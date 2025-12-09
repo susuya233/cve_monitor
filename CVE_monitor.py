@@ -916,52 +916,58 @@ def load_config():
         with open('config.yaml', 'r', encoding='utf-8') as f:
             config = yaml.load(f, Loader=yaml.FullLoader)
             log_info("配置文件读取成功")
-            
-            # 检查钉钉配置
-            if int(config['all_config']['dingding'][0]['enable']) == 1:
-                dingding_webhook = config['all_config']['dingding'][1]['webhook']
-                dingding_secretKey = config['all_config']['dingding'][2]['secretKey']
-                app_name = config['all_config']['dingding'][3]['app_name']
-                log_info(f"启用钉钉推送，webhook长度: {len(dingding_webhook)}, secretKey长度: {len(dingding_secretKey)}")
-                return app_name, dingding_webhook, dingding_secretKey
-            
-            # 检查飞书配置
-            elif int(config['all_config']['feishu'][0]['enable']) == 1:
-                feishu_webhook = config['all_config']['feishu'][1]['webhook']
-                app_name = config['all_config']['feishu'][2]['app_name']
-                log_info(f"启用飞书推送，webhook长度: {len(feishu_webhook)}")
-                return app_name, feishu_webhook
-            
-            # 检查Server酱配置
-            elif int(config['all_config']['server'][0]['enable']) == 1:
-                server_sckey = config['all_config']['server'][1]['sckey']
-                app_name = config['all_config']['server'][2]['app_name']
-                log_info(f"启用Server酱推送，sckey长度: {len(server_sckey)}")
-                return app_name, server_sckey
-            
-            # 检查PushPlus配置
-            elif int(config['all_config']['pushplus'][0]['enable']) == 1:
-                pushplus_token = config['all_config']['pushplus'][1]['token']
-                app_name = config['all_config']['pushplus'][2]['app_name']
-                log_info(f"启用PushPlus推送，token长度: {len(pushplus_token)}")
-                return app_name, pushplus_token
-            
-            # 检查Telegram配置
-            elif int(config['all_config']['tgbot'][0]['enable']) == 1:
-                tgbot_token = config['all_config']['tgbot'][1]['token']
-                tgbot_group_id = config['all_config']['tgbot'][2]['group_id']
-                app_name = config['all_config']['tgbot'][3]['app_name']
-                log_info(f"启用Telegram推送，token长度: {len(tgbot_token)}, group_id: {tgbot_group_id}")
-                return app_name, tgbot_token, tgbot_group_id
-            
-            # 没有启用任何推送
-            elif (int(config['all_config']['tgbot'][0]['enable']) == 0 and
-                  int(config['all_config']['feishu'][0]['enable']) == 0 and
-                  int(config['all_config']['server'][0]['enable']) == 0 and
-                  int(config['all_config']['pushplus'][0]['enable']) == 0 and
-                  int(config['all_config']['dingding'][0]['enable']) == 0):
-                log_error("配置文件有误, 五个社交软件的enable都为0")
-                return None
+        
+        # 优先从环境变量读取配置
+        def get_env_or_config(env_name, config_path, default=''):
+            """从环境变量或配置文件获取值"""
+            return os.environ.get(env_name, config_path if config_path else default)
+        
+        # 检查钉钉配置
+        if int(config['all_config']['dingding'][0]['enable']) == 1:
+            # 从环境变量或配置文件获取值
+            dingding_webhook = get_env_or_config('DINGDING_WEBHOOK', config['all_config']['dingding'][1]['webhook'])
+            dingding_secretKey = get_env_or_config('DINGDING_SECRET', config['all_config']['dingding'][2]['secretKey'])
+            app_name = config['all_config']['dingding'][3]['app_name']
+            log_info(f"启用钉钉推送，webhook长度: {len(dingding_webhook)}, secretKey长度: {len(dingding_secretKey)}")
+            return app_name, dingding_webhook, dingding_secretKey
+        
+        # 检查飞书配置
+        elif int(config['all_config']['feishu'][0]['enable']) == 1:
+            feishu_webhook = get_env_or_config('FEISHU_WEBHOOK', config['all_config']['feishu'][1]['webhook'])
+            app_name = config['all_config']['feishu'][2]['app_name']
+            log_info(f"启用飞书推送，webhook长度: {len(feishu_webhook)}")
+            return app_name, feishu_webhook
+        
+        # 检查Server酱配置
+        elif int(config['all_config']['server'][0]['enable']) == 1:
+            server_sckey = get_env_or_config('SERVER_SCKEY', config['all_config']['server'][1]['sckey'])
+            app_name = config['all_config']['server'][2]['app_name']
+            log_info(f"启用Server酱推送，sckey长度: {len(server_sckey)}")
+            return app_name, server_sckey
+        
+        # 检查PushPlus配置
+        elif int(config['all_config']['pushplus'][0]['enable']) == 1:
+            pushplus_token = get_env_or_config('PUSHPLUS_TOKEN', config['all_config']['pushplus'][1]['token'])
+            app_name = config['all_config']['pushplus'][2]['app_name']
+            log_info(f"启用PushPlus推送，token长度: {len(pushplus_token)}")
+            return app_name, pushplus_token
+        
+        # 检查Telegram配置
+        elif int(config['all_config']['tgbot'][0]['enable']) == 1:
+            tgbot_token = get_env_or_config('TELEGRAM_TOKEN', config['all_config']['tgbot'][1]['token'])
+            tgbot_group_id = get_env_or_config('TELEGRAM_GROUP_ID', config['all_config']['tgbot'][2]['group_id'])
+            app_name = config['all_config']['tgbot'][3]['app_name']
+            log_info(f"启用Telegram推送，token长度: {len(tgbot_token)}, group_id: {tgbot_group_id}")
+            return app_name, tgbot_token, tgbot_group_id
+        
+        # 没有启用任何推送
+        elif (int(config['all_config']['tgbot'][0]['enable']) == 0 and
+              int(config['all_config']['feishu'][0]['enable']) == 0 and
+              int(config['all_config']['server'][0]['enable']) == 0 and
+              int(config['all_config']['pushplus'][0]['enable']) == 0 and
+              int(config['all_config']['dingding'][0]['enable']) == 0):
+            log_error("配置文件有误, 五个社交软件的enable都为0")
+            return None
     except Exception as e:
         log_error(f"读取配置文件失败: {e}")
         log_error(traceback.format_exc())
