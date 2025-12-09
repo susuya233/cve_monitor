@@ -1,0 +1,63 @@
+name: GitHub-CVE-Monitor
+
+# 国际标准时间2点（北京时间10点）
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./requirements.txt
+
+      - name: Run CVE Monitor
+        env:
+          DINGDING_WEBHOOK: ${{ secrets.DINGDING_WEBHOOK }}
+          DINGDING_SECRET: ${{ secrets.DINGDING_SECRET }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          SERVER_SCKEY: ${{ secrets.SERVER_SCKEY }}
+          FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+          GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+        run: python ./CVE_monitor.py
+
+      - name: Commit changes
+        run: |
+          git diff
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add data.db
+          git commit -m "每日CVE漏洞更新（`date +'%Y-%m-%d'`）"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+
+  del_runs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 7
+          keep_minimum_runs: 7
