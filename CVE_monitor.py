@@ -991,6 +991,57 @@ def load_translate_config():
         log_error(f"读取翻译配置失败: {e}")
         return None
 
+# 加载运行配置
+def load_run_config():
+    """加载运行配置"""
+    try:
+        with open('config.yaml', 'r', encoding='utf-8') as f:
+            config = yaml.load(f, Loader=yaml.FullLoader)
+        
+        # 从配置文件获取运行配置
+        run_config = config.get('all_config', {}).get('run_config', [])
+        
+        # 构建运行配置字典
+        run_dict = {}
+        for item in run_config:
+            for key, value in item.items():
+                run_dict[key] = value
+        
+        # 优先从环境变量读取配置
+        # 环境变量优先级高于配置文件
+        run_dict['enable_night_sleep'] = int(os.environ.get('ENABLE_NIGHT_SLEEP', run_dict.get('enable_night_sleep', 1)))
+        run_dict['night_sleep_start'] = int(os.environ.get('NIGHT_SLEEP_START', run_dict.get('night_sleep_start', 0)))
+        run_dict['night_sleep_end'] = int(os.environ.get('NIGHT_SLEEP_END', run_dict.get('night_sleep_end', 7)))
+        run_dict['check_interval'] = int(os.environ.get('CHECK_INTERVAL', run_dict.get('check_interval', 7200)))
+        run_dict['max_run_time'] = int(os.environ.get('MAX_RUN_TIME', run_dict.get('max_run_time', 3540)))
+        run_dict['exception_retry_interval'] = int(os.environ.get('EXCEPTION_RETRY_INTERVAL', run_dict.get('exception_retry_interval', 60)))
+        
+        return run_dict
+    except Exception as e:
+        log_error(f"加载运行配置失败: {e}")
+        log_error(traceback.format_exc())
+        # 返回默认配置
+        return {
+            'enable_night_sleep': 1,
+            'night_sleep_start': 0,
+            'night_sleep_end': 7,
+            'check_interval': 7200,
+            'max_run_time': 3540,
+            'exception_retry_interval': 60
+        }
+
+# 检查是否是夜间时间
+def is_night_time(run_config):
+    """检查是否是夜间时间"""
+    if not run_config.get('enable_night_sleep', 1):
+        return False
+    
+    current_hour = datetime.now().hour
+    start_hour = run_config.get('night_sleep_start', 0)
+    end_hour = run_config.get('night_sleep_end', 7)
+    
+    return start_hour <= current_hour < end_hour
+
 # 翻译函数
 def translate_text(text, source_lang='en', target_lang='zh-cn'):
     """
@@ -1345,6 +1396,10 @@ if __name__ == '__main__':
         create_database()
         log_info("=== 漏洞监控程序启动 ===")
         
+        # 加载运行配置
+        run_config = load_run_config()
+        log_info(f"加载运行配置: {run_config}")
+        
         # 记录上次运行的日期，用于检测日期变化
         last_run_date = datetime.now().strftime('%Y-%m-%d')
         log_info(f"开始运行，当前日期: {last_run_date}")
@@ -1356,9 +1411,28 @@ if __name__ == '__main__':
         ms_crawler = MicrosoftSecurityCrawler()
         okcve_crawler = OKCVECrawler()
         
+        # 记录程序启动时间，用于控制最大运行时长
+        program_start_time = time.time()
+        log_info(f"程序启动时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        
         # 主循环
         while True:
+            # 检查是否超过最大运行时间
+            current_time = time.time()
+            elapsed_time = current_time - program_start_time
+            if elapsed_time > run_config['max_run_time']:
+                log_info(f"程序运行时间已超过最大限制 {run_config['max_run_time']} 秒，自动退出")
+                break
+            
             try:
+                # 检查是否是夜间时间，如果是则休眠
+                if is_night_time(run_config):
+                    current_hour = datetime.now().hour
+                    log_info(f"当前时间 {current_hour} 点，处于夜间休眠时段，程序休眠")
+                    # 休眠1小时后再次检查
+                    time.sleep(3600)
+                    continue
+                
                 # 检查日期是否变化
                 current_date = datetime.now().strftime('%Y-%m-%d')
                 if current_date != last_run_date:
@@ -1427,14 +1501,16 @@ if __name__ == '__main__':
                     log_info("本次未获取到任何新漏洞信息")
                 
                 log_info("本轮漏洞获取完成，等待下一轮...")
-                # 每隔5分钟运行一次
-                time.sleep(300)
+                # 按照配置的检查间隔休眠
+                log_info(f"按照配置休眠 {run_config['check_interval']} 秒")
+                time.sleep(run_config['check_interval'])
                 
             except Exception as e:
                 log_error(f"主循环发生异常: {e}")
                 log_error(traceback.format_exc())
-                # 发生错误时等待1分钟后重试
-                time.sleep(60)
+                # 发生错误时按照配置的重试间隔等待后重试
+                log_info(f"发生异常，按照配置休眠 {run_config['exception_retry_interval']} 秒后重试")
+                time.sleep(run_config['exception_retry_interval'])
                 
     except Exception as e:
         log_error(f"程序启动失败: {e}")
