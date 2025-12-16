@@ -71,6 +71,7 @@ start_process() {
     # 保存进程PID
     echo $! > ${PID_FILE}
     echo "信息：脚本启动成功，PID: $(cat ${PID_FILE})"
+}
 
 # 查看运行状态
 check_status() {
