@@ -65,18 +65,12 @@ stop_process() {
 
 # 启动进程
 start_process() {
-    # 按日期生成日志文件名（格式：YYYY-MM-DD-cve-monitor.log）
-    LOG_FILE="${LOG_DIR}/$(date +%Y-%m-%d)-cve-monitor.log"
-    # 错误日志重定向到同日期的error.log
-    ERROR_LOG_FILE="${LOG_DIR}/$(date +%Y-%m-%d)-cve-monitor-error.log"
-
-    echo "信息：启动Python脚本，日志文件：${LOG_FILE}"
-    # nohup启动，标准输出和标准错误分别重定向到按日期命名的日志文件
-    nohup ${PYTHON_CMD} ${PYTHON_SCRIPT} >> ${LOG_FILE} 2>> ${ERROR_LOG_FILE} &
+    echo "信息：启动Python脚本，日志文件：${LOG_DIR}/run.log 和 ${LOG_DIR}/err.log"
+    # nohup启动，标准输出和标准错误重定向到/dev/null，使用程序内部的日志处理
+    nohup ${PYTHON_CMD} ${PYTHON_SCRIPT} >> /dev/null 2>> /dev/null &
     # 保存进程PID
     echo $! > ${PID_FILE}
     echo "信息：脚本启动成功，PID: $(cat ${PID_FILE})"
-}
 
 # 查看运行状态
 check_status() {
@@ -85,7 +79,8 @@ check_status() {
         if ps -p ${CURRENT_PID} &> /dev/null; then
             echo "状态：脚本正在运行（PID: ${CURRENT_PID}）"
             echo "日志目录：${LOG_DIR}"
-            echo "最新日志：${LOG_DIR}/$(date +%Y-%m-%d)-cve-monitor.log"
+            echo "运行日志：${LOG_DIR}/run.log"
+            echo "错误日志：${LOG_DIR}/err.log"
         else
             echo "状态：脚本已退出（PID文件存在但进程不存在）"
             rm -f ${PID_FILE}
