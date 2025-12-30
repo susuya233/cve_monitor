@@ -1596,65 +1596,117 @@ def discard(text, msg, webhook, is_daily_report=False, html_file=None, markdown_
         }
         
         if is_daily_report and html_file:
-            # 推送报告（日报或周报），Discord Webhook不支持直接发送HTML格式，使用文本格式发送链接
+            # 推送报告（日报或周报），使用Discord Embed格式创建卡片
             # 生成GitHub Pages URL
             github_pages_url = f"https://adminlove520.github.io/CVE_monitor/{html_file}"
-            
-            # 构建推送内容
-            current_date = datetime.now().strftime('%Y-%m-%d')
             
             # 确定报告类型前缀
             report_prefix = "Weekly_" if "Weekly_" in html_file else "Daily_"
             
-            push_content = f"**{text}**\n共收集到 {msg.split()[1]} 个漏洞\n欢迎提交建议：[GitHub Issue](https://github.com/adminlove520/CVE_monitor/issues/new/choose)\n{report_prefix}{current_date}: {github_pages_url}\n\n"
+            # 解析漏洞数量
+            vuln_count = msg.split()[1] if len(msg.split()) > 1 else "0"
             
-            # 添加markdown内容（预览格式）
-            if markdown_content:
-                # 移除markdown标题和最后更新时间，只保留文章列表
-                lines = markdown_content.split('\n')
-                preview_content = []
-                include_lines = False
-                for line in lines:
-                    # 从第一个## 开始记录文章列表
-                    if line.startswith('## '):
-                        include_lines = True
-                    # 跳过Power By信息
-                    if line.strip().startswith('Power By') or line.strip().startswith('---'):
-                        continue
-                    if include_lines:
-                        preview_content.append(line)
-                
-                # 拼接预览内容，移除多余空行
-                push_content += "威胁情报预览：\n"
-                filtered_preview = [line for line in preview_content if line.strip()]
-                push_content += '\n'.join(filtered_preview[:20])  # 只显示前20行
-                if len(filtered_preview) > 20:
-                    push_content += f"\n\n... 共 {len(filtered_preview)} 行，显示前20行"
-            
-            # 添加Power By信息
-            push_content += "\n---\nPower By 东方隐侠安全团队·Anonymous@ [隐侠安全客栈](https://www.dfyxsec.com/)\n---"
-            
+            # 创建Embed卡片
             data = {
-                "content": push_content
+                "embeds": [
+                    {
+                        "title": text,
+                        "description": f"共收集到 {vuln_count} 个漏洞\n欢迎提交建议：[GitHub Issue](https://github.com/adminlove520/CVE_monitor/issues/new/choose)",
+                        "url": github_pages_url,
+                        "color": 16711680,  # 红色
+                        "fields": [
+                            {
+                                "name": "报告链接",
+                                "value": f"[{report_prefix}{datetime.now().strftime('%Y-%m-%d')}]({github_pages_url})",
+                                "inline": False
+                            }
+                        ],
+                        "footer": {
+                            "text": "Power By 东方隐侠安全团队·Anonymous@ 隐侠安全客栈",
+                            "icon_url": "https://www.dfyxsec.com/favicon.ico"
+                        },
+                        "timestamp": datetime.now().isoformat()
+                    }
+                ]
             }
         else:
-            # 推送每日消息
+            # 推送普通消息，使用Discord Embed格式创建卡片
+            # 解析漏洞信息
+            vuln_info = {}
+            lines = msg.split('\n')
+            for line in lines:
+                if ':' in line:
+                    key, value = line.split(':', 1)
+                    vuln_info[key.strip()] = value.strip()
+            
+            # 创建Embed卡片
+            fields = []
+            if vuln_info.get('漏洞标题'):
+                fields.append({
+                    "name": "漏洞标题",
+                    "value": vuln_info['漏洞标题'],
+                    "inline": False
+                })
+            if vuln_info.get('漏洞编号'):
+                fields.append({
+                    "name": "漏洞编号",
+                    "value": vuln_info['漏洞编号'],
+                    "inline": True
+                })
+            if vuln_info.get('来源'):
+                fields.append({
+                    "name": "来源",
+                    "value": vuln_info['来源'],
+                    "inline": True
+                })
+            if vuln_info.get('时间'):
+                fields.append({
+                    "name": "时间",
+                    "value": vuln_info['时间'],
+                    "inline": True
+                })
+            if vuln_info.get('详情链接'):
+                fields.append({
+                    "name": "详情链接",
+                    "value": f"[查看详情]({vuln_info['详情链接']})",
+                    "inline": False
+                })
+            
             data = {
-                "content": f"**{text}**\n{msg}\n\n---\nPower By 东方隐侠安全团队·Anonymous@ [https://www.dfyxsec.com/](https://www.dfyxsec.com/)"
+                "embeds": [
+                    {
+                        "title": text,
+                        "color": 16776960,  # 黄色
+                        "fields": fields,
+                        "footer": {
+                            "text": "Power By 东方隐侠安全团队·Anonymous@ 隐侠安全客栈",
+                            "icon_url": "https://www.dfyxsec.com/favicon.ico"
+                        },
+                        "timestamp": datetime.now().isoformat()
+                    }
+                ]
             }
         
         response = requests.post(webhook, json=data, headers=headers, timeout=10)
-        response.raise_for_status()
         
-        log_info(f"Discard推送返回结果: {response.text}")
-        
-        # Discard推送API返回格式: {'ok': True}
-        if isinstance(response.json(), dict) and response.json().get('ok'):
-            log_info("Discard推送成功")
+        # 只检查状态码，不依赖JSON解析，避免JSONDecodeError
+        if response.status_code in [200, 204]:
+            log_info(f"Discard推送成功，状态码: {response.status_code}")
             return True
         else:
-            log_error(f"Discard推送返回异常结果: {response.json()}")
+            log_error(f"Discard推送失败，状态码: {response.status_code}")
+            log_error(f"响应内容: {response.text}")
             return False
+    except requests.exceptions.JSONDecodeError as je:
+        # 专门处理JSON解码错误，这是最常见的错误
+        status_code = response.status_code if 'response' in locals() else '未知'
+        response_text = response.text if 'response' in locals() else '无响应内容'
+        log_info(f"Discard推送成功（忽略JSON解码错误），状态码: {status_code}")
+        log_info(f"响应内容: {response_text}")
+        # 即使JSON解码失败，如果状态码是200或204，也视为成功
+        if 'response' in locals() and response.status_code in [200, 204]:
+            return True
+        return False
     except Exception as e:
         log_error(f"Discard推送出现异常: {e}")
         log_error(traceback.format_exc())
