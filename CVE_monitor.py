@@ -1475,12 +1475,20 @@ def insert_into_sqlite3_without_check(cve_list):
                     else:
                         vuln_id = cve.id
                     
-                    push_msg = f"漏洞标题：{translated_title}\n漏洞编号：{vuln_id}\n来源：{source}\n时间：{time}"
+                    # 格式化来源，确保显示正确
+                    formatted_source = source
+                    if source == 'Tenable':
+                        formatted_source = 'Tenable (Nessus)'
+                    elif source == '微步':
+                        formatted_source = '微步（ThreatBook）'
+                    
+                    # 构造推送消息，格式与示例完全一致
+                    push_msg = f"漏洞标题: {translated_title}\n漏洞编号: {vuln_id}\n来源: {formatted_source}\n时间: {time}"
                     if cve_url:
-                        push_msg += f"\n详情链接：{cve_url}"
+                        push_msg += f"\n详情链接: {cve_url}"
                     # 如果有翻译后的描述信息，也添加到推送内容中
                     if hasattr(cve, 'info') and cve.info:
-                        push_msg += f"\n漏洞描述：{cve.info}"
+                        push_msg += f"\n漏洞描述: {cve.info}"
                     
                     # 根据配置的推送方式发送消息
                     try:
@@ -1684,9 +1692,17 @@ def send_alerts(cve_list):
                 else:
                     vuln_id = cve.id
                 
-                msg = f"漏洞标题：{title}\n漏洞编号：{vuln_id}\n来源：{src}\n时间：{time_str}"
+                # 格式化来源，确保显示正确
+                formatted_source = src
+                if src == 'Tenable':
+                    formatted_source = 'Tenable (Nessus)'
+                elif src == '微步':
+                    formatted_source = '微步（ThreatBook）'
+                
+                # 构造推送消息，格式与示例完全一致
+                msg = f"漏洞标题: {title}\n漏洞编号: {vuln_id}\n来源: {formatted_source}\n时间: {time_str}"
                 if cve_url:
-                    msg += f"\n详情链接：{cve_url}"
+                    msg += f"\n详情链接: {cve_url}"
                 
                 # 根据配置的推送方式发送消息
                 try:
