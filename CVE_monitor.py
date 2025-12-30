@@ -1622,7 +1622,7 @@ def discard(text, msg, webhook, is_daily_report=False, html_file=None, markdown_
                             }
                         ],
                         "footer": {
-                            "text": "Power By 东方隐侠安全团队·Anonymous@ 隐侠安全客栈",
+                            "text": "Power By 东方隐侠安全团队·Anonymous@ [隐侠安全客栈](https://www.dfyxsec.com)",
                             "icon_url": "https://www.dfyxsec.com/favicon.ico"
                         },
                         "timestamp": datetime.now().isoformat()
@@ -1679,7 +1679,7 @@ def discard(text, msg, webhook, is_daily_report=False, html_file=None, markdown_
                         "color": 16776960,  # 黄色
                         "fields": fields,
                         "footer": {
-                            "text": "Power By 东方隐侠安全团队·Anonymous@ 隐侠安全客栈",
+                            "text": "Power By 东方隐侠安全团队·Anonymous@ [隐侠安全客栈](https://www.dfyxsec.com)",
                             "icon_url": "https://www.dfyxsec.com/favicon.ico"
                         },
                         "timestamp": datetime.now().isoformat()
