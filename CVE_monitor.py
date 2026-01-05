@@ -7,6 +7,8 @@
 # 融合OSCS1024漏洞库、安天、Tenable微软安全中心、CVE平台的漏洞信息爬取及推送脚本
 # -----------------------------------------------
 
+VERSION = '2.3.0'
+
 import json
 import requests
 from datetime import datetime, timedelta
@@ -2523,11 +2525,17 @@ if __name__ == '__main__':
     
     # 解析命令行参数
     parser = argparse.ArgumentParser(description='CVE威胁情报监控')
+    parser.add_argument('--version', action='store_true', help='显示版本号并退出')
     parser.add_argument('--once', action='store_true', help='只执行一次，适合GitHub Action运行')
     parser.add_argument('--daily-report', action='store_true', help='生成日报模式，只生成日报不推送')
     parser.add_argument('--weekly-report', action='store_true', help='生成周报模式，生成周报并推送')
     parser.add_argument('--no-push', action='store_true', help='关闭推送功能，只收集数据')
     args = parser.parse_args()
+
+    # 如果只是显示版本号
+    if args.version:
+        print(f"CVE Monitor v{VERSION}")
+        exit(0)
     
     try:
         # 创建数据库表
