@@ -1,5 +1,8 @@
 # CVE威胁情报推送系统
 
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/adminlove520/cve_monitor?label=version)
+
+
 ## 📋 项目简介
 
 该项目用于监控多个安全平台的最新威胁情报信息，并通过多种渠道（钉钉、飞书、Telegram等）进行实时推送。

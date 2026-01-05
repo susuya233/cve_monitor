@@ -1,0 +1,101 @@
+name: Version Bump
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - '.github/workflows/**'
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'Bump version')"
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Calculate and Update Version
+        id: version_step
+        run: |
+          python -c "
+          import re
+          import os
+          import datetime
+
+          # 读取 CVE_monitor.py
+          with open('CVE_monitor.py', 'r', encoding='utf-8') as f:
+              content = f.read()
+
+          # 获取当前版本
+          current_version = re.search(r\"VERSION = '(\d+\.\d+\.\d+)'\", content).group(1)
+          major, minor, patch = map(int, current_version.split('.'))
+
+          # 获取提交信息
+          commit_msg = os.environ.get('COMMIT_MSG', '')
+          
+          # 计算新版本
+          if '#major' in commit_msg:
+              major += 1
+              minor = 0
+              patch = 0
+          elif '#minor' in commit_msg:
+              minor += 1
+              patch = 0
+          else:
+              patch += 1
+          
+          new_version = f'{major}.{minor}.{patch}'
+          print(f'::set-output name=new_version::{new_version}')
+          
+          # 更新 CVE_monitor.py
+          new_content = re.sub(r\"VERSION = '\d+\.\d+\.\d+'\", f\"VERSION = '{new_version}'\", content)
+          with open('CVE_monitor.py', 'w', encoding='utf-8') as f:
+              f.write(new_content)
+              
+          # 更新 CHANGELOG.md
+          date_str = datetime.datetime.now().strftime('%Y-%m-%d')
+          log_entry = f'\n## 🎉 v{new_version} ({date_str})\n\n### 🚀 自动更新\n\n- 自动版本升级: {current_version} -> {new_version}\n- 提交信息: {commit_msg}\n'
+          
+          try:
+              with open('CHANGELOG.md', 'r', encoding='utf-8') as f:
+                  log_content = f.read()
+              
+              # 在第一个 ### 之前或者文件头部插入
+              # 简单的插入到第二行（假设第一行是标题）
+              lines = log_content.splitlines()
+              if len(lines) > 1:
+                  lines.insert(2, log_entry)
+              else:
+                  lines.append(log_entry)
+                  
+              with open('CHANGELOG.md', 'w', encoding='utf-8') as f:
+                  f.write('\n'.join(lines))
+          except Exception as e:
+              print(f'Warning: Could not update CHANGELOG.md: {e}')
+          "
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add CVE_monitor.py CHANGELOG.md
+          git commit -m "Bump version to v${{ steps.version_step.outputs.new_version }}"
+          git push
+          git tag v${{ steps.version_step.outputs.new_version }}
+          git push origin v${{ steps.version_step.outputs.new_version }}
