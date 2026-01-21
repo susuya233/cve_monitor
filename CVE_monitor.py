@@ -1314,19 +1314,25 @@ class GitHubIssuesCrawler(BaseCrawler):
                 if cve.id not in unique_cves:
                     unique_cves[cve.id] = cve
             
-            # 监控GitHub仓库更新
-            log_info(f"[{self.NAME_CH()}] 开始监控专门发布POC/EXP的GitHub仓库更新")
-            repo_cves = self._search_repositories(headers, updated_since)
-            if repo_cves:
-                all_cve_list.extend(repo_cves)
-                log_info(f"[{self.NAME_CH()}] 从仓库监控获取到 {len(repo_cves)} 条新漏洞")
+            # 仓库监控默认关闭，如需开启设置环境变量 ENABLE_GITHUB_REPO_SCAN=1
+            if os.environ.get('ENABLE_GITHUB_REPO_SCAN', '0') == '1':
+                log_info(f"[{self.NAME_CH()}] 开始监控专门发布POC/EXP的GitHub仓库更新")
+                repo_cves = self._search_repositories(headers, updated_since)
+                if repo_cves:
+                    all_cve_list.extend(repo_cves)
+                    log_info(f"[{self.NAME_CH()}] 从仓库监控获取到 {len(repo_cves)} 条新漏洞")
+            else:
+                log_info(f"[{self.NAME_CH()}] 仓库监控已关闭，设置 ENABLE_GITHUB_REPO_SCAN=1 可开启")
             
-            # 监控GitHub代码中的敏感信息泄露
-            log_info(f"[{self.NAME_CH()}] 开始监控GitHub代码中的敏感信息泄露")
-            code_leak_cves = self._search_code_leaks(headers, updated_since)
-            if code_leak_cves:
-                all_cve_list.extend(code_leak_cves)
-                log_info(f"[{self.NAME_CH()}] 从代码泄露监控获取到 {len(code_leak_cves)} 条新漏洞")
+            # 代码泄露监控默认关闭，如需开启设置环境变量 ENABLE_GITHUB_CODE_LEAK_SCAN=1
+            if os.environ.get('ENABLE_GITHUB_CODE_LEAK_SCAN', '0') == '1':
+                log_info(f"[{self.NAME_CH()}] 开始监控GitHub代码中的敏感信息泄露")
+                code_leak_cves = self._search_code_leaks(headers, updated_since)
+                if code_leak_cves:
+                    all_cve_list.extend(code_leak_cves)
+                    log_info(f"[{self.NAME_CH()}] 从代码泄露监控获取到 {len(code_leak_cves)} 条新漏洞")
+            else:
+                log_info(f"[{self.NAME_CH()}] 代码泄露监控已关闭，设置 ENABLE_GITHUB_CODE_LEAK_SCAN=1 可开启")
             
             # 过滤已经存在于数据库的漏洞（只处理当天的issues）
             new_cve_list = []
