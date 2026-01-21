@@ -7,7 +7,7 @@
 # 融合OSCS1024漏洞库、安天、Tenable微软安全中心、CVE平台的漏洞信息爬取及推送脚本
 # -----------------------------------------------
 
-VERSION = '2.3.4'
+VERSION = '2.3.5'
 
 import json
 import requests
