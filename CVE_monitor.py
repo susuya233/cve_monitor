@@ -1177,8 +1177,7 @@ class GitHubIssuesCrawler(BaseCrawler):
             'exp',  # exploit
             'SQL injection',  # SQL注入
             'sqli',  # SQL注入缩写
-            'RCE',  # remote code execution# injection
-            '代码执行',  # code execution
+            'RCE',  # remote code 
             'SQL注入',  # SQL injection  # remote execution
             'POC',  # 中文环境下的POC
             'EXP',  # 中文环境下的EXP
@@ -1195,19 +1194,8 @@ class GitHubIssuesCrawler(BaseCrawler):
         ]
         # 代码敏感信息关键词（用于监控敏感信息泄露）
         self.code_leak_keywords = [
-            'password',
-            'username',
-            'api_key',
-            'apiKey',
-            'secret_key',
             'secretKey',
-            'access_token',
-            'accessToken',
-            'private_key',
-            'privateKey',
-            'AWS_SECRET',
-            'AWS_ACCESS_KEY',
-            '密码'
+            'access_token'
         ]
         # GitHub token 将在 get_cves 中获取
         self.github_token = None
@@ -1825,7 +1813,15 @@ def create_database():
                     time TEXT,
                     source TEXT,
                     detail_url TEXT,
-                    cve_ids TEXT)''')
+                    cve_ids TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+        # 如果表已存在但没有created_at字段，添加该字段
+        try:
+            cur.execute("ALTER TABLE vulnerabilities ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+            conn.commit()
+        except sqlite3.OperationalError:
+            # 字段已存在，忽略错误
+            pass
         conn.commit()
     except Exception as e:
         print("创建监控表失败！报错：{}".format(e))
@@ -1891,9 +1887,10 @@ def insert_into_sqlite3_without_check(cve_list):
                     if hasattr(cve, 'info') and cve.info:
                         cve.info = translate_text(cve.info, source_lang, target_lang)
                 
-                # 插入数据库
-                cur.execute("INSERT INTO vulnerabilities (id, title, time, source, detail_url, cve_ids) VALUES (?, ?, ?, ?, ?, ?)",
-                           (id, translated_title, time, source, detail_url, cve_ids))
+                # 插入数据库（包含创建时间戳）
+                created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                cur.execute("INSERT INTO vulnerabilities (id, title, time, source, detail_url, cve_ids, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                           (id, translated_title, time, source, detail_url, cve_ids, created_at))
                 conn.commit()  # 每插入一条就提交一次，确保数据立即保存
                 insert_count += 1
                 log_info(f"插入新漏洞成功：{translated_title}")
@@ -2278,28 +2275,51 @@ def insert_into_sqlite3(cve_list):
 def generate_daily_report():
     """
     生成日报，包括Markdown和HTML格式
+    每天9点运行时，生成前24小时（昨天9点到今天9点）的完整数据报告
     """
     log_info("开始生成日报...")
     
-    # 获取当前日期
-    current_date = datetime.now().strftime('%Y-%m-%d')
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    # 计算报告日期：使用昨天的日期（因为9点运行，报告的是前24小时）
+    now = datetime.now()
+    # 如果当前时间在9点之前，使用前天的日期；否则使用昨天的日期
+    if now.hour < 9:
+        report_date = (now - timedelta(days=2)).strftime('%Y-%m-%d')
+        # 查询时间范围：前天9点到昨天9点
+        start_time = (now - timedelta(days=2)).replace(hour=9, minute=0, second=0, microsecond=0)
+        end_time = (now - timedelta(days=1)).replace(hour=9, minute=0, second=0, microsecond=0)
+    else:
+        report_date = (now - timedelta(days=1)).strftime('%Y-%m-%d')
+        # 查询时间范围：昨天9点到今天9点
+        start_time = (now - timedelta(days=1)).replace(hour=9, minute=0, second=0, microsecond=0)
+        end_time = now.replace(hour=9, minute=0, second=0, microsecond=0)
     
-    # 创建目录结构
-    archive_date_dir = os.path.join(ARCHIVE_DIR, current_date)
+    current_time = now.strftime('%Y-%m-%d %H:%M:%S')
+    
+    log_info(f"生成日报，报告日期：{report_date}，时间范围：{start_time.strftime('%Y-%m-%d %H:%M:%S')} 至 {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
+    
+    # 创建目录结构（使用报告日期）
+    archive_date_dir = os.path.join(ARCHIVE_DIR, report_date)
     os.makedirs(archive_date_dir, exist_ok=True)
     
-    # 从数据库中获取当天的所有漏洞
+    # 从数据库中获取前24小时的所有漏洞（使用created_at字段）
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
-    # 按入库顺序倒序展示（最新入库的在最上面）
-    cursor.execute("SELECT id, title, time, source, detail_url, cve_ids FROM vulnerabilities WHERE time = ? ORDER BY rowid DESC", (current_date,))
+    # 查询前24小时的数据，按入库时间倒序展示（最新入库的在最上面）
+    start_time_str = start_time.strftime('%Y-%m-%d %H:%M:%S')
+    end_time_str = end_time.strftime('%Y-%m-%d %H:%M:%S')
+    cursor.execute("""
+        SELECT id, title, time, source, detail_url, cve_ids 
+        FROM vulnerabilities 
+        WHERE created_at >= ? AND created_at < ?
+        ORDER BY created_at DESC
+    """, (start_time_str, end_time_str))
     vulnerabilities = cursor.fetchall()
     conn.close()
     
     # 生成markdown内容
-    markdown_content = f"# 威胁情报 {current_date}\n\n"
+    markdown_content = f"# 威胁情报 {report_date}\n\n"
     markdown_content += f"共收集到 {len(vulnerabilities)} 个漏洞\n"
+    markdown_content += f"时间范围：{start_time.strftime('%Y-%m-%d %H:%M:%S')} 至 {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
     markdown_content += f"最后更新时间：{current_time}\n\n"
     
     # 准备漏洞数据，用于HTML模板
@@ -2327,8 +2347,8 @@ def generate_daily_report():
             'time': time_str
         })
     
-    # 计算昨日漏洞数量
-    yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+    # 计算昨日漏洞数量（用于对比）
+    yesterday = (now - timedelta(days=1)).strftime('%Y-%m-%d')
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM vulnerabilities WHERE time = ?", (yesterday,))
@@ -2343,7 +2363,7 @@ def generate_daily_report():
     }
     
     # 写入markdown文件
-    markdown_file = os.path.join(archive_date_dir, f'Daily_{current_date}.md')
+    markdown_file = os.path.join(archive_date_dir, f'Daily_{report_date}.md')
     is_update = os.path.exists(markdown_file)
     with open(markdown_file, 'w', encoding='utf-8') as f:
         f.write(markdown_content)
@@ -2364,7 +2384,7 @@ def generate_daily_report():
         from jinja2 import Template
         template = Template(template_content)
         html_content = template.render(
-            date=current_date,
+            date=report_date,
             count=len(vulnerabilities),
             update_time=current_time,
             articles=vuln_list,
@@ -2373,7 +2393,7 @@ def generate_daily_report():
         )
         
         # 写入HTML文件
-        html_file = os.path.join(archive_date_dir, f'Daily_{current_date}.html')
+        html_file = os.path.join(archive_date_dir, f'Daily_{report_date}.html')
         with open(html_file, 'w', encoding='utf-8') as f:
             f.write(html_content)
         
@@ -2387,8 +2407,8 @@ def generate_daily_report():
 
         # 汇总推送（仅在日报生成时一次性推送）
         base_url = get_pages_base_url()
-        daily_url = f"{base_url}/archive/{current_date}/Daily_{current_date}.html"
-        push_summary(f"【日报】{current_date}", daily_url, len(vulnerabilities), is_weekly=False)
+        daily_url = f"{base_url}/archive/{report_date}/Daily_{report_date}.html"
+        push_summary(f"【日报】{report_date}", daily_url, len(vulnerabilities), is_weekly=False)
         
     except Exception as e:
         log_error(f"生成威胁情报日报失败：{str(e)}")
