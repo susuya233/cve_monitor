@@ -2292,7 +2292,8 @@ def generate_daily_report():
     # 从数据库中获取当天的所有漏洞
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT id, title, time, source, detail_url, cve_ids FROM vulnerabilities WHERE time = ? ORDER BY time DESC", (current_date,))
+    # 按入库顺序倒序展示（最新入库的在最上面）
+    cursor.execute("SELECT id, title, time, source, detail_url, cve_ids FROM vulnerabilities WHERE time = ? ORDER BY rowid DESC", (current_date,))
     vulnerabilities = cursor.fetchall()
     conn.close()
     
@@ -2896,7 +2897,7 @@ def generate_wordpress_rss(is_weekly=False):
         vulnerabilities = cursor.fetchall()
     else:
         # 生成日报时，只获取当天的漏洞数据
-        cursor.execute("SELECT id, title, time, source, detail_url, cve_ids FROM vulnerabilities WHERE time = ? ORDER BY time DESC", (current_date,))
+        cursor.execute("SELECT id, title, time, source, detail_url, cve_ids FROM vulnerabilities WHERE time = ? ORDER BY rowid DESC", (current_date,))
         vulnerabilities = cursor.fetchall()
     conn.close()
     
@@ -3284,7 +3285,7 @@ def generate_daily_report():
     # 从数据库中获取当天的所有漏洞
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT id, title, time, source, detail_url, cve_ids FROM vulnerabilities WHERE time = ? ORDER BY time DESC", (current_date,))
+    cursor.execute("SELECT id, title, time, source, detail_url, cve_ids FROM vulnerabilities WHERE time = ? ORDER BY rowid DESC", (current_date,))
     vulnerabilities = cursor.fetchall()
     conn.close()
     
@@ -3373,7 +3374,7 @@ def generate_daily_report():
     # 从数据库中获取当天的所有漏洞
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT id, title, time, source, detail_url, cve_ids FROM vulnerabilities WHERE time = ? ORDER BY time DESC", (current_date,))
+    cursor.execute("SELECT id, title, time, source, detail_url, cve_ids FROM vulnerabilities WHERE time = ? ORDER BY rowid DESC", (current_date,))
     vulnerabilities = cursor.fetchall()
     conn.close()
     
