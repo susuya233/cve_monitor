@@ -1158,6 +1158,456 @@ class ThreatBookCrawler(BaseCrawler):
         
         return cve
 
+class GitHubIssuesCrawler(BaseCrawler):
+    """
+    GitHub Issues 监控爬虫类
+    监控包含漏洞相关关键词的 GitHub Issues
+    """
+
+    def __init__(self):
+        super(GitHubIssuesCrawler, self).__init__()
+        # GitHub Search API 地址
+        self.api_url = 'https://api.github.com/search/issues'
+        self.repo_api_url = 'https://api.github.com/search/repositories'
+        self.code_api_url = 'https://api.github.com/search/code'
+        # 漏洞相关关键词（英文+中文）
+        self.keywords = [
+            # 英文关键词
+            'poc',  # proof of concept
+            'exp',  # exploit
+            'SQL injection',  # SQL注入
+            'sqli',  # SQL注入缩写
+            'RCE',  # remote code execution
+            # 中文关键词
+            '漏洞',  # vulnerability
+            '注入',  # injection
+            '利用',  # exploit
+            '代码执行',  # code execution
+            'SQL注入',  # SQL injection
+            '远程执行',  # remote execution
+            'POC',  # 中文环境下的POC
+            'EXP',  # 中文环境下的EXP
+        ]
+        # GitHub仓库搜索关键词（用于监控专门发布POC/EXP的仓库）
+        self.repo_keywords = [
+            'poc',
+            'exploit',
+            'CVE',
+            'vulnerability',
+            '漏洞',
+            '利用',
+            'exp'
+        ]
+        # 代码敏感信息关键词（用于监控敏感信息泄露）
+        self.code_leak_keywords = [
+            'password',
+            'username',
+            'api_key',
+            'apiKey',
+            'secret_key',
+            'secretKey',
+            'access_token',
+            'accessToken',
+            'private_key',
+            'privateKey',
+            'AWS_SECRET',
+            'AWS_ACCESS_KEY',
+            'token',
+            'credential',
+            '密码',
+            '密钥',
+            '令牌',
+            '凭证'
+        ]
+        # GitHub token 将在 get_cves 中获取
+        self.github_token = None
+        self._headers = None
+
+    def NAME_CH(self):
+        return 'GitHub Issues'
+
+    def NAME_EN(self):
+        return 'GitHub Issues Monitor'
+
+    def get_vulnerabilities(self):
+        return []  # 使用get_cves方法获取漏洞信息
+
+    def _get_headers(self):
+        """
+        获取请求头（延迟加载配置）
+        :return: 请求头字典
+        """
+        if self._headers is None:
+            # 延迟加载配置，避免在 __init__ 中调用 load_run_config
+            try:
+                run_config = load_run_config()
+                self.github_token = run_config.get('github_token', '') or os.environ.get('GITHUB_TOKEN', '')
+            except:
+                self.github_token = os.environ.get('GITHUB_TOKEN', '')
+            
+            self._headers = {
+                "Accept": "application/vnd.github.v3+json",
+                "User-Agent": "CVE-Monitor/1.0"
+            }
+            if self.github_token:
+                self._headers["Authorization"] = f"token {self.github_token}"
+        
+        return self._headers
+
+    def get_cves(self):
+        """
+        从GitHub搜索包含漏洞关键词的Issues
+        :return: 漏洞信息列表
+        """
+        try:
+            log_info(f"[{self.NAME_CH()}] 开始获取最新漏洞信息")
+            
+            # 获取请求头（延迟加载）
+            headers = self._get_headers()
+            
+            # 获取当前日期（只搜索最近更新的）
+            current_date = datetime.now().strftime('%Y-%m-%d')
+            # 搜索最近1天内更新的issues（减少搜索范围，加快速度）
+            updated_since = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+            
+            log_info(f"[{self.NAME_CH()}] 搜索最近1天内更新的issues (截止到 {updated_since})")
+            
+            all_cve_list = []
+            
+            # 遍历每个关键词进行搜索
+            for keyword in self.keywords:
+                try:
+                    # GitHub Search API 查询字符串
+                    # 搜索包含关键词的issues，且最近7天内有更新
+                    query = f'{keyword} updated:>={updated_since} is:issue state:open'
+                    
+                    # 发送搜索请求
+                    response = requests.get(
+                        self.api_url,
+                        params={
+                            'q': query,
+                            'sort': 'updated',
+                            'order': 'desc',
+                            'per_page': 10  # 每个关键词最多10条（减少请求数据量）
+                        },
+                        headers=headers,
+                        timeout=self.timeout
+                    )
+                    
+                    # 检查速率限制
+                    if response.status_code == 403:
+                        log_warn(f"[{self.NAME_CH()}] GitHub API速率限制，跳过关键词: {keyword}")
+                        continue
+                    
+                    response.raise_for_status()
+                    data = response.json()
+                    
+                    items = data.get('items', [])
+                    log_info(f"[{self.NAME_CH()}] 关键词 '{keyword}' 找到 {len(items)} 条结果")
+                    
+                    # 转换为CVEInfo对象
+                    for item in items:
+                        cve_info = self._to_cve(item, keyword)
+                        if cve_info and cve_info.id:
+                            all_cve_list.append(cve_info)
+                    
+                    # 避免请求过快，每个关键词之间休眠（减少休眠时间）
+                    time.sleep(0.5)
+                    
+                except Exception as e:
+                    log_error(f"[{self.NAME_CH()}] 搜索关键词 '{keyword}' 失败: {str(e)}")
+                    continue
+            
+            # 去重（同一个issue可能被多个关键词匹配）
+            unique_cves = {}
+            for cve in all_cve_list:
+                if cve.id not in unique_cves:
+                    unique_cves[cve.id] = cve
+            
+            # 监控GitHub仓库更新
+            log_info(f"[{self.NAME_CH()}] 开始监控专门发布POC/EXP的GitHub仓库更新")
+            repo_cves = self._search_repositories(headers, updated_since)
+            if repo_cves:
+                all_cve_list.extend(repo_cves)
+                log_info(f"[{self.NAME_CH()}] 从仓库监控获取到 {len(repo_cves)} 条新漏洞")
+            
+            # 监控GitHub代码中的敏感信息泄露
+            log_info(f"[{self.NAME_CH()}] 开始监控GitHub代码中的敏感信息泄露")
+            code_leak_cves = self._search_code_leaks(headers, updated_since)
+            if code_leak_cves:
+                all_cve_list.extend(code_leak_cves)
+                log_info(f"[{self.NAME_CH()}] 从代码泄露监控获取到 {len(code_leak_cves)} 条新漏洞")
+            
+            # 过滤已经存在于数据库的漏洞（只处理当天的issues）
+            new_cve_list = []
+            for cve_info in unique_cves.values():
+                # 只处理当天的issues
+                issue_date = datetime.strptime(cve_info.time, '%Y-%m-%d').date()
+                current_date_obj = datetime.now().date()
+                if issue_date == current_date_obj:  # 只处理当天的
+                    if not is_vulnerability_exists(cve_info.id):
+                        new_cve_list.append(cve_info)
+                        log_info(f"发现新GitHub Issue: {cve_info.title}")
+                    else:
+                        log_info(f"GitHub Issue已存在，跳过: {cve_info.title}")
+            
+            log_info(f"[{self.NAME_CH()}] 获取到 {len(new_cve_list)}/{len(all_cve_list)} 条新漏洞信息")
+            return new_cve_list
+            
+        except Exception as e:
+            log_error(f"[{self.NAME_CH()}] 获取漏洞信息失败: {str(e)}")
+            log_error(traceback.format_exc())
+            return []
+
+    def _to_cve(self, item, keyword):
+        """
+        转换GitHub Issue为CVEInfo对象
+        :param item: GitHub Issue数据
+        :param keyword: 匹配的关键词
+        :return: CVEInfo对象或None
+        """
+        try:
+            cve = CVEInfo()
+            
+            # 生成唯一ID（使用issue的URL）
+            issue_url = item.get('html_url', '')
+            if not issue_url:
+                return None
+            
+            # 使用issue的ID作为唯一标识
+            issue_id = item.get('id') or item.get('number', '')
+            cve.id = f"github-issue-{issue_id}" if issue_id else hashlib.md5(issue_url.encode('utf-8')).hexdigest()
+            
+            # 设置标题
+            title = item.get('title', '未知标题')
+            cve.title = f"[GitHub Issue] {title} (关键词: {keyword})"
+            
+            # 设置时间（使用更新时间）
+            updated_at = item.get('updated_at', '')
+            if updated_at:
+                # 解析ISO 8601格式时间
+                updated_dt = datetime.strptime(updated_at, '%Y-%m-%dT%H:%M:%SZ')
+                cve.time = updated_dt.strftime('%Y-%m-%d')
+            else:
+                cve.time = datetime.now().strftime('%Y-%m-%d')
+            
+            # 设置CVE编号（从标题或body中提取）
+            body = item.get('body', '') or ''
+            cve_ids = self._extract_cve_ids(title + ' ' + body)
+            cve.cve = ', '.join(cve_ids) if cve_ids else ''
+            
+            # 设置来源和URL
+            cve.src = self.NAME_CH()
+            cve.source = self.NAME_CH()
+            cve.detail_url = issue_url
+            cve.url = issue_url
+            
+            # 设置描述信息
+            repo_name = item.get('repository', {}).get('full_name', '') if isinstance(item.get('repository'), dict) else ''
+            user_name = item.get('user', {}).get('login', '') if isinstance(item.get('user'), dict) else ''
+            body_text = body if body else ''
+            cve.info = f"仓库: {repo_name}\n作者: {user_name}\n关键词: {keyword}\n描述: {body_text[:200] if body_text else '无描述'}"
+            
+            return cve
+        except Exception as e:
+            log_error(f"[{self.NAME_CH()}] 转换Issue失败: {str(e)}")
+            return None
+
+    def _extract_cve_ids(self, text):
+        """
+        从文本中提取CVE编号
+        :param text: 文本内容
+        :return: CVE编号列表
+        """
+        cve_pattern = r'CVE-\d{4}-\d{4,}'
+        matches = re.findall(cve_pattern, text, re.IGNORECASE)
+        return list(set(matches))  # 去重
+
+    def _search_repositories(self, headers, updated_since):
+        """
+        搜索专门发布POC/EXP的GitHub仓库
+        :param headers: 请求头
+        :param updated_since: 更新时间限制
+        :return: 漏洞信息列表
+        """
+        repo_cves = []
+        
+        # 搜索包含关键词的仓库，最近更新过的
+        for keyword in self.repo_keywords[:5]:  # 限制搜索数量，避免过多请求
+            try:
+                # 搜索仓库：包含关键词，最近更新
+                query = f'{keyword} in:name,description pushed:>={updated_since} stars:>10'
+                
+                response = requests.get(
+                    self.repo_api_url,
+                    params={
+                        'q': query,
+                        'sort': 'updated',
+                        'order': 'desc',
+                        'per_page': 5  # 每个关键词最多5个仓库
+                    },
+                    headers=headers,
+                    timeout=self.timeout
+                )
+                
+                if response.status_code == 403:
+                    log_warn(f"[{self.NAME_CH()}] GitHub API速率限制，跳过仓库关键词: {keyword}")
+                    continue
+                
+                response.raise_for_status()
+                data = response.json()
+                repos = data.get('items', [])
+                
+                log_info(f"[{self.NAME_CH()}] 仓库关键词 '{keyword}' 找到 {len(repos)} 个仓库")
+                
+                # 检查每个仓库的最新提交或更新
+                for repo in repos:
+                    try:
+                        repo_name = repo.get('full_name', '')
+                        repo_url = repo.get('html_url', '')
+                        repo_description = repo.get('description', '') or ''
+                        
+                        # 检查仓库是否真的包含漏洞相关内容
+                        if any(kw.lower() in (repo_name + ' ' + repo_description).lower() 
+                               for kw in ['poc', 'exploit', 'cve', 'vulnerability', 'exp', '漏洞', '利用']):
+                            
+                            # 获取仓库的最新更新信息
+                            pushed_at = repo.get('pushed_at', '')
+                            if pushed_at:
+                                pushed_dt = datetime.strptime(pushed_at, '%Y-%m-%dT%H:%M:%SZ')
+                                pushed_date = pushed_dt.strftime('%Y-%m-%d')
+                                
+                                # 只处理当天的更新
+                                if pushed_date == datetime.now().strftime('%Y-%m-%d'):
+                                    cve = CVEInfo()
+                                    cve.id = f"github-repo-{repo_name}-{pushed_date}"
+                                    cve.title = f"[GitHub仓库更新] {repo_name}: {repo_description[:100] if repo_description else '无描述'}"
+                                    cve.time = pushed_date
+                                    cve.src = self.NAME_CH()
+                                    cve.source = self.NAME_CH()
+                                    cve.detail_url = repo_url
+                                    cve.url = repo_url
+                                    
+                                    # 提取CVE编号
+                                    cve_ids = self._extract_cve_ids(repo_name + ' ' + repo_description)
+                                    cve.cve = ', '.join(cve_ids) if cve_ids else ''
+                                    cve.info = f"仓库: {repo_name}\n描述: {repo_description}\n关键词: {keyword}\n更新日期: {pushed_date}"
+                                    
+                                    # 检查是否已存在
+                                    if not is_vulnerability_exists(cve.id):
+                                        repo_cves.append(cve)
+                                        log_info(f"发现新GitHub仓库更新: {repo_name}")
+                    
+                    except Exception as e:
+                        log_error(f"[{self.NAME_CH()}] 处理仓库失败: {str(e)}")
+                        continue
+                
+                # 避免请求过快
+                time.sleep(0.5)
+                
+            except Exception as e:
+                log_error(f"[{self.NAME_CH()}] 搜索仓库关键词 '{keyword}' 失败: {str(e)}")
+                continue
+        
+        return repo_cves
+
+    def _search_code_leaks(self, headers, updated_since):
+        """
+        搜索GitHub代码中的敏感信息泄露（password, username, key等）
+        :param headers: 请求头
+        :param updated_since: 更新时间限制
+        :return: 漏洞信息列表
+        """
+        code_leak_cves = []
+        
+        # 搜索包含敏感关键词的代码，限制关键词数量避免过多请求
+        for keyword in self.code_leak_keywords[:8]:  # 只搜索前8个关键词
+            try:
+                # 搜索代码：包含关键词，最近更新的代码
+                # 使用路径过滤，排除一些常见的测试文件
+                query = f'{keyword} pushed:>={updated_since} -path:test -path:spec -path:example -path:sample'
+                
+                response = requests.get(
+                    self.code_api_url,
+                    params={
+                        'q': query,
+                        'sort': 'indexed',
+                        'order': 'desc',
+                        'per_page': 10  # 每个关键词最多10条结果
+                    },
+                    headers=headers,
+                    timeout=self.timeout
+                )
+                
+                if response.status_code == 403:
+                    log_warn(f"[{self.NAME_CH()}] GitHub API速率限制，跳过代码泄露关键词: {keyword}")
+                    continue
+                
+                if response.status_code == 422:
+                    # 422通常表示搜索查询无效，跳过
+                    log_warn(f"[{self.NAME_CH()}] 代码搜索查询无效，跳过关键词: {keyword}")
+                    continue
+                
+                response.raise_for_status()
+                data = response.json()
+                items = data.get('items', [])
+                
+                log_info(f"[{self.NAME_CH()}] 代码泄露关键词 '{keyword}' 找到 {len(items)} 条结果")
+                
+                # 处理每个代码结果
+                for item in items:
+                    try:
+                        repo_name = item.get('repository', {}).get('full_name', '') if isinstance(item.get('repository'), dict) else ''
+                        file_path = item.get('path', '')
+                        file_url = item.get('html_url', '')
+                        code_snippet = item.get('text_matches', [{}])[0].get('fragment', '')[:200] if item.get('text_matches') else ''
+                        
+                        if not repo_name or not file_url:
+                            continue
+                        
+                        # 检查是否是最近的更新（只处理当天的）
+                        # 由于代码搜索API不直接返回更新时间，我们基于搜索结果时间
+                        current_date = datetime.now().strftime('%Y-%m-%d')
+                        
+                        # 生成唯一ID
+                        code_id = hashlib.md5(f"{repo_name}-{file_path}-{keyword}-{current_date}".encode('utf-8')).hexdigest()
+                        
+                        # 检查是否已存在
+                        if is_vulnerability_exists(f"code-leak-{code_id}"):
+                            continue
+                        
+                        # 创建CVEInfo对象
+                        cve = CVEInfo()
+                        cve.id = f"code-leak-{code_id}"
+                        cve.title = f"[代码泄露] {repo_name}/{file_path} (关键词: {keyword})"
+                        cve.time = current_date
+                        cve.src = self.NAME_CH()
+                        cve.source = self.NAME_CH()
+                        cve.detail_url = file_url
+                        cve.url = file_url
+                        
+                        # 提取CVE编号（如果有）
+                        cve_ids = self._extract_cve_ids(repo_name + ' ' + file_path + ' ' + code_snippet)
+                        cve.cve = ', '.join(cve_ids) if cve_ids else ''
+                        
+                        cve.info = f"仓库: {repo_name}\n文件路径: {file_path}\n关键词: {keyword}\n代码片段: {code_snippet}"
+                        
+                        code_leak_cves.append(cve)
+                        log_info(f"发现代码泄露: {repo_name}/{file_path} (关键词: {keyword})")
+                    
+                    except Exception as e:
+                        log_error(f"[{self.NAME_CH()}] 处理代码泄露结果失败: {str(e)}")
+                        continue
+                
+                # 避免请求过快
+                time.sleep(0.5)
+                
+            except Exception as e:
+                log_error(f"[{self.NAME_CH()}] 搜索代码泄露关键词 '{keyword}' 失败: {str(e)}")
+                continue
+        
+        return code_leak_cves
+
 # 读取配置文件
 
 def load_config():
@@ -1295,7 +1745,8 @@ def load_datasource_config():
             'microsoft': 1,
             'okcve': 1,
             'qianxin': 1,
-            'threatbook': 1
+            'threatbook': 1,
+            'github_issues': 1
         }
         
         for item in datasource_config:
@@ -1311,6 +1762,7 @@ def load_datasource_config():
         datasource_dict['okcve'] = int(os.environ.get('DATASOURCE_OKCVE', datasource_dict.get('okcve', 1)))
         datasource_dict['qianxin'] = int(os.environ.get('DATASOURCE_QIANXIN', datasource_dict.get('qianxin', 1)))
         datasource_dict['threatbook'] = int(os.environ.get('DATASOURCE_THREATBOOK', datasource_dict.get('threatbook', 1)))
+        datasource_dict['github_issues'] = int(os.environ.get('DATASOURCE_GITHUB_ISSUES', datasource_dict.get('github_issues', 1)))
         
         return datasource_dict
     except Exception as e:
@@ -1324,7 +1776,8 @@ def load_datasource_config():
             'microsoft': 1,
             'okcve': 1,
             'qianxin': 1,
-            'threatbook': 1
+            'threatbook': 1,
+            'github_issues': 1
         }
 
 # 检查是否是夜间时间
@@ -2558,6 +3011,7 @@ if __name__ == '__main__':
         okcve_crawler = OKCVECrawler()
         qianxin_crawler = QianxinCrawler()
         threatbook_crawler = ThreatBookCrawler()
+        github_issues_crawler = GitHubIssuesCrawler()
         
         # 记录程序启动时间，用于控制最大运行时长
         program_start_time = time.time()
@@ -2693,6 +3147,21 @@ if __name__ == '__main__':
                         log_error(f"从微步获取漏洞失败: {e}")
                 else:
                     log_info("微步数据源已禁用，跳过")
+                
+                # 在请求之间添加短暂休眠，防止请求过于频繁
+                time.sleep(2)
+                
+                # GitHub Issues
+                if datasource_config.get('github_issues', 1):
+                    try:
+                        github_issues_cves = github_issues_crawler.get_cves()
+                        if github_issues_cves:
+                            all_cves.extend(github_issues_cves)
+                            log_info(f"从GitHub Issues获取到 {len(github_issues_cves)} 条新漏洞")
+                    except Exception as e:
+                        log_error(f"从GitHub Issues获取漏洞失败: {e}")
+                else:
+                    log_info("GitHub Issues数据源已禁用，跳过")
                 
                 log_info(f"本次总共获取到 {len(all_cves)} 条新漏洞信息")
                 

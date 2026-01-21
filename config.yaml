@@ -14,19 +14,20 @@ all_config:
    - group_id: 123
    - app_name: tgbot
  discard:
-   - enable: 1
-   - webhook: https://discord.com/api/webhooks/
-   - app_name: discard
-   - send_normal_msg: ON
-   - send_daily_report: ON
+  - enable: 1
+  - webhook: https://discord.com/api/webhooks/
+  - app_name: discard
+  - send_normal_msg: ON
+  - send_daily_report: ON
  datasources:
-   - oscs1024: 1
-   - antiycloud: 1
-   - tenable: 1
-   - microsoft: 1
-   - okcve: 1
-   - qianxin: 1
-   - threatbook: 1
+  - oscs1024: 1
+  - antiycloud: 1
+  - tenable: 1
+  - microsoft: 1
+  - okcve: 1
+  - qianxin: 1
+  - threatbook: 1
+  - github_issues: 1  # GitHub Issues监控，搜索包含漏洞关键词的issues
  translate:
    - enable: 0
    - provider: google
@@ -40,4 +41,4 @@ all_config:
    - check_interval: 7200  # 检查间隔，单位：秒，默认2小时
    - max_run_time: 3540  # 最大运行时间，单位：秒，默认59分钟
    - exception_retry_interval: 60  # 异常重试间隔，单位：秒，默认1分钟
-   - github_token: ""  # GitHub API令牌，用于解决速率限制问题
+   - github_token: ""  # GitHub API令牌，用于解决速率限制问题。建议通过环境变量 GITHUB_TOKEN 配置（在 GitHub Secrets 中设置），不要直接填写在配置文件中
