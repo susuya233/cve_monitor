@@ -1177,14 +1177,9 @@ class GitHubIssuesCrawler(BaseCrawler):
             'exp',  # exploit
             'SQL injection',  # SQL注入
             'sqli',  # SQL注入缩写
-            'RCE',  # remote code execution
-            # 中文关键词
-            '漏洞',  # vulnerability
-            '注入',  # injection
-            '利用',  # exploit
+            'RCE',  # remote code execution# injection
             '代码执行',  # code execution
-            'SQL注入',  # SQL injection
-            '远程执行',  # remote execution
+            'SQL注入',  # SQL injection  # remote execution
             'POC',  # 中文环境下的POC
             'EXP',  # 中文环境下的EXP
         ]
@@ -1212,12 +1207,7 @@ class GitHubIssuesCrawler(BaseCrawler):
             'privateKey',
             'AWS_SECRET',
             'AWS_ACCESS_KEY',
-            'token',
-            'credential',
-            '密码',
-            '密钥',
-            '令牌',
-            '凭证'
+            '密码'
         ]
         # GitHub token 将在 get_cves 中获取
         self.github_token = None
@@ -1865,18 +1855,8 @@ def insert_into_sqlite3_without_check(cve_list):
     insert_count = 0
     error_count = 0
     
-    # 获取配置信息用于推送
-    try:
-        config = load_config()
-        can_push = bool(config)
-        if can_push:
-            app_name = config[0]
-            log_info(f"获取到推送配置，使用 {app_name} 服务")
-        else:
-            log_warn("未获取到有效的推送配置，将只进行数据库插入，不推送消息")
-    except Exception as e:
-        log_error(f"加载推送配置失败: {e}")
-        can_push = False
+    # 改为仅入库，不在此处逐条推送（推送放到日报/周报汇总）
+    can_push = False
     
     # 加载翻译配置
     translate_config = load_translate_config()
@@ -1912,66 +1892,6 @@ def insert_into_sqlite3_without_check(cve_list):
                 insert_count += 1
                 log_info(f"插入新漏洞成功：{translated_title}")
                 
-                # 立即推送该条漏洞信息
-                if can_push:
-                    # 构造推送信息
-                    push_text = '发现新漏洞！'
-                    
-                    # 构造通用链接
-                    cve_url = getattr(cve, 'detail_url', '')  # 使用 getattr 避免除错
-                    if not cve_url and hasattr(cve, 'cve') and cve.cve:
-                        cve_url = f"https://cve.mitre.org/cgi-bin/cvename.cgi?name={cve.cve}"
-                    
-                    # 获取漏洞编号
-                    if hasattr(cve, 'cve') and cve.cve:
-                        vuln_id = cve.cve
-                    elif hasattr(cve, 'ids') and cve.ids:
-                        vuln_id = ', '.join(cve.ids)
-                    else:
-                        vuln_id = cve.id
-                    
-                    # 格式化来源，确保显示正确
-                    formatted_source = source
-                    if source == 'Tenable':
-                        formatted_source = 'Tenable (Nessus)'
-                    elif source == '微步':
-                        formatted_source = '微步（ThreatBook）'
-                    
-                    # 构造推送消息，格式与示例完全一致
-                    push_msg = f"漏洞标题: {translated_title}\n漏洞编号: {vuln_id}\n来源: {formatted_source}\n时间: {time}"
-                    if cve_url:
-                        push_msg += f"\n详情链接: {cve_url}"
-                    # 如果有翻译后的描述信息，也添加到推送内容中
-                    if hasattr(cve, 'info') and cve.info:
-                        push_msg += f"\n漏洞描述: {cve.info}"
-                    
-                    # 根据配置的推送方式发送消息
-                    try:
-                        push_result = False
-                        if app_name == "dingding":
-                            push_result = dingding(push_text, push_msg, config[1], config[2])
-                            log_info(f"钉钉推送结果: {'成功' if push_result else '失败'} - {translated_title}")
-                        elif app_name == "feishu":
-                            push_result = feishu(push_text, push_msg, config[1])
-                            log_info(f"飞书推送结果: {'成功' if push_result else '失败'} - {translated_title}")
-                        elif app_name == "tgbot":
-                            push_result = tgbot(push_text, push_msg, config[1], config[2])
-                            log_info(f"Telegram推送结果: {'成功' if push_result else '失败'} - {translated_title}")
-                        elif app_name == "discard":
-                            # 检查是否启用每日推送
-                            send_normal_msg = config[2] if len(config) > 2 else 'ON'
-                            # 确保send_normal_msg是字符串类型
-                            send_normal_msg_str = str(send_normal_msg).upper()
-                            if send_normal_msg_str == 'ON':
-                                push_result = discard(push_text, push_msg, config[1])
-                                log_info(f"Discard推送结果: {'成功' if push_result else '失败'} - {translated_title}")
-                            else:
-                                log_info(f"Discard每日推送已禁用，跳过推送: {translated_title}")
-                                push_result = True
-                        else:
-                            log_warn(f"未知的推送方式: {app_name}")
-                    except Exception as e:
-                        log_error(f"推送漏洞信息失败：{e}")
                 
         except sqlite3.IntegrityError as e:
             # 如果遇到唯一性约束错误，记录日志但不中断程序
@@ -2288,6 +2208,55 @@ def send_alerts(cve_list):
         log_error(f"发送漏洞推送时出错：{e}")
         log_error(traceback.format_exc())
 
+# 获取 GitHub Pages 基础地址
+def get_pages_base_url():
+    # 优先使用环境变量
+    base = os.environ.get('PAGES_BASE_URL')
+    if base:
+        return base.rstrip('/')
+    # 尝试从 CNAME 读取
+    try:
+        cname_path = os.path.join(PRJ_DIR, 'CNAME')
+        if os.path.exists(cname_path):
+            with open(cname_path, 'r', encoding='utf-8') as f:
+                domain = f.read().strip()
+                if domain:
+                    if domain.startswith('http'):
+                        return domain.rstrip('/')
+                    return f"https://{domain}".rstrip('/')
+    except Exception:
+        pass
+    # 默认回退
+    return "https://susuya233.github.io/cve_monitor"
+
+# 推送日报/周报汇总
+def push_summary(title, url, count, is_weekly=False):
+    try:
+        config = load_config()
+        if not config:
+            log_warn("未获取到有效的推送配置，汇总推送跳过")
+            return
+        app_name = config[0]
+        msg = f"{title}\n数量：{count}\n链接：{url}"
+        text = "日报汇总" if not is_weekly else "周报汇总"
+
+        if app_name == "dingding":
+            dingding(text, msg, config[1], config[2])
+        elif app_name == "feishu":
+            feishu(text, msg, config[1])
+        elif app_name == "tgbot":
+            tgbot(text, msg, config[1], config[2])
+        elif app_name == "discard":
+            # 对周报/日报，使用 send_daily_report 控制开关
+            send_daily_report = config[3] if len(config) > 3 else 'ON'
+            if str(send_daily_report).upper() == 'ON':
+                discard(text, msg, config[1])
+            else:
+                log_info("Discard日报推送已禁用，跳过汇总推送")
+    except Exception as e:
+        log_error(f"汇总推送失败: {e}")
+        log_error(traceback.format_exc())
+
 # 将漏洞信息插入到数据库，并立即推送新发现的漏洞
 def insert_into_sqlite3(cve_list):
     """
@@ -2408,6 +2377,11 @@ def generate_daily_report():
         
         # 更新index.html
         update_index_html()
+
+        # 汇总推送（仅在日报生成时一次性推送）
+        base_url = get_pages_base_url()
+        daily_url = f"{base_url}/archive/{current_date}/Daily_{current_date}.html"
+        push_summary(f"【日报】{current_date}", daily_url, len(vulnerabilities), is_weekly=False)
         
     except Exception as e:
         log_error(f"生成威胁情报日报失败：{str(e)}")
