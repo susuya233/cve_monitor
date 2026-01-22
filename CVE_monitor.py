@@ -2930,6 +2930,10 @@ def update_index_html():
                             'count': count
                         })
     
+    # 按日期倒序排序（最新的在最上面）
+    weekly_reports.sort(key=lambda x: x['date'], reverse=True)
+    daily_reports.sort(key=lambda x: x['date'], reverse=True)
+    
     # 渲染index.html
     from jinja2 import Template
     template = Template(index_template)
