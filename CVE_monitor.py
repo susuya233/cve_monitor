@@ -1815,17 +1815,27 @@ def create_database():
                     detail_url TEXT,
                     cve_ids TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
-        # 如果表已存在但没有created_at字段，添加该字段
-        try:
-            cur.execute("ALTER TABLE vulnerabilities ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-            conn.commit()
-        except sqlite3.OperationalError:
-            # 字段已存在，忽略错误
-            pass
         conn.commit()
+        
+        # 检查表结构，确认created_at字段是否存在
+        cur.execute("PRAGMA table_info(vulnerabilities)")
+        columns = [row[1] for row in cur.fetchall()]
+        
+        # 如果表已存在但没有created_at字段，添加该字段
+        if 'created_at' not in columns:
+            try:
+                cur.execute("ALTER TABLE vulnerabilities ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+                conn.commit()
+                log_info("已为 vulnerabilities 表添加 created_at 字段")
+            except sqlite3.OperationalError as e:
+                log_error(f"添加 created_at 字段失败：{e}")
+        else:
+            log_info("vulnerabilities 表已包含 created_at 字段")
+            
     except Exception as e:
-        print("创建监控表失败！报错：{}".format(e))
-    conn.close()
+        log_error(f"创建监控表失败！报错：{e}")
+    finally:
+        conn.close()
 
 # 检查漏洞是否已存在
 def is_vulnerability_exists(cve_id):
@@ -2304,15 +2314,34 @@ def generate_daily_report():
     # 从数据库中获取前24小时的所有漏洞（使用created_at字段）
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
+    
+    # 检查表结构，确认created_at字段是否存在
+    cursor.execute("PRAGMA table_info(vulnerabilities)")
+    columns = [row[1] for row in cursor.fetchall()]
+    has_created_at = 'created_at' in columns
+    
     # 查询前24小时的数据，按入库时间倒序展示（最新入库的在最上面）
     start_time_str = start_time.strftime('%Y-%m-%d %H:%M:%S')
     end_time_str = end_time.strftime('%Y-%m-%d %H:%M:%S')
-    cursor.execute("""
-        SELECT id, title, time, source, detail_url, cve_ids 
-        FROM vulnerabilities 
-        WHERE created_at >= ? AND created_at < ?
-        ORDER BY created_at DESC
-    """, (start_time_str, end_time_str))
+    
+    if has_created_at:
+        # 使用created_at字段进行查询
+        cursor.execute("""
+            SELECT id, title, time, source, detail_url, cve_ids 
+            FROM vulnerabilities 
+            WHERE created_at >= ? AND created_at < ?
+            ORDER BY created_at DESC
+        """, (start_time_str, end_time_str))
+    else:
+        # 如果created_at字段不存在，使用time字段作为备选（虽然不够准确，但至少可以工作）
+        log_warn("created_at 字段不存在，使用 time 字段进行查询（可能不够准确）")
+        cursor.execute("""
+            SELECT id, title, time, source, detail_url, cve_ids 
+            FROM vulnerabilities 
+            WHERE time >= ? AND time < ?
+            ORDER BY time DESC
+        """, (start_time_str, end_time_str))
+    
     vulnerabilities = cursor.fetchall()
     conn.close()
     
