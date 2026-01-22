@@ -2320,6 +2320,17 @@ def generate_daily_report():
     columns = [row[1] for row in cursor.fetchall()]
     has_created_at = 'created_at' in columns
     
+    # 如果字段不存在，尝试添加
+    if not has_created_at:
+        try:
+            log_info("检测到 created_at 字段不存在，尝试添加...")
+            cursor.execute("ALTER TABLE vulnerabilities ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+            conn.commit()
+            has_created_at = True
+            log_info("成功添加 created_at 字段")
+        except sqlite3.OperationalError as e:
+            log_error(f"添加 created_at 字段失败：{e}")
+    
     # 查询前24小时的数据，按入库时间倒序展示（最新入库的在最上面）
     start_time_str = start_time.strftime('%Y-%m-%d %H:%M:%S')
     end_time_str = end_time.strftime('%Y-%m-%d %H:%M:%S')
@@ -3216,9 +3227,10 @@ if __name__ == '__main__':
                                     detail_url = getattr(cve, 'detail_url', '')
                                     cve_ids = cve.cve if hasattr(cve, 'cve') and cve.cve else ''
                                     
-                                    # 插入数据库
-                                    cur.execute("INSERT INTO vulnerabilities (id, title, time, source, detail_url, cve_ids) VALUES (?, ?, ?, ?, ?, ?)",
-                                               (id, title, time_str, source, detail_url, cve_ids))
+                                    # 插入数据库（包含创建时间戳）
+                                    created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                                    cur.execute("INSERT INTO vulnerabilities (id, title, time, source, detail_url, cve_ids, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                                               (id, title, time_str, source, detail_url, cve_ids, created_at))
                                     conn.commit()
                                     insert_count += 1
                                     log_info(f"插入新漏洞成功：{title}")
