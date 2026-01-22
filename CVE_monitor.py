@@ -1824,9 +1824,14 @@ def create_database():
         # 如果表已存在但没有created_at字段，添加该字段
         if 'created_at' not in columns:
             try:
-                cur.execute("ALTER TABLE vulnerabilities ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+                # SQLite 不支持在 ALTER TABLE 时使用 CURRENT_TIMESTAMP，先添加字段
+                cur.execute("ALTER TABLE vulnerabilities ADD COLUMN created_at TIMESTAMP")
                 conn.commit()
-                log_info("已为 vulnerabilities 表添加 created_at 字段")
+                # 为现有记录设置默认值（使用当前时间）
+                default_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                cur.execute("UPDATE vulnerabilities SET created_at = ? WHERE created_at IS NULL", (default_time,))
+                conn.commit()
+                log_info("已为 vulnerabilities 表添加 created_at 字段并更新现有记录")
             except sqlite3.OperationalError as e:
                 log_error(f"添加 created_at 字段失败：{e}")
         else:
@@ -2324,10 +2329,15 @@ def generate_daily_report():
     if not has_created_at:
         try:
             log_info("检测到 created_at 字段不存在，尝试添加...")
-            cursor.execute("ALTER TABLE vulnerabilities ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+            # SQLite 不支持在 ALTER TABLE 时使用 CURRENT_TIMESTAMP，先添加字段
+            cursor.execute("ALTER TABLE vulnerabilities ADD COLUMN created_at TIMESTAMP")
+            conn.commit()
+            # 为现有记录设置默认值（使用当前时间）
+            default_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            cursor.execute("UPDATE vulnerabilities SET created_at = ? WHERE created_at IS NULL", (default_time,))
             conn.commit()
             has_created_at = True
-            log_info("成功添加 created_at 字段")
+            log_info("成功添加 created_at 字段并更新现有记录")
         except sqlite3.OperationalError as e:
             log_error(f"添加 created_at 字段失败：{e}")
     
