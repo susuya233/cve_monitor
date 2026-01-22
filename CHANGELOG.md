@@ -1,6 +1,18 @@
 # 📋 更新日志
 
 
+## 🎉 v2.3.6 (2026-01-22)
+
+### 🚀 自动更新
+
+- 自动版本升级: 2.3.5 -> 2.3.6
+- 提交信息: 修复 SQLite ALTER TABLE 不支持 CURRENT_TIMESTAMP 的问题
+
+- 修复 create_database() 函数，先添加字段再更新现有记录
+- 修复 generate_daily_report() 函数中的字段添加逻辑
+- 解决 SQLite 不支持在 ALTER TABLE 时使用非常量默认值的问题
+
+
 ## 🎉 v2.3.5 (2026-01-21)
 
 ### 🚀 自动更新
