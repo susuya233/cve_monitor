@@ -1,0 +1,2259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>威胁情报 - 2026-01-26</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* 现代化配色方案 */
+        :root {
+            --primary-color: #4285f4;
+            --secondary-color: #34a853;
+            --accent-color: #fbbc05;
+            --danger-color: #ea4335;
+            --text-primary: #202124;
+            --text-secondary: #5f6368;
+            --text-muted: #9aa0a6;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #f1f3f4;
+            --border-color: #e0e0e0;
+            --shadow-sm: 0 1px 2px 0 rgba(60, 64, 67, 0.3);
+            --shadow-md: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+            --border-radius: 8px;
+            --transition: all 0.2s ease-in-out;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--bg-secondary);
+            font-size: 16px;
+        }
+        
+        /* 标题样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #3367d6);
+            color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-weight: 600;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--bg-tertiary);
+        }
+        
+        h3 {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        /* 概览卡片 */
+        .summary {
+            background-color: var(--bg-primary);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .summary-item {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .summary-item h2 {
+            margin: 0;
+            padding: 0;
+            border: none;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .summary-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+        
+        /* 漏洞卡片 */
+        .vuln-item {
+            background-color: var(--bg-primary);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .vuln-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        
+        /* 漏洞标题 */
+        .vuln-title {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.3rem;
+            transition: var(--transition);
+            text-align: center;
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        .vuln-title:hover {
+            text-decoration: underline;
+            color: #3367d6;
+        }
+        
+        /* 漏洞信息 */
+        .vuln-info {
+            margin-top: 15px;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .vuln-meta {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .vuln-meta strong {
+            color: var(--text-primary);
+            font-weight: 500;
+            min-width: 80px;
+            flex-shrink: 0;
+        }
+        
+        .vuln-meta span {
+            word-break: break-word;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        /* 标签样式 */
+        .vuln-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-top: 5px;
+        }
+        
+        .tag-critical {
+            background-color: #ffebee;
+            color: var(--danger-color);
+        }
+        
+        .tag-high {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .tag-medium {
+            background-color: #fff8e1;
+            color: var(--accent-color);
+        }
+        
+        .tag-low {
+            background-color: #e8f5e8;
+            color: var(--secondary-color);
+        }
+        
+        /* 链接样式 */
+        .vuln-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            word-break: break-all;
+        }
+        
+        .vuln-link:hover {
+            text-decoration: underline;
+            color: #3367d6;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .vuln-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .summary-item {
+                width: 100%;
+            }
+        }
+        
+        /* 页脚样式 */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        /* 加载动画 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--bg-tertiary);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+        
+        .empty-state h3 {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        /* 切换按钮组 */
+        .view-switcher {
+            background-color: var(--bg-primary);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .view-switcher h3 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .view-button {
+            padding: 10px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .view-button:hover {
+            border-color: var(--primary-color);
+            background: var(--bg-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .view-button.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .view-button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .quick-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .quick-filter-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-right: 5px;
+        }
+
+        /* 工具栏（搜索/筛选/分页） */
+        .toolbar {
+            background-color: var(--bg-primary);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .toolbar-left, .toolbar-right {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .toolbar input, .toolbar select {
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            min-width: 240px;
+            outline: none;
+        }
+
+        .toolbar button {
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .toolbar button:hover {
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-1px);
+        }
+
+        .pager {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .pager .count {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* 折叠详情 */
+        details.vuln-details {
+            margin-top: 10px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        details.vuln-details > summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-primary);
+            list-style: none;
+        }
+
+        details.vuln-details > summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .vuln-summary-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: var(--text-secondary);
+            justify-content: center;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+        }
+
+        /* 切换按钮组 */
+        .view-switcher {
+            background-color: var(--bg-primary);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .view-switcher-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .view-switcher-label {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .switch-button {
+            padding: 8px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .switch-button:hover {
+            border-color: var(--primary-color);
+            background: var(--bg-primary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .switch-button.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔒 威胁情报</h1>
+        <div style="font-size: 1.1rem; margin: 10px 0;">2026-01-26</div>
+        <div style="font-size: 0.9rem; opacity: 0.9;">最后更新时间：2026-01-27 11:07:46</div>
+    </header>
+    
+    <main>
+        <div class="summary">
+            <div class="summary-item">
+                <h2 style="text-align: center; font-weight: bold; margin-bottom: 15px;">威胁情报前瞻</h2>
+                <div style="margin-top: 10px; color: var(--text-secondary); line-height: 1.8;">
+                    <p>📊 <strong>今日漏洞总数：</strong>50</p>
+                    <p>📈 <strong>与昨日对比：</strong>增加了 10 个漏洞</p>
+                    
+                    
+                    <p>🔍 <strong>漏洞来源分布：</strong>
+                        
+                        
+                            
+                                
+                                    OSCS1024漏洞库(9个, 18.0%), 
+                                
+                            
+                                
+                                    Tenable (Nessus)(10个, 20.0%), 
+                                
+                            
+                                
+                                    微步(2个, 4.0%), 
+                                
+                            
+                                
+                                    GitHub Issues(29个, 58.0%), 
+                                
+                            
+                        
+                    </p>
+                    
+                    
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 切换按钮组 -->
+        <div class="view-switcher">
+            <div class="view-switcher-row">
+                <span class="view-switcher-label">📊 快速切换数据源：</span>
+                <button class="switch-button active" data-switch="all" onclick="switchView('all')">全部</button>
+                
+                    
+                        
+                        <button class="switch-button" data-switch="OSCS1024漏洞库" onclick="switchView('OSCS1024漏洞库')">
+                            OSCS1024漏洞库 (9)
+                        </button>
+                        
+                    
+                        
+                        <button class="switch-button" data-switch="Tenable (Nessus)" onclick="switchView('Tenable (Nessus)')">
+                            Tenable (Nessus) (10)
+                        </button>
+                        
+                    
+                        
+                        <button class="switch-button" data-switch="微步" onclick="switchView('微步')">
+                            微步 (2)
+                        </button>
+                        
+                    
+                        
+                        <button class="switch-button" data-switch="GitHub Issues" onclick="switchView('GitHub Issues')">
+                            GitHub Issues (29)
+                        </button>
+                        
+                    
+                
+            </div>
+            <div class="view-switcher-row">
+                <span class="view-switcher-label">🔍 快速筛选类型：</span>
+                <button class="switch-button" data-filter="CVE" onclick="quickFilter('CVE')">CVE编号</button>
+                <button class="switch-button" data-filter="GitHub" onclick="quickFilter('GitHub')">GitHub</button>
+                <button class="switch-button" data-filter="代码泄露" onclick="quickFilter('代码泄露')">代码泄露</button>
+                <button class="switch-button" data-filter="RCE" onclick="quickFilter('RCE')">RCE</button>
+                <button class="switch-button" data-filter="SQL" onclick="quickFilter('SQL')">SQL注入</button>
+                <button class="switch-button" data-filter="POC" onclick="quickFilter('POC')">POC</button>
+                <button class="switch-button" data-filter="EXP" onclick="quickFilter('EXP')">EXP</button>
+            </div>
+        </div>
+        
+        <h2>📋 漏洞详情</h2>
+        <div class="toolbar" id="toolbar">
+            <div class="toolbar-left">
+                <input id="searchInput" type="search" placeholder="搜索标题 / CVE / 关键词（支持中文）…" />
+                <select id="sourceSelect">
+                    <option value="">全部来源</option>
+                </select>
+            </div>
+            <div class="toolbar-right">
+                <button id="collapseAllBtn" type="button">收起详情</button>
+                <button id="expandAllBtn" type="button">展开详情</button>
+                <div class="pager">
+                    <button id="prevBtn" type="button">上一页</button>
+                    <span><span class="count" id="pageInfo">1/1</span> · 显示 <span class="count" id="shownCount">0</span>/<span class="count" id="totalCount">0</span></span>
+                    <button id="nextBtn" type="button">下一页</button>
+                </div>
+            </div>
+        </div>
+        
+            
+            <div class="vuln-item vuln-row" data-source="OSCS1024漏洞库" data-title="CVE-2026-1413漏洞" data-cve="CVE-2026-1413">
+                <h3><a href="https://www.oscs1024.com/hd/MPS-8xhr-7o4i" class="vuln-title" target="_blank">CVE-2026-1413漏洞</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-1413</span>
+                    <span class="pill">🔍 OSCS1024漏洞库</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-1413</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>OSCS1024漏洞库</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.oscs1024.com/hd/MPS-8xhr-7o4i" class="vuln-link" target="_blank">https://www.oscs1024.com/hd/MPS-8xhr-7o4i</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="OSCS1024漏洞库" data-title="CVE-2026-1412 漏洞" data-cve="CVE-2026-1412">
+                <h3><a href="https://www.oscs1024.com/hd/MPS-wrbs-ez6t" class="vuln-title" target="_blank">CVE-2026-1412 漏洞</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-1412</span>
+                    <span class="pill">🔍 OSCS1024漏洞库</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-1412</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>OSCS1024漏洞库</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.oscs1024.com/hd/MPS-wrbs-ez6t" class="vuln-link" target="_blank">https://www.oscs1024.com/hd/MPS-wrbs-ez6t</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="OSCS1024漏洞库" data-title="CVE-2026-1411漏洞" data-cve="CVE-2026-1411">
+                <h3><a href="https://www.oscs1024.com/hd/MPS-s41p-kw6a" class="vuln-title" target="_blank">CVE-2026-1411漏洞</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-1411</span>
+                    <span class="pill">🔍 OSCS1024漏洞库</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-1411</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>OSCS1024漏洞库</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.oscs1024.com/hd/MPS-s41p-kw6a" class="vuln-link" target="_blank">https://www.oscs1024.com/hd/MPS-s41p-kw6a</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="OSCS1024漏洞库" data-title="CVE-2026-1410漏洞" data-cve="CVE-2026-1410">
+                <h3><a href="https://www.oscs1024.com/hd/MPS-2icm-1nwt" class="vuln-title" target="_blank">CVE-2026-1410漏洞</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-1410</span>
+                    <span class="pill">🔍 OSCS1024漏洞库</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-1410</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>OSCS1024漏洞库</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.oscs1024.com/hd/MPS-2icm-1nwt" class="vuln-link" target="_blank">https://www.oscs1024.com/hd/MPS-2icm-1nwt</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="OSCS1024漏洞库" data-title="CVE-2026-1409漏洞" data-cve="CVE-2026-1409">
+                <h3><a href="https://www.oscs1024.com/hd/MPS-mnlp-rti3" class="vuln-title" target="_blank">CVE-2026-1409漏洞</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-1409</span>
+                    <span class="pill">🔍 OSCS1024漏洞库</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-1409</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>OSCS1024漏洞库</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.oscs1024.com/hd/MPS-mnlp-rti3" class="vuln-link" target="_blank">https://www.oscs1024.com/hd/MPS-mnlp-rti3</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="OSCS1024漏洞库" data-title="CVE-2026-1408 漏洞" data-cve="CVE-2026-1408">
+                <h3><a href="https://www.oscs1024.com/hd/MPS-vu9n-8w27" class="vuln-title" target="_blank">CVE-2026-1408 漏洞</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-1408</span>
+                    <span class="pill">🔍 OSCS1024漏洞库</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-1408</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>OSCS1024漏洞库</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.oscs1024.com/hd/MPS-vu9n-8w27" class="vuln-link" target="_blank">https://www.oscs1024.com/hd/MPS-vu9n-8w27</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="OSCS1024漏洞库" data-title="CVE-2026-1407 漏洞" data-cve="CVE-2026-1407">
+                <h3><a href="https://www.oscs1024.com/hd/MPS-yci5-fs8g" class="vuln-title" target="_blank">CVE-2026-1407 漏洞</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-1407</span>
+                    <span class="pill">🔍 OSCS1024漏洞库</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-1407</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>OSCS1024漏洞库</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.oscs1024.com/hd/MPS-yci5-fs8g" class="vuln-link" target="_blank">https://www.oscs1024.com/hd/MPS-yci5-fs8g</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="OSCS1024漏洞库" data-title="CVE-2026-1415 漏洞" data-cve="CVE-2026-1415">
+                <h3><a href="https://www.oscs1024.com/hd/MPS-d4zl-9hjs" class="vuln-title" target="_blank">CVE-2026-1415 漏洞</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-1415</span>
+                    <span class="pill">🔍 OSCS1024漏洞库</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-1415</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>OSCS1024漏洞库</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.oscs1024.com/hd/MPS-d4zl-9hjs" class="vuln-link" target="_blank">https://www.oscs1024.com/hd/MPS-d4zl-9hjs</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="OSCS1024漏洞库" data-title="CVE-2026-1414 漏洞" data-cve="CVE-2026-1414">
+                <h3><a href="https://www.oscs1024.com/hd/MPS-w6tu-bj4m" class="vuln-title" target="_blank">CVE-2026-1414 漏洞</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-1414</span>
+                    <span class="pill">🔍 OSCS1024漏洞库</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-1414</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>OSCS1024漏洞库</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.oscs1024.com/hd/MPS-w6tu-bj4m" class="vuln-link" target="_blank">https://www.oscs1024.com/hd/MPS-w6tu-bj4m</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="Tenable (Nessus)" data-title="In the Linux kernel, the following vulnerability has been resolved: net: octeon_ep_vf: fix free_irq dev_id mismatch in IRQ rollback octep_vf_request_irqs() requests MSI-X queue IRQs with dev_id set to ioq_vector. If request_irq() fails part-way, the rollback loop calls free_irq() with dev_id set to &#39;oct&#39;, which does not match the original dev_id and may leave the irqaction registered. This can keep IRQ handlers alive while ioq_vector is later freed during unwind/teardown, leading to a use-after-free or crash when an interrupt fires. Fix the error path to free IRQs with the same ioq_vector dev_id used during request_irq()." data-cve="CVE-2026-23013">
+                <h3><a href="https://www.tenable.com/cve/CVE-2026-23013" class="vuln-title" target="_blank">In the Linux kernel, the following vulnerability has been resolved: net: octeon_ep_vf: fix free_irq dev_id mismatch in IRQ rollback octep_vf_request_irqs() requests MSI-X queue IRQs with dev_id set to ioq_vector. If request_irq() fails part-way, the rollback loop calls free_irq() with dev_id set to 'oct', which does not match the original dev_id and may leave the irqaction registered. This can keep IRQ handlers alive while ioq_vector is later freed during unwind/teardown, leading to a use-after-free or crash when an interrupt fires. Fix the error path to free IRQs with the same ioq_vector dev_id used during request_irq().</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-23013</span>
+                    <span class="pill">🔍 Tenable (Nessus)</span>
+                    <span class="pill">🕒 2026-01-25 15:15:56</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-23013</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>Tenable (Nessus)</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-25 15:15:56</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.tenable.com/cve/CVE-2026-23013" class="vuln-link" target="_blank">https://www.tenable.com/cve/CVE-2026-23013</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="Tenable (Nessus)" data-title="In the Linux kernel, the following vulnerability has been resolved: mm/damon/core: remove call_control in inactive contexts If damon_call() is executed against a DAMON context that is not running, the function returns error while keeping the damon_call_control object linked to the context&#39;s call_controls list. Let&#39;s suppose the object is deallocated after the damon_call(), and yet another damon_call() is executed against the same context. The function tries to add the new damon_call_control object to the call_controls list, which still has the pointer to the previous damon_call_control object, which is deallocated. As a result, use-after-free happens. This can actually be triggered using the DAMON sysfs interface. It is not easily exploitable since it requires the sysfs write permission and making a definitely weird file writes, though. Please refer to the report for more details about the issue reproduction steps. Fix the issue by making two changes. Firstly, move the final kdamond_call() for cancelling all existing damon_call() requests from terminating DAMON context to be done before the ctx-&gt;kdamond reset. This makes any code that sees NULL ctx-&gt;kdamond can safely assume the context may not access damon_call() requests anymore. Secondly, let damon_call() to cleanup the damon_call_control objects that were added to the already-terminated DAMON context, before returning the error." data-cve="CVE-2026-23012">
+                <h3><a href="https://www.tenable.com/cve/CVE-2026-23012" class="vuln-title" target="_blank">In the Linux kernel, the following vulnerability has been resolved: mm/damon/core: remove call_control in inactive contexts If damon_call() is executed against a DAMON context that is not running, the function returns error while keeping the damon_call_control object linked to the context's call_controls list. Let's suppose the object is deallocated after the damon_call(), and yet another damon_call() is executed against the same context. The function tries to add the new damon_call_control object to the call_controls list, which still has the pointer to the previous damon_call_control object, which is deallocated. As a result, use-after-free happens. This can actually be triggered using the DAMON sysfs interface. It is not easily exploitable since it requires the sysfs write permission and making a definitely weird file writes, though. Please refer to the report for more details about the issue reproduction steps. Fix the issue by making two changes. Firstly, move the final kdamond_call() for cancelling all existing damon_call() requests from terminating DAMON context to be done before the ctx->kdamond reset. This makes any code that sees NULL ctx->kdamond can safely assume the context may not access damon_call() requests anymore. Secondly, let damon_call() to cleanup the damon_call_control objects that were added to the already-terminated DAMON context, before returning the error.</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-23012</span>
+                    <span class="pill">🔍 Tenable (Nessus)</span>
+                    <span class="pill">🕒 2026-01-25 15:15:56</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-23012</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>Tenable (Nessus)</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-25 15:15:56</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.tenable.com/cve/CVE-2026-23012" class="vuln-link" target="_blank">https://www.tenable.com/cve/CVE-2026-23012</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="Tenable (Nessus)" data-title="In the Linux kernel, the following vulnerability has been resolved: ipv4: ip_gre: make ipgre_header() robust Analog to commit db5b4e39c4e6 (&#34;ip6_gre: make ip6gre_header() robust&#34;) Over the years, syzbot found many ways to crash the kernel in ipgre_header() [1]. This involves team or bonding drivers ability to dynamically change their dev-&gt;needed_headroom and/or dev-&gt;hard_header_len In this particular crash mld_newpack() allocated an skb with a too small reserve/headroom, and by the time mld_sendpack() was called, syzbot managed to attach an ipgre device. [1] skbuff: skb_under_panic: text:ffffffff89ea3cb7 len:2030915468 put:2030915372 head:ffff888058b43000 data:ffff887fdfa6e194 tail:0x120 end:0x6c0 dev:team0 kernel BUG at net/core/skbuff.c:213 ! Oops: invalid opcode: 0000 [#1] SMP KASAN PTI CPU: 1 UID: 0 PID: 1322 Comm: kworker/1:9 Not tainted syzkaller #0 PREEMPT(full) Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025 Workqueue: mld mld_ifc_work RIP: 0010:skb_panic+0x157/0x160 net/core/skbuff.c:213 Call Trace: &lt;TASK&gt; skb_under_panic net/core/skbuff.c:223 [inline] skb_push+0xc3/0xe0 net/core/skbuff.c:2641 ipgre_header+0x67/0x290 net/ipv4/ip_gre.c:897 dev_hard_header include/linux/netdevice.h:3436 [inline] neigh_connected_output+0x286/0x460 net/core/neighbour.c:1618 NF_HOOK_COND include/linux/netfilter.h:307 [inline] ip6_output+0x340/0x550 net/ipv6/ip6_output.c:247 NF_HOOK+0x9e/0x380 include/linux/netfilter.h:318 mld_sendpack+0x8d4/0xe60 net/ipv6/mcast.c:1855 mld_send_cr net/ipv6/mcast.c:2154 [inline] mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693 process_one_work kernel/workqueue.c:3257 [inline] process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340 worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421 kthread+0x711/0x8a0 kernel/kthread.c:463 ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158 ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246" data-cve="CVE-2026-23011">
+                <h3><a href="https://www.tenable.com/cve/CVE-2026-23011" class="vuln-title" target="_blank">In the Linux kernel, the following vulnerability has been resolved: ipv4: ip_gre: make ipgre_header() robust Analog to commit db5b4e39c4e6 ("ip6_gre: make ip6gre_header() robust") Over the years, syzbot found many ways to crash the kernel in ipgre_header() [1]. This involves team or bonding drivers ability to dynamically change their dev->needed_headroom and/or dev->hard_header_len In this particular crash mld_newpack() allocated an skb with a too small reserve/headroom, and by the time mld_sendpack() was called, syzbot managed to attach an ipgre device. [1] skbuff: skb_under_panic: text:ffffffff89ea3cb7 len:2030915468 put:2030915372 head:ffff888058b43000 data:ffff887fdfa6e194 tail:0x120 end:0x6c0 dev:team0 kernel BUG at net/core/skbuff.c:213 ! Oops: invalid opcode: 0000 [#1] SMP KASAN PTI CPU: 1 UID: 0 PID: 1322 Comm: kworker/1:9 Not tainted syzkaller #0 PREEMPT(full) Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025 Workqueue: mld mld_ifc_work RIP: 0010:skb_panic+0x157/0x160 net/core/skbuff.c:213 Call Trace: <TASK> skb_under_panic net/core/skbuff.c:223 [inline] skb_push+0xc3/0xe0 net/core/skbuff.c:2641 ipgre_header+0x67/0x290 net/ipv4/ip_gre.c:897 dev_hard_header include/linux/netdevice.h:3436 [inline] neigh_connected_output+0x286/0x460 net/core/neighbour.c:1618 NF_HOOK_COND include/linux/netfilter.h:307 [inline] ip6_output+0x340/0x550 net/ipv6/ip6_output.c:247 NF_HOOK+0x9e/0x380 include/linux/netfilter.h:318 mld_sendpack+0x8d4/0xe60 net/ipv6/mcast.c:1855 mld_send_cr net/ipv6/mcast.c:2154 [inline] mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693 process_one_work kernel/workqueue.c:3257 [inline] process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340 worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421 kthread+0x711/0x8a0 kernel/kthread.c:463 ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158 ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-23011</span>
+                    <span class="pill">🔍 Tenable (Nessus)</span>
+                    <span class="pill">🕒 2026-01-25 15:15:55</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-23011</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>Tenable (Nessus)</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-25 15:15:55</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.tenable.com/cve/CVE-2026-23011" class="vuln-link" target="_blank">https://www.tenable.com/cve/CVE-2026-23011</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="Tenable (Nessus)" data-title="In the Linux kernel, the following vulnerability has been resolved: ipv6: Fix use-after-free in inet6_addr_del(). syzbot reported use-after-free of inet6_ifaddr in inet6_addr_del(). [0] The cited commit accidentally moved ipv6_del_addr() for mngtmpaddr before reading its ifp-&gt;flags for temporary addresses in inet6_addr_del(). Let&#39;s move ipv6_del_addr() down to fix the UAF. [0]: BUG: KASAN: slab-use-after-free in inet6_addr_del.constprop.0+0x67a/0x6b0 net/ipv6/addrconf.c:3117 Read of size 4 at addr ffff88807b89c86c by task syz.3.1618/9593 CPU: 0 UID: 0 PID: 9593 Comm: syz.3.1618 Not tainted syzkaller #0 PREEMPT(full) Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025 Call Trace: &lt;TASK&gt; __dump_stack lib/dump_stack.c:94 [inline] dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120 print_address_description mm/kasan/report.c:378 [inline] print_report+0xcd/0x630 mm/kasan/report.c:482 kasan_report+0xe0/0x110 mm/kasan/report.c:595 inet6_addr_del.constprop.0+0x67a/0x6b0 net/ipv6/addrconf.c:3117 addrconf_del_ifaddr+0x11e/0x190 net/ipv6/addrconf.c:3181 inet6_ioctl+0x1e5/0x2b0 net/ipv6/af_inet6.c:582 sock_do_ioctl+0x118/0x280 net/socket.c:1254 sock_ioctl+0x227/0x6b0 net/socket.c:1375 vfs_ioctl fs/ioctl.c:51 [inline] __do_sys_ioctl fs/ioctl.c:597 [inline] __se_sys_ioctl fs/ioctl.c:583 [inline] __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583 do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline] do_syscall_64+0xcd/0xf80 arch/x86/entry/syscall_64.c:94 entry_SYSCALL_64_after_hwframe+0x77/0x7f RIP: 0033:0x7f164cf8f749 Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 &lt;48&gt; 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48 RSP: 002b:00007f164de64038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010 RAX: ffffffffffffffda RBX: 00007f164d1e5fa0 RCX: 00007f164cf8f749 RDX: 0000200000000000 RSI: 0000000000008936 RDI: 0000000000000003 RBP: 00007f164d013f91 R08: 0000000000000000 R09: 0000000000000000 R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000 R13: 00007f164d1e6038 R14: 00007f164d1e5fa0 R15: 00007ffde15c8288 &lt;/TASK&gt; Allocated by task 9593: kasan_save_stack+0x33/0x60 mm/kasan/common.c:56 kasan_save_track+0x14/0x30 mm/kasan/common.c:77 poison_kmalloc_redzone mm/kasan/common.c:397 [inline] __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:414 kmalloc_noprof include/linux/slab.h:957 [inline] kzalloc_noprof include/linux/slab.h:1094 [inline] ipv6_add_addr+0x4e3/0x2010 net/ipv6/addrconf.c:1120 inet6_addr_add+0x256/0x9b0 net/ipv6/addrconf.c:3050 addrconf_add_ifaddr+0x1fc/0x450 net/ipv6/addrconf.c:3160 inet6_ioctl+0x103/0x2b0 net/ipv6/af_inet6.c:580 sock_do_ioctl+0x118/0x280 net/socket.c:1254 sock_ioctl+0x227/0x6b0 net/socket.c:1375 vfs_ioctl fs/ioctl.c:51 [inline] __do_sys_ioctl fs/ioctl.c:597 [inline] __se_sys_ioctl fs/ioctl.c:583 [inline] __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583 do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline] do_syscall_64+0xcd/0xf80 arch/x86/entry/syscall_64.c:94 entry_SYSCALL_64_after_hwframe+0x77/0x7f Freed by task 6099: kasan_save_stack+0x33/0x60 mm/kasan/common.c:56 kasan_save_track+0x14/0x30 mm/kasan/common.c:77 kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:584 poison_slab_object mm/kasan/common.c:252 [inline] __kasan_slab_free+0x5f/0x80 mm/kasan/common.c:284 kasan_slab_free include/linux/kasan.h:234 [inline] slab_free_hook mm/slub.c:2540 [inline] slab_free_freelist_hook mm/slub.c:2569 [inline] slab_free_bulk mm/slub.c:6696 [inline] kmem_cache_free_bulk mm/slub.c:7383 [inline] kmem_cache_free_bulk+0x2bf/0x680 mm/slub.c:7362 kfree_bulk include/linux/slab.h:830 [inline] kvfree_rcu_bulk+0x1b7/0x1e0 mm/slab_common.c:1523 kvfree_rcu_drain_ready mm/slab_common.c:1728 [inline] kfree_rcu_monitor+0x1d0/0x2f0 mm/slab_common.c:1801 process_one_work+0x9ba/0x1b20 kernel/workqueue.c:3257 process_scheduled_works kernel/workqu ---truncated---" data-cve="CVE-2026-23010">
+                <h3><a href="https://www.tenable.com/cve/CVE-2026-23010" class="vuln-title" target="_blank">In the Linux kernel, the following vulnerability has been resolved: ipv6: Fix use-after-free in inet6_addr_del(). syzbot reported use-after-free of inet6_ifaddr in inet6_addr_del(). [0] The cited commit accidentally moved ipv6_del_addr() for mngtmpaddr before reading its ifp->flags for temporary addresses in inet6_addr_del(). Let's move ipv6_del_addr() down to fix the UAF. [0]: BUG: KASAN: slab-use-after-free in inet6_addr_del.constprop.0+0x67a/0x6b0 net/ipv6/addrconf.c:3117 Read of size 4 at addr ffff88807b89c86c by task syz.3.1618/9593 CPU: 0 UID: 0 PID: 9593 Comm: syz.3.1618 Not tainted syzkaller #0 PREEMPT(full) Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025 Call Trace: <TASK> __dump_stack lib/dump_stack.c:94 [inline] dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120 print_address_description mm/kasan/report.c:378 [inline] print_report+0xcd/0x630 mm/kasan/report.c:482 kasan_report+0xe0/0x110 mm/kasan/report.c:595 inet6_addr_del.constprop.0+0x67a/0x6b0 net/ipv6/addrconf.c:3117 addrconf_del_ifaddr+0x11e/0x190 net/ipv6/addrconf.c:3181 inet6_ioctl+0x1e5/0x2b0 net/ipv6/af_inet6.c:582 sock_do_ioctl+0x118/0x280 net/socket.c:1254 sock_ioctl+0x227/0x6b0 net/socket.c:1375 vfs_ioctl fs/ioctl.c:51 [inline] __do_sys_ioctl fs/ioctl.c:597 [inline] __se_sys_ioctl fs/ioctl.c:583 [inline] __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583 do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline] do_syscall_64+0xcd/0xf80 arch/x86/entry/syscall_64.c:94 entry_SYSCALL_64_after_hwframe+0x77/0x7f RIP: 0033:0x7f164cf8f749 Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48 RSP: 002b:00007f164de64038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010 RAX: ffffffffffffffda RBX: 00007f164d1e5fa0 RCX: 00007f164cf8f749 RDX: 0000200000000000 RSI: 0000000000008936 RDI: 0000000000000003 RBP: 00007f164d013f91 R08: 0000000000000000 R09: 0000000000000000 R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000 R13: 00007f164d1e6038 R14: 00007f164d1e5fa0 R15: 00007ffde15c8288 </TASK> Allocated by task 9593: kasan_save_stack+0x33/0x60 mm/kasan/common.c:56 kasan_save_track+0x14/0x30 mm/kasan/common.c:77 poison_kmalloc_redzone mm/kasan/common.c:397 [inline] __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:414 kmalloc_noprof include/linux/slab.h:957 [inline] kzalloc_noprof include/linux/slab.h:1094 [inline] ipv6_add_addr+0x4e3/0x2010 net/ipv6/addrconf.c:1120 inet6_addr_add+0x256/0x9b0 net/ipv6/addrconf.c:3050 addrconf_add_ifaddr+0x1fc/0x450 net/ipv6/addrconf.c:3160 inet6_ioctl+0x103/0x2b0 net/ipv6/af_inet6.c:580 sock_do_ioctl+0x118/0x280 net/socket.c:1254 sock_ioctl+0x227/0x6b0 net/socket.c:1375 vfs_ioctl fs/ioctl.c:51 [inline] __do_sys_ioctl fs/ioctl.c:597 [inline] __se_sys_ioctl fs/ioctl.c:583 [inline] __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583 do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline] do_syscall_64+0xcd/0xf80 arch/x86/entry/syscall_64.c:94 entry_SYSCALL_64_after_hwframe+0x77/0x7f Freed by task 6099: kasan_save_stack+0x33/0x60 mm/kasan/common.c:56 kasan_save_track+0x14/0x30 mm/kasan/common.c:77 kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:584 poison_slab_object mm/kasan/common.c:252 [inline] __kasan_slab_free+0x5f/0x80 mm/kasan/common.c:284 kasan_slab_free include/linux/kasan.h:234 [inline] slab_free_hook mm/slub.c:2540 [inline] slab_free_freelist_hook mm/slub.c:2569 [inline] slab_free_bulk mm/slub.c:6696 [inline] kmem_cache_free_bulk mm/slub.c:7383 [inline] kmem_cache_free_bulk+0x2bf/0x680 mm/slub.c:7362 kfree_bulk include/linux/slab.h:830 [inline] kvfree_rcu_bulk+0x1b7/0x1e0 mm/slab_common.c:1523 kvfree_rcu_drain_ready mm/slab_common.c:1728 [inline] kfree_rcu_monitor+0x1d0/0x2f0 mm/slab_common.c:1801 process_one_work+0x9ba/0x1b20 kernel/workqueue.c:3257 process_scheduled_works kernel/workqu ---truncated---</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-23010</span>
+                    <span class="pill">🔍 Tenable (Nessus)</span>
+                    <span class="pill">🕒 2026-01-25 15:15:55</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-23010</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>Tenable (Nessus)</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-25 15:15:55</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.tenable.com/cve/CVE-2026-23010" class="vuln-link" target="_blank">https://www.tenable.com/cve/CVE-2026-23010</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="Tenable (Nessus)" data-title="In the Linux kernel, the following vulnerability has been resolved: xhci: sideband: don&#39;t dereference freed ring when removing sideband endpoint xhci_sideband_remove_endpoint() incorrecly assumes that the endpoint is running and has a valid transfer ring. Lianqin reported a crash during suspend/wake-up stress testing, and found the cause to be dereferencing a non-existing transfer ring &#39;ep-&gt;ring&#39; during xhci_sideband_remove_endpoint(). The endpoint and its ring may be in unknown state if this function is called after xHCI was reinitialized in resume (lost power), or if device is being re-enumerated, disconnected or endpoint already dropped. Fix this by both removing unnecessary ring access, and by checking ep-&gt;ring exists before dereferencing it. Also make sure endpoint is running before attempting to stop it. Remove the xhci_initialize_ring_info() call during sideband endpoint removal as is it only initializes ring structure enqueue, dequeue and cycle state values to their starting values without changing actual hardware enqueue, dequeue and cycle state. Leaving them out of sync is worse than leaving it as it is. The endpoint will get freed in after this in most usecases. If the (audio) class driver want&#39;s to reuse the endpoint after offload then it is up to the class driver to ensure endpoint is properly set up." data-cve="CVE-2026-23009">
+                <h3><a href="https://www.tenable.com/cve/CVE-2026-23009" class="vuln-title" target="_blank">In the Linux kernel, the following vulnerability has been resolved: xhci: sideband: don't dereference freed ring when removing sideband endpoint xhci_sideband_remove_endpoint() incorrecly assumes that the endpoint is running and has a valid transfer ring. Lianqin reported a crash during suspend/wake-up stress testing, and found the cause to be dereferencing a non-existing transfer ring 'ep->ring' during xhci_sideband_remove_endpoint(). The endpoint and its ring may be in unknown state if this function is called after xHCI was reinitialized in resume (lost power), or if device is being re-enumerated, disconnected or endpoint already dropped. Fix this by both removing unnecessary ring access, and by checking ep->ring exists before dereferencing it. Also make sure endpoint is running before attempting to stop it. Remove the xhci_initialize_ring_info() call during sideband endpoint removal as is it only initializes ring structure enqueue, dequeue and cycle state values to their starting values without changing actual hardware enqueue, dequeue and cycle state. Leaving them out of sync is worse than leaving it as it is. The endpoint will get freed in after this in most usecases. If the (audio) class driver want's to reuse the endpoint after offload then it is up to the class driver to ensure endpoint is properly set up.</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-23009</span>
+                    <span class="pill">🔍 Tenable (Nessus)</span>
+                    <span class="pill">🕒 2026-01-25 15:15:55</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-23009</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>Tenable (Nessus)</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-25 15:15:55</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.tenable.com/cve/CVE-2026-23009" class="vuln-link" target="_blank">https://www.tenable.com/cve/CVE-2026-23009</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="Tenable (Nessus)" data-title="In the Linux kernel, the following vulnerability has been resolved: drm/vmwgfx: Fix KMS with 3D on HW version 10 HW version 10 does not have GB Surfaces so there is no backing buffer for surface backed FBs. This would result in a nullptr dereference and crash the driver causing a black screen." data-cve="CVE-2026-23008">
+                <h3><a href="https://www.tenable.com/cve/CVE-2026-23008" class="vuln-title" target="_blank">In the Linux kernel, the following vulnerability has been resolved: drm/vmwgfx: Fix KMS with 3D on HW version 10 HW version 10 does not have GB Surfaces so there is no backing buffer for surface backed FBs. This would result in a nullptr dereference and crash the driver causing a black screen.</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-23008</span>
+                    <span class="pill">🔍 Tenable (Nessus)</span>
+                    <span class="pill">🕒 2026-01-25 15:15:55</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-23008</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>Tenable (Nessus)</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-25 15:15:55</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.tenable.com/cve/CVE-2026-23008" class="vuln-link" target="_blank">https://www.tenable.com/cve/CVE-2026-23008</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="Tenable (Nessus)" data-title="In the Linux kernel, the following vulnerability has been resolved: block: zero non-PI portion of auto integrity buffer The auto-generated integrity buffer for writes needs to be fully initialized before being passed to the underlying block device, otherwise the uninitialized memory can be read back by userspace or anyone with physical access to the storage device. If protection information is generated, that portion of the integrity buffer is already initialized. The integrity data is also zeroed if PI generation is disabled via sysfs or the PI tuple size is 0. However, this misses the case where PI is generated and the PI tuple size is nonzero, but the metadata size is larger than the PI tuple. In this case, the remainder (&#34;opaque&#34;) of the metadata is left uninitialized. Generalize the BLK_INTEGRITY_CSUM_NONE check to cover any case when the metadata is larger than just the PI tuple." data-cve="CVE-2026-23007">
+                <h3><a href="https://www.tenable.com/cve/CVE-2026-23007" class="vuln-title" target="_blank">In the Linux kernel, the following vulnerability has been resolved: block: zero non-PI portion of auto integrity buffer The auto-generated integrity buffer for writes needs to be fully initialized before being passed to the underlying block device, otherwise the uninitialized memory can be read back by userspace or anyone with physical access to the storage device. If protection information is generated, that portion of the integrity buffer is already initialized. The integrity data is also zeroed if PI generation is disabled via sysfs or the PI tuple size is 0. However, this misses the case where PI is generated and the PI tuple size is nonzero, but the metadata size is larger than the PI tuple. In this case, the remainder ("opaque") of the metadata is left uninitialized. Generalize the BLK_INTEGRITY_CSUM_NONE check to cover any case when the metadata is larger than just the PI tuple.</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-23007</span>
+                    <span class="pill">🔍 Tenable (Nessus)</span>
+                    <span class="pill">🕒 2026-01-25 15:15:55</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-23007</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>Tenable (Nessus)</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-25 15:15:55</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.tenable.com/cve/CVE-2026-23007" class="vuln-link" target="_blank">https://www.tenable.com/cve/CVE-2026-23007</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="Tenable (Nessus)" data-title="In the Linux kernel, the following vulnerability has been resolved: ASoC: tlv320adcx140: fix null pointer The &#34;snd_soc_component&#34; in &#34;adcx140_priv&#34; was only used once but never set. It was only used for reaching &#34;dev&#34; which is already present in &#34;adcx140_priv&#34;." data-cve="CVE-2026-23006">
+                <h3><a href="https://www.tenable.com/cve/CVE-2026-23006" class="vuln-title" target="_blank">In the Linux kernel, the following vulnerability has been resolved: ASoC: tlv320adcx140: fix null pointer The "snd_soc_component" in "adcx140_priv" was only used once but never set. It was only used for reaching "dev" which is already present in "adcx140_priv".</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-23006</span>
+                    <span class="pill">🔍 Tenable (Nessus)</span>
+                    <span class="pill">🕒 2026-01-25 15:15:55</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-23006</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>Tenable (Nessus)</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-25 15:15:55</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.tenable.com/cve/CVE-2026-23006" class="vuln-link" target="_blank">https://www.tenable.com/cve/CVE-2026-23006</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="Tenable (Nessus)" data-title="In the Linux kernel, the following vulnerability has been resolved: x86/fpu: Clear XSTATE_BV[i] in guest XSAVE state whenever XFD[i]=1 When loading guest XSAVE state via KVM_SET_XSAVE, and when updating XFD in response to a guest WRMSR, clear XFD-disabled features in the saved (or to be restored) XSTATE_BV to ensure KVM doesn&#39;t attempt to load state for features that are disabled via the guest&#39;s XFD. Because the kernel executes XRSTOR with the guest&#39;s XFD, saving XSTATE_BV[i]=1 with XFD[i]=1 will cause XRSTOR to #NM and panic the kernel. E.g. if fpu_update_guest_xfd() sets XFD without clearing XSTATE_BV: ------------[ cut here ]------------ WARNING: arch/x86/kernel/traps.c:1524 at exc_device_not_available+0x101/0x110, CPU#29: amx_test/848 Modules linked in: kvm_intel kvm irqbypass CPU: 29 UID: 1000 PID: 848 Comm: amx_test Not tainted 6.19.0-rc2-ffa07f7fd437-x86_amx_nm_xfd_non_init-vm #171 NONE Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015 RIP: 0010:exc_device_not_available+0x101/0x110 Call Trace: &lt;TASK&gt; asm_exc_device_not_available+0x1a/0x20 RIP: 0010:restore_fpregs_from_fpstate+0x36/0x90 switch_fpu_return+0x4a/0xb0 kvm_arch_vcpu_ioctl_run+0x1245/0x1e40 [kvm] kvm_vcpu_ioctl+0x2c3/0x8f0 [kvm] __x64_sys_ioctl+0x8f/0xd0 do_syscall_64+0x62/0x940 entry_SYSCALL_64_after_hwframe+0x4b/0x53 &lt;/TASK&gt; ---[ end trace 0000000000000000 ]--- This can happen if the guest executes WRMSR(MSR_IA32_XFD) to set XFD[18] = 1, and a host IRQ triggers kernel_fpu_begin() prior to the vmexit handler&#39;s call to fpu_update_guest_xfd(). and if userspace stuffs XSTATE_BV[i]=1 via KVM_SET_XSAVE: ------------[ cut here ]------------ WARNING: arch/x86/kernel/traps.c:1524 at exc_device_not_available+0x101/0x110, CPU#14: amx_test/867 Modules linked in: kvm_intel kvm irqbypass CPU: 14 UID: 1000 PID: 867 Comm: amx_test Not tainted 6.19.0-rc2-2dace9faccd6-x86_amx_nm_xfd_non_init-vm #168 NONE Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015 RIP: 0010:exc_device_not_available+0x101/0x110 Call Trace: &lt;TASK&gt; asm_exc_device_not_available+0x1a/0x20 RIP: 0010:restore_fpregs_from_fpstate+0x36/0x90 fpu_swap_kvm_fpstate+0x6b/0x120 kvm_load_guest_fpu+0x30/0x80 [kvm] kvm_arch_vcpu_ioctl_run+0x85/0x1e40 [kvm] kvm_vcpu_ioctl+0x2c3/0x8f0 [kvm] __x64_sys_ioctl+0x8f/0xd0 do_syscall_64+0x62/0x940 entry_SYSCALL_64_after_hwframe+0x4b/0x53 &lt;/TASK&gt; ---[ end trace 0000000000000000 ]--- The new behavior is consistent with the AMX architecture. Per Intel&#39;s SDM, XSAVE saves XSTATE_BV as &#39;0&#39; for components that are disabled via XFD (and non-compacted XSAVE saves the initial configuration of the state component): If XSAVE, XSAVEC, XSAVEOPT, or XSAVES is saving the state component i, the instruction does not generate #NM when XCR0[i] = IA32_XFD[i] = 1; instead, it operates as if XINUSE[i] = 0 (and the state component was in its initial state): it saves bit i of XSTATE_BV field of the XSAVE header as 0; in addition, XSAVE saves the initial configuration of the state component (the other instructions do not save state component i). Alternatively, KVM could always do XRSTOR with XFD=0, e.g. by using a constant XFD based on the set of enabled features when XSAVEing for a struct fpu_guest. However, having XSTATE_BV[i]=1 for XFD-disabled features can only happen in the above interrupt case, or in similar scenarios involving preemption on preemptible kernels, because fpu_swap_kvm_fpstate()&#39;s call to save_fpregs_to_fpstate() saves the outgoing FPU state with the current XFD; and that is (on all but the first WRMSR to XFD) the guest XFD. Therefore, XFD can only go out of sync with XSTATE_BV in the above interrupt case, or in similar scenarios involving preemption on preemptible kernels, and it we can consider it (de facto) part of KVM ABI that KVM_GET_XSAVE returns XSTATE_BV[i]=0 for XFD-disabled features. [Move clea ---truncated---" data-cve="CVE-2026-23005">
+                <h3><a href="https://www.tenable.com/cve/CVE-2026-23005" class="vuln-title" target="_blank">In the Linux kernel, the following vulnerability has been resolved: x86/fpu: Clear XSTATE_BV[i] in guest XSAVE state whenever XFD[i]=1 When loading guest XSAVE state via KVM_SET_XSAVE, and when updating XFD in response to a guest WRMSR, clear XFD-disabled features in the saved (or to be restored) XSTATE_BV to ensure KVM doesn't attempt to load state for features that are disabled via the guest's XFD. Because the kernel executes XRSTOR with the guest's XFD, saving XSTATE_BV[i]=1 with XFD[i]=1 will cause XRSTOR to #NM and panic the kernel. E.g. if fpu_update_guest_xfd() sets XFD without clearing XSTATE_BV: ------------[ cut here ]------------ WARNING: arch/x86/kernel/traps.c:1524 at exc_device_not_available+0x101/0x110, CPU#29: amx_test/848 Modules linked in: kvm_intel kvm irqbypass CPU: 29 UID: 1000 PID: 848 Comm: amx_test Not tainted 6.19.0-rc2-ffa07f7fd437-x86_amx_nm_xfd_non_init-vm #171 NONE Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015 RIP: 0010:exc_device_not_available+0x101/0x110 Call Trace: <TASK> asm_exc_device_not_available+0x1a/0x20 RIP: 0010:restore_fpregs_from_fpstate+0x36/0x90 switch_fpu_return+0x4a/0xb0 kvm_arch_vcpu_ioctl_run+0x1245/0x1e40 [kvm] kvm_vcpu_ioctl+0x2c3/0x8f0 [kvm] __x64_sys_ioctl+0x8f/0xd0 do_syscall_64+0x62/0x940 entry_SYSCALL_64_after_hwframe+0x4b/0x53 </TASK> ---[ end trace 0000000000000000 ]--- This can happen if the guest executes WRMSR(MSR_IA32_XFD) to set XFD[18] = 1, and a host IRQ triggers kernel_fpu_begin() prior to the vmexit handler's call to fpu_update_guest_xfd(). and if userspace stuffs XSTATE_BV[i]=1 via KVM_SET_XSAVE: ------------[ cut here ]------------ WARNING: arch/x86/kernel/traps.c:1524 at exc_device_not_available+0x101/0x110, CPU#14: amx_test/867 Modules linked in: kvm_intel kvm irqbypass CPU: 14 UID: 1000 PID: 867 Comm: amx_test Not tainted 6.19.0-rc2-2dace9faccd6-x86_amx_nm_xfd_non_init-vm #168 NONE Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015 RIP: 0010:exc_device_not_available+0x101/0x110 Call Trace: <TASK> asm_exc_device_not_available+0x1a/0x20 RIP: 0010:restore_fpregs_from_fpstate+0x36/0x90 fpu_swap_kvm_fpstate+0x6b/0x120 kvm_load_guest_fpu+0x30/0x80 [kvm] kvm_arch_vcpu_ioctl_run+0x85/0x1e40 [kvm] kvm_vcpu_ioctl+0x2c3/0x8f0 [kvm] __x64_sys_ioctl+0x8f/0xd0 do_syscall_64+0x62/0x940 entry_SYSCALL_64_after_hwframe+0x4b/0x53 </TASK> ---[ end trace 0000000000000000 ]--- The new behavior is consistent with the AMX architecture. Per Intel's SDM, XSAVE saves XSTATE_BV as '0' for components that are disabled via XFD (and non-compacted XSAVE saves the initial configuration of the state component): If XSAVE, XSAVEC, XSAVEOPT, or XSAVES is saving the state component i, the instruction does not generate #NM when XCR0[i] = IA32_XFD[i] = 1; instead, it operates as if XINUSE[i] = 0 (and the state component was in its initial state): it saves bit i of XSTATE_BV field of the XSAVE header as 0; in addition, XSAVE saves the initial configuration of the state component (the other instructions do not save state component i). Alternatively, KVM could always do XRSTOR with XFD=0, e.g. by using a constant XFD based on the set of enabled features when XSAVEing for a struct fpu_guest. However, having XSTATE_BV[i]=1 for XFD-disabled features can only happen in the above interrupt case, or in similar scenarios involving preemption on preemptible kernels, because fpu_swap_kvm_fpstate()'s call to save_fpregs_to_fpstate() saves the outgoing FPU state with the current XFD; and that is (on all but the first WRMSR to XFD) the guest XFD. Therefore, XFD can only go out of sync with XSTATE_BV in the above interrupt case, or in similar scenarios involving preemption on preemptible kernels, and it we can consider it (de facto) part of KVM ABI that KVM_GET_XSAVE returns XSTATE_BV[i]=0 for XFD-disabled features. [Move clea ---truncated---</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-23005</span>
+                    <span class="pill">🔍 Tenable (Nessus)</span>
+                    <span class="pill">🕒 2026-01-25 15:15:55</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-23005</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>Tenable (Nessus)</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-25 15:15:55</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.tenable.com/cve/CVE-2026-23005" class="vuln-link" target="_blank">https://www.tenable.com/cve/CVE-2026-23005</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="Tenable (Nessus)" data-title="In the Linux kernel, the following vulnerability has been resolved: dst: fix races in rt6_uncached_list_del() and rt_del_uncached_list() syzbot was able to crash the kernel in rt6_uncached_list_flush_dev() in an interesting way [1] Crash happens in list_del_init()/INIT_LIST_HEAD() while writing list-&gt;prev, while the prior write on list-&gt;next went well. static inline void INIT_LIST_HEAD(struct list_head *list) { WRITE_ONCE(list-&gt;next, list); // This went well WRITE_ONCE(list-&gt;prev, list); // Crash, @list has been freed. } Issue here is that rt6_uncached_list_del() did not attempt to lock ul-&gt;lock, as list_empty(&amp;rt-&gt;dst.rt_uncached) returned true because the WRITE_ONCE(list-&gt;next, list) happened on the other CPU. We might use list_del_init_careful() and list_empty_careful(), or make sure rt6_uncached_list_del() always grabs the spinlock whenever rt-&gt;dst.rt_uncached_list has been set. A similar fix is neeed for IPv4. [1] BUG: KASAN: slab-use-after-free in INIT_LIST_HEAD include/linux/list.h:46 [inline] BUG: KASAN: slab-use-after-free in list_del_init include/linux/list.h:296 [inline] BUG: KASAN: slab-use-after-free in rt6_uncached_list_flush_dev net/ipv6/route.c:191 [inline] BUG: KASAN: slab-use-after-free in rt6_disable_ip+0x633/0x730 net/ipv6/route.c:5020 Write of size 8 at addr ffff8880294cfa78 by task kworker/u8:14/3450 CPU: 0 UID: 0 PID: 3450 Comm: kworker/u8:14 Tainted: G L syzkaller #0 PREEMPT_{RT,(full)} Tainted: [L]=SOFTLOCKUP Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025 Workqueue: netns cleanup_net Call Trace: &lt;TASK&gt; dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120 print_address_description mm/kasan/report.c:378 [inline] print_report+0xca/0x240 mm/kasan/report.c:482 kasan_report+0x118/0x150 mm/kasan/report.c:595 INIT_LIST_HEAD include/linux/list.h:46 [inline] list_del_init include/linux/list.h:296 [inline] rt6_uncached_list_flush_dev net/ipv6/route.c:191 [inline] rt6_disable_ip+0x633/0x730 net/ipv6/route.c:5020 addrconf_ifdown+0x143/0x18a0 net/ipv6/addrconf.c:3853 addrconf_notify+0x1bc/0x1050 net/ipv6/addrconf.c:-1 notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85 call_netdevice_notifiers_extack net/core/dev.c:2268 [inline] call_netdevice_notifiers net/core/dev.c:2282 [inline] netif_close_many+0x29c/0x410 net/core/dev.c:1785 unregister_netdevice_many_notify+0xb50/0x2330 net/core/dev.c:12353 ops_exit_rtnl_list net/core/net_namespace.c:187 [inline] ops_undo_list+0x3dc/0x990 net/core/net_namespace.c:248 cleanup_net+0x4de/0x7b0 net/core/net_namespace.c:696 process_one_work kernel/workqueue.c:3257 [inline] process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340 worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421 kthread+0x711/0x8a0 kernel/kthread.c:463 ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158 ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246 &lt;/TASK&gt; Allocated by task 803: kasan_save_stack mm/kasan/common.c:57 [inline] kasan_save_track+0x3e/0x80 mm/kasan/common.c:78 unpoison_slab_object mm/kasan/common.c:340 [inline] __kasan_slab_alloc+0x6c/0x80 mm/kasan/common.c:366 kasan_slab_alloc include/linux/kasan.h:253 [inline] slab_post_alloc_hook mm/slub.c:4953 [inline] slab_alloc_node mm/slub.c:5263 [inline] kmem_cache_alloc_noprof+0x18d/0x6c0 mm/slub.c:5270 dst_alloc+0x105/0x170 net/core/dst.c:89 ip6_dst_alloc net/ipv6/route.c:342 [inline] icmp6_dst_alloc+0x75/0x460 net/ipv6/route.c:3333 mld_sendpack+0x683/0xe60 net/ipv6/mcast.c:1844 mld_send_cr net/ipv6/mcast.c:2154 [inline] mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693 process_one_work kernel/workqueue.c:3257 [inline] process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340 worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421 kthread+0x711/0x8a0 kernel/kthread.c:463 ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158 ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entr ---truncated---" data-cve="CVE-2026-23004">
+                <h3><a href="https://www.tenable.com/cve/CVE-2026-23004" class="vuln-title" target="_blank">In the Linux kernel, the following vulnerability has been resolved: dst: fix races in rt6_uncached_list_del() and rt_del_uncached_list() syzbot was able to crash the kernel in rt6_uncached_list_flush_dev() in an interesting way [1] Crash happens in list_del_init()/INIT_LIST_HEAD() while writing list->prev, while the prior write on list->next went well. static inline void INIT_LIST_HEAD(struct list_head *list) { WRITE_ONCE(list->next, list); // This went well WRITE_ONCE(list->prev, list); // Crash, @list has been freed. } Issue here is that rt6_uncached_list_del() did not attempt to lock ul->lock, as list_empty(&rt->dst.rt_uncached) returned true because the WRITE_ONCE(list->next, list) happened on the other CPU. We might use list_del_init_careful() and list_empty_careful(), or make sure rt6_uncached_list_del() always grabs the spinlock whenever rt->dst.rt_uncached_list has been set. A similar fix is neeed for IPv4. [1] BUG: KASAN: slab-use-after-free in INIT_LIST_HEAD include/linux/list.h:46 [inline] BUG: KASAN: slab-use-after-free in list_del_init include/linux/list.h:296 [inline] BUG: KASAN: slab-use-after-free in rt6_uncached_list_flush_dev net/ipv6/route.c:191 [inline] BUG: KASAN: slab-use-after-free in rt6_disable_ip+0x633/0x730 net/ipv6/route.c:5020 Write of size 8 at addr ffff8880294cfa78 by task kworker/u8:14/3450 CPU: 0 UID: 0 PID: 3450 Comm: kworker/u8:14 Tainted: G L syzkaller #0 PREEMPT_{RT,(full)} Tainted: [L]=SOFTLOCKUP Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025 Workqueue: netns cleanup_net Call Trace: <TASK> dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120 print_address_description mm/kasan/report.c:378 [inline] print_report+0xca/0x240 mm/kasan/report.c:482 kasan_report+0x118/0x150 mm/kasan/report.c:595 INIT_LIST_HEAD include/linux/list.h:46 [inline] list_del_init include/linux/list.h:296 [inline] rt6_uncached_list_flush_dev net/ipv6/route.c:191 [inline] rt6_disable_ip+0x633/0x730 net/ipv6/route.c:5020 addrconf_ifdown+0x143/0x18a0 net/ipv6/addrconf.c:3853 addrconf_notify+0x1bc/0x1050 net/ipv6/addrconf.c:-1 notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85 call_netdevice_notifiers_extack net/core/dev.c:2268 [inline] call_netdevice_notifiers net/core/dev.c:2282 [inline] netif_close_many+0x29c/0x410 net/core/dev.c:1785 unregister_netdevice_many_notify+0xb50/0x2330 net/core/dev.c:12353 ops_exit_rtnl_list net/core/net_namespace.c:187 [inline] ops_undo_list+0x3dc/0x990 net/core/net_namespace.c:248 cleanup_net+0x4de/0x7b0 net/core/net_namespace.c:696 process_one_work kernel/workqueue.c:3257 [inline] process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340 worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421 kthread+0x711/0x8a0 kernel/kthread.c:463 ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158 ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246 </TASK> Allocated by task 803: kasan_save_stack mm/kasan/common.c:57 [inline] kasan_save_track+0x3e/0x80 mm/kasan/common.c:78 unpoison_slab_object mm/kasan/common.c:340 [inline] __kasan_slab_alloc+0x6c/0x80 mm/kasan/common.c:366 kasan_slab_alloc include/linux/kasan.h:253 [inline] slab_post_alloc_hook mm/slub.c:4953 [inline] slab_alloc_node mm/slub.c:5263 [inline] kmem_cache_alloc_noprof+0x18d/0x6c0 mm/slub.c:5270 dst_alloc+0x105/0x170 net/core/dst.c:89 ip6_dst_alloc net/ipv6/route.c:342 [inline] icmp6_dst_alloc+0x75/0x460 net/ipv6/route.c:3333 mld_sendpack+0x683/0xe60 net/ipv6/mcast.c:1844 mld_send_cr net/ipv6/mcast.c:2154 [inline] mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693 process_one_work kernel/workqueue.c:3257 [inline] process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340 worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421 kthread+0x711/0x8a0 kernel/kthread.c:463 ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158 ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entr ---truncated---</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2026-23004</span>
+                    <span class="pill">🔍 Tenable (Nessus)</span>
+                    <span class="pill">🕒 2026-01-25 15:15:55</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2026-23004</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>Tenable (Nessus)</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-25 15:15:55</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://www.tenable.com/cve/CVE-2026-23004" class="vuln-link" target="_blank">https://www.tenable.com/cve/CVE-2026-23004</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="微步" data-title="Windows 电话服务特权提升漏洞" data-cve="XVE-2026-0498">
+                <h3><a href="https://x.threatbook.com/v5/vul/XVE-2026-0498" class="vuln-title" target="_blank">Windows 电话服务特权提升漏洞</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 XVE-2026-0498</span>
+                    <span class="pill">🔍 微步</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>XVE-2026-0498</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>微步</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://x.threatbook.com/v5/vul/XVE-2026-0498" class="vuln-link" target="_blank">https://x.threatbook.com/v5/vul/XVE-2026-0498</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="微步" data-title="GeoServer JXPath 远程代码执行漏洞" data-cve="XVE-2024-16055">
+                <h3><a href="https://x.threatbook.com/v5/vul/XVE-2024-16055" class="vuln-title" target="_blank">GeoServer JXPath 远程代码执行漏洞</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 XVE-2024-16055</span>
+                    <span class="pill">🔍 微步</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>XVE-2024-16055</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>微步</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://x.threatbook.com/v5/vul/XVE-2024-16055" class="vuln-link" target="_blank">https://x.threatbook.com/v5/vul/XVE-2024-16055</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] WIP: Z440 / Z640 / Z840 BIOS mods - ReBar, microcodes, overclocking (关键词: poc)" data-cve="github-issue-2467010370">
+                <h3><a href="https://github.com/bibikalka1/HP_Z420_Z620_Z820_BOOTBLOCK2013_BIOS_mod/issues/3" class="vuln-title" target="_blank">[GitHub Issue] WIP: Z440 / Z640 / Z840 BIOS mods - ReBar, microcodes, overclocking (关键词: poc)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-2467010370</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-2467010370</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/bibikalka1/HP_Z420_Z620_Z820_BOOTBLOCK2013_BIOS_mod/issues/3" class="vuln-link" target="_blank">https://github.com/bibikalka1/HP_Z420_Z620_Z820_BOOTBLOCK2013_BIOS_mod/issues/3</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Fix: Payment gateway timeout and card verification failures due to misconfigured connection settings - chat-1769375312-b1a7dc4c (关键词: poc)" data-cve="github-issue-3853902412">
+                <h3><a href="https://github.com/parimalpate123/poc-payment-service/issues/72" class="vuln-title" target="_blank">[GitHub Issue] Fix: Payment gateway timeout and card verification failures due to misconfigured connection settings - chat-1769375312-b1a7dc4c (关键词: poc)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3853902412</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3853902412</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/parimalpate123/poc-payment-service/issues/72" class="vuln-link" target="_blank">https://github.com/parimalpate123/poc-payment-service/issues/72</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Crop + Filter Editor (关键词: poc)" data-cve="github-issue-3854348858">
+                <h3><a href="https://github.com/GreGosPhaTos/pik/issues/3" class="vuln-title" target="_blank">[GitHub Issue] Crop + Filter Editor (关键词: poc)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3854348858</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3854348858</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/GreGosPhaTos/pik/issues/3" class="vuln-link" target="_blank">https://github.com/GreGosPhaTos/pik/issues/3</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Rust + Webassembly POC for images handling [SPIKE] (关键词: poc)" data-cve="github-issue-3854313073">
+                <h3><a href="https://github.com/GreGosPhaTos/pik/issues/1" class="vuln-title" target="_blank">[GitHub Issue] Rust + Webassembly POC for images handling [SPIKE] (关键词: poc)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3854313073</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3854313073</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/GreGosPhaTos/pik/issues/1" class="vuln-link" target="_blank">https://github.com/GreGosPhaTos/pik/issues/1</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Soundness of ForceSync (关键词: poc)" data-cve="github-issue-3854300230">
+                <h3><a href="https://github.com/asterinas/asterinas/issues/2928" class="vuln-title" target="_blank">[GitHub Issue] Soundness of ForceSync (关键词: poc)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3854300230</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3854300230</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/asterinas/asterinas/issues/2928" class="vuln-link" target="_blank">https://github.com/asterinas/asterinas/issues/2928</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Op coverage initial tracking in end-to-end run (totally 106 ops) (关键词: exp)" data-cve="github-issue-3679630441">
+                <h3><a href="https://github.com/torch-spyre/torch-spyre/issues/166" class="vuln-title" target="_blank">[GitHub Issue] Op coverage initial tracking in end-to-end run (totally 106 ops) (关键词: exp)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3679630441</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3679630441</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/torch-spyre/torch-spyre/issues/166" class="vuln-link" target="_blank">https://github.com/torch-spyre/torch-spyre/issues/166</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Task 004: Implement Authentication &amp; Authorization (关键词: exp)" data-cve="github-issue-3854337276">
+                <h3><a href="https://github.com/curdriceaurora/Local-File-Organizer/issues/232" class="vuln-title" target="_blank">[GitHub Issue] Task 004: Implement Authentication & Authorization (关键词: exp)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3854337276</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3854337276</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/curdriceaurora/Local-File-Organizer/issues/232" class="vuln-link" target="_blank">https://github.com/curdriceaurora/Local-File-Organizer/issues/232</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] About CLIP score and inference (关键词: exp)" data-cve="github-issue-3833316511">
+                <h3><a href="https://github.com/Raiiyf/DiffuSETS_Exp/issues/6" class="vuln-title" target="_blank">[GitHub Issue] About CLIP score and inference (关键词: exp)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3833316511</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3833316511</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/Raiiyf/DiffuSETS_Exp/issues/6" class="vuln-link" target="_blank">https://github.com/Raiiyf/DiffuSETS_Exp/issues/6</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Dependency Dashboard (关键词: exp)" data-cve="github-issue-2965800161">
+                <h3><a href="https://github.com/openmcp-project/controller-utils/issues/20" class="vuln-title" target="_blank">[GitHub Issue] Dependency Dashboard (关键词: exp)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-2965800161</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-2965800161</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/openmcp-project/controller-utils/issues/20" class="vuln-link" target="_blank">https://github.com/openmcp-project/controller-utils/issues/20</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Realsense Viewer cannot detect depth camera on Jetson orin nx super 16GB Jetpack 6.2 (关键词: exp)" data-cve="github-issue-3852705223">
+                <h3><a href="https://github.com/realsenseai/librealsense/issues/14645" class="vuln-title" target="_blank">[GitHub Issue] Realsense Viewer cannot detect depth camera on Jetson orin nx super 16GB Jetpack 6.2 (关键词: exp)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3852705223</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3852705223</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/realsenseai/librealsense/issues/14645" class="vuln-link" target="_blank">https://github.com/realsenseai/librealsense/issues/14645</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] 2.1.7 - Implementar JWT com expiração 24h, payload {id, email, role, iat, exp} (关键词: exp)" data-cve="github-issue-3851995208">
+                <h3><a href="https://github.com/AlineReis/MedClinic_Project/issues/238" class="vuln-title" target="_blank">[GitHub Issue] 2.1.7 - Implementar JWT com expiração 24h, payload {id, email, role, iat, exp} (关键词: exp)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3851995208</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3851995208</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/AlineReis/MedClinic_Project/issues/238" class="vuln-link" target="_blank">https://github.com/AlineReis/MedClinic_Project/issues/238</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Enable muparser in the RTools build of GDAL (so that muparser is available to GDAL in R on Windows) (关键词: exp)" data-cve="github-issue-3745810929">
+                <h3><a href="https://github.com/firelab/gdalraster/issues/858" class="vuln-title" target="_blank">[GitHub Issue] Enable muparser in the RTools build of GDAL (so that muparser is available to GDAL in R on Windows) (关键词: exp)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3745810929</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3745810929</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/firelab/gdalraster/issues/858" class="vuln-link" target="_blank">https://github.com/firelab/gdalraster/issues/858</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Improve Overall Security Backend (关键词: SQL injection)" data-cve="github-issue-3854353618">
+                <h3><a href="https://github.com/ariebrainware/basis-data-ltt/issues/172" class="vuln-title" target="_blank">[GitHub Issue] Improve Overall Security Backend (关键词: SQL injection)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3854353618</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3854353618</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/ariebrainware/basis-data-ltt/issues/172" class="vuln-link" target="_blank">https://github.com/ariebrainware/basis-data-ltt/issues/172</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Task 005: Add Rate Limiting &amp; Security (关键词: SQL injection)" data-cve="github-issue-3854337401">
+                <h3><a href="https://github.com/curdriceaurora/Local-File-Organizer/issues/233" class="vuln-title" target="_blank">[GitHub Issue] Task 005: Add Rate Limiting & Security (关键词: SQL injection)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3854337401</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3854337401</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/curdriceaurora/Local-File-Organizer/issues/233" class="vuln-link" target="_blank">https://github.com/curdriceaurora/Local-File-Organizer/issues/233</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Security: SQL Injection Risk in AbstractQueryHandler Query Building (关键词: SQL injection)" data-cve="github-issue-3819649452">
+                <h3><a href="https://github.com/openo-beta/Open-O/issues/1649" class="vuln-title" target="_blank">[GitHub Issue] Security: SQL Injection Risk in AbstractQueryHandler Query Building (关键词: SQL injection)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3819649452</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3819649452</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/openo-beta/Open-O/issues/1649" class="vuln-link" target="_blank">https://github.com/openo-beta/Open-O/issues/1649</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Security: SQL Injection Risk in FrmBCINRRecord Query Building (关键词: SQL injection)" data-cve="github-issue-3823800172">
+                <h3><a href="https://github.com/openo-beta/Open-O/issues/1662" class="vuln-title" target="_blank">[GitHub Issue] Security: SQL Injection Risk in FrmBCINRRecord Query Building (关键词: SQL injection)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3823800172</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3823800172</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/openo-beta/Open-O/issues/1662" class="vuln-link" target="_blank">https://github.com/openo-beta/Open-O/issues/1662</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] [每日信息流] 2026-01-26 (关键词: SQL injection)" data-cve="github-issue-3854307762">
+                <h3><a href="https://github.com/Tyaoo/picker/issues/1265" class="vuln-title" target="_blank">[GitHub Issue] [每日信息流] 2026-01-26 (关键词: SQL injection)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3854307762</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3854307762</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/Tyaoo/picker/issues/1265" class="vuln-link" target="_blank">https://github.com/Tyaoo/picker/issues/1265</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] docs(security): Add security warnings for custom SQL features (关键词: SQL injection)" data-cve="github-issue-3854302452">
+                <h3><a href="https://github.com/kent8192/reinhardt-web/issues/52" class="vuln-title" target="_blank">[GitHub Issue] docs(security): Add security warnings for custom SQL features (关键词: SQL injection)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3854302452</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3854302452</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/kent8192/reinhardt-web/issues/52" class="vuln-link" target="_blank">https://github.com/kent8192/reinhardt-web/issues/52</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Bug: Inconsistent empty string validation across DCL statements (关键词: SQL injection)" data-cve="github-issue-3854184451">
+                <h3><a href="https://github.com/kent8192/reinhardt-web/issues/42" class="vuln-title" target="_blank">[GitHub Issue] Bug: Inconsistent empty string validation across DCL statements (关键词: SQL injection)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3854184451</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3854184451</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/kent8192/reinhardt-web/issues/42" class="vuln-link" target="_blank">https://github.com/kent8192/reinhardt-web/issues/42</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Multiple SQL Injection Vulnerabilities in JFinal CMS - Unfiltered orderBy Parameter (关键词: SQL injection)" data-cve="github-issue-3854244993">
+                <h3><a href="https://github.com/jflyfox/jfinal_cms/issues/62" class="vuln-title" target="_blank">[GitHub Issue] Multiple SQL Injection Vulnerabilities in JFinal CMS - Unfiltered orderBy Parameter (关键词: SQL injection)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3854244993</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3854244993</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/jflyfox/jfinal_cms/issues/62" class="vuln-link" target="_blank">https://github.com/jflyfox/jfinal_cms/issues/62</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] 🚨 Security: Critical issues in mcp-server-neon container (关键词: RCE)" data-cve="github-issue-3704391129">
+                <h3><a href="https://github.com/stacklok/dockyard/issues/238" class="vuln-title" target="_blank">[GitHub Issue] 🚨 Security: Critical issues in mcp-server-neon container (关键词: RCE)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3704391129</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3704391129</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/stacklok/dockyard/issues/238" class="vuln-link" target="_blank">https://github.com/stacklok/dockyard/issues/238</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Security remediation tracker agent (关键词: RCE)" data-cve="github-issue-3772527114">
+                <h3><a href="https://github.com/EffortlessMetrics/demo-swarm-swarm/issues/31" class="vuln-title" target="_blank">[GitHub Issue] Security remediation tracker agent (关键词: RCE)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3772527114</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3772527114</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/EffortlessMetrics/demo-swarm-swarm/issues/31" class="vuln-link" target="_blank">https://github.com/EffortlessMetrics/demo-swarm-swarm/issues/31</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Security: Add gateway network exposure check to `clawdbot doctor` (关键词: RCE)" data-cve="github-issue-3854147185">
+                <h3><a href="https://github.com/clawdbot/clawdbot/issues/2015" class="vuln-title" target="_blank">[GitHub Issue] Security: Add gateway network exposure check to `clawdbot doctor` (关键词: RCE)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3854147185</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3854147185</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/clawdbot/clawdbot/issues/2015" class="vuln-link" target="_blank">https://github.com/clawdbot/clawdbot/issues/2015</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] chore: Remove Apache Velocity dependency from codebase (关键词: RCE)" data-cve="CVE-2020-13936">
+                <h3><a href="https://github.com/openo-beta/Open-O/issues/1189" class="vuln-title" target="_blank">[GitHub Issue] chore: Remove Apache Velocity dependency from codebase (关键词: RCE)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 CVE-2020-13936</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>CVE-2020-13936</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/openo-beta/Open-O/issues/1189" class="vuln-link" target="_blank">https://github.com/openo-beta/Open-O/issues/1189</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] Critical XSS/RCE Vulnerability in Screeps Client with Nwjs Environment (关键词: RCE)" data-cve="github-issue-1848498021">
+                <h3><a href="https://github.com/screeps/screeps/issues/162" class="vuln-title" target="_blank">[GitHub Issue] Critical XSS/RCE Vulnerability in Screeps Client with Nwjs Environment (关键词: RCE)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-1848498021</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-1848498021</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/screeps/screeps/issues/162" class="vuln-link" target="_blank">https://github.com/screeps/screeps/issues/162</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] SQL注入之sqlmap|web安全｜渗透测试｜网络安全连云港新浦IT (关键词: SQL注入)" data-cve="github-issue-3854316961">
+                <h3><a href="https://github.com/henewaf/fiyt/issues/153" class="vuln-title" target="_blank">[GitHub Issue] SQL注入之sqlmap|web安全｜渗透测试｜网络安全连云港新浦IT (关键词: SQL注入)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3854316961</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3854316961</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/henewaf/fiyt/issues/153" class="vuln-link" target="_blank">https://github.com/henewaf/fiyt/issues/153</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] [r2cn] 根据mega的aws terraform 部署脚本，完成GCP的部署脚本 (关键词: SQL注入)" data-cve="github-issue-3693540693">
+                <h3><a href="https://github.com/web3infra-foundation/mega/issues/1692" class="vuln-title" target="_blank">[GitHub Issue] [r2cn] 根据mega的aws terraform 部署脚本，完成GCP的部署脚本 (关键词: SQL注入)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3693540693</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3693540693</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/web3infra-foundation/mega/issues/1692" class="vuln-link" target="_blank">https://github.com/web3infra-foundation/mega/issues/1692</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] [Dotfiles Kaizen] TypeScript Best Practices - 2025-12-08 (关键词: SQL注入)" data-cve="github-issue-3704271110">
+                <h3><a href="https://github.com/KJR020/dotfiles/issues/4" class="vuln-title" target="_blank">[GitHub Issue] [Dotfiles Kaizen] TypeScript Best Practices - 2025-12-08 (关键词: SQL注入)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3704271110</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3704271110</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/KJR020/dotfiles/issues/4" class="vuln-link" target="_blank">https://github.com/KJR020/dotfiles/issues/4</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="vuln-item vuln-row" data-source="GitHub Issues" data-title="[GitHub Issue] feat: RAGと作業ディレクトリ解析による各エージェントの知見増加機構の追加 (关键词: SQL注入)" data-cve="github-issue-3852340779">
+                <h3><a href="https://github.com/kenimo49/agent-corp/issues/3" class="vuln-title" target="_blank">[GitHub Issue] feat: RAGと作業ディレクトリ解析による各エージェントの知見増加機構の追加 (关键词: SQL注入)</a></h3>
+                <div class="vuln-summary-line">
+                    <span class="pill">🧾 github-issue-3852340779</span>
+                    <span class="pill">🔍 GitHub Issues</span>
+                    <span class="pill">🕒 2026-01-26</span>
+                </div>
+                <details class="vuln-details">
+                    <summary>查看详情</summary>
+                    <div class="vuln-info">
+                        <div class="vuln-meta">
+                            <strong>编号：</strong>
+                            <span>github-issue-3852340779</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>来源：</strong>
+                            <span>GitHub Issues</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>时间：</strong>
+                            <span>2026-01-26</span>
+                        </div>
+                        <div class="vuln-meta">
+                            <strong>详情：</strong>
+                            <a href="https://github.com/kenimo49/agent-corp/issues/3" class="vuln-link" target="_blank">https://github.com/kenimo49/agent-corp/issues/3</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+        
+    </main>
+    
+    <footer>
+        <p>Power By 东方隐侠安全团队·Anonymous@ <a href="https://www.dfyxsec.com/" target="_blank" style="color: var(--primary-color); text-decoration: none;">隐侠安全客栈</a></p>
+    </footer>
+
+    <script>
+        (function () {
+            const PAGE_SIZE = 25;
+            const rows = Array.from(document.querySelectorAll('.vuln-row'));
+            const searchInput = document.getElementById('searchInput');
+            const sourceSelect = document.getElementById('sourceSelect');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const pageInfo = document.getElementById('pageInfo');
+            const shownCount = document.getElementById('shownCount');
+            const totalCount = document.getElementById('totalCount');
+            const collapseAllBtn = document.getElementById('collapseAllBtn');
+            const expandAllBtn = document.getElementById('expandAllBtn');
+
+            let page = 1;
+
+            function buildSourceOptions() {
+                const sources = new Map();
+                rows.forEach(r => {
+                    const s = (r.dataset.source || '').trim();
+                    if (s) sources.set(s, (sources.get(s) || 0) + 1);
+                });
+                const sorted = Array.from(sources.entries()).sort((a, b) => b[1] - a[1]);
+                sorted.forEach(([s, n]) => {
+                    const opt = document.createElement('option');
+                    opt.value = s;
+                    opt.textContent = `${s} (${n})`;
+                    sourceSelect.appendChild(opt);
+                });
+            }
+
+            function matches(row, q, source) {
+                const hay = `${row.dataset.title || ''} ${row.dataset.cve || ''} ${row.dataset.source || ''}`.toLowerCase();
+                const okQ = !q || hay.includes(q);
+                const okS = !source || (row.dataset.source === source);
+                return okQ && okS;
+            }
+
+            function getFiltered() {
+                const q = (searchInput.value || '').trim().toLowerCase();
+                const source = sourceSelect.value || '';
+                return rows.filter(r => matches(r, q, source));
+            }
+
+            function render() {
+                const filtered = getFiltered();
+                const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+                if (page > pages) page = pages;
+                if (page < 1) page = 1;
+
+                rows.forEach(r => r.style.display = 'none');
+                const start = (page - 1) * PAGE_SIZE;
+                const slice = filtered.slice(start, start + PAGE_SIZE);
+                slice.forEach(r => r.style.display = '');
+
+                pageInfo.textContent = `${page}/${pages}`;
+                shownCount.textContent = String(slice.length);
+                totalCount.textContent = String(filtered.length);
+
+                prevBtn.disabled = (page <= 1);
+                nextBtn.disabled = (page >= pages);
+            }
+
+            function setAllDetails(open) {
+                document.querySelectorAll('details.vuln-details').forEach(d => d.open = open);
+            }
+
+            buildSourceOptions();
+            totalCount.textContent = String(rows.length);
+            render();
+
+            searchInput.addEventListener('input', () => { page = 1; render(); });
+            sourceSelect.addEventListener('change', () => { page = 1; render(); });
+            prevBtn.addEventListener('click', () => { page -= 1; render(); });
+            nextBtn.addEventListener('click', () => { page += 1; render(); });
+            collapseAllBtn.addEventListener('click', () => setAllDetails(false));
+            expandAllBtn.addEventListener('click', () => setAllDetails(true));
+        })();
+
+        // 切换视图函数
+        function switchView(source) {
+            const buttons = document.querySelectorAll('.switch-button[data-switch]');
+            const sourceSelect = document.getElementById('sourceSelect');
+            
+            // 更新按钮状态
+            buttons.forEach(btn => {
+                if (btn.dataset.switch === source) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // 更新下拉选择
+            if (sourceSelect) {
+                sourceSelect.value = source === 'all' ? '' : source;
+                sourceSelect.dispatchEvent(new Event('change'));
+            }
+        }
+
+        // 快速筛选函数
+        function quickFilter(filterType) {
+            const buttons = document.querySelectorAll('.switch-button[data-filter]');
+            const searchInput = document.getElementById('searchInput');
+            
+            // 切换按钮状态（可以多选）
+            const clickedBtn = Array.from(buttons).find(btn => btn.dataset.filter === filterType);
+            if (clickedBtn) {
+                clickedBtn.classList.toggle('active');
+            }
+            
+            // 获取所有激活的筛选类型
+            const activeFilters = Array.from(document.querySelectorAll('.switch-button[data-filter].active'))
+                .map(btn => btn.dataset.filter);
+            
+            if (searchInput) {
+                if (activeFilters.length > 0) {
+                    // 如果有选中的筛选，设置搜索关键词
+                    searchInput.value = activeFilters.join(' ');
+                } else {
+                    // 如果没有选中的筛选，清空搜索
+                    searchInput.value = '';
+                }
+                searchInput.dispatchEvent(new Event('input'));
+            }
+        }
+
+        // 初始化：确保切换按钮与现有功能协同工作
+        document.addEventListener('DOMContentLoaded', function() {
+            // 当下拉选择改变时，同步更新切换按钮
+            const sourceSelect = document.getElementById('sourceSelect');
+            if (sourceSelect) {
+                sourceSelect.addEventListener('change', function() {
+                    const value = this.value || 'all';
+                    switchView(value);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
