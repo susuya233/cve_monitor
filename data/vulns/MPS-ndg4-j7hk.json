@@ -1,0 +1,257 @@
+{
+  "saved_at": "2026-08-12T23:34:48+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ndg4-j7hk",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73500",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "### 影响\n_这是什么样的漏洞？谁受到影响？_\n\n可以到达 etcd TLS 侦听器的网络攻击者可以打开许多 TCP 连接，并且从不发送 ClientHello。每个连接都会在 etcd 服务器进程中生成一个 goroutine，该 goroutine 在 tls.Conn.Handshake() 内无限期阻塞，并且每个连接都会在挂起的映射中进行跟踪。无限制的 goroutine 和映射增长会耗尽 etcd 进程中的内存，导致 etcd 集群（以及当 etcd 支持 Kubernetes 时，控制平面）的可用性丧失。\n\n### 补丁\n_问题解决了吗？用户应该升级到什么版本？_\n\n该漏洞已在以下版本中修复：\n\n-etcd 3.7.1\n-etcd 3.6.14\n-etcd 3.5.33\n\n### 解决方法\n_用户有没有办法在不升级的情况下修复或修复该漏洞？_\n\n如果无法立即升级，则限制网络访问。通过防火墙规则或网络策略限制哪些主机可以到达 etcd 的客户端 (gRPC) 端口，从而减少可以尝试利用的人。\n\n### 记者\n\nVMware 博通",
+    "effects": [
+      {
+        "comp_name": "go.etcd.io/etcd/v3",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[3.6.0,3.6.14)",
+            "min_fixed_version": "3.6.14",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.5.0,3.5.33)",
+            "min_fixed_version": "3.5.33",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.7.0-alpha.0,3.7.1)",
+            "min_fixed_version": "3.7.1",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[v3.6.0,v3.6.14)",
+            "min_fixed_version": "v3.6.14",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,v3.5.33)",
+            "min_fixed_version": "v3.5.33",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[v3.7.0-alpha.0,v3.7.1)",
+            "min_fixed_version": "v3.7.1",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-08-13",
+    "level": "High",
+    "mps_id": "MPS-ndg4-j7hk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/etcd-io/etcd/security/advisories/GHSA-6vch-q96h-7gc3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/etcd-io/etcd/pull/22130",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/etcd-io/etcd/commit/2e07efce9745004eb4773cffaada9b5cdf77cff2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/etcd-io/etcd/commit/f73cba7d920019f91a1ea1f6697833e42731f057",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/etcd-io/etcd/releases/tag/v3.5.33",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/etcd-io/etcd/releases/tag/v3.6.14",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/etcd-io/etcd/releases/tag/v3.7.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-6vch-q96h-7gc3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "etcd：`tlsListener.acceptLoop` 产生无期限的无限制握手 goroutine",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73500",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "### Impact\n_What kind of vulnerability is it? Who is impacted?_\n\nA network attacker who can reach an etcd TLS listener can open many TCP connections and never send a ClientHello. Each connection spawns a goroutine in the etcd server process that blocks indefinitely inside tls.Conn.Handshake(), and each is tracked in the pending map. Unbounded goroutine and map growth exhausts memory in the etcd process, causing loss of availability for the etcd cluster (and, when etcd backs Kubernetes, the control plane).\n\n### Patches\n_Has the problem been patched? What versions should users upgrade to?_\n\nThis vulnerability is patched in the following versions:\n\n- etcd 3.7.1\n- etcd 3.6.14\n- etcd 3.5.33\n\n### Workarounds\n_Is there a way for users to fix or remediate the vulnerability without upgrading?_\n\nIf upgrading is not immediately possible, then restrict network access. Limit which hosts can reach etcd's client (gRPC) port via firewall rules or network policy, reducing who can attempt exploitation.\n\n### Reporter\n\nVMware By Broadcom",
+    "effects": [
+      {
+        "comp_name": "go.etcd.io/etcd/v3",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[3.6.0,3.6.14)",
+            "min_fixed_version": "3.6.14",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.5.0,3.5.33)",
+            "min_fixed_version": "3.5.33",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.7.0-alpha.0,3.7.1)",
+            "min_fixed_version": "3.7.1",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[v3.6.0,v3.6.14)",
+            "min_fixed_version": "v3.6.14",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,v3.5.33)",
+            "min_fixed_version": "v3.5.33",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[v3.7.0-alpha.0,v3.7.1)",
+            "min_fixed_version": "v3.7.1",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-08-13",
+    "level": "High",
+    "mps_id": "MPS-ndg4-j7hk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/etcd-io/etcd/security/advisories/GHSA-6vch-q96h-7gc3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/etcd-io/etcd/pull/22130",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/etcd-io/etcd/commit/2e07efce9745004eb4773cffaada9b5cdf77cff2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/etcd-io/etcd/commit/f73cba7d920019f91a1ea1f6697833e42731f057",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/etcd-io/etcd/releases/tag/v3.5.33",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/etcd-io/etcd/releases/tag/v3.6.14",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/etcd-io/etcd/releases/tag/v3.7.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-6vch-q96h-7gc3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "etcd: `tlsListener.acceptLoop` spawns unbounded handshake goroutines with no deadline"
+  },
+  "first_saved_at": "2026-08-12T23:34:48+00:00"
+}

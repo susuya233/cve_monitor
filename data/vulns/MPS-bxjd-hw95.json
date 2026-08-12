@@ -1,0 +1,285 @@
+{
+  "saved_at": "2026-08-12T23:34:59+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-bxjd-hw95",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73495",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-444",
+    "description": "### 总结\n  blaze-server 可以将 HTTP/1.1 chunked-body Trailer 字段合并到“Request.headers”中。由于尾部字段是攻击者控制的，因此未经身份验证的远程客户端可以注入前端代理从请求标头部分清理的任意标头名称/值（例如“X-Forwarded-For”、内部身份验证标头），从而绕过应用程序中基于标头的信任决策。\n\n  ### 影响\n  任何在 HTTP/1.1 上使用“BlazeServerBuilder”的 http4s 应用程序，其路由或中间件信任代理集标头（例如“X-Forwarded-For”、“X-Real-IP”、“X-Forwarded-Host”、org-internal auth 标头）都会受到影响。如果前端代理剥离/标准化这些标头，但转发带有完整预告片的分块正文，则攻击者可以欺骗客户端 IP 进行允许列表/速率限制/审核、伪造“https”方案或注入内部身份验证标头。还推广了“连接：关闭”预告片，允许攻击者控制终止池后端连接。\n\n  ### 解决方法\n  部署在代理后面，在转发之前删除预告片字段（或拒绝使用预告片的请求）；在修补之前，避免基于代理所依赖的标头进行信任决策。",
+    "effects": [
+      {
+        "comp_name": "org.http4s:blaze-http_2.12",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.23.17]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,0.23.18)",
+            "min_fixed_version": "0.23.18",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.http4s:blaze-http_2.13",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.23.17]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.0.0-M1,1.0.0-M42)",
+            "min_fixed_version": "1.0.0-M42",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,0.23.18)",
+            "min_fixed_version": "0.23.18",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.http4s:blaze-http_3",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[1.0.0-M1,1.0.0-M42)",
+            "min_fixed_version": "1.0.0-M42",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,0.23.17]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,0.23.18)",
+            "min_fixed_version": "0.23.18",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "HTTP请求走私",
+    "kind_en": "HTTP 请求的解释不一致（“HTTP 请求/响应走私”）",
+    "last_modified_time": "2026-08-13",
+    "level": "High",
+    "mps_id": "MPS-bxjd-hw95",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/http4s/blaze/security/advisories/GHSA-46q4-43ph-c6fr",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/http4s/blaze/commit/ef3e666c146cfc16cb6603f1fc3c464daab4a24f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/http4s/blaze/releases/tag/v0.23.18",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/http4s/blaze/releases/tag/v1.0.0-M42",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-46q4-43ph-c6fr",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "blaze：分块正文尾部字段提升到 blaze-server 中的 Request.headers（前端标头清理绕过）",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73495",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-444",
+    "description": "### Summary\n  blaze-server can merge HTTP/1.1 chunked-body trailer fields into `Request.headers`. Because trailer fields are attacker-controlled, an unauthenticated remote client can inject arbitrary header names/values (e.g. `X-Forwarded-For`, internal-auth headers) that a fronting proxy sanitized from the request-header section, bypassing header-based trust decisions in the application.\n\n  ### Impact\n  Any http4s application using `BlazeServerBuilder` over HTTP/1.1 whose routes or middleware trust proxy-set headers (e.g., `X-Forwarded-For`, `X-Real-IP`, `X-Forwarded-Host`, org-internal auth headers) is affected. Where a fronting proxy strips/normalizes those headers but forwards chunked bodies with trailers intact, an attacker can spoof client IP for allow-lists/rate-limits/audit, forge the `https` scheme, or inject internal-auth headers. A promoted `Connection: close` trailer is also honored, allowing attacker-controlled termination of pooled backend connections.\n\n  ### Workarounds\n  Deploy behind a proxy that removes trailer fields (or rejects requests that use trailers) before forwarding; until patched, avoid trust decisions based on headers that a proxy is relied upon to sanitize.",
+    "effects": [
+      {
+        "comp_name": "org.http4s:blaze-http_2.12",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.23.17]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,0.23.18)",
+            "min_fixed_version": "0.23.18",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.http4s:blaze-http_2.13",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.23.17]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.0.0-M1,1.0.0-M42)",
+            "min_fixed_version": "1.0.0-M42",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,0.23.18)",
+            "min_fixed_version": "0.23.18",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.http4s:blaze-http_3",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[1.0.0-M1,1.0.0-M42)",
+            "min_fixed_version": "1.0.0-M42",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,0.23.17]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,0.23.18)",
+            "min_fixed_version": "0.23.18",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "HTTP请求走私",
+    "kind_en": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')",
+    "last_modified_time": "2026-08-13",
+    "level": "High",
+    "mps_id": "MPS-bxjd-hw95",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/http4s/blaze/security/advisories/GHSA-46q4-43ph-c6fr",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/http4s/blaze/commit/ef3e666c146cfc16cb6603f1fc3c464daab4a24f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/http4s/blaze/releases/tag/v0.23.18",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/http4s/blaze/releases/tag/v1.0.0-M42",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-46q4-43ph-c6fr",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "blaze: Chunked-body trailer fields promoted into Request.headers in blaze-server (front-end header-sanitization bypass)"
+  },
+  "first_saved_at": "2026-08-12T23:34:59+00:00"
+}

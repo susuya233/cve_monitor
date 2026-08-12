@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-08-12T23:34:56+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-euw0-pf2i",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73519",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-798",
+    "description": "25.9.2 之前的 WolfStack 包含一个硬编码的集群身份验证密钥，该密钥被编译到每个版本中，并在 src/auth/mod.rs 中作为常量发布，允许未经身份验证的远程攻击者通过在 X-WolfStack-Secret 标头中向 require_auth() 门提供此值来绕过身份验证，而无需任何会话、API 密钥或用户帐户。攻击者可以访问受影响节点的管理端口，枚举主机上的所有 Docker 和 LXC 容器，并通过 POST /api/containers/{runtime}/{id}/exec 端点以 root 身份在任何容器内执行任意命令。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用硬编码的凭证",
+    "kind_en": "使用硬编码凭证",
+    "last_modified_time": "2026-08-13",
+    "level": "Critical",
+    "mps_id": "MPS-euw0-pf2i",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-euw0-pf2i",
+        "name": "https://www.oscs1024.com/hd/MPS-euw0-pf2i"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73519",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73519"
+      },
+      {
+        "url": "https://github.com/wolfsoftwaresystemsltd/WolfStack/releases?page=7#release-v25.9.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/wolfsoftwaresystemsltd/WolfStack/security/advisories/GHSA-r3mw-2wmq-j6jg",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wolfstack-hard-coded-secret-authentication-bypass-via-x-wolfstack-secret",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-73519漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73519",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-798",
+    "description": "WolfStack before 25.9.2 contains a hard-coded cluster-authentication secret compiled into every build and published as a constant in src/auth/mod.rs, allowing remote unauthenticated attackers to bypass authentication by supplying this value in the X-WolfStack-Secret header to the require_auth() gate without any session, API key, or user account. Attackers can reach an affected node's management port to enumerate all Docker and LXC containers on the host and execute arbitrary commands as root inside any container via the POST /api/containers/{runtime}/{id}/exec endpoint.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用硬编码的凭证",
+    "kind_en": "Use of Hard-coded Credentials",
+    "last_modified_time": "2026-08-13",
+    "level": "Critical",
+    "mps_id": "MPS-euw0-pf2i",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-euw0-pf2i",
+        "name": "https://www.oscs1024.com/hd/MPS-euw0-pf2i"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73519",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73519"
+      },
+      {
+        "url": "https://github.com/wolfsoftwaresystemsltd/WolfStack/releases?page=7#release-v25.9.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/wolfsoftwaresystemsltd/WolfStack/security/advisories/GHSA-r3mw-2wmq-j6jg",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wolfstack-hard-coded-secret-authentication-bypass-via-x-wolfstack-secret",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-73519漏洞"
+  },
+  "first_saved_at": "2026-08-12T23:34:56+00:00"
+}
