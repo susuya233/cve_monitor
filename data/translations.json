@@ -1,0 +1,10 @@
+{
+  "e135abcc5fca0e0686184640526fe68abfa097cd": "CVE-2026-18961漏洞",
+  "d518703682fe48a26eba0271e9bee7885cb15657": "WordPress 的社交登录、密码、Magic Link 和电子邮件 OTP – VentraConnect 插件的无密码登录在 1.4.3 及之前的所有版本中都容易通过未经验证的提供商电子邮件绕过身份验证。这是因为插件信任 Spotify 的 /v1/me 端点返回的未经验证的电子邮件字段作为邮箱所有权的证明 - Generic::normalize_common() 将此值复制到规范化配置文件中，而不需要 email_verified 断言，而 User_Links::link_or_login_user() 随后将其直接传递给 get_user_by('email', $email) 并通过 wp_set_auth_cookie() 发出持久身份验证 cookie无需特定于提供商的验证电子邮件门、本地邮箱质询或登录批准步骤。这使得未经身份验证的攻击者可以通过受控的 Spotify OAuth 流程提供已知的目标电子邮件地址，以任何现有 WordPress 用户（包括管理员）身份登录，从而获得对该网站的完全管理访问权限。",
+  "a8644291af729a1e9f5a0bba722707c1cb3190fa": "认证不当",
+  "9c60cbcb9d5a6e55f29a8cf0955641af9511e71b": "CVE-2026-72526漏洞",
+  "285bba63eebff88a14a0feed5b92da468025b9ca": "多云集成组件中发现了一个缺陷。应用程序传播控制器在未经适当验证的情况下处理来自应用程序自定义资源 (CR) 的“ocm-management-cluster”注释。有权在 hub 集群上创建应用程序的租户可以利用此漏洞来定位任意托管集群。这可以强制辐条集群上的 ArgoCD 同步攻击者控制的清单，从而导致这些集群上的任意代码执行或权限升级。",
+  "63ebe3cfa96e658e39e1ddcda3ce3878774abde5": "非预期的代理或中介（“困惑的代理”）",
+  "cc1c8a1ff2b22accd5dd81f3dcc0376be4c7dfbb": "CVE-2026-70398漏洞",
+  "807e0acebf5022098c07191eba962c9d473ba461": "多云集成（红帽高级集群管理 (RHACM) 的一个组件）中发现了一个缺陷。此漏洞允许经过身份验证的用户（称为租户）操纵 GitOpsCluster 控制器。通过利用这一点，租户可以将敏感的分支集群承载令牌从安全位置重定向到他们控制的命名空间。这种未经授权的令牌访问可能会导致关键信息泄露并绕过 ArgoCD AppProjects 内的安全策略。"
+}

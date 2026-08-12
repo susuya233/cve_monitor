@@ -1,0 +1,187 @@
+{
+  "saved_at": "2026-08-12T13:49:11+08:00",
+  "first_seen": false,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-q6xk-i9n3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-18961",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-287",
+    "description": "WordPress 的社交登录、密码、Magic Link 和电子邮件 OTP – VentraConnect 插件的无密码登录在 1.4.3 及之前的所有版本中都容易通过未经验证的提供商电子邮件绕过身份验证。这是因为插件信任 Spotify 的 /v1/me 端点返回的未经验证的电子邮件字段作为邮箱所有权的证明 - Generic::normalize_common() 将此值复制到规范化配置文件中，而不需要 email_verified 断言，而 User_Links::link_or_login_user() 随后将其直接传递给 get_user_by('email', $email) 并通过 wp_set_auth_cookie() 发出持久身份验证 cookie无需特定于提供商的验证电子邮件门、本地邮箱质询或登录批准步骤。这使得未经身份验证的攻击者可以通过受控的 Spotify OAuth 流程提供已知的目标电子邮件地址，以任何现有 WordPress 用户（包括管理员）身份登录，从而获得对该网站的完全管理访问权限。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "身份验证不当",
+    "kind_en": "认证不当",
+    "last_modified_time": "2026-08-12",
+    "level": "High",
+    "mps_id": "MPS-q6xk-i9n3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-q6xk-i9n3",
+        "name": "https://www.oscs1024.com/hd/MPS-q6xk-i9n3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18961",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18961"
+      },
+      {
+        "url": "https://developer.spotify.com/documentation/web-api/reference/get-current-users-profile",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.svn.wordpress.org/ventraconnect-social-login/tags/1.4.3/includes/class-oauth.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.svn.wordpress.org/ventraconnect-social-login/tags/1.4.3/includes/class-user-links.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.svn.wordpress.org/ventraconnect-social-login/tags/1.4.3/includes/providers/class-provider-generic.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.svn.wordpress.org/ventraconnect-social-login/tags/1.4.3/includes/providers/normalizer.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3642024/ventraconnect-social-login",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/d7c0f21a-b04c-407e-9e8c-f81a146deaa8?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-18961漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-18961",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-287",
+    "description": "The Social Login, Passkeys, Magic Link & Email OTP – Passwordless Login by VentraConnect plugin for WordPress is vulnerable to Authentication Bypass via Unverified Provider Email in all versions up to, and including, 1.4.3. This is due to the plugin trusting the unverified email field returned by Spotify's /v1/me endpoint as proof of mailbox ownership — Generic::normalize_common() copies this value into the normalized profile without requiring an email_verified assertion, and User_Links::link_or_login_user() subsequently passes it directly to get_user_by('email', $email) and issues a persistent authentication cookie via wp_set_auth_cookie() without a provider-specific verified-email gate, a local mailbox challenge, or a logged-in approval step. This makes it possible for unauthenticated attackers to log in as any existing WordPress user, including Administrators, by supplying a known target email address through a controlled Spotify OAuth flow, gaining full administrative access to the site.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "身份验证不当",
+    "kind_en": "Improper Authentication",
+    "last_modified_time": "2026-08-12",
+    "level": "High",
+    "mps_id": "MPS-q6xk-i9n3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-q6xk-i9n3",
+        "name": "https://www.oscs1024.com/hd/MPS-q6xk-i9n3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18961",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18961"
+      },
+      {
+        "url": "https://developer.spotify.com/documentation/web-api/reference/get-current-users-profile",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.svn.wordpress.org/ventraconnect-social-login/tags/1.4.3/includes/class-oauth.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.svn.wordpress.org/ventraconnect-social-login/tags/1.4.3/includes/class-user-links.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.svn.wordpress.org/ventraconnect-social-login/tags/1.4.3/includes/providers/class-provider-generic.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.svn.wordpress.org/ventraconnect-social-login/tags/1.4.3/includes/providers/normalizer.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3642024/ventraconnect-social-login",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/d7c0f21a-b04c-407e-9e8c-f81a146deaa8?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-18961漏洞"
+  },
+  "first_saved_at": "2026-08-12T13:37:04+08:00"
+}
