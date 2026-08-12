@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-08-12T18:54:22+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-k5hz-ctvm",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73327",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:R/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:H/UI:A/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:H/UI:A/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-22",
+    "description": "Joomla 6.1.1 在 com_joomlaupdate 扩展中包含一个路径遍历漏洞，该漏洞允许超级用户提取精心制作的存档，其中包含 ZIP 条目文件名中的目录遍历序列或绝对路径。攻击者可以向 extract.php 提取例程提供带有父目录段或绝对路径的恶意 ZIP 条目名称，导致文件写入预期目标根目录之外，并通过植入的 PHP 文件实现持久远程代码执行。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "路径遍历",
+    "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
+    "last_modified_time": "2026-08-13",
+    "level": "High",
+    "mps_id": "MPS-k5hz-ctvm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k5hz-ctvm",
+        "name": "https://www.oscs1024.com/hd/MPS-k5hz-ctvm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73327",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73327"
+      },
+      {
+        "url": "https://github.com/joomla/joomla-cms",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/joomla/joomla-cms/commit/9678a171d37e1e10ca75c9124bdafe20fe14fa5b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/joomla/joomla-cms/pull/48057",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/joomla-zip-slip-path-traversal-via-com-joomlaupdate-extract-php",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-73327漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73327",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:R/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:H/UI:A/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:H/UI:A/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-22",
+    "description": "Joomla 6.1.1 contains a path traversal vulnerability in the com_joomlaupdate extension that allows a Super User to be induced into extracting a crafted archive containing directory traversal sequences or absolute paths in ZIP entry filenames. Attackers can supply malicious ZIP entry names with parent-directory segments or absolute paths to the extract.php extraction routine, causing files to be written outside the intended destination root and enabling persistent remote code execution via planted PHP files.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "路径遍历",
+    "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "last_modified_time": "2026-08-13",
+    "level": "High",
+    "mps_id": "MPS-k5hz-ctvm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k5hz-ctvm",
+        "name": "https://www.oscs1024.com/hd/MPS-k5hz-ctvm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73327",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73327"
+      },
+      {
+        "url": "https://github.com/joomla/joomla-cms",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/joomla/joomla-cms/commit/9678a171d37e1e10ca75c9124bdafe20fe14fa5b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/joomla/joomla-cms/pull/48057",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/joomla-zip-slip-path-traversal-via-com-joomlaupdate-extract-php",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-73327漏洞"
+  },
+  "first_saved_at": "2026-08-12T18:54:22+00:00"
+}
