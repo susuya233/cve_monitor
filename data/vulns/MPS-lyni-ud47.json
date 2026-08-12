@@ -1,0 +1,113 @@
+{
+  "saved_at": "2026-08-12T09:06:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-lyni-ud47",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-19594",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "412d305a-227d-44f9-a262-a31ba44f2aea",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+    "cwe": "CWE-141",
+    "description": "1.13.0 之前的 Snowflake Python API (`snowflake.core`) 版本中输入清理不足，导致通过两个相关弱点进行混乱的代理权限升级：通过未编码的 `..` 标识符路径段进行路径遍历 (CWE-22)，以及通过查询字符串值中未编码的 `&`/`#`/`=` 字符进行 HTTP 参数污染 (CWE-141)。有权访问基于 Snowflake.core 构建的下游应用程序的攻击者可以通过提供“..”作为对象名称来利用路径遍历，从而导致“snowflake.core”向父资源发出 REST 请求，或者通过将“&”/“#”/“=”注入到自由格式名称字段中来利用参数污染，以覆盖对交换、克隆或重命名操作的限制——所有这些操作都在应用程序的特权会话下执行。成功利用该漏洞需要攻击者控制基于snowflake.core构建的应用程序中的标识符或对象名称字符串，并将其传递到更高权限的Snowflake会话下的“snowflake.core”（例如，EXECUTE AS OWNER存储过程、Streamlit应用程序或本机应用程序）。 Snowflake Python API 版本 1.13.0 中提供了该修复程序，该版本还解决了一些其他安全问题。用户必须手动升级。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "参数分隔符转义处理不恰当",
+    "kind_en": "参数/参数分隔符的不正确中和",
+    "last_modified_time": "2026-08-12",
+    "level": "High",
+    "mps_id": "MPS-lyni-ud47",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lyni-ud47",
+        "name": "https://www.oscs1024.com/hd/MPS-lyni-ud47"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19594",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-19594"
+      },
+      {
+        "url": "https://pypi.org/project/snowflake.core/1.13.0/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-19594漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-19594",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "412d305a-227d-44f9-a262-a31ba44f2aea",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+    "cwe": "CWE-141",
+    "description": "Insufficient input sanitization in Snowflake Python API (`snowflake.core`) versions prior to 1.13.0 allowed confused-deputy privilege escalation through two related weaknesses: path traversal (CWE-22) via unencoded `..` identifier path segments, and HTTP parameter pollution (CWE-141) via unencoded `&`/`#`/`=` characters in query string values. An attacker with access to a downstream application built on snowflake.core could exploit the path traversal by supplying `..` as an object name, causing `snowflake.core` to issue REST requests against a parent resource or exploit the parameter pollution by injecting `&`/`#`/`=` into a free-form name field to override constraints on swap, clone, or rename operations — all executed under the application's privileged session. Successful exploitation requires the attacker to control an identifier or object-name string in an application built on snowflake.core that passes it to `snowflake.core` under a higher-privileged Snowflake session (e.g., an EXECUTE AS OWNER stored procedure, Streamlit app, or Native App). The fix is available in Snowflake Python API version 1.13.0, which also addresses several additional security findings. Users must manually upgrade.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "参数分隔符转义处理不恰当",
+    "kind_en": "Improper Neutralization of Parameter/Argument Delimiters",
+    "last_modified_time": "2026-08-12",
+    "level": "High",
+    "mps_id": "MPS-lyni-ud47",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lyni-ud47",
+        "name": "https://www.oscs1024.com/hd/MPS-lyni-ud47"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19594",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-19594"
+      },
+      {
+        "url": "https://pypi.org/project/snowflake.core/1.13.0/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-19594漏洞"
+  },
+  "first_saved_at": "2026-08-12T09:06:54+00:00"
+}
