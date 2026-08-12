@@ -1,0 +1,213 @@
+{
+  "saved_at": "2026-08-12T21:38:53+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-y2as-4kec",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73413",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-407",
+    "description": "### 影响\n\n这会影响启用了标志保护的 Shescape 用户，无论使用什么 API，默认情况下标志保护都是打开的。\n\n攻击者可能会导致输入大小出现运行时二次方，从而导致大输入拒绝服务。\n\n```javascript\n从“shescape”导入 { Shescape }；\n\n// 1.前提条件\n常量选项 = {\n    //未指定标志保护\n    // 或者\n    标志保护：true，\n};\n\n// 2. 有效负载\n让有效负载 = \"\\u0000-\".repeat(32000);\n\n// 3. 用法\nconst shescape = new Shescape(选项);\n让回调；\n\n回调 = () => shescape.escape(payload);\n// 或者\n回调 = () => shescape.escapeAll([有效负载]);\n// 或者\n回调 = () => shescape.quote(payload);\n// 或者\n回调 = () => shescape.quoteAll([payload]);\n\nconst t0 = process.hrtime.bigint();\n打回来（）;\nconst ms = Number(process.hrtime.bigint() - t0) / 1e6;\n\n// 4.影响\nconsole.log(\"持续时间：\"，毫秒);\n// 输出“Duration:”后跟接近 20000 的数字\n````\n\n### 补丁\n\n此错误已在 [v2.1.14] 和 [v3.0.1] 中修复，您现在可以升级到。\n\n如果您已经在使用 Shescape v3，则无需进一步更改。如果您使用的是 Shescape v2，建议升级，因为该版本将于 2026 年 9 月 28 日达到终止状态，请按照[迁移指南]升级到 v3。\n\n对于低于 v2.0.0 的 Shescape 版本，不会发布任何补丁。\n\n### 解决方法\n\n或者，Shescape 的用户可以 1) 对不受信任的输入的长度进行限制，或者 2) 从不受信任的输入中删除 **最后一个** `-` 之前的所有内容。\n\n### 欲了解更多信息\n\n- 对 v2 的 Pull 请求 [#2651] 和 v3 的 [#2649] 进行评论\n- 对 v2 的提交 [b4b34c3] 和 v3 的提交 [43d70b5] 发表评论\n- 在<https://github.com/ericcornelissen/shescape/issues>打开一个问题（新问题>问题）",
+    "effects": [
+      {
+        "comp_name": "shescape",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[2.1.11,2.1.14)",
+            "min_fixed_version": "2.1.14",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.1)",
+            "min_fixed_version": "3.0.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "低效算法复杂性",
+    "kind_en": "低效的算法复杂性",
+    "last_modified_time": "2026-08-13",
+    "level": "High",
+    "mps_id": "MPS-y2as-4kec",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/ericcornelissen/shescape/security/advisories/GHSA-gm3r-q2wp-hw87",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/pull/2649",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/pull/2651",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/commit/43d70b59d09bbe5c3fd02ef08b3a123e977ed9de",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/commit/b4b34c394e7f9da2775bb75381066b9a228c425f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/blob/dea8893a5877893d8d4923dbf253080e08899e6d/docs/migration.md",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/releases/tag/v2.1.14",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/releases/tag/v3.0.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-gm3r-q2wp-hw87",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源",
+      "终端软件"
+    ],
+    "title": "Shescape：旗帜保护中的二次拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73413",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-407",
+    "description": "### Impact\n\nThis impacts users of Shescape that have flag protection enabled, which is on by default, regardless of the API being used.\n\nAn attacker can cause a runtime quadratic in the input size, causing denial of service for large inputs.\n\n```javascript\nimport { Shescape } from \"shescape\";\n\n// 1. Prerequisites\nconst options = {\n    //flagProtection unspecified\n    // Or\n    flagProtection: true,\n};\n\n// 2. Payload\nlet payload = \"\\u0000-\".repeat(32000);\n\n// 3. Usage\nconst shescape = new Shescape(options);\nlet callback;\n\ncallback = () => shescape.escape(payload);\n// Or\ncallback = () => shescape.escapeAll([payload]);\n// Or\ncallback = () => shescape.quote(payload);\n// Or\ncallback = () => shescape.quoteAll([payload]);\n\nconst t0 = process.hrtime.bigint();\ncallback();\nconst ms = Number(process.hrtime.bigint() - t0) / 1e6;\n\n// 4. Impact\nconsole.log(\"Duration:\", ms);\n// Outputs \"Duration:\" followed by a number close to 20000\n```\n\n### Patches\n\nThis bug has been patched in [v2.1.14] and [v3.0.1] which you can upgrade to now.\n\nIf you are already using v3 of Shescape, no further changes are required. If you are using v2 of Shescape it is recommended to upgrade as this version reaches end-of-life status on 2026-09-28, follow the [migration guide] to upgrade to v3.\n\nNo patches will be released for version of Shescape lower than v2.0.0.\n\n### Workarounds\n\nAlternatively, users of Shescape can 1) put restrictions on the length of untrusted input or 2) strip all content before the **last** `-` from untrusted inputs.\n\n### For more information\n\n- Comment on Pull Request [#2651] for v2 and [#2649] for v3\n- Comment on commit [b4b34c3] for v2 and [43d70b5] for v3\n- Open an issue at <https://github.com/ericcornelissen/shescape/issues> (New issue > Question)",
+    "effects": [
+      {
+        "comp_name": "shescape",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[2.1.11,2.1.14)",
+            "min_fixed_version": "2.1.14",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.1)",
+            "min_fixed_version": "3.0.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "低效算法复杂性",
+    "kind_en": "Inefficient Algorithmic Complexity",
+    "last_modified_time": "2026-08-13",
+    "level": "High",
+    "mps_id": "MPS-y2as-4kec",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/ericcornelissen/shescape/security/advisories/GHSA-gm3r-q2wp-hw87",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/pull/2649",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/pull/2651",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/commit/43d70b59d09bbe5c3fd02ef08b3a123e977ed9de",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/commit/b4b34c394e7f9da2775bb75381066b9a228c425f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/blob/dea8893a5877893d8d4923dbf253080e08899e6d/docs/migration.md",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/releases/tag/v2.1.14",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ericcornelissen/shescape/releases/tag/v3.0.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-gm3r-q2wp-hw87",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源",
+      "终端软件"
+    ],
+    "title": "Shescape: Quadratic-time denial of service in the flag-protection"
+  },
+  "first_saved_at": "2026-08-12T21:38:53+00:00"
+}

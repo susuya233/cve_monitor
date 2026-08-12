@@ -1,0 +1,239 @@
+{
+  "saved_at": "2026-08-12T21:39:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-w83s-29bn",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 当攻击者欺骗合法的基于 Web 的应用程序或站点接受来自可信来源的请求时，就会发生跨站点脚本攻击。\r\n- 这是通过转义 Web 应用程序的上下文来完成的； 然后，Web 应用程序将该数据与其他受信任的动态内容一起交付给其用户，而无需对其进行验证。 浏览器不知不觉地在客户端执行恶意脚本（通过客户端语言；通常是 JavaScript 或 HTML）以执行通常被浏览器的同源策略阻止的操作。\r\n- ֿ注入恶意代码是最普遍的XSS利用方式； 因此，转义字符以防止这种操作是保护代码免受此漏洞影响的首要方法。\r\n- 转义意味着应用程序被编码以标记关键字符，特别是用户输入中包含的关键字符，以防止这些字符在危险的上下文中被解释。 例如，在 HTML 中，< 可以编码为 &lt; 并且>可以被编码为&gt; 为了在文本中被解释和显示为它们自己，而在代码本身中，它们被用于 HTML 标记。 如果将恶意内容注入到转义特殊字符的应用程序中，并且该恶意内容使用 < 和 > 作为 HTML 标记，那么如果这些字符在应用程序代码中正确转义，那么这些字符将不会被浏览器解释为 HTML 标记。 转移未遂攻击的方式。\r\n- XSS 最突出的用途是窃取 cookie（来源：OWASP HttpOnly）和劫持用户会话，但 XSS 漏洞已被用于暴露敏感信息、允许访问特权服务和功能以及传播恶意软件。",
+        "title": "什么是XSS"
+      },
+      {
+        "content": "| 类型        | 描述                                                         |\r\n| ----------- | ------------------------------------------------------------ |\r\n| 存储型      | 攻击者将恶意代码插入到应用程序中（通常作为链接）。 每次用户单击链接时，代码都会被激活。 |\r\n| 反射型      | 攻击者从易受攻击的网站应用程序外部向用户提供恶意链接。 单击时，恶意代码将发送到易受攻击的网站，将攻击反映回用户的浏览器。 |\r\n| 基于 DOM 的 | 攻击者强制用户的浏览器呈现恶意页面。 页面中的数据本身提供跨站点脚本数据。 |\r\n| 变异        | 攻击者注入看似安全的代码，但随后在解析标记时被浏览器重写和修改。 一个例子是重新平衡未闭合的引号，甚至为未引用的参数添加引号。 |",
+        "title": "XSS常见的攻击方式"
+      },
+      {
+        "content": "- 在将 HTTP 请求中的数据输入反射回来之前对其进行清理，确保在将任何数据回显给用户之前验证、过滤或转义所有数据，例如搜索期间的查询参数值。\r\n- 将特殊字符（如 ?、&、/、<、> 和空格）转换为其各自的 HTML 或 URL 编码等价物。\r\n- 为用户提供禁用客户端脚本的选项。\r\n- 重定向无效请求。\r\n- 检测同时登录，包括来自两个不同 IP 地址的登录，并使这些会话无效。\r\n- 使用并执行内容安全策略（Content Safe Policy）来禁用可能被 XSS 攻击操纵的任何功能。\r\n- 阅读代码中引用的所有库的文档，了解哪些元素允许嵌入 HTML。",
+        "title": "如何预防XSS"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73415",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:A/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:A/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-79",
+    "description": "当通过图像查看器打开特制图像文件，然后在新选项卡中打开时，JupyterLab 的图像查看器允许跨站点脚本 (XSS)。此 XSS 问题可用于导致 JupyterLab 服务器上的远程代码执行 (RCE)。\n\n### 影响\n\n该漏洞允许执行任意代码。\n\n### 补丁\n\nJupyterLab [`v4.6.2`](https://github.com/jupyterlab/jupyterlab/releases/tag/v4.6.2) 和 [`v4.5.10`](https://github.com/jupyterlab/jupyterlab/releases/tag/v4.5.10) 包含该补丁。\n\n### 解决方法\n\n禁用图像查看器插件：\n\n````\njupyter labextension 禁用 @jupyterlab/imageviewer-extension:plugin\n````\n\n确认：\n\n````\njupyter 实验室扩展列表\n````",
+    "effects": [
+      {
+        "comp_name": "jupyterlab",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[4.6.0,4.6.2)",
+            "min_fixed_version": "4.6.2",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,4.5.10)",
+            "min_fixed_version": "4.5.10",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "XSS",
+    "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
+    "last_modified_time": "2026-08-13",
+    "level": "High",
+    "mps_id": "MPS-w83s-29bn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/security/advisories/GHSA-gx64-gj6p-pc4c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/pull/19184",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/pull/19185",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/pull/19186",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/commit/be9303f5bcd5308eaeae953c5a3c903046682c2c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/commit/f1beab4a2027af4719d6edc07d52d6cf5a39a432",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/releases/tag/v4.5.10",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/releases/tag/v4.6.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-gx64-gj6p-pc4c",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源",
+      "终端软件"
+    ],
+    "title": "JupyterLab：图像查看器在新浏览器选项卡中打开恶意图像时允许 XSS",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 当攻击者欺骗合法的基于 Web 的应用程序或站点接受来自可信来源的请求时，就会发生跨站点脚本攻击。\r\n- 这是通过转义 Web 应用程序的上下文来完成的； 然后，Web 应用程序将该数据与其他受信任的动态内容一起交付给其用户，而无需对其进行验证。 浏览器不知不觉地在客户端执行恶意脚本（通过客户端语言；通常是 JavaScript 或 HTML）以执行通常被浏览器的同源策略阻止的操作。\r\n- ֿ注入恶意代码是最普遍的XSS利用方式； 因此，转义字符以防止这种操作是保护代码免受此漏洞影响的首要方法。\r\n- 转义意味着应用程序被编码以标记关键字符，特别是用户输入中包含的关键字符，以防止这些字符在危险的上下文中被解释。 例如，在 HTML 中，< 可以编码为 &lt; 并且>可以被编码为&gt; 为了在文本中被解释和显示为它们自己，而在代码本身中，它们被用于 HTML 标记。 如果将恶意内容注入到转义特殊字符的应用程序中，并且该恶意内容使用 < 和 > 作为 HTML 标记，那么如果这些字符在应用程序代码中正确转义，那么这些字符将不会被浏览器解释为 HTML 标记。 转移未遂攻击的方式。\r\n- XSS 最突出的用途是窃取 cookie（来源：OWASP HttpOnly）和劫持用户会话，但 XSS 漏洞已被用于暴露敏感信息、允许访问特权服务和功能以及传播恶意软件。",
+        "title": "什么是XSS"
+      },
+      {
+        "content": "| 类型        | 描述                                                         |\r\n| ----------- | ------------------------------------------------------------ |\r\n| 存储型      | 攻击者将恶意代码插入到应用程序中（通常作为链接）。 每次用户单击链接时，代码都会被激活。 |\r\n| 反射型      | 攻击者从易受攻击的网站应用程序外部向用户提供恶意链接。 单击时，恶意代码将发送到易受攻击的网站，将攻击反映回用户的浏览器。 |\r\n| 基于 DOM 的 | 攻击者强制用户的浏览器呈现恶意页面。 页面中的数据本身提供跨站点脚本数据。 |\r\n| 变异        | 攻击者注入看似安全的代码，但随后在解析标记时被浏览器重写和修改。 一个例子是重新平衡未闭合的引号，甚至为未引用的参数添加引号。 |",
+        "title": "XSS常见的攻击方式"
+      },
+      {
+        "content": "- 在将 HTTP 请求中的数据输入反射回来之前对其进行清理，确保在将任何数据回显给用户之前验证、过滤或转义所有数据，例如搜索期间的查询参数值。\r\n- 将特殊字符（如 ?、&、/、<、> 和空格）转换为其各自的 HTML 或 URL 编码等价物。\r\n- 为用户提供禁用客户端脚本的选项。\r\n- 重定向无效请求。\r\n- 检测同时登录，包括来自两个不同 IP 地址的登录，并使这些会话无效。\r\n- 使用并执行内容安全策略（Content Safe Policy）来禁用可能被 XSS 攻击操纵的任何功能。\r\n- 阅读代码中引用的所有库的文档，了解哪些元素允许嵌入 HTML。",
+        "title": "如何预防XSS"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73415",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:A/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:A/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-79",
+    "description": "JupyterLab's image viewer allows for cross-site scripting (XSS) when a specially-crafted image file is opened through the image viewer and then opened in a new tab. This XSS issue can be used to cause remote code execution (RCE) on the JupyterLab server.\n\n### Impact\n\nThis vulnerability allows for arbitrary code execution.\n\n### Patches\n\nJupyterLab [`v4.6.2`](https://github.com/jupyterlab/jupyterlab/releases/tag/v4.6.2) and [`v4.5.10`](https://github.com/jupyterlab/jupyterlab/releases/tag/v4.5.10) contain the patch.\n\n### Workarounds\n\nDisable the image viewer plugin:\n\n```\njupyter labextension disable @jupyterlab/imageviewer-extension:plugin\n```\n\nConfirm with:\n\n```\njupyter labextension list\n```",
+    "effects": [
+      {
+        "comp_name": "jupyterlab",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[4.6.0,4.6.2)",
+            "min_fixed_version": "4.6.2",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,4.5.10)",
+            "min_fixed_version": "4.5.10",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "XSS",
+    "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+    "last_modified_time": "2026-08-13",
+    "level": "High",
+    "mps_id": "MPS-w83s-29bn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/security/advisories/GHSA-gx64-gj6p-pc4c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/pull/19184",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/pull/19185",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/pull/19186",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/commit/be9303f5bcd5308eaeae953c5a3c903046682c2c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/commit/f1beab4a2027af4719d6edc07d52d6cf5a39a432",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/releases/tag/v4.5.10",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jupyterlab/jupyterlab/releases/tag/v4.6.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-gx64-gj6p-pc4c",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源",
+      "终端软件"
+    ],
+    "title": "JupyterLab: Image viewer allows XSS when opening malicious image in new browser tab"
+  },
+  "first_saved_at": "2026-08-12T21:39:07+00:00"
+}

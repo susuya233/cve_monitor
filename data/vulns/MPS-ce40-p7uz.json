@@ -1,0 +1,137 @@
+{
+  "saved_at": "2026-08-12T21:39:00+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ce40-p7uz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73433",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
+    "cwe": "CWE-191",
+    "description": "GStreamer gst-plugins-good (avidemux) 中发现了一个缺陷。当解析 AVI strd 块中的 FUJIFILM 元数据时，gst_avi_demux_parse_strd() 将剩余长度计数器递减固定偏移量（98 和 10 字节），而不验证是否剩余足够的数据。对于恰好为 106 或 107 字节的精心设计的 strd 有效负载，计数器下溢到非常大的无符号值，导致后续以 null 结尾的字符串扫描读取的内容远远超出分配的堆缓冲区。日期格式规范化也可能会超出缓冲区末尾。已确认的影响包括堆越界读取、越界写入、堆信息泄露（相邻数据出现在解析的元数据中）以及应用程序崩溃/拒绝服务。 avidemux 元素由 playbin、decodebin 和 gst-discoverer 自动插入，因此打开或预览精心制作的 AVI 就足以触发该问题。修复了 gst-plugins-good 1.28.6 (GStreamer-SA-2026-0072) 中的上游问题。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "超界折返",
+    "kind_en": "整数下溢（环绕或环绕）",
+    "last_modified_time": "2026-08-13",
+    "level": "High",
+    "mps_id": "MPS-ce40-p7uz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ce40-p7uz",
+        "name": "https://www.oscs1024.com/hd/MPS-ce40-p7uz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73433",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73433"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-73433",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2514801",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/12231",
+        "name": ""
+      },
+      {
+        "url": "https://gstreamer.freedesktop.org/security/sa-2026-0072.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-73433漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73433",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
+    "cwe": "CWE-191",
+    "description": "A flaw was found in GStreamer gst-plugins-good (avidemux). When parsing FUJIFILM metadata in an AVI strd chunk, gst_avi_demux_parse_strd() decrements a remaining-length counter by fixed offsets (98 and 10 bytes) without verifying sufficient data remains. For crafted strd payloads of exactly 106 or 107 bytes, the counter underflows to a very large unsigned value, causing subsequent null-terminated string scanning to read far beyond the allocated heap buffer. Date-format normalization may also write beyond the buffer end. Confirmed impacts include heap out-of-bounds read, out-of-bounds write, heap information disclosure (adjacent data appearing in parsed metadata), and application crash/denial of service. The avidemux element is auto-plugged by playbin, decodebin, and gst-discoverer, so opening or previewing a crafted AVI is sufficient to trigger the issue. Fixed upstream in gst-plugins-good 1.28.6 (GStreamer-SA-2026-0072).",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "超界折返",
+    "kind_en": "Integer Underflow (Wrap or Wraparound)",
+    "last_modified_time": "2026-08-13",
+    "level": "High",
+    "mps_id": "MPS-ce40-p7uz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ce40-p7uz",
+        "name": "https://www.oscs1024.com/hd/MPS-ce40-p7uz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73433",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73433"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-73433",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2514801",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/12231",
+        "name": ""
+      },
+      {
+        "url": "https://gstreamer.freedesktop.org/security/sa-2026-0072.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-73433漏洞"
+  },
+  "first_saved_at": "2026-08-12T21:39:00+00:00"
+}

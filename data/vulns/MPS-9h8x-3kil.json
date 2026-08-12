@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-08-12T21:39:15+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-9h8x-3kil",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73332",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:A/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:A/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-89",
+    "description": "CamaleonCMS 在 cama_contact_form 插件中包含一个存储的跨站点脚本漏洞，该漏洞允许低权限的经过身份验证的攻击者通过联系表单编辑端点向 before_html 字段提交未经净化的内容来注入任意 HTML，而该端点缺乏适当的授权控制。攻击者可以将恶意脚本负载持久保存到数据库中，并在加载联系表单时在受害者的浏览器中执行，从而实现 cookie 盗窃、针对管理界面伪造经过身份验证的请求以及查看用户的会话接管。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SQL注入",
+    "kind_en": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
+    "last_modified_time": "2026-08-13",
+    "level": "Critical",
+    "mps_id": "MPS-9h8x-3kil",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-9h8x-3kil",
+        "name": "https://www.oscs1024.com/hd/MPS-9h8x-3kil"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73332",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73332"
+      },
+      {
+        "url": "https://enrik-m.github.io/posts/Camaleon-CMS-Vulnerabilties/#32-stored-xss-in-contact-form",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/owen2345/camaleon-cms",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/camaleoncms-cama-contact-form-plugin-stored-xss-via-before-html-field",
+        "name": ""
+      },
+      {
+        "url": "https://enrik-m.github.io/posts/Camaleon-CMS-Vulnerabilties/#32-stored-xss-in-contact-form",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-73332漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73332",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:A/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:A/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-89",
+    "description": "CamaleonCMS contains a stored cross-site scripting vulnerability in the cama_contact_form plugin that allows low-privileged authenticated attackers to inject arbitrary HTML by submitting unsanitized content to the before_html field through the contact form edit endpoint, which lacks proper authorization controls. Attackers can persist malicious script payloads into the database that execute in victims' browsers when the contact form loads, enabling cookie theft, forged authenticated requests against the admin interface, and session takeover of viewing users.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SQL注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "last_modified_time": "2026-08-13",
+    "level": "Critical",
+    "mps_id": "MPS-9h8x-3kil",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-9h8x-3kil",
+        "name": "https://www.oscs1024.com/hd/MPS-9h8x-3kil"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73332",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73332"
+      },
+      {
+        "url": "https://enrik-m.github.io/posts/Camaleon-CMS-Vulnerabilties/#32-stored-xss-in-contact-form",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/owen2345/camaleon-cms",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/camaleoncms-cama-contact-form-plugin-stored-xss-via-before-html-field",
+        "name": ""
+      },
+      {
+        "url": "https://enrik-m.github.io/posts/Camaleon-CMS-Vulnerabilties/#32-stored-xss-in-contact-form",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-73332漏洞"
+  },
+  "first_saved_at": "2026-08-12T21:39:15+00:00"
+}
