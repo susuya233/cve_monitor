@@ -27,5 +27,10 @@
   "e2e325b9d96ca152eba655387f5952bc6aea4359": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
   "82ff4cbfc44ce60e9843fbdb858e98b6d4108475": "CVE-2026-19594漏洞",
   "d216103380e5acba6f0ad888f457cf4e24c1120e": "1.13.0 之前的 Snowflake Python API (`snowflake.core`) 版本中输入清理不足，导致通过两个相关弱点进行混乱的代理权限升级：通过未编码的 `..` 标识符路径段进行路径遍历 (CWE-22)，以及通过查询字符串值中未编码的 `&`/`#`/`=` 字符进行 HTTP 参数污染 (CWE-141)。有权访问基于 Snowflake.core 构建的下游应用程序的攻击者可以通过提供“..”作为对象名称来利用路径遍历，从而导致“snowflake.core”向父资源发出 REST 请求，或者通过将“&”/“#”/“=”注入到自由格式名称字段中来利用参数污染，以覆盖对交换、克隆或重命名操作的限制——所有这些操作都在应用程序的特权会话下执行。成功利用该漏洞需要攻击者控制基于snowflake.core构建的应用程序中的标识符或对象名称字符串，并将其传递到更高权限的Snowflake会话下的“snowflake.core”（例如，EXECUTE AS OWNER存储过程、Streamlit应用程序或本机应用程序）。 Snowflake Python API 版本 1.13.0 中提供了该修复程序，该版本还解决了一些其他安全问题。用户必须手动升级。",
-  "02fefc64107a439eae0aa141a9bf402e6d172372": "参数/参数分隔符的不正确中和"
+  "02fefc64107a439eae0aa141a9bf402e6d172372": "参数/参数分隔符的不正确中和",
+  "1f79c0a26ba4f9c35577b32924d020ccf437cc0a": "CVE-2026-70465漏洞",
+  "f814db33f70a3e383c170fadf94bf59fd5b8cded": "Fortinet FortiClientWindows 7.4.0 至 7.4.3、FortiClientWindows 7.2.0 至 7.2.11 中存在不检查输入大小的缓冲区复制（“经典缓冲区溢出”）漏洞，可能允许未经身份验证的攻击者更改或制作对目标主机的 DNS 响应，从而通过恶意数据包执行任意代码。",
+  "0a57490a3c8d9ac8486e893cc0bcbc304c17b150": "CVE-2026-11325漏洞",
+  "786444540b5a26bfcf7be399f5d2e0206ce5eb77": "描述\n\n\n\nCloudflare 最近收到外部研究人员关于此存档存储库中漏洞的通知，其中包括可通过某些 GitHub Actions 工作流程配置访问的“src/index.ts”中的远程代码执行问题。成功利用该漏洞可能会将 CLOUDFLARE_API_TOKEN 和 GITHUB_TOKEN 等工作流程机密暴露给攻击者。由于该存储库自 2024 年起已被弃用，因此 Cloudflare 将不会发布补丁。要修复此问题，我们建议立即迁移到“cloudflare/wrangler-action”。已经迁移的消费者不受影响。\n\n\n\n\n日落日期\n\n\n\ncloudflare/pages-action 存储库将于 2026 年 9 月 18 日删除。消费者必须在 9 月 18 日之前完成迁移，以避免 CI 中断。\n\n\n\n\n受影响的版本\n\n\n\ncloudflare/pages-action 的所有已发布版本，包括固定到 v1 移动标签的消费者。\n\n\n\n\n修补版本\n\n\n\n没有。该存储库将不会收到进一步的更新，包括安全补丁。\n\n\n\n\n解决方案/迁移路径\n在 2026 年 9 月 18 日之前将使用 cloudflare/pages-action 的所有工作流程迁移到“cloudflare/wrangler-action”。请参阅 wra​​ngler-action 自述文件，了解等效的步骤配置和迁移指南。\n\n\n\n\n信用\n\n\n\n感谢 @agentka99 和 @beg1nn3r 通过 Cloudflare 的 HackerOne 计划报告了他们的发现",
+  "5230ab350e6c452a48b8b6b30b28a8fc41bddbce": "使用未维护的第三方组件"
 }
