@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-08-13T01:23:40+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ac6y-nh4x",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71193",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.6
+        }
+      ]
+    },
+    "cvss_score": 9.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
+    "cwe": "CWE-863",
+    "description": "在 22.0.1 之前的 OpenStack Designate 中，区域创建检查（_is_subzone、_is_superzone 和重复区域数据库约束）的范围仅限于目标池。经过身份验证的用户可以通过 AttributeFilter 调度程序将区域调度到不同的池，从而创建与另一个租户的区域冲突的重叠区域，从而绕过这些检查。这可以实现跨租户 DNS 劫持（将流量重定向到攻击者控制的 IP）和 DNS 拒绝服务（NODATA 响应）。利用该漏洞需要在scheduler_filters中启用AttributeFilter的多池部署，这是一个非默认但有记录且受支持的自助服务分层配置。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查错误",
+    "kind_en": "授权错误",
+    "last_modified_time": "2026-08-13",
+    "level": "Critical",
+    "mps_id": "MPS-ac6y-nh4x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ac6y-nh4x",
+        "name": "https://www.oscs1024.com/hd/MPS-ac6y-nh4x"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71193",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71193"
+      },
+      {
+        "url": "https://launchpad.net/bugs/2160533",
+        "name": ""
+      },
+      {
+        "url": "https://security.openstack.org/ossa/OSSA-2026-034.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/08/11/6",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-71193漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71193",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.6
+        }
+      ]
+    },
+    "cvss_score": 9.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
+    "cwe": "CWE-863",
+    "description": "In OpenStack Designate before 22.0.1, zone creation checks (_is_subzone, _is_superzone, and the duplicate-zone DB constraint) are scoped to the target pool only. An authenticated user can bypass these checks by scheduling a zone to a different pool via the AttributeFilter scheduler, creating an overlapping zone that conflicts with another tenant's zone. This enables cross-tenant DNS hijack (redirecting traffic to attacker-controlled IPs) and DNS denial of service (NODATA responses). Exploitation requires a multi-pool deployment with AttributeFilter enabled in scheduler_filters, which is a non-default but documented and supported configuration for self-service tiering.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查错误",
+    "kind_en": "Incorrect Authorization",
+    "last_modified_time": "2026-08-13",
+    "level": "Critical",
+    "mps_id": "MPS-ac6y-nh4x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ac6y-nh4x",
+        "name": "https://www.oscs1024.com/hd/MPS-ac6y-nh4x"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71193",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71193"
+      },
+      {
+        "url": "https://launchpad.net/bugs/2160533",
+        "name": ""
+      },
+      {
+        "url": "https://security.openstack.org/ossa/OSSA-2026-034.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/08/11/6",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-71193漏洞"
+  },
+  "first_saved_at": "2026-08-13T01:23:40+00:00"
+}
