@@ -256,5 +256,20 @@
   "3881fedf230555ab2b48ea15ddb9ddceb7702364": "Trigger.dev 是一个用于构建和部署完全托管的 AI 代理和工作流程的平台。在 4.5.6 之前，POST /api/v1/deployments/:deploymentId/background-workers 会在 apps/webapp/app/v3/services/createDeploymentBackgroundWorkerV4.server.ts 中调用 CreateDeploymentBackgroundWorkerServiceV4.call()，其中，workerDeployment.findFirst() 通过FriendlyId 选择部署，而无需使用environmentId 谓词。拥有一个项目的有效 API 密钥的调用者可以提交另一个项目的部署标识符，将攻击者拥有的后台工作人员链接到受害者部署，并将受害者部署从“构建”移动到“部署”。此问题已在版本 4.5.6 中修复。",
   "513bc998f3de439469963d7eda213770f0dbf846": "CVE-2026-73654漏洞",
   "ab35e8a596f49ec8f2cdc09497a4053a2c631270": "Trigger.dev 是一个用于构建和部署完全托管的 AI 代理和工作流程的平台。从 3.3.8 到 4.5.6，PUT /api/v1/runs/:runId/metadata 端点将攻击者控制的 operation.key 值传递到 packages/core/src/v3/runMetadata/operations.ts 中的 new JSONHeroPath(operation.key).set(newMetadata, value) ，而不拒绝危险的构造函数和原型路径段。具有正常环境 API 密钥的调用者可以污染共享 webapp 进程中的 Object.prototype，破坏 Prisma 查询和 Prometheus 标签，破坏其他租户的工作人员身份验证，并导致进程范围内的拒绝服务。此问题已在版本 4.5.6 中修复。",
-  "0da0b2ca7e0d1578c98ea6a1b47e28ece9111efc": "对象原型属性的控制不当的修改（“原型污染”）"
+  "0da0b2ca7e0d1578c98ea6a1b47e28ece9111efc": "对象原型属性的控制不当的修改（“原型污染”）",
+  "7f367b3000e0e0f1ec5b1b88fb87abc1958172fa": "CVE-2026-8715漏洞",
+  "c7b508eaea3f5677f5b0654b9b0fea7cf153df74": "Vault Secrets Operator 1.3.0 至 1.4.1 容易受到 AppRole 身份验证配置中的任意文件读取和凭据泄露问题的影响，这可能允许具有有限 Kubernetes RBAC 权限的租户从 Operator Pod 的文件系统中读取文件并将其内容传输到租户控制的端点，从而可能导致集群内的权限升级。此漏洞 (CVE-2026-8715) 已在 Vault Secrets Operator 1.5.0 中修复。",
+  "e2ea166fa28809f1cd12bb930d0f47d220566a45": "外部各方可访问的文件或目录",
+  "ed84e163616d4adbecabaa180d6c4f906154d4a9": "CVE-2026-19483漏洞",
+  "aa0c11ec10adc56ff90b391ca2a9b1cd5135365a": "IBM Storage Scale 5.2.3.0 到 5.2.3.8 以及 6.0.0.0 到 6.0.1.0 机密可能会在 IBM Storage Scale Management GUI 的日志文件中公开。管理员密码会从 GUI 记录到 IBM Storage Scale Systems Deploy 和 Upgrade 的 GUI 日志中。与 IBM Storage Scale Management GUI 中的异常相关的信息中可能会泄露秘密。",
+  "dc3273d147b8afd6b203c47ca539f6cb01ea7a66": "将敏感信息插入日志文件",
+  "262326a3a0c02568fe3cb1ce7babc59020b3f0d9": "CVE-2026-18509漏洞",
+  "4030177eb976af71b30fe38fc5b51998141cf5f2": "IBM i 7.6、7.5、7.4 和 7.3 可能允许本地经过身份验证的攻击者通过 Navigator for i 调试器获得权限升级。这可能允许攻击者访问或操纵系统上的敏感数据，或者在 IBM i 系统上创建具有提升权限的新配置文件。",
+  "63e00b8fc429a083695928280d8ef17f38367e92": "不当授权",
+  "d8d376c0d3b79212be491fdbaae68ffd4a1a8b50": "CVE-2026-19297漏洞",
+  "1ec5faf23f2539b58b1147490883344bd1071d01": "由于对过多身份验证尝试的不当限制，IBM Langflow OSS 1.0.0 到 1.9.6 可能允许远程攻击者获得对用户帐户的未经授权的访问。",
+  "124c3d24619d04dd263539d4445b4da733ce1101": "对过多身份验证尝试的不当限制",
+  "810dda767a015e4864a69f4c3cf44d1fcfdd2348": "CVE-2026-18511漏洞",
+  "62f0bfa5eea04c41d16f5b2c8ad55fded17fd7ef": "IBM i 7.6、7.5、7.4 和 7.3 可能允许本地经过身份验证的攻击者在本机 IBM i JSSE 提供程序中生成基于堆栈的缓冲区溢出，这是由 TLS 会话建立期间不正确的边界检查引起的。本地攻击者可能会溢出固定长度缓冲区并在系统上执行任意代码或导致 JVM 进程崩溃。",
+  "b5664b33651b3ce84ac4bb50ba2d0da596dbd972": "越界写入"
 }
