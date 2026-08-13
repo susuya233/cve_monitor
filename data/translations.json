@@ -249,5 +249,12 @@
   "495fc65cd1024181c5e06767c7c1c9b93d6ca626": "CVE-2026-72777漏洞",
   "2dd3260ca9882bf18dc994dd653f018f1f5ac928": "Next AI Draw.io 到 0.4.16 在 POST /api/parse-url 端点中包含服务器端请求伪造漏洞，因为主机名验证仅检查字符串模式而不进行 DNS 解析。未经身份验证的攻击者可以提供绕过字符串验证但解析为内部地址的主机名，从而允许他们访问任意内部 HTTP 服务并窃取包括云元数据在内的响应。",
   "a8ec4cc38698d287ff0d8c9a990bce95ae72eb94": "CVE-2026-18071漏洞",
-  "74b7f376cacb00133e82cd7a824a5b64c95a7697": "IBM i 7.6、7.5、7.4 和 7.3 可能允许本地攻击者因权限管理不当而获得提升的权限。"
+  "74b7f376cacb00133e82cd7a824a5b64c95a7697": "IBM i 7.6、7.5、7.4 和 7.3 可能允许本地攻击者因权限管理不当而获得提升的权限。",
+  "5ee112eac390c258de76388ebe46bb0d77994b33": "CVE-2026-73655漏洞",
+  "b46dc3860c4f0e7779c75c93fa60c8c0c9b5a84e": "Trigger.dev 是一个用于构建和部署完全托管的 AI 代理和工作流程的平台。在 4.5.2 之前，apps/webapp/app/services/googleAuth.server.ts 中的 addGoogleStrategy() 将 Google 个人资料电子邮件传递给 apps/webapp/app/models/user.server.ts 中的 findOrCreateGoogleUser()，而不需要 Google 的 email_verified 断言。当 existingEmailUser && !existingUser 为 true 时，流程会将新的 Google authIdentifier 写入现有的电子邮件匹配帐户并返回该用户对象，从而允许攻击者控制的 Google 个人资料（具有未经验证的匹配电子邮件）接管该帐户。此问题已在版本 4.5.2 中修复。",
+  "0170d796f466b33c181dbf8f0f35f505b91a4019": "CVE-2026-73656漏洞",
+  "3881fedf230555ab2b48ea15ddb9ddceb7702364": "Trigger.dev 是一个用于构建和部署完全托管的 AI 代理和工作流程的平台。在 4.5.6 之前，POST /api/v1/deployments/:deploymentId/background-workers 会在 apps/webapp/app/v3/services/createDeploymentBackgroundWorkerV4.server.ts 中调用 CreateDeploymentBackgroundWorkerServiceV4.call()，其中，workerDeployment.findFirst() 通过FriendlyId 选择部署，而无需使用environmentId 谓词。拥有一个项目的有效 API 密钥的调用者可以提交另一个项目的部署标识符，将攻击者拥有的后台工作人员链接到受害者部署，并将受害者部署从“构建”移动到“部署”。此问题已在版本 4.5.6 中修复。",
+  "513bc998f3de439469963d7eda213770f0dbf846": "CVE-2026-73654漏洞",
+  "ab35e8a596f49ec8f2cdc09497a4053a2c631270": "Trigger.dev 是一个用于构建和部署完全托管的 AI 代理和工作流程的平台。从 3.3.8 到 4.5.6，PUT /api/v1/runs/:runId/metadata 端点将攻击者控制的 operation.key 值传递到 packages/core/src/v3/runMetadata/operations.ts 中的 new JSONHeroPath(operation.key).set(newMetadata, value) ，而不拒绝危险的构造函数和原型路径段。具有正常环境 API 密钥的调用者可以污染共享 webapp 进程中的 Object.prototype，破坏 Prisma 查询和 Prometheus 标签，破坏其他租户的工作人员身份验证，并导致进程范围内的拒绝服务。此问题已在版本 4.5.6 中修复。",
+  "0da0b2ca7e0d1578c98ea6a1b47e28ece9111efc": "对象原型属性的控制不当的修改（“原型污染”）"
 }
