@@ -1,0 +1,319 @@
+{
+  "saved_at": "2026-08-13T20:35:57+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d9f7-8qny",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73653",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+    "cwe": "CWE-862",
+    "description": "## 总结\n\n浏览器模式公开了一组内置“命令”，这些命令在测试运行器的 Node.js 端运行，并且可以触摸本地文件系统（截取屏幕截图、管理 Playwright 跟踪、上传“<input type=\"file\">”文件、比较屏幕截图）。\n\n其中几个命令接受来自浏览器的文件路径并对其进行操作，而无需检查“allowWrite”权限门，也不将路径限制为项目目录。因此，可以访问浏览器模式 API 的客户端可以在 Vitest 进程可以访问的任何位置读取、创建、覆盖或删除文件，即使当“allowWrite”为“false”时也是如此。\n\n当浏览器模式 API 暴露于网络时（例如设置了“test.api.host”，或者可以从另一台机器或源访问开发服务器），这一点最为重要。在该配置中，“allowWrite”默认为“false”，正是为了阻止文件访问，并且这些命令绕过了该保护。在具有受信任测试代码的默认仅本地主机设置中，没有不受信任的一方可以利用它。无论您依赖“allowWrite: false”来包含不受信任的测试代码，这一差距仍然很重要，因为这些命令会忽略该标志。\n\n## Affected commands and impact\n\n|命令 |运营|影响 |\n|---|---|---|\n| `upload` (Playwright + WebdriverIO) |阅读 | Arbitrary local file read;内容加载到页面中并可由测试代码读取。影响最大的案例。 |\n| `takeScreenshot` (Playwright + WebdriverIO) |写 |将 PNG 写入任意路径（逐字使用绝对路径），创建父目录。 |\n| `screenshotMatcher` |写 | Writes reference/diff PNGs;从客户端路径派生的目录允许部分遍历。 |\n| `stopChunkTrace` |写 |将 Playwright 跟踪“.zip”写入可通过跟踪名称中的“../”转义的路径。 |\n| `删除跟踪` |删除| Deletes arbitrary files by path. |\n| `注释痕迹` |阅读（披露）|记录客户端控制的附件路径，报告者将其复制到附件目录中，从而公开文件内容。 |\n\n写入不允许攻击者选择文件内容（它们生成 PNG 图像或跟踪存档），因此完整性影响是在任意路径创建、覆盖或删除文件，而不是写入选定的有效负载。读取（“upload”、“annotateTraces”）更为严重，因为它们会暴露任意文件的完整内容。\n\n该修复程序为每个文件接触提供程序命令添加了“allowWrite”检查，以检查写入/删除操作以及对项目根目录的路径限制（与现有的“fs”命令模式匹配），因此客户端提供的绝对路径和“../”遍历将被拒绝。",
+    "effects": [
+      {
+        "comp_name": "@vitest/browser",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[5.0.0-beta.1,5.0.0-beta.6)",
+            "min_fixed_version": "5.0.0-beta.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,3.2.7)",
+            "min_fixed_version": "3.2.7",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.1.10)",
+            "min_fixed_version": "4.1.10",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "vitest",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[3.0.0,3.2.7)",
+            "min_fixed_version": "3.2.7",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.1.10)",
+            "min_fixed_version": "4.1.10",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.0.0-beta.1,5.0.0-beta.6)",
+            "min_fixed_version": "5.0.0-beta.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-08-14",
+    "level": "Critical",
+    "mps_id": "MPS-d9f7-8qny",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-14",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/vitest-dev/vitest/security/advisories/GHSA-p63j-vcc4-9vmv",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/pull/10674",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/pull/10679",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/pull/10680",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/commit/33f96a145ef09ca6a43b4e555eb273e64a87be23",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/commit/5c18dd267ff7f47f24cab2f615a16b37d90feb7f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/commit/b795e36b34969bec50b47a9f29d26f799a6a04fb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/releases/tag/v3.2.7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/releases/tag/v4.1.10",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/releases/tag/v5.0.0-beta.6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-p63j-vcc4-9vmv",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "@vitest/browser：浏览器模式提供程序命令绕过文件访问权限门",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73653",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+    "cwe": "CWE-862",
+    "description": "## Summary\n\nBrowser Mode exposes a set of built-in \"commands\" that run on the Node.js side of the test runner and can touch the local filesystem (taking screenshots, managing Playwright traces, uploading files for `<input type=\"file\">`, comparing screenshots).\n\nSeveral of these commands accept a file path from the browser and act on it without checking the `allowWrite` permission gate and without confining the path to the project directory. A client that can reach the Browser Mode API can therefore read, create, overwrite, or delete files anywhere the Vitest process can access, even when `allowWrite` is `false`.\n\nThis matters most when the Browser Mode API is exposed to the network (for example `test.api.host` is set, or the dev server is reachable from another machine or origin). In that configuration `allowWrite` defaults to `false` precisely to block file access, and these commands bypass that protection. On a default localhost-only setup with trusted test code, there is no untrusted party in a position to exploit it. The gap still matters wherever you rely on `allowWrite: false` to contain untrusted test code, because these commands ignore that flag.\n\n## Affected commands and impact\n\n| Command | Operation | Impact |\n|---|---|---|\n| `upload` (Playwright + WebdriverIO) | Read | Arbitrary local file read; contents are loaded into the page and readable by test code. Highest-impact case. |\n| `takeScreenshot` (Playwright + WebdriverIO) | Write | Writes a PNG to an arbitrary path (absolute path used verbatim), creating parent directories. |\n| `screenshotMatcher` | Write | Writes reference/diff PNGs; directory derived from client path allows partial traversal. |\n| `stopChunkTrace` | Write | Writes a Playwright trace `.zip` to a path escapable via `../` in the trace name. |\n| `deleteTracing` | Delete | Deletes arbitrary files by path. |\n| `annotateTraces` | Read (disclosure) | Records a client-controlled attachment path that the reporter copies into the attachments directory, disclosing file contents. |\n\nThe writes do not let an attacker choose the file contents (they produce PNG images or trace archives), so the integrity impact is creating, overwriting, or deleting a file at an arbitrary path rather than writing a chosen payload. The reads (`upload`, `annotateTraces`) are more serious because they expose the full contents of an arbitrary file.\n\nThe fix adds, to every file-touching provider command, an `allowWrite` check for write/delete operations and path confinement to the project root (matching the existing `fs` command pattern), so client-supplied absolute paths and `../` traversal are rejected.",
+    "effects": [
+      {
+        "comp_name": "@vitest/browser",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[5.0.0-beta.1,5.0.0-beta.6)",
+            "min_fixed_version": "5.0.0-beta.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,3.2.7)",
+            "min_fixed_version": "3.2.7",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.1.10)",
+            "min_fixed_version": "4.1.10",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "vitest",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[3.0.0,3.2.7)",
+            "min_fixed_version": "3.2.7",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.1.10)",
+            "min_fixed_version": "4.1.10",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.0.0-beta.1,5.0.0-beta.6)",
+            "min_fixed_version": "5.0.0-beta.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-08-14",
+    "level": "Critical",
+    "mps_id": "MPS-d9f7-8qny",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-14",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/vitest-dev/vitest/security/advisories/GHSA-p63j-vcc4-9vmv",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/pull/10674",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/pull/10679",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/pull/10680",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/commit/33f96a145ef09ca6a43b4e555eb273e64a87be23",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/commit/5c18dd267ff7f47f24cab2f615a16b37d90feb7f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/commit/b795e36b34969bec50b47a9f29d26f799a6a04fb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/releases/tag/v3.2.7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/releases/tag/v4.1.10",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vitest-dev/vitest/releases/tag/v5.0.0-beta.6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-p63j-vcc4-9vmv",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "@vitest/browser: Browser Mode provider commands bypass the file-access permission gate"
+  },
+  "first_saved_at": "2026-08-13T20:35:57+00:00"
+}
