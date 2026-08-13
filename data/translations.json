@@ -176,5 +176,17 @@
   "7400119896d9fcc2dbe6b19b483715280a546576": "CWE-200：敏感曝光\n向未经授权的行为者提供的信息",
   "fe547d18c49ba28923c369eb8b58151ead49b4af": "CVE-2026-19484漏洞",
   "3f4b2ced1d576d0cf1c31bbfd508e4ddb2480ff5": "@fastify/busboy 是一个多部分表单数据解析器。在版本 3.1.0 到 3.2.0 中，未经身份验证的远程攻击者可以通过发送边界被设计为特定长度的多部分请求来阻止 Node.js 事件循环。供应商的流式搜索将其跳跃表存储在固定的 256 个条目字节数组中，并且正好 252 个字节的边界使搜索针变为 256 个字节，这将默认的跳跃距离截断为零，并将搜索变成小型主体上的 CPU 绑定循环。单个小请求可能会使一个核心繁忙，并拒绝为同一进程处理的其他请求提供服务。该问题已在 @fastify/busboy 3.2.1 中得到修复，它加宽了跳跃表，因此保留了跳跃距离。用户应升级到3.2.1。",
-  "6cb30b0522cb390fa44ca8eb0de4b7454eb9e107": "在单线程、非阻塞上下文中使用阻塞代码"
+  "6cb30b0522cb390fa44ca8eb0de4b7454eb9e107": "在单线程、非阻塞上下文中使用阻塞代码",
+  "d7140938102420d2a3310d78cc1540c51cc3f7dd": "CVE-2026-73629漏洞",
+  "b65503deab9969532d2077c3eff030dfaf7d9ea6": "2.6.0 之前的 Serendipity 在 serendipity_url_allowed() 过滤器中包含服务器端请求伪造漏洞，该漏洞无法阻止十六进制编码的 IPv4 地址、IPv6 文字和链接本地范围。具有 adminImagesAdd 权限的经过身份验证的用户可以使用备用地址格式绕过过滤器来请求内部服务并通过公共上传目录检索响应正文。",
+  "b5afaec7acb9de8ad6d3b7b5138a87c9d6dc76fe": "CVE-2026-73620漏洞",
+  "60c69875285d5485c4516262c98042ea4e4415e2": "3.1.57 之前的 GitPython 无法保护 IndexFile.checkout() 和 TagReference.create() 中的 git 选项转发，从而允许攻击者通过 kwargs 传递不安全的选项。攻击者可以使用 --prefix 用存储库内容覆盖任意文件，或使用 -F 读取带内返回的任意文件。",
+  "50ae9381a69491918513d2bcb30d3da03ef85452": "CVE-2026-73624漏洞",
+  "56ea076f2cf24d0a8802a91822432bd844e57732": "3.1.54 之前的 GitPython 版本在 Diffable.diff 方法中包含任意文件覆盖漏洞，该漏洞无法验证通过 kwargs 传递的 git 选项。攻击者可以通过其他参数或输出 kwarg 提供 --output 参数，以将补丁内容写入攻击者在进程权限级别选择的文件路径。",
+  "39604f006eba748b195bc2b13d360a4cfc98808d": "CVE-2026-73622漏洞",
+  "dc481d12eeec37946af95fa3702c95da30ef91c6": "3.1.55 之前的 GitPython 无法禁用 Remote.create() 和 Submodule.add() URL 处理中的环境变量扩展，从而允许攻击者通过提供包含变量引用的 URL 来窃取机密。攻击者可以使用环境变量令牌制作 URL，这些令牌会扩展为 .git/config 和 .gitmodules，然后在 fetch 或 pull 操作期间传输到攻击者控制的主机。",
+  "cc07922564fbe8a37161fb87e99e88e5f2bc6842": "CVE-2026-73625漏洞",
+  "f0bd85e4c9c6f43d5b01928714731b058656a70e": "3.1.54 之前的 GitPython 版本在 check_unsafe_options 防护中包含远程代码执行漏洞，可以通过在单字符 kwarg 值中走私 git 选项来绕过该漏洞。攻击者可以向 clone_from、fetch、pull、push、ls_remote、iter_commits、blame 或 archive 方法提供精心设计的选项字典，以通过 --upload-pack 参数执行任意操作系统命令。",
+  "282e561497b4dc0d725664e035162cff752f8c85": "CVE-2026-73623漏洞",
+  "f278a5bfe84ae73d8e0dca32126cd7ccc40ef2fe": "3.1.54之前的GitPython在unsafe_git_clone_options中包含一个不完整的拒绝列表，省略了--template，允许攻击者在克隆操作期间实现任意命令执行。攻击者可以提供 --template 指向包含恶意结帐后挂钩的目录，这些挂钩在 git 克隆存储库时执行。"
 }
