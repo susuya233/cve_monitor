@@ -1,0 +1,139 @@
+{
+  "saved_at": "2026-08-14T18:44:19+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-7c0b-42rw",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-48528",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-287",
+    "description": "Metacat 是数据存储库软件，可帮助研究人员保存、共享和发现数据。 Metacat 版本 2.0.0 到 3.4.0 在“/cn/v1/object”和“/cn/v2/object” REST API 端点中包含未经身份验证的 SQL 注入漏洞，原因是未经验证的用户输入可以传递到后端 SQL 数据库。可以修改`nodeId`参数来注入SQL命令，结果以错误消息的形式返回。 Metacat 将用户提供的数据附加到 SQL 查询中，而无需进行清理或参数化。这允许从底层 PostgresQL 数据库中提取任意数据，从而将受保护的信息完全暴露给攻击者。这是通过利用 Metacat 中的错误报告机制来实现的，其中 SQL 错误响应在 Metacat 返回的 XML 错误消息中镜像回调用者。例如，一种方法是使用 PostgreSQL“CAST”函数通过任意子查询的结果生成错误，然后将其注入 Metacat 返回的 XML 错误消息中。攻击者无需经过身份验证即可执行攻击。  此外，还可以执行在Metacat数据库中插入、更新和删除数据的任意SQL语句，从而导致数据库中的所有数据被完全泄露。针对这些漏洞已经开发并验证了完整的概念验证攻击。此漏洞的影响对于 DataONE 网络中的 Metacat 部署至关重要，其中数据库中的信息可能会被泄露、添加、更改或删除。这包括有关数据目录的管理信息、有关谁访问数据的访问日志信息、有关个人的识别信息（包括其 ORCID 标识符和客户端 IP 地址）、有关谁应该能够访问和修改数据的访问控制信息，以及数据系统的其他关键内部结构。此 SQL 注入漏洞已在 Metacat 3.4.1 版本中得到完全修复。如果无法立即升级到 Metacat 3.4.1，大多数部署可以通过禁用 web 应用程序部署中的“/cn” REST 端点来缓解该问题。 DataONE 网络中的成员存储库不需要或使用此 API，因为它仅由 DataONE 协调节点部署使用。因此，可以禁用此 API，而不会减少大多数部署的功能。要禁用易受攻击的端点，只需删除与两个 servlet“edu.ucsb.nceas.metacat.restservice.v1.CNRestServlet”和“edu.ucsb.nceas.metacat.restservice.v2.CNRestServlet”关联的 servlet 引擎中“/cn”端点的 servlet 和 servlet 映射即可。例如，在 Tomcat 中，从 Metacat 中的应用程序 web.xml 文件中删除相关的“servlet-mapping”元素。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "身份验证不当",
+    "kind_en": "认证不当",
+    "last_modified_time": "2026-08-15",
+    "level": "Critical",
+    "mps_id": "MPS-7c0b-42rw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-7c0b-42rw",
+        "name": "https://www.oscs1024.com/hd/MPS-7c0b-42rw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48528",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-48528"
+      },
+      {
+        "url": "https://github.com/NCEAS/metacat/security/advisories/GHSA-6g6j-wh5h-77h5",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-48528漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-48528",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-287",
+    "description": "Metacat is data repository software that helps researchers preserve, share, and discover data. Metacat versions 2.0.0 through 3.4.0 contain an unauthenticated SQL injection vulnerability in the `/cn/v1/object` and `/cn/v2/object` REST API endpoints due to unsanitized user input that can be passed through to the backend SQL database. The `nodeId` parameter can be modified to inject SQL commands, and the results are returned in error messages. Metacat appends the user-supplied data into the sql query without sanitization or parameterization. This allows extraction of arbitrary data from the underlying PostgresQL database, fully exposing protected information to the attacker. This is accomplished by leveraging the error reporting mechanisms in Metacat, where SQL error responses are mirrored back to the caller in the XML error message returned by Metacat. One approach, for example, is to use the PostgreSQL `CAST` function to generate an error with the results of an arbitrary subquery, which is then injected into the XML error message returned by Metacat. Attackers do not need to be authenticated to execute the attack.  In addition, arbitrary SQL statements that insert, update, and delete data in the Metacat database can be executed, resulting in full compromise of all data in the database. Full proof of concept attacks have been developed and verified for these vulnerabilities. The impact of this vulnerability is critical for Metacat deployments in the DataONE network where information from the database can be exfiltrated, added, changed, or deleted. This includes management information about the data catalog, access log information about who accessed data, identifying information about individuals including their ORCID identifier and client IP address, access control information about who should be able to access and modify data, and other critical internals of the data system. This sql injection vulnerability was remediated fully in Metacat version 3.4.1. If upgrading to Metacat 3.4.1 isn't immediately possible, most deployments can mitigate the issue by disabling the `/cn` REST endpoints in the webapp deployment. This API is not needed or used by member repositories in the DataONE network, as it is only used by the DataONE Coordinating Node deployments. Consequently, this API can be disabled without reduction of functionality for most deployments. To disable the vulnerable endpoints, simply remove the servlet and servlet-mapping for the `/cn` endpoints in the servlet engine associated with the two servlets, `edu.ucsb.nceas.metacat.restservice.v1.CNRestServlet` and `edu.ucsb.nceas.metacat.restservice.v2.CNRestServlet`. For example, in Tomcat, remove the relevant `servlet-mapping` elements from the application web.xml file in Metacat.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "身份验证不当",
+    "kind_en": "Improper Authentication",
+    "last_modified_time": "2026-08-15",
+    "level": "Critical",
+    "mps_id": "MPS-7c0b-42rw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-7c0b-42rw",
+        "name": "https://www.oscs1024.com/hd/MPS-7c0b-42rw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48528",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-48528"
+      },
+      {
+        "url": "https://github.com/NCEAS/metacat/security/advisories/GHSA-6g6j-wh5h-77h5",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-48528漏洞"
+  },
+  "first_saved_at": "2026-08-14T18:44:19+00:00"
+}

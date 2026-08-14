@@ -358,5 +358,19 @@
   "d47753de6fffaf4dc415111516f0b3740527f7d3": "CVE-2026-66270漏洞",
   "8fbddf836ac5f8f39498b43311b258c07231a1b9": "CVE-2026-53970漏洞",
   "7a1966d8bb8270afc36a369956bfe5e7a6f5c253": "ZeroBrew 版本 0.3.1 及更早版本在 Ruby 兼容性填充程序中包含缺少完整性验证漏洞，该漏洞允许网络攻击者通过在公式资源或基于 URL 的补丁 URL 中替换恶意内容而无需校验和验证来执行任意代码。攻击者可以拦截或替换 shim.rb 中辅助资源和补丁路径的下载，注入攻击者控制的构建步骤或在源构建期间通过“zb install --build-from-source”执行的源树修改，而不会发出任何完整性警告。",
-  "7746da20aec1ea41e18c0e1434328e931bff6c57": "不进行完整性检查的代码下载"
+  "7746da20aec1ea41e18c0e1434328e931bff6c57": "不进行完整性检查的代码下载",
+  "5db882aeb63bf203e506d3bc4c03b081a814ba32": "CVE-2026-73850漏洞",
+  "215ffa1b9b842fda186352ef2d803e62f78812e9": "Emlog 是一个开源网站构建系统。在2.6.20及更早版本中，ai.php中的queryDatabase函数存在SQL注入漏洞。",
+  "f856fa7278665caf769df102449b8ba071ff0c94": "CVE-2026-73849漏洞",
+  "9d841cac76b52b2fdb23a98a14ede1586075ee2a": "Emlog 是一个开源网站构建系统。在 2.6.26 及更早版本中，install.php 在没有身份验证的情况下接受 action=reinstall 并故意跳过已安装的检查，因为防护仅在 $act != 'reinstall' 时运行。远程攻击者可以提交主机名、dbuser、dbpasswd、dbname、dbprefix、用户名、密码和电子邮件值，以导致 file_put_contents('config.php', $config) 使用攻击者控制的数据库设置覆盖配置并创建新的管理员帐户。截至本次审查，尚无可用的固定版本。",
+  "41982158b8bbaf6cc541a2eab2bdc7b86270cabf": "CVE-2026-72970漏洞",
+  "afe06ebc5bc6d06e8bc2eeb105d018d7b665a880": "Microsoft Edge（基于 Chromium）中基于堆的缓冲区溢出允许未经授权的攻击者通过网络执行代码。",
+  "356a28941dcdb31fbeb69f6496949f3125f95801": "CVE-2026-63361漏洞",
+  "4490f8124630e50a60ba8018e5e64b3eadce3f95": "LimeSurvey Community Edition 7.0.5 在 HTML 编辑器弹出端点中包含经过身份验证的反射跨站点脚本漏洞。文本和名称查询参数通过黑名单清理器传递，然后在没有上下文适当的输出编码的情况下进行渲染。",
+  "4653b9b2fb489d6fc91dcbc6810dcd0e2ded313d": "CVE-2026-48528漏洞",
+  "34aa42bb6f5224b1db7010238106994c72ebd804": "Metacat 是数据存储库软件，可帮助研究人员保存、共享和发现数据。 Metacat 版本 2.0.0 到 3.4.0 在“/cn/v1/object”和“/cn/v2/object” REST API 端点中包含未经身份验证的 SQL 注入漏洞，原因是未经验证的用户输入可以传递到后端 SQL 数据库。可以修改`nodeId`参数来注入SQL命令，结果以错误消息的形式返回。 Metacat 将用户提供的数据附加到 SQL 查询中，而无需进行清理或参数化。这允许从底层 PostgresQL 数据库中提取任意数据，从而将受保护的信息完全暴露给攻击者。这是通过利用 Metacat 中的错误报告机制来实现的，其中 SQL 错误响应在 Metacat 返回的 XML 错误消息中镜像回调用者。例如，一种方法是使用 PostgreSQL“CAST”函数通过任意子查询的结果生成错误，然后将其注入 Metacat 返回的 XML 错误消息中。攻击者无需经过身份验证即可执行攻击。  此外，还可以执行在Metacat数据库中插入、更新和删除数据的任意SQL语句，从而导致数据库中的所有数据被完全泄露。针对这些漏洞已经开发并验证了完整的概念验证攻击。此漏洞的影响对于 DataONE 网络中的 Metacat 部署至关重要，其中数据库中的信息可能会被泄露、添加、更改或删除。这包括有关数据目录的管理信息、有关谁访问数据的访问日志信息、有关个人的识别信息（包括其 ORCID 标识符和客户端 IP 地址）、有关谁应该能够访问和修改数据的访问控制信息，以及数据系统的其他关键内部结构。此 SQL 注入漏洞已在 Metacat 3.4.1 版本中得到完全修复。如果无法立即升级到 Metacat 3.4.1，大多数部署可以通过禁用 web 应用程序部署中的“/cn” REST 端点来缓解该问题。 DataONE 网络中的成员存储库不需要或使用此 API，因为它仅由 DataONE 协调节点部署使用。因此，可以禁用此 API，而不会减少大多数部署的功能。要禁用易受攻击的端点，只需删除与两个 servlet“edu.ucsb.nceas.metacat.restservice.v1.CNRestServlet”和“edu.ucsb.nceas.metacat.restservice.v2.CNRestServlet”关联的 servlet 引擎中“/cn”端点的 servlet 和 servlet 映射即可。例如，在 Tomcat 中，从 Metacat 中的应用程序 web.xml 文件中删除相关的“servlet-mapping”元素。",
+  "06f650cc84dbe846dddcd78738c3e0ac38ebdd42": "CVE-2026-19847漏洞",
+  "34bb15f8f0bcd58133f9634ccde2023b29a44623": "TOTOLINK A800R 4.1.2cu.5137_B20200730 中发现安全漏洞。受影响的是组件wps.so的文件/cgi-bin/cstecgi.cgi的函数setWiFiWpsConfig。对参数 pin 的操作会导致基于堆栈的缓冲区溢出。攻击可以远程发起。该漏洞已向公众发布，可用于攻击。",
+  "02ed81e6a0f4107fc5d8f45c41575a6a922a0e16": "CVE-2026-19682漏洞",
+  "1c39b2249ec19490b188076d0d1cc1955683f5a5": "安全中心中存在命令注入漏洞，未经身份验证的远程攻击者可以利用此问题以服务帐户的权限在底层操作系统上执行任意命令。"
 }
