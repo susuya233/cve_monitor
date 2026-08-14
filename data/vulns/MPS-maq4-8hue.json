@@ -1,0 +1,141 @@
+{
+  "saved_at": "2026-08-14T20:25:04+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-maq4-8hue",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-50027",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-306",
+    "description": "mcp-memory-service 是一个面向 AI 智能体场景的开源 MCP 内存服务，其 HTTP REST 服务在 /api/documents/* 下的全部路由因未注入任何认证依赖，导致远程未认证攻击者无需任何凭据即可对存储中的记忆数据执行任意读取、写入和删除操作。\n受影响版本中，组件 mcp-memory-service（PyPI 包名 mcp-memory-service，源仓库 27b-io/mcp-memory-service，artifact 标识 mcp-memory-service）小于 10.67.1 的所有发布版本均受影响；其根因位于 src/mcp_memory_service/web/api/documents.py 文件头部第 33 行仅以 from fastapi import APIRouter, UploadFile, File, Form, HTTPException, BackgroundTasks 引入 FastAPI 符号而未引入 Depends，第 43 行通过 router = APIRouter() 实例化路由器时也未设置 dependencies= 形参，并且文件整体没有从 ..oauth.middleware 引入 require_read_access、require_write_access、AuthenticationResult，导致 upload_document、batch_upload_documents、get_upload_status、get_upload_history、remove_document、remove_documents_by_tags、search_document_content 这七个 /api/documents/* 路由处理器在签名中均缺少 Depends(require_read_access) / Depends(require_write_access) 形参，直接进入 storage.store、storage.delete_by_tags 等存储后端逻辑；当运维启用 HTTP REST 模式并配置 MCP_API_KEY 或 OAuth 时，/api/memories 路由会被 require_read_access/require_write_access 守卫拦截返回 401，但 /api/documents/* 路由仍允许任意请求访问，从而造成未授权的内存读写删链路。\n修复版本中通过，修复版本（10.67.1）中通过在 documents.py 头部 import 中补齐 Depends 并新增 from ..oauth.middleware import require_read_access, require_write_access, AuthenticationResult，然后为 upload_document、batch_upload_documents、remove_document、remove_documents_by_tags 等写操作路由添加 user: AuthenticationResult = Depends(require_write_access) 形参，为 get_upload_status、get_upload_history、search_document_content 等读操作路由添加 user: AuthenticationResult = Depends(require_read_access) 形参，使每一个进入 storage.store / storage.delete_by_tags 的请求都必须先经 MCP_API_KEY 或 OAuth 校验，未授权访问被 FastAPI 依赖注入在路由入口拦截，从而切断未认证读写删的利用路径；用户应升级至 10.67.1 及以上版本，或在升级前通过反向代理/防火墙限制对 /api/documents/* 的外部访问作为临时缓解。",
+    "effects": [
+      {
+        "comp_name": "mcp-memory-service",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0,10.67.1)",
+            "min_fixed_version": "10.67.1",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-07-03",
+    "level": "Critical",
+    "mps_id": "MPS-maq4-8hue",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-15",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/doobidoo/mcp-memory-service/security/advisories/GHSA-84hp-mqvj-3p8h",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-84hp-mqvj-3p8h",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "mcp-memory-service 文档 API 端点缺少身份认证漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-50027",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-306",
+    "description": "mcp-memory-service 是一个面向 AI 智能体场景的开源 MCP 内存服务，其 HTTP REST 服务在 /api/documents/* 下的全部路由因未注入任何认证依赖，导致远程未认证攻击者无需任何凭据即可对存储中的记忆数据执行任意读取、写入和删除操作。\n受影响版本中，组件 mcp-memory-service（PyPI 包名 mcp-memory-service，源仓库 27b-io/mcp-memory-service，artifact 标识 mcp-memory-service）小于 10.67.1 的所有发布版本均受影响；其根因位于 src/mcp_memory_service/web/api/documents.py 文件头部第 33 行仅以 from fastapi import APIRouter, UploadFile, File, Form, HTTPException, BackgroundTasks 引入 FastAPI 符号而未引入 Depends，第 43 行通过 router = APIRouter() 实例化路由器时也未设置 dependencies= 形参，并且文件整体没有从 ..oauth.middleware 引入 require_read_access、require_write_access、AuthenticationResult，导致 upload_document、batch_upload_documents、get_upload_status、get_upload_history、remove_document、remove_documents_by_tags、search_document_content 这七个 /api/documents/* 路由处理器在签名中均缺少 Depends(require_read_access) / Depends(require_write_access) 形参，直接进入 storage.store、storage.delete_by_tags 等存储后端逻辑；当运维启用 HTTP REST 模式并配置 MCP_API_KEY 或 OAuth 时，/api/memories 路由会被 require_read_access/require_write_access 守卫拦截返回 401，但 /api/documents/* 路由仍允许任意请求访问，从而造成未授权的内存读写删链路。\n修复版本中通过，修复版本（10.67.1）中通过在 documents.py 头部 import 中补齐 Depends 并新增 from ..oauth.middleware import require_read_access, require_write_access, AuthenticationResult，然后为 upload_document、batch_upload_documents、remove_document、remove_documents_by_tags 等写操作路由添加 user: AuthenticationResult = Depends(require_write_access) 形参，为 get_upload_status、get_upload_history、search_document_content 等读操作路由添加 user: AuthenticationResult = Depends(require_read_access) 形参，使每一个进入 storage.store / storage.delete_by_tags 的请求都必须先经 MCP_API_KEY 或 OAuth 校验，未授权访问被 FastAPI 依赖注入在路由入口拦截，从而切断未认证读写删的利用路径；用户应升级至 10.67.1 及以上版本，或在升级前通过反向代理/防火墙限制对 /api/documents/* 的外部访问作为临时缓解。",
+    "effects": [
+      {
+        "comp_name": "mcp-memory-service",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0,10.67.1)",
+            "min_fixed_version": "10.67.1",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-07-03",
+    "level": "Critical",
+    "mps_id": "MPS-maq4-8hue",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-15",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/doobidoo/mcp-memory-service/security/advisories/GHSA-84hp-mqvj-3p8h",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-84hp-mqvj-3p8h",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "mcp-memory-service 文档 API 端点缺少身份认证漏洞"
+  },
+  "first_saved_at": "2026-08-14T20:25:04+00:00"
+}
