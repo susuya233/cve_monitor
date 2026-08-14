@@ -324,5 +324,16 @@
   "4a4f3245680604ee8c48655108f972e2e3d6f08d": "CVE-2026-19794漏洞",
   "98500c6244d79454caff8ba6bc30f4823cd5315a": "由于输入清理和输出转义不足，WordPress 的 WP-Stats 插件在 2.56 及之前的所有版本中都容易受到存储跨站点脚本攻击。这使得未经身份验证的攻击者可以在页面中注入任意 Web 脚本，每当用户访问注入的页面时就会执行这些脚本。",
   "44cd94aa374717338644d8e064ab3fd3f6145a67": "CVE-2026-19821漏洞",
-  "1543c25e1679eb77064d8779d8ebbfe36c941e80": "Tenda AC12 15.03.06.23_multi_TD01 中发现了一个漏洞。该漏洞影响组件httpd Web管理界面的文件/goform/SetSysAutoRebbotCfg的formSetRebootTimer函数。对参数 restartTime 的这种操作会导致缓冲区溢出。攻击可能是远程发起的。该漏洞已被公开披露并可能被利用。"
+  "1543c25e1679eb77064d8779d8ebbfe36c941e80": "Tenda AC12 15.03.06.23_multi_TD01 中发现了一个漏洞。该漏洞影响组件httpd Web管理界面的文件/goform/SetSysAutoRebbotCfg的formSetRebootTimer函数。对参数 restartTime 的这种操作会导致缓冲区溢出。攻击可能是远程发起的。该漏洞已被公开披露并可能被利用。",
+  "65fb84aa60a457c1f1ca774a4355e8af90838530": "CVE-2026-72836漏洞",
+  "36b6c9f5b3d78ebb47986f9963ddf13ba8de1e8f": "2.63.19 之前的 FileBrowser 在自注册期间检查主目录所有权时不考虑不区分大小写的文件系统。当启用 Signup 和 CreateUserDir 并且 FileBrowser 的根位于不区分大小写的文件系统上（在 Windows/NTFS 上确认）时，两个仅字母大小写不同的自注册用户名（例如 CaseVictim 和 casevictim）将存储为不同的帐户，但解析为相同的物理主目录，因为范围所有权检查将持久范围作为精确的区分大小写的字符串进行比较。因此，第二个注册者可以通过经过身份验证的 HTTP 端点读取、覆盖和删除另一个帐户的文件，而无需现有帐户或受害者交互。",
+  "97ec87729d0701cad4c87d0cc7349fc36c932246": "大小写敏感处理不当",
+  "d89ee922de2be60df231567f1914401b3c96b4c7": "CVE-2026-72837漏洞",
+  "a649f5caf4564721c7759529d7fd9869f623ab5a": "2.63.20 之前的文件浏览器版本无法遵守代理和挂钩身份验证自动配置路径中的 createUserDir 隔离。具有有效的上游身份验证凭据的攻击者可以通过利用服务器根范围分配来读取、修改、删除和共享属于其他用户的文件。",
+  "74170b9970a40cad7f3b617602228a40997de1e9": "CVE-2026-72859漏洞",
+  "38e51f3d0e564ead11641e0419789128e195a936": "3.40.0 之前的 Budibase 版本 3.39.4 在 S3 附件上传端点中包含授权回归，允许 BASIC 用户通过向附件端点发送 POST 请求来获取 S3 PutObject 预签名 URL。路由从 BUILDER 权限检查更改为 TABLE/WRITE 检查，BASIC 用户默认持有该权限。攻击者可以在请求正文中指定任意 S3 存储桶，以生成预签名 URL，用于写入可通过存储的 IAM 凭证访问的任何存储桶，从而实现未经授权的文件上传。",
+  "f9a34c7b305ad5d467351190f743366ba86ca8f2": "CVE-2026-72838漏洞",
+  "337bea2328151e8f66cac83828a31306f53da945": "2.63.19 之前的 FileBrowser 版本无法强制执行 TUS 可恢复上传 PATCH 端点中声明的上传长度，从而允许经过身份验证的用户将任意数据写入磁盘。攻击者可以发送超出声明的上传长度的超大请求体，耗尽可用磁盘空间并导致服务不可用。",
+  "fe25454a00d99af8d552ff039cd9dba2ec7b3fb6": "CVE-2026-72833漏洞",
+  "5f22c7f3bb2fc61de14398bf363611db606b8429": "Grav API 插件 (getgrav/grav-plugin-api) 版本 >= 1.0.6 和 <= 1.0.11 包含权限提升漏洞。在超级管理员帐户上创建的作用域 API 密钥会绕过其在四个 isSuperAdmin() 门控写入端点（在 GroupsController、AccountsConfigController、PreferencesController 和 DashboardWidgetController 中）声明的作用域上限。这些端点通过超级管理员提前返回进行授权，该提前返回从不调用 requirePermission()（范围上限的唯一执行点），因此“只读”范围的密钥（例如 api.pages.read）可以执行仅超级写入操作，包括重写组 ACL 映射以向任意帐户授予超级管理员权限。因此，泄露或委托的只读 CI/监控密钥可以获得完整的超级管理员写入能力。已在 1.0.13 中修复。"
 }
