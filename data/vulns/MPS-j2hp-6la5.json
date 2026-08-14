@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-08-14T09:54:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-j2hp-6la5",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-53790",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "rsync 是开源文件同步工具，用于在本地与远程目录之间进行增量复制和备份，并提供 daemon 与 rsync-ssl 封装。\n受影响版本中，多处把对端或主机可控字符串未经充分引用送进 shell：open_socket_out_wrapped() 把主机名原样替换进 RSYNC_CONNECT_PROG 的 %H；daemon 的 expand_vars() 把 %RSYNC_*% 展开进 pre/post/early exec hook；rsync-ssl 把 hostspec 无字符策略地拼进 openssl/stunnel 命令行；safe_arg() 的 SHELL_CHARS 未包含换行和回车，远程路径可拆出第二条命令。攻击者可注入元字符或换行，在 rsync 进程或调用方权限下执行任意命令。\n修复版本中通过对 %H 做 shell 引用并拒绝危险主机字符、对 hook 展开值拒绝 shell 语法、在 rsync-ssl 调用助手前校验主机名、以及把换行和回车加入远程 shell 引用集，切断不可信值进入命令解析的路径。",
+    "effects": [
+      {
+        "comp_name": "rsync",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.5.0)",
+            "min_fixed_version": "3.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "低",
+    "fix_suggestion": "建议修复",
+    "kind": "参数注入或修改",
+    "kind_en": "命令中参数分隔符的不正确中和（“参数注入”）",
+    "last_modified_time": "2026-08-14",
+    "level": "Critical",
+    "mps_id": "MPS-j2hp-6la5",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-08-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-j2hp-6la5",
+        "name": "https://www.oscs1024.com/hd/MPS-j2hp-6la5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-53790",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-53790"
+      },
+      {
+        "url": "https://github.com/RsyncProject/rsync/releases/tag/v3.5.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/RsyncProject/rsync/security/advisories/GHSA-5hcf-7xxm-rmqq",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/rsync-command-injection-via-multiple-code-paths",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/RsyncProject/rsync/commit/d199b43149ef8850382e72d6145a5826db216f66",
+        "name": "Commit"
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "poc",
+      "专家校准",
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "rsync命令注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-53790",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "rsync 是开源文件同步工具，用于在本地与远程目录之间进行增量复制和备份，并提供 daemon 与 rsync-ssl 封装。\n受影响版本中，多处把对端或主机可控字符串未经充分引用送进 shell：open_socket_out_wrapped() 把主机名原样替换进 RSYNC_CONNECT_PROG 的 %H；daemon 的 expand_vars() 把 %RSYNC_*% 展开进 pre/post/early exec hook；rsync-ssl 把 hostspec 无字符策略地拼进 openssl/stunnel 命令行；safe_arg() 的 SHELL_CHARS 未包含换行和回车，远程路径可拆出第二条命令。攻击者可注入元字符或换行，在 rsync 进程或调用方权限下执行任意命令。\n修复版本中通过对 %H 做 shell 引用并拒绝危险主机字符、对 hook 展开值拒绝 shell 语法、在 rsync-ssl 调用助手前校验主机名、以及把换行和回车加入远程 shell 引用集，切断不可信值进入命令解析的路径。",
+    "effects": [
+      {
+        "comp_name": "rsync",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.5.0)",
+            "min_fixed_version": "3.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "低",
+    "fix_suggestion": "Recommend",
+    "kind": "参数注入或修改",
+    "kind_en": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "last_modified_time": "2026-08-14",
+    "level": "Critical",
+    "mps_id": "MPS-j2hp-6la5",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-08-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-j2hp-6la5",
+        "name": "https://www.oscs1024.com/hd/MPS-j2hp-6la5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-53790",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-53790"
+      },
+      {
+        "url": "https://github.com/RsyncProject/rsync/releases/tag/v3.5.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/RsyncProject/rsync/security/advisories/GHSA-5hcf-7xxm-rmqq",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/rsync-command-injection-via-multiple-code-paths",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/RsyncProject/rsync/commit/d199b43149ef8850382e72d6145a5826db216f66",
+        "name": "Commit"
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "poc",
+      "专家校准",
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "rsync命令注入漏洞"
+  },
+  "first_saved_at": "2026-08-14T09:54:32+00:00"
+}
