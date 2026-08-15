@@ -1,5 +1,5 @@
 {
-  "saved_at": "2026-08-15T08:20:32+00:00",
+  "saved_at": "2026-08-15T09:20:00+00:00",
   "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
@@ -35,8 +35,22 @@
     "cvss_score": 7.2,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
     "cwe": "CWE-79",
-    "description": "由于输入清理和输出转义不足，WordPress 的 Invisible Anti-Spam & CAPTCHA — reCAPTCHA Alternative for All Forms 插件很容易通过 'action' 参数在 5.1 及之前的所有版本中受到存储跨站点脚本攻击。这使得未经身份验证的攻击者可以在页面中注入任意 Web 脚本，每当用户访问注入的页面时就会执行这些脚本。存储的有效负载由任何未经身份验证的 admin-ajax.php 请求写入，其操作值与插件的显式操作列表中的条目匹配，该列表在激活时为常见表单构建器自动填充，并且不需要身份验证门即可到达保存路径。",
-    "effects": [],
+    "description": "Invisible Anti-Spam & CAPTCHA — reCAPTCHA Alternative for All Forms 是开源 WordPress 插件（GPLv2，仓库在 WordPress.org Subversion），由 Matthias Nordwig 维护，可在不打扰用户的情况下为登录、注册、评论以及 Contact Form 7、Elementor、WPForms、Gravity Forms 等主流表单构建器提供反垃圾保护。\n受影响版本中，includes/class-stamp.php 中 Stamp::__construct() 通过 $this->whole_request_data['action'] 读取未登录 admin-ajax.php 请求里的 action 参数，仅经 sanitize_text_field() 处理就交给 Stamp::save_for_analysis()，再通过 Stamp::save_message() 以 $wpdb->insert() 直接写入 wp_recaptcha_gdpr_message_rgm 表的 rgm_action 列；随后 includes/class-message-page.php 在渲染消息列表时，把数据库里取出的 $rgm_action 原样拼接到 onSubmit 内联 JS 字符串字面量里。攻击者发送一个未登录 POST 到 /wp-admin/admin-ajax.php，在 action 参数里携带如 '+alert(1)+' 之类的 JS 字符串闭合序列即可写入存储载荷，任何打开受感染消息页面的管理员访问时都会在浏览器中执行任意脚本。\n修复版本中通过在 includes/class-message-page.php 渲染前对 $rgm_action 同时应用 esc_attr() 与 esc_js()，并在拼接到 onSubmit 时改用 esc_js() 转义后的 $rgm_action_js，从输出阶段切断闭合单引号 JS 字符串的路径，同时保留与已存 explicit actions 白名单比对所需的原始值 $rgm_action_raw。",
+    "effects": [
+      {
+        "comp_name": "gdpr-compliant-recaptcha-for-all-forms",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -83,7 +97,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-16145漏洞",
+    "title": "GDPR reCAPTCHA 插件存储型 XSS",
     "_translated": true
   },
   "detail_original": {
@@ -117,8 +131,22 @@
     "cvss_score": 7.2,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
     "cwe": "CWE-79",
-    "description": "The Invisible Anti-Spam & CAPTCHA — reCAPTCHA Alternative for All Forms plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'action' parameter in all versions up to, and including, 5.1 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The stored payload is written by any unauthenticated admin-ajax.php request whose action value matches an entry in the plugin's explicit-actions list, which is auto-populated for common form builders at activation and requires no authentication gate to reach the save path.",
-    "effects": [],
+    "description": "Invisible Anti-Spam & CAPTCHA — reCAPTCHA Alternative for All Forms 是开源 WordPress 插件（GPLv2，仓库在 WordPress.org Subversion），由 Matthias Nordwig 维护，可在不打扰用户的情况下为登录、注册、评论以及 Contact Form 7、Elementor、WPForms、Gravity Forms 等主流表单构建器提供反垃圾保护。\n受影响版本中，includes/class-stamp.php 中 Stamp::__construct() 通过 $this->whole_request_data['action'] 读取未登录 admin-ajax.php 请求里的 action 参数，仅经 sanitize_text_field() 处理就交给 Stamp::save_for_analysis()，再通过 Stamp::save_message() 以 $wpdb->insert() 直接写入 wp_recaptcha_gdpr_message_rgm 表的 rgm_action 列；随后 includes/class-message-page.php 在渲染消息列表时，把数据库里取出的 $rgm_action 原样拼接到 onSubmit 内联 JS 字符串字面量里。攻击者发送一个未登录 POST 到 /wp-admin/admin-ajax.php，在 action 参数里携带如 '+alert(1)+' 之类的 JS 字符串闭合序列即可写入存储载荷，任何打开受感染消息页面的管理员访问时都会在浏览器中执行任意脚本。\n修复版本中通过在 includes/class-message-page.php 渲染前对 $rgm_action 同时应用 esc_attr() 与 esc_js()，并在拼接到 onSubmit 时改用 esc_js() 转义后的 $rgm_action_js，从输出阶段切断闭合单引号 JS 字符串的路径，同时保留与已存 explicit actions 白名单比对所需的原始值 $rgm_action_raw。",
+    "effects": [
+      {
+        "comp_name": "gdpr-compliant-recaptcha-for-all-forms",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -165,7 +193,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-16145漏洞"
+    "title": "GDPR reCAPTCHA 插件存储型 XSS"
   },
   "first_saved_at": "2026-08-15T05:19:49+00:00"
 }

@@ -441,5 +441,6 @@
   "086cf472b1d8fc1a4a5adb43aaaa66d5d0b3cf03": "WordPress 的批发市场插件在 2.2.2 及以下版本中很容易通过 ced_wholesale_request_send AJAX 操作进行权限升级。 ced_wholesale_request_send_callback() 处理程序仅验证随机数（通过前端的 wp_localize_script 向任何经过身份验证的用户公开）以及调用者是否具有肯定的用户 ID，然后使用客户端提供的 role_required POST 参数调用 WP_User::add_role() ，而不将该值限制为批发角色的白名单。当站点管理员启用“直接分配请求的角色”选项时，经过身份验证的具有订阅者级别及以上访问权限的攻击者可以将其权限提升为管理员。",
   "6172a63aee93820f6494d6eaa0d9c15f647f049c": "CVE-2026-15826漏洞",
   "a7cd49943342f7a43f8dbccb3e8bb9c849173886": "WordPress 的用户配置文件生成器插件在 3.16.4 及以下版本中容易通过类型混淆而绕过身份验证。这是由于 wppb_log_in_user() 函数在执行 is_wp_error() 检查之前对 wp_insert_user() 的返回值调用了 absint() — 当使用 61-70 个字符的用户名提交注册时，WordPress 核心会使用 WP_Error 对象拒绝它，但在错误检查可以短路执行之前，absint() 将该对象强制为整数 1，从而导致插件绑定并返回瞬态支持autologin nonce 与用户 ID 1 相关联。这使得未经身份验证的攻击者可以以站点的管理员帐户（用户 ID 1）登录，从而导致站点的完全管理接管。",
-  "0674ac23e9129c418267c6713a9df843d2e17a06": "类型转换或转换不正确"
+  "0674ac23e9129c418267c6713a9df843d2e17a06": "类型转换或转换不正确",
+  "5b20892e3373074887e1e8f08cbab5514c0253b1": "GDPR reCAPTCHA 插件存储型 XSS"
 }
