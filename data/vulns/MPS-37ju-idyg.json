@@ -1,0 +1,177 @@
+{
+  "saved_at": "2026-08-15T08:20:27+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-37ju-idyg",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-15826",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-704",
+    "description": "WordPress 的用户配置文件生成器插件在 3.16.4 及以下版本中容易通过类型混淆而绕过身份验证。这是由于 wppb_log_in_user() 函数在执行 is_wp_error() 检查之前对 wp_insert_user() 的返回值调用了 absint() — 当使用 61-70 个字符的用户名提交注册时，WordPress 核心会使用 WP_Error 对象拒绝它，但在错误检查可以短路执行之前，absint() 将该对象强制为整数 1，从而导致插件绑定并返回瞬态支持autologin nonce 与用户 ID 1 相关联。这使得未经身份验证的攻击者可以以站点的管理员帐户（用户 ID 1）登录，从而导致站点的完全管理接管。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不正确的类型转换",
+    "kind_en": "类型转换或转换不正确",
+    "last_modified_time": "2026-08-15",
+    "level": "Critical",
+    "mps_id": "MPS-37ju-idyg",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-37ju-idyg",
+        "name": "https://www.oscs1024.com/hd/MPS-37ju-idyg"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15826",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-15826"
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/features/functions.php#L1481",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/front-end/class-formbuilder.php#L262",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/front-end/class-formbuilder.php#L364",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/front-end/class-formbuilder.php#L742",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/front-end/class-formbuilder.php#L945",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/front-end/default-fields/username/username.php#L28",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/front-end/default-fields/username/username.php#L49",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3609855/profile-builder",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/9f606fba-f779-42ea-a160-6c3b20dc5e79?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-15826漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-15826",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-704",
+    "description": "The User Profile Builder plugin for WordPress is vulnerable to Authentication Bypass via Type Confusion in versions up to, and including, 3.16.4. This is due to the wppb_log_in_user() function calling absint() on the return value of wp_insert_user() before performing an is_wp_error() check — when a registration is submitted with a 61–70 character username, WordPress core rejects it with a WP_Error object, but absint() coerces that object to the integer 1 before the error check can short-circuit execution, causing the plugin to bind and return a transient-backed autologin nonce tied to user ID 1. This makes it possible for unauthenticated attackers to log in as the site's Administrator account (user ID 1), resulting in full administrative takeover of the site.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不正确的类型转换",
+    "kind_en": "Incorrect Type Conversion or Cast",
+    "last_modified_time": "2026-08-15",
+    "level": "Critical",
+    "mps_id": "MPS-37ju-idyg",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-37ju-idyg",
+        "name": "https://www.oscs1024.com/hd/MPS-37ju-idyg"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15826",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-15826"
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/features/functions.php#L1481",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/front-end/class-formbuilder.php#L262",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/front-end/class-formbuilder.php#L364",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/front-end/class-formbuilder.php#L742",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/front-end/class-formbuilder.php#L945",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/front-end/default-fields/username/username.php#L28",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/profile-builder/tags/3.16.4/front-end/default-fields/username/username.php#L49",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3609855/profile-builder",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/9f606fba-f779-42ea-a160-6c3b20dc5e79?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-15826漏洞"
+  },
+  "first_saved_at": "2026-08-15T08:20:27+00:00"
+}
