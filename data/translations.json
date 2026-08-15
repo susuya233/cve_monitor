@@ -442,5 +442,9 @@
   "6172a63aee93820f6494d6eaa0d9c15f647f049c": "CVE-2026-15826漏洞",
   "a7cd49943342f7a43f8dbccb3e8bb9c849173886": "WordPress 的用户配置文件生成器插件在 3.16.4 及以下版本中容易通过类型混淆而绕过身份验证。这是由于 wppb_log_in_user() 函数在执行 is_wp_error() 检查之前对 wp_insert_user() 的返回值调用了 absint() — 当使用 61-70 个字符的用户名提交注册时，WordPress 核心会使用 WP_Error 对象拒绝它，但在错误检查可以短路执行之前，absint() 将该对象强制为整数 1，从而导致插件绑定并返回瞬态支持autologin nonce 与用户 ID 1 相关联。这使得未经身份验证的攻击者可以以站点的管理员帐户（用户 ID 1）登录，从而导致站点的完全管理接管。",
   "0674ac23e9129c418267c6713a9df843d2e17a06": "类型转换或转换不正确",
-  "5b20892e3373074887e1e8f08cbab5514c0253b1": "GDPR reCAPTCHA 插件存储型 XSS"
+  "5b20892e3373074887e1e8f08cbab5514c0253b1": "GDPR reCAPTCHA 插件存储型 XSS",
+  "1d895433490d3e7ddee687f60b6efc10b8c655f1": "CVE-2026-16142漏洞",
+  "1e2febdda55293d6c870beea3bcbbb8b445dc99f": "WordPress 的 TrueBooker 插件在 1.2.6 及之前的所有版本中都容易受到帐户接管的攻击。这是因为 add_front_user_update() AJAX 处理程序为未经身份验证的用户注册并接受任意 truebooker_wp_user_id 值，该值直接传递给 wp_update_user() 而不验证身份验证或所有权。这使得未经身份验证的攻击者可以通过提交目标用户 ID 和攻击者控制的电子邮件地址来更改任何 WordPress 用户帐户电子邮件地址（包括管理员）。然后，攻击者可以使用本机 WordPress 密码重置流程在攻击者控制的电子邮件地址处接收重置链接并接管该帐户。",
+  "b7078697c396de92f80a9defe1b75b1feeb25a00": "CVE-2026-15142漏洞",
+  "a8db9f0b8507ad9fbb030787ab81e9ddd82c9408": "WordPress 的 Real Estate Manager Pro 插件在 12.8.6 及之前的所有版本中都容易受到权限升级的影响。这是由于allow_attachment_actions() 函数中的能力处理不当造成的，该函数可能会在用户能力检查期间将目标用户 ID 视为媒体附件 ID。这使得具有订阅者级及以上访问权限的经过身份验证的攻击者可以编辑管理员帐户，并在目标用户 ID 与现有媒体附件的 ID 匹配时将其权限升级为管理员。"
 }
