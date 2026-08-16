@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-16T13:26:21+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-16T13:26:18+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-oxbf-dl8t",
+  "source_page": "https://www.oscs1024.com/hd/MPS-m9ls-dtj1",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,73 +21,53 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-2497",
+    "cve_id": "CVE-2026-74251",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
-          "severity": "high",
-          "base_score": 7.2
+          "source": "security@joomla.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-89",
-    "description": "WordPress 的 Gallery by BestWebSoft 插件在 4.7.9 及之前的所有版本中都容易通过“_gallery_order_{post_id}”参数数组键受到 SQL 注入攻击。这是由于对用户提供的参数进行了不充分的转义以及对现有 SQL 查询缺乏充分的准备。 `gllr_save_postdata()` 函数将 `$_POST` 中未经清理的数组键直接存储到 post 元中，稍后在没有准备语句的 SQL 查询中使用。这使得具有编辑级及以上访问权限的经过身份验证的攻击者可以将额外的 SQL 查询附加到现有的查询中，这些查询可用于从数据库中提取敏感信息。",
+    "description": "Joomla 扩展 - phoca.cz - 通过 Phoca Cart 5.0.0-6.1.16 中的属性过滤器进行未经身份验证的 SQL 注入 - Phoca Cart 公共商店商品页面上的 a[]（属性）和 s[]（规范）GET 数组参数原始连接到 SQL WHERE 子句中，无需参数化或转义。未经身份验证的攻击者可以通过这些参数注入任意 SQL，从而通过基于时间的盲技术实现完整的数据库提取。",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "建议修复",
+    "fix_suggestion": "可选修复",
     "kind": "SQL注入",
     "kind_en": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
     "last_modified_time": "2026-08-16",
-    "level": "High",
-    "mps_id": "MPS-oxbf-dl8t",
+    "level": "Critical",
+    "mps_id": "MPS-m9ls-dtj1",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-16",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-oxbf-dl8t",
-        "name": "https://www.oscs1024.com/hd/MPS-oxbf-dl8t"
+        "url": "https://www.oscs1024.com/hd/MPS-m9ls-dtj1",
+        "name": "https://www.oscs1024.com/hd/MPS-m9ls-dtj1"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-2497",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-2497"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74251",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74251"
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/tags/4.7.6/gallery-plugin.php#L1052",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/tags/4.7.6/includes/class-gllr-media-table.php#L58",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/trunk/gallery-plugin.php#L1052",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/trunk/includes/class-gllr-media-table.php#L58",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3609291%40gallery-plugin&new=3609291%40gallery-plugin",
-        "name": ""
-      },
-      {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/884b97b7-d023-4752-81b1-086ab022f85e?source=cve",
+        "url": "https://www.phoca.cz/phocacart",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-2497漏洞",
+    "title": "CVE-2026-74251漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -107,73 +87,53 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-2497",
+    "cve_id": "CVE-2026-74251",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
-          "severity": "high",
-          "base_score": 7.2
+          "source": "security@joomla.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-89",
-    "description": "The Gallery by BestWebSoft plugin for WordPress is vulnerable to SQL Injection via the '_gallery_order_{post_id}' parameter array keys in all versions up to, and including, 4.7.9. This is due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. The `gllr_save_postdata()` function stores unsanitized array keys from `$_POST` directly into post meta, which are later used in SQL queries without prepared statements. This makes it possible for authenticated attackers, with Editor-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database.",
+    "description": "Joomla Extension - phoca.cz -  Unauthenticated SQL injection via attribute filter in Phoca Cart 5.0.0-6.1.16 - The a[] (attribute) and s[] (specification) GET array parameters on Phoca Cart's public shop items page are concatenated raw into SQL WHERE clauses without parameterization or escaping. An unauthenticated attacker can inject arbitrary SQL through these parameters, enabling full database extraction via time-based blind techniques.",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Recommend",
+    "fix_suggestion": "Optional",
     "kind": "SQL注入",
     "kind_en": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
     "last_modified_time": "2026-08-16",
-    "level": "High",
-    "mps_id": "MPS-oxbf-dl8t",
+    "level": "Critical",
+    "mps_id": "MPS-m9ls-dtj1",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-16",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-oxbf-dl8t",
-        "name": "https://www.oscs1024.com/hd/MPS-oxbf-dl8t"
+        "url": "https://www.oscs1024.com/hd/MPS-m9ls-dtj1",
+        "name": "https://www.oscs1024.com/hd/MPS-m9ls-dtj1"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-2497",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-2497"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74251",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74251"
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/tags/4.7.6/gallery-plugin.php#L1052",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/tags/4.7.6/includes/class-gllr-media-table.php#L58",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/trunk/gallery-plugin.php#L1052",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/trunk/includes/class-gllr-media-table.php#L58",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3609291%40gallery-plugin&new=3609291%40gallery-plugin",
-        "name": ""
-      },
-      {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/884b97b7-d023-4752-81b1-086ab022f85e?source=cve",
+        "url": "https://www.phoca.cz/phocacart",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-2497漏洞"
+    "title": "CVE-2026-74251漏洞"
   },
-  "first_saved_at": "2026-08-16T07:25:29+00:00"
+  "first_saved_at": "2026-08-16T13:26:18+00:00"
 }
