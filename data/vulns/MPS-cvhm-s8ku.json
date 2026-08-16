@@ -1,0 +1,137 @@
+{
+  "saved_at": "2026-08-16T15:15:28+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-cvhm-s8ku",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74788",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "7.0.0 之前的 Scriban（受影响版本 <= 6.6.0）在 string.pad_left 和 string.pad_right 模板函数中包含不受控制的内存分配漏洞，这些函数在委托给 .NET 的 String.PadLeft/PadRight 之前不对宽度参数执行验证。当应用程序将 Scriban 暴露给不受信任的模板输入时，攻击者可以提供任意大的宽度值（例如 500,000,000），以在单个调用中触发 ~1GB 内存分配，从而导致 OutOfMemoryException 和拒绝服务。 TemplateContext.LimitToString 限制不会阻止这种情况，因为它仅在字符串完全分配后才强制执行。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-08-16",
+    "level": "High",
+    "mps_id": "MPS-cvhm-s8ku",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-16",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-cvhm-s8ku",
+        "name": "https://www.oscs1024.com/hd/MPS-cvhm-s8ku"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74788",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74788"
+      },
+      {
+        "url": "https://github.com/scriban/scriban/security/advisories/GHSA-v66j-x4hw-fv9g",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/scriban-before-denial-of-service-via-string-pad-left-pad-right",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-74788漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74788",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "Scriban before 7.0.0 (affected versions <= 6.6.0) contains an uncontrolled memory allocation vulnerability in the string.pad_left and string.pad_right template functions, which perform no validation on the width parameter before delegating to .NET's String.PadLeft/PadRight. When an application exposes Scriban to untrusted template input, an attacker can supply an arbitrarily large width value (e.g., 500,000,000) to trigger ~1GB memory allocations in a single call, resulting in OutOfMemoryException and denial of service. The TemplateContext.LimitToString limit does not prevent this because it is only enforced after the string has been fully allocated.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-08-16",
+    "level": "High",
+    "mps_id": "MPS-cvhm-s8ku",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-16",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-cvhm-s8ku",
+        "name": "https://www.oscs1024.com/hd/MPS-cvhm-s8ku"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74788",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74788"
+      },
+      {
+        "url": "https://github.com/scriban/scriban/security/advisories/GHSA-v66j-x4hw-fv9g",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/scriban-before-denial-of-service-via-string-pad-left-pad-right",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-74788漏洞"
+  },
+  "first_saved_at": "2026-08-16T15:15:28+00:00"
+}
