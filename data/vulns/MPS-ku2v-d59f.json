@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-16T17:14:20+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-16T17:14:22+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-9fth-cdp4",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ku2v-d59f",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,29 +21,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-74789",
+    "cve_id": "CVE-2026-74785",
     "cvss": {
       "cvssv31": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-          "severity": "high",
-          "base_score": 7.5
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "medium",
+          "base_score": 6.5
         }
       ],
       "cvssv4": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.7
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 8.7,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-400",
-    "description": "7.0.0 之前的 Scriban（受影响 <= 6.6.0）仅将其 LoopLimit 约束应用于脚本循环语句，而不应用于内置运算符和函数内执行的昂贵迭代。因此，单个表达式如 {{ 1..1000000 | array.size }} — 或内存放大表达式（例如 {{ 'A' * 200000000 }}） — 即使 LoopLimit 配置为非常小的值，也可能会强制消耗大量 CPU 或内存，从而导致拒绝服务。渲染攻击者控制的模板并依赖 LoopLimit 安全执行的应用程序会受到影响。",
+    "description": "7.0.0 之前的 Scriban 在表达式计算中包含三个不同的拒绝服务漏洞，这些漏洞通过无界字符串乘法、不受控制的 BigInteger 移位操作以及通过内置函数中的范围枚举绕过 LoopLimit 来绕过现有的安全控制。能够提供模板的攻击者可能会导致内存不足异常或 CPU 耗尽，通常会终止整个主机进程。",
     "effects": [],
     "epss": -1,
     "exp": false,
@@ -55,31 +55,31 @@
     "kind_en": "不受控制的资源消耗",
     "last_modified_time": "2026-08-16",
     "level": "High",
-    "mps_id": "MPS-9fth-cdp4",
+    "mps_id": "MPS-ku2v-d59f",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-16",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-9fth-cdp4",
-        "name": "https://www.oscs1024.com/hd/MPS-9fth-cdp4"
+        "url": "https://www.oscs1024.com/hd/MPS-ku2v-d59f",
+        "name": "https://www.oscs1024.com/hd/MPS-ku2v-d59f"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74789",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74789"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74785",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74785"
       },
       {
-        "url": "https://github.com/scriban/scriban/security/advisories/GHSA-c875-h985-hvrc",
+        "url": "https://github.com/scriban/scriban/security/advisories/GHSA-xw6w-9jjh-p9cr",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/scriban-before-looplimit-bypass-via-built-in-operations",
+        "url": "https://www.vulncheck.com/advisories/scriban-before-denial-of-service-via-unbounded-resource-consumption",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-74789漏洞",
+    "title": "CVE-2026-74785漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -99,29 +99,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-74789",
+    "cve_id": "CVE-2026-74785",
     "cvss": {
       "cvssv31": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-          "severity": "high",
-          "base_score": 7.5
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "medium",
+          "base_score": 6.5
         }
       ],
       "cvssv4": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.7
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 8.7,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-400",
-    "description": "Scriban before 7.0.0 (affected <= 6.6.0) applies its LoopLimit constraint only to script loop statements and not to expensive iteration performed inside built-in operators and functions. As a result, a single expression such as {{ 1..1000000 | array.size }} — or a memory-amplification expression such as {{ 'A' * 200000000 }} — can force large CPU or memory consumption even when LoopLimit is configured to a very small value, resulting in denial of service. Applications that render attacker-controlled templates and rely on LoopLimit for safe execution are affected.",
+    "description": "Scriban before 7.0.0 contains three distinct denial-of-service vulnerabilities in expression evaluation that bypass existing safety controls through unbounded string multiplication, uncontrolled BigInteger shift operations, and LoopLimit bypass via range enumeration in builtin functions. Attackers who can supply templates can cause out-of-memory exceptions or CPU exhaustion, typically terminating the entire host process.",
     "effects": [],
     "epss": -1,
     "exp": false,
@@ -133,31 +133,31 @@
     "kind_en": "Uncontrolled Resource Consumption",
     "last_modified_time": "2026-08-16",
     "level": "High",
-    "mps_id": "MPS-9fth-cdp4",
+    "mps_id": "MPS-ku2v-d59f",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-16",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-9fth-cdp4",
-        "name": "https://www.oscs1024.com/hd/MPS-9fth-cdp4"
+        "url": "https://www.oscs1024.com/hd/MPS-ku2v-d59f",
+        "name": "https://www.oscs1024.com/hd/MPS-ku2v-d59f"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74789",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74789"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74785",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74785"
       },
       {
-        "url": "https://github.com/scriban/scriban/security/advisories/GHSA-c875-h985-hvrc",
+        "url": "https://github.com/scriban/scriban/security/advisories/GHSA-xw6w-9jjh-p9cr",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/scriban-before-looplimit-bypass-via-built-in-operations",
+        "url": "https://www.vulncheck.com/advisories/scriban-before-denial-of-service-via-unbounded-resource-consumption",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-74789漏洞"
+    "title": "CVE-2026-74785漏洞"
   },
-  "first_saved_at": "2026-08-16T15:15:24+00:00"
+  "first_saved_at": "2026-08-16T17:14:22+00:00"
 }

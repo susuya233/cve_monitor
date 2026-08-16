@@ -530,5 +530,7 @@
   "f96c72e985033a47df3df53155fffcba2334004e": "CVE-2026-74787漏洞",
   "dbf19f287799e44cb55de2b0457c7883ec211cb0": "7.0.0 之前的 Scriban 在 object.to_json 内置函数中包含不受控制的递归漏洞，缺乏深度限制和循环引用检测。攻击者可以使用自引用对象制作模板来触发无界递归，从而导致 StackOverflowException 致命地终止托管 .NET 进程。",
   "73d0c9d6c339a89d78ab0f1d49c85e0d7e995638": "CVE-2026-74788漏洞",
-  "2a912a7df537d324593f8c3196ac57918f257e10": "7.0.0 之前的 Scriban（受影响版本 <= 6.6.0）在 string.pad_left 和 string.pad_right 模板函数中包含不受控制的内存分配漏洞，这些函数在委托给 .NET 的 String.PadLeft/PadRight 之前不对宽度参数执行验证。当应用程序将 Scriban 暴露给不受信任的模板输入时，攻击者可以提供任意大的宽度值（例如 500,000,000），以在单个调用中触发 ~1GB 内存分配，从而导致 OutOfMemoryException 和拒绝服务。 TemplateContext.LimitToString 限制不会阻止这种情况，因为它仅在字符串完全分配后才强制执行。"
+  "2a912a7df537d324593f8c3196ac57918f257e10": "7.0.0 之前的 Scriban（受影响版本 <= 6.6.0）在 string.pad_left 和 string.pad_right 模板函数中包含不受控制的内存分配漏洞，这些函数在委托给 .NET 的 String.PadLeft/PadRight 之前不对宽度参数执行验证。当应用程序将 Scriban 暴露给不受信任的模板输入时，攻击者可以提供任意大的宽度值（例如 500,000,000），以在单个调用中触发 ~1GB 内存分配，从而导致 OutOfMemoryException 和拒绝服务。 TemplateContext.LimitToString 限制不会阻止这种情况，因为它仅在字符串完全分配后才强制执行。",
+  "cde61a03f05e69f355825df43fd79ad45e4bd401": "CVE-2026-74785漏洞",
+  "3ba2078dbb923683ea64ae665b19b0c864392c4a": "7.0.0 之前的 Scriban 在表达式计算中包含三个不同的拒绝服务漏洞，这些漏洞通过无界字符串乘法、不受控制的 BigInteger 移位操作以及通过内置函数中的范围枚举绕过 LoopLimit 来绕过现有的安全控制。能够提供模板的攻击者可能会导致内存不足异常或 CPU 耗尽，通常会终止整个主机进程。"
 }
