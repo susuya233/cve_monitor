@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-08-16T07:25:29+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-oxbf-dl8t",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-2497",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-89",
+    "description": "WordPress 的 Gallery by BestWebSoft 插件在 4.7.9 及之前的所有版本中都容易通过“_gallery_order_{post_id}”参数数组键受到 SQL 注入攻击。这是由于对用户提供的参数进行了不充分的转义以及对现有 SQL 查询缺乏充分的准备。 `gllr_save_postdata()` 函数将 `$_POST` 中未经清理的数组键直接存储到 post 元中，稍后在没有准备语句的 SQL 查询中使用。这使得具有编辑级及以上访问权限的经过身份验证的攻击者可以将额外的 SQL 查询附加到现有的查询中，这些查询可用于从数据库中提取敏感信息。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "SQL注入",
+    "kind_en": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
+    "last_modified_time": "2026-08-16",
+    "level": "High",
+    "mps_id": "MPS-oxbf-dl8t",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-16",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oxbf-dl8t",
+        "name": "https://www.oscs1024.com/hd/MPS-oxbf-dl8t"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-2497",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-2497"
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/tags/4.7.6/gallery-plugin.php#L1052",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/tags/4.7.6/includes/class-gllr-media-table.php#L58",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/trunk/gallery-plugin.php#L1052",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/trunk/includes/class-gllr-media-table.php#L58",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3609291%40gallery-plugin&new=3609291%40gallery-plugin",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/884b97b7-d023-4752-81b1-086ab022f85e?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-2497漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-2497",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-89",
+    "description": "The Gallery by BestWebSoft plugin for WordPress is vulnerable to SQL Injection via the '_gallery_order_{post_id}' parameter array keys in all versions up to, and including, 4.7.9. This is due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. The `gllr_save_postdata()` function stores unsanitized array keys from `$_POST` directly into post meta, which are later used in SQL queries without prepared statements. This makes it possible for authenticated attackers, with Editor-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "SQL注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "last_modified_time": "2026-08-16",
+    "level": "High",
+    "mps_id": "MPS-oxbf-dl8t",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-16",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oxbf-dl8t",
+        "name": "https://www.oscs1024.com/hd/MPS-oxbf-dl8t"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-2497",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-2497"
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/tags/4.7.6/gallery-plugin.php#L1052",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/tags/4.7.6/includes/class-gllr-media-table.php#L58",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/trunk/gallery-plugin.php#L1052",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/gallery-plugin/trunk/includes/class-gllr-media-table.php#L58",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3609291%40gallery-plugin&new=3609291%40gallery-plugin",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/884b97b7-d023-4752-81b1-086ab022f85e?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-2497漏洞"
+  },
+  "first_saved_at": "2026-08-16T07:25:29+00:00"
+}
