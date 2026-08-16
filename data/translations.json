@@ -486,5 +486,13 @@
   "fec350cfb832c031bebfd06704d5368471547e06": "CVE-2026-73046漏洞",
   "9eaef4a842f8432a38d863fd466beaf3aca51fe7": "v3.7.4 之前的 SiYuan 不适当地限制了 CheckAuth() 中间件中的过多身份验证尝试。 HTTP 基本身份验证分支几乎保护整个 /api/* 表面，接受工作区访问代码 (Conf.AccessAuthCode) 作为基本身份验证密码，但从不查阅 CAPTCHA/锁定门或增加 cookie/会话登录路径使用的失败计数器。这允许未经身份验证的远程攻击者通过无限制的自动请求暴力破解管理员访问代码，并获得对内核的完全 RoleAdministrator 访问权限。存在第二个弱点，因为访问代码是使用非恒定时间字符串比较来进行比较的。",
   "023a294ca7552e3b59702f11c7eb6c0dfa694cec": "CVE-2026-19924漏洞",
-  "493f79db23898dcebaecfea9ff310f7ba6d9335c": "Tenda AC10 16.03.10.09_multi_TDE01 中检测到安全漏洞。该漏洞影响httpd组件的R7WebsSecurityHandler功能。这种操纵会导致身份验证不当。攻击可能是远程发起的。该漏洞已被公开披露并且可能被使用。"
+  "493f79db23898dcebaecfea9ff310f7ba6d9335c": "Tenda AC10 16.03.10.09_multi_TDE01 中检测到安全漏洞。该漏洞影响httpd组件的R7WebsSecurityHandler功能。这种操纵会导致身份验证不当。攻击可能是远程发起的。该漏洞已被公开披露并且可能被使用。",
+  "13a259083f3a5d2fc2d51507ddac3a02c4c73b44": "CVE-2026-18432漏洞",
+  "124cc611ea49802cf4f0a71ed2c0534b9848d238": "WordPress 的 Frontend Admin by DynamiApps 插件在 3.29.9 及之前的所有版本中都容易受到权限升级的影响。该漏洞的存在是因为 `ActionUser::conditions_logic()` 在 `is_numeric()` 测试后面控制了 `current_user_can('edit_user', $user_id)` 授权检查，导致当 `$user_id` 是非数字字符串时完全跳过检查 — 这种情况可以通过将精心设计的值（例如 `1one`）传递到未经验证的未经验证的 `item_id` 参数来引发。 `wp_ajax_nopriv_frontend_admin/forms/change_form` AJAX 端点。这使得攻击者可以通过获取带有非数字用户 ID 的服务器签名“_acf_objects”负载来将权限升级为管理员，WordPress 随后将其强制为整数 1（默认管理员），从而允许攻击者覆盖该帐户的密码或电子邮件地址。未经身份验证的用户利用该漏洞需要配置面向公众的前端用户表单；在所有其他情况下，订户级帐户就足够了。",
+  "f5c5f151bdc941e6050fdd646567f03fa8fcbce5": "CVE-2026-17123漏洞",
+  "1b63ada258140945e43c2ad2c6254773a08e9b4a": "WordPress 的 Royal Elementor Addons 插件在 1.7.1064 及以下版本中容易通过表单生成器小部件的“webhook_url”设置遭受服务器端请求伪造。小部件的 render() 方法将攻击者控制的 URL 持久保存到每次渲染的 wpr_webhook_url_{widget_id} 选项中（包括预览自己草稿的贡献者），并且 wpr_form_builder_webhook AJAX 处理程序（为经过身份验证和未经身份验证的调用者注册）读取该选项并通过非安全 wp_remote_post() 分派出站请求，没有主机白名单，没有方案限制，并且没有私有/环回 IP 过滤器（此路径上不会调用插件现有的 wpr_is_blocked_remote_host / wpr_is_private_or_local_ip 帮助程序）。这使得具有贡献者级别及以上访问权限的经过身份验证的攻击者可以向源自 Web 应用程序的任意位置发出 Web 请求，并可用于查询和修改来自内部服务的信息。",
+  "8c0f9284739ba4a38c15cf1e4ecfe39961b70153": "CVE-2026-16098漏洞",
+  "37d8d49b8bc8d18e673261c8cbc6da4ce845210f": "WordPress 的 ProSolution WP 客户端插件在 2.0.10 及之前的所有版本中都容易通过 proSol_handleFileUpload 函数受到任意文件上传的攻击。这是由于缺少对攻击者控制的 Content-Disposition 标头文件名的验证（该文件名会在保存文件之前覆盖允许列出的多部分文件名），以及保存后扩展检查无法删除已写入的文件。这使得未经身份验证的攻击者可以上传可执行的文件，从而使远程代码执行成为可能。到达上传处理程序所需的随机数通过呈现作业门户短代码的任何前端页面上的 wp_localize_script 公开公开，允许未经身份验证的访问者获取有效的随机数并完全绕过该门控检查。",
+  "c54365d4197a47f83e5989d94997f2ff11c321b6": "CVE-2026-16099漏洞",
+  "fa3f8ee9e1831ce7f1318ce89dc3eccadc9a35b8": "WordPress 的 Podlove Podcast Publisher 插件容易受到任意文件删除的影响，因为在 4.5.3 及之前的所有版本中，create_link_item 函数中的文件路径验证不足。这使得具有贡献者级别及以上访问权限的经过身份验证的攻击者可以删除服务器上的任意文件，当删除正确的文件（例如 wp-config.php）时，这很容易导致远程代码执行。插件本身通过 Podlove\\ImageCache\\GenerationGuard 存在可行的 POP 链，其 __destruct() 方法使用通过反序列化填充的攻击者控制的文件路径调用 wp_delete_file()。"
 }
