@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-16T06:29:41+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0ugv-8dyb",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-18316",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+    "cwe": "CWE-862",
+    "description": "WordPress 的 Solace Extra 插件容易受到未经授权的修改和数据丢失，因为在 1.6.0 及以下版本中缺少对 import_zip() 函数的功能检查。该处理程序在 wp_ajax_action-import-zip 和 wp_ajax_nopriv_action-import-zip 上注册，并且仅验证“ajax-nonce”随机数，该随机数通过 wp_localize_script （不受限制的 admin_enqueue_scripts 挂钩）在每个管理页面上发出，因此任何经过身份验证的用户（包括订阅者）都可以访问该随机数。这使得具有订阅者级别及以上访问权限的经过身份验证的攻击者可以擦除导航菜单、侧边栏小部件（通过 update_option('sidebars_widgets', array())）、所有主题 mod（通过 remove_theme_mods()）和 Elementor 模板，以及触发任意演示内容导入。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-08-16",
+    "level": "Critical",
+    "mps_id": "MPS-0ugv-8dyb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-16",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0ugv-8dyb",
+        "name": "https://www.oscs1024.com/hd/MPS-0ugv-8dyb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18316",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18316"
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/solace-extra/tags/1.6.0/admin/class-solace-extra-admin.php#L289",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/solace-extra/tags/1.6.0/admin/import.php#L2382",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/solace-extra/tags/1.6.0/includes/class-solace-extra.php#L336",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3627961%40solace-extra&new=3627961%40solace-extra",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/4e427c4e-3e27-49e3-ba64-6241b430d5d8?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-18316漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-18316",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+    "cwe": "CWE-862",
+    "description": "The Solace Extra plugin for WordPress is vulnerable to unauthorized modification and loss of data due to a missing capability check on the import_zip() function in versions up to, and including, 1.6.0. The handler is registered on both wp_ajax_action-import-zip and wp_ajax_nopriv_action-import-zip and only verifies the 'ajax-nonce' nonce, which is emitted on every admin page via wp_localize_script (unrestricted admin_enqueue_scripts hook) and is therefore accessible to any authenticated user including Subscribers. This makes it possible for authenticated attackers, with Subscriber-level access and above, to wipe navigation menus, sidebar widgets (via update_option('sidebars_widgets', array())), all theme mods (via remove_theme_mods()), and Elementor templates, as well as trigger arbitrary demo-content imports.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-08-16",
+    "level": "Critical",
+    "mps_id": "MPS-0ugv-8dyb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-16",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0ugv-8dyb",
+        "name": "https://www.oscs1024.com/hd/MPS-0ugv-8dyb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18316",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18316"
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/solace-extra/tags/1.6.0/admin/class-solace-extra-admin.php#L289",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/solace-extra/tags/1.6.0/admin/import.php#L2382",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/solace-extra/tags/1.6.0/includes/class-solace-extra.php#L336",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3627961%40solace-extra&new=3627961%40solace-extra",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/4e427c4e-3e27-49e3-ba64-6241b430d5d8?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-18316漏洞"
+  },
+  "first_saved_at": "2026-08-16T06:29:41+00:00"
+}
