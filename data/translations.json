@@ -532,5 +532,7 @@
   "73d0c9d6c339a89d78ab0f1d49c85e0d7e995638": "CVE-2026-74788漏洞",
   "2a912a7df537d324593f8c3196ac57918f257e10": "7.0.0 之前的 Scriban（受影响版本 <= 6.6.0）在 string.pad_left 和 string.pad_right 模板函数中包含不受控制的内存分配漏洞，这些函数在委托给 .NET 的 String.PadLeft/PadRight 之前不对宽度参数执行验证。当应用程序将 Scriban 暴露给不受信任的模板输入时，攻击者可以提供任意大的宽度值（例如 500,000,000），以在单个调用中触发 ~1GB 内存分配，从而导致 OutOfMemoryException 和拒绝服务。 TemplateContext.LimitToString 限制不会阻止这种情况，因为它仅在字符串完全分配后才强制执行。",
   "cde61a03f05e69f355825df43fd79ad45e4bd401": "CVE-2026-74785漏洞",
-  "3ba2078dbb923683ea64ae665b19b0c864392c4a": "7.0.0 之前的 Scriban 在表达式计算中包含三个不同的拒绝服务漏洞，这些漏洞通过无界字符串乘法、不受控制的 BigInteger 移位操作以及通过内置函数中的范围枚举绕过 LoopLimit 来绕过现有的安全控制。能够提供模板的攻击者可能会导致内存不足异常或 CPU 耗尽，通常会终止整个主机进程。"
+  "3ba2078dbb923683ea64ae665b19b0c864392c4a": "7.0.0 之前的 Scriban 在表达式计算中包含三个不同的拒绝服务漏洞，这些漏洞通过无界字符串乘法、不受控制的 BigInteger 移位操作以及通过内置函数中的范围枚举绕过 LoopLimit 来绕过现有的安全控制。能够提供模板的攻击者可能会导致内存不足异常或 CPU 耗尽，通常会终止整个主机进程。",
+  "230215ddf9c88b56bcd1fce75b7b3b084aff1e40": "CVE-2026-74786漏洞",
+  "11c978e6080b30e85ce58c8ca0eee176c297f71f": "7.0.0 之前的 Scriban（受影响的版本 <= 6.6.0）包含一个拒绝服务漏洞，其中 LimitToString 安全限制（默认 1MB）可以被绕过，因为 ObjectToString 会在每个顶级调用上重置每次调用长度计数器 (_currentToStringLength)，并且 StringBuilderOutput 不强制执行累积输出大小限制。可以提供模板的攻击者可以在循环中重复渲染接近限制的字符串，分配大约 1GB 内存并导致内存不足的情况，从而导致主机应用程序崩溃。"
 }
