@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-17T19:22:37+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-17T20:19:29+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-3hnu-2ais",
@@ -30,12 +30,26 @@
     "cvss_score": 8.7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-197",
-    "description": "COVESA Open1722 到 0.9.2 在 acf-can-listener.c 中包含一个整数截断漏洞，允许未经身份验证的远程攻击者通过发送带有匹配 AVTP 流 ID 的被拒绝的 UDP 数据报，导致 CAN 侦听器将进程堆栈内存传输到 CAN 总线上。声明为 uint8_t 的 num_can_msgs 变量将 avtp_to_can() 的 -1 错误返回值截断为 255，导致写循环在 15 槽堆栈数组上迭代 255 次，并将大约 18 KB 的相邻堆栈内存作为大约 240 个 CAN 帧泄漏到 CAN 总线上的任何接收者。",
-    "effects": [],
+    "description": "COVESA Open1722 是开源 IEEE 1722 AVTP 协议实现，提供 Linux/Zephyr 等平台上的 ACF-CAN 监听与桥接示例，用于在以太网与 CAN 总线之间转发消息。\n受影响版本中，Linux 示例 acf-can-listener 将 avtp_to_can() 的 int 返回值赋给 uint8_t 类型的 num_can_msgs；当 UDP/以太网数据报携带匹配的 AVTP stream ID 但解析失败返回 -1 时，该值被截断为 255，随后写环按 255 次迭代读取仅 15 槽的栈上 can_frames 数组，把约 18 KB 相邻栈内存作为约 240 帧 CAN 报文写到 CAN 总线，造成未认证远程栈内存泄露。\n修复版本中通过将 num_can_msgs 改为有符号整数并在写环前检查 avtp_to_can() 负返回值、同时为 avtp_to_can() 增加容量参数并限制写入上界，切断错误返回被截断后继续向 CAN 总线写出栈内存的路径；截至 2026-08-17 公开仓库与正式 release 中尚未出现已验证修复版本，公开 issue 仅给出建议修复方向。",
+    "effects": [
+      {
+        "comp_name": "Open1722",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.9.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "数值截断错误",
@@ -65,8 +79,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73523漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Open1722整数截断泄露漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -95,12 +111,26 @@
     "cvss_score": 8.7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-197",
-    "description": "COVESA Open1722 through 0.9.2 contains an integer truncation vulnerability in acf-can-listener.c that allows unauthenticated remote attackers to cause the CAN listener to transmit process stack memory onto the CAN bus by sending a rejected UDP datagram with a matching AVTP stream ID. The num_can_msgs variable declared as uint8_t truncates the -1 error return value from avtp_to_can() to 255, causing a write loop to iterate 255 times over a 15-slot stack array and leak approximately 18 KB of adjacent stack memory as roughly 240 CAN frames to any recipient on the CAN bus.",
-    "effects": [],
+    "description": "COVESA Open1722 是开源 IEEE 1722 AVTP 协议实现，提供 Linux/Zephyr 等平台上的 ACF-CAN 监听与桥接示例，用于在以太网与 CAN 总线之间转发消息。\n受影响版本中，Linux 示例 acf-can-listener 将 avtp_to_can() 的 int 返回值赋给 uint8_t 类型的 num_can_msgs；当 UDP/以太网数据报携带匹配的 AVTP stream ID 但解析失败返回 -1 时，该值被截断为 255，随后写环按 255 次迭代读取仅 15 槽的栈上 can_frames 数组，把约 18 KB 相邻栈内存作为约 240 帧 CAN 报文写到 CAN 总线，造成未认证远程栈内存泄露。\n修复版本中通过将 num_can_msgs 改为有符号整数并在写环前检查 avtp_to_can() 负返回值、同时为 avtp_to_can() 增加容量参数并限制写入上界，切断错误返回被截断后继续向 CAN 总线写出栈内存的路径；截至 2026-08-17 公开仓库与正式 release 中尚未出现已验证修复版本，公开 issue 仅给出建议修复方向。",
+    "effects": [
+      {
+        "comp_name": "Open1722",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.9.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "数值截断错误",
@@ -130,8 +160,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73523漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Open1722整数截断泄露漏洞"
   },
   "first_saved_at": "2026-08-17T19:22:37+00:00"
 }

@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-17T19:22:40+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-17T20:19:27+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-2tuc-zewj",
@@ -35,8 +35,22 @@
     "cvss_score": 10,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-94",
-    "description": "Joomla 扩展 - Regularlabs.com - 通过 Sourcerer < 14.0.0 中未经验证的反射用户输入进行未经身份验证的 RCE - 14.0.0 之前的常规实验室 Sourcerer 处理在 Joomla 最终呈现的 HTML 中找到的 {source} 块，而无法可靠地确定该代码的来源。",
-    "effects": [],
+    "description": "Regular Labs Sourcerer 是面向 Joomla 的商业扩展，用于在文章、模块与页面渲染结果中嵌入并执行 PHP、JavaScript、CSS 与 HTML 代码块。\n受影响版本中，Sourcerer 会处理 Joomla 最终渲染 HTML 中出现的 {source} 代码块，但未能可靠判定这些代码块的真实来源。未认证攻击者可通过可反射到最终页面输出的用户输入注入 {source} 块，使扩展将其当作可执行代码处理，从而在服务器上实现任意代码执行。\n修复版本中通过默认阻止反射或其它未经验证的渲染结果中的 Sourcerer 代码执行，同时保留已验证的文章与 Custom 模块代码路径，切断未认证反射输入到代码执行的利用链。",
+    "effects": [
+      {
+        "comp_name": "Sourcerer extension for Joomla",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,14.0.0)",
+            "min_fixed_version": "14.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -66,8 +80,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-74253漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Regular Labs Sourcerer 未校验反射代码块远程代码执行漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -101,8 +117,22 @@
     "cvss_score": 10,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-94",
-    "description": "Joomla Extension - regularlabs.com - Unauthenticated RCE through unverified reflected user input in Sourcerer < 14.0.0 - Regular Labs Sourcerer before 14.0.0 processes {source} blocks found in Joomla’s final rendered HTML without reliably determining where that code originated.",
-    "effects": [],
+    "description": "Regular Labs Sourcerer 是面向 Joomla 的商业扩展，用于在文章、模块与页面渲染结果中嵌入并执行 PHP、JavaScript、CSS 与 HTML 代码块。\n受影响版本中，Sourcerer 会处理 Joomla 最终渲染 HTML 中出现的 {source} 代码块，但未能可靠判定这些代码块的真实来源。未认证攻击者可通过可反射到最终页面输出的用户输入注入 {source} 块，使扩展将其当作可执行代码处理，从而在服务器上实现任意代码执行。\n修复版本中通过默认阻止反射或其它未经验证的渲染结果中的 Sourcerer 代码执行，同时保留已验证的文章与 Custom 模块代码路径，切断未认证反射输入到代码执行的利用链。",
+    "effects": [
+      {
+        "comp_name": "Sourcerer extension for Joomla",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,14.0.0)",
+            "min_fixed_version": "14.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -132,8 +162,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-74253漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Regular Labs Sourcerer 未校验反射代码块远程代码执行漏洞"
   },
   "first_saved_at": "2026-08-17T19:22:40+00:00"
 }

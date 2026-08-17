@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-17T19:22:30+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-17T20:19:28+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-j570-49ul",
@@ -35,8 +35,22 @@
     "cvss_score": 9.3,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-89",
-    "description": "Joomla 扩展 - joomlack.fr - Page Builder CK 中的 SQL 注入 < 3.6.5 - Joomla 扩展 Page Builder CK 容易受到与样式模型相关的 SQL 注入问题的影响。 3.6.4 版本修复了前端的向量，3.6.5 版本修复了后端的向量。",
-    "effects": [],
+    "description": "Page Builder CK 是 joomlack.fr 提供的 Joomla 页面构建扩展，用于在 Joomla 站点中可视化创建与管理页面内容；当前未发现其官方完整源码以公开 GitHub 仓库形式分发。\n受影响版本中，styles model 相关处理存在 SQL 注入问题。未授权远程攻击者可经前台或后台 styles 相关请求将恶意输入拼入 SQL 语句，造成数据库查询被篡改，进而导致敏感数据泄露、数据被篡改或影响站点可用性；其中 3.6.4 已修复前台向量，3.6.5 才完成后台向量修复，故完整修复边界为 3.6.5。\n修复版本中通过修正 styles model 与 styles 加载链路中的安全问题切断注入路径：3.6.4 修复 styles models and function 相关前台问题，3.6.5 修复 styles loading 相关后台问题，使不可信输入无法再进入危险 SQL 构造。",
+    "effects": [
+      {
+        "comp_name": "page_builder_ck",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,3.6.5)",
+            "min_fixed_version": "3.6.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -66,8 +80,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-74254漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Page Builder CK SQL注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -101,8 +117,22 @@
     "cvss_score": 9.3,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-89",
-    "description": "Joomla Extension - joomlack.fr - SQL injection in Page Builder CK < 3.6.5 - The Joomla extension Page Builder CK is vulnerable to a SQL injection issue related to the styles model. Version 3.6.4 fixed the vector in the frontend, 3.6.5 in the backend.",
-    "effects": [],
+    "description": "Page Builder CK 是 joomlack.fr 提供的 Joomla 页面构建扩展，用于在 Joomla 站点中可视化创建与管理页面内容；当前未发现其官方完整源码以公开 GitHub 仓库形式分发。\n受影响版本中，styles model 相关处理存在 SQL 注入问题。未授权远程攻击者可经前台或后台 styles 相关请求将恶意输入拼入 SQL 语句，造成数据库查询被篡改，进而导致敏感数据泄露、数据被篡改或影响站点可用性；其中 3.6.4 已修复前台向量，3.6.5 才完成后台向量修复，故完整修复边界为 3.6.5。\n修复版本中通过修正 styles model 与 styles 加载链路中的安全问题切断注入路径：3.6.4 修复 styles models and function 相关前台问题，3.6.5 修复 styles loading 相关后台问题，使不可信输入无法再进入危险 SQL 构造。",
+    "effects": [
+      {
+        "comp_name": "page_builder_ck",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,3.6.5)",
+            "min_fixed_version": "3.6.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -132,8 +162,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-74254漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Page Builder CK SQL注入漏洞"
   },
   "first_saved_at": "2026-08-17T19:22:30+00:00"
 }

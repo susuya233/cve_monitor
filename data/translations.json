@@ -613,5 +613,14 @@
   "fbbef53f5f6b3ac4d2b747de542226b228d97e16": "sqlparse：group_comments 中的二次 O(n²) DoS",
   "3402b7892b69094c2fe62a126f88a9a10113adcf": "sqlparse 是 Python 的非验证 SQL 解析器模块。在 0.6.0 之前，sqlparse/engine/grouping.py 中的 group_comments 会重复重新扫描 MAX_GROUPING_TOKENS 保护之前的仅注释语句，通过 sqlparse.parse() 和 sqlparse.format(sql, strip_comments=True) 导致 CPU 消耗呈二次方。此问题已在 0.6.0 版本中修复。",
   "24bcc7040d0fba8dac50982d6b88d39464d062ec": "CVE-2026-68519漏洞",
-  "088e17a897241714051669e82e614d73db2acc4b": "Glances是一款开源系统跨平台监控工具。在 4.5.6 之前，glances/actions.py 中的 GlancesActions.run() 会忽略警报操作命令的 --disable-config-exec 并在启用 shell 操作符的情况下调用 secure_popen() ，从而允许在警报触发时执行配置的重定向、命令链或管道。此问题已在 4.5.6 中修复。"
+  "088e17a897241714051669e82e614d73db2acc4b": "Glances是一款开源系统跨平台监控工具。在 4.5.6 之前，glances/actions.py 中的 GlancesActions.run() 会忽略警报操作命令的 --disable-config-exec 并在启用 shell 操作符的情况下调用 secure_popen() ，从而允许在警报触发时执行配置的重定向、命令链或管道。此问题已在 4.5.6 中修复。",
+  "a40bf4ef115efdeab23d04054857efeaa2d61a36": "CVE-2026-74238漏洞",
+  "8cc6e1979f967488f6ab730368c40c5bdb3b4277": "TIER IV Nebula 到 1.2.0 在 Vlp32Decoder::unpack() 函数中包含越界读取漏洞，该漏洞允许未经身份验证的远程攻击者通过发送短 UDP 数据报，导致解码器将接收到的 UDP 缓冲区末尾读取到相邻的堆内存中。攻击者可以将格式错误的数据报发送到 Velodyne UDP 传感器端口，该端口缺乏其他驱动程序中存在的发送者地址限制，导致从堆内存内容派生的伪造点被静默发布到 Autoware 节点使用的下游 PointCloud2 消息中。",
+  "f2bc45e8e5f5e5a6676ed664b9f9fa49dda912e8": "CVE-2026-66792漏洞",
+  "7301ba6f82e3bd4ac24424e0cceebca5fab81d5d": "multicloud-operators-subscription 组件中发现了一个缺陷。该漏洞允许托管集群上的用户通过创建带有特定的、精心设计的注释的订阅来升级其权限。成功利用该漏洞使攻击者能够利用控制器服务帐户的提升权限将资源部署到任何命名空间中，从而可能导致对集群资源进行未经授权的访问和控制。",
+  "5d24b1a6b66ace9bb2d58fccbd56db06f4d2cb16": "CVE-2026-45698漏洞",
+  "085db98a4e35218d361507909945d4f90cdded67": "Netatalk 是一个用于类 Unix 操作系统的免费开源文件服务器套件。在版本 3.1.19 到 4.4.2 中，Netatalk 的 afpd 守护程序的deletedir() 函数中存在基于堆栈的缓冲区溢出，这是由于在计算用于路径构建的剩余缓冲区大小时出现整数下溢。 deletedir() 是一个实用程序函数，当文件操作跨越 AFP 共享卷内的设备边界时调用，标准库的 renameat() 无法处理。该函数尝试通过跟踪 size_t 保留变量中的可用空间来防止缓冲区溢出。但是，用于计算剩余结果的算术会导致无符号整数下溢，从而导致变量变为 SIZE_MAX。因此，后续边界检查始终评估为安全，允许无界 strcpy() 操作将攻击者控制的文件名复制到几乎已满的堆栈缓冲区中。 4.4.3 版本修复了该问题。",
+  "f6d1a9238ba5bc8dbfa6b88868efc99164b2adba": "CVE-2026-12553漏洞",
+  "b93484604155ebd55e220043675eb064cccd1c0a": "HP 已发现 HP Web Jetadmin (WJA) 中存在一个潜在漏洞，该漏洞可能允许未经身份验证的攻击者通过 DLL 劫持机制读取或写入任意文件。",
+  "3ffbb3106624786acd465e358a75c342f4972741": "Page Builder CK SQL注入漏洞"
 }
