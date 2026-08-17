@@ -645,5 +645,15 @@
   "25735eb981db284d58cc4573be0a60ae6db6e782": "MemOS 是一个用于法学硕士和人工智能代理的内存操作系统。在启用身份验证 (AUTH_ENABLED=true) 但未设置未记录的默认 INTERNAL_SERVICE_SECRET 环境变量的部署中，src/memos/api/middleware/auth.py 中的 is_internal_request() 检查无法打开：os.getenv(\"INTERNAL_SERVICE_SECRET\") 返回 None 并且省略 X-Internal-Service 标头的请求也会产生 None，因此比较 None == 没有一个评估为真。然后，该请求被视为受信任的内部主体并授予范围：[“all”]。因此，未经身份验证的远程攻击者可以访问管理 API 密钥管理端点，为任何用户生成 API 密钥、枚举密钥、撤销密钥并生成用于持久特权访问的主密钥以及所有数据端点。",
   "bdc69902a548d24d710743938f3f02c161a172b2": "不正确的比较",
   "062666430acfe8b6f2f834ec127c7fcd4ae952bc": "CVE-2026-75109漏洞",
-  "efa713528b9c8ef45292b494cb93d750c3bf287e": "已确定无法授权对 API 处理程序中的通用任务终止、暂停和取消暂停端点的请求。经过身份验证的攻击者可以通过终止、暂停或取消暂停不属于他们的任务来破坏其他用户的工作负载。"
+  "efa713528b9c8ef45292b494cb93d750c3bf287e": "已确定无法授权对 API 处理程序中的通用任务终止、暂停和取消暂停端点的请求。经过身份验证的攻击者可以通过终止、暂停或取消暂停不属于他们的任务来破坏其他用户的工作负载。",
+  "01bc776cd6c74adb8d5331228e33c11f1ea6b849": "CVE-2026-9816漏洞",
+  "66b1ce1092c3a092356273911bc421373752479a": "Mattermost 版本 11.7.x <= 11.7.6、10.11.x <= 10.11.21、11.8.x <= 11.8.3 无法在插入和存档导入路径上验证服务器端的 BoardMember.Scheme* 字段，这允许板编辑器或非来宾团队成员通过 POST 向任意用户授予板管理员权限/api/v2/boards/{boardID}/members 和 POST /api/v2/teams/{teamID}/archive/import.. Mattermost 咨询 ID：MMSA-2026-00685",
+  "ec912afc05e69e57612236dd9c6eae8575e49705": "CVE-2026-71424漏洞",
+  "46901e13829c6100e1bb76d61a40d6f71217bd3c": "Onyx 是一个开源人工智能平台。在 3.1.10、3.2.14 和 4.0.0 之前，Onyx 的 GET /api/mcp/servers 和 GET /api/mcp/servers/persona/{persona_id} 端点会公开另一个用户的 OAuth 授权标头，因为 OnyxTokenStorage.set_tokens 和 OnyxTokenStorage.set_client_info backend/onyx/server/features/mcp/api.py 将每个用户令牌复制到共享管理 MCPConnectionConfig 行中，并且 _db_mcp_server_to_api_mcp_server 通过 auth_template.headers 返回该行给任何 BASIC_ACCESS 用户。此问题已在版本 3.1.10、3.2.14 和 4.0.0 中修复。",
+  "591e2134efadd6c87990f883addfee163d449095": "CVE-2026-69148漏洞",
+  "998ffec9eebd52b0d538c838d3a3df4d0a35f7a9": "MLflow 是一个用于代理、大型语言模型和机器学习模型的开源人工智能工程平台。在 3.15.0 之前，CreateModelVersion 在 mlflow/server/handlers.py 中的 _validate_source_run() 或 _validate_source_model() 之后接受 run_id 或 model_id 仅验证路径包含，允许经过身份验证的用户创建引用另一个用户的工件目录的模型版本，并通过 GET /model-versions/get-artifact 读取文件，而无需所需的 READ 权限。此问题已在 3.15.0 版本中修复。",
+  "8bd23a4bc4dc83df1a2a183f1e85399c66935642": "CVE-2026-64849漏洞",
+  "d9e0697a92231ffd23aeed414358b4bc3feecfd8": "MLflow 是一个用于代理、大型语言模型和机器学习模型的开源人工智能工程平台。在 3.15.0 之前，未经身份验证的 POST /api/2.0/mlflow/webhooks/{id}/test 端点仅针对原始 URL 调用 mlflow/utils/validation.py 中的 _validate_webhook_url()，而 mlflow/webhooks/delivery.py 遵循重定向并重新解析主机名而不固定已验证的地址，从而允许攻击者访问内部或云元数据服务并接收 response_status 和响应正文。此问题已在 3.15.0 版本中修复。",
+  "d1b7b982c4cfd2c2f428c38ef99a8fd02b0f1148": "CVE-2026-45790漏洞",
+  "45d77169bd7c72d05bdef1e07543c168cfe2b885": "Dokploy 是一个免费、可自托管的平台即服务 (PaaS)。在0.29.6之前，apps/dokploy/server/api/routers/organization.ts中的Dokploy的organization.inviteMember tRPC过程允许具有member:create权限的用户邀请具有所有者角色的帐户，而packages/server/src/services/user.ts允许特权自托管用户创建具有任意角色的帐户，从而实现永久组织接管，因为所有者角色无法降级。此问题已在 0.29.6 版本中修复。"
 }
