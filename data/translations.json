@@ -587,5 +587,14 @@
   "1082bd4002f47379c872ad1d6f7f791b5f64641e": "CVE-2026-75050漏洞",
   "674ec04e39dcee0ff68f3f59d1db0de813597297": "在 2026.1.13901 之前的 JetBrains YouTrack 中， \n2026.2.17950 通过精心设计的类型参数可以进行 DoS 攻击",
   "02a3294fd59a1c2eb02903ff6cd37f83c5d47c8b": "CVE-2026-75056漏洞",
-  "30dc430ca6dbdd9114f795c14c289c4868e41c65": "在 2026.2.1 之前的 JetBrains IntelliJ IDEA 中，可以通过 Markdown 导出工具进行 rCE"
+  "30dc430ca6dbdd9114f795c14c289c4868e41c65": "在 2026.2.1 之前的 JetBrains IntelliJ IDEA 中，可以通过 Markdown 导出工具进行 rCE",
+  "aeb293e0eb067285796920046af00153bbc1e2d2": "CVE-2026-9771漏洞",
+  "cb5ccfd67019c583b3c8e24155c8f9d54938bf65": "flash_copy() 系统调用由 drivers/flash/flash_util.c 中的 z_vrfy_flash_copy() 进行验证。在启用 CONFIG_USERSPACE 的构建上，此处理程序是用户模式调用者的内核端信任边界。在修复之前，它仅验证输出缓冲区 (K_SYSCALL_MEMORY_WRITE) 并将两个 struct device * 参数 src_dev 和 dst_dev 直接传递到实现中，无需任何对象验证 - 与每个同级 flash 系统调用不同，它使用 K_SYSCALL_DRIVER_FLASH 保护其设备指针。\n\n用户模式线程完全控制 src_dev/dst_dev 的值及其自身地址空间的内容。实现 z_impl_flash_copy() 取消引用这些指针并通过其驱动程序 API 函数表进行调用（例如 api->get_parameters(dst_dev)、flash_read(src_dev, ...)、flash_write(dst_dev, ...)）。通过提供一个指向伪造的结构设备的指针，该设备的 api 表包含攻击者选择的函数指针，非特权线程可以导致内核在管理模式下调用任意代码；传递任何任意或无效地址，否则会导致内核崩溃或越界读取。\n\n结果是用户空间沙箱的本地权限升级（内核拒绝服务和信息泄露作为较小的结果）。该修复将 K_SYSCALL_DRIVER_FLASH(src_dev, read) 和 K_SYSCALL_DRIVER_FLASH(dst_dev, write) 添加到 z_vrfy_flash_copy()，这将验证每个设备是否是已注册的闪存驱动程序内核对象，调用线程在任何取消引用之前都可以使用，从而完全关闭路径。",
+  "c8227d5709d9a79a0aa587c3b90e31f8c1530eca": "CVE-2026-68518漏洞",
+  "1456e37b58de3c0b4aba50d90ab5ec1d03446340": "Glances是一款开源系统跨平台监控工具。在 4.5.6 之前，glances/actions.py 中的 _sanitize_mustache_dict() 在 chevron.render() 之前清理各个 Mustache 值，允许相邻的未转义 Mustache 变量重建 secure_popen() 在由管理员配置的操作模板呈现攻击者控制的进程或容器字段时执行的 shell 操作符。此问题已在 4.5.6 中修复。",
+  "9abd68d27c3d7eed1e1886a8e665741ef8e13418": "websocket-driver-ruby 拒绝服务漏洞",
+  "25adb79620b4a8d6dd5de3a1d8f4d9185cc98f19": "CVE-2026-40145漏洞",
+  "b1237919d4edd1cd70fccea105db2b51ae246e7b": "端点权限管理（Windows 部署）支持实用程序与代理的篡改保护控制之间的交互中存在漏洞。在某些情况下，应用于公用事业进程的保护可能不会按预期执行。",
+  "4e46ee1fe478f68302d1892d3d51567cacf3925e": "访问控制粒度不够",
+  "2c7239cb78ec807e698719802d4af07e08ae58d3": "PyCharm Jupyter MCP未授权执行"
 }

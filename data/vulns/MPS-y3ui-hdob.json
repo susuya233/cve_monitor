@@ -1,0 +1,143 @@
+{
+  "saved_at": "2026-08-17T18:29:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-y3ui-hdob",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61666",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.9
+        }
+      ]
+    },
+    "cvss_score": 8.9,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-248",
+    "description": "websocket-driver-ruby 是 Ruby 生态中用于实现 WebSocket 客户端与服务端的开源组件，当服务端通过 WebSocket::Driver.server() 在 TCP 上承载 WebSocket 时，攻击者发送畸形 Host 头会触发 URI.parse 抛出未被捕获的 URI::InvalidURIError，导致服务端进程崩溃。\n受影响版本中，websocket-driver（rubygems 包名 websocket-driver）所有 0.8.2 之前的发布版本（含 0.x 主分支）受影响，漏洞位于 lib/websocket/http/request.rb 的 Request#complete 方法：构造器完成 HTTP 头解析后，代码直接将 @env['HTTP_HOST'] 拼接到 \"http://#{ host }\" 后调用 URI.parse 提取 SERVER_NAME/SERVER_PORT，未捕获 URI::InvalidURIError；任何未在外层 try/rescue 中显式包裹 driver.parse() 调用的应用都会被该异常击穿，进程随即终止。\n修复版本中通过将 host 解析独立封装为 Request#set_server_vars 方法并在其后追加 rescue URI::InvalidURIError 分支调用 error，使畸形 Host 头进入错误状态并将整条 HTTP 请求判定为非法，WebSocket 握手不再建立；该修复随提交 7d6fd87759a2fdc83590d3b49ffa661dc53fa128 进入 0.8.2 版本。",
+    "effects": [
+      {
+        "comp_name": "websocket-driver",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,0.8.2)",
+            "min_fixed_version": "0.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未捕获的异常",
+    "kind_en": "未捕获的异常",
+    "last_modified_time": "2026-07-22",
+    "level": "High",
+    "mps_id": "MPS-y3ui-hdob",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-18",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/faye/websocket-driver-ruby/security/advisories/GHSA-2x63-gw47-w4mm",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/faye/websocket-driver-ruby/commit/7d6fd87759a2fdc83590d3b49ffa661dc53fa128",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-2x63-gw47-w4mm",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "websocket-driver-ruby 拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61666",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.9
+        }
+      ]
+    },
+    "cvss_score": 8.9,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-248",
+    "description": "websocket-driver-ruby 是 Ruby 生态中用于实现 WebSocket 客户端与服务端的开源组件，当服务端通过 WebSocket::Driver.server() 在 TCP 上承载 WebSocket 时，攻击者发送畸形 Host 头会触发 URI.parse 抛出未被捕获的 URI::InvalidURIError，导致服务端进程崩溃。\n受影响版本中，websocket-driver（rubygems 包名 websocket-driver）所有 0.8.2 之前的发布版本（含 0.x 主分支）受影响，漏洞位于 lib/websocket/http/request.rb 的 Request#complete 方法：构造器完成 HTTP 头解析后，代码直接将 @env['HTTP_HOST'] 拼接到 \"http://#{ host }\" 后调用 URI.parse 提取 SERVER_NAME/SERVER_PORT，未捕获 URI::InvalidURIError；任何未在外层 try/rescue 中显式包裹 driver.parse() 调用的应用都会被该异常击穿，进程随即终止。\n修复版本中通过将 host 解析独立封装为 Request#set_server_vars 方法并在其后追加 rescue URI::InvalidURIError 分支调用 error，使畸形 Host 头进入错误状态并将整条 HTTP 请求判定为非法，WebSocket 握手不再建立；该修复随提交 7d6fd87759a2fdc83590d3b49ffa661dc53fa128 进入 0.8.2 版本。",
+    "effects": [
+      {
+        "comp_name": "websocket-driver",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,0.8.2)",
+            "min_fixed_version": "0.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未捕获的异常",
+    "kind_en": "Uncaught Exception",
+    "last_modified_time": "2026-07-22",
+    "level": "High",
+    "mps_id": "MPS-y3ui-hdob",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-18",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/faye/websocket-driver-ruby/security/advisories/GHSA-2x63-gw47-w4mm",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/faye/websocket-driver-ruby/commit/7d6fd87759a2fdc83590d3b49ffa661dc53fa128",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-2x63-gw47-w4mm",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "websocket-driver-ruby 拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-08-17T18:29:54+00:00"
+}
