@@ -596,5 +596,22 @@
   "25adb79620b4a8d6dd5de3a1d8f4d9185cc98f19": "CVE-2026-40145漏洞",
   "b1237919d4edd1cd70fccea105db2b51ae246e7b": "端点权限管理（Windows 部署）支持实用程序与代理的篡改保护控制之间的交互中存在漏洞。在某些情况下，应用于公用事业进程的保护可能不会按预期执行。",
   "4e46ee1fe478f68302d1892d3d51567cacf3925e": "访问控制粒度不够",
-  "2c7239cb78ec807e698719802d4af07e08ae58d3": "PyCharm Jupyter MCP未授权执行"
+  "2c7239cb78ec807e698719802d4af07e08ae58d3": "PyCharm Jupyter MCP未授权执行",
+  "58d9338fd88ce269164e9df29d699ac6b0bb537d": "CVE-2026-74254漏洞",
+  "eb76ad5c63e0cd5f66f30f64910f7560e9267ba2": "Joomla 扩展 - joomlack.fr - Page Builder CK 中的 SQL 注入 < 3.6.5 - Joomla 扩展 Page Builder CK 容易受到与样式模型相关的 SQL 注入问题的影响。 3.6.4 版本修复了前端的向量，3.6.5 版本修复了后端的向量。",
+  "4fb7f0ade3af8a23765ca3b1e9b4c9ba0d18ac88": "CVE-2026-73522漏洞",
+  "cbc1acb75502d94110c5e958ee212b39beab213a": "COVESA Open1722 到 0.9.2 包含一个堆栈缓冲区溢出漏洞，允许未经身份验证的远程攻击者通过发送包含超过 15 个 ACF-CAN 消息的精心设计的 UDP 数据报来写入超过固定 15 槽堆栈阵列末尾的内容。 avtp_to_can() 函数会增加其写入索引，但不会将其限制在调用方提供的数组大小上，并且由于侦听器接受来自任何与以明文传输的硬编码的未经身份验证的流 ID 相匹配的发送方的数据报，因此攻击者可以破坏相邻的堆栈内存，以实现任意代码执行或拒绝服务。",
+  "675d1fe6e5e037851a1dabefef7e4243fff6b911": "CVE-2026-73523漏洞",
+  "882facc17d7fb03bae26c597d930fbbc20d35f96": "COVESA Open1722 到 0.9.2 在 acf-can-listener.c 中包含一个整数截断漏洞，允许未经身份验证的远程攻击者通过发送带有匹配 AVTP 流 ID 的被拒绝的 UDP 数据报，导致 CAN 侦听器将进程堆栈内存传输到 CAN 总线上。声明为 uint8_t 的 num_can_msgs 变量将 avtp_to_can() 的 -1 错误返回值截断为 255，导致写循环在 15 槽堆栈数组上迭代 255 次，并将大约 18 KB 的相邻堆栈内存作为大约 240 个 CAN 帧泄漏到 CAN 总线上的任何接收者。",
+  "7c3760739a56a172afa094eb6268b1a999b96985": "数字截断错误",
+  "8c15ca86a29c1c42e4f42113b7f3244cc81ca13e": "CVE-2026-74253漏洞",
+  "2c970373a6c3b42b82751c6e8b281602928ea0ac": "Joomla 扩展 - Regularlabs.com - 通过 Sourcerer < 14.0.0 中未经验证的反射用户输入进行未经身份验证的 RCE - 14.0.0 之前的常规实验室 Sourcerer 处理在 Joomla 最终呈现的 HTML 中找到的 {source} 块，而无法可靠地确定该代码的来源。",
+  "b9fe888ef146994b601a3c83fcd264b267e41426": "CVE-2026-71980漏洞",
+  "7ed651c308c797f4f6b5d9ef0174651dbbc29826": "Belledonne Communications bcg729 至 1.1.2 在 src/cng.c 中的decodeSIDframe()函数中包含越界读取漏洞，允许未经身份验证的网络相邻攻击者通过发送零长度舒适噪声 RTP 有效负载来触发超出缓冲区边界的堆读取。零长度有效负载会导致 uint8_t 滤波器阶数计算中出现整数下溢，该阶数换行为 255 并被限制为 10，从而导致函数无条件地从零字节缓冲区读取 11 字节，从而导致媒体进程终止或静默消耗相邻堆内存作为反射系数。",
+  "4dc9ddf2543818b4c2ab4add56d255778bf38479": "CVE-2026-71979漏洞",
+  "fc3998253c362325dd0e2d5884fbf28c369f873b": "INDI（仪器中性分布式接口）indiserver 至 2.2.4.2（在提交 96bbd7f 中修复）包含一个堆栈缓冲区溢出漏洞，允许未经身份验证的远程攻击者通过发送名称超过 1024 字节的不匹配标签的格式错误的 XML 来使守护程序崩溃。攻击者可以在端口 7624 上发送带有不匹配 XML 标记的单个 TCP 数据包，以触发无界 sprintf() 写入 MsgQueue.cpp 中的固定 1024 字节堆栈缓冲区，终止守护程序并中断所有活动客户端和驱动程序会话。",
+  "fbbef53f5f6b3ac4d2b747de542226b228d97e16": "sqlparse：group_comments 中的二次 O(n²) DoS",
+  "3402b7892b69094c2fe62a126f88a9a10113adcf": "sqlparse 是 Python 的非验证 SQL 解析器模块。在 0.6.0 之前，sqlparse/engine/grouping.py 中的 group_comments 会重复重新扫描 MAX_GROUPING_TOKENS 保护之前的仅注释语句，通过 sqlparse.parse() 和 sqlparse.format(sql, strip_comments=True) 导致 CPU 消耗呈二次方。此问题已在 0.6.0 版本中修复。",
+  "24bcc7040d0fba8dac50982d6b88d39464d062ec": "CVE-2026-68519漏洞",
+  "088e17a897241714051669e82e614d73db2acc4b": "Glances是一款开源系统跨平台监控工具。在 4.5.6 之前，glances/actions.py 中的 GlancesActions.run() 会忽略警报操作命令的 --disable-config-exec 并在启用 shell 操作符的情况下调用 secure_popen() ，从而允许在警报触发时执行配置的重定向、命令链或管道。此问题已在 4.5.6 中修复。"
 }

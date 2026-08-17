@@ -1,0 +1,137 @@
+{
+  "saved_at": "2026-08-17T19:22:37+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3hnu-2ais",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73523",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-197",
+    "description": "COVESA Open1722 到 0.9.2 在 acf-can-listener.c 中包含一个整数截断漏洞，允许未经身份验证的远程攻击者通过发送带有匹配 AVTP 流 ID 的被拒绝的 UDP 数据报，导致 CAN 侦听器将进程堆栈内存传输到 CAN 总线上。声明为 uint8_t 的 num_can_msgs 变量将 avtp_to_can() 的 -1 错误返回值截断为 255，导致写循环在 15 槽堆栈数组上迭代 255 次，并将大约 18 KB 的相邻堆栈内存作为大约 240 个 CAN 帧泄漏到 CAN 总线上的任何接收者。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "数值截断错误",
+    "kind_en": "数字截断错误",
+    "last_modified_time": "2026-08-18",
+    "level": "High",
+    "mps_id": "MPS-3hnu-2ais",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3hnu-2ais",
+        "name": "https://www.oscs1024.com/hd/MPS-3hnu-2ais"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73523",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73523"
+      },
+      {
+        "url": "https://github.com/COVESA/Open1722/issues/154",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/covesa-open1722-stack-memory-disclosure-via-acf-can-listener-c-integer-truncation",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-73523漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73523",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-197",
+    "description": "COVESA Open1722 through 0.9.2 contains an integer truncation vulnerability in acf-can-listener.c that allows unauthenticated remote attackers to cause the CAN listener to transmit process stack memory onto the CAN bus by sending a rejected UDP datagram with a matching AVTP stream ID. The num_can_msgs variable declared as uint8_t truncates the -1 error return value from avtp_to_can() to 255, causing a write loop to iterate 255 times over a 15-slot stack array and leak approximately 18 KB of adjacent stack memory as roughly 240 CAN frames to any recipient on the CAN bus.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "数值截断错误",
+    "kind_en": "Numeric Truncation Error",
+    "last_modified_time": "2026-08-18",
+    "level": "High",
+    "mps_id": "MPS-3hnu-2ais",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3hnu-2ais",
+        "name": "https://www.oscs1024.com/hd/MPS-3hnu-2ais"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73523",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73523"
+      },
+      {
+        "url": "https://github.com/COVESA/Open1722/issues/154",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/covesa-open1722-stack-memory-disclosure-via-acf-can-listener-c-integer-truncation",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-73523漏洞"
+  },
+  "first_saved_at": "2026-08-17T19:22:37+00:00"
+}
