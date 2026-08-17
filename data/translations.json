@@ -622,5 +622,11 @@
   "085db98a4e35218d361507909945d4f90cdded67": "Netatalk 是一个用于类 Unix 操作系统的免费开源文件服务器套件。在版本 3.1.19 到 4.4.2 中，Netatalk 的 afpd 守护程序的deletedir() 函数中存在基于堆栈的缓冲区溢出，这是由于在计算用于路径构建的剩余缓冲区大小时出现整数下溢。 deletedir() 是一个实用程序函数，当文件操作跨越 AFP 共享卷内的设备边界时调用，标准库的 renameat() 无法处理。该函数尝试通过跟踪 size_t 保留变量中的可用空间来防止缓冲区溢出。但是，用于计算剩余结果的算术会导致无符号整数下溢，从而导致变量变为 SIZE_MAX。因此，后续边界检查始终评估为安全，允许无界 strcpy() 操作将攻击者控制的文件名复制到几乎已满的堆栈缓冲区中。 4.4.3 版本修复了该问题。",
   "f6d1a9238ba5bc8dbfa6b88868efc99164b2adba": "CVE-2026-12553漏洞",
   "b93484604155ebd55e220043675eb064cccd1c0a": "HP 已发现 HP Web Jetadmin (WJA) 中存在一个潜在漏洞，该漏洞可能允许未经身份验证的攻击者通过 DLL 劫持机制读取或写入任意文件。",
-  "3ffbb3106624786acd465e358a75c342f4972741": "Page Builder CK SQL注入漏洞"
+  "3ffbb3106624786acd465e358a75c342f4972741": "Page Builder CK SQL注入漏洞",
+  "62da32cdbd2b0eebc017127d80365831527226eb": "CVE-2026-71553漏洞",
+  "fe5f4ded9df51a27e4456a4e4095f8902150280b": "ApostropeCMS 是一个开源 Node.js 内容管理系统。在 4.32.0 及更早版本中，PATCH /api/v1/article/:id 接受继承路径 toString.call 并将其通过实用程序模块传递给 apos.util.set() 和 apos.util.get()，允许经过身份验证的编辑器覆盖共享 Object.prototype.toString 函数的 call 属性，并导致持续的进程范围拒绝服务，直到重新启动。",
+  "7f09cc191f1c6d34d63f58ec7a60a251b6a9757c": "CVE-2026-71472漏洞",
+  "e06be17aca9a7b26ba561ce905f0414c79b70b7f": "acm-search-v2-rhel9 中发现了一个缺陷。此漏洞允许经过身份验证的攻击者（例如中心管理员或搜索自定义资源 (CR) 编辑器）注入恶意 shell 命令或 SQL 语句。出现这种情况是因为搜索 CR 中提供的 WORK_MEM 字符串在用于 bash 脚本和 SQL 查询之前未经过正确验证。成功利用该漏洞可能会导致在特权 postgres pod 中执行任意代码，从而可能危及系统。",
+  "47222e05533e9c0e2a2f667e8181e62fa52cb250": "CVE-2026-70495漏洞",
+  "0c7f20d7d2f61667dc5f3eb2c57ff9c1d1a931d7": "search-v2-operator 中发现了一个缺陷。该组件的“search-serviceaccount”权限过于广泛，使其能够模拟整个集群中的用户和组。如果攻击者获得对此服务帐户下运行的任何 Pod 的访问权限，他们就可以利用此漏洞来实现“system:masters”访问，从而授予他们对集群的完全控制权。"
 }
