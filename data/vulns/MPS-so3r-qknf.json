@@ -1,0 +1,181 @@
+{
+  "saved_at": "2026-08-18T18:28:38+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-so3r-qknf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-69220",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-674",
+    "description": "RabbitMQ Java Client 是开源 Java 客户端库，供 Java 与 JVM 应用连接并与 RabbitMQ 节点交互，Maven 坐标为 com.rabbitmq:amqp-client，由 rabbitmq/rabbitmq-java-client 维护。\n受影响版本中，src/main/java/com/rabbitmq/client/impl/ValueReader.java 的 readTable 与 readArray 在解析 AMQP 表类型 F 与数组类型 A 时递归调用 readFieldValue，但未限制嵌套深度。攻击者控制的 AMQP 服务器或网络中间人在预认证的 connection.start 帧中发送约 580 层嵌套表，每层约 7 字节、合计约 4060 字节，远在默认 131072 字节帧上限之内；在默认 JVM 栈（约 512KB、约 864 字节/帧）下即可触发 StackOverflowError，终止客户端输入处理线程，造成拒绝服务。\n修复版本中通过在 ValueReader 中新增 MAX_FIELD_VALUE_NESTING_DEPTH = 32 常量，给 readTable、readArray、readFieldValue 增加 depth 参数并在 depth 超过阈值时抛出 MalformedFrameException，从而切断恶意深嵌套帧触发栈溢出的递归路径。",
+    "effects": [
+      {
+        "comp_name": "com.rabbitmq:amqp-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.33.1)",
+            "min_fixed_version": "5.33.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-so3r-qknf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/rabbitmq/rabbitmq-java-client/security/advisories/GHSA-93j5-89vc-pph4",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rabbitmq/rabbitmq-java-client/pull/2007",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rabbitmq/rabbitmq-java-client/pull/2008",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rabbitmq/rabbitmq-java-client/commit/09af76fce136f3136931654a0a1d43095c80e2f0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rabbitmq/rabbitmq-java-client/commit/db89e34809fbc6ba4e946615f297f3684ccd0acc",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rabbitmq/rabbitmq-java-client/releases/tag/v5.33.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-93j5-89vc-pph4",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "RabbitMQ Java客户端栈溢出拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-69220",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-674",
+    "description": "RabbitMQ Java Client 是开源 Java 客户端库，供 Java 与 JVM 应用连接并与 RabbitMQ 节点交互，Maven 坐标为 com.rabbitmq:amqp-client，由 rabbitmq/rabbitmq-java-client 维护。\n受影响版本中，src/main/java/com/rabbitmq/client/impl/ValueReader.java 的 readTable 与 readArray 在解析 AMQP 表类型 F 与数组类型 A 时递归调用 readFieldValue，但未限制嵌套深度。攻击者控制的 AMQP 服务器或网络中间人在预认证的 connection.start 帧中发送约 580 层嵌套表，每层约 7 字节、合计约 4060 字节，远在默认 131072 字节帧上限之内；在默认 JVM 栈（约 512KB、约 864 字节/帧）下即可触发 StackOverflowError，终止客户端输入处理线程，造成拒绝服务。\n修复版本中通过在 ValueReader 中新增 MAX_FIELD_VALUE_NESTING_DEPTH = 32 常量，给 readTable、readArray、readFieldValue 增加 depth 参数并在 depth 超过阈值时抛出 MalformedFrameException，从而切断恶意深嵌套帧触发栈溢出的递归路径。",
+    "effects": [
+      {
+        "comp_name": "com.rabbitmq:amqp-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.33.1)",
+            "min_fixed_version": "5.33.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-so3r-qknf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/rabbitmq/rabbitmq-java-client/security/advisories/GHSA-93j5-89vc-pph4",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rabbitmq/rabbitmq-java-client/pull/2007",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rabbitmq/rabbitmq-java-client/pull/2008",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rabbitmq/rabbitmq-java-client/commit/09af76fce136f3136931654a0a1d43095c80e2f0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rabbitmq/rabbitmq-java-client/commit/db89e34809fbc6ba4e946615f297f3684ccd0acc",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rabbitmq/rabbitmq-java-client/releases/tag/v5.33.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-93j5-89vc-pph4",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "RabbitMQ Java客户端栈溢出拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-08-18T18:28:38+00:00"
+}
