@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-08-18T16:23:36+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-vp5i-ymq1",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75898",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "RAGFlow 是开源检索增强生成（RAG）引擎，提供文档解析、向量化、检索和大模型生成能力，属于大模型与 AI 基础设施组件。\n受影响版本中，智能体工作流的 Invoke（HTTP Request）组件（agent/component/invoke.py）在 Invoke._invoke 中直接将 Invoke._build_url 基于画布配置和运行时模板（如 chat query 插值）拼接出的 URL 交给 Invoke._send_request，由 requests.get、requests.post 或 requests.put 直接发起请求，未调用 common.ssrf_guard.assert_url_is_safe 校验，也没有把解析后的目标地址钉回 pin_dns 上下文；这使得 Agent 创建者或可在该 Agent 触发流程中投递内容的低权用户，能够把请求指向环回地址、链路本地地址、RFC 1918 私网段，以及云实例元数据端点 169.254.169.254，并将响应正文作为 Invoke 节点输出回传到调用方。\n修复版本中通过在 Invoke._build_url 内调用 assert_url_is_safe 校验并把 hostname 与 IP 缓存到 Invoke._pinned_hostname/_pinned_ip，在 Invoke._invoke 内用 pin_dns 上下文将后续 requests.* 锁定到已校验地址，并把 _send_request 的 allow_redirects 强制设为 False，从而阻断对环回/私网/元数据端点的 SSRF 以及通过跳转二次绕过。",
+    "effects": [
+      {
+        "comp_name": "ragflow",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.26.3)",
+            "min_fixed_version": "0.26.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-18",
+    "level": "High",
+    "mps_id": "MPS-vp5i-ymq1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-vp5i-ymq1",
+        "name": "https://www.oscs1024.com/hd/MPS-vp5i-ymq1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75898",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75898"
+      },
+      {
+        "url": "https://github.com/infiniflow/ragflow/blob/v0.26.2/agent/component/invoke.py#L168-L172",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/infiniflow/ragflow/commit/c4fe68eaa0bf1d6442d2cd6ac2e35bc9ccbed34f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/infiniflow/ragflow/commit/e16d1a0150e1ca069beb538ae3dcd03f59edc5fa",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/infiniflow/ragflow/issues/15425",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/infiniflow/ragflow/issues/18280",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/infiniflow/ragflow/releases/tag/v0.26.3",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ragflow-server-side-request-forgery-via-agent-invoke-component",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "RAGFlow Agent Invoke 组件 SSRF 漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75898",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "RAGFlow 是开源检索增强生成（RAG）引擎，提供文档解析、向量化、检索和大模型生成能力，属于大模型与 AI 基础设施组件。\n受影响版本中，智能体工作流的 Invoke（HTTP Request）组件（agent/component/invoke.py）在 Invoke._invoke 中直接将 Invoke._build_url 基于画布配置和运行时模板（如 chat query 插值）拼接出的 URL 交给 Invoke._send_request，由 requests.get、requests.post 或 requests.put 直接发起请求，未调用 common.ssrf_guard.assert_url_is_safe 校验，也没有把解析后的目标地址钉回 pin_dns 上下文；这使得 Agent 创建者或可在该 Agent 触发流程中投递内容的低权用户，能够把请求指向环回地址、链路本地地址、RFC 1918 私网段，以及云实例元数据端点 169.254.169.254，并将响应正文作为 Invoke 节点输出回传到调用方。\n修复版本中通过在 Invoke._build_url 内调用 assert_url_is_safe 校验并把 hostname 与 IP 缓存到 Invoke._pinned_hostname/_pinned_ip，在 Invoke._invoke 内用 pin_dns 上下文将后续 requests.* 锁定到已校验地址，并把 _send_request 的 allow_redirects 强制设为 False，从而阻断对环回/私网/元数据端点的 SSRF 以及通过跳转二次绕过。",
+    "effects": [
+      {
+        "comp_name": "ragflow",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.26.3)",
+            "min_fixed_version": "0.26.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-18",
+    "level": "High",
+    "mps_id": "MPS-vp5i-ymq1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-vp5i-ymq1",
+        "name": "https://www.oscs1024.com/hd/MPS-vp5i-ymq1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75898",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75898"
+      },
+      {
+        "url": "https://github.com/infiniflow/ragflow/blob/v0.26.2/agent/component/invoke.py#L168-L172",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/infiniflow/ragflow/commit/c4fe68eaa0bf1d6442d2cd6ac2e35bc9ccbed34f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/infiniflow/ragflow/commit/e16d1a0150e1ca069beb538ae3dcd03f59edc5fa",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/infiniflow/ragflow/issues/15425",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/infiniflow/ragflow/issues/18280",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/infiniflow/ragflow/releases/tag/v0.26.3",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ragflow-server-side-request-forgery-via-agent-invoke-component",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "RAGFlow Agent Invoke 组件 SSRF 漏洞"
+  },
+  "first_saved_at": "2026-08-18T16:23:36+00:00"
+}
