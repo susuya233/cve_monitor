@@ -1,5 +1,5 @@
 {
-  "saved_at": "2026-08-18T09:25:59+00:00",
+  "saved_at": "2026-08-18T10:21:28+00:00",
   "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
@@ -22,12 +22,26 @@
     "cvss_score": 8.1,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:H/A:N",
     "cwe": "CWE-177",
-    "description": "Velociraptor 的 Web GUI 允许为表中的列指定自定义类型。 URL 类型采用单元格值并形成可在 GUI 中单击的 URL。该代码不限制此 URL 中允许的方案，允许攻击者指定将用户暴露于 XSS 的 JavaScript 方案。",
-    "effects": [],
+    "description": "Velociraptor 是 Rapid7 开源的终端取证与响应平台，提供服务端、客户端与 Web 管理界面，用于收集和展示主机取证数据。\n受影响版本中，Web GUI 允许将表格列指定为 URL 类型。table.jsx 的 getFormatter 对 url 类型调用 URLViewer，后者通过 api.href 把单元格值写入可点击链接。href 未限制协议，攻击者可把 javascript: 方案写入单元格，用户点击后在浏览器中执行脚本，形成存储型 XSS。\n修复版本中通过在 href 中仅允许空协议、http: 与 https:，将其余协议改写为 #，阻止 javascript: 等危险方案进入可点击链接。",
+    "effects": [
+      {
+        "comp_name": "velociraptor",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.77.2)",
+            "min_fixed_version": "0.77.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "Hex编码",
@@ -53,8 +67,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-15371漏洞",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Velociraptor存储型XSS",
     "_translated": true
   },
   "detail_original": {
@@ -75,12 +92,26 @@
     "cvss_score": 8.1,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:H/A:N",
     "cwe": "CWE-177",
-    "description": "Velociraptor's web GUI allows specifying a custom type for columns in tables. The URL type takes the cell value and forms a URL which can be clicked in the GUI.The code does not limit the schemes allowed in this URL , allowing an attacker to specify a JavaScript scheme exposing the user to XSS.",
-    "effects": [],
+    "description": "Velociraptor 是 Rapid7 开源的终端取证与响应平台，提供服务端、客户端与 Web 管理界面，用于收集和展示主机取证数据。\n受影响版本中，Web GUI 允许将表格列指定为 URL 类型。table.jsx 的 getFormatter 对 url 类型调用 URLViewer，后者通过 api.href 把单元格值写入可点击链接。href 未限制协议，攻击者可把 javascript: 方案写入单元格，用户点击后在浏览器中执行脚本，形成存储型 XSS。\n修复版本中通过在 href 中仅允许空协议、http: 与 https:，将其余协议改写为 #，阻止 javascript: 等危险方案进入可点击链接。",
+    "effects": [
+      {
+        "comp_name": "velociraptor",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.77.2)",
+            "min_fixed_version": "0.77.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "Hex编码",
@@ -106,8 +137,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-15371漏洞"
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Velociraptor存储型XSS"
   },
   "first_saved_at": "2026-08-18T08:28:31+00:00"
 }
