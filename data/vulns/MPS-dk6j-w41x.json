@@ -1,0 +1,129 @@
+{
+  "saved_at": "2026-08-18T23:16:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-dk6j-w41x",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-53958",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:L",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:L",
+    "cwe": "CWE-915",
+    "description": "4gaBoards 是一个用于实时项目管理的看板系统。在 3.3.9 之前，4gaBoards 允许经过身份验证的用户通过 PATCH /api/users/:id 修改 ssoGoogleId、ssoGoogleEmail、ssoGithubId、ssoGithubUsername、ssoGithubEmail、ssoMicrosoftId、ssoMicrosoftEmail、ssoOidcId 和 ssoOidcEmail。 server/api/controllers/users/update.js 中的白名单批量根据用户输入分配这些后端管理的身份属性。攻击者可以将受害者的提供商标识符放在攻击者控制的帐户上，从而导致在 server/api/helpers/users/get-create-one-for-github-sso.js 等帮助程序中进行默认查找，以在电子邮件链接流运行之前匹配受害者对攻击者帐户的第一次 SSO 登录。受害者登录到攻击者控制的帐户，并且受害者创建的项目、板或数据仍然可以通过攻击者的原始本地凭​​据进行访问。此问题已在 3.3.9 版本中修复。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "动态确定对象属性修改的控制不恰当",
+    "kind_en": "动态确定的对象属性的受控修改不当",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-dk6j-w41x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dk6j-w41x",
+        "name": "https://www.oscs1024.com/hd/MPS-dk6j-w41x"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-53958",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-53958"
+      },
+      {
+        "url": "https://github.com/RARgames/4gaBoards/commit/7a79f4c5d338614058515752abd67e49ee2818bb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/RARgames/4gaBoards/releases/tag/v3.3.9",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/RARgames/4gaBoards/security/advisories/GHSA-j2fw-r2gj-hfr3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-53958漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-53958",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:L",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:L",
+    "cwe": "CWE-915",
+    "description": "4gaBoards is a boards system for realtime project management. Prior to 3.3.9, 4gaBoards allows an authenticated user to modify ssoGoogleId, ssoGoogleEmail, ssoGithubId, ssoGithubUsername, ssoGithubEmail, ssoMicrosoftId, ssoMicrosoftEmail, ssoOidcId, and ssoOidcEmail through PATCH /api/users/:id. The whitelist in server/api/controllers/users/update.js mass assigns these backend-managed identity attributes from user input. An attacker can place a victim's provider identifier on an attacker-controlled account, causing the default lookup in helpers such as server/api/helpers/users/get-create-one-for-github-sso.js to match the victim's first SSO login to the attacker's account before the email-linkage flow runs. The victim is logged into the attacker-controlled account, and projects, boards, or data the victim creates remain accessible through the attacker's original local credentials. This issue is fixed in version 3.3.9.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "动态确定对象属性修改的控制不恰当",
+    "kind_en": "Improperly Controlled Modification of Dynamically-Determined Object Attributes",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-dk6j-w41x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dk6j-w41x",
+        "name": "https://www.oscs1024.com/hd/MPS-dk6j-w41x"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-53958",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-53958"
+      },
+      {
+        "url": "https://github.com/RARgames/4gaBoards/commit/7a79f4c5d338614058515752abd67e49ee2818bb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/RARgames/4gaBoards/releases/tag/v3.3.9",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/RARgames/4gaBoards/security/advisories/GHSA-j2fw-r2gj-hfr3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-53958漏洞"
+  },
+  "first_saved_at": "2026-08-18T23:16:33+00:00"
+}
