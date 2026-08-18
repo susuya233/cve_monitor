@@ -1,0 +1,175 @@
+{
+  "saved_at": "2026-08-18T20:16:28+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d4bc-i9fk",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55166",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:L",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:L",
+    "cwe": "CWE-918",
+    "description": "Lemur是Netflix开源的TLS证书管理服务，集成SSO认证、ACME协议外部证书颁发机构和内部CA。当认证用户提交恶意构造的acme_url时，服务器未做校验直接发起请求，导致攻击者可利用SSRF访问AWS EC2元数据服务169.254.169.254获取工作负载凭证，同时证书私钥的权限校验仅基于创建者身份而非当前所有者，使得攻击者在证书所有权转移后仍能持续获取私钥。\n受影响版本中，lemur/plugins/lemur_acme/acme_handlers.py的setup_acme_client_no_retry函数从用户传入的options字典读取acme_url后直接传给ClientV2.get_directory进行服务端HTTP请求，没有任何主机名或URL方案校验，允许指向169.254.169.254等内网地址。lemur/lemur/certificates/views.py的get函数在处理证书私钥请求时使用if g.current_user != cert.user条件分支，仅当调用者不是创建者时才校验RBAC权限，创建者获取私钥时始终返回200，导致所有权转移后原创建者仍能获取私钥。\n修复版本中通过在acme_handlers.py添加ACME_DIRECTORY_HOST_ALLOWLIST配置验证，仅允许letsencrypt.org等白名单域名，拒绝内网地址和IMDS端点，切断了SSRF利用路径。同时在views.py增强审计日志，记录access_via、creator_id和current_owner，使创建者绕过权限的行为在审计记录中可见。",
+    "effects": [
+      {
+        "comp_name": "lemur",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.9.2)",
+            "min_fixed_version": "1.9.2",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "netflix/lemur",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.9.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-19",
+    "level": "Critical",
+    "mps_id": "MPS-d4bc-i9fk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/Netflix/lemur/security/advisories/GHSA-v2wp-frmc-5q3v",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Netflix/lemur/releases/tag/v1.9.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-v2wp-frmc-5q3v",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源",
+      "终端软件"
+    ],
+    "title": "Lemur ACME SSRF与证书创建者权限绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55166",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:L",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:L",
+    "cwe": "CWE-918",
+    "description": "Lemur是Netflix开源的TLS证书管理服务，集成SSO认证、ACME协议外部证书颁发机构和内部CA。当认证用户提交恶意构造的acme_url时，服务器未做校验直接发起请求，导致攻击者可利用SSRF访问AWS EC2元数据服务169.254.169.254获取工作负载凭证，同时证书私钥的权限校验仅基于创建者身份而非当前所有者，使得攻击者在证书所有权转移后仍能持续获取私钥。\n受影响版本中，lemur/plugins/lemur_acme/acme_handlers.py的setup_acme_client_no_retry函数从用户传入的options字典读取acme_url后直接传给ClientV2.get_directory进行服务端HTTP请求，没有任何主机名或URL方案校验，允许指向169.254.169.254等内网地址。lemur/lemur/certificates/views.py的get函数在处理证书私钥请求时使用if g.current_user != cert.user条件分支，仅当调用者不是创建者时才校验RBAC权限，创建者获取私钥时始终返回200，导致所有权转移后原创建者仍能获取私钥。\n修复版本中通过在acme_handlers.py添加ACME_DIRECTORY_HOST_ALLOWLIST配置验证，仅允许letsencrypt.org等白名单域名，拒绝内网地址和IMDS端点，切断了SSRF利用路径。同时在views.py增强审计日志，记录access_via、creator_id和current_owner，使创建者绕过权限的行为在审计记录中可见。",
+    "effects": [
+      {
+        "comp_name": "lemur",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.9.2)",
+            "min_fixed_version": "1.9.2",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "netflix/lemur",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.9.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-19",
+    "level": "Critical",
+    "mps_id": "MPS-d4bc-i9fk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/Netflix/lemur/security/advisories/GHSA-v2wp-frmc-5q3v",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Netflix/lemur/releases/tag/v1.9.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-v2wp-frmc-5q3v",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源",
+      "终端软件"
+    ],
+    "title": "Lemur ACME SSRF与证书创建者权限绕过漏洞"
+  },
+  "first_saved_at": "2026-08-18T20:16:28+00:00"
+}
