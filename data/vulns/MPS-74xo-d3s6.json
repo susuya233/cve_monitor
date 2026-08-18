@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-08-18T19:22:43+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-74xo-d3s6",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74038",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-22",
+    "description": "Wazuh 是一款开源的主机入侵检测与日志监控平台，wazuh-manager 是其服务端守护进程，提供 Agent 注册、密钥管理与远程通信等能力。\n受影响版本中，wazuh-manager 的 Agent 注册监听端口在收到客户端发来的 OSSEC A:'<name>' 注册请求后，会先调用 src/addagent/validate.c 中的 OS_IsValidName 对 <name> 进行合法性校验。原始实现仅校验长度和字符集，未拒绝以点开头的名字，因此攻击者只需以 .. 等点序列作为 Agent 名称在注册端口发起一次注册请求，即可绕过校验通过。注册成功后，Manager 在执行队列差异清理时通过 delete_diff 等路径拼接把 Agent 名称作为目录名拼接到队列根目录之后；由于 .. 会解析到上级目录，原本应限定在 queue/<agent>/ 下的递归删除跨越到上级 queue 目录，将其下的全部子目录一并删除，导致所有依赖该队列的 Wazuh 服务停止，需要手工恢复。\n修复版本中通过在 src/addagent/validate.c 的 OS_IsValidName 中新增 u_name[0] == '.' 的前缀判断，从源头拒绝以点开头的 Agent 名称，恶意注册请求在第一阶段校验即被拒绝；并新增 src/unit_tests/addagent/test_validate.c 单元测试覆盖 .、..、.hidden 等点序列用例，确保后续不会再回退。",
+    "effects": [
+      {
+        "comp_name": "wazuh-manager",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.14.6)",
+            "min_fixed_version": "4.14.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "路径遍历",
+    "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-74xo-d3s6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-74xo-d3s6",
+        "name": "https://www.oscs1024.com/hd/MPS-74xo-d3s6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74038",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74038"
+      },
+      {
+        "url": "https://github.com/wazuh/wazuh/pull/35833",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/wazuh/wazuh/security/advisories/GHSA-573w-mqw4-jvmr",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wazuh-path-traversal-dos-via-agent-enrollment",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Wazuh管理器Agent注册路径穿越拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74038",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-22",
+    "description": "Wazuh 是一款开源的主机入侵检测与日志监控平台，wazuh-manager 是其服务端守护进程，提供 Agent 注册、密钥管理与远程通信等能力。\n受影响版本中，wazuh-manager 的 Agent 注册监听端口在收到客户端发来的 OSSEC A:'<name>' 注册请求后，会先调用 src/addagent/validate.c 中的 OS_IsValidName 对 <name> 进行合法性校验。原始实现仅校验长度和字符集，未拒绝以点开头的名字，因此攻击者只需以 .. 等点序列作为 Agent 名称在注册端口发起一次注册请求，即可绕过校验通过。注册成功后，Manager 在执行队列差异清理时通过 delete_diff 等路径拼接把 Agent 名称作为目录名拼接到队列根目录之后；由于 .. 会解析到上级目录，原本应限定在 queue/<agent>/ 下的递归删除跨越到上级 queue 目录，将其下的全部子目录一并删除，导致所有依赖该队列的 Wazuh 服务停止，需要手工恢复。\n修复版本中通过在 src/addagent/validate.c 的 OS_IsValidName 中新增 u_name[0] == '.' 的前缀判断，从源头拒绝以点开头的 Agent 名称，恶意注册请求在第一阶段校验即被拒绝；并新增 src/unit_tests/addagent/test_validate.c 单元测试覆盖 .、..、.hidden 等点序列用例，确保后续不会再回退。",
+    "effects": [
+      {
+        "comp_name": "wazuh-manager",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.14.6)",
+            "min_fixed_version": "4.14.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "路径遍历",
+    "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-74xo-d3s6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-74xo-d3s6",
+        "name": "https://www.oscs1024.com/hd/MPS-74xo-d3s6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74038",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74038"
+      },
+      {
+        "url": "https://github.com/wazuh/wazuh/pull/35833",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/wazuh/wazuh/security/advisories/GHSA-573w-mqw4-jvmr",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wazuh-path-traversal-dos-via-agent-enrollment",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Wazuh管理器Agent注册路径穿越拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-08-18T19:22:43+00:00"
+}
