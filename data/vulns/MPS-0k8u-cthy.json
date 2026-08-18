@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-08-18T21:17:34+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0k8u-cthy",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71417",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:H",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:H",
+    "cwe": "CWE-639",
+    "description": "Lemur 是 Netflix 开源的 TLS 证书管理服务，基于 Python（Flask）实现，以 pip 包 lemur 形式分发，仓库为 github.com/Netflix/lemur（Apache-2.0 协议），用于在 ACME、DigiCert、Entrust、Google CA、CFSSL 等多个 CA 之上统一签发、跟踪和吊销证书。\n受影响版本中，POST /api/1/certificates/upload 仅以 StrictRolePermission 拦截可读用户，并未对请求体中由调用者指定的 authority 校验 AuthorityPermission；CertificateUploadInputSchema 与 AssociatedAuthoritySchema 直接按 id/名称解析 authority 且不做权限检查；lemur/certificates/models.py 中 Certificate 仅对 name 强制唯一，body、serial、external_id 缺乏唯一约束，因而调用者可针对目标证书的 (authority_id, serial) 与 body 再次插入一条由自己拥有的重复记录。攻击者随后对重复记录调用 PUT /api/1/certificates/<dup_id>/revoke，CertificateRevoke.put 仅在 g.current_user != cert.user 时执行 CertificatePermission 检查（重复记录的 user 即为攻击者，直接绕过），且 cert.endpoints 为空时绕过“已部署端点禁止吊销”防线；最终 service.revoke 调用 issuer 插件按 certificate.body（ACME）或 certificate.external_id（DigiCert/Entrust/Google CA/CFSSL）使用 authority 的存储 CA 凭据在真实 CA 侧吊销目标证书，可在不持有 AuthorityPermission 或 CertificatePermission 的情况下造成集群级 TLS 拒绝服务。\n修复版本中通过在 CertificatesUpload.post 中校验 authority 的 AuthorityPermission，并在 (authority_id, serial) 已存在时返回 409 拒绝重复上传；在 CertificateRevoke.put 中按 (authority_id, serial) 查找全部相关 Certificate 行，对每一行均执行 CertificatePermission 与已部署端点检查，使重复记录或行内授权都不能再绕过吊销授权与端点保护。",
+    "effects": [
+      {
+        "comp_name": "lemur",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.9.3)",
+            "min_fixed_version": "1.9.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-0k8u-cthy",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0k8u-cthy",
+        "name": "https://www.oscs1024.com/hd/MPS-0k8u-cthy"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71417",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71417"
+      },
+      {
+        "url": "https://github.com/Netflix/lemur/commit/851389ae737a6d6bf16c1f9ca64a2ce56c1cc5c6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Netflix/lemur/releases/tag/v1.9.3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Netflix/lemur/security/advisories/GHSA-pxmc-2ffp-8j67",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Netflix/lemur/security/advisories/GHSA-pxmc-2ffp-8j67",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源",
+      "终端软件"
+    ],
+    "title": "Lemur 任意证书吊销漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71417",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:H",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:H",
+    "cwe": "CWE-639",
+    "description": "Lemur 是 Netflix 开源的 TLS 证书管理服务，基于 Python（Flask）实现，以 pip 包 lemur 形式分发，仓库为 github.com/Netflix/lemur（Apache-2.0 协议），用于在 ACME、DigiCert、Entrust、Google CA、CFSSL 等多个 CA 之上统一签发、跟踪和吊销证书。\n受影响版本中，POST /api/1/certificates/upload 仅以 StrictRolePermission 拦截可读用户，并未对请求体中由调用者指定的 authority 校验 AuthorityPermission；CertificateUploadInputSchema 与 AssociatedAuthoritySchema 直接按 id/名称解析 authority 且不做权限检查；lemur/certificates/models.py 中 Certificate 仅对 name 强制唯一，body、serial、external_id 缺乏唯一约束，因而调用者可针对目标证书的 (authority_id, serial) 与 body 再次插入一条由自己拥有的重复记录。攻击者随后对重复记录调用 PUT /api/1/certificates/<dup_id>/revoke，CertificateRevoke.put 仅在 g.current_user != cert.user 时执行 CertificatePermission 检查（重复记录的 user 即为攻击者，直接绕过），且 cert.endpoints 为空时绕过“已部署端点禁止吊销”防线；最终 service.revoke 调用 issuer 插件按 certificate.body（ACME）或 certificate.external_id（DigiCert/Entrust/Google CA/CFSSL）使用 authority 的存储 CA 凭据在真实 CA 侧吊销目标证书，可在不持有 AuthorityPermission 或 CertificatePermission 的情况下造成集群级 TLS 拒绝服务。\n修复版本中通过在 CertificatesUpload.post 中校验 authority 的 AuthorityPermission，并在 (authority_id, serial) 已存在时返回 409 拒绝重复上传；在 CertificateRevoke.put 中按 (authority_id, serial) 查找全部相关 Certificate 行，对每一行均执行 CertificatePermission 与已部署端点检查，使重复记录或行内授权都不能再绕过吊销授权与端点保护。",
+    "effects": [
+      {
+        "comp_name": "lemur",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.9.3)",
+            "min_fixed_version": "1.9.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-0k8u-cthy",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0k8u-cthy",
+        "name": "https://www.oscs1024.com/hd/MPS-0k8u-cthy"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71417",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71417"
+      },
+      {
+        "url": "https://github.com/Netflix/lemur/commit/851389ae737a6d6bf16c1f9ca64a2ce56c1cc5c6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Netflix/lemur/releases/tag/v1.9.3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Netflix/lemur/security/advisories/GHSA-pxmc-2ffp-8j67",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Netflix/lemur/security/advisories/GHSA-pxmc-2ffp-8j67",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源",
+      "终端软件"
+    ],
+    "title": "Lemur 任意证书吊销漏洞"
+  },
+  "first_saved_at": "2026-08-18T21:17:34+00:00"
+}

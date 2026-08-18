@@ -1,0 +1,123 @@
+{
+  "saved_at": "2026-08-18T21:17:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0z5m-wr12",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71676",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-122",
+    "description": "Open5GS 是开源 5G 核心网实现，采用 C 语言开发，提供 AMF、SMF、UPF 等 5G 核心网功能组件，其中 AMF 模块使用 lib/nas/5gs/decoder.c 与 lib/nas/5gs/ies.c 中的解码器处理来自 gNB 的 NAS PDU。\n受影响版本中，lib/nas/5gs/decoder.c 的 ogs_nas_5gmm_decode 根据 NAS PDU 的 message type 字节分发到对应的子解码器；攻击者将 message type 从 0x57（Service Accept 类）篡改为 0x4e（注册请求相关），使得解码器把原本属于 Authentication Response IE 的负载误判为 Service Accept 的 TLV 列表，调用链最终进入 lib/nas/5gs/ies.c 的 ogs_nas_5gs_decode_gprs_timer_2。 该函数仅检查 pkbuf->len < 1 就读取首字节作为 length，并直接以 source->length + sizeof(source->length) 计算长度后通过 memcpy 写入目标结构与剩余缓冲区；当攻击者控制 length 字段且超出实际可用缓冲时，会触发 ASAN 报告的 heap-buffer-overflow，导致 open5gs-amfd 进程崩溃，造成 5G 核心网接入与移动性管理服务拒绝。\n修复版本中通过为 lib/nas/5gs/ies.c 中所有 NAS 5GS 解码器增加 pkbuf 最小长度前置校验（pkbuf->len < N 即返回 -1），并在 lib/nas/5gs/decoder.c 的服务接受解码链路中收紧 type 判定与边界检查，阻止类型混淆后的畸形 TLV 进入 gprs_timer_2 等深层解码函数。",
+    "effects": [
+      {
+        "comp_name": "open5gs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.7.0,2.7.5)",
+            "min_fixed_version": "2.7.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-0z5m-wr12",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0z5m-wr12",
+        "name": "https://www.oscs1024.com/hd/MPS-0z5m-wr12"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71676",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71676"
+      },
+      {
+        "url": "https://gist.github.com/centauruszzz/0d267967fc5d072f31c866603f7aaf7c",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Open5GS NAS 5GS 解码器链堆缓冲区溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71676",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-122",
+    "description": "Open5GS 是开源 5G 核心网实现，采用 C 语言开发，提供 AMF、SMF、UPF 等 5G 核心网功能组件，其中 AMF 模块使用 lib/nas/5gs/decoder.c 与 lib/nas/5gs/ies.c 中的解码器处理来自 gNB 的 NAS PDU。\n受影响版本中，lib/nas/5gs/decoder.c 的 ogs_nas_5gmm_decode 根据 NAS PDU 的 message type 字节分发到对应的子解码器；攻击者将 message type 从 0x57（Service Accept 类）篡改为 0x4e（注册请求相关），使得解码器把原本属于 Authentication Response IE 的负载误判为 Service Accept 的 TLV 列表，调用链最终进入 lib/nas/5gs/ies.c 的 ogs_nas_5gs_decode_gprs_timer_2。 该函数仅检查 pkbuf->len < 1 就读取首字节作为 length，并直接以 source->length + sizeof(source->length) 计算长度后通过 memcpy 写入目标结构与剩余缓冲区；当攻击者控制 length 字段且超出实际可用缓冲时，会触发 ASAN 报告的 heap-buffer-overflow，导致 open5gs-amfd 进程崩溃，造成 5G 核心网接入与移动性管理服务拒绝。\n修复版本中通过为 lib/nas/5gs/ies.c 中所有 NAS 5GS 解码器增加 pkbuf 最小长度前置校验（pkbuf->len < N 即返回 -1），并在 lib/nas/5gs/decoder.c 的服务接受解码链路中收紧 type 判定与边界检查，阻止类型混淆后的畸形 TLV 进入 gprs_timer_2 等深层解码函数。",
+    "effects": [
+      {
+        "comp_name": "open5gs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.7.0,2.7.5)",
+            "min_fixed_version": "2.7.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-0z5m-wr12",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0z5m-wr12",
+        "name": "https://www.oscs1024.com/hd/MPS-0z5m-wr12"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71676",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71676"
+      },
+      {
+        "url": "https://gist.github.com/centauruszzz/0d267967fc5d072f31c866603f7aaf7c",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Open5GS NAS 5GS 解码器链堆缓冲区溢出漏洞"
+  },
+  "first_saved_at": "2026-08-18T21:17:33+00:00"
+}
