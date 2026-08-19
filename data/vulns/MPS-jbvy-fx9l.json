@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-19T06:33:30+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-jbvy-fx9l",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-49415",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-367",
+    "description": "FreeBSD 是开源操作系统，其内核通过 execve(2) 加载可执行映像；当目标为 SUID 程序时，内核会安装新的虚拟地址空间，并将进程凭据切换为文件所有者。\n受影响版本中，do_execve 在更新进程凭据之前先安装 SUID 二进制的新虚拟地址空间。此窗口内，procfs_doprocmem 先调用 p_candebug 再解锁并调用 proc_rwmem，调试权限检查仍看到原始凭据并放行同用户访问。未授权本地用户可经 procfs 或 linprocfs 改写尚未提权的 SUID 进程地址空间，从而取得受影响系统的完全控制权。\n修复版本中通过新增 execve_block 与 proc_vmspace_ref，使对目标进程地址空间的访问与 execve 互斥，并在持有稳定 vmspace 引用后执行 p_candebug，阻止在凭据提升前改写 SUID 地址空间。",
+    "effects": [
+      {
+        "comp_name": "freebsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[15.0-RELEASE,15.0-RELEASE-p11)",
+            "min_fixed_version": "15.0-RELEASE-p11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.1-RELEASE,15.1-RELEASE-p1)",
+            "min_fixed_version": "15.1-RELEASE-p1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.4-RELEASE,14.4-RELEASE-p7)",
+            "min_fixed_version": "14.4-RELEASE-p7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.3-RELEASE,14.3-RELEASE-p16)",
+            "min_fixed_version": "14.3-RELEASE-p16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "检查时间与使用时间(TOCTOU)的竞争条件",
+    "kind_en": "检查时间使用时间 (TOCTOU) 竞争条件",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-jbvy-fx9l",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jbvy-fx9l",
+        "name": "https://www.oscs1024.com/hd/MPS-jbvy-fx9l"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-49415",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-49415"
+      },
+      {
+        "url": "https://security.freebsd.org/advisories/FreeBSD-SA-26:39.execve.asc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "FreeBSD竞态提权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-49415",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-367",
+    "description": "FreeBSD 是开源操作系统，其内核通过 execve(2) 加载可执行映像；当目标为 SUID 程序时，内核会安装新的虚拟地址空间，并将进程凭据切换为文件所有者。\n受影响版本中，do_execve 在更新进程凭据之前先安装 SUID 二进制的新虚拟地址空间。此窗口内，procfs_doprocmem 先调用 p_candebug 再解锁并调用 proc_rwmem，调试权限检查仍看到原始凭据并放行同用户访问。未授权本地用户可经 procfs 或 linprocfs 改写尚未提权的 SUID 进程地址空间，从而取得受影响系统的完全控制权。\n修复版本中通过新增 execve_block 与 proc_vmspace_ref，使对目标进程地址空间的访问与 execve 互斥，并在持有稳定 vmspace 引用后执行 p_candebug，阻止在凭据提升前改写 SUID 地址空间。",
+    "effects": [
+      {
+        "comp_name": "freebsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[15.0-RELEASE,15.0-RELEASE-p11)",
+            "min_fixed_version": "15.0-RELEASE-p11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.1-RELEASE,15.1-RELEASE-p1)",
+            "min_fixed_version": "15.1-RELEASE-p1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.4-RELEASE,14.4-RELEASE-p7)",
+            "min_fixed_version": "14.4-RELEASE-p7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.3-RELEASE,14.3-RELEASE-p16)",
+            "min_fixed_version": "14.3-RELEASE-p16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "检查时间与使用时间(TOCTOU)的竞争条件",
+    "kind_en": "Time-of-check Time-of-use (TOCTOU) Race Condition",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-jbvy-fx9l",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jbvy-fx9l",
+        "name": "https://www.oscs1024.com/hd/MPS-jbvy-fx9l"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-49415",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-49415"
+      },
+      {
+        "url": "https://security.freebsd.org/advisories/FreeBSD-SA-26:39.execve.asc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "FreeBSD竞态提权漏洞"
+  },
+  "first_saved_at": "2026-08-19T06:33:30+00:00"
+}

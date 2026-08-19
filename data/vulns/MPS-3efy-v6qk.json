@@ -1,0 +1,143 @@
+{
+  "saved_at": "2026-08-19T06:33:26+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3efy-v6qk",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-49419",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-911",
+    "description": "FreeBSD 是开源 UNIX 类操作系统，其 Jail 子系统提供操作系统级进程隔离；自 15.0 起，jail_set(2) 与 jail_get(2) 支持 JAIL_AT_DESC，使调用可在 jail 描述符所指 prison 的上下文中创建或查询 jail。\n受影响版本中，指定 JAIL_AT_DESC 时，kern_jail_set() 与 kern_jail_get() 在调用 jaildesc_find() 查找描述符对应 prison 之前，先对调用者当前 prison 指针 mypr 执行 prison_free()。若描述符无效或指向已销毁 jail，查找失败后的 done_errmsg/done 路径会再次 prison_free(mypr)，造成引用计数下溢，prison 结构体可能在仍被使用时被释放。无特权本地用户可经 jail_set(2)/jail_get(2) 触发该路径：在宿主上通常立即导致内核 panic，在 jail 内则可能被用于提升权限。\n修复版本中通过先将 jaildesc_find() 结果写入临时指针 jdpr，仅在查找成功后再 prison_free(mypr) 并切换 mypr，使查找失败时错误路径不再二次释放当前 prison，从而消除引用计数下溢。",
+    "effects": [
+      {
+        "comp_name": "freebsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[15.0-RELEASE,15.0-RELEASE-p11)",
+            "min_fixed_version": "15.0-RELEASE-p11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.1-RELEASE,15.1-RELEASE-p1)",
+            "min_fixed_version": "15.1-RELEASE-p1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "引用计数的更新不恰当",
+    "kind_en": "引用计数更新不当",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-3efy-v6qk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3efy-v6qk",
+        "name": "https://www.oscs1024.com/hd/MPS-3efy-v6qk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-49419",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-49419"
+      },
+      {
+        "url": "https://security.freebsd.org/advisories/FreeBSD-SA-26:38.jail.asc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "FreeBSD Jail引用计数下溢",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-49419",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-911",
+    "description": "FreeBSD 是开源 UNIX 类操作系统，其 Jail 子系统提供操作系统级进程隔离；自 15.0 起，jail_set(2) 与 jail_get(2) 支持 JAIL_AT_DESC，使调用可在 jail 描述符所指 prison 的上下文中创建或查询 jail。\n受影响版本中，指定 JAIL_AT_DESC 时，kern_jail_set() 与 kern_jail_get() 在调用 jaildesc_find() 查找描述符对应 prison 之前，先对调用者当前 prison 指针 mypr 执行 prison_free()。若描述符无效或指向已销毁 jail，查找失败后的 done_errmsg/done 路径会再次 prison_free(mypr)，造成引用计数下溢，prison 结构体可能在仍被使用时被释放。无特权本地用户可经 jail_set(2)/jail_get(2) 触发该路径：在宿主上通常立即导致内核 panic，在 jail 内则可能被用于提升权限。\n修复版本中通过先将 jaildesc_find() 结果写入临时指针 jdpr，仅在查找成功后再 prison_free(mypr) 并切换 mypr，使查找失败时错误路径不再二次释放当前 prison，从而消除引用计数下溢。",
+    "effects": [
+      {
+        "comp_name": "freebsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[15.0-RELEASE,15.0-RELEASE-p11)",
+            "min_fixed_version": "15.0-RELEASE-p11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.1-RELEASE,15.1-RELEASE-p1)",
+            "min_fixed_version": "15.1-RELEASE-p1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "引用计数的更新不恰当",
+    "kind_en": "Improper Update of Reference Count",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-3efy-v6qk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3efy-v6qk",
+        "name": "https://www.oscs1024.com/hd/MPS-3efy-v6qk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-49419",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-49419"
+      },
+      {
+        "url": "https://security.freebsd.org/advisories/FreeBSD-SA-26:38.jail.asc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "FreeBSD Jail引用计数下溢"
+  },
+  "first_saved_at": "2026-08-19T06:33:26+00:00"
+}
