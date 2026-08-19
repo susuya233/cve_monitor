@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T13:39:03+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T14:26:37+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-1fm5-avdx",
@@ -22,14 +22,14 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
     "cwe": "CWE-401",
-    "description": "cockpit-ws 中发现内存泄漏缺陷。登录页面处理程序会在每个携带 CockpitLang cookie 的未经身份验证的请求上泄漏堆分配，从而允许未经身份验证的远程攻击者耗尽主机上的内存并导致拒绝服务。",
+    "description": "Cockpit 是开源的服务器 Web 管理界面，其中 cockpit-ws 是其对外提供 HTTP/WS 服务的守护进程，cockpit-ws 同时由 Red Hat Enterprise Linux 7/8/9/10 以及 Red Hat OpenShift Dev Spaces 发行。\n受影响版本中，src/ws/cockpithandlers.c 中 send_login_html 函数在解析请求头时通过 cockpit_web_server_parse_cookie 取出 CockpitLang cookie 字符串并赋值给局部变量 language，随后该变量被传入 cockpit_web_response_negotiation 用于选择 login 页面的本地化资源，但函数末尾仅调用 g_strfreev(languages) 释放 Accept-Language 路径产生的 languages 数组，并未释放 parse_cookie 返回的 language 字符串。每次携带 CockpitLang cookie 的未鉴权 GET /login 请求都会泄漏该堆分配，远程未鉴权攻击者可重复触发该路径耗尽 cockpit-ws 进程堆内存并造成拒绝服务。\n修复版本中通过在 send_login_html 中针对 CockpitLang cookie 路径使用 g_autofree 管理 language，并在所有出口路径确保该分配的字符串被释放，切断每个未鉴权请求对应的堆泄漏。",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "内存泄漏",
     "kind_en": "有效生命周期后内存丢失释放",
     "last_modified_time": "2026-08-19",
@@ -58,7 +58,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-76235漏洞",
+    "title": "cockpit-ws登录页处理器内存泄漏漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -79,14 +79,14 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
     "cwe": "CWE-401",
-    "description": "A memory leak flaw was found in cockpit-ws. The login page handler leaks a heap allocation on every unauthenticated request that carries a CockpitLang cookie, allowing a remote unauthenticated attacker to exhaust memory on the host and cause a denial of service.",
+    "description": "Cockpit 是开源的服务器 Web 管理界面，其中 cockpit-ws 是其对外提供 HTTP/WS 服务的守护进程，cockpit-ws 同时由 Red Hat Enterprise Linux 7/8/9/10 以及 Red Hat OpenShift Dev Spaces 发行。\n受影响版本中，src/ws/cockpithandlers.c 中 send_login_html 函数在解析请求头时通过 cockpit_web_server_parse_cookie 取出 CockpitLang cookie 字符串并赋值给局部变量 language，随后该变量被传入 cockpit_web_response_negotiation 用于选择 login 页面的本地化资源，但函数末尾仅调用 g_strfreev(languages) 释放 Accept-Language 路径产生的 languages 数组，并未释放 parse_cookie 返回的 language 字符串。每次携带 CockpitLang cookie 的未鉴权 GET /login 请求都会泄漏该堆分配，远程未鉴权攻击者可重复触发该路径耗尽 cockpit-ws 进程堆内存并造成拒绝服务。\n修复版本中通过在 send_login_html 中针对 CockpitLang cookie 路径使用 g_autofree 管理 language，并在所有出口路径确保该分配的字符串被释放，切断每个未鉴权请求对应的堆泄漏。",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "内存泄漏",
     "kind_en": "Missing Release of Memory after Effective Lifetime",
     "last_modified_time": "2026-08-19",
@@ -115,7 +115,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-76235漏洞"
+    "title": "cockpit-ws登录页处理器内存泄漏漏洞"
   },
   "first_saved_at": "2026-08-19T13:39:03+00:00"
 }

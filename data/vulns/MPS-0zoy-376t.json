@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T13:39:20+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T14:26:38+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-0zoy-376t",
@@ -35,14 +35,28 @@
     "cvss_score": 9.3,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:L",
     "cwe": "CWE-89",
-    "description": "Nikstore Core <= 1.5 版本中未经身份验证的 SQL 注入。",
-    "effects": [],
+    "description": "Nikstore Core 是由 TeconceTheme 为其 Nikstore 商业 WordPress 主题配套提供的闭源电商扩展插件，常用于 WooCommerce 商品、订单与查询扩展，属于未在 WordPress.org 上架、不公开源码的商业组件。\n受影响版本中，未认证的攻击者可直接向插件暴露的 Web 接口发送含 SQL 元字符的请求，未对外部输入进行参数化或转义即拼入数据库查询，造成 WordPress 站点数据库的未授权读取，并因昂贵的注入载荷影响数据库与站点可用性。\n修复版本中通过上游尚未发布官方补丁，建议在 WAF 与主机层启用 Patchstack 提供的虚拟补丁规则拦截异常 SQL 元字符与 UNION/SELECT 等关键字，及时停用或卸载该插件，并持续关注上游修复版本发布直至升级至修复版本。",
+    "effects": [
+      {
+        "comp_name": "nikstore-core",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "SQL注入",
     "kind_en": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
     "last_modified_time": "2026-08-19",
@@ -66,8 +80,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73388漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Nikstore Core 插件SQL注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -101,14 +117,28 @@
     "cvss_score": 9.3,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:L",
     "cwe": "CWE-89",
-    "description": "Unauthenticated SQL Injection in Nikstore Core <= 1.5 versions.",
-    "effects": [],
+    "description": "Nikstore Core 是由 TeconceTheme 为其 Nikstore 商业 WordPress 主题配套提供的闭源电商扩展插件，常用于 WooCommerce 商品、订单与查询扩展，属于未在 WordPress.org 上架、不公开源码的商业组件。\n受影响版本中，未认证的攻击者可直接向插件暴露的 Web 接口发送含 SQL 元字符的请求，未对外部输入进行参数化或转义即拼入数据库查询，造成 WordPress 站点数据库的未授权读取，并因昂贵的注入载荷影响数据库与站点可用性。\n修复版本中通过上游尚未发布官方补丁，建议在 WAF 与主机层启用 Patchstack 提供的虚拟补丁规则拦截异常 SQL 元字符与 UNION/SELECT 等关键字，及时停用或卸载该插件，并持续关注上游修复版本发布直至升级至修复版本。",
+    "effects": [
+      {
+        "comp_name": "nikstore-core",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "SQL注入",
     "kind_en": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
     "last_modified_time": "2026-08-19",
@@ -132,8 +162,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73388漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Nikstore Core 插件SQL注入漏洞"
   },
   "first_saved_at": "2026-08-19T13:39:20+00:00"
 }

@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T13:39:32+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T14:26:51+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-5zyf-o8lt",
@@ -35,14 +35,28 @@
     "cvss_score": 9.8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-502",
-    "description": "灵活订阅 <= 1.8.1 版本中的客户 PHP 对象注入。",
-    "effects": [],
+    "description": "Flexible Subscriptions 是 WP Desk 提供的开源 WordPress 插件，用于在 WooCommerce 中创建订阅商品并处理定期付款。\n受影响版本中，客户完成含订阅商品的结账后，SubscriptionCheckout 会基于父订单创建订阅，并由 OrderDataTransfer.copy_data 复制订单元数据；该函数对每个元数据值调用 maybe_unserialize，使客户写入且仍呈序列化形态的字符串进入 PHP 反序列化。存在可用 POP 链时，可导致代码执行、SQL 注入、路径穿越或拒绝服务。\n修复版本中通过移除 copy_data 对 maybe_unserialize 的调用，改为直接写入原始元数据值，切断不可信序列化字符串进入对象注入路径。",
+    "effects": [
+      {
+        "comp_name": "flexible-subscriptions",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.8.2)",
+            "min_fixed_version": "1.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "反序列化",
     "kind_en": "不可信数据的反序列化",
     "last_modified_time": "2026-08-19",
@@ -66,8 +80,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73364漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Flexible Subscriptions对象注入",
     "_translated": true
   },
   "detail_original": {
@@ -101,14 +117,28 @@
     "cvss_score": 9.8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-502",
-    "description": "Customer PHP Object Injection in Flexible Subscriptions <= 1.8.1 versions.",
-    "effects": [],
+    "description": "Flexible Subscriptions 是 WP Desk 提供的开源 WordPress 插件，用于在 WooCommerce 中创建订阅商品并处理定期付款。\n受影响版本中，客户完成含订阅商品的结账后，SubscriptionCheckout 会基于父订单创建订阅，并由 OrderDataTransfer.copy_data 复制订单元数据；该函数对每个元数据值调用 maybe_unserialize，使客户写入且仍呈序列化形态的字符串进入 PHP 反序列化。存在可用 POP 链时，可导致代码执行、SQL 注入、路径穿越或拒绝服务。\n修复版本中通过移除 copy_data 对 maybe_unserialize 的调用，改为直接写入原始元数据值，切断不可信序列化字符串进入对象注入路径。",
+    "effects": [
+      {
+        "comp_name": "flexible-subscriptions",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.8.2)",
+            "min_fixed_version": "1.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "反序列化",
     "kind_en": "Deserialization of Untrusted Data",
     "last_modified_time": "2026-08-19",
@@ -132,8 +162,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73364漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Flexible Subscriptions对象注入"
   },
   "first_saved_at": "2026-08-19T13:39:32+00:00"
 }

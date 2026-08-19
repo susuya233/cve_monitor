@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T13:39:18+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T14:26:44+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-cwup-lj9x",
@@ -35,14 +35,28 @@
     "cvss_score": 9.8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-502",
-    "description": "Kalles Addons <= 1.0.6 版本中未经身份验证的 PHP 对象注入。",
-    "effects": [],
+    "description": "Kalles Addons 是由 The4 发布的商业 WordPress 插件，作为 Kalles WooCommerce 主题的配套扩展用于扩展主题电商相关功能。该插件为闭源商业分发，未在 WordPress.org 公共插件目录上架，也未公开 GitHub 源码仓库。\n受影响版本中，插件在面向未认证请求的入口对 PHP 序列化数据直接进行反序列化处理，输入未经过白名单、强签名或类型校验即进入对象反序列化流程，构成 CWE-502 描述的不安全反序列化。攻击者无需任何凭据即可向暴露入口投递恶意序列化数据，借助目标 WordPress 环境中可用的 POP 链在服务端触发任意对象注入，进一步导致代码执行、SQL 注入、路径穿越或拒绝服务等后果；Patchstack 在其公告中将其风险描述为高度危险并预期被大规模利用，CVSS 基础评分 9.8。\n修复版本中通过停止在未认证请求路径直接反序列化不可信输入或对该路径上的序列化数据做强签名与白名单校验，阻断攻击者控制的字符串进入对象反序列化流程；截至本文档生成日期官方尚未发布修复版本，建议在官方修复版可用前通过 Patchstack 缓解规则（RapidMitigate）拦截攻击向量，或暂时停用 Kalles Addons 插件直至官方修复版发布。",
+    "effects": [
+      {
+        "comp_name": "the4/kalles-addons",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.6]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "反序列化",
     "kind_en": "不可信数据的反序列化",
     "last_modified_time": "2026-08-19",
@@ -66,8 +80,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73389漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Kalles Addons WordPress 插件 PHP 对象注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -101,14 +117,28 @@
     "cvss_score": 9.8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-502",
-    "description": "Unauthenticated PHP Object Injection in Kalles Addons <= 1.0.6 versions.",
-    "effects": [],
+    "description": "Kalles Addons 是由 The4 发布的商业 WordPress 插件，作为 Kalles WooCommerce 主题的配套扩展用于扩展主题电商相关功能。该插件为闭源商业分发，未在 WordPress.org 公共插件目录上架，也未公开 GitHub 源码仓库。\n受影响版本中，插件在面向未认证请求的入口对 PHP 序列化数据直接进行反序列化处理，输入未经过白名单、强签名或类型校验即进入对象反序列化流程，构成 CWE-502 描述的不安全反序列化。攻击者无需任何凭据即可向暴露入口投递恶意序列化数据，借助目标 WordPress 环境中可用的 POP 链在服务端触发任意对象注入，进一步导致代码执行、SQL 注入、路径穿越或拒绝服务等后果；Patchstack 在其公告中将其风险描述为高度危险并预期被大规模利用，CVSS 基础评分 9.8。\n修复版本中通过停止在未认证请求路径直接反序列化不可信输入或对该路径上的序列化数据做强签名与白名单校验，阻断攻击者控制的字符串进入对象反序列化流程；截至本文档生成日期官方尚未发布修复版本，建议在官方修复版可用前通过 Patchstack 缓解规则（RapidMitigate）拦截攻击向量，或暂时停用 Kalles Addons 插件直至官方修复版发布。",
+    "effects": [
+      {
+        "comp_name": "the4/kalles-addons",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.6]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "反序列化",
     "kind_en": "Deserialization of Untrusted Data",
     "last_modified_time": "2026-08-19",
@@ -132,8 +162,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73389漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Kalles Addons WordPress 插件 PHP 对象注入漏洞"
   },
   "first_saved_at": "2026-08-19T13:39:18+00:00"
 }

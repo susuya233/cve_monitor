@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T13:39:23+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T14:26:41+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-84n7-w1fq",
@@ -22,14 +22,28 @@
     "cvss_score": 8.1,
     "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-98",
-    "description": "Resido <= 1.5 版本中包含未经身份验证的本地文件。",
-    "effects": [],
+    "description": "Resido 是 SmartDataSoft 出品的商业 WordPress 房地产主题，常用于房产中介、楼盘展示与查询门户，源码通过 ThemeForest 渠道分发，并未在 GitHub 等公开仓库提供可下载源代码。\n受影响版本中，主题暴露的 Web 接口在加载模板或子页面的过程中直接把用户可控的请求参数拼入 PHP 文件包含流程，未对该参数做路径白名单、扩展名限定或 realpath 校验，攻击者只需向主题任意可访问端点提交一个指向本地文件的相对或绝对路径，未认证即可让服务器在 include/require 阶段加载并渲染该文件内容，从而读取 wp-config.php 等包含数据库凭证的敏感文件，或借助日志、PECL 等中间文件实现进一步利用。\n修复版本中通过上游官方补丁目前尚未发布，建议在官方修复发布前通过 Web 应用防火墙或 Patchstack 虚拟补丁规则拦截异常的目录穿越与 PHP 包装器 payload，并在主机与 WordPress 权限层收紧 PHP 文件可读范围直至升级至官方修复版本。",
+    "effects": [
+      {
+        "comp_name": "resido",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "php远程文件包含",
     "kind_en": "PHP 程序中 Include/Require 语句的文件名控制不当（“PHP 远程文件包含”）",
     "last_modified_time": "2026-08-19",
@@ -53,8 +67,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73387漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Resido WordPress 主题本地文件包含漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -75,14 +91,28 @@
     "cvss_score": 8.1,
     "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-98",
-    "description": "Unauthenticated Local File Inclusion in Resido <= 1.5 versions.",
-    "effects": [],
+    "description": "Resido 是 SmartDataSoft 出品的商业 WordPress 房地产主题，常用于房产中介、楼盘展示与查询门户，源码通过 ThemeForest 渠道分发，并未在 GitHub 等公开仓库提供可下载源代码。\n受影响版本中，主题暴露的 Web 接口在加载模板或子页面的过程中直接把用户可控的请求参数拼入 PHP 文件包含流程，未对该参数做路径白名单、扩展名限定或 realpath 校验，攻击者只需向主题任意可访问端点提交一个指向本地文件的相对或绝对路径，未认证即可让服务器在 include/require 阶段加载并渲染该文件内容，从而读取 wp-config.php 等包含数据库凭证的敏感文件，或借助日志、PECL 等中间文件实现进一步利用。\n修复版本中通过上游官方补丁目前尚未发布，建议在官方修复发布前通过 Web 应用防火墙或 Patchstack 虚拟补丁规则拦截异常的目录穿越与 PHP 包装器 payload，并在主机与 WordPress 权限层收紧 PHP 文件可读范围直至升级至官方修复版本。",
+    "effects": [
+      {
+        "comp_name": "resido",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "php远程文件包含",
     "kind_en": "Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion')",
     "last_modified_time": "2026-08-19",
@@ -106,8 +136,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73387漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Resido WordPress 主题本地文件包含漏洞"
   },
   "first_saved_at": "2026-08-19T13:39:23+00:00"
 }

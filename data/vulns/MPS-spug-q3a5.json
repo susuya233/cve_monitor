@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T13:39:07+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T14:26:47+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-spug-q3a5",
@@ -35,14 +35,28 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
     "cwe": "CWE-862",
-    "description": "Stitch Express <= 1.9.0 版本中未经身份验证的损坏访问控制。",
-    "effects": [],
+    "description": "Stitch Express 是发布于 WordPress.org 的开源 WooCommerce 支付网关插件，用于在网店结账流程中接入 Stitch Express 在线收款。\n受影响版本中，插件存在未认证的访问控制缺失，部分功能未校验授权、认证或 nonce。未登录访问者可直接调用这些功能，执行本应由更高权限保护的操作，从而修改受保护状态并破坏站点完整性。\n修复版本中通过为相关功能补齐授权、认证或 nonce 校验切断未授权操作路径；截至 2026-08-19，Patchstack 标明尚无官方补丁，WordPress.org 当前最高版本 1.9.1 的变更日志亦未声明该项安全修复。",
+    "effects": [
+      {
+        "comp_name": "stitch-express",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.9.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
     "last_modified_time": "2026-08-19",
@@ -66,8 +80,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73394漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Stitch Express越权漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -101,14 +117,28 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
     "cwe": "CWE-862",
-    "description": "Unauthenticated Broken Access Control in Stitch Express <= 1.9.0 versions.",
-    "effects": [],
+    "description": "Stitch Express 是发布于 WordPress.org 的开源 WooCommerce 支付网关插件，用于在网店结账流程中接入 Stitch Express 在线收款。\n受影响版本中，插件存在未认证的访问控制缺失，部分功能未校验授权、认证或 nonce。未登录访问者可直接调用这些功能，执行本应由更高权限保护的操作，从而修改受保护状态并破坏站点完整性。\n修复版本中通过为相关功能补齐授权、认证或 nonce 校验切断未授权操作路径；截至 2026-08-19，Patchstack 标明尚无官方补丁，WordPress.org 当前最高版本 1.9.1 的变更日志亦未声明该项安全修复。",
+    "effects": [
+      {
+        "comp_name": "stitch-express",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.9.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
     "last_modified_time": "2026-08-19",
@@ -132,8 +162,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73394漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Stitch Express越权漏洞"
   },
   "first_saved_at": "2026-08-19T13:39:07+00:00"
 }

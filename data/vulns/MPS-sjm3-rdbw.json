@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T13:39:28+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T14:26:52+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-sjm3-rdbw",
@@ -22,14 +22,28 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
     "cwe": "CWE-201",
-    "description": "使用联系表 7 <= 3.0.2 版本跟踪用户地理位置时未经身份验证的敏感数据暴露。",
-    "effects": [],
+    "description": "Track Geolocation Of Users Using Contact Form 7 是 ZealousWeb 发布的开源 WordPress 插件，用于在 Contact Form 7 提交时记录访问者地理位置，并提供后台列表、CSV 导出与邮件短码输出。\n受影响版本中，CFGEO_Admin_Action::action__cfgeo_init_99 在 WordPress init 阶段只要请求包含 export_csv 且 post_type 为 cfgeozw_data，会把全部表单提交记录以 CSV 响应返回，未校验登录状态、nonce 或 manage_options 能力。未认证攻击者访问 WordPress 后台入口即可下载联系人字段、地理位置、附件 URL 等敏感数据。\n修复版本中通过尚未发布的官方补丁收紧该导出入口的鉴权。截至 2026-08-19，WordPress.org 与 GitHub 最新稳定版本仍为 3.0.2，公开资料标明暂无官方补丁；在官方修复发布前，应停用该插件或拦截未认证的 export_csv 请求。",
+    "effects": [
+      {
+        "comp_name": "track-geolocation-of-users-using-contact-form-7",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.0.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "通过发送数据的信息暴露",
     "kind_en": "将敏感信息插入发送的数据中",
     "last_modified_time": "2026-08-19",
@@ -53,8 +67,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73386漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CF7地理定位敏感数据暴露",
     "_translated": true
   },
   "detail_original": {
@@ -75,14 +91,28 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
     "cwe": "CWE-201",
-    "description": "Unauthenticated Sensitive Data Exposure in Track Geolocation Of Users Using Contact Form 7 <= 3.0.2 versions.",
-    "effects": [],
+    "description": "Track Geolocation Of Users Using Contact Form 7 是 ZealousWeb 发布的开源 WordPress 插件，用于在 Contact Form 7 提交时记录访问者地理位置，并提供后台列表、CSV 导出与邮件短码输出。\n受影响版本中，CFGEO_Admin_Action::action__cfgeo_init_99 在 WordPress init 阶段只要请求包含 export_csv 且 post_type 为 cfgeozw_data，会把全部表单提交记录以 CSV 响应返回，未校验登录状态、nonce 或 manage_options 能力。未认证攻击者访问 WordPress 后台入口即可下载联系人字段、地理位置、附件 URL 等敏感数据。\n修复版本中通过尚未发布的官方补丁收紧该导出入口的鉴权。截至 2026-08-19，WordPress.org 与 GitHub 最新稳定版本仍为 3.0.2，公开资料标明暂无官方补丁；在官方修复发布前，应停用该插件或拦截未认证的 export_csv 请求。",
+    "effects": [
+      {
+        "comp_name": "track-geolocation-of-users-using-contact-form-7",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.0.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "通过发送数据的信息暴露",
     "kind_en": "Insertion of Sensitive Information Into Sent Data",
     "last_modified_time": "2026-08-19",
@@ -106,8 +136,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73386漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CF7地理定位敏感数据暴露"
   },
   "first_saved_at": "2026-08-19T13:39:28+00:00"
 }

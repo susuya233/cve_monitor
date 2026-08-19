@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T13:39:15+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T14:26:39+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-3v6u-r2df",
@@ -22,14 +22,28 @@
     "cvss_score": 9.8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-266",
-    "description": "总捐赠 <= 2.0.5 版本中未经身份验证的权限升级。",
-    "effects": [],
+    "description": "Total Donations 是 KlbTheme 发布的 WordPress 付费插件，用于在站点上接受和管理捐赠表单与捐赠记录，属于闭源商业组件，分发渠道为 KlbTheme 自有下载与 Envato 等第三方市场，不托管于 WordPress.org 插件目录或 GitHub 公共仓库。\n受影响版本中，受影响版本（<= 2.0.5）中，插件存在未授权权限提升风险，NVD 与 Patchstack 将其归类为 CWE-266（Incorrect Privilege Assignment）。插件在面向前端的 REST/AJAX 入口或表单提交处理中，未对调用者身份与当前权限做充分校验，使未登录或低权限请求可被用于给目标账户赋予更高角色（例如把订阅者提权为管理员），获得提升权限后即可在站点后台接管站点、注入内容或植入持久化后门。\n修复版本中通过，截至 2026-08-19 官方仍未发布修复版本，Patchstack 仅为该 CVE 发布了一条应急 mitigation 规则用于临时拦截利用。建议在官方修复发布前禁用并移除该插件，或使用 WAF/虚拟补丁规则阻断对插件公开入口的可疑提权请求，并将受影响账户恢复至原始角色。",
+    "effects": [
+      {
+        "comp_name": "klbtheme/total-donations",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "特权授予不正确",
     "kind_en": "权限分配不正确",
     "last_modified_time": "2026-08-19",
@@ -53,8 +67,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73390漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Total Donations插件未授权权限提升漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -75,14 +91,28 @@
     "cvss_score": 9.8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-266",
-    "description": "Unauthenticated Privilege Escalation in Total Donations <= 2.0.5 versions.",
-    "effects": [],
+    "description": "Total Donations 是 KlbTheme 发布的 WordPress 付费插件，用于在站点上接受和管理捐赠表单与捐赠记录，属于闭源商业组件，分发渠道为 KlbTheme 自有下载与 Envato 等第三方市场，不托管于 WordPress.org 插件目录或 GitHub 公共仓库。\n受影响版本中，受影响版本（<= 2.0.5）中，插件存在未授权权限提升风险，NVD 与 Patchstack 将其归类为 CWE-266（Incorrect Privilege Assignment）。插件在面向前端的 REST/AJAX 入口或表单提交处理中，未对调用者身份与当前权限做充分校验，使未登录或低权限请求可被用于给目标账户赋予更高角色（例如把订阅者提权为管理员），获得提升权限后即可在站点后台接管站点、注入内容或植入持久化后门。\n修复版本中通过，截至 2026-08-19 官方仍未发布修复版本，Patchstack 仅为该 CVE 发布了一条应急 mitigation 规则用于临时拦截利用。建议在官方修复发布前禁用并移除该插件，或使用 WAF/虚拟补丁规则阻断对插件公开入口的可疑提权请求，并将受影响账户恢复至原始角色。",
+    "effects": [
+      {
+        "comp_name": "klbtheme/total-donations",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "特权授予不正确",
     "kind_en": "Incorrect Privilege Assignment",
     "last_modified_time": "2026-08-19",
@@ -106,8 +136,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-73390漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Total Donations插件未授权权限提升漏洞"
   },
   "first_saved_at": "2026-08-19T13:39:15+00:00"
 }
