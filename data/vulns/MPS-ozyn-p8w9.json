@@ -1,5 +1,5 @@
 {
-  "saved_at": "2026-08-19T00:53:19+00:00",
+  "saved_at": "2026-08-19T02:15:08+00:00",
   "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
@@ -35,12 +35,26 @@
     "cvss_score": 8.8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
     "cwe": "CWE-352",
-    "description": "DevItems HashBar 中的跨站请求伪造 (CSRF) 漏洞 – WordPress 通知栏允许跨站请求伪造。\n\n此问题影响 HashBar – WordPress 通知栏：从不适用到 2.0.0。",
-    "effects": [],
+    "description": "HashBar – WordPress Notification Bar 是 DevItems 发布的开源 WordPress 插件，用于创建公告栏、通知栏和弹窗营销活动。\n受影响版本中，公告分析、弹窗分析和 A/B 测试跟踪模块在 rest_authentication_errors 过滤器里使用 strpos() 判断 $_SERVER['REQUEST_URI'] 是否包含 /hashbar/v1/announcement-analytics/batch 等公开跟踪路径。攻击者可在任意 WordPress REST 请求的查询串中植入该子串，使过滤器返回 true 并跳过 cookie 认证 REST 调用所需的 nonce 校验。未认证攻击者诱导已登录的高权限用户访问恶意页面后，可冒用其身份向站点 REST API 提交状态变更请求。\n修复版本中通过改为读取 WordPress 解析后的 $GLOBALS['wp']->query_vars['rest_route'] 并与跟踪路由做精确相等比较，阻止查询串走私触发认证绕过，切断跨站请求对其他 REST 接口的伪造路径。",
+    "effects": [
+      {
+        "comp_name": "hashbar-wp-notification-bar",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.1)",
+            "min_fixed_version": "2.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "CSRF",
@@ -67,7 +81,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-66602漏洞",
+    "title": "HashBar CSRF漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -101,12 +115,26 @@
     "cvss_score": 8.8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
     "cwe": "CWE-352",
-    "description": "Cross-Site Request Forgery (CSRF) vulnerability in DevItems HashBar – WordPress Notification Bar allows Cross Site Request Forgery.\n\nThis issue affects HashBar – WordPress Notification Bar: from n/a through 2.0.0.",
-    "effects": [],
+    "description": "HashBar – WordPress Notification Bar 是 DevItems 发布的开源 WordPress 插件，用于创建公告栏、通知栏和弹窗营销活动。\n受影响版本中，公告分析、弹窗分析和 A/B 测试跟踪模块在 rest_authentication_errors 过滤器里使用 strpos() 判断 $_SERVER['REQUEST_URI'] 是否包含 /hashbar/v1/announcement-analytics/batch 等公开跟踪路径。攻击者可在任意 WordPress REST 请求的查询串中植入该子串，使过滤器返回 true 并跳过 cookie 认证 REST 调用所需的 nonce 校验。未认证攻击者诱导已登录的高权限用户访问恶意页面后，可冒用其身份向站点 REST API 提交状态变更请求。\n修复版本中通过改为读取 WordPress 解析后的 $GLOBALS['wp']->query_vars['rest_route'] 并与跟踪路由做精确相等比较，阻止查询串走私触发认证绕过，切断跨站请求对其他 REST 接口的伪造路径。",
+    "effects": [
+      {
+        "comp_name": "hashbar-wp-notification-bar",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.1)",
+            "min_fixed_version": "2.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "CSRF",
@@ -133,7 +161,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-66602漏洞"
+    "title": "HashBar CSRF漏洞"
   },
   "first_saved_at": "2026-08-18T23:16:24+00:00"
 }
