@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-08-19T17:21:20+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xg7k-w06j",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62668",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "Grav API Plugin 是为 Grav CMS 提供 RESTful API 的开源 PHP 插件，可暴露无头访问、用户管理、Webhook 等接口。\n受影响版本中，WebhookController.php 的 create 与 update 方法在接收前端提交的 URL 时仅使用 filter_var($url, FILTER_VALIDATE_URL) 做语法校验，不限定协议也不检测目标主机；随后 WebhookDispatcher.php 的 httpPost 方法以 curl_init 初始化请求，但未设置 CURLOPT_PROTOCOLS 与 CURLOPT_REDIR_PROTOCOLS。拥有 api.webhooks.write 权限的账户可在 JSON body 中提交 file://、dict://、gopher://、或指向 127.0.0.0/8、RFC1918 私有网段、169.254.169.254 等保留地址的目标，cURL 会按提交的协议发起请求并把响应内容写入 deliveries 接口，攻击者可借此读取本地文件、利用 gopher 等协议探测内网服务，或窃取云实例元数据凭证。\n修复版本中通过在 WebhookController 中新增 validateWebhookUrl()，要求 URL 必须为 http/https 并调用 WebhookDispatcher::hostIsPublic() 拒绝解析至 loopback、RFC1918 私有网段、link-local 与其他保留段的主机；dispatch 时再次对解析后的目标主机做公网校验，curl_init 增加 CURLOPT_PROTOCOLS 与 CURLOPT_REDIR_PROTOCOLS 限制为 CURLPROTO_HTTP | CURLPROTO_HTTPS，从根因上切断非 HTTP(S) 协议及内网地址触发的 SSRF 路径。",
+    "effects": [
+      {
+        "comp_name": "getgrav/grav-plugin-api",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.6)",
+            "min_fixed_version": "1.0.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-20",
+    "level": "Critical",
+    "mps_id": "MPS-xg7k-w06j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xg7k-w06j",
+        "name": "https://www.oscs1024.com/hd/MPS-xg7k-w06j"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-62668",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-62668"
+      },
+      {
+        "url": "https://github.com/getgrav/grav-plugin-api/commit/dfcc947f0d6758772caac290c68fe8d4c4a4874e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getgrav/grav-plugin-api/releases/tag/1.0.6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getgrav/grav/security/advisories/GHSA-58q8-f7v4-w2vf",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Grav API插件Webhook SSRF漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62668",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "Grav API Plugin 是为 Grav CMS 提供 RESTful API 的开源 PHP 插件，可暴露无头访问、用户管理、Webhook 等接口。\n受影响版本中，WebhookController.php 的 create 与 update 方法在接收前端提交的 URL 时仅使用 filter_var($url, FILTER_VALIDATE_URL) 做语法校验，不限定协议也不检测目标主机；随后 WebhookDispatcher.php 的 httpPost 方法以 curl_init 初始化请求，但未设置 CURLOPT_PROTOCOLS 与 CURLOPT_REDIR_PROTOCOLS。拥有 api.webhooks.write 权限的账户可在 JSON body 中提交 file://、dict://、gopher://、或指向 127.0.0.0/8、RFC1918 私有网段、169.254.169.254 等保留地址的目标，cURL 会按提交的协议发起请求并把响应内容写入 deliveries 接口，攻击者可借此读取本地文件、利用 gopher 等协议探测内网服务，或窃取云实例元数据凭证。\n修复版本中通过在 WebhookController 中新增 validateWebhookUrl()，要求 URL 必须为 http/https 并调用 WebhookDispatcher::hostIsPublic() 拒绝解析至 loopback、RFC1918 私有网段、link-local 与其他保留段的主机；dispatch 时再次对解析后的目标主机做公网校验，curl_init 增加 CURLOPT_PROTOCOLS 与 CURLOPT_REDIR_PROTOCOLS 限制为 CURLPROTO_HTTP | CURLPROTO_HTTPS，从根因上切断非 HTTP(S) 协议及内网地址触发的 SSRF 路径。",
+    "effects": [
+      {
+        "comp_name": "getgrav/grav-plugin-api",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.6)",
+            "min_fixed_version": "1.0.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-20",
+    "level": "Critical",
+    "mps_id": "MPS-xg7k-w06j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xg7k-w06j",
+        "name": "https://www.oscs1024.com/hd/MPS-xg7k-w06j"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-62668",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-62668"
+      },
+      {
+        "url": "https://github.com/getgrav/grav-plugin-api/commit/dfcc947f0d6758772caac290c68fe8d4c4a4874e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getgrav/grav-plugin-api/releases/tag/1.0.6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getgrav/grav/security/advisories/GHSA-58q8-f7v4-w2vf",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Grav API插件Webhook SSRF漏洞"
+  },
+  "first_saved_at": "2026-08-19T17:21:20+00:00"
+}

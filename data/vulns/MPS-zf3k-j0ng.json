@@ -1,0 +1,189 @@
+{
+  "saved_at": "2026-08-19T17:21:11+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-zf3k-j0ng",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-64852",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "Grav API 插件（getgrav/grav-plugin-api）是 Grav CMS 的开源 PHP 插件，以 Composer 包形式分发，为站点内容提供完整的 headless RESTful API 接入能力。\n受影响版本中，插件在用户/plugins/api/api.php 拦截 admin 任务 apiKeyGenerate 与 apiKeyRevoke，仅以 admin.login 这一所有面板用户都具备的基线权限校验调用方，却直接读取路由中的目标账户名，调用 handleApiKeyGenerate 或 handleApiKeyRevoke 生成绑定到目标账户的持久 ApiKeyManager 凭证，因此继承目标账户的全部 API 权限（包括 api.super 等）。具备 admin.login 的基础面板用户即可为任意账户签发或撤销持久 API 密钥，从而触发账户接管与权限提升。\n修复版本中通过在 handleAdminApiKeyTask 中调用新增的 authorizeApiKeyTarget($current) 完成目标账户授权：管理自身账户密钥始终允许，操作其他账户则需 admin.users 或 admin.super，且只有超级管理员才能针对超级管理员账户执行；handleApiKeyGenerate 与 handleApiKeyRevoke 保持原签名，仅依赖前序授权结果切断越权签发路径。",
+    "effects": [
+      {
+        "comp_name": "getgrav/grav-plugin-api",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.8)",
+            "min_fixed_version": "1.0.8",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-zf3k-j0ng",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zf3k-j0ng",
+        "name": "https://www.oscs1024.com/hd/MPS-zf3k-j0ng"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-64852",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-64852"
+      },
+      {
+        "url": "https://github.com/getgrav/grav-plugin-api/commit/ed16f0aaa9b398c6f179fb8f51e0fa53e4ed8a30",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getgrav/grav-plugin-api/releases/tag/1.0.8",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getgrav/grav/security/advisories/GHSA-7v74-m76q-8wf3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Grav API插件API密钥授权绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-64852",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "Grav API 插件（getgrav/grav-plugin-api）是 Grav CMS 的开源 PHP 插件，以 Composer 包形式分发，为站点内容提供完整的 headless RESTful API 接入能力。\n受影响版本中，插件在用户/plugins/api/api.php 拦截 admin 任务 apiKeyGenerate 与 apiKeyRevoke，仅以 admin.login 这一所有面板用户都具备的基线权限校验调用方，却直接读取路由中的目标账户名，调用 handleApiKeyGenerate 或 handleApiKeyRevoke 生成绑定到目标账户的持久 ApiKeyManager 凭证，因此继承目标账户的全部 API 权限（包括 api.super 等）。具备 admin.login 的基础面板用户即可为任意账户签发或撤销持久 API 密钥，从而触发账户接管与权限提升。\n修复版本中通过在 handleAdminApiKeyTask 中调用新增的 authorizeApiKeyTarget($current) 完成目标账户授权：管理自身账户密钥始终允许，操作其他账户则需 admin.users 或 admin.super，且只有超级管理员才能针对超级管理员账户执行；handleApiKeyGenerate 与 handleApiKeyRevoke 保持原签名，仅依赖前序授权结果切断越权签发路径。",
+    "effects": [
+      {
+        "comp_name": "getgrav/grav-plugin-api",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.8)",
+            "min_fixed_version": "1.0.8",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-zf3k-j0ng",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zf3k-j0ng",
+        "name": "https://www.oscs1024.com/hd/MPS-zf3k-j0ng"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-64852",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-64852"
+      },
+      {
+        "url": "https://github.com/getgrav/grav-plugin-api/commit/ed16f0aaa9b398c6f179fb8f51e0fa53e4ed8a30",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getgrav/grav-plugin-api/releases/tag/1.0.8",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getgrav/grav/security/advisories/GHSA-7v74-m76q-8wf3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Grav API插件API密钥授权绕过漏洞"
+  },
+  "first_saved_at": "2026-08-19T17:21:11+00:00"
+}

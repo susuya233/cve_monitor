@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-08-19T17:21:18+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-gkwz-7hc0",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62673",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-178",
+    "description": "Grav 是基于文件的开源 PHP Web 平台，可作为内容管理系统或站点框架运行，仓库以 MIT 协议发布在 GitHub（getgrav/grav）。\n受影响版本中，仓库根目录下的 .htaccess 与 webserver-configs/htaccess.txt 中的 Apache RewriteRule 拒绝规则均未携带 [NC]（No Case）标志，对敏感目录名与扩展名的匹配严格区分大小写。在大小写不敏感的文件系统（如 macOS、Windows，或将卷挂载到此类宿主机的 Docker 部署）上，攻击者只需将请求路径中的目录或扩展名改为大写形式即可绕过这些规则；维护者已在 macOS 上确认 /User/accounts/admin.yaml 与 /USER/config/security.yaml 直接返回 HTTP 200，使未认证访问者可读取 user/accounts 与 user/config 下的文件，包括管理员密码哈希与 security.yaml 中的 CSRF salt。\n修复版本中通过为 .htaccess 与 webserver-configs/htaccess.txt 中所有安全拒绝 RewriteRule 显式追加 [NC] 标志解决了该问题，使目录名与文件扩展名的匹配在 URL 与文件系统层面均按大小写不敏感处理，从而在 macOS、Windows 等大小写不敏感文件系统上同样生效，切断大小写绕过路径并保留 user/data 媒体透传规则。",
+    "effects": [
+      {
+        "comp_name": "getgrav/grav",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.4)",
+            "min_fixed_version": "2.0.4",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "大小写敏感处理不恰当",
+    "kind_en": "大小写敏感处理不当",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-gkwz-7hc0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gkwz-7hc0",
+        "name": "https://www.oscs1024.com/hd/MPS-gkwz-7hc0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-62673",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-62673"
+      },
+      {
+        "url": "https://github.com/getgrav/grav/commit/8c9d1e7b6fd66ecea80a4bc3783fd41d36e22fb1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getgrav/grav/releases/tag/2.0.4",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getgrav/grav/security/advisories/GHSA-vwg3-w8w3-pc79",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Grav CMS .htaccess安全规则大小写绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62673",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-178",
+    "description": "Grav 是基于文件的开源 PHP Web 平台，可作为内容管理系统或站点框架运行，仓库以 MIT 协议发布在 GitHub（getgrav/grav）。\n受影响版本中，仓库根目录下的 .htaccess 与 webserver-configs/htaccess.txt 中的 Apache RewriteRule 拒绝规则均未携带 [NC]（No Case）标志，对敏感目录名与扩展名的匹配严格区分大小写。在大小写不敏感的文件系统（如 macOS、Windows，或将卷挂载到此类宿主机的 Docker 部署）上，攻击者只需将请求路径中的目录或扩展名改为大写形式即可绕过这些规则；维护者已在 macOS 上确认 /User/accounts/admin.yaml 与 /USER/config/security.yaml 直接返回 HTTP 200，使未认证访问者可读取 user/accounts 与 user/config 下的文件，包括管理员密码哈希与 security.yaml 中的 CSRF salt。\n修复版本中通过为 .htaccess 与 webserver-configs/htaccess.txt 中所有安全拒绝 RewriteRule 显式追加 [NC] 标志解决了该问题，使目录名与文件扩展名的匹配在 URL 与文件系统层面均按大小写不敏感处理，从而在 macOS、Windows 等大小写不敏感文件系统上同样生效，切断大小写绕过路径并保留 user/data 媒体透传规则。",
+    "effects": [
+      {
+        "comp_name": "getgrav/grav",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.4)",
+            "min_fixed_version": "2.0.4",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "大小写敏感处理不恰当",
+    "kind_en": "Improper Handling of Case Sensitivity",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-gkwz-7hc0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gkwz-7hc0",
+        "name": "https://www.oscs1024.com/hd/MPS-gkwz-7hc0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-62673",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-62673"
+      },
+      {
+        "url": "https://github.com/getgrav/grav/commit/8c9d1e7b6fd66ecea80a4bc3783fd41d36e22fb1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getgrav/grav/releases/tag/2.0.4",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getgrav/grav/security/advisories/GHSA-vwg3-w8w3-pc79",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Grav CMS .htaccess安全规则大小写绕过漏洞"
+  },
+  "first_saved_at": "2026-08-19T17:21:18+00:00"
+}
