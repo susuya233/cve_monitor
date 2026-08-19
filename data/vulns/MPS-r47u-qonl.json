@@ -1,11 +1,11 @@
 {
-  "saved_at": "2026-08-18T00:52:43+00:00",
+  "saved_at": "2026-08-19T03:40:42+00:00",
   "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-r47u-qonl",
   "detail": {
-    "analysis_status": 0,
+    "analysis_status": 3,
     "articles": [],
     "cnvd_id": "",
     "cve_id": "CVE-2026-64849",
@@ -16,13 +16,19 @@
           "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:N",
           "severity": "critical",
           "base_score": 9.3
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "critical",
+          "base_score": 9.3
         }
       ]
     },
     "cvss_score": 9.3,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:N",
     "cwe": "CWE-918",
-    "description": "MLflow 是一个用于代理、大型语言模型和机器学习模型的开源人工智能工程平台。在 3.15.0 之前，未经身份验证的 POST /api/2.0/mlflow/webhooks/{id}/test 端点仅针对原始 URL 调用 mlflow/utils/validation.py 中的 _validate_webhook_url()，而 mlflow/webhooks/delivery.py 遵循重定向并重新解析主机名而不固定已验证的地址，从而允许攻击者访问内部或云元数据服务并接收 response_status 和响应正文。此问题已在 3.15.0 版本中修复。",
+    "description": "MLflow 是开源 AI 工程平台，用于智能体、大语言模型与机器学习模型的跟踪、注册和部署，其 Tracking Server 默认提供模型注册 Webhook 接口。\n受影响版本中，默认未启用认证的 Tracking Server 对外提供 POST /api/2.0/mlflow/webhooks 与 POST /api/2.0/mlflow/webhooks/{id}/test。mlflow/utils/validation.py 的 _validate_webhook_url() 只检查原始 URL 的 scheme 与解析得到的公网 IP，并不把该地址带入后续连接。mlflow/webhooks/delivery.py 的 _send_webhook_request() 调用 session.post() 时会重新解析主机名，并且未设置 allow_redirects=False。攻击者先创建指向自身公网 HTTPS 站点的 webhook，再让该站点返回 302 Location 指向云元数据或内网地址；服务器跟随重定向访问内网，test 接口把上游 response_status 与 response_body 返回给调用方。\n修复版本中通过新增 SSRFProtectedHTTPAdapter，在每次 TCP connect() 返回后、TLS 与 HTTP 数据交换前用套接字 getpeername() 校验对端 IP 为公网地址，同时将 webhook Session 的 trust_env 设为 False。重定向目标与 DNS 重绑定都会在新连接上被拦截，内网响应不再被取回或回显。",
     "effects": [
       {
         "comp_name": "mlflow",
@@ -41,18 +47,22 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
-    "exploitability": "中",
-    "fix_suggestion": "建议修复",
+    "exploit_requirement_cost": "低",
+    "exploitability": "极高",
+    "fix_suggestion": "强烈建议修复",
     "kind": "SSRF",
     "kind_en": "服务器端请求伪造 (SSRF)",
-    "last_modified_time": "2026-08-18",
+    "last_modified_time": "2026-08-19",
     "level": "Critical",
     "mps_id": "MPS-r47u-qonl",
-    "poc": false,
+    "poc": true,
     "poc_url": [],
-    "published_time": "2026-08-18",
+    "published_time": "2026-08-19",
     "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-r47u-qonl",
+        "name": "https://www.oscs1024.com/hd/MPS-r47u-qonl"
+      },
       {
         "url": "https://github.com/mlflow/mlflow/security/advisories/GHSA-7gwp-5pfp-969j",
         "name": ""
@@ -78,13 +88,21 @@
         "name": ""
       }
     ],
-    "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-64849漏洞",
+    "scope_influence": "广",
+    "tags": [
+      "AI",
+      "poc",
+      "python",
+      "专家校准",
+      "开源",
+      "强烈建议修复",
+      "终端软件"
+    ],
+    "title": "MLflow Webhook SSRF漏洞",
     "_translated": true
   },
   "detail_original": {
-    "analysis_status": 0,
+    "analysis_status": 3,
     "articles": [],
     "cnvd_id": "",
     "cve_id": "CVE-2026-64849",
@@ -95,13 +113,19 @@
           "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:N",
           "severity": "critical",
           "base_score": 9.3
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "critical",
+          "base_score": 9.3
         }
       ]
     },
     "cvss_score": 9.3,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:N",
     "cwe": "CWE-918",
-    "description": "MLflow is an open source AI engineering platform for agents, large language models, and machine learning models. Prior to 3.15.0, the unauthenticated POST /api/2.0/mlflow/webhooks/{id}/test endpoint calls _validate_webhook_url() in mlflow/utils/validation.py only for the original URL while mlflow/webhooks/delivery.py follows redirects and re-resolves the hostname without pinning the validated address, allowing attackers to reach internal or cloud metadata services and receive response_status and response_body. This issue is fixed in version 3.15.0.",
+    "description": "MLflow 是开源 AI 工程平台，用于智能体、大语言模型与机器学习模型的跟踪、注册和部署，其 Tracking Server 默认提供模型注册 Webhook 接口。\n受影响版本中，默认未启用认证的 Tracking Server 对外提供 POST /api/2.0/mlflow/webhooks 与 POST /api/2.0/mlflow/webhooks/{id}/test。mlflow/utils/validation.py 的 _validate_webhook_url() 只检查原始 URL 的 scheme 与解析得到的公网 IP，并不把该地址带入后续连接。mlflow/webhooks/delivery.py 的 _send_webhook_request() 调用 session.post() 时会重新解析主机名，并且未设置 allow_redirects=False。攻击者先创建指向自身公网 HTTPS 站点的 webhook，再让该站点返回 302 Location 指向云元数据或内网地址；服务器跟随重定向访问内网，test 接口把上游 response_status 与 response_body 返回给调用方。\n修复版本中通过新增 SSRFProtectedHTTPAdapter，在每次 TCP connect() 返回后、TLS 与 HTTP 数据交换前用套接字 getpeername() 校验对端 IP 为公网地址，同时将 webhook Session 的 trust_env 设为 False。重定向目标与 DNS 重绑定都会在新连接上被拦截，内网响应不再被取回或回显。",
     "effects": [
       {
         "comp_name": "mlflow",
@@ -120,18 +144,22 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
-    "exploitability": "中",
-    "fix_suggestion": "Recommend",
+    "exploit_requirement_cost": "低",
+    "exploitability": "极高",
+    "fix_suggestion": "StrongRecommend",
     "kind": "SSRF",
     "kind_en": "Server-Side Request Forgery (SSRF)",
-    "last_modified_time": "2026-08-18",
+    "last_modified_time": "2026-08-19",
     "level": "Critical",
     "mps_id": "MPS-r47u-qonl",
-    "poc": false,
+    "poc": true,
     "poc_url": [],
-    "published_time": "2026-08-18",
+    "published_time": "2026-08-19",
     "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-r47u-qonl",
+        "name": "https://www.oscs1024.com/hd/MPS-r47u-qonl"
+      },
       {
         "url": "https://github.com/mlflow/mlflow/security/advisories/GHSA-7gwp-5pfp-969j",
         "name": ""
@@ -157,9 +185,17 @@
         "name": ""
       }
     ],
-    "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-64849漏洞"
+    "scope_influence": "广",
+    "tags": [
+      "AI",
+      "poc",
+      "python",
+      "专家校准",
+      "开源",
+      "强烈建议修复",
+      "终端软件"
+    ],
+    "title": "MLflow Webhook SSRF漏洞"
   },
   "first_saved_at": "2026-08-17T23:17:16+00:00"
 }
