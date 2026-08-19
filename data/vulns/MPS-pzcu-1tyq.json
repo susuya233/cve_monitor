@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-08-19T22:18:26+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-pzcu-1tyq",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75596",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-407",
+    "description": "Netty 是一个异步、事件驱动的网络应用框架。在 4.1.137.Final 和 4.2.17.Final 之前，默认的 io.netty.handler.ssl.SniHandler 构造函数使用 io.netty.handler.ssl.SslClientHelloHandler#decode 处的 handler/src/main/java/io/netty/handler/ssl/SslClientHelloHandler.java 中的握手前 ClientHello 聚合路径，其中handshakeBuffer.clear() 和 writeBytes() 为每个附加 TLS 记录重新复制所有先前接收到的正文字节。未经身份验证的远程对等方可以通告大型 ClientHello 并以数千个微小记录的形式传递其主体，从而在 TLS 握手完成之前导致事件循环上的 CPU 工作量增加，并降低其他客户端的 TLS 处理能力。此问题已在版本 4.1.137.Final 和 4.2.17.Final 中修复。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "低效算法复杂性",
+    "kind_en": "低效的算法复杂性",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-pzcu-1tyq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pzcu-1tyq",
+        "name": "https://www.oscs1024.com/hd/MPS-pzcu-1tyq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75596",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75596"
+      },
+      {
+        "url": "https://github.com/netty/netty/commit/1b5abc6443b63726c72cdd285af2feb7ddbb8ff7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/commit/9e0519239108a69b7e9bbc5e9182ee139a0d7961",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/pull/17213",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/pull/17217",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/releases/tag/netty-4.1.137.Final",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/releases/tag/netty-4.2.17.Final",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/security/advisories/GHSA-fccg-mwvh-qqg4",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-75596漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75596",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-407",
+    "description": "Netty is an asynchronous, event-driven network application framework. Prior to 4.1.137.Final and 4.2.17.Final, the default io.netty.handler.ssl.SniHandler constructors use the pre-handshake ClientHello aggregation path in handler/src/main/java/io/netty/handler/ssl/SslClientHelloHandler.java at io.netty.handler.ssl.SslClientHelloHandler#decode, where handshakeBuffer.clear() and writeBytes() recopy all previously received body bytes for every additional TLS record. An unauthenticated remote peer can advertise a large ClientHello and deliver its body in thousands of tiny records, causing quadratic CPU work on the event loop before the TLS handshake completes and degrading TLS handling for other clients. This issue is fixed in versions 4.1.137.Final and 4.2.17.Final.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "低效算法复杂性",
+    "kind_en": "Inefficient Algorithmic Complexity",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-pzcu-1tyq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pzcu-1tyq",
+        "name": "https://www.oscs1024.com/hd/MPS-pzcu-1tyq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75596",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75596"
+      },
+      {
+        "url": "https://github.com/netty/netty/commit/1b5abc6443b63726c72cdd285af2feb7ddbb8ff7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/commit/9e0519239108a69b7e9bbc5e9182ee139a0d7961",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/pull/17213",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/pull/17217",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/releases/tag/netty-4.1.137.Final",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/releases/tag/netty-4.2.17.Final",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/security/advisories/GHSA-fccg-mwvh-qqg4",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-75596漏洞"
+  },
+  "first_saved_at": "2026-08-19T22:18:26+00:00"
+}
