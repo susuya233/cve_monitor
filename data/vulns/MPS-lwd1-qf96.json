@@ -1,0 +1,177 @@
+{
+  "saved_at": "2026-08-19T18:24:47+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-lwd1-qf96",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75142",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "FFmpeg 是开源多媒体处理套件，提供命令行工具与 libavformat 等库，用于音视频解码、转码与封装。\n受影响版本中，MPEG-PS 复用器 libavformat/mpegenc.c 的 flush_packet() 使用固定 128 字节栈缓冲依次写入 pack header 与 system header。put_system_header() 按 12+3*N 字节为每路流写入系统头，但 PutBitContext 被设置成超过该栈缓冲剩余空间的长度，自身边界检查无法拦截。将含约 35 路及以上流的输入封装为 MPEG-PS 时，会触发栈缓冲区溢出。\n修复版本中通过在 mpeg_mux_init() 初始化阶段调用 get_system_header_size()，当系统头长度超过 128-14 字节时返回 EINVAL 并拒绝封装，阻断过量流配置进入固定栈缓冲写入路径。",
+    "effects": [
+      {
+        "comp_name": "FFmpeg",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.0.1)",
+            "min_fixed_version": "9.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "基于堆栈的缓冲区溢出",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-lwd1-qf96",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lwd1-qf96",
+        "name": "https://www.oscs1024.com/hd/MPS-lwd1-qf96"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75142",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75142"
+      },
+      {
+        "url": "https://code.ffmpeg.org/FFmpeg/FFmpeg/commit/9d786e4b5e9b8482651928574de33772aeee7be1",
+        "name": ""
+      },
+      {
+        "url": "https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/24087",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ffmpeg-stack-buffer-overflow-in-mpeg-ps-muxer-via-mpegenc-c",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FFmpeg MPEG-PS栈溢出",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75142",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "FFmpeg 是开源多媒体处理套件，提供命令行工具与 libavformat 等库，用于音视频解码、转码与封装。\n受影响版本中，MPEG-PS 复用器 libavformat/mpegenc.c 的 flush_packet() 使用固定 128 字节栈缓冲依次写入 pack header 与 system header。put_system_header() 按 12+3*N 字节为每路流写入系统头，但 PutBitContext 被设置成超过该栈缓冲剩余空间的长度，自身边界检查无法拦截。将含约 35 路及以上流的输入封装为 MPEG-PS 时，会触发栈缓冲区溢出。\n修复版本中通过在 mpeg_mux_init() 初始化阶段调用 get_system_header_size()，当系统头长度超过 128-14 字节时返回 EINVAL 并拒绝封装，阻断过量流配置进入固定栈缓冲写入路径。",
+    "effects": [
+      {
+        "comp_name": "FFmpeg",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.0.1)",
+            "min_fixed_version": "9.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "Stack-based Buffer Overflow",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-lwd1-qf96",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lwd1-qf96",
+        "name": "https://www.oscs1024.com/hd/MPS-lwd1-qf96"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75142",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75142"
+      },
+      {
+        "url": "https://code.ffmpeg.org/FFmpeg/FFmpeg/commit/9d786e4b5e9b8482651928574de33772aeee7be1",
+        "name": ""
+      },
+      {
+        "url": "https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/24087",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ffmpeg-stack-buffer-overflow-in-mpeg-ps-muxer-via-mpegenc-c",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FFmpeg MPEG-PS栈溢出"
+  },
+  "first_saved_at": "2026-08-19T18:24:47+00:00"
+}

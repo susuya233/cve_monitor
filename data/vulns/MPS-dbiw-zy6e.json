@@ -1,0 +1,177 @@
+{
+  "saved_at": "2026-08-19T18:24:48+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-dbiw-zy6e",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75141",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-122",
+    "description": "FFmpeg 是开源多媒体处理套件，提供音视频解码、编码、转封装和滤镜能力，被播放器、转码服务和内容生产链路广泛使用。\n受影响版本中，hvcC 配置记录写入函数 hvcc_array_add_nal_unit 将同类 NAL 单元数量保存在 uint16_t 类型的 numNalus 字段。攻击者提供包含单一类型超过 65535 个 NAL 单元的 HEVC 输入后，计数回绕为 0，随后访问 array->nal[numNalus-1] 写出越界堆内存。用户以 -c copy 转封装该输入即可触发堆缓冲区溢出。\n修复版本中通过在扩容数组前拒绝 numNalus >= UINT16_MAX 的写入请求，阻止计数回绕和越界写，从而切断该溢出路径。",
+    "effects": [
+      {
+        "comp_name": "ffmpeg",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.0.1)",
+            "min_fixed_version": "9.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-dbiw-zy6e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dbiw-zy6e",
+        "name": "https://www.oscs1024.com/hd/MPS-dbiw-zy6e"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75141",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75141"
+      },
+      {
+        "url": "https://code.ffmpeg.org/FFmpeg/FFmpeg/commit/acf5d7cdc1f9ae8752c23e1ea8d7f355ed780781",
+        "name": ""
+      },
+      {
+        "url": "https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/24088",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ffmpeg-heap-buffer-overflow-in-hvcc-box-writer-via-hevc-muxing",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FFmpeg hvcC堆溢出",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75141",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-122",
+    "description": "FFmpeg 是开源多媒体处理套件，提供音视频解码、编码、转封装和滤镜能力，被播放器、转码服务和内容生产链路广泛使用。\n受影响版本中，hvcC 配置记录写入函数 hvcc_array_add_nal_unit 将同类 NAL 单元数量保存在 uint16_t 类型的 numNalus 字段。攻击者提供包含单一类型超过 65535 个 NAL 单元的 HEVC 输入后，计数回绕为 0，随后访问 array->nal[numNalus-1] 写出越界堆内存。用户以 -c copy 转封装该输入即可触发堆缓冲区溢出。\n修复版本中通过在扩容数组前拒绝 numNalus >= UINT16_MAX 的写入请求，阻止计数回绕和越界写，从而切断该溢出路径。",
+    "effects": [
+      {
+        "comp_name": "ffmpeg",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.0.1)",
+            "min_fixed_version": "9.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-dbiw-zy6e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dbiw-zy6e",
+        "name": "https://www.oscs1024.com/hd/MPS-dbiw-zy6e"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75141",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75141"
+      },
+      {
+        "url": "https://code.ffmpeg.org/FFmpeg/FFmpeg/commit/acf5d7cdc1f9ae8752c23e1ea8d7f355ed780781",
+        "name": ""
+      },
+      {
+        "url": "https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/24088",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ffmpeg-heap-buffer-overflow-in-hvcc-box-writer-via-hevc-muxing",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FFmpeg hvcC堆溢出"
+  },
+  "first_saved_at": "2026-08-19T18:24:48+00:00"
+}

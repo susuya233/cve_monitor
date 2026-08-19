@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-08-19T18:24:50+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-wxmo-chu7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72529",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerability@kaspersky.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "vulnerability@kaspersky.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "TrueConf Server 是 TrueConf 公司的闭源商业视频会议与协作服务端软件，支持 Windows 与 Linux 部署，为企业内网提供音视频会议、企业消息以及客户端安装包分发能力。\n受影响版本中，服务端在默认开放的 4307/TCP 上暴露了一个未公开的内部功能，调用该功能前缺少任何身份认证与访问控制。未授权远程攻击者可直接连接该端口并调用此功能，向服务端提交脚本并使其在内置脚本引擎中执行；脚本运行于受限隔离环境，io、os 等高危模块不可用，但已形成无凭据的远程服务端代码执行入口，与同批公开的隔离环境逃逸问题 CVE-2026-72530 组合后可在宿主系统上以 NT AUTHORITY\\SYSTEM 权限执行任意代码。Kaspersky ICS CERT 已记录 Head Mare 组织在真实攻击中利用该组合把 httpconf/site/public/js/locale.php 替换为 Web Shell、清除相关事件日志，并替换 TrueConf 客户端安装包向会议参与方投放 PhantomCore 后门。\n修复版本中通过 TrueConf 于 2026 年 6 月 18 日发布的 5.3.9、5.4.9 与 5.5.5 安全更新收紧了 4307/TCP 服务对该未公开功能的调用控制，未授权连接无法再触发服务端脚本执行；厂商与研究方均未披露该功能的源码级改动细节，5.2 及更早版本没有对应修复分支，需由官方支持协助升级。",
+    "effects": [
+      {
+        "comp_name": "trueconf_server",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.3)",
+            "min_fixed_version": "5.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.5,5.5.5)",
+            "min_fixed_version": "5.5.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.4,5.4.9)",
+            "min_fixed_version": "5.4.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.3,5.3.9)",
+            "min_fixed_version": "5.3.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-08-20",
+    "level": "Critical",
+    "mps_id": "MPS-wxmo-chu7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wxmo-chu7",
+        "name": "https://www.oscs1024.com/hd/MPS-wxmo-chu7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72529",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72529"
+      },
+      {
+        "url": "https://ics-cert.kaspersky.com/advisories/2026/08/11/trueconf-server-missing-authentication-for-critical-function/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "TrueConf Server 认证缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72529",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerability@kaspersky.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "vulnerability@kaspersky.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "TrueConf Server 是 TrueConf 公司的闭源商业视频会议与协作服务端软件，支持 Windows 与 Linux 部署，为企业内网提供音视频会议、企业消息以及客户端安装包分发能力。\n受影响版本中，服务端在默认开放的 4307/TCP 上暴露了一个未公开的内部功能，调用该功能前缺少任何身份认证与访问控制。未授权远程攻击者可直接连接该端口并调用此功能，向服务端提交脚本并使其在内置脚本引擎中执行；脚本运行于受限隔离环境，io、os 等高危模块不可用，但已形成无凭据的远程服务端代码执行入口，与同批公开的隔离环境逃逸问题 CVE-2026-72530 组合后可在宿主系统上以 NT AUTHORITY\\SYSTEM 权限执行任意代码。Kaspersky ICS CERT 已记录 Head Mare 组织在真实攻击中利用该组合把 httpconf/site/public/js/locale.php 替换为 Web Shell、清除相关事件日志，并替换 TrueConf 客户端安装包向会议参与方投放 PhantomCore 后门。\n修复版本中通过 TrueConf 于 2026 年 6 月 18 日发布的 5.3.9、5.4.9 与 5.5.5 安全更新收紧了 4307/TCP 服务对该未公开功能的调用控制，未授权连接无法再触发服务端脚本执行；厂商与研究方均未披露该功能的源码级改动细节，5.2 及更早版本没有对应修复分支，需由官方支持协助升级。",
+    "effects": [
+      {
+        "comp_name": "trueconf_server",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.3)",
+            "min_fixed_version": "5.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.5,5.5.5)",
+            "min_fixed_version": "5.5.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.4,5.4.9)",
+            "min_fixed_version": "5.4.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.3,5.3.9)",
+            "min_fixed_version": "5.3.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-08-20",
+    "level": "Critical",
+    "mps_id": "MPS-wxmo-chu7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wxmo-chu7",
+        "name": "https://www.oscs1024.com/hd/MPS-wxmo-chu7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72529",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72529"
+      },
+      {
+        "url": "https://ics-cert.kaspersky.com/advisories/2026/08/11/trueconf-server-missing-authentication-for-critical-function/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "TrueConf Server 认证缺失漏洞"
+  },
+  "first_saved_at": "2026-08-19T18:24:50+00:00"
+}
