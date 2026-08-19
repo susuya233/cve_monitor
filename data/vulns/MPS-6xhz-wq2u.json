@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-08-19T10:22:11+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6xhz-wq2u",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76164",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "AIL Framework 是开源信息泄露分析框架，用于采集、爬取并分析明网与暗网中的泄露数据。\n受影响版本中，已认证低权限用户可通过爬虫 Web 界面或 REST 接口提交任意 URL。send_to_spider 与 add_crawler_task 将请求交给 api_add_crawler_task，后者以 priority=90 创建手动任务，CrawlerTask.create 因此跳过仅在 priority 为 0 时执行的域名黑名单检查；Domain.get_domain_type 将普通 IP 字面量归类为 web 目标并直接发起 HTTP(S) 抓取。攻击者可令服务器访问回环地址、RFC1918 私网、链路本地地址以及 169.254.169.254 等云元数据服务，再通过爬虫界面读取 HTML、截图和 HAR 数据，形成非盲 SSRF 并泄露内部应用或云实例信息。\n修复版本中通过新增 is_global_url 与 api_validate_global_urls，在任务入队前解析目标并拒绝解析到非全局 IP 的 URL，同时默认启用本地 IP 过滤，切断对内网与链路本地地址的抓取路径。",
+    "effects": [
+      {
+        "comp_name": "ail-framework",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,6.9)",
+            "min_fixed_version": "6.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-6xhz-wq2u",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6xhz-wq2u",
+        "name": "https://www.oscs1024.com/hd/MPS-6xhz-wq2u"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76164",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76164"
+      },
+      {
+        "url": "https://github.com/ail-project/ail-framework/commit/d7b60ff9e20ee493895430b1a7c63d498a8fd780",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "AIL爬虫SSRF漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76164",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "AIL Framework 是开源信息泄露分析框架，用于采集、爬取并分析明网与暗网中的泄露数据。\n受影响版本中，已认证低权限用户可通过爬虫 Web 界面或 REST 接口提交任意 URL。send_to_spider 与 add_crawler_task 将请求交给 api_add_crawler_task，后者以 priority=90 创建手动任务，CrawlerTask.create 因此跳过仅在 priority 为 0 时执行的域名黑名单检查；Domain.get_domain_type 将普通 IP 字面量归类为 web 目标并直接发起 HTTP(S) 抓取。攻击者可令服务器访问回环地址、RFC1918 私网、链路本地地址以及 169.254.169.254 等云元数据服务，再通过爬虫界面读取 HTML、截图和 HAR 数据，形成非盲 SSRF 并泄露内部应用或云实例信息。\n修复版本中通过新增 is_global_url 与 api_validate_global_urls，在任务入队前解析目标并拒绝解析到非全局 IP 的 URL，同时默认启用本地 IP 过滤，切断对内网与链路本地地址的抓取路径。",
+    "effects": [
+      {
+        "comp_name": "ail-framework",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,6.9)",
+            "min_fixed_version": "6.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-6xhz-wq2u",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6xhz-wq2u",
+        "name": "https://www.oscs1024.com/hd/MPS-6xhz-wq2u"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76164",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76164"
+      },
+      {
+        "url": "https://github.com/ail-project/ail-framework/commit/d7b60ff9e20ee493895430b1a7c63d498a8fd780",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "AIL爬虫SSRF漏洞"
+  },
+  "first_saved_at": "2026-08-19T10:22:11+00:00"
+}

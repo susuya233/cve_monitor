@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-19T10:22:16+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-aq7w-hl1y",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-58081",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-122",
+    "description": "FreeBSD 是开源操作系统，iconv(3) 是其 C 库提供的字符编码转换接口，供大量应用程序和库处理国际化文本。\n受影响版本中，HZ、UTF-7、VIQR 和 ZW 等编码模块在写出转换结果前未正确检查调用方提供的输出缓冲区剩余长度。应用程序一旦通过 iconv(3) 将不可信输入转换到或从上述编码，即可把转换后的字符写出到缓冲区之外，触发堆缓冲区溢出并导致进程内存损坏。\n修复版本中通过在 UTF-7、VIQR、ZW 的写出路径补上输出长度检查并在空间不足时返回 E2BIG，同时将 HZ 状态缓冲区从 ROWCOL_MAX 扩大为 4+ROWCOL_MAX 以容纳最多两段转义序列，阻止越界写入。",
+    "effects": [
+      {
+        "comp_name": "freebsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[15.1-RELEASE,15.1-RELEASE-p1)",
+            "min_fixed_version": "15.1-RELEASE-p1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.0-RELEASE,15.0-RELEASE-p11)",
+            "min_fixed_version": "15.0-RELEASE-p11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.4-RELEASE,14.4-RELEASE-p7)",
+            "min_fixed_version": "14.4-RELEASE-p7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.3-RELEASE,14.3-RELEASE-p16)",
+            "min_fixed_version": "14.3-RELEASE-p16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-08-19",
+    "level": "Critical",
+    "mps_id": "MPS-aq7w-hl1y",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-aq7w-hl1y",
+        "name": "https://www.oscs1024.com/hd/MPS-aq7w-hl1y"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-58081",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-58081"
+      },
+      {
+        "url": "https://security.freebsd.org/advisories/FreeBSD-SA-26:49.iconv.asc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "FreeBSD iconv堆溢出",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-58081",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-122",
+    "description": "FreeBSD 是开源操作系统，iconv(3) 是其 C 库提供的字符编码转换接口，供大量应用程序和库处理国际化文本。\n受影响版本中，HZ、UTF-7、VIQR 和 ZW 等编码模块在写出转换结果前未正确检查调用方提供的输出缓冲区剩余长度。应用程序一旦通过 iconv(3) 将不可信输入转换到或从上述编码，即可把转换后的字符写出到缓冲区之外，触发堆缓冲区溢出并导致进程内存损坏。\n修复版本中通过在 UTF-7、VIQR、ZW 的写出路径补上输出长度检查并在空间不足时返回 E2BIG，同时将 HZ 状态缓冲区从 ROWCOL_MAX 扩大为 4+ROWCOL_MAX 以容纳最多两段转义序列，阻止越界写入。",
+    "effects": [
+      {
+        "comp_name": "freebsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[15.1-RELEASE,15.1-RELEASE-p1)",
+            "min_fixed_version": "15.1-RELEASE-p1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.0-RELEASE,15.0-RELEASE-p11)",
+            "min_fixed_version": "15.0-RELEASE-p11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.4-RELEASE,14.4-RELEASE-p7)",
+            "min_fixed_version": "14.4-RELEASE-p7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.3-RELEASE,14.3-RELEASE-p16)",
+            "min_fixed_version": "14.3-RELEASE-p16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-08-19",
+    "level": "Critical",
+    "mps_id": "MPS-aq7w-hl1y",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-aq7w-hl1y",
+        "name": "https://www.oscs1024.com/hd/MPS-aq7w-hl1y"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-58081",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-58081"
+      },
+      {
+        "url": "https://security.freebsd.org/advisories/FreeBSD-SA-26:49.iconv.asc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "FreeBSD iconv堆溢出"
+  },
+  "first_saved_at": "2026-08-19T10:22:16+00:00"
+}
