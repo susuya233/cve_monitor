@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-08-19T20:20:05+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-kizr-u5gc",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-70496",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-250",
+    "description": "search-v2-operator 是 Red Hat Advanced Cluster Management for Kubernetes 2 提供的 Kubernetes Operator，使用 Go 语言开发，负责在多集群环境中部署 search-api、search-collector 等组件并对外提供集群级搜索能力。\n受影响版本中，该 Operator 部署时随附的 ClusterRole 授予了 impersonate、certificatesigningrequests/approval、signers/approve、RBAC 写权限以及 ManifestWork 资源等效于 cluster-admin 的权限集，任何能够触发该 Operator 处理外部输入的低权限账户都可以借助 Operator ServiceAccount 完成身份伪装、批准 CSR、写入 RBAC 对象或下发 ManifestWork，从而在 Kubernetes 集群内实现权限提升并接管控制面。\n修复版本中通过 Red Hat 官方安全更新收紧了该 Operator 的 ClusterRole 权限，剥离 impersonate、CSR 批准、RBAC 写权限等超出运行需要的特权，仅保留 search-api、search-collector 等组件实际依赖的最小权限集；公开上游 stolostron/search-v2-operator 仓库暂未检索到对应修复 commit，建议升级至 Red Hat 提供的修复版本。",
+    "effects": [
+      {
+        "comp_name": "github.com/stolostron/search-v2-operator",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.15.0]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "带着不必要的权限执行",
+    "kind_en": "使用不必要的权限执行",
+    "last_modified_time": "2026-08-20",
+    "level": "Critical",
+    "mps_id": "MPS-kizr-u5gc",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-kizr-u5gc",
+        "name": "https://www.oscs1024.com/hd/MPS-kizr-u5gc"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-70496",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-70496"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-70496",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2511032",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "search-v2-operator 集群权限过度授权",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-70496",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-250",
+    "description": "search-v2-operator 是 Red Hat Advanced Cluster Management for Kubernetes 2 提供的 Kubernetes Operator，使用 Go 语言开发，负责在多集群环境中部署 search-api、search-collector 等组件并对外提供集群级搜索能力。\n受影响版本中，该 Operator 部署时随附的 ClusterRole 授予了 impersonate、certificatesigningrequests/approval、signers/approve、RBAC 写权限以及 ManifestWork 资源等效于 cluster-admin 的权限集，任何能够触发该 Operator 处理外部输入的低权限账户都可以借助 Operator ServiceAccount 完成身份伪装、批准 CSR、写入 RBAC 对象或下发 ManifestWork，从而在 Kubernetes 集群内实现权限提升并接管控制面。\n修复版本中通过 Red Hat 官方安全更新收紧了该 Operator 的 ClusterRole 权限，剥离 impersonate、CSR 批准、RBAC 写权限等超出运行需要的特权，仅保留 search-api、search-collector 等组件实际依赖的最小权限集；公开上游 stolostron/search-v2-operator 仓库暂未检索到对应修复 commit，建议升级至 Red Hat 提供的修复版本。",
+    "effects": [
+      {
+        "comp_name": "github.com/stolostron/search-v2-operator",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.15.0]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "带着不必要的权限执行",
+    "kind_en": "Execution with Unnecessary Privileges",
+    "last_modified_time": "2026-08-20",
+    "level": "Critical",
+    "mps_id": "MPS-kizr-u5gc",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-kizr-u5gc",
+        "name": "https://www.oscs1024.com/hd/MPS-kizr-u5gc"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-70496",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-70496"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-70496",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2511032",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "search-v2-operator 集群权限过度授权"
+  },
+  "first_saved_at": "2026-08-19T20:20:05+00:00"
+}

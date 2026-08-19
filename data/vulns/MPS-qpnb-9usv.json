@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-19T20:20:08+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-19T20:20:06+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-0hdn-ickm",
+  "source_page": "https://www.oscs1024.com/hd/MPS-qpnb-9usv",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,81 +21,78 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-71424",
+    "cve_id": "CVE-2026-55643",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
           "source": "security-advisories@github.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-          "severity": "critical",
-          "base_score": 9.6
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
         }
       ]
     },
-    "cvss_score": 9.6,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "Onyx 是一个开源人工智能平台。在 3.1.10、3.2.14 和 4.0.0 之前，Onyx 的 GET /api/mcp/servers 和 GET /api/mcp/servers/persona/{persona_id} 端点会公开另一个用户的 OAuth 授权标头，因为 OnyxTokenStorage.set_tokens 和 OnyxTokenStorage.set_client_info backend/onyx/server/features/mcp/api.py 将每个用户令牌复制到共享管理 MCPConnectionConfig 行中，并且 _db_mcp_server_to_api_mcp_server 通过 auth_template.headers 返回该行给任何 BASIC_ACCESS 用户。此问题已在版本 3.1.10、3.2.14 和 4.0.0 中修复。",
-    "effects": [],
+    "description": "Snipe-IT 是开源 IT 资产与许可证管理系统，基于 PHP 与 Laravel 构建，用于管理硬件、软件许可及人员资产关系。\n受影响版本中，开启完整多公司支持（FMCS）且启用 floater 模式后，Company::scopeCompanyablesDirectly 在查询 users 表时通过 orWhereDoesntHave('companies') 把无公司关联用户纳入公司范围内账号的可见集合。/api/v1/users 可返回这些用户的个人信息，/api/v1/users/{id}/licenses 可返回其已分配许可证；/users/bulkeditsave 与 /users/merge 仅校验类级权限、未调用 isCurrentUserHasAccess，可修改范围外用户资料、软删除用户并把已分配资产转移到攻击者账号。\n修复版本中通过删除公司范围内账号查询 users 时的 floater 分支，使该类账号只能看到在 company_user 枢纽中与自己存在公司交集的用户，阻断对无公司用户的列表读取、批量修改与合并删除。",
+    "effects": [
+      {
+        "comp_name": "snipe-it",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,8.6.3)",
+            "min_fixed_version": "8.6.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "授权检查错误",
     "kind_en": "授权错误",
-    "last_modified_time": "2026-08-18",
-    "level": "Critical",
-    "mps_id": "MPS-0hdn-ickm",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-qpnb-9usv",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-18",
+    "published_time": "2026-08-20",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-0hdn-ickm",
-        "name": "https://www.oscs1024.com/hd/MPS-0hdn-ickm"
+        "url": "https://www.oscs1024.com/hd/MPS-qpnb-9usv",
+        "name": "https://www.oscs1024.com/hd/MPS-qpnb-9usv"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-55643",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-55643"
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/3f3d79d1a7722fdc84a1c61c8aa830d890017e9e",
+        "url": "https://github.com/grokability/snipe-it/commit/fbe05a8df4742729a9b0756c016d45f48246cc7b",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/4001cedd0a8968723bfe95dd188914ed56777910",
+        "url": "https://github.com/grokability/snipe-it/releases/tag/v8.6.3",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/b103937888fd5008067c2bb6eb6e5424576394f2",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11238",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11242",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11243",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/releases/tag/v4.0.0",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/security/advisories/GHSA-q62f-rv3h-f822",
+        "url": "https://github.com/grokability/snipe-it/security/advisories/GHSA-c6w2-j4wq-mvwg",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-71424漏洞",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Snipe-IT租户隔离绕过",
     "_translated": true
   },
   "detail_original": {
@@ -115,81 +112,78 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-71424",
+    "cve_id": "CVE-2026-55643",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
           "source": "security-advisories@github.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-          "severity": "critical",
-          "base_score": 9.6
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
         }
       ]
     },
-    "cvss_score": 9.6,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "Onyx is an open-source AI platform. Prior to 3.1.10, 3.2.14, and 4.0.0, Onyx's GET /api/mcp/servers and GET /api/mcp/servers/persona/{persona_id} endpoints expose another user's OAuth Authorization header because OnyxTokenStorage.set_tokens and OnyxTokenStorage.set_client_info in backend/onyx/server/features/mcp/api.py copy per-user tokens into a shared admin MCPConnectionConfig row and _db_mcp_server_to_api_mcp_server returns that row through auth_template.headers to any BASIC_ACCESS user. This issue is fixed in versions 3.1.10, 3.2.14, and 4.0.0.",
-    "effects": [],
+    "description": "Snipe-IT 是开源 IT 资产与许可证管理系统，基于 PHP 与 Laravel 构建，用于管理硬件、软件许可及人员资产关系。\n受影响版本中，开启完整多公司支持（FMCS）且启用 floater 模式后，Company::scopeCompanyablesDirectly 在查询 users 表时通过 orWhereDoesntHave('companies') 把无公司关联用户纳入公司范围内账号的可见集合。/api/v1/users 可返回这些用户的个人信息，/api/v1/users/{id}/licenses 可返回其已分配许可证；/users/bulkeditsave 与 /users/merge 仅校验类级权限、未调用 isCurrentUserHasAccess，可修改范围外用户资料、软删除用户并把已分配资产转移到攻击者账号。\n修复版本中通过删除公司范围内账号查询 users 时的 floater 分支，使该类账号只能看到在 company_user 枢纽中与自己存在公司交集的用户，阻断对无公司用户的列表读取、批量修改与合并删除。",
+    "effects": [
+      {
+        "comp_name": "snipe-it",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,8.6.3)",
+            "min_fixed_version": "8.6.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "授权检查错误",
     "kind_en": "Incorrect Authorization",
-    "last_modified_time": "2026-08-18",
-    "level": "Critical",
-    "mps_id": "MPS-0hdn-ickm",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-qpnb-9usv",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-18",
+    "published_time": "2026-08-20",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-0hdn-ickm",
-        "name": "https://www.oscs1024.com/hd/MPS-0hdn-ickm"
+        "url": "https://www.oscs1024.com/hd/MPS-qpnb-9usv",
+        "name": "https://www.oscs1024.com/hd/MPS-qpnb-9usv"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-55643",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-55643"
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/3f3d79d1a7722fdc84a1c61c8aa830d890017e9e",
+        "url": "https://github.com/grokability/snipe-it/commit/fbe05a8df4742729a9b0756c016d45f48246cc7b",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/4001cedd0a8968723bfe95dd188914ed56777910",
+        "url": "https://github.com/grokability/snipe-it/releases/tag/v8.6.3",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/b103937888fd5008067c2bb6eb6e5424576394f2",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11238",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11242",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11243",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/releases/tag/v4.0.0",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/security/advisories/GHSA-q62f-rv3h-f822",
+        "url": "https://github.com/grokability/snipe-it/security/advisories/GHSA-c6w2-j4wq-mvwg",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-71424漏洞"
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Snipe-IT租户隔离绕过"
   },
-  "first_saved_at": "2026-08-17T23:17:10+00:00"
+  "first_saved_at": "2026-08-19T20:20:06+00:00"
 }
