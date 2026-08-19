@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-08-19T07:32:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-fp4h-nl86",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-18031",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-287",
+    "description": "TabaPay Gateway（插件标识 tabapay-gateway）是开源 WordPress/WooCommerce 支付网关插件，用于将商店结账接入 TabaPay（tabapay.ir）支付通道。\n受影响版本中，对外 WooCommerce API 回调 Tabapay_Gateway::handle_tabapay_callback 在校验支付结果前，当请求携带非空 token 与 wc_order 时，会读取该订单关联账号并调用 wp_set_current_user、wp_set_auth_cookie 建立登录会话。未认证攻击者可指定任意已关联注册用户（含管理员）的订单编号，直接登录对应账号。\n修复版本中通过在建立会话前完成支付回调真实性校验切断未授权登录链路；截至 2026-08-19，WPScan 标明尚无已知修复，GitHub 与 WordPress.org 最高版本仍为 1.4.0，官方插件目录已关闭下载。",
+    "effects": [
+      {
+        "comp_name": "tabapay-gateway",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.4.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "身份验证不当",
+    "kind_en": "认证不当",
+    "last_modified_time": "2026-08-19",
+    "level": "Critical",
+    "mps_id": "MPS-fp4h-nl86",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fp4h-nl86",
+        "name": "https://www.oscs1024.com/hd/MPS-fp4h-nl86"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18031",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18031"
+      },
+      {
+        "url": "https://wpscan.com/vulnerability/6576dcd1-aea6-47c0-9157-4ca56f426612/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "TabaPay支付回调认证绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-18031",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-287",
+    "description": "TabaPay Gateway（插件标识 tabapay-gateway）是开源 WordPress/WooCommerce 支付网关插件，用于将商店结账接入 TabaPay（tabapay.ir）支付通道。\n受影响版本中，对外 WooCommerce API 回调 Tabapay_Gateway::handle_tabapay_callback 在校验支付结果前，当请求携带非空 token 与 wc_order 时，会读取该订单关联账号并调用 wp_set_current_user、wp_set_auth_cookie 建立登录会话。未认证攻击者可指定任意已关联注册用户（含管理员）的订单编号，直接登录对应账号。\n修复版本中通过在建立会话前完成支付回调真实性校验切断未授权登录链路；截至 2026-08-19，WPScan 标明尚无已知修复，GitHub 与 WordPress.org 最高版本仍为 1.4.0，官方插件目录已关闭下载。",
+    "effects": [
+      {
+        "comp_name": "tabapay-gateway",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.4.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "身份验证不当",
+    "kind_en": "Improper Authentication",
+    "last_modified_time": "2026-08-19",
+    "level": "Critical",
+    "mps_id": "MPS-fp4h-nl86",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fp4h-nl86",
+        "name": "https://www.oscs1024.com/hd/MPS-fp4h-nl86"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18031",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18031"
+      },
+      {
+        "url": "https://wpscan.com/vulnerability/6576dcd1-aea6-47c0-9157-4ca56f426612/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "TabaPay支付回调认证绕过"
+  },
+  "first_saved_at": "2026-08-19T07:32:49+00:00"
+}
