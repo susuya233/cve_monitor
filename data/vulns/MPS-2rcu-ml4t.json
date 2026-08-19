@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T22:18:22+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T23:17:30+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-2rcu-ml4t",
@@ -38,12 +38,26 @@
     "cvss_score": 8.6,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-121",
-    "description": "TRENDnet TV-IP751WIC 11.03.03 中发现安全漏洞。受此问题影响的是组件 alphapd 的文件 /cgi-bin/admin/set_time.cgi 的一些未知功能。对参数 Currenttime 的操作会导致基于堆栈的缓冲区溢出。攻击可以远程发起。该漏洞已向公众发布，可用于攻击。",
-    "effects": [],
+    "description": "TRENDnet TV-IP751WIC 是闭源无线日夜型网络摄像机，通过 HTTP 管理界面提供时间同步、视频监控和设备配置功能。\n受影响版本中，alphapd 组件的 /cgi-bin/admin/set_time.cgi 接收 Currenttime 参数，经 websGetVar 读取后以 sprintf(\"date -s %s &\") 写入栈缓冲区并交给 doSystem 执行。攻击者可远程操纵该参数覆盖栈上返回地址，并使设备执行拼接后的系统命令。\n修复版本中通过公开渠道未能确认已发布的补丁固件；TRENDnet 已将 TV-IP751WIC 标为停产，支持页提供的最新固件仍为 1.03.03。在官方修复发布前，应隔离摄像头管理接口并限制对 /cgi-bin/admin/set_time.cgi 的访问。",
+    "effects": [
+      {
+        "comp_name": "tv-ip751wic",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[11.03.03,11.03.03]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "栈缓冲区溢出",
@@ -89,8 +103,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-76584漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "TV-IP751WIC栈溢出漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -127,12 +143,26 @@
     "cvss_score": 8.6,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-121",
-    "description": "A security flaw has been discovered in TRENDnet TV-IP751WIC 11.03.03. Affected by this issue is some unknown functionality of the file /cgi-bin/admin/set_time.cgi of the component alphapd. The manipulation of the argument Currenttime results in stack-based buffer overflow. The attack can be launched remotely. The exploit has been released to the public and may be used for attacks.",
-    "effects": [],
+    "description": "TRENDnet TV-IP751WIC 是闭源无线日夜型网络摄像机，通过 HTTP 管理界面提供时间同步、视频监控和设备配置功能。\n受影响版本中，alphapd 组件的 /cgi-bin/admin/set_time.cgi 接收 Currenttime 参数，经 websGetVar 读取后以 sprintf(\"date -s %s &\") 写入栈缓冲区并交给 doSystem 执行。攻击者可远程操纵该参数覆盖栈上返回地址，并使设备执行拼接后的系统命令。\n修复版本中通过公开渠道未能确认已发布的补丁固件；TRENDnet 已将 TV-IP751WIC 标为停产，支持页提供的最新固件仍为 1.03.03。在官方修复发布前，应隔离摄像头管理接口并限制对 /cgi-bin/admin/set_time.cgi 的访问。",
+    "effects": [
+      {
+        "comp_name": "tv-ip751wic",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[11.03.03,11.03.03]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "栈缓冲区溢出",
@@ -178,8 +208,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-76584漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "TV-IP751WIC栈溢出漏洞"
   },
   "first_saved_at": "2026-08-19T22:18:22+00:00"
 }

@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T22:18:24+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T23:17:31+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-oxh9-pkln",
@@ -22,12 +22,12 @@
     "cvss_score": 8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H",
     "cwe": "CWE-829",
-    "description": "acm-operator-bundle 中发现缺陷。该组件的构建过程从远程源下载并运行脚本，而不验证其真实性或完整性。此脚本可以访问构建环境中使用的敏感凭据，例如 GitHub 访问令牌和注册表密码。远程攻击者可以利用此漏洞注入恶意代码，从而导致对构建资源的未经授权的访问，并可能危及生成的操作包。",
+    "description": "acm-operator-bundle 是 Red Hat Advanced Cluster Management for Kubernetes（RHACM）的开源 Operator Bundle 构建仓库，用于生成并发布 ACM operator 捆绑包镜像。\n受影响版本中，捆绑包构建流程会在运行时从 stolostron/release 仓库的 master 分支拉取当前 HEAD，并执行其中的 tools/konflux/common/process-triggering-pr.sh，且未校验提交 SHA、校验和或签名。该脚本继承构建环境中的完整凭据，包括覆盖 github.repository_owner 下全部仓库的 GitHub App 令牌、registry.redhat.io / registry.stage.redhat.io / quay.io 的仓库口令，以及对即将交付的 bundle PR 的写权限。能够改写 stolostron/release@master 的攻击者可向该特权构建路径注入恶意代码，窃取凭据或篡改已交付的 operator bundle。\n修复版本中通过将 config/acm-bundle-pr-config-vars 的 tools_repo_branch 从可变的 master 固定为完整 40 位 commit SHA，并在 tools/run-script-from-tools-repo 中拒绝非 SHA 引用、校验检出 HEAD 与钉扎提交一致，切断对未固定远程脚本的执行。",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "从非可信控制范围包含功能例程",
@@ -58,7 +58,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-76139漏洞",
+    "title": "ACM捆绑包供应链漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -79,12 +79,12 @@
     "cvss_score": 8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H",
     "cwe": "CWE-829",
-    "description": "A flaw was found in acm-operator-bundle. The build process for this component downloads and runs a script from a remote source without verifying its authenticity or integrity. This script gains access to sensitive credentials, such as GitHub access tokens and registry passwords, used in the build environment. A remote attacker could exploit this vulnerability to inject malicious code, leading to unauthorized access to build resources and potential compromise of the resulting operator bundle.",
+    "description": "acm-operator-bundle 是 Red Hat Advanced Cluster Management for Kubernetes（RHACM）的开源 Operator Bundle 构建仓库，用于生成并发布 ACM operator 捆绑包镜像。\n受影响版本中，捆绑包构建流程会在运行时从 stolostron/release 仓库的 master 分支拉取当前 HEAD，并执行其中的 tools/konflux/common/process-triggering-pr.sh，且未校验提交 SHA、校验和或签名。该脚本继承构建环境中的完整凭据，包括覆盖 github.repository_owner 下全部仓库的 GitHub App 令牌、registry.redhat.io / registry.stage.redhat.io / quay.io 的仓库口令，以及对即将交付的 bundle PR 的写权限。能够改写 stolostron/release@master 的攻击者可向该特权构建路径注入恶意代码，窃取凭据或篡改已交付的 operator bundle。\n修复版本中通过将 config/acm-bundle-pr-config-vars 的 tools_repo_branch 从可变的 master 固定为完整 40 位 commit SHA，并在 tools/run-script-from-tools-repo 中拒绝非 SHA 引用、校验检出 HEAD 与钉扎提交一致，切断对未固定远程脚本的执行。",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "从非可信控制范围包含功能例程",
@@ -115,7 +115,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-76139漏洞"
+    "title": "ACM捆绑包供应链漏洞"
   },
   "first_saved_at": "2026-08-19T22:18:24+00:00"
 }

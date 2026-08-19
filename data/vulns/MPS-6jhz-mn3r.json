@@ -1,0 +1,209 @@
+{
+  "saved_at": "2026-08-19T23:17:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6jhz-mn3r",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75595",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-754",
+    "description": "Netty 是开源的异步事件驱动网络应用框架，被广泛用于构建高性能 Java 网络服务端与 TLS 中间件；漏洞组件 io.netty.handler.ssl.SslClientHelloHandler 是 Netty handler 模块中负责在 TLS 握身前根据 SNI 选择 SslContext 的公开扩展类。\n受影响版本中，io.netty.handler.ssl.SslClientHelloHandler#decode 在聚合跨多个 TLS 记录分片的 ClientHello 时使用了错误的偏移量来读取四字节 TLS 握手头，当攻击者将 4 字节握手头（即 HandshakeType + handshakeLength）跨越两个或更多 TLS 记录分片时，in.getUnsignedByte(readerIndex + SSL_RECORD_HEADER_LENGTH) 与 in.getUnsignedMedium(readerIndex + SSL_RECORD_HEADER_LENGTH + 1) 会越过可用缓冲区下标而抛 IndexOutOfBoundsException，异常路径进入 select(ctx, null) 分支，使处理器跳到默认 SslContext 而不是按 server_name 匹配的 SslContext。在仅以 per-SNI clientAuth=REQUIRE 作为唯一互信 TLS 校验手段、且默认 SslContext 配置为 clientAuth=NONE 或 clientAuth=OPTIONAL、又未在应用层额外校验客户端证书的部署中，未认证的远端攻击者可通过发送分片 ClientHello 绕过受保护路由的 mTLS 客户端证书校验要求。\n修复版本中通过重写 SslClientHelloHandler#decode 解决了该问题，新增 aggregatedBytes 与 handshakeLength 实例字段跟踪已聚合字节，在跨记录读取时先把 SSL_RECORD_HEADER 之后的负载字节累积到 handshakeBuffer，等 four-byte handshake header 与完整 handshakeLength 都在聚合缓冲中后再统一解析 handshakeType、handshakeLength 与 ClientHello 主体，并在 readerIndex + SSL_RECORD_HEADER_LENGTH + 4 仍超出 endOffset 时提前 return 等待更多数据、避免越界；索引不再越过合法下标，异常路径不再被触发，per-SNI SslContext 可被稳定选中。",
+    "effects": [
+      {
+        "comp_name": "io.netty:netty",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.1.137.Final)",
+            "min_fixed_version": "4.1.137.Final",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,4.2.17.Final)",
+            "min_fixed_version": "4.2.17.Final",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对因果或异常条件的不恰当检查",
+    "kind_en": "对异常或特殊情况的不当检查",
+    "last_modified_time": "2026-08-20",
+    "level": "Critical",
+    "mps_id": "MPS-6jhz-mn3r",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6jhz-mn3r",
+        "name": "https://www.oscs1024.com/hd/MPS-6jhz-mn3r"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75595",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75595"
+      },
+      {
+        "url": "https://github.com/netty/netty/commit/1b5abc6443b63726c72cdd285af2feb7ddbb8ff7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/commit/9e0519239108a69b7e9bbc5e9182ee139a0d7961",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/pull/17213",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/pull/17217",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/releases/tag/netty-4.1.137.Final",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/releases/tag/netty-4.2.17.Final",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/security/advisories/GHSA-c4c3-7fpv-j4q5",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Netty SslClientHelloHandler 互信 TLS 校验绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75595",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-754",
+    "description": "Netty 是开源的异步事件驱动网络应用框架，被广泛用于构建高性能 Java 网络服务端与 TLS 中间件；漏洞组件 io.netty.handler.ssl.SslClientHelloHandler 是 Netty handler 模块中负责在 TLS 握身前根据 SNI 选择 SslContext 的公开扩展类。\n受影响版本中，io.netty.handler.ssl.SslClientHelloHandler#decode 在聚合跨多个 TLS 记录分片的 ClientHello 时使用了错误的偏移量来读取四字节 TLS 握手头，当攻击者将 4 字节握手头（即 HandshakeType + handshakeLength）跨越两个或更多 TLS 记录分片时，in.getUnsignedByte(readerIndex + SSL_RECORD_HEADER_LENGTH) 与 in.getUnsignedMedium(readerIndex + SSL_RECORD_HEADER_LENGTH + 1) 会越过可用缓冲区下标而抛 IndexOutOfBoundsException，异常路径进入 select(ctx, null) 分支，使处理器跳到默认 SslContext 而不是按 server_name 匹配的 SslContext。在仅以 per-SNI clientAuth=REQUIRE 作为唯一互信 TLS 校验手段、且默认 SslContext 配置为 clientAuth=NONE 或 clientAuth=OPTIONAL、又未在应用层额外校验客户端证书的部署中，未认证的远端攻击者可通过发送分片 ClientHello 绕过受保护路由的 mTLS 客户端证书校验要求。\n修复版本中通过重写 SslClientHelloHandler#decode 解决了该问题，新增 aggregatedBytes 与 handshakeLength 实例字段跟踪已聚合字节，在跨记录读取时先把 SSL_RECORD_HEADER 之后的负载字节累积到 handshakeBuffer，等 four-byte handshake header 与完整 handshakeLength 都在聚合缓冲中后再统一解析 handshakeType、handshakeLength 与 ClientHello 主体，并在 readerIndex + SSL_RECORD_HEADER_LENGTH + 4 仍超出 endOffset 时提前 return 等待更多数据、避免越界；索引不再越过合法下标，异常路径不再被触发，per-SNI SslContext 可被稳定选中。",
+    "effects": [
+      {
+        "comp_name": "io.netty:netty",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.1.137.Final)",
+            "min_fixed_version": "4.1.137.Final",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,4.2.17.Final)",
+            "min_fixed_version": "4.2.17.Final",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对因果或异常条件的不恰当检查",
+    "kind_en": "Improper Check for Unusual or Exceptional Conditions",
+    "last_modified_time": "2026-08-20",
+    "level": "Critical",
+    "mps_id": "MPS-6jhz-mn3r",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6jhz-mn3r",
+        "name": "https://www.oscs1024.com/hd/MPS-6jhz-mn3r"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75595",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75595"
+      },
+      {
+        "url": "https://github.com/netty/netty/commit/1b5abc6443b63726c72cdd285af2feb7ddbb8ff7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/commit/9e0519239108a69b7e9bbc5e9182ee139a0d7961",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/pull/17213",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/pull/17217",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/releases/tag/netty-4.1.137.Final",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/releases/tag/netty-4.2.17.Final",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/netty/netty/security/advisories/GHSA-c4c3-7fpv-j4q5",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Netty SslClientHelloHandler 互信 TLS 校验绕过漏洞"
+  },
+  "first_saved_at": "2026-08-19T23:17:33+00:00"
+}
