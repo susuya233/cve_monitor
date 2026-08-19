@@ -1,0 +1,157 @@
+{
+  "saved_at": "2026-08-19T15:24:47+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-78m2-5cuz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76237",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "Stigmem 是 Apache-2.0 开源的联邦知识织物，stigmem-node 是其 Python 参考节点，为 AI Agent 与人类提供可追溯的类型化事实存储及隔离审查接口。\n受影响版本中，启用 opt-in 插件 stigmem-plugin-multi-tenant 的多租户节点上，routes/quarantine.py 的列表与计数查询以及 _get_quarantined_fact 未加入 f.tenant_id = identity.tenant_id 谓词，get_garden_by_slug_or_id 的 UUID 查找也未按租户隔离。仅持有租户 write 能力的租户管理员调用 GET /v1/quarantine、POST /v1/quarantine/{fact_id}/admit 或 /reject，即可列出、读取并准入或拒绝其他租户的隔离事实。默认单租户部署不受影响。\n修复版本中通过在列表、计数与 _get_quarantined_fact 查询中增加 f.tenant_id = identity.tenant_id 条件，并将花园 UUID 查找限制在调用者租户内，阻断跨租户读取与审核路径。",
+    "effects": [
+      {
+        "comp_name": "stigmem-node",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.9.0a12)",
+            "min_fixed_version": "0.9.0a12",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-78m2-5cuz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-78m2-5cuz",
+        "name": "https://www.oscs1024.com/hd/MPS-78m2-5cuz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76237",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76237"
+      },
+      {
+        "url": "https://github.com/eidetic-labs/stigmem/security/advisories/GHSA-xhv3-q4xx-349r",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/stigmem-before-0a12-cross-tenant-bola-via-quarantine",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "stigmem跨租户越权",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76237",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "Stigmem 是 Apache-2.0 开源的联邦知识织物，stigmem-node 是其 Python 参考节点，为 AI Agent 与人类提供可追溯的类型化事实存储及隔离审查接口。\n受影响版本中，启用 opt-in 插件 stigmem-plugin-multi-tenant 的多租户节点上，routes/quarantine.py 的列表与计数查询以及 _get_quarantined_fact 未加入 f.tenant_id = identity.tenant_id 谓词，get_garden_by_slug_or_id 的 UUID 查找也未按租户隔离。仅持有租户 write 能力的租户管理员调用 GET /v1/quarantine、POST /v1/quarantine/{fact_id}/admit 或 /reject，即可列出、读取并准入或拒绝其他租户的隔离事实。默认单租户部署不受影响。\n修复版本中通过在列表、计数与 _get_quarantined_fact 查询中增加 f.tenant_id = identity.tenant_id 条件，并将花园 UUID 查找限制在调用者租户内，阻断跨租户读取与审核路径。",
+    "effects": [
+      {
+        "comp_name": "stigmem-node",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.9.0a12)",
+            "min_fixed_version": "0.9.0a12",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-78m2-5cuz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-78m2-5cuz",
+        "name": "https://www.oscs1024.com/hd/MPS-78m2-5cuz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76237",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76237"
+      },
+      {
+        "url": "https://github.com/eidetic-labs/stigmem/security/advisories/GHSA-xhv3-q4xx-349r",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/stigmem-before-0a12-cross-tenant-bola-via-quarantine",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "stigmem跨租户越权"
+  },
+  "first_saved_at": "2026-08-19T15:24:47+00:00"
+}

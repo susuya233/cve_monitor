@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-08-19T15:24:34+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-hf4g-szan",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76242",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-295",
+    "description": "stigmem-node 是 Apache-2.0 许可的开源 Python 参考节点，用于实现 Stigmem 协议的事实存储、查询与节点间联邦复制。\n受影响版本中，POST /v1/federation/peers 对应的 register_peer 在拉取对等节点 /.well-known/stigmem 公钥并完成声明签名校验后，立即将 peers.status 设为 active，缺少管理员基于带外指纹的独立批准。攻击者若拦截或劫持初始注册过程中的密钥材料，即可登记恶意对等节点，并在对等令牌被接受后读取或篡改联邦流量。\n修复版本中通过将校验通过后的状态改为 pending_approval，并新增批准接口：管理员必须提交与 federation_pubkey 匹配的 sha256 指纹后才将节点激活，未批准对等令牌会被拒绝。",
+    "effects": [
+      {
+        "comp_name": "stigmem-node",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0.9.0a1,0.9.0a2)",
+            "min_fixed_version": "0.9.0a2",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "证书验证不恰当",
+    "kind_en": "证书验证不当",
+    "last_modified_time": "2026-08-19",
+    "level": "Critical",
+    "mps_id": "MPS-hf4g-szan",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hf4g-szan",
+        "name": "https://www.oscs1024.com/hd/MPS-hf4g-szan"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76242",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76242"
+      },
+      {
+        "url": "https://github.com/eidetic-labs/stigmem/security/advisories/GHSA-9vp8-3hmv-8fgh",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/stigmem-federation-peer-registration-authentication-bypass",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "stigmem联邦对等注册绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76242",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-295",
+    "description": "stigmem-node 是 Apache-2.0 许可的开源 Python 参考节点，用于实现 Stigmem 协议的事实存储、查询与节点间联邦复制。\n受影响版本中，POST /v1/federation/peers 对应的 register_peer 在拉取对等节点 /.well-known/stigmem 公钥并完成声明签名校验后，立即将 peers.status 设为 active，缺少管理员基于带外指纹的独立批准。攻击者若拦截或劫持初始注册过程中的密钥材料，即可登记恶意对等节点，并在对等令牌被接受后读取或篡改联邦流量。\n修复版本中通过将校验通过后的状态改为 pending_approval，并新增批准接口：管理员必须提交与 federation_pubkey 匹配的 sha256 指纹后才将节点激活，未批准对等令牌会被拒绝。",
+    "effects": [
+      {
+        "comp_name": "stigmem-node",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0.9.0a1,0.9.0a2)",
+            "min_fixed_version": "0.9.0a2",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "证书验证不恰当",
+    "kind_en": "Improper Certificate Validation",
+    "last_modified_time": "2026-08-19",
+    "level": "Critical",
+    "mps_id": "MPS-hf4g-szan",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hf4g-szan",
+        "name": "https://www.oscs1024.com/hd/MPS-hf4g-szan"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76242",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76242"
+      },
+      {
+        "url": "https://github.com/eidetic-labs/stigmem/security/advisories/GHSA-9vp8-3hmv-8fgh",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/stigmem-federation-peer-registration-authentication-bypass",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "stigmem联邦对等注册绕过"
+  },
+  "first_saved_at": "2026-08-19T15:24:34+00:00"
+}

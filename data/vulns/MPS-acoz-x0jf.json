@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-08-19T15:24:39+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-acoz-x0jf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76241",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-494",
+    "description": "stigmem 是 eidetic-labs 维护、采用 Apache-2.0 协议发布的开源记忆与插件治理框架；其下 stigmem-node（PyPI 包 stigmem-node）是基于 FastAPI 的节点服务，负责已安装插件的发现、签名校验与注册。\n受影响版本中，stigmem-node 仅通过单一环境变量 STIGMEM_PLUGIN_SIGNING_REQUIRED=false 即可关闭插件签名强制校验；节点启动时由 node/src/stigmem_node/main.py 的 lifespan 调用 node/src/stigmem_node/plugins/lifecycle.py 中的 register_discovered_plugins，当签名强制关闭时该函数直接调用 node/src/stigmem_node/plugins/signing.py 的 allow_unsigned_development_override，对未签名插件仅返回 trust_decision='development_unsigned_override' 的元数据，不再做完整性核验或二次确认。若该配置被带入插件目录对低信任用户可写的部署，未签名（可能为恶意）的插件代码会被加载并以节点进程权限执行，造成任意代码执行。\n修复版本中通过在 allow_unsigned_development_override 起始处读取 settings.plugin_unsigned_ack 并要求其等于字面量 'i-understand-plugins-are-unsigned'（node/src/stigmem_node/settings.py 同步新增 plugin_unsigned_ack 字段），STIGMEM_PLUGIN_SIGNING_REQUIRED 与 STIGMEM_PLUGIN_UNSIGNED_ACK 双确认不齐备时抛出 RuntimeError 拒绝启动，从而阻断未签名插件的静默加载。",
+    "effects": [
+      {
+        "comp_name": "stigmem-node",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0.9.0a1,0.9.0a2)",
+            "min_fixed_version": "0.9.0a2",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "下载代码缺少完整性检查",
+    "kind_en": "不进行完整性检查的代码下载",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-acoz-x0jf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-acoz-x0jf",
+        "name": "https://www.oscs1024.com/hd/MPS-acoz-x0jf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76241",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76241"
+      },
+      {
+        "url": "https://github.com/eidetic-labs/stigmem/security/advisories/GHSA-w7pm-9g55-mxfm",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/stigmem-plugin-signature-enforcement-bypass-via-configuration",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "stigmem 插件签名强制绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76241",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-494",
+    "description": "stigmem 是 eidetic-labs 维护、采用 Apache-2.0 协议发布的开源记忆与插件治理框架；其下 stigmem-node（PyPI 包 stigmem-node）是基于 FastAPI 的节点服务，负责已安装插件的发现、签名校验与注册。\n受影响版本中，stigmem-node 仅通过单一环境变量 STIGMEM_PLUGIN_SIGNING_REQUIRED=false 即可关闭插件签名强制校验；节点启动时由 node/src/stigmem_node/main.py 的 lifespan 调用 node/src/stigmem_node/plugins/lifecycle.py 中的 register_discovered_plugins，当签名强制关闭时该函数直接调用 node/src/stigmem_node/plugins/signing.py 的 allow_unsigned_development_override，对未签名插件仅返回 trust_decision='development_unsigned_override' 的元数据，不再做完整性核验或二次确认。若该配置被带入插件目录对低信任用户可写的部署，未签名（可能为恶意）的插件代码会被加载并以节点进程权限执行，造成任意代码执行。\n修复版本中通过在 allow_unsigned_development_override 起始处读取 settings.plugin_unsigned_ack 并要求其等于字面量 'i-understand-plugins-are-unsigned'（node/src/stigmem_node/settings.py 同步新增 plugin_unsigned_ack 字段），STIGMEM_PLUGIN_SIGNING_REQUIRED 与 STIGMEM_PLUGIN_UNSIGNED_ACK 双确认不齐备时抛出 RuntimeError 拒绝启动，从而阻断未签名插件的静默加载。",
+    "effects": [
+      {
+        "comp_name": "stigmem-node",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0.9.0a1,0.9.0a2)",
+            "min_fixed_version": "0.9.0a2",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "下载代码缺少完整性检查",
+    "kind_en": "Download of Code Without Integrity Check",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-acoz-x0jf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-acoz-x0jf",
+        "name": "https://www.oscs1024.com/hd/MPS-acoz-x0jf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76241",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76241"
+      },
+      {
+        "url": "https://github.com/eidetic-labs/stigmem/security/advisories/GHSA-w7pm-9g55-mxfm",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/stigmem-plugin-signature-enforcement-bypass-via-configuration",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "stigmem 插件签名强制绕过"
+  },
+  "first_saved_at": "2026-08-19T15:24:39+00:00"
+}

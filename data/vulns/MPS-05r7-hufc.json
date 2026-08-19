@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-19T15:24:48+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-19T15:24:40+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-0hdn-ickm",
+  "source_page": "https://www.oscs1024.com/hd/MPS-05r7-hufc",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,81 +21,74 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-71424",
+    "cve_id": "CVE-2026-76238",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "security-advisories@github.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-          "severity": "critical",
-          "base_score": 9.6
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.2
         }
       ]
     },
-    "cvss_score": 9.6,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "Onyx 是一个开源人工智能平台。在 3.1.10、3.2.14 和 4.0.0 之前，Onyx 的 GET /api/mcp/servers 和 GET /api/mcp/servers/persona/{persona_id} 端点会公开另一个用户的 OAuth 授权标头，因为 OnyxTokenStorage.set_tokens 和 OnyxTokenStorage.set_client_info backend/onyx/server/features/mcp/api.py 将每个用户令牌复制到共享管理 MCPConnectionConfig 行中，并且 _db_mcp_server_to_api_mcp_server 通过 auth_template.headers 返回该行给任何 BASIC_ACCESS 用户。此问题已在版本 3.1.10、3.2.14 和 4.0.0 中修复。",
-    "effects": [],
+    "description": "stigmem 是 eidetic-labs 维护的开源 Python 持久记忆图谱组件，其中 stigmem-node 提供 HTTP API、内置 federation 与可选的多租户扩展 stigmem-plugin-multi-tenant。\n受影响版本中，POST /v1/decay/sweep 路由在处理衰减扫描请求时未把调用者的 tenant_id 透传到 SQL 候选查询与异步任务执行链路，lifecycle.decay 中 _select_ttl_candidates 与 _select_confidence_candidates 的 SELECT 语句均缺少 tenant_id 谓词，导致持有单租户 write 凭据的攻击者提交的 POST 请求会以 ttl_seconds=0 把所有租户的事实记录批量过期（跨租户数据销毁），或通过 dry_run 拿到跨租户的事实计数与存在性信息（跨租户信息泄露 oracle）。\n修复版本中通过在 _select_ttl_candidates、_select_confidence_candidates 与 run_decay_sweep 中新增 AND f.tenant_id = ? 谓词，并把 identity.tenant_id 显式透传到 HTTP 路由 decay_sweep、_decay_job_worker 与 create_job 调用中，使单租户 sweep 不再跨租户生效，dry_run 仅返回调用者自己租户的候选计数。",
+    "effects": [
+      {
+        "comp_name": "stigmem-node",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.9.0a12)",
+            "min_fixed_version": "0.9.0a12",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "授权检查错误",
     "kind_en": "授权错误",
-    "last_modified_time": "2026-08-18",
-    "level": "Critical",
-    "mps_id": "MPS-0hdn-ickm",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-05r7-hufc",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-18",
+    "published_time": "2026-08-19",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-0hdn-ickm",
-        "name": "https://www.oscs1024.com/hd/MPS-0hdn-ickm"
+        "url": "https://www.oscs1024.com/hd/MPS-05r7-hufc",
+        "name": "https://www.oscs1024.com/hd/MPS-05r7-hufc"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76238",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76238"
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/3f3d79d1a7722fdc84a1c61c8aa830d890017e9e",
+        "url": "https://github.com/eidetic-labs/stigmem/security/advisories/GHSA-6gqw-jqv7-v88m",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/4001cedd0a8968723bfe95dd188914ed56777910",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/b103937888fd5008067c2bb6eb6e5424576394f2",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11238",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11242",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11243",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/releases/tag/v4.0.0",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/security/advisories/GHSA-q62f-rv3h-f822",
+        "url": "https://www.vulncheck.com/advisories/stigmem-before-0a12-cross-tenant-bola-via-decay-sweep",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-71424漏洞",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "stigmem跨租户衰减扫描BOLA漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -115,81 +108,74 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-71424",
+    "cve_id": "CVE-2026-76238",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "security-advisories@github.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-          "severity": "critical",
-          "base_score": 9.6
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.2
         }
       ]
     },
-    "cvss_score": 9.6,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "Onyx is an open-source AI platform. Prior to 3.1.10, 3.2.14, and 4.0.0, Onyx's GET /api/mcp/servers and GET /api/mcp/servers/persona/{persona_id} endpoints expose another user's OAuth Authorization header because OnyxTokenStorage.set_tokens and OnyxTokenStorage.set_client_info in backend/onyx/server/features/mcp/api.py copy per-user tokens into a shared admin MCPConnectionConfig row and _db_mcp_server_to_api_mcp_server returns that row through auth_template.headers to any BASIC_ACCESS user. This issue is fixed in versions 3.1.10, 3.2.14, and 4.0.0.",
-    "effects": [],
+    "description": "stigmem 是 eidetic-labs 维护的开源 Python 持久记忆图谱组件，其中 stigmem-node 提供 HTTP API、内置 federation 与可选的多租户扩展 stigmem-plugin-multi-tenant。\n受影响版本中，POST /v1/decay/sweep 路由在处理衰减扫描请求时未把调用者的 tenant_id 透传到 SQL 候选查询与异步任务执行链路，lifecycle.decay 中 _select_ttl_candidates 与 _select_confidence_candidates 的 SELECT 语句均缺少 tenant_id 谓词，导致持有单租户 write 凭据的攻击者提交的 POST 请求会以 ttl_seconds=0 把所有租户的事实记录批量过期（跨租户数据销毁），或通过 dry_run 拿到跨租户的事实计数与存在性信息（跨租户信息泄露 oracle）。\n修复版本中通过在 _select_ttl_candidates、_select_confidence_candidates 与 run_decay_sweep 中新增 AND f.tenant_id = ? 谓词，并把 identity.tenant_id 显式透传到 HTTP 路由 decay_sweep、_decay_job_worker 与 create_job 调用中，使单租户 sweep 不再跨租户生效，dry_run 仅返回调用者自己租户的候选计数。",
+    "effects": [
+      {
+        "comp_name": "stigmem-node",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.9.0a12)",
+            "min_fixed_version": "0.9.0a12",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "授权检查错误",
     "kind_en": "Incorrect Authorization",
-    "last_modified_time": "2026-08-18",
-    "level": "Critical",
-    "mps_id": "MPS-0hdn-ickm",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-05r7-hufc",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-18",
+    "published_time": "2026-08-19",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-0hdn-ickm",
-        "name": "https://www.oscs1024.com/hd/MPS-0hdn-ickm"
+        "url": "https://www.oscs1024.com/hd/MPS-05r7-hufc",
+        "name": "https://www.oscs1024.com/hd/MPS-05r7-hufc"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76238",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76238"
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/3f3d79d1a7722fdc84a1c61c8aa830d890017e9e",
+        "url": "https://github.com/eidetic-labs/stigmem/security/advisories/GHSA-6gqw-jqv7-v88m",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/4001cedd0a8968723bfe95dd188914ed56777910",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/b103937888fd5008067c2bb6eb6e5424576394f2",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11238",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11242",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11243",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/releases/tag/v4.0.0",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/security/advisories/GHSA-q62f-rv3h-f822",
+        "url": "https://www.vulncheck.com/advisories/stigmem-before-0a12-cross-tenant-bola-via-decay-sweep",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-71424漏洞"
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "stigmem跨租户衰减扫描BOLA漏洞"
   },
-  "first_saved_at": "2026-08-17T23:17:10+00:00"
+  "first_saved_at": "2026-08-19T15:24:40+00:00"
 }
