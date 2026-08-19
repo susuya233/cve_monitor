@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-19T05:23:28+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-19T05:23:23+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-0hdn-ickm",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5f5e-00b0",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,81 +21,77 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-71424",
-    "cvss": {
-      "cvssv31": [
-        {
-          "source": "security-advisories@github.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-          "severity": "critical",
-          "base_score": 9.6
-        }
-      ]
-    },
-    "cvss_score": 9.6,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+    "cve_id": "CVE-2026-63338",
+    "cvss": {},
+    "cvss_score": 8.3,
+    "cvss_vector": "",
     "cwe": "CWE-863",
-    "description": "Onyx 是一个开源人工智能平台。在 3.1.10、3.2.14 和 4.0.0 之前，Onyx 的 GET /api/mcp/servers 和 GET /api/mcp/servers/persona/{persona_id} 端点会公开另一个用户的 OAuth 授权标头，因为 OnyxTokenStorage.set_tokens 和 OnyxTokenStorage.set_client_info backend/onyx/server/features/mcp/api.py 将每个用户令牌复制到共享管理 MCPConnectionConfig 行中，并且 _db_mcp_server_to_api_mcp_server 通过 auth_template.headers 返回该行给任何 BASIC_ACCESS 用户。此问题已在版本 3.1.10、3.2.14 和 4.0.0 中修复。",
-    "effects": [],
+    "description": "IXP Manager 是由 INEX 维护的开源 PHP/Laravel 应用，为全球两百多家互联网交换中心（IXP）提供对等互联管理、路由服务器、客户服务与 API 密钥等核心能力。\n受影响版本中，IXP\\Http\\Controllers\\ApiKeyController 的 doUpdate 方法直接以 ApiKey::findOrFail($id) 取得目标记录，没有按 user_id 做归属校验；随后调用 $this->object->update($r->all())，配合 IXP\\Models\\ApiKey 中 $fillable = ['apiKey', 'expires', 'allowedIPs', 'created', 'lastseenAt', 'lastseenFrom', 'description']，使请求中可控的 apiKey 字段被批量赋值覆盖。任意拥有 AUTH_CUSTUSER 权限的已登录客户用户都可向 PUT /api-key/update/{id} 提交带 apiKey 的表单，把任意其他用户（含超级管理员）的 API Key 明文改写为攻击者控制值，再以新 Key 走 API 完成身份冒用并获得对应权限。\n修复版本中通过在 doUpdate 内显式比对 $this->object->user_id !== $r->user()->id 时直接 abort(403)，阻断跨用户更新路径，并将批量赋值替换为仅对受校验的 description 字段赋值（$this->object->description = $r->description），同时去除 apiKey 在 $fillable 中的可批量赋值能力，从而切断越权读取/编辑其他用户资源以及 API Key 明文覆写的攻击链路。",
+    "effects": [
+      {
+        "comp_name": "inex/ixp-manager",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[v7.0.0,v7.3.0)",
+            "min_fixed_version": "v7.3.0",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "授权检查错误",
     "kind_en": "授权错误",
-    "last_modified_time": "2026-08-18",
-    "level": "Critical",
-    "mps_id": "MPS-0hdn-ickm",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-5f5e-00b0",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-18",
+    "published_time": "2026-08-19",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-0hdn-ickm",
-        "name": "https://www.oscs1024.com/hd/MPS-0hdn-ickm"
-      },
-      {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424"
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/3f3d79d1a7722fdc84a1c61c8aa830d890017e9e",
+        "url": "https://www.openwall.com/lists/oss-security/2026/08/14/2",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/4001cedd0a8968723bfe95dd188914ed56777910",
+        "url": "https://github.com/inex/IXP-Manager/security/advisories/GHSA-m7g4-g69h-vj5w",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/b103937888fd5008067c2bb6eb6e5424576394f2",
+        "url": "https://github.com/inex/IXP-Manager/releases/tag/v7.3.1",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11238",
+        "url": "https://github.com/inex/IXP-Manager/releases/tag/v7.3.0",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11242",
+        "url": "https://github.com/inex/IXP-Manager/commit/3856e936",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11243",
+        "url": "https://github.com/inex/IXP-Manager/blob/v7.2.0/app/Http/Controllers/ApiKeyController.php",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/releases/tag/v4.0.0",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/security/advisories/GHSA-q62f-rv3h-f822",
+        "url": "https://github.com/inex/IXP-Manager/blob/v7.2.0/app/Models/ApiKey.php",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-71424漏洞",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "IXP Manager API Key 更新路径 IDOR/BOLA 与 Mass Assignment 漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -115,81 +111,77 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-71424",
-    "cvss": {
-      "cvssv31": [
-        {
-          "source": "security-advisories@github.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-          "severity": "critical",
-          "base_score": 9.6
-        }
-      ]
-    },
-    "cvss_score": 9.6,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+    "cve_id": "CVE-2026-63338",
+    "cvss": {},
+    "cvss_score": 8.3,
+    "cvss_vector": "",
     "cwe": "CWE-863",
-    "description": "Onyx is an open-source AI platform. Prior to 3.1.10, 3.2.14, and 4.0.0, Onyx's GET /api/mcp/servers and GET /api/mcp/servers/persona/{persona_id} endpoints expose another user's OAuth Authorization header because OnyxTokenStorage.set_tokens and OnyxTokenStorage.set_client_info in backend/onyx/server/features/mcp/api.py copy per-user tokens into a shared admin MCPConnectionConfig row and _db_mcp_server_to_api_mcp_server returns that row through auth_template.headers to any BASIC_ACCESS user. This issue is fixed in versions 3.1.10, 3.2.14, and 4.0.0.",
-    "effects": [],
+    "description": "IXP Manager 是由 INEX 维护的开源 PHP/Laravel 应用，为全球两百多家互联网交换中心（IXP）提供对等互联管理、路由服务器、客户服务与 API 密钥等核心能力。\n受影响版本中，IXP\\Http\\Controllers\\ApiKeyController 的 doUpdate 方法直接以 ApiKey::findOrFail($id) 取得目标记录，没有按 user_id 做归属校验；随后调用 $this->object->update($r->all())，配合 IXP\\Models\\ApiKey 中 $fillable = ['apiKey', 'expires', 'allowedIPs', 'created', 'lastseenAt', 'lastseenFrom', 'description']，使请求中可控的 apiKey 字段被批量赋值覆盖。任意拥有 AUTH_CUSTUSER 权限的已登录客户用户都可向 PUT /api-key/update/{id} 提交带 apiKey 的表单，把任意其他用户（含超级管理员）的 API Key 明文改写为攻击者控制值，再以新 Key 走 API 完成身份冒用并获得对应权限。\n修复版本中通过在 doUpdate 内显式比对 $this->object->user_id !== $r->user()->id 时直接 abort(403)，阻断跨用户更新路径，并将批量赋值替换为仅对受校验的 description 字段赋值（$this->object->description = $r->description），同时去除 apiKey 在 $fillable 中的可批量赋值能力，从而切断越权读取/编辑其他用户资源以及 API Key 明文覆写的攻击链路。",
+    "effects": [
+      {
+        "comp_name": "inex/ixp-manager",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[v7.0.0,v7.3.0)",
+            "min_fixed_version": "v7.3.0",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "授权检查错误",
     "kind_en": "Incorrect Authorization",
-    "last_modified_time": "2026-08-18",
-    "level": "Critical",
-    "mps_id": "MPS-0hdn-ickm",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-5f5e-00b0",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-18",
+    "published_time": "2026-08-19",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-0hdn-ickm",
-        "name": "https://www.oscs1024.com/hd/MPS-0hdn-ickm"
-      },
-      {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424"
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/3f3d79d1a7722fdc84a1c61c8aa830d890017e9e",
+        "url": "https://www.openwall.com/lists/oss-security/2026/08/14/2",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/4001cedd0a8968723bfe95dd188914ed56777910",
+        "url": "https://github.com/inex/IXP-Manager/security/advisories/GHSA-m7g4-g69h-vj5w",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/b103937888fd5008067c2bb6eb6e5424576394f2",
+        "url": "https://github.com/inex/IXP-Manager/releases/tag/v7.3.1",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11238",
+        "url": "https://github.com/inex/IXP-Manager/releases/tag/v7.3.0",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11242",
+        "url": "https://github.com/inex/IXP-Manager/commit/3856e936",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11243",
+        "url": "https://github.com/inex/IXP-Manager/blob/v7.2.0/app/Http/Controllers/ApiKeyController.php",
         "name": ""
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/releases/tag/v4.0.0",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/security/advisories/GHSA-q62f-rv3h-f822",
+        "url": "https://github.com/inex/IXP-Manager/blob/v7.2.0/app/Models/ApiKey.php",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-71424漏洞"
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "IXP Manager API Key 更新路径 IDOR/BOLA 与 Mass Assignment 漏洞"
   },
-  "first_saved_at": "2026-08-17T23:17:10+00:00"
+  "first_saved_at": "2026-08-19T05:23:23+00:00"
 }
