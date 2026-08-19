@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T18:24:46+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T19:19:49+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-qhcu-f2ms",
@@ -31,7 +31,21 @@
     "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-122",
     "description": "FFmpeg 是开源多媒体处理框架，用于音视频编解码、封装与流传输，libavformat 中的 RTP 复用器可将 VC-2/Dirac 数据单元打包为 RTP 载荷。\n受影响版本中，libavformat/rtpenc_vc2hq.c 的 send_packet 把输入推导出的数据单元或分片长度直接 memcpy 到固定大小的 rtp_ctx->buf，未相对 max_payload_size 做上限校验。攻击者将恶意 Dirac 数据单元送入 RTP 复用输出后，可在默认包大小下触发堆缓冲区溢出并造成内存损坏。\n修复版本中通过在 send_packet 拒绝超过 max_payload_size 减去 RTP_VC2HQ_PL_HEADER_SIZE 与 info_hdr_size 后剩余空间的数据单元，并向 send_picture 返回 AVERROR_INVALIDDATA，切断超长拷贝进入固定 RTP 载荷缓冲区的路径。",
-    "effects": [],
+    "effects": [
+      {
+        "comp_name": "FFmpeg",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.0.1)",
+            "min_fixed_version": "9.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -69,7 +83,9 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
+    "tags": [
+      "应用软件"
+    ],
     "title": "FFmpeg VC-2堆溢出",
     "_translated": true
   },
@@ -100,7 +116,21 @@
     "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-122",
     "description": "FFmpeg 是开源多媒体处理框架，用于音视频编解码、封装与流传输，libavformat 中的 RTP 复用器可将 VC-2/Dirac 数据单元打包为 RTP 载荷。\n受影响版本中，libavformat/rtpenc_vc2hq.c 的 send_packet 把输入推导出的数据单元或分片长度直接 memcpy 到固定大小的 rtp_ctx->buf，未相对 max_payload_size 做上限校验。攻击者将恶意 Dirac 数据单元送入 RTP 复用输出后，可在默认包大小下触发堆缓冲区溢出并造成内存损坏。\n修复版本中通过在 send_packet 拒绝超过 max_payload_size 减去 RTP_VC2HQ_PL_HEADER_SIZE 与 info_hdr_size 后剩余空间的数据单元，并向 send_picture 返回 AVERROR_INVALIDDATA，切断超长拷贝进入固定 RTP 载荷缓冲区的路径。",
-    "effects": [],
+    "effects": [
+      {
+        "comp_name": "FFmpeg",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.0.1)",
+            "min_fixed_version": "9.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -138,7 +168,9 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
+    "tags": [
+      "应用软件"
+    ],
     "title": "FFmpeg VC-2堆溢出"
   },
   "first_saved_at": "2026-08-19T18:24:46+00:00"

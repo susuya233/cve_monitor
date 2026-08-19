@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T18:24:45+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T19:19:48+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-01ga-olmc",
@@ -31,7 +31,21 @@
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-122",
     "description": "FFmpeg 是开源多媒体处理框架，用于音视频编解码、转封装与网络流协议处理；RIST 协议由可选模块 libavformat/librist.c 对接外部 librist 库实现。\n受影响版本中，librist_read() 忽略调用方传入的 size，将拷贝长度直接设为 data_block->payload_len，再把完整载荷 memcpy 到目标缓冲区。该路径可通过 async:rist:// 触发，async 包装器按剩余 FIFO 空间传入更小缓冲区，远程 RIST 发送端发送超过该长度的数据包会造成堆缓冲区溢出。\n修复版本中通过将拷贝长度改为 FFMIN(data_block->payload_len, size)，使 librist_read() 遵守调用方缓冲区上限，阻止超长载荷写越界。",
-    "effects": [],
+    "effects": [
+      {
+        "comp_name": "ffmpeg",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1c10bcc2e17255dacb717a25ab3db142ce390602)",
+            "min_fixed_version": "1c10bcc2e17255dacb717a25ab3db142ce390602",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -69,7 +83,9 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
+    "tags": [
+      "应用软件"
+    ],
     "title": "FFmpeg RIST堆溢出",
     "_translated": true
   },
@@ -100,7 +116,21 @@
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-122",
     "description": "FFmpeg 是开源多媒体处理框架，用于音视频编解码、转封装与网络流协议处理；RIST 协议由可选模块 libavformat/librist.c 对接外部 librist 库实现。\n受影响版本中，librist_read() 忽略调用方传入的 size，将拷贝长度直接设为 data_block->payload_len，再把完整载荷 memcpy 到目标缓冲区。该路径可通过 async:rist:// 触发，async 包装器按剩余 FIFO 空间传入更小缓冲区，远程 RIST 发送端发送超过该长度的数据包会造成堆缓冲区溢出。\n修复版本中通过将拷贝长度改为 FFMIN(data_block->payload_len, size)，使 librist_read() 遵守调用方缓冲区上限，阻止超长载荷写越界。",
-    "effects": [],
+    "effects": [
+      {
+        "comp_name": "ffmpeg",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1c10bcc2e17255dacb717a25ab3db142ce390602)",
+            "min_fixed_version": "1c10bcc2e17255dacb717a25ab3db142ce390602",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -138,7 +168,9 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
+    "tags": [
+      "应用软件"
+    ],
     "title": "FFmpeg RIST堆溢出"
   },
   "first_saved_at": "2026-08-19T18:24:45+00:00"
