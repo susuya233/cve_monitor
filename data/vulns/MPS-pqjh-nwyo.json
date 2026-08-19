@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-19T08:29:23+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-pqjh-nwyo",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-49429",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-122",
+    "description": "FreeBSD 是开源操作系统，基础系统从 7.0 起集成 OpenZFS，并提供 zfs-userspace(8) 查询数据集按用户统计的空间占用。\n受影响版本中，ZFS_IOC_USERSPACE_MANY ioctl 对应的 zfs_ioc_userspace_many 将调用方提供的 64 位 zc_nvlist_dst_size 截断为 32 位 int 后调用 vmem_alloc 分配内核缓冲区，却仍把原始 64 位大小作为 zfs_userspace_many 写回记录的上限。拥有 userused 委托权限的本地用户可触发内核堆溢出并可能提升权限。\n修复版本中通过把 bufsize 改为 uint64_t，并以 1000 条 zfs_useracct_t 为上限截取分配长度，在调用 zfs_userspace_many 前将 zc_nvlist_dst_size 同步为实际分配大小，避免写回超过已分配缓冲区。",
+    "effects": [
+      {
+        "comp_name": "freebsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[15.1-RELEASE,15.1-RELEASE-p1)",
+            "min_fixed_version": "15.1-RELEASE-p1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.3-RELEASE,14.3-RELEASE-p16)",
+            "min_fixed_version": "14.3-RELEASE-p16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.0-RELEASE,15.0-RELEASE-p11)",
+            "min_fixed_version": "15.0-RELEASE-p11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.4-RELEASE,14.4-RELEASE-p7)",
+            "min_fixed_version": "14.4-RELEASE-p7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-pqjh-nwyo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pqjh-nwyo",
+        "name": "https://www.oscs1024.com/hd/MPS-pqjh-nwyo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-49429",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-49429"
+      },
+      {
+        "url": "https://security.freebsd.org/advisories/FreeBSD-SA-26:40.zfs.asc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "FreeBSD ZFS堆溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-49429",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-122",
+    "description": "FreeBSD 是开源操作系统，基础系统从 7.0 起集成 OpenZFS，并提供 zfs-userspace(8) 查询数据集按用户统计的空间占用。\n受影响版本中，ZFS_IOC_USERSPACE_MANY ioctl 对应的 zfs_ioc_userspace_many 将调用方提供的 64 位 zc_nvlist_dst_size 截断为 32 位 int 后调用 vmem_alloc 分配内核缓冲区，却仍把原始 64 位大小作为 zfs_userspace_many 写回记录的上限。拥有 userused 委托权限的本地用户可触发内核堆溢出并可能提升权限。\n修复版本中通过把 bufsize 改为 uint64_t，并以 1000 条 zfs_useracct_t 为上限截取分配长度，在调用 zfs_userspace_many 前将 zc_nvlist_dst_size 同步为实际分配大小，避免写回超过已分配缓冲区。",
+    "effects": [
+      {
+        "comp_name": "freebsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[15.1-RELEASE,15.1-RELEASE-p1)",
+            "min_fixed_version": "15.1-RELEASE-p1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.3-RELEASE,14.3-RELEASE-p16)",
+            "min_fixed_version": "14.3-RELEASE-p16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.0-RELEASE,15.0-RELEASE-p11)",
+            "min_fixed_version": "15.0-RELEASE-p11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.4-RELEASE,14.4-RELEASE-p7)",
+            "min_fixed_version": "14.4-RELEASE-p7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-pqjh-nwyo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pqjh-nwyo",
+        "name": "https://www.oscs1024.com/hd/MPS-pqjh-nwyo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-49429",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-49429"
+      },
+      {
+        "url": "https://security.freebsd.org/advisories/FreeBSD-SA-26:40.zfs.asc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "FreeBSD ZFS堆溢出漏洞"
+  },
+  "first_saved_at": "2026-08-19T08:29:23+00:00"
+}

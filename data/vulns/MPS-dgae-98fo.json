@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-19T08:29:21+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-dgae-98fo",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-49428",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-915",
+    "description": "FreeBSD 是开源操作系统，其内核 posixshm 模块实现 POSIX 共享内存，并支持由物理连续页支撑的 largepage 对象，应用程序可通过 shm_create_largepage(3) 创建此类对象。\n受影响版本中，largepage 对象不允许截断或回收底层页框，但 kern_shm_open2 在以 O_RDWR 与 O_TRUNC 重新打开已有对象时直接调用面向普通共享内存的 shm_dotruncate_locked，shm_fspacectl 也未在 SPACECTL_DEALLOC 前检查 shm_largepage，导致这些系统调用错误释放 largepage 内存。无特权本地用户可借此访问已释放的内核内存并提升权限。\n修复版本中通过将 O_TRUNC 路径改为调用 shm_dotruncate_cookie，使 largepage 对象进入 shm_dotruncate_largepage 并在收缩时返回 ENOTSUP，同时在 shm_fspacectl 入口对 largepage 对象直接返回 ENOTSUP，切断错误释放路径。",
+    "effects": [
+      {
+        "comp_name": "freebsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[15.1-RELEASE,15.1-RELEASE-p1)",
+            "min_fixed_version": "15.1-RELEASE-p1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.0-RELEASE,15.0-RELEASE-p11)",
+            "min_fixed_version": "15.0-RELEASE-p11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.4-RELEASE,14.4-RELEASE-p7)",
+            "min_fixed_version": "14.4-RELEASE-p7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.3-RELEASE,14.3-RELEASE-p16)",
+            "min_fixed_version": "14.3-RELEASE-p16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "动态确定对象属性修改的控制不恰当",
+    "kind_en": "动态确定的对象属性的受控修改不当",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-dgae-98fo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dgae-98fo",
+        "name": "https://www.oscs1024.com/hd/MPS-dgae-98fo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-49428",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-49428"
+      },
+      {
+        "url": "https://security.freebsd.org/advisories/FreeBSD-SA-26:44.posixshm.asc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "FreeBSD共享内存释放漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-49428",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-915",
+    "description": "FreeBSD 是开源操作系统，其内核 posixshm 模块实现 POSIX 共享内存，并支持由物理连续页支撑的 largepage 对象，应用程序可通过 shm_create_largepage(3) 创建此类对象。\n受影响版本中，largepage 对象不允许截断或回收底层页框，但 kern_shm_open2 在以 O_RDWR 与 O_TRUNC 重新打开已有对象时直接调用面向普通共享内存的 shm_dotruncate_locked，shm_fspacectl 也未在 SPACECTL_DEALLOC 前检查 shm_largepage，导致这些系统调用错误释放 largepage 内存。无特权本地用户可借此访问已释放的内核内存并提升权限。\n修复版本中通过将 O_TRUNC 路径改为调用 shm_dotruncate_cookie，使 largepage 对象进入 shm_dotruncate_largepage 并在收缩时返回 ENOTSUP，同时在 shm_fspacectl 入口对 largepage 对象直接返回 ENOTSUP，切断错误释放路径。",
+    "effects": [
+      {
+        "comp_name": "freebsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[15.1-RELEASE,15.1-RELEASE-p1)",
+            "min_fixed_version": "15.1-RELEASE-p1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.0-RELEASE,15.0-RELEASE-p11)",
+            "min_fixed_version": "15.0-RELEASE-p11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.4-RELEASE,14.4-RELEASE-p7)",
+            "min_fixed_version": "14.4-RELEASE-p7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.3-RELEASE,14.3-RELEASE-p16)",
+            "min_fixed_version": "14.3-RELEASE-p16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "动态确定对象属性修改的控制不恰当",
+    "kind_en": "Improperly Controlled Modification of Dynamically-Determined Object Attributes",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-dgae-98fo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dgae-98fo",
+        "name": "https://www.oscs1024.com/hd/MPS-dgae-98fo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-49428",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-49428"
+      },
+      {
+        "url": "https://security.freebsd.org/advisories/FreeBSD-SA-26:44.posixshm.asc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "FreeBSD共享内存释放漏洞"
+  },
+  "first_saved_at": "2026-08-19T08:29:21+00:00"
+}
