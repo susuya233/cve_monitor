@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-19T03:40:44+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-19T04:30:52+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-dlrw-peko",
@@ -21,17 +21,31 @@
     },
     "cvss_score": 9.1,
     "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-    "cwe": "",
-    "description": "1.41.0 之前的 armeria-xds 版本中已发现一个漏洞，其中 xDS 上游 TLS 对等验证可能会被静默禁用，从而允许对 xDS 管理的上游连接进行中间人攻击。",
-    "effects": [],
+    "cwe": "CWE-295",
+    "description": "Armeria 是 LY Corporation 开源（Apache-2.0）的高性能异步网络服务框架，armeria-xds 子模块提供面向 xDS 控制平面（Envoy/Istio 风格）的客户端 TLS 与上游集群解析能力，依赖上游推送的 UpstreamTlsContext 与 CertificateValidationContext 配置远端对端身份。\n受影响版本中，xds/src/main/java/com/linecorp/armeria/xds/TransportSocketSnapshot.java 的 buildClientTlsSpec 在装配 ClientTlsSpec 时无条件将 endpointIdentificationAlgorithm 置为空串以禁用 JSSE 主机名校验，并在 CommonTlsContext 同时缺少 trusted_ca 与 system_root_certs、以及根本没有 validation_context 的两条分支中调用 TlsPeerVerifierFactory.noVerify() 静默跳过证书链校验；其中 TrustedCa 缺失分支仅通过静态 warnedNoVerify 一次性打日志，缺失 validation_context 分支则完全不记录，外部表现为 xDS 客户端在已建立 TLS 会话外观下不对任何证书做对端身份校验，攻击者可在客户端与上游之间实施中间人攻击并被任意证书冒名接受。\n修复版本中通过将 endpointIdentificationAlgorithm 的置空逻辑收窄为仅在 autoSniSanValidation 未启用时执行、TrustedCa 缺失分支在 autoSniSanValidation 配置下改为抛 IllegalArgumentException 失败关闭、缺失 validation_context 分支同步补齐告警，并以 armeria-xds 1.41.0 作为最小修复版本发布，使任何缺信任锚或缺校验上下文的配置不再静默落入 noVerify。",
+    "effects": [
+      {
+        "comp_name": "com.linecorp.armeria:armeria-xds",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.41.0)",
+            "min_fixed_version": "1.41.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
-    "kind": "",
-    "kind_en": "",
+    "kind": "证书验证不恰当",
+    "kind_en": "证书验证不当",
     "last_modified_time": "2026-08-19",
     "level": "Critical",
     "mps_id": "MPS-dlrw-peko",
@@ -57,8 +71,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-11751漏洞",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Armeria xDS 上游 TLS 对等端校验被静默禁用",
     "_translated": true
   },
   "detail_original": {
@@ -78,17 +95,31 @@
     },
     "cvss_score": 9.1,
     "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-    "cwe": "",
-    "description": "A vulnerability has been identified in armeria-xds versions prior to 1.41.0, where xDS upstream TLS peer verification may be silently disabled, allowing man-in-the-middle attacks against xDS-managed upstream connections.",
-    "effects": [],
+    "cwe": "CWE-295",
+    "description": "Armeria 是 LY Corporation 开源（Apache-2.0）的高性能异步网络服务框架，armeria-xds 子模块提供面向 xDS 控制平面（Envoy/Istio 风格）的客户端 TLS 与上游集群解析能力，依赖上游推送的 UpstreamTlsContext 与 CertificateValidationContext 配置远端对端身份。\n受影响版本中，xds/src/main/java/com/linecorp/armeria/xds/TransportSocketSnapshot.java 的 buildClientTlsSpec 在装配 ClientTlsSpec 时无条件将 endpointIdentificationAlgorithm 置为空串以禁用 JSSE 主机名校验，并在 CommonTlsContext 同时缺少 trusted_ca 与 system_root_certs、以及根本没有 validation_context 的两条分支中调用 TlsPeerVerifierFactory.noVerify() 静默跳过证书链校验；其中 TrustedCa 缺失分支仅通过静态 warnedNoVerify 一次性打日志，缺失 validation_context 分支则完全不记录，外部表现为 xDS 客户端在已建立 TLS 会话外观下不对任何证书做对端身份校验，攻击者可在客户端与上游之间实施中间人攻击并被任意证书冒名接受。\n修复版本中通过将 endpointIdentificationAlgorithm 的置空逻辑收窄为仅在 autoSniSanValidation 未启用时执行、TrustedCa 缺失分支在 autoSniSanValidation 配置下改为抛 IllegalArgumentException 失败关闭、缺失 validation_context 分支同步补齐告警，并以 armeria-xds 1.41.0 作为最小修复版本发布，使任何缺信任锚或缺校验上下文的配置不再静默落入 noVerify。",
+    "effects": [
+      {
+        "comp_name": "com.linecorp.armeria:armeria-xds",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.41.0)",
+            "min_fixed_version": "1.41.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
-    "kind": "",
-    "kind_en": "",
+    "kind": "证书验证不恰当",
+    "kind_en": "Improper Certificate Validation",
     "last_modified_time": "2026-08-19",
     "level": "Critical",
     "mps_id": "MPS-dlrw-peko",
@@ -114,8 +145,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-11751漏洞"
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Armeria xDS 上游 TLS 对等端校验被静默禁用"
   },
   "first_saved_at": "2026-08-19T03:40:44+00:00"
 }

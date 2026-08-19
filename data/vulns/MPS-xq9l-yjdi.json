@@ -1,0 +1,209 @@
+{
+  "saved_at": "2026-08-19T04:30:48+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xq9l-yjdi",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76004",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:S/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 9
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "UTT HiPER 1250GW 是商用无线路由器网关设备，配套闭源固件提供 Web 管理界面与 HTTP API。\n受影响版本中，HTTP Handler 模块下 /goform/aspApBasicConfigUrcp 接口在处理 changetype=setApVlanId 路径时直接调用 strcpy 将 pvid 参数拷贝到栈上缓冲区，未对输入长度做任何校验。远程已认证攻击者通过向该接口发送包含超长 pvid 值的 POST 请求即可触发栈缓冲区溢出，可能造成设备进程崩溃或在被攻击者劫持执行流后执行任意代码。\n修复版本中通过将危险的 strcpy 替换为长度受限的安全字符串拷贝函数、对 pvid 输入长度做上限校验能够消除栈缓冲区溢出风险；公开资料中未发布官方修复版本或修复代码，建议在厂商修复前通过限制 Web 管理面访问、关闭远程管理以及对 /goform/aspApBasicConfigUrcp 接口进行网络层过滤等方式缓解。",
+    "effects": [
+      {
+        "comp_name": "UTT HiPER 1250GW",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.2.7-210907-180535]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "基于堆栈的缓冲区溢出",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-xq9l-yjdi",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xq9l-yjdi",
+        "name": "https://www.oscs1024.com/hd/MPS-xq9l-yjdi"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76004",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76004"
+      },
+      {
+        "url": "https://github.com/7wkajk/CVE-VUL/blob/main/106.md",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-76004",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/submit/877885",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/vuln/391920",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/vuln/391920/cti",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "UTT 1250GW缓冲区溢出",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76004",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:S/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 9
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "UTT HiPER 1250GW 是商用无线路由器网关设备，配套闭源固件提供 Web 管理界面与 HTTP API。\n受影响版本中，HTTP Handler 模块下 /goform/aspApBasicConfigUrcp 接口在处理 changetype=setApVlanId 路径时直接调用 strcpy 将 pvid 参数拷贝到栈上缓冲区，未对输入长度做任何校验。远程已认证攻击者通过向该接口发送包含超长 pvid 值的 POST 请求即可触发栈缓冲区溢出，可能造成设备进程崩溃或在被攻击者劫持执行流后执行任意代码。\n修复版本中通过将危险的 strcpy 替换为长度受限的安全字符串拷贝函数、对 pvid 输入长度做上限校验能够消除栈缓冲区溢出风险；公开资料中未发布官方修复版本或修复代码，建议在厂商修复前通过限制 Web 管理面访问、关闭远程管理以及对 /goform/aspApBasicConfigUrcp 接口进行网络层过滤等方式缓解。",
+    "effects": [
+      {
+        "comp_name": "UTT HiPER 1250GW",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.2.7-210907-180535]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "Stack-based Buffer Overflow",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-xq9l-yjdi",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xq9l-yjdi",
+        "name": "https://www.oscs1024.com/hd/MPS-xq9l-yjdi"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76004",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76004"
+      },
+      {
+        "url": "https://github.com/7wkajk/CVE-VUL/blob/main/106.md",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-76004",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/submit/877885",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/vuln/391920",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/vuln/391920/cti",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "UTT 1250GW缓冲区溢出"
+  },
+  "first_saved_at": "2026-08-19T04:30:48+00:00"
+}
