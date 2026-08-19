@@ -796,5 +796,7 @@
   "93823ce12dcdb70117c04ec63f8d98aa98f3b236": "TranslatePress – 使用适用于 WordPress 的 AI 翻译插件翻译多语言网站在 3.2.5 及以下版本中容易受到未经身份验证的存储跨站点脚本的攻击。特殊的 gettext 标记 '#!trpst#' 和 '#!trpen#​​' 由includes/class-translation-render.php 中的translate_page() 无条件重写为'<' 和'>'（第538-539 行）。由于这些标记是纯文本，没有 HTML 特殊字符，因此未经身份验证的攻击者可以将它们嵌入评论中；这些标记在 wp_kses 中仍然存在，并且当以第二语言查看该帖子时，替换会将攻击者的“#!trpst#img ... #!trpen#​​”变成真正的 <img> 标记。 remove_tags_from_output() 仅删除 <script>/<style>，因此 <img onerror=...> 在访问者的浏览器中执行。",
   "ded785177515d687fddcd1269092b2d49b19261e": "CVE-2026-15780漏洞",
   "badafb5a9f88416499fcedf32bd1573f2fcd4638": "由于输入清理和输出转义不足，WP Statistics – 简单、隐私友好的 WordPress Google Analytics 替代插件很容易通过 'utm_campaign' 参数在 14.16.8 及之前的所有版本中受到存储跨站脚本攻击。这使得未经身份验证的攻击者可以在页面中注入任意 Web 脚本，每当用户访问注入的页面时就会执行这些脚本。可以通过公共 /wp-statistics/v2/hit REST 端点在无需身份验证的情况下植入有效负载，因为所需的签名在公共主页上公开，并且 Base64 编码的 page_uri POST 参数会覆盖之前清理的 REQUEST_URI，从而允许恶意 utm_campaign 值绕过清理并存储在数据库中。",
-  "15f37149fb39d3da1554d87cd0888800c4c45250": "在预期生命周期内过早释放资源"
+  "15f37149fb39d3da1554d87cd0888800c4c45250": "在预期生命周期内过早释放资源",
+  "609e18ce34077f9bc1dd0d152b5364de9d1e5318": "可观察到的时间差异",
+  "b572e7df6ca9eed80e0b8f73095f08b3e8eedfa1": "协商期间选择安全性较低的算法（“算法降级”）"
 }

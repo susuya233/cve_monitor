@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-08-19T09:26:44+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-gcvl-n437",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72889",
+    "cvss": {},
+    "cvss_score": 9.1,
+    "cvss_vector": "",
+    "cwe": "CWE-757",
+    "description": "Net::OAuth 是发布于 CPAN 的开源 Perl 模块，用于构造、签名和校验 OAuth 1.0 与 1.0a 消息。\n受影响版本中，Net::OAuth::Message::verify 通过 _signature_method_class 把入站消息的 signature_method 直接映射为 Net::OAuth::SignatureMethod::* 并完成校验，校验方无法固定算法。攻击者将 oauth_signature_method 指定为 HMAC-SHA1 或 HMAC-SHA256 后，Net::OAuth::Request::signature_key 会用 consumer_secret 与 token_secret 派生对称密钥；RSA-SHA1 部署只持有消费方公钥，该必填参数常被填成可猜测占位值，攻击者可以在没有私钥和共享密钥的情况下伪造任意 consumer key 与 token 的请求并通过校验。\n修复版本中通过要求校验方在消息参数 allowed_signature_methods 或进程级 @Net::OAuth::ALLOWED_SIGNATURE_METHODS 中声明可接受算法，并在 verify 分发前由 _check_signature_method_allowed 拒绝未声明或白名单外的方法，切断由发送方选择算法及密钥的路径。",
+    "effects": [
+      {
+        "comp_name": "Net-OAuth",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.33)",
+            "min_fixed_version": "0.33",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "在会话协商时选择低安全性的算法（算法降级）",
+    "kind_en": "协商期间选择安全性较低的算法（“算法降级”）",
+    "last_modified_time": "2026-08-19",
+    "level": "Critical",
+    "mps_id": "MPS-gcvl-n437",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gcvl-n437",
+        "name": "https://www.oscs1024.com/hd/MPS-gcvl-n437"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72889",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72889"
+      },
+      {
+        "url": "https://datatracker.ietf.org/doc/html/rfc5849#section-3.4.2",
+        "name": ""
+      },
+      {
+        "url": "https://datatracker.ietf.org/doc/html/rfc5849#section-3.4.3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vurtdev/Net-OAuth/commit/c467adf45c8d77ac4b92ad78b3eebf949252ba7f.patch",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vurtdev/Net-OAuth/security/advisories/GHSA-c8rm-g5cm-4pf5",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/RRWO/Net-OAuth-0.33/changes",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Net::OAuth签名算法混淆",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72889",
+    "cvss": {},
+    "cvss_score": 9.1,
+    "cvss_vector": "",
+    "cwe": "CWE-757",
+    "description": "Net::OAuth 是发布于 CPAN 的开源 Perl 模块，用于构造、签名和校验 OAuth 1.0 与 1.0a 消息。\n受影响版本中，Net::OAuth::Message::verify 通过 _signature_method_class 把入站消息的 signature_method 直接映射为 Net::OAuth::SignatureMethod::* 并完成校验，校验方无法固定算法。攻击者将 oauth_signature_method 指定为 HMAC-SHA1 或 HMAC-SHA256 后，Net::OAuth::Request::signature_key 会用 consumer_secret 与 token_secret 派生对称密钥；RSA-SHA1 部署只持有消费方公钥，该必填参数常被填成可猜测占位值，攻击者可以在没有私钥和共享密钥的情况下伪造任意 consumer key 与 token 的请求并通过校验。\n修复版本中通过要求校验方在消息参数 allowed_signature_methods 或进程级 @Net::OAuth::ALLOWED_SIGNATURE_METHODS 中声明可接受算法，并在 verify 分发前由 _check_signature_method_allowed 拒绝未声明或白名单外的方法，切断由发送方选择算法及密钥的路径。",
+    "effects": [
+      {
+        "comp_name": "Net-OAuth",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.33)",
+            "min_fixed_version": "0.33",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "在会话协商时选择低安全性的算法（算法降级）",
+    "kind_en": "Selection of Less-Secure Algorithm During Negotiation ('Algorithm Downgrade')",
+    "last_modified_time": "2026-08-19",
+    "level": "Critical",
+    "mps_id": "MPS-gcvl-n437",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gcvl-n437",
+        "name": "https://www.oscs1024.com/hd/MPS-gcvl-n437"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72889",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72889"
+      },
+      {
+        "url": "https://datatracker.ietf.org/doc/html/rfc5849#section-3.4.2",
+        "name": ""
+      },
+      {
+        "url": "https://datatracker.ietf.org/doc/html/rfc5849#section-3.4.3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vurtdev/Net-OAuth/commit/c467adf45c8d77ac4b92ad78b3eebf949252ba7f.patch",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vurtdev/Net-OAuth/security/advisories/GHSA-c8rm-g5cm-4pf5",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/RRWO/Net-OAuth-0.33/changes",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Net::OAuth签名算法混淆"
+  },
+  "first_saved_at": "2026-08-19T09:26:44+00:00"
+}

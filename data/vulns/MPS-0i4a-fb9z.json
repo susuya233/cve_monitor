@@ -1,0 +1,207 @@
+{
+  "saved_at": "2026-08-19T09:26:45+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0i4a-fb9z",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-58082",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-121",
+    "description": "FreeBSD 是开源类 Unix 操作系统，其 C 标准库中 iconv(3) 通过一组可加载的编码模块为众多应用程序与国际化库提供字符编码转换能力。\n受影响版本中，lib/libiconv_modules/ISO2022/citrus_iso2022.c 中的 _ISO2022_sputwchar、_citrus_ISO2022_put_state_reset 与 _citrus_ISO2022_wcrtomb_priv 等函数为中间字符输出使用长度为 MB_LEN_MAX（6 字节）的栈缓冲区 tmp[MB_LEN_MAX] 或 buf[MB_LEN_MAX]。ISO-2022-CN 等变体在切换字符集或写入 escape 序列时，单个字符最多需要 10 字节输出，超过该栈缓冲区可造成最多 4 字节的栈缓冲区溢出；调用 iconv(3) 转换 ISO-2022 类编码不可信输入的应用均可能受到影响。\n修复版本中通过将 _ENCODING_MB_CUR_MAX 宏以及上述三处栈缓冲区由 MB_LEN_MAX 调整为 10 字节，使中间输出能够容纳 ISO-2022 变体最长字符，并新增 ISO-2022-CN 转换回归测试，从而切断栈缓冲区溢出路径。",
+    "effects": [
+      {
+        "comp_name": "freebsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026-06-30 17:22:10 UTC)",
+            "min_fixed_version": "2026-06-30 17:22:10 UTC",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,14.4-STABLE-2026-06-30)",
+            "min_fixed_version": "14.4-STABLE-2026-06-30",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,14.3-RELEASE-p16)",
+            "min_fixed_version": "14.3-RELEASE-p16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,14.4-RELEASE-p7)",
+            "min_fixed_version": "14.4-RELEASE-p7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,15.1-RELEASE-p1)",
+            "min_fixed_version": "15.1-RELEASE-p1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,15.0-RELEASE-p11)",
+            "min_fixed_version": "15.0-RELEASE-p11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,15.1-STABLE-2026-06-30)",
+            "min_fixed_version": "15.1-STABLE-2026-06-30",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "基于堆栈的缓冲区溢出",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-0i4a-fb9z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0i4a-fb9z",
+        "name": "https://www.oscs1024.com/hd/MPS-0i4a-fb9z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-58082",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-58082"
+      },
+      {
+        "url": "https://security.freebsd.org/advisories/FreeBSD-SA-26:49.iconv.asc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "FreeBSD iconv ISO-2022 栈缓冲区溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-58082",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-121",
+    "description": "FreeBSD 是开源类 Unix 操作系统，其 C 标准库中 iconv(3) 通过一组可加载的编码模块为众多应用程序与国际化库提供字符编码转换能力。\n受影响版本中，lib/libiconv_modules/ISO2022/citrus_iso2022.c 中的 _ISO2022_sputwchar、_citrus_ISO2022_put_state_reset 与 _citrus_ISO2022_wcrtomb_priv 等函数为中间字符输出使用长度为 MB_LEN_MAX（6 字节）的栈缓冲区 tmp[MB_LEN_MAX] 或 buf[MB_LEN_MAX]。ISO-2022-CN 等变体在切换字符集或写入 escape 序列时，单个字符最多需要 10 字节输出，超过该栈缓冲区可造成最多 4 字节的栈缓冲区溢出；调用 iconv(3) 转换 ISO-2022 类编码不可信输入的应用均可能受到影响。\n修复版本中通过将 _ENCODING_MB_CUR_MAX 宏以及上述三处栈缓冲区由 MB_LEN_MAX 调整为 10 字节，使中间输出能够容纳 ISO-2022 变体最长字符，并新增 ISO-2022-CN 转换回归测试，从而切断栈缓冲区溢出路径。",
+    "effects": [
+      {
+        "comp_name": "freebsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026-06-30 17:22:10 UTC)",
+            "min_fixed_version": "2026-06-30 17:22:10 UTC",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,14.4-STABLE-2026-06-30)",
+            "min_fixed_version": "14.4-STABLE-2026-06-30",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,14.3-RELEASE-p16)",
+            "min_fixed_version": "14.3-RELEASE-p16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,14.4-RELEASE-p7)",
+            "min_fixed_version": "14.4-RELEASE-p7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,15.1-RELEASE-p1)",
+            "min_fixed_version": "15.1-RELEASE-p1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,15.0-RELEASE-p11)",
+            "min_fixed_version": "15.0-RELEASE-p11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,15.1-STABLE-2026-06-30)",
+            "min_fixed_version": "15.1-STABLE-2026-06-30",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "Stack-based Buffer Overflow",
+    "last_modified_time": "2026-08-19",
+    "level": "High",
+    "mps_id": "MPS-0i4a-fb9z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0i4a-fb9z",
+        "name": "https://www.oscs1024.com/hd/MPS-0i4a-fb9z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-58082",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-58082"
+      },
+      {
+        "url": "https://security.freebsd.org/advisories/FreeBSD-SA-26:49.iconv.asc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "FreeBSD iconv ISO-2022 栈缓冲区溢出漏洞"
+  },
+  "first_saved_at": "2026-08-19T09:26:45+00:00"
+}
