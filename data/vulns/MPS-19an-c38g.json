@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-08-20T16:27:29+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-19an-c38g",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61897",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@ubuntu.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-273",
+    "description": "AccountsService 是 freedesktop 提供的开源 D-Bus 用户账号管理守护进程，Ubuntu 在其上定制了 /usr/share/language-tools/ 目录下的语言切换助手脚本。\n受影响版本中，普通本地用户通过 D-Bus 调用 org.freedesktop.Accounts.User.SetLanguage 时，src/user.c 中的 user_update_environment 仅以 setresuid(-1, accounts_user_get_uid(user), -1) 与 setresgid(-1, user->gid, -1) 修改有效 UID/GID，真实 UID 仍为 0；随后派生的 /usr/share/language-tools/set-language-helper 继承 ruid=0/euid=用户 凭据执行；该脚本读取 ~/.pam_environment 中攻击者控制的 LANGUAGE 旧值并直接拼接进 data/langtools/save-to-pam-env 的 sed 替换字符串，注入 /e 标志后 GNU sed 调用 /bin/sh -c 执行替换文本，新派生的 shell 缺少 -p 选项，将有效 UID 复位到真实 UID 0，从而在用户主目录写入 setuid-root trampoline 完成本地提权。\n修复版本中通过将 src/user.c 中 user_language_validate、user_locale_validate 与 user_update_environment 三处统一替换为新增的 spawn_sync_as_user 助手，在 fork 后立即对真实、有效与保存 UID/GID 全部调用 setresuid(uid,uid,uid) 与 setresgid(gid,gid,gid) 一次性丢弃特权；同时 data/langtools/save-to-pam-env、set-language-helper 与 update-langlist 不再将 ~/.pam_environment 内容直接拼入 sed，而是改为 mktemp 临时文件 + is_valid_pam_value 白名单校验 var 与 value，禁止 /、;、#、e 等危险字符进入 sed 表达式，从根源切断 SetLanguage D-Bus 调用到 root shell 的整条提权链路。",
+    "effects": [
+      {
+        "comp_name": "accountsservice",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,23.13.9-8ubuntu7)",
+            "min_fixed_version": "23.13.9-8ubuntu7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对于放弃特权的检查不恰当",
+    "kind_en": "对删除权限的不当检查",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-19an-c38g",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-19an-c38g",
+        "name": "https://www.oscs1024.com/hd/MPS-19an-c38g"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61897",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61897"
+      },
+      {
+        "url": "https://bugs.launchpad.net/ubuntu/+source/accountsservice/+bug/2157985",
+        "name": ""
+      },
+      {
+        "url": "https://ubuntu.com/security/CVE-2026-61897",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "AccountsService SetLanguage 本地权限提升",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61897",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@ubuntu.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-273",
+    "description": "AccountsService 是 freedesktop 提供的开源 D-Bus 用户账号管理守护进程，Ubuntu 在其上定制了 /usr/share/language-tools/ 目录下的语言切换助手脚本。\n受影响版本中，普通本地用户通过 D-Bus 调用 org.freedesktop.Accounts.User.SetLanguage 时，src/user.c 中的 user_update_environment 仅以 setresuid(-1, accounts_user_get_uid(user), -1) 与 setresgid(-1, user->gid, -1) 修改有效 UID/GID，真实 UID 仍为 0；随后派生的 /usr/share/language-tools/set-language-helper 继承 ruid=0/euid=用户 凭据执行；该脚本读取 ~/.pam_environment 中攻击者控制的 LANGUAGE 旧值并直接拼接进 data/langtools/save-to-pam-env 的 sed 替换字符串，注入 /e 标志后 GNU sed 调用 /bin/sh -c 执行替换文本，新派生的 shell 缺少 -p 选项，将有效 UID 复位到真实 UID 0，从而在用户主目录写入 setuid-root trampoline 完成本地提权。\n修复版本中通过将 src/user.c 中 user_language_validate、user_locale_validate 与 user_update_environment 三处统一替换为新增的 spawn_sync_as_user 助手，在 fork 后立即对真实、有效与保存 UID/GID 全部调用 setresuid(uid,uid,uid) 与 setresgid(gid,gid,gid) 一次性丢弃特权；同时 data/langtools/save-to-pam-env、set-language-helper 与 update-langlist 不再将 ~/.pam_environment 内容直接拼入 sed，而是改为 mktemp 临时文件 + is_valid_pam_value 白名单校验 var 与 value，禁止 /、;、#、e 等危险字符进入 sed 表达式，从根源切断 SetLanguage D-Bus 调用到 root shell 的整条提权链路。",
+    "effects": [
+      {
+        "comp_name": "accountsservice",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,23.13.9-8ubuntu7)",
+            "min_fixed_version": "23.13.9-8ubuntu7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对于放弃特权的检查不恰当",
+    "kind_en": "Improper Check for Dropped Privileges",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-19an-c38g",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-19an-c38g",
+        "name": "https://www.oscs1024.com/hd/MPS-19an-c38g"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61897",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61897"
+      },
+      {
+        "url": "https://bugs.launchpad.net/ubuntu/+source/accountsservice/+bug/2157985",
+        "name": ""
+      },
+      {
+        "url": "https://ubuntu.com/security/CVE-2026-61897",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "AccountsService SetLanguage 本地权限提升"
+  },
+  "first_saved_at": "2026-08-20T16:27:29+00:00"
+}
