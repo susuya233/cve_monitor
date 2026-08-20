@@ -889,5 +889,15 @@
   "38020bb7ed5d96f2a5a8d40eaf37a7f0febcd8ab": "CVE-2026-73257漏洞",
   "edd847efcd0680d490d91c31ac700ab20ce6eedf": "Mongoose 是一个嵌入式 Web 服务器和网络库。从版本 7.22 开始，未经身份验证的远程攻击者可以发送包含 Content-Length 和 Transfer-Encoding: chunked 的 HTTP 请求。 src/http.c 中 mg_http_parse() 和 http_cb() 路径中的 cl_count 和 te_count 检查接受两个标头并优先考虑分块编码，而内容长度优先的反向代理可以使用不同的请求边界。这种 CL.TE 去同步可以注入访问或修改另一个用户上下文中的资源的请求。此问题已在 7.22 版本中修复。",
   "f19b5b7d1212ead6ce10b8669467eab4e150a42e": "CVE-2026-73256漏洞",
-  "348a89c56dcbe3264ec2c53fd09bfa8ea15233e0": "Mongoose 是一个嵌入式 Web 服务器和网络库。在 7.22 之前，未经身份验证的远程攻击者可以通过发送带有 Transfer-Encoding：分块和冲突帧的请求来利用 HTTP/1.0 反向代理部署。 src/http.c 中的 http_cb() 函数以不可能的大于八的条件测试 hm.proto.len，即使 mg_http_parse() 需要八字节协议字符串，因此永远不会设置 is_http_1_0。 Mongoose 因此会处理 HTTP/1.0 代理可以忽略的分块编码，从而实现请求走私和未经授权的访问或状态更改。此问题已在 7.22 版本中修复。"
+  "348a89c56dcbe3264ec2c53fd09bfa8ea15233e0": "Mongoose 是一个嵌入式 Web 服务器和网络库。在 7.22 之前，未经身份验证的远程攻击者可以通过发送带有 Transfer-Encoding：分块和冲突帧的请求来利用 HTTP/1.0 反向代理部署。 src/http.c 中的 http_cb() 函数以不可能的大于八的条件测试 hm.proto.len，即使 mg_http_parse() 需要八字节协议字符串，因此永远不会设置 is_http_1_0。 Mongoose 因此会处理 HTTP/1.0 代理可以忽略的分块编码，从而实现请求走私和未经授权的访问或状态更改。此问题已在 7.22 版本中修复。",
+  "c3a7976160daeb8ed7d672ab9e0b344055a9018d": "CVE-2026-77148漏洞",
+  "bd1bb84bc14853697c2d0de42a341e5e8633cc82": "Comfast CF-N1-S 2.6.0.1 中发现漏洞。这会影响组件 Web 管理的文件 /cgi-bin/mbox-config?method=SET&section=ptest_channel 的函数 sub_44B50C。该操作会导致基于堆栈的缓冲区溢出。攻击可以远程发起。该漏洞已被公开并且可以被使用。",
+  "7c0cb34a80a79d4cefd0e17871f1677948acc920": "CVE-2026-72852漏洞",
+  "fafc244ce59a661c3dbeeb3e75c7ba6e5de85f4a": "hank-ai/darknet 通过以未经检查的 32 位 int 算术乘以从 .cfg 文件中获取的配置字段来调整卷积层的权重和输出堆缓冲区的大小。在 src-lib/convolutional_layer.cpp 中，l.nweights 计算为 (c / groups) * n * size * size，l.outputs 计算为 l.out_h * l.out_w * l.out_c，并且两者都直接输入 xcalloc。真实维度积超过 INT_MAX 的 .cfg 会回绕到较小值或零值，因此分配大小不足；例如，宽度和高度为 256，过滤器为 65536 的结果为 2^32，它会换算为 0。forward_convolutional_layer 然后使用不同的操作数顺序重新导出 GEMM 维度，将 k 计算为 l.size*l.size*l.c / l.groups，其中分配在乘法之前进行划分，并通过尺寸不足的缓冲区进行读取和写入。加载精心设计的 .cfg 进行推理或训练就足够了，不需要有效的 .weights 文件。所报告的概念证明观察到在相同输入的发布版本中，AddressSanitizer 下的 gemm_nn_fast 中的堆缓冲区溢出读取和 glibc 分配器元数据损坏，表明存在越界写入。",
+  "b2ff5e92b09ad8670ae69fe42bac439738a1b895": "CVE-2026-66785漏洞",
+  "5cf79c0edb62e749a1a2cd4e2155fdbc2a027529": "Submariner 中发现了一个缺陷。此漏洞允许恶意集群（分支）通过发布特制网络端点来重定向来自其他连接集群（对等集群）的网络流量。系统无法正确验证恶意集群提供的网络子网，使其能够声明任意网络范围。因此，来自对等集群的用于这些任意范围的所有网络流量都将通过攻击者的隧道重新路由，从而可能导致未经授权的信息泄露或网络中断。",
+  "0825b3f659f5b246846e7870bd27b8c66e727611": "CVE-2026-66787漏洞",
+  "3557327b261dab59ea68feac225f37f3aed91d47": "Red Hat Advanced Cluster Management for Kubernetes 的 Lighthouse 组件中发现了一个缺陷。此漏洞源于对 EndpointSlice 对象中公布的 IP 地址的验证不充分。受损的分支集群可以通过使用攻击者控制的 IP 地址创建 EndpointSlices 来利用此漏洞，从而导致其他集群的灯塔 DNS 将合法服务流量重定向到恶意端点。这使得远程攻击者能够对跨集群服务通信进行透明的中间人（MITM）攻击，可能导致未经授权的信息泄露和数据操纵。",
+  "5880317e0801c87716ddc9e12753f14b990dbcc9": "CVE-2026-66788漏洞",
+  "02cb09d43fdafe18568aeae7f9a0b21a53bf96d3": "Lighthouse 中发现了一个缺陷。远程攻击者通过破坏分支集群，可以利用其中资源注入的目标命名空间源自代理对象上由攻击者控制的标签或注释的漏洞。这使得攻击者可以将未经授权的 EndpointSlices 和 ServiceImports 注入对等集群上的任何命名空间，包括 kube-system 和 openshift-* 等关键系统命名空间。这可能会导致集群内的权限升级或其他形式的系统危害。"
 }
