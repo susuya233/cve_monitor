@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-08-20T23:20:08+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-enk6-3sqb",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72848",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "langchain_community/document_loaders/sitemap.py 中的 SitemapLoader.parse_sitemap 仅将记录的restrict_to_same_domain 控制应用于叶 url 条目。 url 元素上的循环过滤跨域位置，但嵌套站点地图元素上的循环将子 loc 直接传递给 self.scrape_all([loc.text], \"xml\")，后者到达 WebBaseLoader.scrape_all 和 aiohttp GET，没有域比较，也没有检查私有、环回或链接本地目的地。因此，控制或影响所摄取站点地图的攻击者可以将嵌套站点地图条目指向内部地址，并使服务器获取它，即使部署应用程序专门将restrict_to_same_domain 设置为 True 以限制出站请求也是如此。所获取的内容被解析并显示在返回的文档中，因此内部响应会向调用者公开，而不仅仅是请求。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-enk6-3sqb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-enk6-3sqb",
+        "name": "https://www.oscs1024.com/hd/MPS-enk6-3sqb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72848",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72848"
+      },
+      {
+        "url": "https://github.com/langchain-ai/langchain-community",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/langchain-ai/langchain-community/blob/main/libs/community/langchain_community/document_loaders/sitemap.py",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/langchain-ai/langchain/issues/38814",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/langchain-community-sitemaploader-does-not-apply-restrict-to-same-domain-to-nested-sitemap-index-entries-allowing-server-side-request-forgery",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-72848漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72848",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "SitemapLoader.parse_sitemap in langchain_community/document_loaders/sitemap.py applies the documented restrict_to_same_domain control only to leaf url entries. The loop over url elements filters cross-domain locations, but the loop over nested sitemap elements passes the child loc straight to self.scrape_all([loc.text], \"xml\"), which reaches WebBaseLoader.scrape_all and an aiohttp GET, with no domain comparison and no check for private, loopback or link-local destinations. An attacker who controls or influences an ingested sitemap can therefore point a nested sitemap entry at an internal address and make the server fetch it even when the deploying application set restrict_to_same_domain to True specifically to confine outbound requests. The fetched content is parsed and surfaces in the returned Documents, so internal responses are disclosed to the caller rather than merely requested.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-enk6-3sqb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-enk6-3sqb",
+        "name": "https://www.oscs1024.com/hd/MPS-enk6-3sqb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72848",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72848"
+      },
+      {
+        "url": "https://github.com/langchain-ai/langchain-community",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/langchain-ai/langchain-community/blob/main/libs/community/langchain_community/document_loaders/sitemap.py",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/langchain-ai/langchain/issues/38814",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/langchain-community-sitemaploader-does-not-apply-restrict-to-same-domain-to-nested-sitemap-index-entries-allowing-server-side-request-forgery",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-72848漏洞"
+  },
+  "first_saved_at": "2026-08-20T23:20:08+00:00"
+}

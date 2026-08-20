@@ -911,5 +911,19 @@
   "25593aa95b547e5e6ad92b6842e15958b01c6880": "CVE-2026-74836漏洞",
   "46f60cf4fd00a5e94c8c351f4a6d54ee3a2ecf2e": "mtrudel bandit 中的无限制资源分配或限制漏洞允许未经身份验证的远程攻击者通过连接级流量控制无限期地固定无限数量的 HTTP/2 流进程。当流的响应正文超出 HTTP/2 连接级发送窗口（默认 65,535 字节，在连接上的所有流之间共享）时，Bandit.HTTP2.Connection 将剩余字节和回复闭包排队到待发送中，并且流进程在对连接进程的同步调用中永远阻塞。没有任何东西限制等待，也没有任何东西清除队列：被阻止的流的客户端 RST_STREAM 被传递到其邮箱，但在它卡在调用中时从未被读取，因此取消不会释放任何东西，并且定期 PING 帧可以防止传输级读取超时触发。流级发送窗口上的等效块已被限制在 15 秒；连接级路径没有这样的界限。\n\n每个停滞的流都会固定其进程、Plug 状态以及该 Plug 在阻塞写入中持有的任何资源，例如反向代理 Plug 中的池化上游连接。攻击者选择响应超出连接窗口（对于大多数重要有效负载而言很常见）的任何端点，授予慷慨的流级窗口，因此只有连接窗口对其进行限制，并通过定期 PING 保持连接处于活动状态；该原语可在流和连接之间重复，但每个流和连接需要一个空闲套接字。\n\n此问题影响 bandit：从 0.3.4 到 1.12.5。",
   "e679e0f618390265ce2a891d368d448640612f26": "CVE-2026-73137漏洞",
-  "e3d1ee7b1c99a6dc797e89733a68b24e2208b63f": "红帽高级集群管理 (RHACM) 的 multicloud-operators-subscription 组件中发现了一个缺陷。具有 HelmRelease 创建权限的租户可以通过操纵“secretRef.Namespace”字段来利用此漏洞。这允许 HelmRelease 控制器中的 GetSecret() 函数从任何命名空间获取敏感凭据，然后将其发送到攻击者控制的 Helm 存储库。这可能导致凭证从任意命名空间 Secret 中泄露，从而导致信息泄露。"
+  "e3d1ee7b1c99a6dc797e89733a68b24e2208b63f": "红帽高级集群管理 (RHACM) 的 multicloud-operators-subscription 组件中发现了一个缺陷。具有 HelmRelease 创建权限的租户可以通过操纵“secretRef.Namespace”字段来利用此漏洞。这允许 HelmRelease 控制器中的 GetSecret() 函数从任何命名空间获取敏感凭据，然后将其发送到攻击者控制的 Helm 存储库。这可能导致凭证从任意命名空间 Secret 中泄露，从而导致信息泄露。",
+  "c3d622208df0b2ca14d7d9629611d4a1a1429722": "CVE-2026-77645漏洞",
+  "02f2008624dd845795819d9714b112200a72572d": "PTC Windchill 和 PTC FlexPLM 中报告了严重的远程代码执行 (RCE) 漏洞。该漏洞可能通过不可信数据的反序列化被利用。",
+  "07f07c3ac1630bcb2e6db100a49073665c26462e": "CVE-2026-77644漏洞",
+  "da1728a7a7421acecf109d0938de1e368c3ccc71": "PTC Windchill Risk and Reliability (WRR) 企业版中报告了一个严重的绕过访问控制漏洞。",
+  "103fa536bdc5ec9176a88f21109f21a5f6a70b25": "CVE-2026-77642漏洞",
+  "2a2eda8bbe83dad09f292b5134e8fa168c6d7493": "0.4.9.9 之前的 tor 在解析具有意外签名摘要类型的共识或分离签名时容易出现越界写入。对于大多数 Tor 角色来说影响很小，但对于目录权限来说影响可能很大。这是 TROVE-2026-019。",
+  "c6944594709cfc47e52a72780a83ad933a7ce761": "CVE-2026-77646漏洞",
+  "4049306dcf7c904522365936b72557853a630072": "PTC Windchill PDMLink 和 PTC FlexPLM 中已报告存在服务器端请求伪造 (SSRF) 漏洞。该漏洞可能通过不可信数据的反序列化被利用。",
+  "720974f9012d966feab14e53d8a10f3002c1dabf": "CVE-2026-72818漏洞",
+  "d35aaf37afe7afc36e42b2fc624fd52ac1c8fc0f": "nltk/tokenize/casual.py 中的 URLS 正则表达式编译为 TweetTokenizer.WORD_RE 并由 TweetTokenizer.tokenize 应用，包含一个裸域分支，其域标签前缀 [a-z0-9]+(?:[.\\-][a-z0-9]+)* 是无界的。由许多交替标签分隔符组成的输入可以以指数级多种方式进行分区，并且由于分支还需要此类输入从不提供的尾随顶级域，因此引擎在每个偏移处失败之前都会探索这些分区。因此，几千字节的输入会消耗几秒到几分钟的单线程 CPU，并且在匹配之前执行的 HANG_RE 替换不会破坏模式。 TweetTokenizer 旨在对不受信任的社交媒体文本进行标记，因此将其或模块级 Casual_tokenize 应用于提交的文本的任何服务都可以根据请求停止，无需进行身份验证。版本 3.10.1 限制了标签重复。",
+  "9b0f3730ac67a8c6c2dd2372811f62a645e22618": "CVE-2026-72843漏洞",
+  "4c45c635a4c06d808aba859e7bac08e8e5d82b0c": "EverShop 中的客户更新路由在packages/evershop/src/modules/customer/api/updateCustomer/route.json 中使用 \"access\": \"public\" 进行声明，这会导致管理员身份验证中间件在不检查调用者的情况下调用 next()，并且没有客户会话中间件保护该路由；链中唯一的中间件解析 JSON 主体。 updateCustomer.js 中的处理程序随后通过从 URL 路径获取的 uuid 加载客户，并将提供的字段写回该记录，对密码（如果提供）进行哈希处理，而不验证调用者是否拥有该记录。因此，携带已知客户 uuid 的未经身份验证的请求可以覆盖该客户的电子邮件地址和密码，并从 200 响应中读回更新的记录，从而接管该帐户并锁定其所有者。客户 uuid 通过订单确认电子邮件链接和管理 URL 公开。 2.2.1版本将路由更改为“access”：“private”。",
+  "210a918964435c4fc545032b540984898cc016b9": "CVE-2026-72848漏洞",
+  "e74bf04fe18688400967230f7247e86c41367e43": "langchain_community/document_loaders/sitemap.py 中的 SitemapLoader.parse_sitemap 仅将记录的restrict_to_same_domain 控制应用于叶 url 条目。 url 元素上的循环过滤跨域位置，但嵌套站点地图元素上的循环将子 loc 直接传递给 self.scrape_all([loc.text], \"xml\")，后者到达 WebBaseLoader.scrape_all 和 aiohttp GET，没有域比较，也没有检查私有、环回或链接本地目的地。因此，控制或影响所摄取站点地图的攻击者可以将嵌套站点地图条目指向内部地址，并使服务器获取它，即使部署应用程序专门将restrict_to_same_domain 设置为 True 以限制出站请求也是如此。所获取的内容被解析并显示在返回的文档中，因此内部响应会向调用者公开，而不仅仅是请求。"
 }

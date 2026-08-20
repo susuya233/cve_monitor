@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-08-20T23:20:04+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-dti8-9osl",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72818",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1333",
+    "description": "nltk/tokenize/casual.py 中的 URLS 正则表达式编译为 TweetTokenizer.WORD_RE 并由 TweetTokenizer.tokenize 应用，包含一个裸域分支，其域标签前缀 [a-z0-9]+(?:[.\\-][a-z0-9]+)* 是无界的。由许多交替标签分隔符组成的输入可以以指数级多种方式进行分区，并且由于分支还需要此类输入从不提供的尾随顶级域，因此引擎在每个偏移处失败之前都会探索这些分区。因此，几千字节的输入会消耗几秒到几分钟的单线程 CPU，并且在匹配之前执行的 HANG_RE 替换不会破坏模式。 TweetTokenizer 旨在对不受信任的社交媒体文本进行标记，因此将其或模块级 Casual_tokenize 应用于提交的文本的任何服务都可以根据请求停止，无需进行身份验证。版本 3.10.1 限制了标签重复。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "ReDoS",
+    "kind_en": "正则表达式复杂性低效",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-dti8-9osl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dti8-9osl",
+        "name": "https://www.oscs1024.com/hd/MPS-dti8-9osl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72818",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72818"
+      },
+      {
+        "url": "https://github.com/nltk/nltk",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nltk/nltk/blob/3.9.4/nltk/tokenize/casual.py",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nltk/nltk/issues/3704",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nltk/nltk/releases/tag/v3.10.1",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nltk-tweettokenizer-url-pattern-backtracks-catastrophically-on-naked-domain-like-input",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-72818漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72818",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1333",
+    "description": "The URLS regular expression in nltk/tokenize/casual.py, compiled into TweetTokenizer.WORD_RE and applied by TweetTokenizer.tokenize, contains a naked-domain branch whose domain-label prefix [a-z0-9]+(?:[.\\-][a-z0-9]+)* is unbounded. Input consisting of many alternating label separators can be partitioned in exponentially many ways, and because the branch also requires a trailing top-level domain that such input never supplies, the engine explores those partitions before failing at each offset. A few kilobytes of input therefore consumes seconds to minutes of single-threaded CPU, and the HANG_RE substitution performed before matching does not collapse the pattern. TweetTokenizer is intended for tokenizing untrusted social-media text, so any service that applies it, or the module-level casual_tokenize, to submitted text can be stalled per request without authentication. Version 3.10.1 bounds the label repetition.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "ReDoS",
+    "kind_en": "Inefficient Regular Expression Complexity",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-dti8-9osl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dti8-9osl",
+        "name": "https://www.oscs1024.com/hd/MPS-dti8-9osl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72818",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72818"
+      },
+      {
+        "url": "https://github.com/nltk/nltk",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nltk/nltk/blob/3.9.4/nltk/tokenize/casual.py",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nltk/nltk/issues/3704",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nltk/nltk/releases/tag/v3.10.1",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nltk-tweettokenizer-url-pattern-backtracks-catastrophically-on-naked-domain-like-input",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-72818漏洞"
+  },
+  "first_saved_at": "2026-08-20T23:20:04+00:00"
+}
