@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-20T12:34:59+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-20T13:40:43+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-qh1r-ytzo",
@@ -35,12 +35,40 @@
     "cvss_score": 7.2,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-94",
-    "description": "1.123.69、2.33.4 和 2.34.1 之前的 n8n 版本包含 JavaScript 任务运行程序 VM 沙箱逃逸。运行程序的原型冻结例程涵盖了 globalThis 函数，但不包括 EventEmitter 等内部模块构造函数，从而允许具有代码节点访问权限的经过身份验证的用户利用原型污染在运行程序容器内执行任意命令。由于受污染的原型是进程范围的对象，因此在同一共享运行器上的其他租户的代码节点执行中，损坏仍然存在。在未启用任务运行程序的 v1.x 实例上，代码节点 JavaScript 直接在主 n8n 进程中运行，影响可能更大。",
-    "effects": [],
+    "description": "n8n 是开源的工作流自动化平台，使用 TypeScript/Node.js 实现，提供可视化编辑器、Code 节点以及外部 JavaScript 任务运行器以隔离执行用户脚本。\n受影响版本中，js-task-runner 的原型冻结例程仅覆盖 globalThis 上的函数及其原型，未覆盖 node:events 等内部模块构造函数。攻击者凭借已认证用户身份在 Code 节点中提交 JavaScript 脚本后，可通过写入 EventEmitter.prototype.on 等成员污染共享原型，由于 process 等对象继承自 EventEmitter.prototype，受污染的方法会沿原型链影响进程内其它对象，从而在任务运行器容器内执行任意系统命令。该污染作用于进程级共享原型，会在同一共享运行器上后续其它租户的 Code 节点执行中持续生效，v1.x 未启用任务运行器时 Code 节点 JavaScript 直接运行在 n8n 主进程内，影响进一步放大。\n修复版本中通过新增 packages/@n8n/task-runner/src/js-task-runner/prototype-hardening.ts 中的 lockEventEmitterMethods() 函数，在 freezeGlobals() 内对 EventEmitter.prototype 的 emit、on、once、addListener、prependListener、prependOnceListener 等成员以 Object.defineProperty 设为 writable=false 与 configurable=false，从而切断通过覆盖 EventEmitter 原型成员实现沙箱逃逸的路径，并修复 Code 节点在主进程内执行时相同的原型号污染问题。",
+    "effects": [
+      {
+        "comp_name": "n8n",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.123.69)",
+            "min_fixed_version": "1.123.69",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.33.4)",
+            "min_fixed_version": "2.33.4",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.34.1)",
+            "min_fixed_version": "2.34.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "代码注入",
@@ -70,8 +98,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-77077漏洞",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "n8n JavaScript任务运行器EventEmitter原型污染沙箱逃逸漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -105,12 +136,40 @@
     "cvss_score": 7.2,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-94",
-    "description": "n8n versions before 1.123.69, 2.33.4, and 2.34.1 contain a JavaScript task runner VM sandbox escape. The runner's prototype-freezing routine covers globalThis functions but not internal module constructors such as EventEmitter, allowing an authenticated user with Code node access to exploit prototype pollution to execute arbitrary commands within the runner container. Because the polluted prototype is a process-wide object, the corruption persists across other tenants' Code node executions on the same shared runner. On v1.x instances without task runners enabled, Code node JavaScript runs directly in the main n8n process, where the impact could be higher.",
-    "effects": [],
+    "description": "n8n 是开源的工作流自动化平台，使用 TypeScript/Node.js 实现，提供可视化编辑器、Code 节点以及外部 JavaScript 任务运行器以隔离执行用户脚本。\n受影响版本中，js-task-runner 的原型冻结例程仅覆盖 globalThis 上的函数及其原型，未覆盖 node:events 等内部模块构造函数。攻击者凭借已认证用户身份在 Code 节点中提交 JavaScript 脚本后，可通过写入 EventEmitter.prototype.on 等成员污染共享原型，由于 process 等对象继承自 EventEmitter.prototype，受污染的方法会沿原型链影响进程内其它对象，从而在任务运行器容器内执行任意系统命令。该污染作用于进程级共享原型，会在同一共享运行器上后续其它租户的 Code 节点执行中持续生效，v1.x 未启用任务运行器时 Code 节点 JavaScript 直接运行在 n8n 主进程内，影响进一步放大。\n修复版本中通过新增 packages/@n8n/task-runner/src/js-task-runner/prototype-hardening.ts 中的 lockEventEmitterMethods() 函数，在 freezeGlobals() 内对 EventEmitter.prototype 的 emit、on、once、addListener、prependListener、prependOnceListener 等成员以 Object.defineProperty 设为 writable=false 与 configurable=false，从而切断通过覆盖 EventEmitter 原型成员实现沙箱逃逸的路径，并修复 Code 节点在主进程内执行时相同的原型号污染问题。",
+    "effects": [
+      {
+        "comp_name": "n8n",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.123.69)",
+            "min_fixed_version": "1.123.69",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.33.4)",
+            "min_fixed_version": "2.33.4",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.34.1)",
+            "min_fixed_version": "2.34.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "代码注入",
@@ -140,8 +199,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-77077漏洞"
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "n8n JavaScript任务运行器EventEmitter原型污染沙箱逃逸漏洞"
   },
   "first_saved_at": "2026-08-20T12:34:59+00:00"
 }

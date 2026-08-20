@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-20T12:34:55+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-20T13:40:45+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-l2o8-qyn6",
@@ -35,12 +35,40 @@
     "cvss_score": 8.7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "1.123.69 之前的 n8n、2.33.4 之前的 2.x 和 2.34.1 之前的 2.34.x 在 Snowflake 节点中包含任意文件读写漏洞，该节点将自由格式的执行查询输入（包括客户端命令）直接传递到 Snowflake SDK，而不应用 n8n 的文件访问限制。具有可用 Snowflake 凭据的经过身份验证的用户可以从 n8n 主机上传本地文件或使用暂存文件覆盖现有文件。",
-    "effects": [],
+    "description": "n8n 是开源的工作流自动化平台，使用 TypeScript 实现，提供可视化节点编辑器与 Snowflake 等大量内置节点；Snowflake 节点直接调用 snowflake-sdk 执行用户填写的 SQL。\n受影响版本中，Snowflake 节点的 Execute Query 操作将用户在节点参数里填写的完整 SQL 文本直接透传给 snowflake-sdk 的 connection.execute 方法，未对 SQL 类型做任何过滤；由于 snowflake-sdk 接受 PUT/GET 文件传输语句并由其内置客户端读取或写入 n8n 进程所在主机上的任意路径，绕过 n8n 自身的文件访问限制，导致已认证用户只要配置了可用的 Snowflake 凭据，就能利用 GET 读取 n8n 主机的本地文件，或利用 PUT 把本地已 staged 的文件覆盖到 n8n 主机上的任意路径。\n修复版本中通过在 GenericFunctions.ts 中新增 stripLeadingComments 与 isFileTransferQuery 工具，并在 execute 函数入口判断 sqlText 是否以 GET 或 PUT 开头；若命中文件传输语句，立即抛出 NodeOperationError 中断执行，从而阻止客户端 PUT/GET 命令进入 snowflake-sdk 的 connection.execute 调用。",
+    "effects": [
+      {
+        "comp_name": "n8n",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[0,1.123.69)",
+            "min_fixed_version": "1.123.69",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0,2.33.4)",
+            "min_fixed_version": "2.33.4",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.34.0,2.34.1)",
+            "min_fixed_version": "2.34.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "OS命令注入",
@@ -70,8 +98,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-77080漏洞",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "n8n Snowflake 节点任意文件读写漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -105,12 +136,40 @@
     "cvss_score": 8.7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "n8n before 1.123.69, 2.x before 2.33.4, and 2.34.x before 2.34.1 contain an arbitrary file read and write vulnerability in the Snowflake node, which passes free-form Execute Query input, including client-side commands, directly to the Snowflake SDK without applying n8n's file-access restrictions. An authenticated user with usable Snowflake credentials can upload a local file from the n8n host or overwrite an existing file with a staged one.",
-    "effects": [],
+    "description": "n8n 是开源的工作流自动化平台，使用 TypeScript 实现，提供可视化节点编辑器与 Snowflake 等大量内置节点；Snowflake 节点直接调用 snowflake-sdk 执行用户填写的 SQL。\n受影响版本中，Snowflake 节点的 Execute Query 操作将用户在节点参数里填写的完整 SQL 文本直接透传给 snowflake-sdk 的 connection.execute 方法，未对 SQL 类型做任何过滤；由于 snowflake-sdk 接受 PUT/GET 文件传输语句并由其内置客户端读取或写入 n8n 进程所在主机上的任意路径，绕过 n8n 自身的文件访问限制，导致已认证用户只要配置了可用的 Snowflake 凭据，就能利用 GET 读取 n8n 主机的本地文件，或利用 PUT 把本地已 staged 的文件覆盖到 n8n 主机上的任意路径。\n修复版本中通过在 GenericFunctions.ts 中新增 stripLeadingComments 与 isFileTransferQuery 工具，并在 execute 函数入口判断 sqlText 是否以 GET 或 PUT 开头；若命中文件传输语句，立即抛出 NodeOperationError 中断执行，从而阻止客户端 PUT/GET 命令进入 snowflake-sdk 的 connection.execute 调用。",
+    "effects": [
+      {
+        "comp_name": "n8n",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[0,1.123.69)",
+            "min_fixed_version": "1.123.69",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0,2.33.4)",
+            "min_fixed_version": "2.33.4",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.34.0,2.34.1)",
+            "min_fixed_version": "2.34.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "OS命令注入",
@@ -140,8 +199,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-77080漏洞"
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "n8n Snowflake 节点任意文件读写漏洞"
   },
   "first_saved_at": "2026-08-20T12:34:55+00:00"
 }

@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-20T12:34:57+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-20T13:40:44+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-pjow-4fv3",
@@ -35,12 +35,40 @@
     "cvss_score": 7.7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "1.123.69 之前的 n8n（以及 2.33.4 / 2.34.1 之前的 2.x）在 Git 节点中包含代码执行漏洞。 Git 节点执行某些存储库本地 git 配置值而不中和它们，因此针对包含恶意值的存储库的任何后续 Git 节点操作都会以 n8n 进程用户的身份执行。这无法通过 Git 节点自己的配置控制来实现，并且需要在其他地方存在单独的文件写入漏洞来植入恶意值。",
-    "effects": [],
+    "description": "n8n 是开源的工作流自动化平台，Git node 是其内置节点之一，可在工作流中执行 clone、push、fetch、listConfig 等 Git 操作。\n受影响版本中，Git node 在执行 listConfig 操作时直接读取仓库本地 .git/config，把 remote.origin.url 与 remote.origin.pushurl 等键的原始字符串作为节点输出返回，URL 的用户名/密码片段可携带 shell 元字符。仓库内的恶意 config 因此经节点间数据流进入后续 Git 节点操作，被带入 simple-git 触发的 git 命令执行流程并以 n8n 进程用户身份执行任意命令。该路径无法通过 Git 节点自身的参数控制面实现，需要先借助另一个文件写入漏洞把恶意 config 植入目标仓库。\n修复版本中通过在 packages/nodes-base/nodes/Git/GenericFunctions.ts 中新增 sanitizeUrl 与 mapGitConfigList，对 listConfig 返回数据里的 remote.origin.url 与 remote.origin.pushurl 先经 new URL() 解析后清空 username 与 password 再写回，同时将 Git.node.ts 的 listConfig 分支替换为调用 mapGitConfigList，切断恶意 URL 在节点间流转时被复用的链路。",
+    "effects": [
+      {
+        "comp_name": "n8n",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.33.4)",
+            "min_fixed_version": "2.33.4",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.123.69)",
+            "min_fixed_version": "1.123.69",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.34.1)",
+            "min_fixed_version": "2.34.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "OS命令注入",
@@ -70,8 +98,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-77084漏洞",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "n8n Git node 命令注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -105,12 +136,40 @@
     "cvss_score": 7.7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "n8n before 1.123.69 (and 2.x before 2.33.4 / 2.34.1) contains a code execution vulnerability in the Git node. The Git node executed certain repository-local git configuration values without neutralizing them, so any subsequent Git node operation against a repository containing a malicious value would execute it as the n8n process user. This is not reachable through the Git node's own configuration controls and requires a separate file-write vulnerability elsewhere to plant the malicious value.",
-    "effects": [],
+    "description": "n8n 是开源的工作流自动化平台，Git node 是其内置节点之一，可在工作流中执行 clone、push、fetch、listConfig 等 Git 操作。\n受影响版本中，Git node 在执行 listConfig 操作时直接读取仓库本地 .git/config，把 remote.origin.url 与 remote.origin.pushurl 等键的原始字符串作为节点输出返回，URL 的用户名/密码片段可携带 shell 元字符。仓库内的恶意 config 因此经节点间数据流进入后续 Git 节点操作，被带入 simple-git 触发的 git 命令执行流程并以 n8n 进程用户身份执行任意命令。该路径无法通过 Git 节点自身的参数控制面实现，需要先借助另一个文件写入漏洞把恶意 config 植入目标仓库。\n修复版本中通过在 packages/nodes-base/nodes/Git/GenericFunctions.ts 中新增 sanitizeUrl 与 mapGitConfigList，对 listConfig 返回数据里的 remote.origin.url 与 remote.origin.pushurl 先经 new URL() 解析后清空 username 与 password 再写回，同时将 Git.node.ts 的 listConfig 分支替换为调用 mapGitConfigList，切断恶意 URL 在节点间流转时被复用的链路。",
+    "effects": [
+      {
+        "comp_name": "n8n",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.33.4)",
+            "min_fixed_version": "2.33.4",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.123.69)",
+            "min_fixed_version": "1.123.69",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.34.1)",
+            "min_fixed_version": "2.34.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "OS命令注入",
@@ -140,8 +199,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-77084漏洞"
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "n8n Git node 命令注入漏洞"
   },
   "first_saved_at": "2026-08-20T12:34:57+00:00"
 }
