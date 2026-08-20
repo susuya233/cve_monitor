@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-08-20T17:22:55+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-put1-mwcz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75140",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "jsoup 是开源 Java HTML 与 XML 解析库，提供文档抓取、解析、清洗和 DOM 操作能力。\n受影响版本中，XmlTreeBuilder.insertElementFor 在处理每个 XML 起始标签时都会把当前作用域的命名空间映射完整复制一份并压入 namespacesStack。攻击者提供深度嵌套且各层带有独立 xmlns 前缀声明的 XML 文档后，该复制路径形成平方级时间与内存开销，可耗尽 JVM 堆内存并触发 OutOfMemoryError，导致应用程序终止。\n修复版本中通过将 XmlTreeBuilder 改为维护一份 namespaceBindings 当前绑定表，仅记录每个元素作用域内变更的命名空间并在元素闭合时还原父级绑定，使命名空间跟踪改为线性复杂度，避免深嵌套唯一命名空间文档耗尽内存。",
+    "effects": [
+      {
+        "comp_name": "org.jsoup:jsoup",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.23.1]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-put1-mwcz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-put1-mwcz",
+        "name": "https://www.oscs1024.com/hd/MPS-put1-mwcz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75140",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75140"
+      },
+      {
+        "url": "https://github.com/jhy/jsoup/commit/862ba2f1d48ee95609183dbcfc848c9fd7afc76a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jhy/jsoup/pull/2556",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/jsoup-uncontrolled-resource-consumption-in-xmltreebuilder",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "jsoup XML解析资源耗尽",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75140",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "jsoup 是开源 Java HTML 与 XML 解析库，提供文档抓取、解析、清洗和 DOM 操作能力。\n受影响版本中，XmlTreeBuilder.insertElementFor 在处理每个 XML 起始标签时都会把当前作用域的命名空间映射完整复制一份并压入 namespacesStack。攻击者提供深度嵌套且各层带有独立 xmlns 前缀声明的 XML 文档后，该复制路径形成平方级时间与内存开销，可耗尽 JVM 堆内存并触发 OutOfMemoryError，导致应用程序终止。\n修复版本中通过将 XmlTreeBuilder 改为维护一份 namespaceBindings 当前绑定表，仅记录每个元素作用域内变更的命名空间并在元素闭合时还原父级绑定，使命名空间跟踪改为线性复杂度，避免深嵌套唯一命名空间文档耗尽内存。",
+    "effects": [
+      {
+        "comp_name": "org.jsoup:jsoup",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.23.1]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-put1-mwcz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-put1-mwcz",
+        "name": "https://www.oscs1024.com/hd/MPS-put1-mwcz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75140",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75140"
+      },
+      {
+        "url": "https://github.com/jhy/jsoup/commit/862ba2f1d48ee95609183dbcfc848c9fd7afc76a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/jhy/jsoup/pull/2556",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/jsoup-uncontrolled-resource-consumption-in-xmltreebuilder",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "jsoup XML解析资源耗尽"
+  },
+  "first_saved_at": "2026-08-20T17:22:55+00:00"
+}
