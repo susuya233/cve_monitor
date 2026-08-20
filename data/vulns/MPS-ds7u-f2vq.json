@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-20T10:23:07+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-20T10:23:04+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-0hdn-ickm",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ds7u-f2vq",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,81 +21,77 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-71424",
+    "cve_id": "CVE-2026-14949",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security-advisories@github.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-          "severity": "critical",
-          "base_score": 9.6
+          "source": "info@cert.vde.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "info@cert.vde.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
         }
       ]
     },
-    "cvss_score": 9.6,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "Onyx 是一个开源人工智能平台。在 3.1.10、3.2.14 和 4.0.0 之前，Onyx 的 GET /api/mcp/servers 和 GET /api/mcp/servers/persona/{persona_id} 端点会公开另一个用户的 OAuth 授权标头，因为 OnyxTokenStorage.set_tokens 和 OnyxTokenStorage.set_client_info backend/onyx/server/features/mcp/api.py 将每个用户令牌复制到共享管理 MCPConnectionConfig 行中，并且 _db_mcp_server_to_api_mcp_server 通过 auth_template.headers 返回该行给任何 BASIC_ACCESS 用户。此问题已在版本 3.1.10、3.2.14 和 4.0.0 中修复。",
-    "effects": [],
+    "description": "Frauscher FDS102 是 Frauscher Sensortechnik GmbH 面向 FAdC/FAdCi R2 的商业诊断系统软件，用于铁路轮轴计数设备的诊断、监测与运维。\n受影响版本中，Web 接口 /api/user/add.php 暴露的用户创建功能未正确执行基于角色的访问控制。已持有低权限有效会话的远程攻击者可向该接口提交创建用户请求，并指定任意角色值，从而新建包含应用最高权限在内的账户。\n修复版本中通过厂商安全更新收紧用户创建接口的授权校验，阻止低权限会话再创建高权限账户；公开资料未披露更细粒度的源码修改。",
+    "effects": [
+      {
+        "comp_name": "fds_102",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.11.0,2.14.0)",
+            "min_fixed_version": "2.14.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "授权检查错误",
     "kind_en": "授权错误",
-    "last_modified_time": "2026-08-18",
-    "level": "Critical",
-    "mps_id": "MPS-0hdn-ickm",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-ds7u-f2vq",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-18",
+    "published_time": "2026-08-20",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-0hdn-ickm",
-        "name": "https://www.oscs1024.com/hd/MPS-0hdn-ickm"
+        "url": "https://www.oscs1024.com/hd/MPS-ds7u-f2vq",
+        "name": "https://www.oscs1024.com/hd/MPS-ds7u-f2vq"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-14949",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-14949"
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/3f3d79d1a7722fdc84a1c61c8aa830d890017e9e",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/4001cedd0a8968723bfe95dd188914ed56777910",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/b103937888fd5008067c2bb6eb6e5424576394f2",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11238",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11242",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11243",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/releases/tag/v4.0.0",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/security/advisories/GHSA-q62f-rv3h-f822",
+        "url": "https://www.certvde.com/en/advisories/VDE-2026-078/",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-71424漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FDS102越权创建账户",
     "_translated": true
   },
   "detail_original": {
@@ -115,81 +111,77 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-71424",
+    "cve_id": "CVE-2026-14949",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security-advisories@github.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-          "severity": "critical",
-          "base_score": 9.6
+          "source": "info@cert.vde.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "info@cert.vde.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
         }
       ]
     },
-    "cvss_score": 9.6,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "Onyx is an open-source AI platform. Prior to 3.1.10, 3.2.14, and 4.0.0, Onyx's GET /api/mcp/servers and GET /api/mcp/servers/persona/{persona_id} endpoints expose another user's OAuth Authorization header because OnyxTokenStorage.set_tokens and OnyxTokenStorage.set_client_info in backend/onyx/server/features/mcp/api.py copy per-user tokens into a shared admin MCPConnectionConfig row and _db_mcp_server_to_api_mcp_server returns that row through auth_template.headers to any BASIC_ACCESS user. This issue is fixed in versions 3.1.10, 3.2.14, and 4.0.0.",
-    "effects": [],
+    "description": "Frauscher FDS102 是 Frauscher Sensortechnik GmbH 面向 FAdC/FAdCi R2 的商业诊断系统软件，用于铁路轮轴计数设备的诊断、监测与运维。\n受影响版本中，Web 接口 /api/user/add.php 暴露的用户创建功能未正确执行基于角色的访问控制。已持有低权限有效会话的远程攻击者可向该接口提交创建用户请求，并指定任意角色值，从而新建包含应用最高权限在内的账户。\n修复版本中通过厂商安全更新收紧用户创建接口的授权校验，阻止低权限会话再创建高权限账户；公开资料未披露更细粒度的源码修改。",
+    "effects": [
+      {
+        "comp_name": "fds_102",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.11.0,2.14.0)",
+            "min_fixed_version": "2.14.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "授权检查错误",
     "kind_en": "Incorrect Authorization",
-    "last_modified_time": "2026-08-18",
-    "level": "Critical",
-    "mps_id": "MPS-0hdn-ickm",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-ds7u-f2vq",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-18",
+    "published_time": "2026-08-20",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-0hdn-ickm",
-        "name": "https://www.oscs1024.com/hd/MPS-0hdn-ickm"
+        "url": "https://www.oscs1024.com/hd/MPS-ds7u-f2vq",
+        "name": "https://www.oscs1024.com/hd/MPS-ds7u-f2vq"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71424"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-14949",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-14949"
       },
       {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/3f3d79d1a7722fdc84a1c61c8aa830d890017e9e",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/4001cedd0a8968723bfe95dd188914ed56777910",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/commit/b103937888fd5008067c2bb6eb6e5424576394f2",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11238",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11242",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/pull/11243",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/releases/tag/v4.0.0",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/onyx-dot-app/onyx/security/advisories/GHSA-q62f-rv3h-f822",
+        "url": "https://www.certvde.com/en/advisories/VDE-2026-078/",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-71424漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FDS102越权创建账户"
   },
-  "first_saved_at": "2026-08-17T23:17:10+00:00"
+  "first_saved_at": "2026-08-20T10:23:04+00:00"
 }
