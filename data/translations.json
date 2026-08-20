@@ -899,5 +899,7 @@
   "0825b3f659f5b246846e7870bd27b8c66e727611": "CVE-2026-66787漏洞",
   "3557327b261dab59ea68feac225f37f3aed91d47": "Red Hat Advanced Cluster Management for Kubernetes 的 Lighthouse 组件中发现了一个缺陷。此漏洞源于对 EndpointSlice 对象中公布的 IP 地址的验证不充分。受损的分支集群可以通过使用攻击者控制的 IP 地址创建 EndpointSlices 来利用此漏洞，从而导致其他集群的灯塔 DNS 将合法服务流量重定向到恶意端点。这使得远程攻击者能够对跨集群服务通信进行透明的中间人（MITM）攻击，可能导致未经授权的信息泄露和数据操纵。",
   "5880317e0801c87716ddc9e12753f14b990dbcc9": "CVE-2026-66788漏洞",
-  "02cb09d43fdafe18568aeae7f9a0b21a53bf96d3": "Lighthouse 中发现了一个缺陷。远程攻击者通过破坏分支集群，可以利用其中资源注入的目标命名空间源自代理对象上由攻击者控制的标签或注释的漏洞。这使得攻击者可以将未经授权的 EndpointSlices 和 ServiceImports 注入对等集群上的任何命名空间，包括 kube-system 和 openshift-* 等关键系统命名空间。这可能会导致集群内的权限升级或其他形式的系统危害。"
+  "02cb09d43fdafe18568aeae7f9a0b21a53bf96d3": "Lighthouse 中发现了一个缺陷。远程攻击者通过破坏分支集群，可以利用其中资源注入的目标命名空间源自代理对象上由攻击者控制的标签或注释的漏洞。这使得攻击者可以将未经授权的 EndpointSlices 和 ServiceImports 注入对等集群上的任何命名空间，包括 kube-system 和 openshift-* 等关键系统命名空间。这可能会导致集群内的权限升级或其他形式的系统危害。",
+  "21a1e1c1511f1407aa55824a71aaac74111fb08d": "CVE-2026-75910漏洞",
+  "447107c05956f331b1423e8bd99502b94f400827": "v2026.17.1 之前的 Amazon Athena Federated Query 中的 ClickHouse 连接器部署模板中的权限分配不正确，可能会允许经过身份验证的远程用户通过将连接器的连接字符串指向不相关的密钥和用户控制下的数据库终端节点来读取部署账户中的任意 AWS Secrets Manager 密钥，从而导致连接器将密钥传输到该终端节点。要修复此问题，用户应升级到 aws-athena-query-federation 连接器版本 v2026.17.1 或更高版本，并确保修补任何分叉或派生代码以纳入新修复。或者，要修复此问题，用户应使用当前模板重新部署连接器并提供非空 SecretNamePrefix 值。"
 }
