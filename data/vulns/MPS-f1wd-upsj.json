@@ -1,0 +1,137 @@
+{
+  "saved_at": "2026-08-20T19:25:53+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-f1wd-upsj",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73256",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-444",
+    "description": "Mongoose 是一个嵌入式 Web 服务器和网络库。在 7.22 之前，未经身份验证的远程攻击者可以通过发送带有 Transfer-Encoding：分块和冲突帧的请求来利用 HTTP/1.0 反向代理部署。 src/http.c 中的 http_cb() 函数以不可能的大于八的条件测试 hm.proto.len，即使 mg_http_parse() 需要八字节协议字符串，因此永远不会设置 is_http_1_0。 Mongoose 因此会处理 HTTP/1.0 代理可以忽略的分块编码，从而实现请求走私和未经授权的访问或状态更改。此问题已在 7.22 版本中修复。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "HTTP请求走私",
+    "kind_en": "HTTP 请求的解释不一致（“HTTP 请求/响应走私”）",
+    "last_modified_time": "2026-08-21",
+    "level": "Critical",
+    "mps_id": "MPS-f1wd-upsj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-f1wd-upsj",
+        "name": "https://www.oscs1024.com/hd/MPS-f1wd-upsj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73256",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73256"
+      },
+      {
+        "url": "https://github.com/cesanta/mongoose/commit/a9df523f76f43a38bd53b4232b9cfd4c16869e71",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/cesanta/mongoose/pull/3611",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/cesanta/mongoose/releases/tag/7.22",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/cesanta/mongoose/security/advisories/GHSA-mgp5-rjrv-h5j3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-73256漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73256",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-444",
+    "description": "Mongoose is an embedded web server and network library. Prior to 7.22, a remote unauthenticated attacker can exploit an HTTP/1.0 reverse-proxy deployment by sending a request with Transfer-Encoding: chunked and conflicting framing. The http_cb() function in src/http.c tests hm.proto.len with an impossible greater-than-eight condition even though mg_http_parse() requires an eight-byte protocol string, so is_http_1_0 is never set. Mongoose consequently processes chunked encoding that an HTTP/1.0 proxy can ignore, enabling request smuggling and unauthorized access or state changes. This issue is fixed in version 7.22.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "HTTP请求走私",
+    "kind_en": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')",
+    "last_modified_time": "2026-08-21",
+    "level": "Critical",
+    "mps_id": "MPS-f1wd-upsj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-f1wd-upsj",
+        "name": "https://www.oscs1024.com/hd/MPS-f1wd-upsj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73256",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73256"
+      },
+      {
+        "url": "https://github.com/cesanta/mongoose/commit/a9df523f76f43a38bd53b4232b9cfd4c16869e71",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/cesanta/mongoose/pull/3611",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/cesanta/mongoose/releases/tag/7.22",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/cesanta/mongoose/security/advisories/GHSA-mgp5-rjrv-h5j3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-73256漏洞"
+  },
+  "first_saved_at": "2026-08-20T19:25:53+00:00"
+}
