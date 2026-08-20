@@ -1,0 +1,141 @@
+{
+  "saved_at": "2026-08-20T06:35:06+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-h8jf-469n",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76956",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-394",
+    "description": "libexpat（Expat）是以 MIT 许可证发布的开源 C 语言流式 XML 解析库，用于解析 XML 1.0，并被操作系统发行版、语言运行时与大量应用程序作为底层解析组件使用。\n受影响版本中，writeRandomBytes_getentropy 将 getentropy() 返回值直接赋给 bool 变量 success。getentropy 成功时返回 0，该值被当成失败，已写入的高质量熵被丢弃。generate_hash_secret_salt 随即回退到时间戳与进程号生成 SipHash 盐，哈希盐可被预测。攻击者通过 XML_Parse 提交构造的 XML 内容即可发起哈希洪水，造成拒绝服务。\n修复版本中通过将成功判定改为 getentropy(target, count) == 0，仅在系统调用成功时保留该熵并用于哈希盐，恢复对哈希洪水攻击的防护。",
+    "effects": [
+      {
+        "comp_name": "libexpat",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.8.2,2.8.4)",
+            "min_fixed_version": "2.8.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未预期的状态编码或返回值",
+    "kind_en": "意外的状态代码或返回值",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-h8jf-469n",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-h8jf-469n",
+        "name": "https://www.oscs1024.com/hd/MPS-h8jf-469n"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76956",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76956"
+      },
+      {
+        "url": "https://github.com/libexpat/libexpat/pull/1326",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "libexpat哈希洪水漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76956",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-394",
+    "description": "libexpat（Expat）是以 MIT 许可证发布的开源 C 语言流式 XML 解析库，用于解析 XML 1.0，并被操作系统发行版、语言运行时与大量应用程序作为底层解析组件使用。\n受影响版本中，writeRandomBytes_getentropy 将 getentropy() 返回值直接赋给 bool 变量 success。getentropy 成功时返回 0，该值被当成失败，已写入的高质量熵被丢弃。generate_hash_secret_salt 随即回退到时间戳与进程号生成 SipHash 盐，哈希盐可被预测。攻击者通过 XML_Parse 提交构造的 XML 内容即可发起哈希洪水，造成拒绝服务。\n修复版本中通过将成功判定改为 getentropy(target, count) == 0，仅在系统调用成功时保留该熵并用于哈希盐，恢复对哈希洪水攻击的防护。",
+    "effects": [
+      {
+        "comp_name": "libexpat",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.8.2,2.8.4)",
+            "min_fixed_version": "2.8.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未预期的状态编码或返回值",
+    "kind_en": "Unexpected Status Code or Return Value",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-h8jf-469n",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-h8jf-469n",
+        "name": "https://www.oscs1024.com/hd/MPS-h8jf-469n"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76956",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76956"
+      },
+      {
+        "url": "https://github.com/libexpat/libexpat/pull/1326",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "libexpat哈希洪水漏洞"
+  },
+  "first_saved_at": "2026-08-20T06:35:06+00:00"
+}
