@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-08-20T11:20:21+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-mp62-yhg8",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "由于整数类型的有限范围，在进行算术运算或操作时，结果可能超出类型的表示范围，导致溢出或环绕。溢出指的是结果超过了类型的最大值或小于了最小值，而环绕指的是结果绕回到类型的最小值或最大值。",
+        "title": "什么是整数溢出或环绕"
+      },
+      {
+        "content": "- 缓冲区溢出：整数溢出可能导致缓冲区溢出漏洞。当整数溢出导致分配的缓冲区大小不足以容纳结果时，攻击者可以利用这个漏洞覆盖相邻的内存区域，执行恶意代码或篡改程序的状态。\r\n- 身份验证绕过：在进行身份验证或访问控制时，整数溢出可能导致绕过验证的漏洞。攻击者可以构造特殊的输入，使溢出的整数值绕过了预期的验证逻辑，从而获得未经授权的访问权限。\r\n- 数据篡改：整数溢出可能导致数据篡改漏洞。攻击者可以通过使整数溢出，修改计数器、索引或其他控制数据的值，导致程序在处理数据时发生错误或执行意外的操作。",
+        "title": "整数溢出或环绕常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与限制：对用户输入的整数进行合理的验证和限制，确保其在允许的范围内。\r\n- 使用安全的整数操作函数：使用安全的整数操作函数，如`add_with_overflow()`、`sub_with_overflow()`、`mul_with_overflow()`等，这些函数会检查并处理溢出情况，确保计算结果在安全范围内。\r\n- 类型检查和转换：在进行整数运算或操作之前，进行类型检查和转换，确保操作数的类型和范围是合适的。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括对整数运算和操作的规范和限制，以帮助程序员编写更可靠、安全的代码。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的整数溢出问题。这些工具可以帮助发现代码中可能存在的溢出漏洞，并及时修复。",
+        "title": "如何预防整数溢出或环绕"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-18917",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-190",
+    "description": "libvirt 是开源虚拟化管理工具包，提供守护进程与统一 API，用于管理 KVM、QEMU、LXC 等虚拟化平台。\n受影响版本中，远程 RPC 处理函数 remoteDispatchNodeGetFreePages 将攻击者可控的 unsigned int 参数 pages_len 与 cellCount 直接相乘，结果用于对照 REMOTE_NODE_MAX_CELLS 做上限检查并分配返回缓冲区。乘积按 32 位无符号整数回绕后，例如传入 1023 与 4198405 可使校验通过并分配过小堆缓冲；随后 hypervisor 驱动按真实 NUMA 节点数据写入该缓冲，造成堆溢出，进而损坏以 root 运行的 libvirt 守护进程内存，导致拒绝服务或本地权限提升。该 RPC 仅需 connect:read ACL，默认只读 Unix 套接字可被非特权本地用户访问。\n修复版本中通过在 remoteDispatchNodeGetFreePages 的上限检查中使用 VIR_INT_MULTIPLY_OVERFLOW 宏，拒绝 pages_len 与 cellCount 相乘溢出的请求，避免分配过小缓冲区并阻断后续 NUMA 数据越界写入。截至 2026-08-20，该修复已合入上游主线，官方尚未发布包含该修复的发行版本。",
+    "effects": [
+      {
+        "comp_name": "libvirt",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.2.6,12.6.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "整数溢出或环绕",
+    "kind_en": "整数溢出或环绕",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-mp62-yhg8",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mp62-yhg8",
+        "name": "https://www.oscs1024.com/hd/MPS-mp62-yhg8"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18917",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18917"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-18917",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2520161",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "开源"
+    ],
+    "title": "libvirt整数溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "由于整数类型的有限范围，在进行算术运算或操作时，结果可能超出类型的表示范围，导致溢出或环绕。溢出指的是结果超过了类型的最大值或小于了最小值，而环绕指的是结果绕回到类型的最小值或最大值。",
+        "title": "什么是整数溢出或环绕"
+      },
+      {
+        "content": "- 缓冲区溢出：整数溢出可能导致缓冲区溢出漏洞。当整数溢出导致分配的缓冲区大小不足以容纳结果时，攻击者可以利用这个漏洞覆盖相邻的内存区域，执行恶意代码或篡改程序的状态。\r\n- 身份验证绕过：在进行身份验证或访问控制时，整数溢出可能导致绕过验证的漏洞。攻击者可以构造特殊的输入，使溢出的整数值绕过了预期的验证逻辑，从而获得未经授权的访问权限。\r\n- 数据篡改：整数溢出可能导致数据篡改漏洞。攻击者可以通过使整数溢出，修改计数器、索引或其他控制数据的值，导致程序在处理数据时发生错误或执行意外的操作。",
+        "title": "整数溢出或环绕常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与限制：对用户输入的整数进行合理的验证和限制，确保其在允许的范围内。\r\n- 使用安全的整数操作函数：使用安全的整数操作函数，如`add_with_overflow()`、`sub_with_overflow()`、`mul_with_overflow()`等，这些函数会检查并处理溢出情况，确保计算结果在安全范围内。\r\n- 类型检查和转换：在进行整数运算或操作之前，进行类型检查和转换，确保操作数的类型和范围是合适的。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括对整数运算和操作的规范和限制，以帮助程序员编写更可靠、安全的代码。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的整数溢出问题。这些工具可以帮助发现代码中可能存在的溢出漏洞，并及时修复。",
+        "title": "如何预防整数溢出或环绕"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-18917",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-190",
+    "description": "libvirt 是开源虚拟化管理工具包，提供守护进程与统一 API，用于管理 KVM、QEMU、LXC 等虚拟化平台。\n受影响版本中，远程 RPC 处理函数 remoteDispatchNodeGetFreePages 将攻击者可控的 unsigned int 参数 pages_len 与 cellCount 直接相乘，结果用于对照 REMOTE_NODE_MAX_CELLS 做上限检查并分配返回缓冲区。乘积按 32 位无符号整数回绕后，例如传入 1023 与 4198405 可使校验通过并分配过小堆缓冲；随后 hypervisor 驱动按真实 NUMA 节点数据写入该缓冲，造成堆溢出，进而损坏以 root 运行的 libvirt 守护进程内存，导致拒绝服务或本地权限提升。该 RPC 仅需 connect:read ACL，默认只读 Unix 套接字可被非特权本地用户访问。\n修复版本中通过在 remoteDispatchNodeGetFreePages 的上限检查中使用 VIR_INT_MULTIPLY_OVERFLOW 宏，拒绝 pages_len 与 cellCount 相乘溢出的请求，避免分配过小缓冲区并阻断后续 NUMA 数据越界写入。截至 2026-08-20，该修复已合入上游主线，官方尚未发布包含该修复的发行版本。",
+    "effects": [
+      {
+        "comp_name": "libvirt",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.2.6,12.6.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "整数溢出或环绕",
+    "kind_en": "Integer Overflow or Wraparound",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-mp62-yhg8",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mp62-yhg8",
+        "name": "https://www.oscs1024.com/hd/MPS-mp62-yhg8"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18917",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18917"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-18917",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2520161",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "开源"
+    ],
+    "title": "libvirt整数溢出漏洞"
+  },
+  "first_saved_at": "2026-08-20T11:20:21+00:00"
+}
