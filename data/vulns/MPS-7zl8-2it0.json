@@ -1,0 +1,157 @@
+{
+  "saved_at": "2026-08-20T07:35:50+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-7zl8-2it0",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-15049",
+    "cvss": {},
+    "cvss_score": 7.2,
+    "cvss_vector": "",
+    "cwe": "CWE-434",
+    "description": "Depicter 是 Averta 发布的开源 WordPress 插件（GPL-2.0），用于可视化创建弹窗、通知栏、滑块和轮播。\n受影响版本中，后台 ZIP 导入接口 ImportAjaxController::unpack 将上传文件交给 ImportService::unpack 处理。该函数仅校验客户端声明的 MIME 类型，随后使用 ZipArchive::extractTo 把压缩包完整解压到站点可访问的 wp-content/uploads/depicter 目录，既不拦截 php、phtml 等可执行后缀，也不阻止路径穿越；导入失败时异常路径不会删除已写入文件。具备 editor 角色及 import_depicter 权限的用户可将含可执行 PHP 的 ZIP 包写入 Web 目录并实现远程代码执行。\n修复版本中通过在控制器侧强制校验扩展名为 zip，并在 ImportService::unpack 中改为逐条目解压：跳过 php/phtml/phar/.htaccess 等危险扩展与含 ../ 的路径，使用随机目录与随机文件名存放临时包，并在异常路径中删除残留文件，从而切断任意文件写入。",
+    "effects": [
+      {
+        "comp_name": "depicter",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.8.0)",
+            "min_fixed_version": "4.8.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "任意文件上传",
+    "kind_en": "危险类型文件无限制上传",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-7zl8-2it0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-7zl8-2it0",
+        "name": "https://www.oscs1024.com/hd/MPS-7zl8-2it0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15049",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-15049"
+      },
+      {
+        "url": "https://wpscan.com/vulnerability/c32e6a11-98f2-48e8-be64-f0c1966ddc18/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Depicter任意文件上传漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-15049",
+    "cvss": {},
+    "cvss_score": 7.2,
+    "cvss_vector": "",
+    "cwe": "CWE-434",
+    "description": "Depicter 是 Averta 发布的开源 WordPress 插件（GPL-2.0），用于可视化创建弹窗、通知栏、滑块和轮播。\n受影响版本中，后台 ZIP 导入接口 ImportAjaxController::unpack 将上传文件交给 ImportService::unpack 处理。该函数仅校验客户端声明的 MIME 类型，随后使用 ZipArchive::extractTo 把压缩包完整解压到站点可访问的 wp-content/uploads/depicter 目录，既不拦截 php、phtml 等可执行后缀，也不阻止路径穿越；导入失败时异常路径不会删除已写入文件。具备 editor 角色及 import_depicter 权限的用户可将含可执行 PHP 的 ZIP 包写入 Web 目录并实现远程代码执行。\n修复版本中通过在控制器侧强制校验扩展名为 zip，并在 ImportService::unpack 中改为逐条目解压：跳过 php/phtml/phar/.htaccess 等危险扩展与含 ../ 的路径，使用随机目录与随机文件名存放临时包，并在异常路径中删除残留文件，从而切断任意文件写入。",
+    "effects": [
+      {
+        "comp_name": "depicter",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.8.0)",
+            "min_fixed_version": "4.8.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "任意文件上传",
+    "kind_en": "Unrestricted Upload of File with Dangerous Type",
+    "last_modified_time": "2026-08-20",
+    "level": "High",
+    "mps_id": "MPS-7zl8-2it0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-7zl8-2it0",
+        "name": "https://www.oscs1024.com/hd/MPS-7zl8-2it0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15049",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-15049"
+      },
+      {
+        "url": "https://wpscan.com/vulnerability/c32e6a11-98f2-48e8-be64-f0c1966ddc18/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Depicter任意文件上传漏洞"
+  },
+  "first_saved_at": "2026-08-20T07:35:50+00:00"
+}
