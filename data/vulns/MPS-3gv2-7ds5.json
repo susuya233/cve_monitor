@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-21T13:40:27+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-21T14:28:12+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-3gv2-7ds5",
@@ -35,14 +35,28 @@
     "cvss_score": 7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:L/VA:L/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-22",
-    "description": "Joomla 扩展 - yootheme.com - 在 YOOtheme Pro 2.3.0-5.0.40 中读取经过身份验证的特权任意文件 - 文件系统源的路径过滤器容易受到基于 glob 的模式攻击，允许授权用户读取任意文件。",
-    "effects": [],
+    "description": "YOOtheme Pro 是商业 Joomla 扩展，用于在 Joomla 站点中构建页面、表单与应用，属于闭源商业组件。\n受影响版本中，Filesystem 数据源的路径过滤逻辑未充分考虑 glob 通配语义，未授权但已认证且具备相应权限的攻击者，可构造 glob 模式绕过路径过滤读取任意文件内容。\n修复版本中通过收紧 Filesystem 数据源对路径模式的解析与判定，阻断利用 glob 通配进行的目录越界读取，使受信任权限用户只能访问预期目录下的文件。",
+    "effects": [
+      {
+        "comp_name": "com_yootheme_pro",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.0.40]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "路径遍历",
     "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
     "last_modified_time": "2026-08-21",
@@ -66,8 +80,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-75115漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "YOOtheme Pro 任意文件读取漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -101,14 +117,28 @@
     "cvss_score": 7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:L/VA:L/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-22",
-    "description": "Joomla Extension - yootheme.com - Authenticated, privileged arbitrary file read in YOOtheme Pro 2.3.0-5.0.40 - The Filesystem source's path filter is vulnerable to glob-based pattern attacks, allowing authorized users to read arbitrary files.",
-    "effects": [],
+    "description": "YOOtheme Pro 是商业 Joomla 扩展，用于在 Joomla 站点中构建页面、表单与应用，属于闭源商业组件。\n受影响版本中，Filesystem 数据源的路径过滤逻辑未充分考虑 glob 通配语义，未授权但已认证且具备相应权限的攻击者，可构造 glob 模式绕过路径过滤读取任意文件内容。\n修复版本中通过收紧 Filesystem 数据源对路径模式的解析与判定，阻断利用 glob 通配进行的目录越界读取，使受信任权限用户只能访问预期目录下的文件。",
+    "effects": [
+      {
+        "comp_name": "com_yootheme_pro",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.0.40]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "路径遍历",
     "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
     "last_modified_time": "2026-08-21",
@@ -132,8 +162,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-75115漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "YOOtheme Pro 任意文件读取漏洞"
   },
   "first_saved_at": "2026-08-21T13:40:27+00:00"
 }

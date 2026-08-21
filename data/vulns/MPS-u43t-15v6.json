@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-21T13:40:24+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-21T14:28:15+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-u43t-15v6",
@@ -35,14 +35,28 @@
     "cvss_score": 8.6,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-79",
-    "description": "Joomla 扩展 - yootheme.com - 通过 Zoo < 4.1.66 中用户控制的字段未经身份验证的存储 XSS - 用户在注释中提供的输入和用户提供的字段元素未转义，导致存储的 XSS 向量。",
-    "effects": [],
+    "description": "YOOtheme Zoo 是面向 Joomla CMS 的商业 CCK（内容构建工具）扩展，提供自定义字段、评论与多种应用来构建和管理站点内容。\n受影响版本中，用户在评论与用户可控的自定义字段元素中提交的输入在渲染输出前未进行充分的 HTML 转义，未授权攻击者可向这些位置注入恶意脚本内容并被持久化保存，随后任何访问受影响页面的用户浏览器都会自动执行该脚本，构成存储型跨站脚本攻击（CWE-79）。\n修复版本中通过在 Zoo 4.1.66 对评论文本与用户自定义字段元素输出添加转义处理，切断了从用户输入到页面 HTML 之间的未转义路径，使攻击者注入的脚本无法再被渲染给后续访问者。",
+    "effects": [
+      {
+        "comp_name": "zoo",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.1.66)",
+            "min_fixed_version": "4.1.66",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "XSS",
     "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
     "last_modified_time": "2026-08-21",
@@ -66,8 +80,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-76612漏洞",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "YOOtheme Zoo Joomla扩展存储型XSS漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -101,14 +118,28 @@
     "cvss_score": 8.6,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-79",
-    "description": "Joomla Extension - yootheme.com - Unauthenticated stored XSS via user-controlled fields in Zoo < 4.1.66 - User supplied input in comments and user supplied field elements weren't escaped, leading to a stored XSS vector.",
-    "effects": [],
+    "description": "YOOtheme Zoo 是面向 Joomla CMS 的商业 CCK（内容构建工具）扩展，提供自定义字段、评论与多种应用来构建和管理站点内容。\n受影响版本中，用户在评论与用户可控的自定义字段元素中提交的输入在渲染输出前未进行充分的 HTML 转义，未授权攻击者可向这些位置注入恶意脚本内容并被持久化保存，随后任何访问受影响页面的用户浏览器都会自动执行该脚本，构成存储型跨站脚本攻击（CWE-79）。\n修复版本中通过在 Zoo 4.1.66 对评论文本与用户自定义字段元素输出添加转义处理，切断了从用户输入到页面 HTML 之间的未转义路径，使攻击者注入的脚本无法再被渲染给后续访问者。",
+    "effects": [
+      {
+        "comp_name": "zoo",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.1.66)",
+            "min_fixed_version": "4.1.66",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "XSS",
     "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
     "last_modified_time": "2026-08-21",
@@ -132,8 +163,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-76612漏洞"
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "YOOtheme Zoo Joomla扩展存储型XSS漏洞"
   },
   "first_saved_at": "2026-08-21T13:40:24+00:00"
 }

@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-21T13:40:21+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-21T14:28:11+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-yuqk-1570",
@@ -35,14 +35,28 @@
     "cvss_score": 9.2,
     "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-89",
-    "description": "Joomla 扩展 - yotheme.com - YOOtheme Pro 1.0.0-5.0.40 中经过身份验证的特权 SQL 注入 - SQL 注入允许任何贡献者级别用户将自己的内容注入 SQL 查询。",
-    "effects": [],
+    "description": "YOOtheme Pro 是商业 Joomla 扩展，提供可视化页面构建与内容模板能力，属于闭源商业软件。\n受影响版本中，扩展在处理 contributor 级别用户可控的字段时未对 SQL 查询进行充分过滤或参数化，导致具备 contributor 权限的认证用户可在提交内容中注入 SQL 片段并被带入查询执行，造成数据库层信息泄露或篡改。\n修复版本中通过收紧对用户可控字段的 SQL 处理，使用占位符参数化或类型校验切断注入路径，使 contributor 级别的输入无法再进入危险查询上下文。",
+    "effects": [
+      {
+        "comp_name": "yootheme_pro",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,5.0.40]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "SQL注入",
     "kind_en": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
     "last_modified_time": "2026-08-21",
@@ -66,8 +80,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-76613漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "YOOtheme Pro SQL注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -101,14 +117,28 @@
     "cvss_score": 9.2,
     "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-89",
-    "description": "Joomla Extension - yootheme.com - Authenticated, privileged SQL injection in YOOtheme Pro 1.0.0-5.0.40 - An SQL injection allowed any contributor-level user to inject own content into SQL queries.",
-    "effects": [],
+    "description": "YOOtheme Pro 是商业 Joomla 扩展，提供可视化页面构建与内容模板能力，属于闭源商业软件。\n受影响版本中，扩展在处理 contributor 级别用户可控的字段时未对 SQL 查询进行充分过滤或参数化，导致具备 contributor 权限的认证用户可在提交内容中注入 SQL 片段并被带入查询执行，造成数据库层信息泄露或篡改。\n修复版本中通过收紧对用户可控字段的 SQL 处理，使用占位符参数化或类型校验切断注入路径，使 contributor 级别的输入无法再进入危险查询上下文。",
+    "effects": [
+      {
+        "comp_name": "yootheme_pro",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,5.0.40]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "SQL注入",
     "kind_en": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
     "last_modified_time": "2026-08-21",
@@ -132,8 +162,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-76613漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "YOOtheme Pro SQL注入漏洞"
   },
   "first_saved_at": "2026-08-21T13:40:21+00:00"
 }
