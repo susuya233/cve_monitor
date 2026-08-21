@@ -1,5 +1,5 @@
 {
-  "saved_at": "2026-08-21T03:44:39+00:00",
+  "saved_at": "2026-08-21T04:31:56+00:00",
   "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
@@ -22,8 +22,22 @@
     "cvss_score": 9.8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-506",
-    "description": "Rust 的 arrayref crate 0.3.10 可以在编译使用该 crate 的项目时触发恶意代码的执行，因为它具有恶意依赖项，可以注册命令和控制服务器以提供任意代码执行。",
-    "effects": [],
+    "description": "arrayref 是 Rust 生态中用于在切片边界上获取固定长度数组引用的开源 crate，提供 array_ref!、array_refs!、array_mut_ref! 等宏以便安全地按固定长度借出数组视图。\n受影响版本中，arrayref 0.3.10 在发布至 crates.io 时引入了一个恶意的 proc-macro 依赖。该依赖在编译期执行时连接命令与控制服务器并下载运行任意代码，导致任何依赖 0.3.10 的下游项目在 cargo build 阶段即触发远程代码执行。\n修复版本中通过 crates.io 将恶意版本 0.3.10 从索引中移除并下架，阻断了该版本的发布链路；官方建议将依赖固定到不受影响的 0.3.9 及以下版本，避免下游继续解析该版本。",
+    "effects": [
+      {
+        "comp_name": "arrayref",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "[0.3.10,0.3.10]",
+            "min_fixed_version": "",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -70,7 +84,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-77651漏洞",
+    "title": "arrayref 供应链投毒漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -91,8 +105,22 @@
     "cvss_score": 9.8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-506",
-    "description": "The arrayref crate 0.3.10 for Rust can trigger execution of malicious code when compiling a project that uses the crate, because it has a rogue dependency that registers with a command-and-control server to offer arbitrary code execution.",
-    "effects": [],
+    "description": "arrayref 是 Rust 生态中用于在切片边界上获取固定长度数组引用的开源 crate，提供 array_ref!、array_refs!、array_mut_ref! 等宏以便安全地按固定长度借出数组视图。\n受影响版本中，arrayref 0.3.10 在发布至 crates.io 时引入了一个恶意的 proc-macro 依赖。该依赖在编译期执行时连接命令与控制服务器并下载运行任意代码，导致任何依赖 0.3.10 的下游项目在 cargo build 阶段即触发远程代码执行。\n修复版本中通过 crates.io 将恶意版本 0.3.10 从索引中移除并下架，阻断了该版本的发布链路；官方建议将依赖固定到不受影响的 0.3.9 及以下版本，避免下游继续解析该版本。",
+    "effects": [
+      {
+        "comp_name": "arrayref",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "[0.3.10,0.3.10]",
+            "min_fixed_version": "",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -139,7 +167,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-77651漏洞"
+    "title": "arrayref 供应链投毒漏洞"
   },
   "first_saved_at": "2026-08-21T02:22:16+00:00"
 }
