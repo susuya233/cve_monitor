@@ -1,0 +1,139 @@
+{
+  "saved_at": "2026-08-21T10:23:04+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-34k1-bvoi",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-68745",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-347",
+    "description": "Apache CloudStack 是开源 IaaS 云管理平台，使用 Java 实现，主要用于构建和管理公有云、私有云及混合云环境。\n受影响版本中，plugins/user-authenticators/saml2 模块的 SAML2LoginAPIAuthenticatorCmd.authenticate 方法在处理 SAML Response 时，签名校验守卫条件写成 idpMetadata.getSigningCertificate() != null && sig != null。当 IdP 元数据未注册签名证书而 SAML Response 仍包含 ds:Signature 元素时，整个签名校验块被静默跳过；攻击者只要再满足欺骗 IdP 的 IP 地址或在管理服务器上注册一个攻击者可控的 URL 之一，便可凭借一份携带任意虚假签名的 SAML Response 完成认证、获得合法会话，实现未授权身份绕过。同一漏洞模式在方法内层的 EncryptedAssertion 签名校验处再次出现。\n修复版本中通过将签名校验拆出为独立的 validateSAMLSignature 方法，并改为仅在 sig 为 null 时直接返回；签名存在时强制要求 IdP 已注册签名证书，无证书立即抛出 ACCOUNT_ERROR，SignatureValidator.validate 抛出 ValidationException 时同样抛出 ACCOUNT_ERROR，从根本上切断\"IdP 无签名证书即跳过验签\"的逻辑路径。",
+    "effects": [
+      {
+        "comp_name": "apache-cloudstack",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.20.3.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,4.22.1.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "密码签名验证不当",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-34k1-bvoi",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-34k1-bvoi",
+        "name": "https://www.oscs1024.com/hd/MPS-34k1-bvoi"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-68745",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-68745"
+      },
+      {
+        "url": "https://lists.apache.org/thread/g6cwddtjrwbh1d56wjz4cfp3fzfm4kbc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Apache CloudStack SAML 认证绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-68745",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-347",
+    "description": "Apache CloudStack 是开源 IaaS 云管理平台，使用 Java 实现，主要用于构建和管理公有云、私有云及混合云环境。\n受影响版本中，plugins/user-authenticators/saml2 模块的 SAML2LoginAPIAuthenticatorCmd.authenticate 方法在处理 SAML Response 时，签名校验守卫条件写成 idpMetadata.getSigningCertificate() != null && sig != null。当 IdP 元数据未注册签名证书而 SAML Response 仍包含 ds:Signature 元素时，整个签名校验块被静默跳过；攻击者只要再满足欺骗 IdP 的 IP 地址或在管理服务器上注册一个攻击者可控的 URL 之一，便可凭借一份携带任意虚假签名的 SAML Response 完成认证、获得合法会话，实现未授权身份绕过。同一漏洞模式在方法内层的 EncryptedAssertion 签名校验处再次出现。\n修复版本中通过将签名校验拆出为独立的 validateSAMLSignature 方法，并改为仅在 sig 为 null 时直接返回；签名存在时强制要求 IdP 已注册签名证书，无证书立即抛出 ACCOUNT_ERROR，SignatureValidator.validate 抛出 ValidationException 时同样抛出 ACCOUNT_ERROR，从根本上切断\"IdP 无签名证书即跳过验签\"的逻辑路径。",
+    "effects": [
+      {
+        "comp_name": "apache-cloudstack",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.20.3.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,4.22.1.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "Improper Verification of Cryptographic Signature",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-34k1-bvoi",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-34k1-bvoi",
+        "name": "https://www.oscs1024.com/hd/MPS-34k1-bvoi"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-68745",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-68745"
+      },
+      {
+        "url": "https://lists.apache.org/thread/g6cwddtjrwbh1d56wjz4cfp3fzfm4kbc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Apache CloudStack SAML 认证绕过漏洞"
+  },
+  "first_saved_at": "2026-08-21T10:23:04+00:00"
+}

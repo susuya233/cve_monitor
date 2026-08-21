@@ -961,5 +961,6 @@
   "753523eed8406aa7a9c3e1c628d8d637bfc01252": "Dokan（dokan-lite）是一款开源的 WordPress 多商户市场解决方案插件，用于在 WooCommerce 之上提供多商户、订单、提现与商品管理能力。\n受影响版本中，AdminExtensionsController、AdminOnboardingController、SetupWizard 与 SetupWizardNoWC 四个安装/激活 WordPress.org 插件的入口仅以 manage_woocommerce 作为权限校验，而 Shop Manager 等持有 manage_woocommerce 的角色并不天然具备 install_plugins 与 activate_plugins。攻击者持有 Shop Manager 凭证向 /dokan/v1/extensions/install 提交任意插件 slug 即可写入任意插件；通过 /dokan/v1/onboarding 触发 create_onboarding，进入 install_required_plugins 后由 SetupWizard::install_plugin 调用 dokan_install_wp_org_plugin 触发后台安装并激活，实现任意代码执行。\n修复版本中通过将四条路径改为基于 install_plugins（必要时叠加 activate_plugins）的判定完成修补：AdminExtensionsController::register_routes 把 permission_callback 改为新增的 check_install_permission，仅要求 install_plugins；SetupWizard::user_can_install_plugin 同时校验 install_plugins 与 activate_plugins；AdminOnboardingController::install_required_plugins 复用该谓词跳过无权限安装；SetupWizardNoWC::install_woocommerce 在调度前调用该谓词拒绝未授权安装，关闭 Shop Manager 触发的提权链。",
   "fa2624b1f1ce105cedf91e081bd8a7f3a00ce30e": "CVE-2026-77264漏洞",
   "8fc295b9fc38c86ca7de4060bace54ae70f76f9f": "自动化 Web 平台 – WooCommerce 的通知和 OTP、WordPress 的高级国家/地区代码插件在 4.8.6 及之前的版本中容易受到身份验证绕过的影响。这是因为，handle_email_otp_return() 函数在响应可公开访问的 OTP 请求时返回秘密魔术登录令牌，而不是仅将其传递到用户的电子邮件地址。这使得未经身份验证的攻击者可以以网站上的任何用户（包括管理员）身份登录（如果他们知道该用户的电子邮件地址）。",
-  "699b140097b5b4a913b786ee7b4f10cd36b2d2c8": "重定向后执行 (EAR)"
+  "699b140097b5b4a913b786ee7b4f10cd36b2d2c8": "重定向后执行 (EAR)",
+  "6bac147f3c484357812db3f185437f2ebea07342": "Apache CloudStack SAML 认证绕过漏洞"
 }

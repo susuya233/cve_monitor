@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-08-21T10:23:02+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-pxqk-jrd3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，从而导致未授权的用户或资源可以被访问或篡改。",
+        "title": "什么是访问控制不当"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n",
+        "title": "访问控制不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防访问控制不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-65613",
+    "cvss": {},
+    "cvss_score": 7.6,
+    "cvss_vector": "",
+    "cwe": "CWE-284",
+    "description": "Apache CloudStack 是开源基础设施即服务（IaaS）云管理平台，提供计算、网络、存储资源编排和租户隔离能力，Webhook 模块用于把平台事件推送到外部 URL。\n受影响版本中，WebhookApiServiceImpl 的 listWebhookDeliveries 与 deleteWebhookDelivery 在按账号或域校验调用者可见 Webhook 之前就允许发起搜索与删除。listWebhookDeliveries 调用 webhookDeliveryJoinDao.searchAndCountByListApiParameters 时，仅在调用者显式传入 webhookId 时才用其过滤，否则直接调用 getIdsOfAccessibleWebhooks(caller) 返回 root admin 的空列表，导致非 admin 调用者提供的 webhookId 不在自身可见集时仍可越权命中其他账号下的交付记录并读取；deleteWebhookDelivery 直接把入参 webhookId 透传给 webhookDeliveryDao.deleteByDeleteApiParams，未先用 isCallerRootAdmin 与 getIdsOfAccessibleWebhooks 把可删除范围收缩到调用者自身可见的 Webhook，且 basicWebhookDeliveryApiCheck 调用时未传入 isCallerRootAdmin，跨账号交付也可被删除。\n修复版本中通过在 basicWebhookDeliveryApiCheck 增加 isCallerRootAdmin 形参并在 listWebhookDeliveries、deleteWebhookDelivery 中显式调用 accountManager.isRootAdmin 与 accountManager.isAdmin 重新判定调用者身份，把 list 与 delete 的范围限制到 getIdsOfAccessibleWebhooks 返回的可见 Webhook 集，同时把 isCallerRootAdmin 透传到 DAO 层 searchAndCountByListApiParameters 与 deleteByDeleteApiParams，避免 root admin 拿到空列表时退化为未过滤查询，切断了跨账号读取与跨账号删除路径。",
+    "effects": [
+      {
+        "comp_name": "apache-cloudstack",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.20.0.0,4.20.3.1)",
+            "min_fixed_version": "4.20.3.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.21.0.0,4.22.1.1)",
+            "min_fixed_version": "4.22.1.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "访问控制不当",
+    "kind_en": "访问控制不当",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-pxqk-jrd3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pxqk-jrd3",
+        "name": "https://www.oscs1024.com/hd/MPS-pxqk-jrd3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-65613",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-65613"
+      },
+      {
+        "url": "https://lists.apache.org/thread/g6cwddtjrwbh1d56wjz4cfp3fzfm4kbc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Apache CloudStack Webhook交付列表与删除授权绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，从而导致未授权的用户或资源可以被访问或篡改。",
+        "title": "什么是访问控制不当"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n",
+        "title": "访问控制不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防访问控制不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-65613",
+    "cvss": {},
+    "cvss_score": 7.6,
+    "cvss_vector": "",
+    "cwe": "CWE-284",
+    "description": "Apache CloudStack 是开源基础设施即服务（IaaS）云管理平台，提供计算、网络、存储资源编排和租户隔离能力，Webhook 模块用于把平台事件推送到外部 URL。\n受影响版本中，WebhookApiServiceImpl 的 listWebhookDeliveries 与 deleteWebhookDelivery 在按账号或域校验调用者可见 Webhook 之前就允许发起搜索与删除。listWebhookDeliveries 调用 webhookDeliveryJoinDao.searchAndCountByListApiParameters 时，仅在调用者显式传入 webhookId 时才用其过滤，否则直接调用 getIdsOfAccessibleWebhooks(caller) 返回 root admin 的空列表，导致非 admin 调用者提供的 webhookId 不在自身可见集时仍可越权命中其他账号下的交付记录并读取；deleteWebhookDelivery 直接把入参 webhookId 透传给 webhookDeliveryDao.deleteByDeleteApiParams，未先用 isCallerRootAdmin 与 getIdsOfAccessibleWebhooks 把可删除范围收缩到调用者自身可见的 Webhook，且 basicWebhookDeliveryApiCheck 调用时未传入 isCallerRootAdmin，跨账号交付也可被删除。\n修复版本中通过在 basicWebhookDeliveryApiCheck 增加 isCallerRootAdmin 形参并在 listWebhookDeliveries、deleteWebhookDelivery 中显式调用 accountManager.isRootAdmin 与 accountManager.isAdmin 重新判定调用者身份，把 list 与 delete 的范围限制到 getIdsOfAccessibleWebhooks 返回的可见 Webhook 集，同时把 isCallerRootAdmin 透传到 DAO 层 searchAndCountByListApiParameters 与 deleteByDeleteApiParams，避免 root admin 拿到空列表时退化为未过滤查询，切断了跨账号读取与跨账号删除路径。",
+    "effects": [
+      {
+        "comp_name": "apache-cloudstack",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.20.0.0,4.20.3.1)",
+            "min_fixed_version": "4.20.3.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.21.0.0,4.22.1.1)",
+            "min_fixed_version": "4.22.1.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "访问控制不当",
+    "kind_en": "Improper Access Control",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-pxqk-jrd3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pxqk-jrd3",
+        "name": "https://www.oscs1024.com/hd/MPS-pxqk-jrd3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-65613",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-65613"
+      },
+      {
+        "url": "https://lists.apache.org/thread/g6cwddtjrwbh1d56wjz4cfp3fzfm4kbc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Apache CloudStack Webhook交付列表与删除授权绕过漏洞"
+  },
+  "first_saved_at": "2026-08-21T10:23:02+00:00"
+}

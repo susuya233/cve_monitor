@@ -1,0 +1,151 @@
+{
+  "saved_at": "2026-08-21T10:23:06+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-pabr-7ntd",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-63046",
+    "cvss": {},
+    "cvss_score": 9,
+    "cvss_vector": "",
+    "cwe": "CWE-88",
+    "description": "Apache InLong 是 Apache 软件基金会旗下的一站式海量数据集成服务，提供数据采集、传输、聚合与排序能力，相关代码以 Java 实现并在 GitHub 上以 Apache-2.0 协议开源。\n受影响版本中，Manager 端的 ModuleController 公开 REST 接口允许具备 INLONG_ADMIN 角色的调用方在 ModuleRequest 中写入任意 startCommand / stopCommand / checkCommand / installCommand / uninstallCommand 字符串；该请求经 ModuleServiceImpl.save / update 持久化至 Manager 数据库后，Agent 端的 ModuleManager 在 installModule / startModule / stopModule / uninstallModule / isProcessAllStarted 等方法中，将这些字符串原样传入 org.apache.inlong.agent.utils.ExcuteLinux.exeCmd(String)，而后者内部使用 /bin/sh -c 派生子进程，整个调用链既无 shell 元字符过滤也无 argv[0] 白名单校验。攻击者只需在命令字符串中拼接 ; | & $( ) 等 shell 元字符或附加任意可执行文件名，即可在所有部署了该模块的 Agent 主机上以运行 Agent 进程的系统权限执行任意 shell 命令，构成由 Manager 管理员凭证通向 Agent 节点完整控制权的提权 / 远程代码执行路径。\n修复版本中通过PR #12151 将 ExcuteLinux 改造为基于 ProcessBuilder 的 argv 数组入口 exeCmd(String[]) / exeCmd(List,File,long) 与链式 exePipedCmd，彻底移除 /bin/sh -c 调用，并新增 ModuleCommandValidator 与 AllowedRootsResolver 在 Agent 端执行前对 argv[0]、元字符与工作目录根路径做白名单与路径根校验；同时 PR #12155 在 ModuleServiceImpl.save / update 中调用 ModuleCommandValidator.validateOnSave / validateOnUpdate 进行保存前白名单校验，发现违规时通过 ErrorCodeEnum.MODULE_COMMAND_NOT_IN_WHITELIST 抛出 BusinessException，从源头阻断非法命令进入持久化与执行链。",
+    "effects": [
+      {
+        "comp_name": "org.apache.inlong:inlong-agent",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.4.0)",
+            "min_fixed_version": "2.4.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.apache.inlong:inlong-manager",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.4.0)",
+            "min_fixed_version": "2.4.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "参数注入或修改",
+    "kind_en": "命令中参数分隔符的不正确中和（“参数注入”）",
+    "last_modified_time": "2026-08-21",
+    "level": "Critical",
+    "mps_id": "MPS-pabr-7ntd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pabr-7ntd",
+        "name": "https://www.oscs1024.com/hd/MPS-pabr-7ntd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-63046",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-63046"
+      },
+      {
+        "url": "https://lists.apache.org/thread/2pgz70rz9ozfm7vm5c33po3yyspq846y",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Apache InLong 模块命令参数注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-63046",
+    "cvss": {},
+    "cvss_score": 9,
+    "cvss_vector": "",
+    "cwe": "CWE-88",
+    "description": "Apache InLong 是 Apache 软件基金会旗下的一站式海量数据集成服务，提供数据采集、传输、聚合与排序能力，相关代码以 Java 实现并在 GitHub 上以 Apache-2.0 协议开源。\n受影响版本中，Manager 端的 ModuleController 公开 REST 接口允许具备 INLONG_ADMIN 角色的调用方在 ModuleRequest 中写入任意 startCommand / stopCommand / checkCommand / installCommand / uninstallCommand 字符串；该请求经 ModuleServiceImpl.save / update 持久化至 Manager 数据库后，Agent 端的 ModuleManager 在 installModule / startModule / stopModule / uninstallModule / isProcessAllStarted 等方法中，将这些字符串原样传入 org.apache.inlong.agent.utils.ExcuteLinux.exeCmd(String)，而后者内部使用 /bin/sh -c 派生子进程，整个调用链既无 shell 元字符过滤也无 argv[0] 白名单校验。攻击者只需在命令字符串中拼接 ; | & $( ) 等 shell 元字符或附加任意可执行文件名，即可在所有部署了该模块的 Agent 主机上以运行 Agent 进程的系统权限执行任意 shell 命令，构成由 Manager 管理员凭证通向 Agent 节点完整控制权的提权 / 远程代码执行路径。\n修复版本中通过PR #12151 将 ExcuteLinux 改造为基于 ProcessBuilder 的 argv 数组入口 exeCmd(String[]) / exeCmd(List,File,long) 与链式 exePipedCmd，彻底移除 /bin/sh -c 调用，并新增 ModuleCommandValidator 与 AllowedRootsResolver 在 Agent 端执行前对 argv[0]、元字符与工作目录根路径做白名单与路径根校验；同时 PR #12155 在 ModuleServiceImpl.save / update 中调用 ModuleCommandValidator.validateOnSave / validateOnUpdate 进行保存前白名单校验，发现违规时通过 ErrorCodeEnum.MODULE_COMMAND_NOT_IN_WHITELIST 抛出 BusinessException，从源头阻断非法命令进入持久化与执行链。",
+    "effects": [
+      {
+        "comp_name": "org.apache.inlong:inlong-agent",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.4.0)",
+            "min_fixed_version": "2.4.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.apache.inlong:inlong-manager",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.4.0)",
+            "min_fixed_version": "2.4.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "参数注入或修改",
+    "kind_en": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "last_modified_time": "2026-08-21",
+    "level": "Critical",
+    "mps_id": "MPS-pabr-7ntd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pabr-7ntd",
+        "name": "https://www.oscs1024.com/hd/MPS-pabr-7ntd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-63046",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-63046"
+      },
+      {
+        "url": "https://lists.apache.org/thread/2pgz70rz9ozfm7vm5c33po3yyspq846y",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Apache InLong 模块命令参数注入漏洞"
+  },
+  "first_saved_at": "2026-08-21T10:23:06+00:00"
+}
