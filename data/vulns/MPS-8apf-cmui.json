@@ -1,0 +1,157 @@
+{
+  "saved_at": "2026-08-21T20:18:50+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-8apf-cmui",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Adjacent",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54134",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-73",
+    "description": "OctoPrint 是开源 3D 打印机控制 Web 应用,基于 Flask 和 Tornado 构建上传处理功能。\n受影响版本中,UploadStorageFallbackHandler 的内部保留字段 path、filename、size 等原本仅供 Tornado 上传处理器在流式写入临时文件后向 Flask 传递临时文件路径使用。CVE-2025-48067 的修复仅过滤了 multipart form-data 中的这些字段,但未防护通过 URL query parameter 或 Tornado 与 Werkzeug 之间解析差异(smuggling)注入的同名参数,导致攻击者可用具有 FILE_UPLOAD 权限的账户将服务器上任意可读文件伪装为新上传文件并移入上传文件夹,从而实现配置文件等敏感文件的外泄。\n修复版本中通过新增 _deny_reserved_fields() 方法在 Tornado handler 的 prepare 阶段和请求体处理完成后两次拒绝携带保留字段的请求,使用 secrets.token_hex 生成新 multipart boundary 替换客户端提供的 boundary 以消除解析差异,并通过 Werkzeug 的 parse_form_data 对重写后的请求体进行严格校验,确保最终传递给 Flask 的请求不包含任何客户端可控的内部字段。",
+    "effects": [
+      {
+        "comp_name": "octoprint",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.11.8)",
+            "min_fixed_version": "1.11.8",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0rc1,2.0.0rc3)",
+            "min_fixed_version": "2.0.0rc3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "文件名或路径的外部控制",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-8apf-cmui",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/OctoPrint/OctoPrint/security/advisories/GHSA-j4h9-pm27-4rfw",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-j4h9-pm27-4rfw",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源",
+      "终端软件"
+    ],
+    "title": "OctoPrint文件越权访问漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Adjacent",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54134",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-73",
+    "description": "OctoPrint 是开源 3D 打印机控制 Web 应用,基于 Flask 和 Tornado 构建上传处理功能。\n受影响版本中,UploadStorageFallbackHandler 的内部保留字段 path、filename、size 等原本仅供 Tornado 上传处理器在流式写入临时文件后向 Flask 传递临时文件路径使用。CVE-2025-48067 的修复仅过滤了 multipart form-data 中的这些字段,但未防护通过 URL query parameter 或 Tornado 与 Werkzeug 之间解析差异(smuggling)注入的同名参数,导致攻击者可用具有 FILE_UPLOAD 权限的账户将服务器上任意可读文件伪装为新上传文件并移入上传文件夹,从而实现配置文件等敏感文件的外泄。\n修复版本中通过新增 _deny_reserved_fields() 方法在 Tornado handler 的 prepare 阶段和请求体处理完成后两次拒绝携带保留字段的请求,使用 secrets.token_hex 生成新 multipart boundary 替换客户端提供的 boundary 以消除解析差异,并通过 Werkzeug 的 parse_form_data 对重写后的请求体进行严格校验,确保最终传递给 Flask 的请求不包含任何客户端可控的内部字段。",
+    "effects": [
+      {
+        "comp_name": "octoprint",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.11.8)",
+            "min_fixed_version": "1.11.8",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0rc1,2.0.0rc3)",
+            "min_fixed_version": "2.0.0rc3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "External Control of File Name or Path",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-8apf-cmui",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/OctoPrint/OctoPrint/security/advisories/GHSA-j4h9-pm27-4rfw",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-j4h9-pm27-4rfw",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源",
+      "终端软件"
+    ],
+    "title": "OctoPrint文件越权访问漏洞"
+  },
+  "first_saved_at": "2026-08-21T20:18:50+00:00"
+}

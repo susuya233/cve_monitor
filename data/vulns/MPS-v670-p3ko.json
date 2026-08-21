@@ -1,0 +1,191 @@
+{
+  "saved_at": "2026-08-21T20:18:51+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-v670-p3ko",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54071",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "BabelDOC 是 funstory-ai 开发的开源 Python PDF 翻译库，它内嵌的 pdfminer CMap 加载模块对 PDF 字体字典中的 /Encoding 或 /CMapName 名称仅做 NUL 字节剥离就拼成文件路径并直接调用 pickle.loads 反序列化其内容，攻击者只需在构造的 PDF 中使用 #xx 十六进制把 /Encoding 编码为以 '/' 开头的绝对路径即可让 BabelDOC 加载并反序列化任意攻击者可控的 .pickle.gz 文件，从而以 BabelDOC 进程权限执行任意 Python 代码。\n受影响版本中，BabelDOC ≤ 0.6.2（artifact: BabelDOC，repository: pip，language: python）的 babeldoc/pdfminer/cmapdb.py 文件 CMapDB._load_data() 方法先对 PDF 控制的 name 字符串执行 name.replace(\"\\0\", \"\") 仅去除 NUL 字节，然后以 \"%s.pickle.gz\" % name 拼接出 filename，再依次在 cmap_paths = (os.environ.get(\"CMAP_PATH\", \"/usr/share/pdfminer/\"), os.path.join(os.path.dirname(__file__), \"cmap\")) 两个目录下用 os.path.join(directory, filename) 构造路径，当 PDF 字体字典的 /Encoding 使用 #2F 等十六进制解码出以 '/' 开头的绝对路径时 os.path.join 直接丢弃前者返回绝对路径本身并执行 gzip.open(path) + pickle.loads(gzfile.read())，从而触发 CWE-502 不受信任数据反序列化漏洞，以 BabelDOC 进程权限实现任意代码执行。\n修复版本中通过 BabelDOC 0.6.3（fix commit: 28f784ca6b437dbba040bfd9c67110373cd0924b）的 babeldoc/pdfminer/cmapdb.py 文件 CMapDB._load_data() 与新增的 babeldoc/format/pdf/new_parser/runtime/cmap_secure_loader.py 文件 load_verified_cmap_data() 切断上述反序列化路径：CMapDB._load_data 不再基于 PDF 控制字符串拼接并访问外部 cmap 目录，而是把清理 NUL 后的 name 传入 load_verified_cmap_data，该函数先以 _cmap_manifest_data.CMAP_MANIFEST 对文件名进行精确白名单校验，再通过 (BUNDLED_CMAP_DIR / filename).resolve() 与 path.parent == BUNDLED_CMAP_DIR 做目录包含检查，最后对压缩后的 .gz 字节计算 hashlib.sha256 并与白名单中固定的 SHA-256 与 size 逐项比对，CMAP_PATH 环境变量与外部 cmap 搜索目录被完全移除，任何一项校验失败即抛出 CMapIntegrityError 并被上层映射为 CMapNotFound，pickle.loads 永远不会触达未通过完整性校验的字节流，从根本上切断 PDF 控制的 pickle 反序列化利用路径。",
+    "effects": [
+      {
+        "comp_name": "BabelDOC",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0,0.6.3)",
+            "min_fixed_version": "0.6.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "babeldoc",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.6.3)",
+            "min_fixed_version": "0.6.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-07-14",
+    "level": "High",
+    "mps_id": "MPS-v670-p3ko",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/funstory-ai/BabelDOC/security/advisories/GHSA-m8gf-v64p-gfmg",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-m8gf-v64p-gfmg",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "BabelDOC CMap Pickle 反序列化任意代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54071",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "BabelDOC 是 funstory-ai 开发的开源 Python PDF 翻译库，它内嵌的 pdfminer CMap 加载模块对 PDF 字体字典中的 /Encoding 或 /CMapName 名称仅做 NUL 字节剥离就拼成文件路径并直接调用 pickle.loads 反序列化其内容，攻击者只需在构造的 PDF 中使用 #xx 十六进制把 /Encoding 编码为以 '/' 开头的绝对路径即可让 BabelDOC 加载并反序列化任意攻击者可控的 .pickle.gz 文件，从而以 BabelDOC 进程权限执行任意 Python 代码。\n受影响版本中，BabelDOC ≤ 0.6.2（artifact: BabelDOC，repository: pip，language: python）的 babeldoc/pdfminer/cmapdb.py 文件 CMapDB._load_data() 方法先对 PDF 控制的 name 字符串执行 name.replace(\"\\0\", \"\") 仅去除 NUL 字节，然后以 \"%s.pickle.gz\" % name 拼接出 filename，再依次在 cmap_paths = (os.environ.get(\"CMAP_PATH\", \"/usr/share/pdfminer/\"), os.path.join(os.path.dirname(__file__), \"cmap\")) 两个目录下用 os.path.join(directory, filename) 构造路径，当 PDF 字体字典的 /Encoding 使用 #2F 等十六进制解码出以 '/' 开头的绝对路径时 os.path.join 直接丢弃前者返回绝对路径本身并执行 gzip.open(path) + pickle.loads(gzfile.read())，从而触发 CWE-502 不受信任数据反序列化漏洞，以 BabelDOC 进程权限实现任意代码执行。\n修复版本中通过 BabelDOC 0.6.3（fix commit: 28f784ca6b437dbba040bfd9c67110373cd0924b）的 babeldoc/pdfminer/cmapdb.py 文件 CMapDB._load_data() 与新增的 babeldoc/format/pdf/new_parser/runtime/cmap_secure_loader.py 文件 load_verified_cmap_data() 切断上述反序列化路径：CMapDB._load_data 不再基于 PDF 控制字符串拼接并访问外部 cmap 目录，而是把清理 NUL 后的 name 传入 load_verified_cmap_data，该函数先以 _cmap_manifest_data.CMAP_MANIFEST 对文件名进行精确白名单校验，再通过 (BUNDLED_CMAP_DIR / filename).resolve() 与 path.parent == BUNDLED_CMAP_DIR 做目录包含检查，最后对压缩后的 .gz 字节计算 hashlib.sha256 并与白名单中固定的 SHA-256 与 size 逐项比对，CMAP_PATH 环境变量与外部 cmap 搜索目录被完全移除，任何一项校验失败即抛出 CMapIntegrityError 并被上层映射为 CMapNotFound，pickle.loads 永远不会触达未通过完整性校验的字节流，从根本上切断 PDF 控制的 pickle 反序列化利用路径。",
+    "effects": [
+      {
+        "comp_name": "BabelDOC",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0,0.6.3)",
+            "min_fixed_version": "0.6.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "babeldoc",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.6.3)",
+            "min_fixed_version": "0.6.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-07-14",
+    "level": "High",
+    "mps_id": "MPS-v670-p3ko",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/funstory-ai/BabelDOC/security/advisories/GHSA-m8gf-v64p-gfmg",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-m8gf-v64p-gfmg",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "BabelDOC CMap Pickle 反序列化任意代码执行漏洞"
+  },
+  "first_saved_at": "2026-08-21T20:18:51+00:00"
+}
