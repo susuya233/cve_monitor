@@ -1,0 +1,151 @@
+{
+  "saved_at": "2026-08-21T08:32:36+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-gfb8-muzp",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在权限管理方面存在缺陷，未能正确地验证和限制用户的权限。这可能包括访问控制列表（ACL）的不当配置、权限检查的缺失或错误、不恰当的身份验证和授权过程等。攻击者可以利用这些缺陷来绕过访问控制，获得未经授权的权限，执行敏感操作或访问敏感信息。",
+        "title": "什么是权限管理不当"
+      },
+      {
+        "content": "- 水平权限提升：攻击者以与当前授权相同的权限冒充其他用户，获取对其他用户的访问权限。这可能是由于应用程序未能适当验证和限制用户的身份验证和授权。\r\n- 垂直权限提升：攻击者以比其当前授权更高的权限执行操作，获取对更高权限资源的访问。这可以发生在应用程序未正确验证用户请求的权限级别，或者在权限检查过程中存在漏洞的情况下。\r\n- 特权维持：攻击者通过利用特权管理的不当实施，将其特权保持在系统中。这可以包括未及时撤销特权、未正确管理特权的生命周期等。",
+        "title": "权限管理不当常见的攻击方式"
+      },
+      {
+        "content": "- 适当的访问控制：应用程序应该实施适当的访问控制机制，包括强制访问控制列表（ACL）、角色基础访问控制（RBAC）、最小权限原则等，以确保用户只能访问其授权范围内的资源。\r\n- 身份验证和授权的正确实施：应用程序应该正确实施身份验证和授权机制，包括验证用户的身份、验证请求的权限级别，以及在授权过程中进行必要的权限检查。\r\n- 权限分离原则：应用程序应该根据职责和功能将特权分离，并只授予用户所需的最低权限，遵循最小特权原则。\r\n- 审计和监控：应用程序应该记录和监控特权操作，及时检测和响应异常或未经授权的特权访问。\r\n- 安全编码实践：开发人员应遵循安全编码实践，如输入验证、输出编码、错误处理等，以防止特权管理不当的漏洞。",
+        "title": "如何预防权限管理不当"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75796",
+    "cvss": {},
+    "cvss_score": 7.2,
+    "cvss_vector": "",
+    "cwe": "CWE-269",
+    "description": "AI Engine 是开源的 WordPress 插件（PHP），提供 AI 对话、内容生成、图像与 MCP（Model Context Protocol）工具等能力，源代码托管于 jordymeow/ai-engine 仓库。\n受影响版本中，labs/mcp-core.php 中 Meow_MWAI_Labs_MCP_Core::dispatch() 的 wp_create_user 与 wp_update_user 分支仅校验调用者持有 administrator 角色，未对目标账户做对象级权限检查。在 WordPress Multisite 环境下，子站点 Administrator 可通过 wp_update_user 直接修改任意账户（包括 Network Administrator）的密码或角色，并通过 wp_create_user 授予超出自身权限的角色，从而接管网络上任意账户。\n修复版本中通过在 dispatch() 的 wp_create_user 分支增加 current_user_can('create_users') 校验与目标角色在 get_editable_roles() 中的白名单校验，在 wp_update_user 分支增加 current_user_can('edit_user', $target_id) 与角色变更时的 current_user_can('promote_user') 校验，使对象级权限边界与 WordPress 后台一致，从而切断 Multisite 子站点管理员的越权提权链路。",
+    "effects": [
+      {
+        "comp_name": "ai-engine",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.8.0,3.6.1)",
+            "min_fixed_version": "3.6.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "权限管理不当",
+    "kind_en": "权限管理不当",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-gfb8-muzp",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gfb8-muzp",
+        "name": "https://www.oscs1024.com/hd/MPS-gfb8-muzp"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75796",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75796"
+      },
+      {
+        "url": "https://wpscan.com/vulnerability/919da0c7-7643-4903-9454-2fb66353f5cb/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "AI Engine WordPress插件MCP用户工具权限提升漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在权限管理方面存在缺陷，未能正确地验证和限制用户的权限。这可能包括访问控制列表（ACL）的不当配置、权限检查的缺失或错误、不恰当的身份验证和授权过程等。攻击者可以利用这些缺陷来绕过访问控制，获得未经授权的权限，执行敏感操作或访问敏感信息。",
+        "title": "什么是权限管理不当"
+      },
+      {
+        "content": "- 水平权限提升：攻击者以与当前授权相同的权限冒充其他用户，获取对其他用户的访问权限。这可能是由于应用程序未能适当验证和限制用户的身份验证和授权。\r\n- 垂直权限提升：攻击者以比其当前授权更高的权限执行操作，获取对更高权限资源的访问。这可以发生在应用程序未正确验证用户请求的权限级别，或者在权限检查过程中存在漏洞的情况下。\r\n- 特权维持：攻击者通过利用特权管理的不当实施，将其特权保持在系统中。这可以包括未及时撤销特权、未正确管理特权的生命周期等。",
+        "title": "权限管理不当常见的攻击方式"
+      },
+      {
+        "content": "- 适当的访问控制：应用程序应该实施适当的访问控制机制，包括强制访问控制列表（ACL）、角色基础访问控制（RBAC）、最小权限原则等，以确保用户只能访问其授权范围内的资源。\r\n- 身份验证和授权的正确实施：应用程序应该正确实施身份验证和授权机制，包括验证用户的身份、验证请求的权限级别，以及在授权过程中进行必要的权限检查。\r\n- 权限分离原则：应用程序应该根据职责和功能将特权分离，并只授予用户所需的最低权限，遵循最小特权原则。\r\n- 审计和监控：应用程序应该记录和监控特权操作，及时检测和响应异常或未经授权的特权访问。\r\n- 安全编码实践：开发人员应遵循安全编码实践，如输入验证、输出编码、错误处理等，以防止特权管理不当的漏洞。",
+        "title": "如何预防权限管理不当"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75796",
+    "cvss": {},
+    "cvss_score": 7.2,
+    "cvss_vector": "",
+    "cwe": "CWE-269",
+    "description": "AI Engine 是开源的 WordPress 插件（PHP），提供 AI 对话、内容生成、图像与 MCP（Model Context Protocol）工具等能力，源代码托管于 jordymeow/ai-engine 仓库。\n受影响版本中，labs/mcp-core.php 中 Meow_MWAI_Labs_MCP_Core::dispatch() 的 wp_create_user 与 wp_update_user 分支仅校验调用者持有 administrator 角色，未对目标账户做对象级权限检查。在 WordPress Multisite 环境下，子站点 Administrator 可通过 wp_update_user 直接修改任意账户（包括 Network Administrator）的密码或角色，并通过 wp_create_user 授予超出自身权限的角色，从而接管网络上任意账户。\n修复版本中通过在 dispatch() 的 wp_create_user 分支增加 current_user_can('create_users') 校验与目标角色在 get_editable_roles() 中的白名单校验，在 wp_update_user 分支增加 current_user_can('edit_user', $target_id) 与角色变更时的 current_user_can('promote_user') 校验，使对象级权限边界与 WordPress 后台一致，从而切断 Multisite 子站点管理员的越权提权链路。",
+    "effects": [
+      {
+        "comp_name": "ai-engine",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.8.0,3.6.1)",
+            "min_fixed_version": "3.6.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "权限管理不当",
+    "kind_en": "Improper Privilege Management",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-gfb8-muzp",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gfb8-muzp",
+        "name": "https://www.oscs1024.com/hd/MPS-gfb8-muzp"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75796",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75796"
+      },
+      {
+        "url": "https://wpscan.com/vulnerability/919da0c7-7643-4903-9454-2fb66353f5cb/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "AI Engine WordPress插件MCP用户工具权限提升漏洞"
+  },
+  "first_saved_at": "2026-08-21T08:32:36+00:00"
+}
