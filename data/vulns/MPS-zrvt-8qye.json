@@ -1,0 +1,199 @@
+{
+  "saved_at": "2026-08-21T19:21:16+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-zrvt-8qye",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62674",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9
+        }
+      ]
+    },
+    "cvss_score": 9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "Omnigent 是开源 AI Agent 框架与元编排层，用于协调多个编码 Agent 协作完成任务，本身属于大模型与 AI Agent 基础设施组件。\n受影响版本中，PUT /sessions/{session_id}/agent 处理器 update_session_agent 仅校验调用者对目标会话具备 LEVEL_EDIT 权限，未拒绝绑定到 agent.session_id 为 None 的共享或模板 Agent。具备会话编辑权限的认证用户可向 omnigent/server/routes/sessions.py 中的 update_session_agent 上传新的 Agent 包（bundle）替换共享 Agent 存储内容，并在其中植入 stdio MCP 服务器配置；后续任何引用该共享 Agent 的会话在加载阶段都会通过 omnigent/tools/mcp.py 的 stdio_client 启动攻击者指定的命令，从而在 Omnigent runner 进程权限下执行任意系统命令，泄露文件、凭据、工作区数据并影响内部服务与 runner 可用性。\n修复版本中通过在 update_session_agent 中复用 session_mcp_servers._editable_agent 已有的守卫，新增 agent.session_id is None 判断并直接以 INVALID_INPUT 拒绝请求，切断认证用户通过 PUT 覆盖共享或模板 Agent 包的路径，使后续会话不再加载被污染的 stdio MCP 配置。",
+    "effects": [
+      {
+        "comp_name": "omnigent",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.3.0)",
+            "min_fixed_version": "0.3.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-08-22",
+    "level": "Critical",
+    "mps_id": "MPS-zrvt-8qye",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zrvt-8qye",
+        "name": "https://www.oscs1024.com/hd/MPS-zrvt-8qye"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-62674",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-62674"
+      },
+      {
+        "url": "https://github.com/omnigent-ai/omnigent/commit/25a22dc9e6da4648d23749f0a589e47e6aed991b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/omnigent-ai/omnigent/pull/1418",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/omnigent-ai/omnigent/releases/tag/v0.3.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/omnigent-ai/omnigent/security/advisories/GHSA-jrrm-9hc7-2v3h",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "Omnigent 共享 Agent 包覆盖导致远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62674",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9
+        }
+      ]
+    },
+    "cvss_score": 9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "Omnigent 是开源 AI Agent 框架与元编排层，用于协调多个编码 Agent 协作完成任务，本身属于大模型与 AI Agent 基础设施组件。\n受影响版本中，PUT /sessions/{session_id}/agent 处理器 update_session_agent 仅校验调用者对目标会话具备 LEVEL_EDIT 权限，未拒绝绑定到 agent.session_id 为 None 的共享或模板 Agent。具备会话编辑权限的认证用户可向 omnigent/server/routes/sessions.py 中的 update_session_agent 上传新的 Agent 包（bundle）替换共享 Agent 存储内容，并在其中植入 stdio MCP 服务器配置；后续任何引用该共享 Agent 的会话在加载阶段都会通过 omnigent/tools/mcp.py 的 stdio_client 启动攻击者指定的命令，从而在 Omnigent runner 进程权限下执行任意系统命令，泄露文件、凭据、工作区数据并影响内部服务与 runner 可用性。\n修复版本中通过在 update_session_agent 中复用 session_mcp_servers._editable_agent 已有的守卫，新增 agent.session_id is None 判断并直接以 INVALID_INPUT 拒绝请求，切断认证用户通过 PUT 覆盖共享或模板 Agent 包的路径，使后续会话不再加载被污染的 stdio MCP 配置。",
+    "effects": [
+      {
+        "comp_name": "omnigent",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.3.0)",
+            "min_fixed_version": "0.3.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-08-22",
+    "level": "Critical",
+    "mps_id": "MPS-zrvt-8qye",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zrvt-8qye",
+        "name": "https://www.oscs1024.com/hd/MPS-zrvt-8qye"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-62674",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-62674"
+      },
+      {
+        "url": "https://github.com/omnigent-ai/omnigent/commit/25a22dc9e6da4648d23749f0a589e47e6aed991b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/omnigent-ai/omnigent/pull/1418",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/omnigent-ai/omnigent/releases/tag/v0.3.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/omnigent-ai/omnigent/security/advisories/GHSA-jrrm-9hc7-2v3h",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "Omnigent 共享 Agent 包覆盖导致远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-08-21T19:21:16+00:00"
+}

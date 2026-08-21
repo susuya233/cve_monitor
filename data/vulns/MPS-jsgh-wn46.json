@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-08-21T19:21:12+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-jsgh-wn46",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77237",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-843",
+    "description": "FreeRTOS-Kernel 是开源的 C 语言实时操作系统内核，为 FreeRTOS 提供任务调度、队列与信号量原语；其中 queue set 机制（xQueueAddToSet / xQueueRemoveFromSet）允许任务将多个队列与信号量聚合为一个集合统一等待。\n受影响版本中，在启用 MPU 的移植端口上，xQueueAddToSet() 在将 QueueHandle_t 加入 QueueSetHandle_t 时缺少对入队对象 ucQueueType 与既有集合成员 ucQueueType 的一致性校验。当 configUSE_QUEUE_SETS 被设置为 1 时，未特权任务可向 queue set 投递与现有成员类型不一致的对象，借助类型不匹配绕过 MPU 边界，将不可读的特权内核内存以跨边界方式暴露给未特权上下文读取。\n修复版本中通过在 xQueueAddToSet() 中加入 ucQueueType 与已存在集合成员 ucQueueType 的严格一致性比对，仅允许类型完全匹配的队列对象加入 queue set，从而切断未特权任务借由类型错配越权读取特权内核内存的路径。",
+    "effects": [
+      {
+        "comp_name": "freertos-kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,11.3.1)",
+            "min_fixed_version": "11.3.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用不兼容类型访问资源（类型混淆）",
+    "kind_en": "使用不兼容类型访问资源（“类型混淆”）",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-jsgh-wn46",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jsgh-wn46",
+        "name": "https://www.oscs1024.com/hd/MPS-jsgh-wn46"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77237",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77237"
+      },
+      {
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-086-aws/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FreeRTOS/FreeRTOS-Kernel/tree/11.3.1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FreeRTOS-Kernel xQueueAddToSet 类型校验缺失导致特权内核内存越权读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77237",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-843",
+    "description": "FreeRTOS-Kernel 是开源的 C 语言实时操作系统内核，为 FreeRTOS 提供任务调度、队列与信号量原语；其中 queue set 机制（xQueueAddToSet / xQueueRemoveFromSet）允许任务将多个队列与信号量聚合为一个集合统一等待。\n受影响版本中，在启用 MPU 的移植端口上，xQueueAddToSet() 在将 QueueHandle_t 加入 QueueSetHandle_t 时缺少对入队对象 ucQueueType 与既有集合成员 ucQueueType 的一致性校验。当 configUSE_QUEUE_SETS 被设置为 1 时，未特权任务可向 queue set 投递与现有成员类型不一致的对象，借助类型不匹配绕过 MPU 边界，将不可读的特权内核内存以跨边界方式暴露给未特权上下文读取。\n修复版本中通过在 xQueueAddToSet() 中加入 ucQueueType 与已存在集合成员 ucQueueType 的严格一致性比对，仅允许类型完全匹配的队列对象加入 queue set，从而切断未特权任务借由类型错配越权读取特权内核内存的路径。",
+    "effects": [
+      {
+        "comp_name": "freertos-kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,11.3.1)",
+            "min_fixed_version": "11.3.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用不兼容类型访问资源（类型混淆）",
+    "kind_en": "Access of Resource Using Incompatible Type ('Type Confusion')",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-jsgh-wn46",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jsgh-wn46",
+        "name": "https://www.oscs1024.com/hd/MPS-jsgh-wn46"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77237",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77237"
+      },
+      {
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-086-aws/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FreeRTOS/FreeRTOS-Kernel/tree/11.3.1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FreeRTOS-Kernel xQueueAddToSet 类型校验缺失导致特权内核内存越权读取漏洞"
+  },
+  "first_saved_at": "2026-08-21T19:21:12+00:00"
+}

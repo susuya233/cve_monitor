@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-08-21T19:21:13+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-cxhq-3lue",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77236",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:H",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-787",
+    "description": "FreeRTOS-Kernel 是由 Amazon 维护并以 MIT 协议开源的实时操作系统内核，其 ARMv8-M 端口基于 TrustZone-M 在安全世界（Secure World）和非安全世界（Normal World）之间提供隔离与上下文切换能力，安全世界使用 secure_context 数组分配任务私有栈。\n受影响版本中，secure_context.c 中的 SecureContext_AllocateContext 在收到来自非安全世界传入的 ulSecureStackSize 后，未对该参数执行任何最小值或上溢检查便直接调用 pvPortMalloc( ulSecureStackSize + securecontextSTACK_SEAL_SIZE )，随后在堆内存外的 pucStackMemory + ulSecureStackSize 处写入两段 32 位栈封印值，并在 CONTROL 寄存器字写入阶段越过分配边界。非安全任务通过 portALLOCATE_SECURE_CONTEXT 宏展开的 vPortAllocateSecureContext 触发 SVC，把任意小尺寸的 ulSecureStackSize 传入安全世界即可触发安全世界堆元数据的越界写入，影响 TrustZone-M 隔离。\n修复版本中通过在 pvPortMalloc 之前新增 ulSecureStackSize < securecontextSTACK_SEAL_SIZE 与 ulSecureStackSize > UINT32_MAX - securecontextSTACK_SEAL_SIZE 两项边界校验，拒绝过小或会与封印尺寸相加产生整数溢出的请求，使 pucStackMemory 保持为 NULL 并由调用路径 configASSERT 失败，终止了越界写入路径，同时 FreeContext 路径补充了 pucStackLimit 校验以修复相关使用后释放问题。",
+    "effects": [
+      {
+        "comp_name": "amazon:freertos-kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.2.0,11.3.1)",
+            "min_fixed_version": "11.3.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界写入",
+    "kind_en": "越界写入",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-cxhq-3lue",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-cxhq-3lue",
+        "name": "https://www.oscs1024.com/hd/MPS-cxhq-3lue"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77236",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77236"
+      },
+      {
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-086-aws/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FreeRTOS/FreeRTOS-Kernel/releases/tag/V11.3.1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FreeRTOS-Kernel 安全上下文分配最小尺寸校验缺失",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77236",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:H",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-787",
+    "description": "FreeRTOS-Kernel 是由 Amazon 维护并以 MIT 协议开源的实时操作系统内核，其 ARMv8-M 端口基于 TrustZone-M 在安全世界（Secure World）和非安全世界（Normal World）之间提供隔离与上下文切换能力，安全世界使用 secure_context 数组分配任务私有栈。\n受影响版本中，secure_context.c 中的 SecureContext_AllocateContext 在收到来自非安全世界传入的 ulSecureStackSize 后，未对该参数执行任何最小值或上溢检查便直接调用 pvPortMalloc( ulSecureStackSize + securecontextSTACK_SEAL_SIZE )，随后在堆内存外的 pucStackMemory + ulSecureStackSize 处写入两段 32 位栈封印值，并在 CONTROL 寄存器字写入阶段越过分配边界。非安全任务通过 portALLOCATE_SECURE_CONTEXT 宏展开的 vPortAllocateSecureContext 触发 SVC，把任意小尺寸的 ulSecureStackSize 传入安全世界即可触发安全世界堆元数据的越界写入，影响 TrustZone-M 隔离。\n修复版本中通过在 pvPortMalloc 之前新增 ulSecureStackSize < securecontextSTACK_SEAL_SIZE 与 ulSecureStackSize > UINT32_MAX - securecontextSTACK_SEAL_SIZE 两项边界校验，拒绝过小或会与封印尺寸相加产生整数溢出的请求，使 pucStackMemory 保持为 NULL 并由调用路径 configASSERT 失败，终止了越界写入路径，同时 FreeContext 路径补充了 pucStackLimit 校验以修复相关使用后释放问题。",
+    "effects": [
+      {
+        "comp_name": "amazon:freertos-kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.2.0,11.3.1)",
+            "min_fixed_version": "11.3.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界写入",
+    "kind_en": "Out-of-bounds Write",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-cxhq-3lue",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-cxhq-3lue",
+        "name": "https://www.oscs1024.com/hd/MPS-cxhq-3lue"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77236",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77236"
+      },
+      {
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-086-aws/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FreeRTOS/FreeRTOS-Kernel/releases/tag/V11.3.1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FreeRTOS-Kernel 安全上下文分配最小尺寸校验缺失"
+  },
+  "first_saved_at": "2026-08-21T19:21:13+00:00"
+}
