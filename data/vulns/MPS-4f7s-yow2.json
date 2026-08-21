@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-08-21T21:17:56+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4f7s-yow2",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-67359",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@joomla.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "J2Store 是 j2commerce.com 发布的 Joomla 电子商务扩展插件，用于在 Joomla 中提供商品目录、购物车与订单管理能力，属于闭源商业组件。\n受影响版本中，订单详情（结算确认页）对应的服务端渲染逻辑直接以请求参数中的 order_id 作为对象引用键，且未校验当前访问者与该订单的所属关系，导致任意未认证访问者只需在查询参数中提供任意 order_id 即可触发对应订单结算确认页面的渲染，获取订单中的商品明细、价格和订单总额。\n修复版本中通过在订单结算确认页面对 order_id 增加访问者与订单归属的鉴权判定，并对 order_id 的可猜测性或可枚举性加以约束，使未授权访问者无法再以任意订单标识读取他人订单内容。",
+    "effects": [
+      {
+        "comp_name": "com_j2store",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.0.20]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.1.0,4.1.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.0.0,3.3.20]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-4f7s-yow2",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4f7s-yow2",
+        "name": "https://www.oscs1024.com/hd/MPS-4f7s-yow2"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67359",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-67359"
+      },
+      {
+        "url": "https://www.j2commerce.com/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "J2Store订单内容泄露漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-67359",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@joomla.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "J2Store 是 j2commerce.com 发布的 Joomla 电子商务扩展插件，用于在 Joomla 中提供商品目录、购物车与订单管理能力，属于闭源商业组件。\n受影响版本中，订单详情（结算确认页）对应的服务端渲染逻辑直接以请求参数中的 order_id 作为对象引用键，且未校验当前访问者与该订单的所属关系，导致任意未认证访问者只需在查询参数中提供任意 order_id 即可触发对应订单结算确认页面的渲染，获取订单中的商品明细、价格和订单总额。\n修复版本中通过在订单结算确认页面对 order_id 增加访问者与订单归属的鉴权判定，并对 order_id 的可猜测性或可枚举性加以约束，使未授权访问者无法再以任意订单标识读取他人订单内容。",
+    "effects": [
+      {
+        "comp_name": "com_j2store",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.0.20]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.1.0,4.1.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.0.0,3.3.20]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-4f7s-yow2",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4f7s-yow2",
+        "name": "https://www.oscs1024.com/hd/MPS-4f7s-yow2"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67359",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-67359"
+      },
+      {
+        "url": "https://www.j2commerce.com/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "J2Store订单内容泄露漏洞"
+  },
+  "first_saved_at": "2026-08-21T21:17:56+00:00"
+}

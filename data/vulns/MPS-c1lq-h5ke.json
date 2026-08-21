@@ -1,0 +1,177 @@
+{
+  "saved_at": "2026-08-21T21:17:53+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-c1lq-h5ke",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77810",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-95",
+    "description": "aws-athena-query-federation 是 AWS 开源（Apache-2.0）的 Athena 联合查询连接器集合，Neptune 连接器允许通过 Athena SQL 对 Amazon Neptune 图数据库执行 Gremlin、openCypher 与 SPARQL 查询。\n受影响版本中，NeptuneGremlinQueryPassthrough.customConnectorVerifications 接收 Athena 联邦查询请求中由用户提供的 Gremlin 遍历串，并通过 PropertyGraphHandler 调用基于 GremlinGroovyScriptEngine 的脚本引擎执行该串。由于 Groovy 脚本引擎允许直接访问 Java 对象与系统方法，攻击者只需通过 Athena Federated Query 提交一条以 Gremlin 形式透传的查询，即可在承载该连接器的 Lambda 上读取环境变量、IAM 凭据、EC2 IMDS 元数据等敏感属性，从而越权访问 Lambda 的运行环境。\n修复版本中通过将 PropertyGraphHandler 中脚本引擎由 GremlinGroovyScriptEngine 替换为 GremlinLangScriptEngine，将 Gremlin 解析限制在 Gremlin Language 这一安全子集，删除了 NeptuneGremlinQueryPassthrough 中基于 valueMap 字符串的弱校验，并在 NeptuneMetadataHandler 加入运行期 Map 类型检查，使任意 Groovy 执行路径不再可达。",
+    "effects": [
+      {
+        "comp_name": "athena-neptune",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2024.15.1,2026.30.1)",
+            "min_fixed_version": "2026.30.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "eval注入",
+    "kind_en": "动态评估代码中指令的不当中和（“评估注入”）",
+    "last_modified_time": "2026-08-22",
+    "level": "Critical",
+    "mps_id": "MPS-c1lq-h5ke",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-c1lq-h5ke",
+        "name": "https://www.oscs1024.com/hd/MPS-c1lq-h5ke"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77810",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77810"
+      },
+      {
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-087-aws/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/awslabs/aws-athena-query-federation/releases/tag/v2026.30.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/awslabs/aws-athena-query-federation/security/advisories/GHSA-v7c2-5wfg-qg44",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Athena Neptune连接器Gremlin QPT代码注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77810",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-95",
+    "description": "aws-athena-query-federation 是 AWS 开源（Apache-2.0）的 Athena 联合查询连接器集合，Neptune 连接器允许通过 Athena SQL 对 Amazon Neptune 图数据库执行 Gremlin、openCypher 与 SPARQL 查询。\n受影响版本中，NeptuneGremlinQueryPassthrough.customConnectorVerifications 接收 Athena 联邦查询请求中由用户提供的 Gremlin 遍历串，并通过 PropertyGraphHandler 调用基于 GremlinGroovyScriptEngine 的脚本引擎执行该串。由于 Groovy 脚本引擎允许直接访问 Java 对象与系统方法，攻击者只需通过 Athena Federated Query 提交一条以 Gremlin 形式透传的查询，即可在承载该连接器的 Lambda 上读取环境变量、IAM 凭据、EC2 IMDS 元数据等敏感属性，从而越权访问 Lambda 的运行环境。\n修复版本中通过将 PropertyGraphHandler 中脚本引擎由 GremlinGroovyScriptEngine 替换为 GremlinLangScriptEngine，将 Gremlin 解析限制在 Gremlin Language 这一安全子集，删除了 NeptuneGremlinQueryPassthrough 中基于 valueMap 字符串的弱校验，并在 NeptuneMetadataHandler 加入运行期 Map 类型检查，使任意 Groovy 执行路径不再可达。",
+    "effects": [
+      {
+        "comp_name": "athena-neptune",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2024.15.1,2026.30.1)",
+            "min_fixed_version": "2026.30.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "eval注入",
+    "kind_en": "Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection')",
+    "last_modified_time": "2026-08-22",
+    "level": "Critical",
+    "mps_id": "MPS-c1lq-h5ke",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-c1lq-h5ke",
+        "name": "https://www.oscs1024.com/hd/MPS-c1lq-h5ke"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77810",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77810"
+      },
+      {
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-087-aws/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/awslabs/aws-athena-query-federation/releases/tag/v2026.30.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/awslabs/aws-athena-query-federation/security/advisories/GHSA-v7c2-5wfg-qg44",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Athena Neptune连接器Gremlin QPT代码注入漏洞"
+  },
+  "first_saved_at": "2026-08-21T21:17:53+00:00"
+}
