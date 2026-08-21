@@ -1,0 +1,183 @@
+{
+  "saved_at": "2026-08-21T12:34:31+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d08b-8c33",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-47852",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-377",
+    "description": "Spring AI 是开源 Java AI 应用框架，其中的 spring-ai-transformers 模块基于 ONNX Runtime 提供 TransformersEmbeddingModel 等本地嵌入推理能力，会把 tokenizer、模型权重等远程资源下载到本地缓存目录后加载执行。\n受影响版本中，org.springframework.ai.transformers.ResourceCacheService 的无参构造函数将缓存根目录固定为 System.getProperty(\"java.io.tmpdir\") 与字面量子目录 spring-ai-onnx-generative 拼接后的可预测路径。在多用户主机上，任意本地账户都可以预先创建该目录并植入经过构造的恶意 ONNX 模型文件，当受害 Spring AI 应用随后加载嵌入模型时，TransformersEmbeddingModel 会从该缓存目录读取 attacker-controlled 的 ONNX 文件并交给 ONNX Runtime 解析执行，触发模型替换及通过构造模型实现的进一步危害。\n修复版本中通过将 ResourceCacheService 默认缓存目录改为 Files.createTempDirectory(\"spring-ai-model-cache\") 生成的、由系统保证唯一的临时目录，使不同用户、不同进程无法事先抢占该路径，切断本地 ONNX 模型替换链路。",
+    "effects": [
+      {
+        "comp_name": "org.springframework.ai:spring-ai-transformers",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.0.0.1)",
+            "min_fixed_version": "2.0.0.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.1.0,1.1.9)",
+            "min_fixed_version": "1.1.9",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.0.0,1.0.10)",
+            "min_fixed_version": "1.0.10",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不安全的临时文件",
+    "kind_en": "不安全的临时文件",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-d08b-8c33",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://spring.io/security/cve-2026-47852",
+        "name": ""
+      },
+      {
+        "url": "https://spring.io/security/cve-2026-47852/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/commit/369a92670e7de1074a6f35b7a68071a789697932",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/issues/6754",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/releases/tag/v2.0.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/blob/v2.0.1/models/spring-ai-transformers/src/main/java/org/springframework/ai/transformers/ResourceCacheService.java",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "java",
+      "开源"
+    ],
+    "title": "Spring AI 可预测缓存目录导致的本地 ONNX 模型替换漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-47852",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-377",
+    "description": "Spring AI 是开源 Java AI 应用框架，其中的 spring-ai-transformers 模块基于 ONNX Runtime 提供 TransformersEmbeddingModel 等本地嵌入推理能力，会把 tokenizer、模型权重等远程资源下载到本地缓存目录后加载执行。\n受影响版本中，org.springframework.ai.transformers.ResourceCacheService 的无参构造函数将缓存根目录固定为 System.getProperty(\"java.io.tmpdir\") 与字面量子目录 spring-ai-onnx-generative 拼接后的可预测路径。在多用户主机上，任意本地账户都可以预先创建该目录并植入经过构造的恶意 ONNX 模型文件，当受害 Spring AI 应用随后加载嵌入模型时，TransformersEmbeddingModel 会从该缓存目录读取 attacker-controlled 的 ONNX 文件并交给 ONNX Runtime 解析执行，触发模型替换及通过构造模型实现的进一步危害。\n修复版本中通过将 ResourceCacheService 默认缓存目录改为 Files.createTempDirectory(\"spring-ai-model-cache\") 生成的、由系统保证唯一的临时目录，使不同用户、不同进程无法事先抢占该路径，切断本地 ONNX 模型替换链路。",
+    "effects": [
+      {
+        "comp_name": "org.springframework.ai:spring-ai-transformers",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.0.0.1)",
+            "min_fixed_version": "2.0.0.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.1.0,1.1.9)",
+            "min_fixed_version": "1.1.9",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.0.0,1.0.10)",
+            "min_fixed_version": "1.0.10",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不安全的临时文件",
+    "kind_en": "Insecure Temporary File",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-d08b-8c33",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://spring.io/security/cve-2026-47852",
+        "name": ""
+      },
+      {
+        "url": "https://spring.io/security/cve-2026-47852/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/commit/369a92670e7de1074a6f35b7a68071a789697932",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/issues/6754",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/releases/tag/v2.0.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/blob/v2.0.1/models/spring-ai-transformers/src/main/java/org/springframework/ai/transformers/ResourceCacheService.java",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "java",
+      "开源"
+    ],
+    "title": "Spring AI 可预测缓存目录导致的本地 ONNX 模型替换漏洞"
+  },
+  "first_saved_at": "2026-08-21T12:34:31+00:00"
+}

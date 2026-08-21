@@ -1,9 +1,9 @@
 {
   "saved_at": "2026-08-21T12:34:41+00:00",
-  "first_seen": false,
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-8153-8373",
+  "source_page": "https://www.oscs1024.com/hd/MPS-1onp-j35b",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,42 +21,38 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-47879",
-    "cvss": {},
-    "cvss_score": 7,
-    "cvss_vector": "",
+    "cve_id": "CVE-2026-77086",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-22",
-    "description": "Spring Cloud Gateway 是基于 Spring WebFlux 的开源 Java API 网关，提供路由、过滤和协议转换能力；JsonToGrpcGatewayFilterFactory 用于把 HTTP+JSON 请求转换为 gRPC 请求，需要一个 proto descriptor 资源定位。\n受影响版本中，JsonToGrpcGatewayFilterFactory 在调用 apply(Config) 构造 GatewayFilter 时，直接把 Config.protoDescriptor 透传给 resourceLoader.getResource(...) 读取 FileDescriptorSet，任何能够配置或修改 Spring Cloud Gateway 路由的攻击者都可以把 protoDescriptor 写成 file:/、http:// 等任意 Spring Resource 协议，从而读取宿主机文件或访问外部资源，造成敏感文件泄露与 SSRF。\n修复版本中通过为 JsonToGrpcGatewayFilterFactory 增加 EnvironmentAware 与 VALID_PROTO_DESCRIPTOR_PREFIXES_KEY（默认仅允许 classpath: 与 classpath*:），在 apply() 中先用 PathUtils.checkResource 校验 protoDescriptor 必须落在允许前缀内，否则抛出 IllegalArgumentException，从而切断任意 Spring Resource 加载路径。",
+    "description": "SiYuan 是开源的个人知识管理与笔记系统，使用 Go 编写的 kernel 服务提供 HTTP API，并通过 Bazaar 集市管理插件、主题、图标、模板与挂件等扩展。\n受影响版本中，kernel/model/bazaar.go 的 getPackageInstallPath 函数将请求参数 packageName 与基础目录通过 filepath.Join 直接拼接，未校验是否包含 ../ 等路径遍历序列，导致全部 10 个 Bazaar 安装/卸载接口（POST /api/bazaar/installBazaarPlugin、uninstallBazaarPlugin、installBazaarWidget、uninstallBazaarWidget、installBazaarIcon、uninstallBazaarIcon、installBazaarTemplate、uninstallBazaarTemplate、installBazaarTheme、uninstallBazaarTheme）在收到形如 ../../../../target 的 packageName 时，安装流程会将下载的压缩包写入任意目录，卸载流程会调用 os.RemoveAll 递归删除任意目录。\n修复版本中通过在 getPackageInstallPath 入口新增 bazaar.IsValidPackageName 包名合法性校验，并结合 gulu.File.IsSubPath 对最终路径进行容器归属校验，使 ../ 等序列在路径构造阶段即被拒绝，从而切断任意位置文件写入与任意目录递归删除链路。",
     "effects": [
       {
-        "comp_name": "org.springframework.cloud:spring-cloud-gateway-server-webflux",
-        "ecosystem": "maven",
+        "comp_name": "github.com/siyuan-note/siyuan/kernel",
+        "ecosystem": "go",
         "versions": [
           {
-            "affected_version": "[4.0.0,4.2.10)",
-            "min_fixed_version": "4.2.10",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[4.3.0,4.3.6)",
-            "min_fixed_version": "4.3.6",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[3.0.0,3.1.14)",
-            "min_fixed_version": "3.1.14",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[5.0.0,5.0.3)",
-            "min_fixed_version": "5.0.3",
-            "repository": "maven",
+            "affected_version": "(-∞,3.7.4)",
+            "min_fixed_version": "3.7.4",
+            "repository": "go",
             "solutions": [],
             "upstream": true
           }
@@ -66,30 +62,40 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "路径遍历",
     "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
     "last_modified_time": "2026-08-21",
-    "level": "High",
-    "mps_id": "MPS-8153-8373",
+    "level": "Critical",
+    "mps_id": "MPS-1onp-j35b",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-21",
     "reference_url_list": [
       {
-        "url": "https://spring.io/security/cve-2026-47879",
+        "url": "https://www.oscs1024.com/hd/MPS-1onp-j35b",
+        "name": "https://www.oscs1024.com/hd/MPS-1onp-j35b"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77086",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77086"
+      },
+      {
+        "url": "https://github.com/siyuan-note/siyuan/security/advisories/GHSA-wr4w-7vjm-mmx3",
         "name": ""
       },
       {
-        "url": "https://github.com/spring-cloud/spring-cloud-gateway/commit/6c53fd1c95bad683de58614d92f6116f1a44a873",
+        "url": "https://www.vulncheck.com/advisories/siyuan-before-path-traversal-via-packagename",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "Spring Cloud Gateway JsonToGrpc 任意资源读取漏洞",
+    "tags": [
+      "go"
+    ],
+    "title": "SiYuan Bazaar install/uninstall packageName 路径遍历漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -109,42 +115,38 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-47879",
-    "cvss": {},
-    "cvss_score": 7,
-    "cvss_vector": "",
+    "cve_id": "CVE-2026-77086",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-22",
-    "description": "Spring Cloud Gateway 是基于 Spring WebFlux 的开源 Java API 网关，提供路由、过滤和协议转换能力；JsonToGrpcGatewayFilterFactory 用于把 HTTP+JSON 请求转换为 gRPC 请求，需要一个 proto descriptor 资源定位。\n受影响版本中，JsonToGrpcGatewayFilterFactory 在调用 apply(Config) 构造 GatewayFilter 时，直接把 Config.protoDescriptor 透传给 resourceLoader.getResource(...) 读取 FileDescriptorSet，任何能够配置或修改 Spring Cloud Gateway 路由的攻击者都可以把 protoDescriptor 写成 file:/、http:// 等任意 Spring Resource 协议，从而读取宿主机文件或访问外部资源，造成敏感文件泄露与 SSRF。\n修复版本中通过为 JsonToGrpcGatewayFilterFactory 增加 EnvironmentAware 与 VALID_PROTO_DESCRIPTOR_PREFIXES_KEY（默认仅允许 classpath: 与 classpath*:），在 apply() 中先用 PathUtils.checkResource 校验 protoDescriptor 必须落在允许前缀内，否则抛出 IllegalArgumentException，从而切断任意 Spring Resource 加载路径。",
+    "description": "SiYuan 是开源的个人知识管理与笔记系统，使用 Go 编写的 kernel 服务提供 HTTP API，并通过 Bazaar 集市管理插件、主题、图标、模板与挂件等扩展。\n受影响版本中，kernel/model/bazaar.go 的 getPackageInstallPath 函数将请求参数 packageName 与基础目录通过 filepath.Join 直接拼接，未校验是否包含 ../ 等路径遍历序列，导致全部 10 个 Bazaar 安装/卸载接口（POST /api/bazaar/installBazaarPlugin、uninstallBazaarPlugin、installBazaarWidget、uninstallBazaarWidget、installBazaarIcon、uninstallBazaarIcon、installBazaarTemplate、uninstallBazaarTemplate、installBazaarTheme、uninstallBazaarTheme）在收到形如 ../../../../target 的 packageName 时，安装流程会将下载的压缩包写入任意目录，卸载流程会调用 os.RemoveAll 递归删除任意目录。\n修复版本中通过在 getPackageInstallPath 入口新增 bazaar.IsValidPackageName 包名合法性校验，并结合 gulu.File.IsSubPath 对最终路径进行容器归属校验，使 ../ 等序列在路径构造阶段即被拒绝，从而切断任意位置文件写入与任意目录递归删除链路。",
     "effects": [
       {
-        "comp_name": "org.springframework.cloud:spring-cloud-gateway-server-webflux",
-        "ecosystem": "maven",
+        "comp_name": "github.com/siyuan-note/siyuan/kernel",
+        "ecosystem": "go",
         "versions": [
           {
-            "affected_version": "[4.0.0,4.2.10)",
-            "min_fixed_version": "4.2.10",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[4.3.0,4.3.6)",
-            "min_fixed_version": "4.3.6",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[3.0.0,3.1.14)",
-            "min_fixed_version": "3.1.14",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[5.0.0,5.0.3)",
-            "min_fixed_version": "5.0.3",
-            "repository": "maven",
+            "affected_version": "(-∞,3.7.4)",
+            "min_fixed_version": "3.7.4",
+            "repository": "go",
             "solutions": [],
             "upstream": true
           }
@@ -154,30 +156,40 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "路径遍历",
     "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
     "last_modified_time": "2026-08-21",
-    "level": "High",
-    "mps_id": "MPS-8153-8373",
+    "level": "Critical",
+    "mps_id": "MPS-1onp-j35b",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-21",
     "reference_url_list": [
       {
-        "url": "https://spring.io/security/cve-2026-47879",
+        "url": "https://www.oscs1024.com/hd/MPS-1onp-j35b",
+        "name": "https://www.oscs1024.com/hd/MPS-1onp-j35b"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77086",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77086"
+      },
+      {
+        "url": "https://github.com/siyuan-note/siyuan/security/advisories/GHSA-wr4w-7vjm-mmx3",
         "name": ""
       },
       {
-        "url": "https://github.com/spring-cloud/spring-cloud-gateway/commit/6c53fd1c95bad683de58614d92f6116f1a44a873",
+        "url": "https://www.vulncheck.com/advisories/siyuan-before-path-traversal-via-packagename",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "Spring Cloud Gateway JsonToGrpc 任意资源读取漏洞"
+    "tags": [
+      "go"
+    ],
+    "title": "SiYuan Bazaar install/uninstall packageName 路径遍历漏洞"
   },
-  "first_saved_at": "2026-08-21T06:35:34+00:00"
+  "first_saved_at": "2026-08-21T12:34:41+00:00"
 }

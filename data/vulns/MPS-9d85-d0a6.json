@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-08-21T12:34:41+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-9d85-d0a6",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-59279",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-770",
+    "description": "Spring AI is an open-source application framework for building AI/LLM applications; its MCP module provides Model Context Protocol (MCP) server transports for integrating LLM agents with tools and data sources, and ships both a WebFlux and a WebMvc Streamable HTTP server transport provider.\n受影响版本中，MCP Streamable HTTP server transport 在 POST 请求处理方法 handlePost 收到 method 为 initialize 的 JSON-RPC 请求时，会无条件地通过 sessionFactory.startSession 创建新会话并写入 sessions 这个 ConcurrentHashMap，且默认不要求客户端认证，也没有对 sessions 容量做任何上限控制；远程攻击者可以持续发送 initialize 请求，使服务端在内存中累积无界的会话对象并最终耗尽可用内存，导致面向所有合法客户端的拒绝服务。\n修复版本中通过在 WebFluxStreamableServerTransportProvider 与 WebMvcStreamableServerTransportProvider 中引入 maxSessions 上限与会话空闲回收机制解决了该问题：构造器新增 maxSessions 与可选的 sessionIdleTimeout 参数，启动一个基于 Flux.interval 的 idleSessionScheduler 周期调用 evictIdleSessions，并新增 lastAccess 时间表 sessionLastAccessTimes；在 handlePost 创建会话前增加 if (this.sessions.size() >= this.maxSessions) 检查，超限时返回 503 Service Unavailable 并以 INTERNAL_ERROR 消息 Max number of sessions reached 拒绝新增会话。",
+    "effects": [
+      {
+        "comp_name": "org.springframework.ai:spring-ai-mcp",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.0.0]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-9d85-d0a6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://spring.io/security/cve-2026-59279",
+        "name": ""
+      },
+      {
+        "url": "https://spring.io/security/cve-2026-59279/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/commit/023867c80be379f53296fbb0002ac522d0d44449",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/blob/v2.0.1/mcp/transport/mcp-spring-webflux/src/main/java/org/springframework/ai/mcp/server/webflux/transport/WebFluxStreamableServerTransportProvider.java",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/blob/v2.0.1/mcp/transport/mcp-spring-webmvc/src/main/java/org/springframework/ai/mcp/server/webmvc/transport/WebMvcStreamableServerTransportProvider.java",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/releases/tag/v2.0.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/security/advisories",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "java",
+      "开源"
+    ],
+    "title": "Spring AI MCP Streamable HTTP 服务器传输无界会话分配拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-59279",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-770",
+    "description": "Spring AI is an open-source application framework for building AI/LLM applications; its MCP module provides Model Context Protocol (MCP) server transports for integrating LLM agents with tools and data sources, and ships both a WebFlux and a WebMvc Streamable HTTP server transport provider.\n受影响版本中，MCP Streamable HTTP server transport 在 POST 请求处理方法 handlePost 收到 method 为 initialize 的 JSON-RPC 请求时，会无条件地通过 sessionFactory.startSession 创建新会话并写入 sessions 这个 ConcurrentHashMap，且默认不要求客户端认证，也没有对 sessions 容量做任何上限控制；远程攻击者可以持续发送 initialize 请求，使服务端在内存中累积无界的会话对象并最终耗尽可用内存，导致面向所有合法客户端的拒绝服务。\n修复版本中通过在 WebFluxStreamableServerTransportProvider 与 WebMvcStreamableServerTransportProvider 中引入 maxSessions 上限与会话空闲回收机制解决了该问题：构造器新增 maxSessions 与可选的 sessionIdleTimeout 参数，启动一个基于 Flux.interval 的 idleSessionScheduler 周期调用 evictIdleSessions，并新增 lastAccess 时间表 sessionLastAccessTimes；在 handlePost 创建会话前增加 if (this.sessions.size() >= this.maxSessions) 检查，超限时返回 503 Service Unavailable 并以 INTERNAL_ERROR 消息 Max number of sessions reached 拒绝新增会话。",
+    "effects": [
+      {
+        "comp_name": "org.springframework.ai:spring-ai-mcp",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.0.0]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-9d85-d0a6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://spring.io/security/cve-2026-59279",
+        "name": ""
+      },
+      {
+        "url": "https://spring.io/security/cve-2026-59279/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/commit/023867c80be379f53296fbb0002ac522d0d44449",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/blob/v2.0.1/mcp/transport/mcp-spring-webflux/src/main/java/org/springframework/ai/mcp/server/webflux/transport/WebFluxStreamableServerTransportProvider.java",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/blob/v2.0.1/mcp/transport/mcp-spring-webmvc/src/main/java/org/springframework/ai/mcp/server/webmvc/transport/WebMvcStreamableServerTransportProvider.java",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/releases/tag/v2.0.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/security/advisories",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "java",
+      "开源"
+    ],
+    "title": "Spring AI MCP Streamable HTTP Server Transport Unbounded Session Allocation Denial of Service"
+  },
+  "first_saved_at": "2026-08-21T12:34:30+00:00"
+}

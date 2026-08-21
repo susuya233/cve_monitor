@@ -962,5 +962,9 @@
   "fa2624b1f1ce105cedf91e081bd8a7f3a00ce30e": "CVE-2026-77264漏洞",
   "8fc295b9fc38c86ca7de4060bace54ae70f76f9f": "自动化 Web 平台 – WooCommerce 的通知和 OTP、WordPress 的高级国家/地区代码插件在 4.8.6 及之前的版本中容易受到身份验证绕过的影响。这是因为，handle_email_otp_return() 函数在响应可公开访问的 OTP 请求时返回秘密魔术登录令牌，而不是仅将其传递到用户的电子邮件地址。这使得未经身份验证的攻击者可以以网站上的任何用户（包括管理员）身份登录（如果他们知道该用户的电子邮件地址）。",
   "699b140097b5b4a913b786ee7b4f10cd36b2d2c8": "重定向后执行 (EAR)",
-  "6bac147f3c484357812db3f185437f2ebea07342": "Apache CloudStack SAML 认证绕过漏洞"
+  "6bac147f3c484357812db3f185437f2ebea07342": "Apache CloudStack SAML 认证绕过漏洞",
+  "46bce22fb571ddf632f16fcc89870a14c9a3085c": "Spring AI MCP Streamable HTTP 服务器传输无界会话分配拒绝服务",
+  "34e6467ab4d14a3433e2b4aa7f9a1cda5abb0ee7": "Spring AI is an open-source application framework for building AI/LLM applications; its MCP module provides Model Context Protocol (MCP) server transports for integrating LLM agents with tools and data sources, and ships both a WebFlux and a WebMvc Streamable HTTP server transport provider.\n受影响版本中，MCP Streamable HTTP server transport 在 POST 请求处理方法 handlePost 收到 method 为 initialize 的 JSON-RPC 请求时，会无条件地通过 sessionFactory.startSession 创建新会话并写入 sessions 这个 ConcurrentHashMap，且默认不要求客户端认证，也没有对 sessions 容量做任何上限控制；远程攻击者可以持续发送 initialize 请求，使服务端在内存中累积无界的会话对象并最终耗尽可用内存，导致面向所有合法客户端的拒绝服务。\n修复版本中通过在 WebFluxStreamableServerTransportProvider 与 WebMvcStreamableServerTransportProvider 中引入 maxSessions 上限与会话空闲回收机制解决了该问题：构造器新增 maxSessions 与可选的 sessionIdleTimeout 参数，启动一个基于 Flux.interval 的 idleSessionScheduler 周期调用 evictIdleSessions，并新增 lastAccess 时间表 sessionLastAccessTimes；在 handlePost 创建会话前增加 if (this.sessions.size() >= this.maxSessions) 检查，超限时返回 503 Service Unavailable 并以 INTERNAL_ERROR 消息 Max number of sessions reached 拒绝新增会话。",
+  "9e08d1db65e15f584b6ede1b4e57586b2f4c467a": "不安全的临时文件",
+  "bf4285689087ed7aafae45f0ac5df6a1169e4b39": "SiYuan Bazaar install/uninstall packageName 路径遍历漏洞"
 }

@@ -1,0 +1,221 @@
+{
+  "saved_at": "2026-08-21T12:34:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-12d7-0d70",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-47851",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-674",
+    "description": "Spring AI 是面向 AI 工程的开源 Java 框架，spring-ai-pdf-document-reader 子模块提供基于 PDF 文档目录（TOC/Outline）的段落切分能力，可与 LLM 检索增强生成管线协同摄取 PDF 资料。\n受影响版本中，ParagraphPdfDocumentReader 在解析 PDF 文档目录时调用 ParagraphManager.generateParagraphs 沿 PDOutlineNode 的 firstChild/nextSibling 链路递归生成段落树，未对递归深度或节点访问记录做任何限制。攻击者通过构造一份目录结构深度极大或条目之间存在循环引用的 PDF 文档，可在摄入线程触发 java.lang.StackOverflowError，使摄取流程异常终止并对依赖该管线检索的业务造成拒绝服务。\n修复版本中通过在 ParagraphManager.generateParagraphs 引入 REASONABLE_DEPTH（64 层）深度上限，并使用 HashSet<COSDictionary> 记录已访问的 COS 对象来阻断循环引用，对扁平化方法 flatten 也同步追加深度校验，从源头切断无限递归路径并改抛 IllegalStateException 而非 StackOverflowError。",
+    "effects": [
+      {
+        "comp_name": "Spring AI (product)",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.1.0,1.1.8]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.0.0,1.0.9]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.springframework.ai:spring-ai-pdf-document-reader",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.0.9]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.1.0,1.1.8]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0,2.0.0]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-12d7-0d70",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://spring.io/security/cve-2026-47851",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/commit/8a1fd8ed79011f63c1d9c02fec52778416a3d2d2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/issues/6753",
+        "name": ""
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H&version=3.1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "java",
+      "开源"
+    ],
+    "title": "Spring AI PDF Document Reader 目录树递归栈溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-47851",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-674",
+    "description": "Spring AI 是面向 AI 工程的开源 Java 框架，spring-ai-pdf-document-reader 子模块提供基于 PDF 文档目录（TOC/Outline）的段落切分能力，可与 LLM 检索增强生成管线协同摄取 PDF 资料。\n受影响版本中，ParagraphPdfDocumentReader 在解析 PDF 文档目录时调用 ParagraphManager.generateParagraphs 沿 PDOutlineNode 的 firstChild/nextSibling 链路递归生成段落树，未对递归深度或节点访问记录做任何限制。攻击者通过构造一份目录结构深度极大或条目之间存在循环引用的 PDF 文档，可在摄入线程触发 java.lang.StackOverflowError，使摄取流程异常终止并对依赖该管线检索的业务造成拒绝服务。\n修复版本中通过在 ParagraphManager.generateParagraphs 引入 REASONABLE_DEPTH（64 层）深度上限，并使用 HashSet<COSDictionary> 记录已访问的 COS 对象来阻断循环引用，对扁平化方法 flatten 也同步追加深度校验，从源头切断无限递归路径并改抛 IllegalStateException 而非 StackOverflowError。",
+    "effects": [
+      {
+        "comp_name": "Spring AI (product)",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.1.0,1.1.8]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.0.0,1.0.9]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.springframework.ai:spring-ai-pdf-document-reader",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.0.9]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.1.0,1.1.8]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0,2.0.0]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-12d7-0d70",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://spring.io/security/cve-2026-47851",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/commit/8a1fd8ed79011f63c1d9c02fec52778416a3d2d2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-ai/issues/6753",
+        "name": ""
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H&version=3.1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "java",
+      "开源"
+    ],
+    "title": "Spring AI PDF Document Reader 目录树递归栈溢出漏洞"
+  },
+  "first_saved_at": "2026-08-21T12:34:32+00:00"
+}
