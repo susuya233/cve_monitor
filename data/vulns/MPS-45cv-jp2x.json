@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-08-21T22:17:17+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-45cv-jp2x",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77354",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-789",
+    "description": "kin-openapi 是开源 Go 语言库，用于解析与校验 OpenAPI 3 规范定义的 HTTP 接口，是 Go 生态中常见的 OpenAPI 处理组件。\n受影响版本中，openapi3filter 在解码 style 为 deepObject 的查询参数时，先把攻击者控制的稀疏下标（来自形如 param[items][N]=x 的查询字符串）收集到 map[string]any，再调用 req_resp_decoder.go 中的 sliceMapToSlice 按最大下标 N 分配长度为 N+1 的稠密 []any；随后 buildResObj 又分配同样长度的第二份 []any。该分配在 schema 校验之前完成，因此即便 spec 声明 maxItems 也无法阻止。因此，未认证客户端仅需发送类似 ?param[items][50000000]=x 的 24 字节请求，就可迫使目标进程进行数 GB 级别堆分配，引发 OOM kill 或重启循环。\n修复版本中通过在 req_resp_decoder.go 中对从 deepObject 查询参数派生的整数下标加上可配置的硬上限（仅当 N 超过该上限时拒绝解码），切断了 max 与分配长度之间的无界传导，并使 schema 校验（含 maxItems）能在解码阶段前生效，从而阻止利用极小请求放大出数 GB 堆内存的链路。建议升级到 0.142.0 及以上版本。",
+    "effects": [
+      {
+        "comp_name": "github.com/getkin/kin-openapi",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[0.124.0,0.142.0)",
+            "min_fixed_version": "0.142.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的内存分配",
+    "kind_en": "大小值过大的内存分配",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-45cv-jp2x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/getkin/kin-openapi/security/advisories/GHSA-xhj3-7xw9-vr34",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getkin/kin-openapi/commit/1223a0f215d2cf9beb2d9eb9ea2649d001c21388",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getkin/kin-openapi/releases/tag/v0.142.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-xhj3-7xw9-vr34",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "kin-openapi deepObject参数解码内存耗尽漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77354",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-789",
+    "description": "kin-openapi 是开源 Go 语言库，用于解析与校验 OpenAPI 3 规范定义的 HTTP 接口，是 Go 生态中常见的 OpenAPI 处理组件。\n受影响版本中，openapi3filter 在解码 style 为 deepObject 的查询参数时，先把攻击者控制的稀疏下标（来自形如 param[items][N]=x 的查询字符串）收集到 map[string]any，再调用 req_resp_decoder.go 中的 sliceMapToSlice 按最大下标 N 分配长度为 N+1 的稠密 []any；随后 buildResObj 又分配同样长度的第二份 []any。该分配在 schema 校验之前完成，因此即便 spec 声明 maxItems 也无法阻止。因此，未认证客户端仅需发送类似 ?param[items][50000000]=x 的 24 字节请求，就可迫使目标进程进行数 GB 级别堆分配，引发 OOM kill 或重启循环。\n修复版本中通过在 req_resp_decoder.go 中对从 deepObject 查询参数派生的整数下标加上可配置的硬上限（仅当 N 超过该上限时拒绝解码），切断了 max 与分配长度之间的无界传导，并使 schema 校验（含 maxItems）能在解码阶段前生效，从而阻止利用极小请求放大出数 GB 堆内存的链路。建议升级到 0.142.0 及以上版本。",
+    "effects": [
+      {
+        "comp_name": "github.com/getkin/kin-openapi",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[0.124.0,0.142.0)",
+            "min_fixed_version": "0.142.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的内存分配",
+    "kind_en": "Memory Allocation with Excessive Size Value",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-45cv-jp2x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/getkin/kin-openapi/security/advisories/GHSA-xhj3-7xw9-vr34",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getkin/kin-openapi/commit/1223a0f215d2cf9beb2d9eb9ea2649d001c21388",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getkin/kin-openapi/releases/tag/v0.142.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-xhj3-7xw9-vr34",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "kin-openapi deepObject参数解码内存耗尽漏洞"
+  },
+  "first_saved_at": "2026-08-21T22:17:17+00:00"
+}

@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-08-21T22:17:19+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-62tu-w4n1",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用了空指针，并在不进行有效检查的情况下对其进行取消引用操作。当程序试图取消引用空指针时，由于空指针不指向任何有效的内存地址，会导致程序崩溃或产生未定义的行为。这种错误通常发生在开发者未对指针进行正确的初始化或验证时。",
+        "title": "什么是空指针取消引用"
+      },
+      {
+        "content": "- 拒绝服务：攻击者可以通过构造恶意输入或请求，触发程序中的空指针取消引用错误，导致程序崩溃或无法正常运行。这可能导致拒绝服务攻击，使系统无法提供正常的服务。\r\n- 内存信息泄露：攻击者可以通过利用空指针取消引用错误，访问程序中的敏感内存信息。这可能包括栈上的变量、函数指针或其他敏感数据，从而暴露系统的机密信息。\r\n- 代码执行：在某些情况下，空指针取消引用错误可能导致执行恶意代码或注入恶意代码的机会。攻击者可以通过精心构造的输入，利用空指针取消引用错误来执行任意的代码，进而获取系统控制权或执行未经授权的操作。",
+        "title": "空指针取消引用常见的攻击方式"
+      },
+      {
+        "content": "- 指针初始化和验证：开发者应该正确地初始化指针，并在使用指针之前进行有效的验证，确保指针不为空。在取消引用指针之前，应始终检查其是否为空。\r\n- 异常处理和错误恢复：程序应该具备健壮的异常处理和错误恢复机制，以便在发生空指针取消引用错误时能够适当地处理异常，而不是导致程序崩溃或暴露敏感信息。\r\n- 防御性编程：采用防御性编程的原则，如避免在未经验证的指针上进行操作，避免使用未初始化的指针等，以防止空指针取消引用错误的发生。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的空指针取消引用错误。这些工具可以帮助发现代码中可能存在的空指针问题，并及时修复。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括良好的指针使用和管理规范，以帮助开发者编写更可靠、安全的代码。",
+        "title": "如何预防空指针取消引用"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76905",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-476",
+    "description": "kin-openapi 是开源的 Go 语言 OpenAPI 解析与校验库，提供 routers、openapi3filter 等用于 HTTP 请求的 schema 校验与错误渲染能力。\n受影响版本中，openapi3filter.convertParseError 函数（位于 openapi3filter/validation_error_encoder.go）在处理 multipart/form-data 请求体解析错误时，访问 e.Parameter.In 前未判空。当某个标量表单字段（如声明为 integer 的 age）提交了无法解析的值时，multipart 解码器会在 req_resp_decoder.go 中将一个 *ParseError 嵌套进外层 *ParseError，最终形成的 *RequestError 同时满足 e.Parameter 为 nil 与 innerErr.Cause 为 *ParseError 两个条件，ConvertErrors 与 ValidationErrorEncoder 路径因此触发对 nil 指针的字段解引用，请求处理 goroutine 发生 panic。\n修复版本中通过在 convertParseError 的 query 分支补上 e.Parameter != nil 判空守卫修复该问题，确保 e.Parameter 为 nil 时直接走回退分支返回 Status 400 的 ValidationError，并补充对 Title 为空场景的回退处理，避免再因同一根因发生空指针解引用。",
+    "effects": [
+      {
+        "comp_name": "github.com/getkin/kin-openapi",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[0.10.0,0.141.0)",
+            "min_fixed_version": "0.141.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "空指针取消引用",
+    "kind_en": "空指针取消引用",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-62tu-w4n1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/getkin/kin-openapi/security/advisories/GHSA-mmfr-pmjx-hw9w",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getkin/kin-openapi/commit/1d0a337c9b1570fab283be8a04c8af6e43b9a22c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getkin/kin-openapi/releases/tag/v0.141.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-mmfr-pmjx-hw9w",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "kin-openapi openapi3filter ConvertErrors 空指针解引用拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用了空指针，并在不进行有效检查的情况下对其进行取消引用操作。当程序试图取消引用空指针时，由于空指针不指向任何有效的内存地址，会导致程序崩溃或产生未定义的行为。这种错误通常发生在开发者未对指针进行正确的初始化或验证时。",
+        "title": "什么是空指针取消引用"
+      },
+      {
+        "content": "- 拒绝服务：攻击者可以通过构造恶意输入或请求，触发程序中的空指针取消引用错误，导致程序崩溃或无法正常运行。这可能导致拒绝服务攻击，使系统无法提供正常的服务。\r\n- 内存信息泄露：攻击者可以通过利用空指针取消引用错误，访问程序中的敏感内存信息。这可能包括栈上的变量、函数指针或其他敏感数据，从而暴露系统的机密信息。\r\n- 代码执行：在某些情况下，空指针取消引用错误可能导致执行恶意代码或注入恶意代码的机会。攻击者可以通过精心构造的输入，利用空指针取消引用错误来执行任意的代码，进而获取系统控制权或执行未经授权的操作。",
+        "title": "空指针取消引用常见的攻击方式"
+      },
+      {
+        "content": "- 指针初始化和验证：开发者应该正确地初始化指针，并在使用指针之前进行有效的验证，确保指针不为空。在取消引用指针之前，应始终检查其是否为空。\r\n- 异常处理和错误恢复：程序应该具备健壮的异常处理和错误恢复机制，以便在发生空指针取消引用错误时能够适当地处理异常，而不是导致程序崩溃或暴露敏感信息。\r\n- 防御性编程：采用防御性编程的原则，如避免在未经验证的指针上进行操作，避免使用未初始化的指针等，以防止空指针取消引用错误的发生。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的空指针取消引用错误。这些工具可以帮助发现代码中可能存在的空指针问题，并及时修复。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括良好的指针使用和管理规范，以帮助开发者编写更可靠、安全的代码。",
+        "title": "如何预防空指针取消引用"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76905",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-476",
+    "description": "kin-openapi 是开源的 Go 语言 OpenAPI 解析与校验库，提供 routers、openapi3filter 等用于 HTTP 请求的 schema 校验与错误渲染能力。\n受影响版本中，openapi3filter.convertParseError 函数（位于 openapi3filter/validation_error_encoder.go）在处理 multipart/form-data 请求体解析错误时，访问 e.Parameter.In 前未判空。当某个标量表单字段（如声明为 integer 的 age）提交了无法解析的值时，multipart 解码器会在 req_resp_decoder.go 中将一个 *ParseError 嵌套进外层 *ParseError，最终形成的 *RequestError 同时满足 e.Parameter 为 nil 与 innerErr.Cause 为 *ParseError 两个条件，ConvertErrors 与 ValidationErrorEncoder 路径因此触发对 nil 指针的字段解引用，请求处理 goroutine 发生 panic。\n修复版本中通过在 convertParseError 的 query 分支补上 e.Parameter != nil 判空守卫修复该问题，确保 e.Parameter 为 nil 时直接走回退分支返回 Status 400 的 ValidationError，并补充对 Title 为空场景的回退处理，避免再因同一根因发生空指针解引用。",
+    "effects": [
+      {
+        "comp_name": "github.com/getkin/kin-openapi",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[0.10.0,0.141.0)",
+            "min_fixed_version": "0.141.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "空指针取消引用",
+    "kind_en": "NULL Pointer Dereference",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-62tu-w4n1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/getkin/kin-openapi/security/advisories/GHSA-mmfr-pmjx-hw9w",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getkin/kin-openapi/commit/1d0a337c9b1570fab283be8a04c8af6e43b9a22c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/getkin/kin-openapi/releases/tag/v0.141.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-mmfr-pmjx-hw9w",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "kin-openapi openapi3filter ConvertErrors 空指针解引用拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-08-21T22:17:19+00:00"
+}
