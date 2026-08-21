@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-08-21T06:35:35+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3e68-1c2c",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-59270",
+    "cvss": {},
+    "cvss_score": 9.3,
+    "cvss_vector": "",
+    "cwe": "CWE-1392",
+    "description": "Spring Security 是开源 Java 安全框架，UnboundIdContainer 是其提供的嵌入式 UnboundID LDAP 服务器容器，常用于开发与测试场景下替代外部目录服务。\n受影响版本中，UnboundIdContainer.start() 在创建 InMemoryDirectoryServerConfig 时无条件调用 addAdditionalBindCredentials(\"uid=admin,ou=system\", \"secret\") 注册一对硬编码的管理员绑定凭据，并通过 InMemoryListenerConfig.createLDAPConfig(\"LDAP\", this.port) 构造监听器时未显式传入 InetAddress，导致 LDAP 监听器被绑定到所有可用网络接口。攻击者只要能从所在网络位置访问该 LDAP 监听端口，即可使用上述固定凭据成功绑定，并任意读写内存目录中的条目。\n修复版本中通过将 createLDAPConfig 改为 createLDAPConfig(\"LDAP\", InetAddress.getLoopbackAddress(), this.port, null)，显式把嵌入式 LDAP 监听器绑定到本机回环地址，限制其仅监听本地接口，从根本上切断未授权远程绑定与目录读写路径。",
+    "effects": [
+      {
+        "comp_name": "org.springframework.security:spring-security-ldap",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[6.4.0,6.4.19)",
+            "min_fixed_version": "6.4.19",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.1.0,7.1.1)",
+            "min_fixed_version": "7.1.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.8.0,5.8.28)",
+            "min_fixed_version": "5.8.28",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.0.0,7.0.7)",
+            "min_fixed_version": "7.0.7",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.5.0,6.5.12)",
+            "min_fixed_version": "6.5.12",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.7.0,5.7.26)",
+            "min_fixed_version": "5.7.26",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "",
+    "kind_en": "",
+    "last_modified_time": "2026-08-21",
+    "level": "Critical",
+    "mps_id": "MPS-3e68-1c2c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://spring.io/security/cve-2026-59270",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-security/commit/1b84c74776d006452d7642c72c65329966ec8b86",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Spring Security 嵌入式 UnboundID LDAP 服务器在所有网络接口上暴露固定管理员绑定凭据",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-59270",
+    "cvss": {},
+    "cvss_score": 9.3,
+    "cvss_vector": "",
+    "cwe": "CWE-1392",
+    "description": "Spring Security 是开源 Java 安全框架，UnboundIdContainer 是其提供的嵌入式 UnboundID LDAP 服务器容器，常用于开发与测试场景下替代外部目录服务。\n受影响版本中，UnboundIdContainer.start() 在创建 InMemoryDirectoryServerConfig 时无条件调用 addAdditionalBindCredentials(\"uid=admin,ou=system\", \"secret\") 注册一对硬编码的管理员绑定凭据，并通过 InMemoryListenerConfig.createLDAPConfig(\"LDAP\", this.port) 构造监听器时未显式传入 InetAddress，导致 LDAP 监听器被绑定到所有可用网络接口。攻击者只要能从所在网络位置访问该 LDAP 监听端口，即可使用上述固定凭据成功绑定，并任意读写内存目录中的条目。\n修复版本中通过将 createLDAPConfig 改为 createLDAPConfig(\"LDAP\", InetAddress.getLoopbackAddress(), this.port, null)，显式把嵌入式 LDAP 监听器绑定到本机回环地址，限制其仅监听本地接口，从根本上切断未授权远程绑定与目录读写路径。",
+    "effects": [
+      {
+        "comp_name": "org.springframework.security:spring-security-ldap",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[6.4.0,6.4.19)",
+            "min_fixed_version": "6.4.19",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.1.0,7.1.1)",
+            "min_fixed_version": "7.1.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.8.0,5.8.28)",
+            "min_fixed_version": "5.8.28",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.0.0,7.0.7)",
+            "min_fixed_version": "7.0.7",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.5.0,6.5.12)",
+            "min_fixed_version": "6.5.12",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.7.0,5.7.26)",
+            "min_fixed_version": "5.7.26",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "",
+    "kind_en": "",
+    "last_modified_time": "2026-08-21",
+    "level": "Critical",
+    "mps_id": "MPS-3e68-1c2c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://spring.io/security/cve-2026-59270",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-security/commit/1b84c74776d006452d7642c72c65329966ec8b86",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Spring Security 嵌入式 UnboundID LDAP 服务器在所有网络接口上暴露固定管理员绑定凭据"
+  },
+  "first_saved_at": "2026-08-21T06:35:35+00:00"
+}

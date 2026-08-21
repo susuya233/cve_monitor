@@ -953,5 +953,8 @@
   "68b4565ed7c13e944a7745bbecddab0a0c134c93": "Rocket.Chat Omnichannel 访客名存储型 XSS",
   "c1059800fdc859e2435fc9bf21e774bf082f208b": "双重免费",
   "7f2c413e62893b4b5af2c782a0f5e1962fddd555": "使用超出范围的指针偏移量",
-  "f8f044c5685af49ecfc601782f7a00a8dddeaf28": "Datiphy Data Management Center 上传 API 路径穿越漏洞"
+  "f8f044c5685af49ecfc601782f7a00a8dddeaf28": "Datiphy Data Management Center 上传 API 路径穿越漏洞",
+  "30e8fb0992037b2c9619078e605355b539c31ee9": "Spring Security Authorization Server 默认同意页跨站脚本漏洞",
+  "616f0d5ef371a40b72f2768cfacea467064d1b3c": "Spring Cloud Gateway JsonToGrpc 任意资源读取漏洞",
+  "741bd06f02163f90e2e05ff899ea5d3d493a67b1": "Spring Cloud Gateway 是基于 Spring WebFlux 的开源 Java API 网关，提供路由、过滤和协议转换能力；JsonToGrpcGatewayFilterFactory 用于把 HTTP+JSON 请求转换为 gRPC 请求，需要一个 proto descriptor 资源定位。\n受影响版本中，JsonToGrpcGatewayFilterFactory 在调用 apply(Config) 构造 GatewayFilter 时，直接把 Config.protoDescriptor 透传给 resourceLoader.getResource(...) 读取 FileDescriptorSet，任何能够配置或修改 Spring Cloud Gateway 路由的攻击者都可以把 protoDescriptor 写成 file:/、http:// 等任意 Spring Resource 协议，从而读取宿主机文件或访问外部资源，造成敏感文件泄露与 SSRF。\n修复版本中通过为 JsonToGrpcGatewayFilterFactory 增加 EnvironmentAware 与 VALID_PROTO_DESCRIPTOR_PREFIXES_KEY（默认仅允许 classpath: 与 classpath*:），在 apply() 中先用 PathUtils.checkResource 校验 protoDescriptor 必须落在允许前缀内，否则抛出 IllegalArgumentException，从而切断任意 Spring Resource 加载路径。"
 }
