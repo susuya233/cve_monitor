@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-08-21T16:25:10+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-pa25-97fq",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77815",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-59",
+    "description": "Infinite Image Browsing（IIB）是开源 Python 图像/视频浏览扩展，作为 Stable Diffusion WebUI 等 AI 图像生成工具的扩展运行，提供扫描目录内的图像检索、缩略图、预览与文件服务能力。\n受影响版本中，scripts/iib/tool.py 中的 to_abs_path 工具函数使用 os.path.normpath 对请求路径进行规范化，仅折叠点段而不会解析符号链接；而 scripts/iib/api.py 中的 is_path_trusted 信任判定通过 path.startswith(parent_path) 检查请求路径是否落在已扫描目录内，由于 normpath 不会跟随符号链接，在扫描目录中放置指向 /etc/passwd 等受保护文件的符号链接即可让 startswith 检查通过。get_file 接口随后以 FileResponse 直接返回该文件，导致任意文件被读取。是否启用访问控制由 scripts/iib/tool.py 的 get_enable_access_control 决定：IIB_ACCESS_CONTROL=enable 时启用，=disable 时禁用，否则在宿主 Stable Diffusion WebUI 使用 share、ngrok、listen 或 server_name 启动时启用，其余情况回退为禁用。\n修复版本中通过将 to_abs_path 改为使用 os.path.realpath 解析符号链接，并在 is_path_trusted 中同样对 parent_path 调用 realpath，同时在 startswith(parent_path + os.sep) 上添加尾部分隔符以避免前缀匹配绕过，阻断符号链接逃逸路径。",
+    "effects": [
+      {
+        "comp_name": "infinite-image-browsing",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.8.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "在文件访问前对链接解析不恰当（链接跟随）",
+    "kind_en": "文件访问前的链接解析不正确（“链接跟踪”）",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-pa25-97fq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pa25-97fq",
+        "name": "https://www.oscs1024.com/hd/MPS-pa25-97fq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77815",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77815"
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/blob/v1.8.0/scripts/iib/api.py#L329-L344",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/blob/v1.8.0/scripts/iib/tool.py#L172-L175",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/commit/4057a624c7a23a36f0b4dc6a545b40767d602450",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/issues/968",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/pull/969",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/infinite-image-browsing-resolves-paths-with-normpath-allowing-symlink-escape-from-scanned-directories",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "Infinite Image Browsing 路径校验符号链接逃逸导致任意文件读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77815",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-59",
+    "description": "Infinite Image Browsing（IIB）是开源 Python 图像/视频浏览扩展，作为 Stable Diffusion WebUI 等 AI 图像生成工具的扩展运行，提供扫描目录内的图像检索、缩略图、预览与文件服务能力。\n受影响版本中，scripts/iib/tool.py 中的 to_abs_path 工具函数使用 os.path.normpath 对请求路径进行规范化，仅折叠点段而不会解析符号链接；而 scripts/iib/api.py 中的 is_path_trusted 信任判定通过 path.startswith(parent_path) 检查请求路径是否落在已扫描目录内，由于 normpath 不会跟随符号链接，在扫描目录中放置指向 /etc/passwd 等受保护文件的符号链接即可让 startswith 检查通过。get_file 接口随后以 FileResponse 直接返回该文件，导致任意文件被读取。是否启用访问控制由 scripts/iib/tool.py 的 get_enable_access_control 决定：IIB_ACCESS_CONTROL=enable 时启用，=disable 时禁用，否则在宿主 Stable Diffusion WebUI 使用 share、ngrok、listen 或 server_name 启动时启用，其余情况回退为禁用。\n修复版本中通过将 to_abs_path 改为使用 os.path.realpath 解析符号链接，并在 is_path_trusted 中同样对 parent_path 调用 realpath，同时在 startswith(parent_path + os.sep) 上添加尾部分隔符以避免前缀匹配绕过，阻断符号链接逃逸路径。",
+    "effects": [
+      {
+        "comp_name": "infinite-image-browsing",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.8.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "在文件访问前对链接解析不恰当（链接跟随）",
+    "kind_en": "Improper Link Resolution Before File Access ('Link Following')",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-pa25-97fq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pa25-97fq",
+        "name": "https://www.oscs1024.com/hd/MPS-pa25-97fq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77815",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77815"
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/blob/v1.8.0/scripts/iib/api.py#L329-L344",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/blob/v1.8.0/scripts/iib/tool.py#L172-L175",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/commit/4057a624c7a23a36f0b4dc6a545b40767d602450",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/issues/968",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/pull/969",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/infinite-image-browsing-resolves-paths-with-normpath-allowing-symlink-escape-from-scanned-directories",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "Infinite Image Browsing 路径校验符号链接逃逸导致任意文件读取漏洞"
+  },
+  "first_saved_at": "2026-08-21T16:25:10+00:00"
+}

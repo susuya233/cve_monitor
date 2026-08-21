@@ -1,0 +1,223 @@
+{
+  "saved_at": "2026-08-21T16:25:14+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-u4wl-szky",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77814",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-22",
+    "description": "Infinite Image Browsing 是开源 Python 扩展，作为 Stable Diffusion WebUI 的脚本插件运行，用于浏览和管理生成的图像文件，并通过 FastAPI 暴露受访问控制保护的 HTTP 接口。\n受影响版本中，scripts/iib/api.py 中闭包函数 is_path_trusted 在遍历 mem[\"all_scanned_paths\"] 中的允许父目录时，对每个允许路径使用 path.startswith(parent_path) 判断请求路径是否被允许，但未在 parent_path 后追加路径分隔符。当配置的允许目录是 /data/images 时，请求 /data/images_private/secret.txt 会因前缀字符串匹配而通过校验，绕过既有的路径隔离并由同文件中的 get_file 路由通过 FileResponse 返回任意可读文件。是否真正进入这一危险分支由 scripts/iib/tool.py 的 get_enable_access_control 决定：环境变量 IIB_ACCESS_CONTROL 等于 enable 时强制启用、等于 disable 时强制关闭，否则只有宿主 Stable Diffusion WebUI 以 --share、--ngrok、--listen 或 --server_name 启动时才启用，因此影响集中在网络暴露的 WebUI 部署。\n修复版本中通过将判定改为 path.startswith(parent_path + os.sep) 并在循环内先用 os.path.realpath 解析父目录符号链接/真实路径，从而只把真正位于允许父目录之下的路径视为可信；同时将 scripts/iib/tool.py 中 to_abs_path 由 os.path.normpath 切换为 os.path.realpath，确保请求路径在比较前同样完成符号链接解析，彻底切断前缀字符串碰撞的越权读取链路。",
+    "effects": [
+      {
+        "comp_name": "infinite-image-browsing",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.8.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "路径遍历",
+    "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-u4wl-szky",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-u4wl-szky",
+        "name": "https://www.oscs1024.com/hd/MPS-u4wl-szky"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77814",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77814"
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/blob/v1.8.0/scripts/iib/api.py#L329-L344",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/commit/4057a624c7a23a36f0b4dc6a545b40767d602450",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/issues/968",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/pull/969",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/infinite-image-browsing-is-path-trusted-prefix-comparison-omits-the-trailing-path-separator",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Infinite Image Browsing 路径穿越漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77814",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-22",
+    "description": "Infinite Image Browsing 是开源 Python 扩展，作为 Stable Diffusion WebUI 的脚本插件运行，用于浏览和管理生成的图像文件，并通过 FastAPI 暴露受访问控制保护的 HTTP 接口。\n受影响版本中，scripts/iib/api.py 中闭包函数 is_path_trusted 在遍历 mem[\"all_scanned_paths\"] 中的允许父目录时，对每个允许路径使用 path.startswith(parent_path) 判断请求路径是否被允许，但未在 parent_path 后追加路径分隔符。当配置的允许目录是 /data/images 时，请求 /data/images_private/secret.txt 会因前缀字符串匹配而通过校验，绕过既有的路径隔离并由同文件中的 get_file 路由通过 FileResponse 返回任意可读文件。是否真正进入这一危险分支由 scripts/iib/tool.py 的 get_enable_access_control 决定：环境变量 IIB_ACCESS_CONTROL 等于 enable 时强制启用、等于 disable 时强制关闭，否则只有宿主 Stable Diffusion WebUI 以 --share、--ngrok、--listen 或 --server_name 启动时才启用，因此影响集中在网络暴露的 WebUI 部署。\n修复版本中通过将判定改为 path.startswith(parent_path + os.sep) 并在循环内先用 os.path.realpath 解析父目录符号链接/真实路径，从而只把真正位于允许父目录之下的路径视为可信；同时将 scripts/iib/tool.py 中 to_abs_path 由 os.path.normpath 切换为 os.path.realpath，确保请求路径在比较前同样完成符号链接解析，彻底切断前缀字符串碰撞的越权读取链路。",
+    "effects": [
+      {
+        "comp_name": "infinite-image-browsing",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.8.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "路径遍历",
+    "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-u4wl-szky",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-u4wl-szky",
+        "name": "https://www.oscs1024.com/hd/MPS-u4wl-szky"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77814",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77814"
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/blob/v1.8.0/scripts/iib/api.py#L329-L344",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/commit/4057a624c7a23a36f0b4dc6a545b40767d602450",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/issues/968",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zanllp/infinite-image-browsing/pull/969",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/infinite-image-browsing-is-path-trusted-prefix-comparison-omits-the-trailing-path-separator",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Infinite Image Browsing 路径穿越漏洞"
+  },
+  "first_saved_at": "2026-08-21T16:25:14+00:00"
+}

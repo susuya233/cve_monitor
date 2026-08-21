@@ -1,0 +1,137 @@
+{
+  "saved_at": "2026-08-21T16:25:18+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-m728-9a1w",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75501",
+    "cvss": {},
+    "cvss_score": 9.1,
+    "cvss_vector": "",
+    "cwe": "CWE-306",
+    "description": "Calix GS7 XGS (GS5239XG) 是运营商面向住宅用户部署的网关设备，运行 Calix 自有的 EXOS 固件，提供路由、NAT 和防火墙功能，固件内置的 UPnP 服务基于 MiniUPnPd 2.3.7 实现，用于 LAN 侧的自动端口映射。\n受影响版本中，EXOS 6.6.47 固件把 MiniUPnPd 的 UPnP IGD WANIPConnection SOAP 控制端点绑定到 WAN 侧接口的 TCP 5000，并且没有对该服务施加访问控制。MiniUPnPd 中处理 AddPortMapping、DeletePortMapping、GetGenericPortMappingEntry 与 GetExternalIPAddress 这几个 WANIPConnection 动作的 SOAP 请求处理器在收到 WAN 上到达的 SOAP 报文时会无条件信任请求来源，攻击者只要知道设备的公网 IP，就可以远程伪造 SOAP 调用来新增、删除或枚举 NAT 端口映射并查询设备的外网地址，效果等同于直接在防火墙上打洞，将 LAN 内部服务直接暴露到公网。\n修复版本中通过将 MiniUPnPd 的控制端点绑定仅限定到 LAN 接口、并在防火墙策略上禁止外部对 TCP 5000 的访问解决了该问题；CERT/CC 公告同时指出 Calix 暂未发布固件更新，受影响用户应在管理界面禁用 UPnP，或在网关和上游同时阻断对 TCP 5000 的入站流量。",
+    "effects": [
+      {
+        "comp_name": "Calix GS7 XGS (GS5239XG) running EXOS firmware",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.6.47]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-08-21",
+    "level": "Critical",
+    "mps_id": "MPS-m728-9a1w",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-m728-9a1w",
+        "name": "https://www.oscs1024.com/hd/MPS-m728-9a1w"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75501",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75501"
+      },
+      {
+        "url": "https://drkq.github.io/security-research/calix-vu756733/",
+        "name": ""
+      },
+      {
+        "url": "https://kb.cert.org/vuls/id/756733",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Calix GS7 XGS 住宅路由器 UPnP WANIPConnection 未认证远程访问漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75501",
+    "cvss": {},
+    "cvss_score": 9.1,
+    "cvss_vector": "",
+    "cwe": "CWE-306",
+    "description": "Calix GS7 XGS (GS5239XG) 是运营商面向住宅用户部署的网关设备，运行 Calix 自有的 EXOS 固件，提供路由、NAT 和防火墙功能，固件内置的 UPnP 服务基于 MiniUPnPd 2.3.7 实现，用于 LAN 侧的自动端口映射。\n受影响版本中，EXOS 6.6.47 固件把 MiniUPnPd 的 UPnP IGD WANIPConnection SOAP 控制端点绑定到 WAN 侧接口的 TCP 5000，并且没有对该服务施加访问控制。MiniUPnPd 中处理 AddPortMapping、DeletePortMapping、GetGenericPortMappingEntry 与 GetExternalIPAddress 这几个 WANIPConnection 动作的 SOAP 请求处理器在收到 WAN 上到达的 SOAP 报文时会无条件信任请求来源，攻击者只要知道设备的公网 IP，就可以远程伪造 SOAP 调用来新增、删除或枚举 NAT 端口映射并查询设备的外网地址，效果等同于直接在防火墙上打洞，将 LAN 内部服务直接暴露到公网。\n修复版本中通过将 MiniUPnPd 的控制端点绑定仅限定到 LAN 接口、并在防火墙策略上禁止外部对 TCP 5000 的访问解决了该问题；CERT/CC 公告同时指出 Calix 暂未发布固件更新，受影响用户应在管理界面禁用 UPnP，或在网关和上游同时阻断对 TCP 5000 的入站流量。",
+    "effects": [
+      {
+        "comp_name": "Calix GS7 XGS (GS5239XG) running EXOS firmware",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.6.47]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-08-21",
+    "level": "Critical",
+    "mps_id": "MPS-m728-9a1w",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-m728-9a1w",
+        "name": "https://www.oscs1024.com/hd/MPS-m728-9a1w"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75501",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75501"
+      },
+      {
+        "url": "https://drkq.github.io/security-research/calix-vu756733/",
+        "name": ""
+      },
+      {
+        "url": "https://kb.cert.org/vuls/id/756733",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Calix GS7 XGS 住宅路由器 UPnP WANIPConnection 未认证远程访问漏洞"
+  },
+  "first_saved_at": "2026-08-21T16:25:18+00:00"
+}

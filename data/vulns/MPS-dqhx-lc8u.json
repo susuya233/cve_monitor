@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-08-21T16:25:27+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-dqhx-lc8u",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-63343",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-73",
+    "description": "Incus 是开源的系统容器与虚拟机管理器，由 Linux Containers 社区维护并以 Apache-2.0 协议在 GitHub（lxc/incus）发布，核心守护进程 incusd 通过 REST API 提供实例生命周期、镜像、存储、网络与实例元数据等能力。\n受影响版本中，攻击者可在上传的容器镜像根目录中放置名为 metadata.yaml 的符号链接，使其指向宿主上的任意路径。已认证的 Incus 用户启动基于该镜像的实例后，incusd 在处理实例元数据接口 PUT /1.0/instances/{name}/metadata 与 GET /1.0/instances/{name}/metadata 时，会通过 filepath.Join(inst.Path(), \"metadata.yaml\") 计算路径并使用 os.Open / os.WriteFile 直接操作该文件，没有先用 Lstat 拒绝符号链接，也没有用 os.OpenRoot 将其限定在实例根目录之内，导致符号链接被跟随，incusd 以 root 身份对宿主任意路径完成任意文件读或写。\n修复版本中通过将 cmd/incusd/instance_metadata.go 中 instanceMetadataGet、instanceMetadataPatch 与 doInstanceMetadataUpdate 对 metadata.yaml 的访问全部替换为基于 os.OpenRoot(inst.Path()) 的 root.Open(\"metadata.yaml\") 与 root.WriteFile(...) 调用，把符号链接解析限制在实例根目录之内，从而切断了从恶意镜像元数据到宿主任意文件的路径穿越链。",
+    "effects": [
+      {
+        "comp_name": "github.com/lxc/incus",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[0,7.3.0)",
+            "min_fixed_version": "7.3.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "文件名或路径的外部控制",
+    "last_modified_time": "2026-08-21",
+    "level": "Critical",
+    "mps_id": "MPS-dqhx-lc8u",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dqhx-lc8u",
+        "name": "https://www.oscs1024.com/hd/MPS-dqhx-lc8u"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-63343",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-63343"
+      },
+      {
+        "url": "https://github.com/lxc/incus/security/advisories/GHSA-fmjx-5j3g-997p",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Incus 镜像元数据符号链接路径穿越漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-63343",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-73",
+    "description": "Incus 是开源的系统容器与虚拟机管理器，由 Linux Containers 社区维护并以 Apache-2.0 协议在 GitHub（lxc/incus）发布，核心守护进程 incusd 通过 REST API 提供实例生命周期、镜像、存储、网络与实例元数据等能力。\n受影响版本中，攻击者可在上传的容器镜像根目录中放置名为 metadata.yaml 的符号链接，使其指向宿主上的任意路径。已认证的 Incus 用户启动基于该镜像的实例后，incusd 在处理实例元数据接口 PUT /1.0/instances/{name}/metadata 与 GET /1.0/instances/{name}/metadata 时，会通过 filepath.Join(inst.Path(), \"metadata.yaml\") 计算路径并使用 os.Open / os.WriteFile 直接操作该文件，没有先用 Lstat 拒绝符号链接，也没有用 os.OpenRoot 将其限定在实例根目录之内，导致符号链接被跟随，incusd 以 root 身份对宿主任意路径完成任意文件读或写。\n修复版本中通过将 cmd/incusd/instance_metadata.go 中 instanceMetadataGet、instanceMetadataPatch 与 doInstanceMetadataUpdate 对 metadata.yaml 的访问全部替换为基于 os.OpenRoot(inst.Path()) 的 root.Open(\"metadata.yaml\") 与 root.WriteFile(...) 调用，把符号链接解析限制在实例根目录之内，从而切断了从恶意镜像元数据到宿主任意文件的路径穿越链。",
+    "effects": [
+      {
+        "comp_name": "github.com/lxc/incus",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[0,7.3.0)",
+            "min_fixed_version": "7.3.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "External Control of File Name or Path",
+    "last_modified_time": "2026-08-21",
+    "level": "Critical",
+    "mps_id": "MPS-dqhx-lc8u",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dqhx-lc8u",
+        "name": "https://www.oscs1024.com/hd/MPS-dqhx-lc8u"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-63343",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-63343"
+      },
+      {
+        "url": "https://github.com/lxc/incus/security/advisories/GHSA-fmjx-5j3g-997p",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Incus 镜像元数据符号链接路径穿越漏洞"
+  },
+  "first_saved_at": "2026-08-21T16:25:27+00:00"
+}
