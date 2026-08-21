@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-08-21T23:17:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-1hb8-g75v",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-53530",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1285",
+    "description": "ratex-parser 在解析包含多字节 UTF-8 分隔符的 \\verb 命令时由于按字节下标切片触发 \"byte index is not a char boundary\" panic，且 release profile 设置 panic=\"abort\" 导致单个恶意输入即可终止整个进程，对所有渲染不可信 LaTeX 的服务构成拒绝服务风险。\n受影响版本中，crates.io 上的 crate ratex-parser 在 < 0.1.11 的发布版本中，crates/ratex-parser/src/parser.rs 的 parse_symbol_inner 函数对 \\verb 参数先以 arg.starts_with('*') 与 &arg[1..] 处理星号、再以 arg[1..arg.len() - 1] 按字节切片除去首尾分隔符，当分隔符为多字节字符（如 é = U+00E9，字节序列 C3 A9）时索引 1 落入多字节字符内部，越过 Rust 的 char boundary 校验后 panic，借 panic=abort 终止进程。\n修复版本中通过 0.1.11 发布的 commit 56bfa62b1d3b4691cc311d0a0758ad80b895af72 将 \\verb 参数先以 stripped.strip_prefix('*') 安全识别星号并收集为 Vec<char>，再按字符下标 chars[1..chars.len() - 1] 切片得到 body，从根因上消除字节切片在多字节字符上发生 panic 的路径，并新增 ASCII 与多字节分隔符相关的正反向测试覆盖 \\verbéxé 等场景。",
+    "effects": [
+      {
+        "comp_name": "crates.io:ratex-parser",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "[0.0.0,0.1.11)",
+            "min_fixed_version": "0.1.11",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "ratex-parser",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.11)",
+            "min_fixed_version": "0.1.11",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "输入中指定索引、位置或偏移的验证不当",
+    "kind_en": "输入中指定索引、位置或偏移量的验证不正确",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-1hb8-g75v",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/erweixin/RaTeX/security/advisories/GHSA-4hgp-59h5-gvrj",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-4hgp-59h5-gvrj",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "ratex-parser 多字节 UTF-8 字符串切片导致拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-53530",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1285",
+    "description": "ratex-parser 在解析包含多字节 UTF-8 分隔符的 \\verb 命令时由于按字节下标切片触发 \"byte index is not a char boundary\" panic，且 release profile 设置 panic=\"abort\" 导致单个恶意输入即可终止整个进程，对所有渲染不可信 LaTeX 的服务构成拒绝服务风险。\n受影响版本中，crates.io 上的 crate ratex-parser 在 < 0.1.11 的发布版本中，crates/ratex-parser/src/parser.rs 的 parse_symbol_inner 函数对 \\verb 参数先以 arg.starts_with('*') 与 &arg[1..] 处理星号、再以 arg[1..arg.len() - 1] 按字节切片除去首尾分隔符，当分隔符为多字节字符（如 é = U+00E9，字节序列 C3 A9）时索引 1 落入多字节字符内部，越过 Rust 的 char boundary 校验后 panic，借 panic=abort 终止进程。\n修复版本中通过 0.1.11 发布的 commit 56bfa62b1d3b4691cc311d0a0758ad80b895af72 将 \\verb 参数先以 stripped.strip_prefix('*') 安全识别星号并收集为 Vec<char>，再按字符下标 chars[1..chars.len() - 1] 切片得到 body，从根因上消除字节切片在多字节字符上发生 panic 的路径，并新增 ASCII 与多字节分隔符相关的正反向测试覆盖 \\verbéxé 等场景。",
+    "effects": [
+      {
+        "comp_name": "crates.io:ratex-parser",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "[0.0.0,0.1.11)",
+            "min_fixed_version": "0.1.11",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "ratex-parser",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.11)",
+            "min_fixed_version": "0.1.11",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "输入中指定索引、位置或偏移的验证不当",
+    "kind_en": "Improper Validation of Specified Index, Position, or Offset in Input",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-1hb8-g75v",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/erweixin/RaTeX/security/advisories/GHSA-4hgp-59h5-gvrj",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-4hgp-59h5-gvrj",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "ratex-parser 多字节 UTF-8 字符串切片导致拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-08-21T23:17:33+00:00"
+}
