@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-08-21T17:22:38+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-fcvo-x25t",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54789",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-787",
+    "description": "mod_auth_openidc 是 Apache 2.x HTTP 服务器的 OpenID Certified 身份认证与授权模块，实现 OpenID Connect Relying Party 功能；该项目以 C 语言实现并以 Apache 模块形式加载，开源维护。\n受影响版本中，公开导出的 oidc_state_cookies_clean_expired 函数在请求处理路径上从 r->headers_in 读取客户端 Cookie 头、按分号切分为多个 token 后交给内部 oidc_state_cookies_parse_token 解析。该函数使用 while (cookie != NULL && *cookie != OIDC_CHAR_EQUAL) 扫描 token 中的等号以分离 cookie 名与值，但 cookie 指针仅被自增、永不重新赋值为 NULL，因此 cookie != NULL 判断恒为真，循环只能靠遇到 '=' 退出。当未认证客户端发送以默认前缀 mod_auth_openidc_state_ 开头但不包含 '=' 的 Cookie token 时，循环会越过 token 缓冲区末端继续在相邻内存中扫描直到偶然命中 '='（越界读，命中未映射页时可导致进程崩溃/拒绝服务），随后在该偏移处写入 '\\0'（攻击者可控位置的一字节越界写）。\n修复版本中通过将扫描条件改为 (*cookie != '\\0' && *cookie != OIDC_CHAR_EQUAL)，在到达字符串结束符时即停止扫描；既有的 if (*cookie != OIDC_CHAR_EQUAL) return 0 检查随后可正常拒绝无值 token，从而切断越界读写路径，并补充 test_state_cookies_clean_no_value 回归测试覆盖该输入形态。",
+    "effects": [
+      {
+        "comp_name": "mod_auth_openidc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.4.19.4)",
+            "min_fixed_version": "2.4.19.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界写入",
+    "kind_en": "越界写入",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-fcvo-x25t",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fcvo-x25t",
+        "name": "https://www.oscs1024.com/hd/MPS-fcvo-x25t"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54789",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-54789"
+      },
+      {
+        "url": "https://github.com/OpenIDC/mod_auth_openidc/commit/8017478471cc071c49aa073c5c9be652a73a8630",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OpenIDC/mod_auth_openidc/security/advisories/GHSA-vgr5-qcpp-x2pr",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "mod_auth_openidc 状态 Cookie 解析越界读写漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54789",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-787",
+    "description": "mod_auth_openidc 是 Apache 2.x HTTP 服务器的 OpenID Certified 身份认证与授权模块，实现 OpenID Connect Relying Party 功能；该项目以 C 语言实现并以 Apache 模块形式加载，开源维护。\n受影响版本中，公开导出的 oidc_state_cookies_clean_expired 函数在请求处理路径上从 r->headers_in 读取客户端 Cookie 头、按分号切分为多个 token 后交给内部 oidc_state_cookies_parse_token 解析。该函数使用 while (cookie != NULL && *cookie != OIDC_CHAR_EQUAL) 扫描 token 中的等号以分离 cookie 名与值，但 cookie 指针仅被自增、永不重新赋值为 NULL，因此 cookie != NULL 判断恒为真，循环只能靠遇到 '=' 退出。当未认证客户端发送以默认前缀 mod_auth_openidc_state_ 开头但不包含 '=' 的 Cookie token 时，循环会越过 token 缓冲区末端继续在相邻内存中扫描直到偶然命中 '='（越界读，命中未映射页时可导致进程崩溃/拒绝服务），随后在该偏移处写入 '\\0'（攻击者可控位置的一字节越界写）。\n修复版本中通过将扫描条件改为 (*cookie != '\\0' && *cookie != OIDC_CHAR_EQUAL)，在到达字符串结束符时即停止扫描；既有的 if (*cookie != OIDC_CHAR_EQUAL) return 0 检查随后可正常拒绝无值 token，从而切断越界读写路径，并补充 test_state_cookies_clean_no_value 回归测试覆盖该输入形态。",
+    "effects": [
+      {
+        "comp_name": "mod_auth_openidc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.4.19.4)",
+            "min_fixed_version": "2.4.19.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界写入",
+    "kind_en": "Out-of-bounds Write",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-fcvo-x25t",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fcvo-x25t",
+        "name": "https://www.oscs1024.com/hd/MPS-fcvo-x25t"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54789",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-54789"
+      },
+      {
+        "url": "https://github.com/OpenIDC/mod_auth_openidc/commit/8017478471cc071c49aa073c5c9be652a73a8630",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OpenIDC/mod_auth_openidc/security/advisories/GHSA-vgr5-qcpp-x2pr",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "mod_auth_openidc 状态 Cookie 解析越界读写漏洞"
+  },
+  "first_saved_at": "2026-08-21T17:22:38+00:00"
+}

@@ -1,0 +1,189 @@
+{
+  "saved_at": "2026-08-21T17:22:40+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-v9rq-hpg3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-22681",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "OpenViking 是面向 AI Agent 的开源上下文数据库与资源解析框架，提供 HTTP Server 用于注册外部资源并自动抓取解析。\n受影响版本中，POST /api/v1/resources 接口接收用户可控的 path 字段后，调用 ResourceService.add_resource 进入 HTMLParser 与 URLTypeDetector，URLTypeDetector.detect、HTMLParser._fetch_html、HTMLParser._download_file 均使用 httpx.AsyncClient(follow_redirects=True) 直接对 path 发起 HEAD 与 GET 请求，且未对目标主机做公网校验，攻击者可提交 loopback、RFC 1918、link-local 或云元数据地址，使服务端向内网及元数据服务发起出站请求并通过解析结果接口回读内容。\n修复版本中通过新增 openviking/utils/network_guard.py 的 ensure_public_remote_target 函数对目标主机做公网校验（拒绝 localhost、私有网段、链路本地地址，并校验解析后 IP 是否属于 ipaddress.is_global），路由层在 add_resource 中传入 enforce_public_remote_targets=True，URLTypeDetector.detect、HTMLParser._fetch_html、_download_file 增加 request_validator 参数并通过 httpx event_hooks 在每次请求前校验 URL，同时关闭 trust_env 以屏蔽代理环境变量影响，从源头阻断 SSRF 链路。",
+    "effects": [
+      {
+        "comp_name": "openviking",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.3.4)",
+            "min_fixed_version": "0.3.4",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-v9rq-hpg3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-v9rq-hpg3",
+        "name": "https://www.oscs1024.com/hd/MPS-v9rq-hpg3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-22681",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-22681"
+      },
+      {
+        "url": "https://github.com/volcengine/OpenViking/commit/41e345896d247e43ab78bbcb38b4a5b1b38ef62c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/volcengine/OpenViking/pull/1133",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/volcengine/OpenViking/releases/tag/v0.3.4",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/openviking-ssrf-via-api-v1-resources",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "OpenViking /api/v1/resources 端点 SSRF 漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-22681",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "OpenViking 是面向 AI Agent 的开源上下文数据库与资源解析框架，提供 HTTP Server 用于注册外部资源并自动抓取解析。\n受影响版本中，POST /api/v1/resources 接口接收用户可控的 path 字段后，调用 ResourceService.add_resource 进入 HTMLParser 与 URLTypeDetector，URLTypeDetector.detect、HTMLParser._fetch_html、HTMLParser._download_file 均使用 httpx.AsyncClient(follow_redirects=True) 直接对 path 发起 HEAD 与 GET 请求，且未对目标主机做公网校验，攻击者可提交 loopback、RFC 1918、link-local 或云元数据地址，使服务端向内网及元数据服务发起出站请求并通过解析结果接口回读内容。\n修复版本中通过新增 openviking/utils/network_guard.py 的 ensure_public_remote_target 函数对目标主机做公网校验（拒绝 localhost、私有网段、链路本地地址，并校验解析后 IP 是否属于 ipaddress.is_global），路由层在 add_resource 中传入 enforce_public_remote_targets=True，URLTypeDetector.detect、HTMLParser._fetch_html、_download_file 增加 request_validator 参数并通过 httpx event_hooks 在每次请求前校验 URL，同时关闭 trust_env 以屏蔽代理环境变量影响，从源头阻断 SSRF 链路。",
+    "effects": [
+      {
+        "comp_name": "openviking",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.3.4)",
+            "min_fixed_version": "0.3.4",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-v9rq-hpg3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-v9rq-hpg3",
+        "name": "https://www.oscs1024.com/hd/MPS-v9rq-hpg3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-22681",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-22681"
+      },
+      {
+        "url": "https://github.com/volcengine/OpenViking/commit/41e345896d247e43ab78bbcb38b4a5b1b38ef62c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/volcengine/OpenViking/pull/1133",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/volcengine/OpenViking/releases/tag/v0.3.4",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/openviking-ssrf-via-api-v1-resources",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "OpenViking /api/v1/resources 端点 SSRF 漏洞"
+  },
+  "first_saved_at": "2026-08-21T17:22:40+00:00"
+}
