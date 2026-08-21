@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-08-21T13:40:31+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-scj9-4gun",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77759",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "4daa8cea-433a-44bd-9456-53b127fc289a",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "Roskus Prospero Flow CRM 是开源的 PHP CRM 平台，基于 Laravel 框架提供多租户客户关系与财务交易管理能力，源码托管于 GitHub。\n受影响版本中，App\\Http\\Controllers\\Api\\Transaction\\TransactionReadController::read 暴露 GET /api/transaction/{id} 接口，方法体直接以 Transaction::find($id) 读取记录，未校验 Auth::user()->company_id 与目标记录的 company_id 是否一致，也没有绑定任何权限检查，导致任意已认证用户通过递增或猜测整数 id 即可读取同实例其它公司的财务交易记录。\n修复版本中通过引入 App\\Http\\Requests\\TransactionReadRequest 并将其注入 read 方法，先在 authorize() 中强制要求 Auth::user()->can('read accounting') 权限，再将查询改写为 Transaction::where('company_id', Auth::user()->company_id)->find($id)，把数据访问限定到当前用户所属公司，从而切断跨租户读取链。",
+    "effects": [
+      {
+        "comp_name": "roskus/prospero-flow-crm",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[5.0.0,5.3.6)",
+            "min_fixed_version": "5.3.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-scj9-4gun",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-scj9-4gun",
+        "name": "https://www.oscs1024.com/hd/MPS-scj9-4gun"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77759",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77759"
+      },
+      {
+        "url": "https://github.com/Roskus/prospero-flow-crm/commit/980c35ac00e419591a8adc2d1dbcc120ea62e273",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Roskus/prospero-flow-crm/releases/tag/v5.5.3",
+        "name": ""
+      },
+      {
+        "url": "https://secur0.com/en/cna/cve-list/cve-2026-77759-idor-missing-authz-prospero-transaction-api",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Prospero Flow CRM 交易API 越权读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77759",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "4daa8cea-433a-44bd-9456-53b127fc289a",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "Roskus Prospero Flow CRM 是开源的 PHP CRM 平台，基于 Laravel 框架提供多租户客户关系与财务交易管理能力，源码托管于 GitHub。\n受影响版本中，App\\Http\\Controllers\\Api\\Transaction\\TransactionReadController::read 暴露 GET /api/transaction/{id} 接口，方法体直接以 Transaction::find($id) 读取记录，未校验 Auth::user()->company_id 与目标记录的 company_id 是否一致，也没有绑定任何权限检查，导致任意已认证用户通过递增或猜测整数 id 即可读取同实例其它公司的财务交易记录。\n修复版本中通过引入 App\\Http\\Requests\\TransactionReadRequest 并将其注入 read 方法，先在 authorize() 中强制要求 Auth::user()->can('read accounting') 权限，再将查询改写为 Transaction::where('company_id', Auth::user()->company_id)->find($id)，把数据访问限定到当前用户所属公司，从而切断跨租户读取链。",
+    "effects": [
+      {
+        "comp_name": "roskus/prospero-flow-crm",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[5.0.0,5.3.6)",
+            "min_fixed_version": "5.3.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-08-21",
+    "level": "High",
+    "mps_id": "MPS-scj9-4gun",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-scj9-4gun",
+        "name": "https://www.oscs1024.com/hd/MPS-scj9-4gun"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77759",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77759"
+      },
+      {
+        "url": "https://github.com/Roskus/prospero-flow-crm/commit/980c35ac00e419591a8adc2d1dbcc120ea62e273",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Roskus/prospero-flow-crm/releases/tag/v5.5.3",
+        "name": ""
+      },
+      {
+        "url": "https://secur0.com/en/cna/cve-list/cve-2026-77759-idor-missing-authz-prospero-transaction-api",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Prospero Flow CRM 交易API 越权读取漏洞"
+  },
+  "first_saved_at": "2026-08-21T13:40:31+00:00"
+}
