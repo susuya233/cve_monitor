@@ -1,0 +1,167 @@
+{
+  "saved_at": "2026-08-22T12:25:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-n8iw-fbzv",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，从而导致未授权的用户或资源可以被访问或篡改。",
+        "title": "什么是访问控制不当"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n",
+        "title": "访问控制不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防访问控制不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-66916",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@joomla.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "medium",
+          "base_score": 6.9
+        }
+      ]
+    },
+    "cvss_score": 6.9,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-284",
+    "description": "JoomGallery 是开源的 Joomla! 4.x/5.x 原生图库组件，以独立 component 形式通过 Joomla Extension Directory 分发，由 JoomGallery::ProjectTeam 在 GitHub 维护 GPL-3.0 版本源代码。\n受影响版本中，站点侧 Category 视图的 HtmlView 在加载前会判断 $this->item->pw_protected 标志位，仅在分类未启用密码保护时才读取子分类、父分类、图片、过滤表单等数据；而同模块下被路由 format=json 触发的 JsonView 在 display() 方法中完全没有 pw_protected 判定，照常调用 $this->get('Children')、$this->get('Parent')、$this->get('Images') 等加载逻辑，将原本受密码门控的内容完整序列化输出。未认证攻击者只需拼接 ?option=com_joomgallery&view=category&id=<受保护分类ID>&format=json，就能越过密码会话校验直接读取分类内容，等价于访问控制被绕过。\n修复版本中通过让 JsonView 在拿到 $this->item 后先做与 HtmlView 相同的 pw_protected 判断，仅在未启用密码或调用方已解锁分类时才加载并输出 children、parent、images，从而与 HTML 视图保持一致的密码门控语义，切断未授权读取链路。",
+    "effects": [
+      {
+        "comp_name": "joomgalleryfriends:com_joomgallery",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.4.0)",
+            "min_fixed_version": "4.4.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "访问控制不当",
+    "kind_en": "访问控制不当",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-n8iw-fbzv",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-n8iw-fbzv",
+        "name": "https://www.oscs1024.com/hd/MPS-n8iw-fbzv"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-66916",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-66916"
+      },
+      {
+        "url": "https://www.joomgalleryfriends.net/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "JoomGallery 受密码保护分类通过 JSON 格式绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，从而导致未授权的用户或资源可以被访问或篡改。",
+        "title": "什么是访问控制不当"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n",
+        "title": "访问控制不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防访问控制不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-66916",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@joomla.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "medium",
+          "base_score": 6.9
+        }
+      ]
+    },
+    "cvss_score": 6.9,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-284",
+    "description": "JoomGallery 是开源的 Joomla! 4.x/5.x 原生图库组件，以独立 component 形式通过 Joomla Extension Directory 分发，由 JoomGallery::ProjectTeam 在 GitHub 维护 GPL-3.0 版本源代码。\n受影响版本中，站点侧 Category 视图的 HtmlView 在加载前会判断 $this->item->pw_protected 标志位，仅在分类未启用密码保护时才读取子分类、父分类、图片、过滤表单等数据；而同模块下被路由 format=json 触发的 JsonView 在 display() 方法中完全没有 pw_protected 判定，照常调用 $this->get('Children')、$this->get('Parent')、$this->get('Images') 等加载逻辑，将原本受密码门控的内容完整序列化输出。未认证攻击者只需拼接 ?option=com_joomgallery&view=category&id=<受保护分类ID>&format=json，就能越过密码会话校验直接读取分类内容，等价于访问控制被绕过。\n修复版本中通过让 JsonView 在拿到 $this->item 后先做与 HtmlView 相同的 pw_protected 判断，仅在未启用密码或调用方已解锁分类时才加载并输出 children、parent、images，从而与 HTML 视图保持一致的密码门控语义，切断未授权读取链路。",
+    "effects": [
+      {
+        "comp_name": "joomgalleryfriends:com_joomgallery",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.4.0)",
+            "min_fixed_version": "4.4.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "访问控制不当",
+    "kind_en": "Improper Access Control",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-n8iw-fbzv",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-n8iw-fbzv",
+        "name": "https://www.oscs1024.com/hd/MPS-n8iw-fbzv"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-66916",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-66916"
+      },
+      {
+        "url": "https://www.joomgalleryfriends.net/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "JoomGallery 受密码保护分类通过 JSON 格式绕过"
+  },
+  "first_saved_at": "2026-08-22T12:25:54+00:00"
+}
