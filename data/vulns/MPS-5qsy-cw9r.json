@@ -1,0 +1,199 @@
+{
+  "saved_at": "2026-08-22T18:20:12+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5qsy-cw9r",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74727",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-416",
+    "description": "Linux 内核是开源、跨平台的操作系统内核，其中 drivers/net/ovpn 子系统实现基于 WireGuard 思路的 OVPN 隧道驱动，对外通过 generic netlink 接口与 UDP 套接字管理 peer 与传输端点。\n受影响版本中，ovpn_nl_peer_set_doit() 先通过 ovpn_peer_get_by_id() 解析目标 peer，仅持有引用计数后再获取 ovpn->lock；窗口期内的并发 OVPN_CMD_PEER_DEL、keepalive 过期或套接字拆除可能先获得锁，调用 ovpn_peer_remove() 将 peer 从 by_id、by_vpn_addr4/6、by_transp_addr 四张哈希表中 unhash 并释放锁；set_doit 之后才取得锁并调用 ovpn_peer_hash_vpn_ip()，将已被移除的 peer 重新插入哈希表。float 路径上 ovpn_peer_endpoints_update() 在异步 AEAD 解密与 netlink 通知之后才取锁，同样会在 by_transp_addr 中再次哈希同一 peer。peer 在引用计数归零后通过 call_rcu 释放，但内嵌的哈希节点尚未断链，形成 UAF 窗口。\n修复版本中通过在 ovpn->lock 保护下判断 hash_entry_id 是否已 unhash 来跳过 rehash，复用 ovpn_peer_remove() 已有的哨兵检测；该检查对 add 路径是无副作用的，因为 ovpn_peer_add_mp() 在调用 ovpn_peer_hash_vpn_ip() 之前已插入 hash_entry_id，从而切断「先移除再被 rehash」的因果链，关闭 UAF 窗口。",
+    "effects": [
+      {
+        "comp_name": "linux:linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.16,6.18.45)",
+            "min_fixed_version": "6.18.45",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.16,7.1.9)",
+            "min_fixed_version": "7.1.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.16,7.2)",
+            "min_fixed_version": "7.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "UAF",
+    "kind_en": "免费后使用",
+    "last_modified_time": "2026-08-23",
+    "level": "High",
+    "mps_id": "MPS-5qsy-cw9r",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5qsy-cw9r",
+        "name": "https://www.oscs1024.com/hd/MPS-5qsy-cw9r"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74727",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74727"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/33ec10567fe14456063daf549fdf1a4f53448e4c",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/66745480298775f188b2f5ad266643e85a90f73b",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/d20c181088984b6eaa8d7fe7cb5ab3510988df59",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Linux 内核 OVPN 驱动哈希重入导致 UAF",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74727",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-416",
+    "description": "Linux 内核是开源、跨平台的操作系统内核，其中 drivers/net/ovpn 子系统实现基于 WireGuard 思路的 OVPN 隧道驱动，对外通过 generic netlink 接口与 UDP 套接字管理 peer 与传输端点。\n受影响版本中，ovpn_nl_peer_set_doit() 先通过 ovpn_peer_get_by_id() 解析目标 peer，仅持有引用计数后再获取 ovpn->lock；窗口期内的并发 OVPN_CMD_PEER_DEL、keepalive 过期或套接字拆除可能先获得锁，调用 ovpn_peer_remove() 将 peer 从 by_id、by_vpn_addr4/6、by_transp_addr 四张哈希表中 unhash 并释放锁；set_doit 之后才取得锁并调用 ovpn_peer_hash_vpn_ip()，将已被移除的 peer 重新插入哈希表。float 路径上 ovpn_peer_endpoints_update() 在异步 AEAD 解密与 netlink 通知之后才取锁，同样会在 by_transp_addr 中再次哈希同一 peer。peer 在引用计数归零后通过 call_rcu 释放，但内嵌的哈希节点尚未断链，形成 UAF 窗口。\n修复版本中通过在 ovpn->lock 保护下判断 hash_entry_id 是否已 unhash 来跳过 rehash，复用 ovpn_peer_remove() 已有的哨兵检测；该检查对 add 路径是无副作用的，因为 ovpn_peer_add_mp() 在调用 ovpn_peer_hash_vpn_ip() 之前已插入 hash_entry_id，从而切断「先移除再被 rehash」的因果链，关闭 UAF 窗口。",
+    "effects": [
+      {
+        "comp_name": "linux:linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.16,6.18.45)",
+            "min_fixed_version": "6.18.45",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.16,7.1.9)",
+            "min_fixed_version": "7.1.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.16,7.2)",
+            "min_fixed_version": "7.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "UAF",
+    "kind_en": "Use After Free",
+    "last_modified_time": "2026-08-23",
+    "level": "High",
+    "mps_id": "MPS-5qsy-cw9r",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5qsy-cw9r",
+        "name": "https://www.oscs1024.com/hd/MPS-5qsy-cw9r"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74727",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74727"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/33ec10567fe14456063daf549fdf1a4f53448e4c",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/66745480298775f188b2f5ad266643e85a90f73b",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/d20c181088984b6eaa8d7fe7cb5ab3510988df59",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Linux 内核 OVPN 驱动哈希重入导致 UAF"
+  },
+  "first_saved_at": "2026-08-22T18:20:12+00:00"
+}
