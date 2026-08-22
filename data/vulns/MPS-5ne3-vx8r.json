@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-22T16:16:37+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5ne3-vx8r",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76602",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@joomla.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-89",
+    "description": "Fabrik 是面向 Joomla CMS 的开源应用与表单构建组件，提供可视化列表、表单、报表与应用搭建能力，由 fabrikar.com 维护，遵循 GPLv3 协议，源代码托管于 https://github.com/Fabrik/fabrik。\n受影响版本中，列表（list）视图由 components/com_fabrik/controllers/list.php 中的 FabrikControllerList::display 作为 Joomla MVC 对外入口处理，order_by / orderby URL 参数经 JFactory::getApplication()->input->getString() 读取后，被直接传入 components/com_fabrik/models/list.php 中 buildQueryOrder 函数拼装 ORDER BY 子句，仅对字段名调用 FabrikString::safeColName 转义，未对实际值进行白名单校验，攻击者可使用基于条件表达式的 payload 触发基于时间的盲注，读取数据库内容。\n修复版本中通过在 buildQueryOrder 中对 order_by / orderby 取值强制限定为列表已声明的元素字段名或已知列名，丢弃非白名单值并由 setOrderByAndDir 仅允许 session 写入，从而切断未认证 ORDER BY 注入路径。",
+    "effects": [
+      {
+        "comp_name": "fabrikar.com:Fabrik extension for Joomla",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.7.3)",
+            "min_fixed_version": "4.7.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SQL注入",
+    "kind_en": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
+    "last_modified_time": "2026-08-22",
+    "level": "Critical",
+    "mps_id": "MPS-5ne3-vx8r",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5ne3-vx8r",
+        "name": "https://www.oscs1024.com/hd/MPS-5ne3-vx8r"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76602",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76602"
+      },
+      {
+        "url": "https://www.fabrikar.com/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Fabrik Joomla 扩展 ORDER BY 注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76602",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@joomla.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-89",
+    "description": "Fabrik 是面向 Joomla CMS 的开源应用与表单构建组件，提供可视化列表、表单、报表与应用搭建能力，由 fabrikar.com 维护，遵循 GPLv3 协议，源代码托管于 https://github.com/Fabrik/fabrik。\n受影响版本中，列表（list）视图由 components/com_fabrik/controllers/list.php 中的 FabrikControllerList::display 作为 Joomla MVC 对外入口处理，order_by / orderby URL 参数经 JFactory::getApplication()->input->getString() 读取后，被直接传入 components/com_fabrik/models/list.php 中 buildQueryOrder 函数拼装 ORDER BY 子句，仅对字段名调用 FabrikString::safeColName 转义，未对实际值进行白名单校验，攻击者可使用基于条件表达式的 payload 触发基于时间的盲注，读取数据库内容。\n修复版本中通过在 buildQueryOrder 中对 order_by / orderby 取值强制限定为列表已声明的元素字段名或已知列名，丢弃非白名单值并由 setOrderByAndDir 仅允许 session 写入，从而切断未认证 ORDER BY 注入路径。",
+    "effects": [
+      {
+        "comp_name": "fabrikar.com:Fabrik extension for Joomla",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.7.3)",
+            "min_fixed_version": "4.7.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SQL注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "last_modified_time": "2026-08-22",
+    "level": "Critical",
+    "mps_id": "MPS-5ne3-vx8r",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5ne3-vx8r",
+        "name": "https://www.oscs1024.com/hd/MPS-5ne3-vx8r"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76602",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76602"
+      },
+      {
+        "url": "https://www.fabrikar.com/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Fabrik Joomla 扩展 ORDER BY 注入漏洞"
+  },
+  "first_saved_at": "2026-08-22T16:16:37+00:00"
+}
