@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-08-22T23:14:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6d4l-0noq",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-47895",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-415",
+    "description": "strongSwan 是开源 IPsec VPN 套件，提供基于 IKEv1/IKEv2 的 VPN 通信与 EAP 身份认证服务，支持 EAP-TTLS、EAP-PEAP、EAP-SIM、EAP-AKA 等多种方法处理对端 EAP-Identity。\n受影响版本中，src/libstrongswan/utils/identification.c 的 clone_ 方法在拷贝 identification_t 对象时只覆盖了 regex 分支以及 encoded.len 非零的情形，未对编码长度为 0 但指针非 NULL 的情况单独克隆；eap_authenticator.c 在解析对端发送的 EAP-Identity（典型输入如 \"@#\"、\"<type>:#\" 或包含 0x00 的二进制数据）后调用 eap_identity->clone(eap_identity) 将结果存入 auth-cfg，memcpy 之后原始对象与克隆对象共享同一块编码内存，随后双方各自 destroy 时对同一指针执行两次 chunk_free，构成双重释放，未授权对端只需向启用 EAP 的 IKE 服务端发送一次此类 EAP-Identity 即可触发。\n修复版本中通过将 clone_ 的判断由 if (this->encoded.len) 调整为 else，使空但非 NULL 的 encoded 同样走 chunk_clone 创建独立内存，并新增 test_clone_empty 用例验证 '@#' 等空编码克隆结果与原对象指针不相等，从根因上切断双重释放链。",
+    "effects": [
+      {
+        "comp_name": "strongSwan",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.0.7)",
+            "min_fixed_version": "6.0.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "双重释放",
+    "kind_en": "双重免费",
+    "last_modified_time": "2026-08-23",
+    "level": "High",
+    "mps_id": "MPS-6d4l-0noq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6d4l-0noq",
+        "name": "https://www.oscs1024.com/hd/MPS-6d4l-0noq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-47895",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-47895"
+      },
+      {
+        "url": "https://github.com/strongswan/strongswan/releases/tag/6.0.7",
+        "name": ""
+      },
+      {
+        "url": "https://www.strongswan.org/download.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "strongSwan EAP身份克隆双重释放漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-47895",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-415",
+    "description": "strongSwan 是开源 IPsec VPN 套件，提供基于 IKEv1/IKEv2 的 VPN 通信与 EAP 身份认证服务，支持 EAP-TTLS、EAP-PEAP、EAP-SIM、EAP-AKA 等多种方法处理对端 EAP-Identity。\n受影响版本中，src/libstrongswan/utils/identification.c 的 clone_ 方法在拷贝 identification_t 对象时只覆盖了 regex 分支以及 encoded.len 非零的情形，未对编码长度为 0 但指针非 NULL 的情况单独克隆；eap_authenticator.c 在解析对端发送的 EAP-Identity（典型输入如 \"@#\"、\"<type>:#\" 或包含 0x00 的二进制数据）后调用 eap_identity->clone(eap_identity) 将结果存入 auth-cfg，memcpy 之后原始对象与克隆对象共享同一块编码内存，随后双方各自 destroy 时对同一指针执行两次 chunk_free，构成双重释放，未授权对端只需向启用 EAP 的 IKE 服务端发送一次此类 EAP-Identity 即可触发。\n修复版本中通过将 clone_ 的判断由 if (this->encoded.len) 调整为 else，使空但非 NULL 的 encoded 同样走 chunk_clone 创建独立内存，并新增 test_clone_empty 用例验证 '@#' 等空编码克隆结果与原对象指针不相等，从根因上切断双重释放链。",
+    "effects": [
+      {
+        "comp_name": "strongSwan",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.0.7)",
+            "min_fixed_version": "6.0.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "双重释放",
+    "kind_en": "Double Free",
+    "last_modified_time": "2026-08-23",
+    "level": "High",
+    "mps_id": "MPS-6d4l-0noq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6d4l-0noq",
+        "name": "https://www.oscs1024.com/hd/MPS-6d4l-0noq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-47895",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-47895"
+      },
+      {
+        "url": "https://github.com/strongswan/strongswan/releases/tag/6.0.7",
+        "name": ""
+      },
+      {
+        "url": "https://www.strongswan.org/download.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "strongSwan EAP身份克隆双重释放漏洞"
+  },
+  "first_saved_at": "2026-08-22T23:14:33+00:00"
+}

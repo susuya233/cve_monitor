@@ -1,5 +1,5 @@
 {
-  "saved_at": "2026-08-22T22:15:21+00:00",
+  "saved_at": "2026-08-22T23:14:34+00:00",
   "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
@@ -29,6 +29,26 @@
     "cwe": "CWE-416",
     "description": "Linux kernel 是开源操作系统内核,sched_ext(scx)是其可扩展调度器子系统,允许通过 BPF 程序实现自定义 CPU 调度策略,并支持 cgroup 级子调度器(sub-scheduler)层级化管理。\n受影响版本中,kernel/sched/ext.c 的 scx_sub_disable 在子调度器 enable 失败但尚未执行 scx_link_sched() 进入层级时,仍会运行完整的清理路径,包括 set_cgroup_sched 重置 cgroup 归属以及对 sch->cgrp 的任务遍历。该路径与根调度器的 disable 路径存在竞争:drain_descendants() 是子调度器 disable 时任务遍历与根 all-task teardown 之间的唯一排序点,未链接的子调度器对 drain_descendants() 不可见,根的 teardown 可能在子 drain 与 walk 之间执行,把任务切出至无调度器状态;随后 walk 命中成员不变性 WARN_ON_ONCE(!scx_task_on_sched(sch, p)) 并把已退出的任务迁移到正在死亡的层级,构成 use-after-free。\n修复版本中通过在 scx_sub_disable 取锁后立即判断 sch->sibling 是否为空:若 sch 从未被链接过则跳过 cgroup 归属重置和 scx_task_iter 任务遍历,直接 goto dump 进入 scx_disable_dump,仅对已被链接的子调度器保留原路径与成员不变性检查,从而避免未链接子调度器在并发禁用场景下访问已退出的任务。",
     "effects": [
+      {
+        "comp_name": "linux",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.1.9-1)",
+            "min_fixed_version": "7.1.9-1",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:14",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
       {
         "comp_name": "linux_kernel",
         "ecosystem": "linux",
@@ -114,6 +134,26 @@
     "cwe": "CWE-416",
     "description": "Linux kernel 是开源操作系统内核,sched_ext(scx)是其可扩展调度器子系统,允许通过 BPF 程序实现自定义 CPU 调度策略,并支持 cgroup 级子调度器(sub-scheduler)层级化管理。\n受影响版本中,kernel/sched/ext.c 的 scx_sub_disable 在子调度器 enable 失败但尚未执行 scx_link_sched() 进入层级时,仍会运行完整的清理路径,包括 set_cgroup_sched 重置 cgroup 归属以及对 sch->cgrp 的任务遍历。该路径与根调度器的 disable 路径存在竞争:drain_descendants() 是子调度器 disable 时任务遍历与根 all-task teardown 之间的唯一排序点,未链接的子调度器对 drain_descendants() 不可见,根的 teardown 可能在子 drain 与 walk 之间执行,把任务切出至无调度器状态;随后 walk 命中成员不变性 WARN_ON_ONCE(!scx_task_on_sched(sch, p)) 并把已退出的任务迁移到正在死亡的层级,构成 use-after-free。\n修复版本中通过在 scx_sub_disable 取锁后立即判断 sch->sibling 是否为空:若 sch 从未被链接过则跳过 cgroup 归属重置和 scx_task_iter 任务遍历,直接 goto dump 进入 scx_disable_dump,仅对已被链接的子调度器保留原路径与成员不变性检查,从而避免未链接子调度器在并发禁用场景下访问已退出的任务。",
     "effects": [
+      {
+        "comp_name": "linux",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.1.9-1)",
+            "min_fixed_version": "7.1.9-1",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:14",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
       {
         "comp_name": "linux_kernel",
         "ecosystem": "linux",
