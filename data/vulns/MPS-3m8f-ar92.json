@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-08-22T07:26:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3m8f-ar92",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76793",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-287",
+    "description": "Firebase Authentication 是由 miniOrange 提供的 WordPress 插件，用于使用 Firebase 用户凭证或社交登录接入 WordPress 站点登录流程；该插件以闭源形式分发，源码未公开。\n受影响版本中，插件在用 Firebase 身份令牌完成 WordPress 登录时，未要求令牌中携带的 email 字段经过验证，便直接按该 email 匹配本地 WordPress 账户并签发登录会话，使未认证攻击者可以提交携带任意 email 的自签 Firebase 令牌接管站点任意账户，包括管理员。\n修复版本中通过收紧对 Firebase 令牌 email 字段的校验，强制要求 email 已验证后再建立 WordPress 会话，从而切断未认证攻击者凭任意 email 接管账户的链路，官方修复版本为 1.7.1。",
+    "effects": [
+      {
+        "comp_name": "firebase-authentication",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.7.1)",
+            "min_fixed_version": "1.7.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "身份验证不当",
+    "kind_en": "认证不当",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-3m8f-ar92",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3m8f-ar92",
+        "name": "https://www.oscs1024.com/hd/MPS-3m8f-ar92"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76793",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76793"
+      },
+      {
+        "url": "https://wpscan.com/vulnerability/0414ef2b-0d97-41c7-9146-f31ace8b66b2/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Firebase Authentication 插件账户接管漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76793",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-287",
+    "description": "Firebase Authentication 是由 miniOrange 提供的 WordPress 插件，用于使用 Firebase 用户凭证或社交登录接入 WordPress 站点登录流程；该插件以闭源形式分发，源码未公开。\n受影响版本中，插件在用 Firebase 身份令牌完成 WordPress 登录时，未要求令牌中携带的 email 字段经过验证，便直接按该 email 匹配本地 WordPress 账户并签发登录会话，使未认证攻击者可以提交携带任意 email 的自签 Firebase 令牌接管站点任意账户，包括管理员。\n修复版本中通过收紧对 Firebase 令牌 email 字段的校验，强制要求 email 已验证后再建立 WordPress 会话，从而切断未认证攻击者凭任意 email 接管账户的链路，官方修复版本为 1.7.1。",
+    "effects": [
+      {
+        "comp_name": "firebase-authentication",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.7.1)",
+            "min_fixed_version": "1.7.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "身份验证不当",
+    "kind_en": "Improper Authentication",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-3m8f-ar92",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3m8f-ar92",
+        "name": "https://www.oscs1024.com/hd/MPS-3m8f-ar92"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76793",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76793"
+      },
+      {
+        "url": "https://wpscan.com/vulnerability/0414ef2b-0d97-41c7-9146-f31ace8b66b2/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Firebase Authentication 插件账户接管漏洞"
+  },
+  "first_saved_at": "2026-08-22T07:26:07+00:00"
+}

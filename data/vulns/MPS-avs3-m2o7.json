@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-22T07:26:12+00:00",
+  "saved_at": "2026-08-22T07:26:10+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-nre1-i2ax",
+  "source_page": "https://www.oscs1024.com/hd/MPS-avs3-m2o7",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -22,20 +22,20 @@
     ],
     "attack_vector_type": "Network",
     "cnvd_id": "",
-    "cve_id": "CVE-2026-16576",
+    "cve_id": "CVE-2026-16738",
     "cvss": {},
-    "cvss_score": 7.2,
+    "cvss_score": 7.5,
     "cvss_vector": "",
     "cwe": "CWE-284",
-    "description": "Dokan（dokan-lite）是一款开源的 WordPress 多商户市场解决方案插件，用于在 WooCommerce 之上提供多商户、订单、提现与商品管理能力。\n受影响版本中，AdminExtensionsController、AdminOnboardingController、SetupWizard 与 SetupWizardNoWC 四个安装/激活 WordPress.org 插件的入口仅以 manage_woocommerce 作为权限校验，而 Shop Manager 等持有 manage_woocommerce 的角色并不天然具备 install_plugins 与 activate_plugins。攻击者持有 Shop Manager 凭证向 /dokan/v1/extensions/install 提交任意插件 slug 即可写入任意插件；通过 /dokan/v1/onboarding 触发 create_onboarding，进入 install_required_plugins 后由 SetupWizard::install_plugin 调用 dokan_install_wp_org_plugin 触发后台安装并激活，实现任意代码执行。\n修复版本中通过将四条路径改为基于 install_plugins（必要时叠加 activate_plugins）的判定完成修补：AdminExtensionsController::register_routes 把 permission_callback 改为新增的 check_install_permission，仅要求 install_plugins；SetupWizard::user_can_install_plugin 同时校验 install_plugins 与 activate_plugins；AdminOnboardingController::install_required_plugins 复用该谓词跳过无权限安装；SetupWizardNoWC::install_woocommerce 在调度前调用该谓词拒绝未授权安装，关闭 Shop Manager 触发的提权链。",
+    "description": "Conekta Payment Gateway 是面向 WooCommerce 商城的开源支付网关插件，提供墨西哥市场的信用卡、现金、银行转账、BNPL 以及 Apple Pay / Google Pay 钱包等支付方式，其官方源码以 GPLv2 协议通过 WordPress.org 公共 SVN 分发。\n受影响版本中，对外公开的 WooCommerce API 处理器 WC_Conekta_Gateway::check_for_webhook 通过 add_action('woocommerce_api_wc_conekta', ...) 监听 /?wc-api=wc_conekta 端点，接收任意来源的 POST 请求并将 $event = json_decode(file_get_contents('php://input'), true) 直接交给 WC_Conekta_Plugin::handleOrderPaid；该方法从 $event['data']['object'] 取出所谓 Conekta 订单字段并作为支付事实，既未调用 Conekta OrdersApi 重新校验订单与支付状态，也未校验金额/币种、未做幂等去重、未与特定 WooCommerce 订单建立绑定，任意未认证攻击者仅需向该端点发送伪造的 order.paid 事件载荷，即可让插件把任意 WooCommerce 订单标记为已支付。\n修复版本中通过将 handleOrderPaid 改为先调用 fetch_conekta_order 经 OrdersApi::getOrderById 重新拉取订单与支付状态，仅以 API 返回的 verified_order 作为唯一可信事实来源，并新增金额/币种一致性比对、基于 Conekta order id 的 find_paid_order_for_conekta_id 幂等去重以及与目标 WooCommerce 订单的严格绑定，切断伪造 webhook 标记任意订单为已支付的链路。",
     "effects": [
       {
-        "comp_name": "dokan-lite",
+        "comp_name": "conekta-payment-gateway",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,5.0.14)",
-            "min_fixed_version": "5.0.14",
+            "affected_version": "(-∞,6.2.2)",
+            "min_fixed_version": "6.2.2",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -46,34 +46,36 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "访问控制不当",
     "kind_en": "访问控制不当",
-    "last_modified_time": "2026-08-21",
+    "last_modified_time": "2026-08-22",
     "level": "High",
-    "mps_id": "MPS-nre1-i2ax",
+    "mps_id": "MPS-avs3-m2o7",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-21",
+    "published_time": "2026-08-22",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-nre1-i2ax",
-        "name": "https://www.oscs1024.com/hd/MPS-nre1-i2ax"
+        "url": "https://www.oscs1024.com/hd/MPS-avs3-m2o7",
+        "name": "https://www.oscs1024.com/hd/MPS-avs3-m2o7"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16576",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-16576"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16738",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-16738"
       },
       {
-        "url": "https://wpscan.com/vulnerability/801e9008-e912-4606-8c21-3d31dc0bd2c7/",
+        "url": "https://wpscan.com/vulnerability/89a2917e-032c-4f0f-be44-1a50b9d6fddf/",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "Dokan插件REST API权限校验缺陷导致任意插件安装",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Conekta 支付网关伪造漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -94,20 +96,20 @@
     ],
     "attack_vector_type": "Network",
     "cnvd_id": "",
-    "cve_id": "CVE-2026-16576",
+    "cve_id": "CVE-2026-16738",
     "cvss": {},
-    "cvss_score": 7.2,
+    "cvss_score": 7.5,
     "cvss_vector": "",
     "cwe": "CWE-284",
-    "description": "Dokan（dokan-lite）是一款开源的 WordPress 多商户市场解决方案插件，用于在 WooCommerce 之上提供多商户、订单、提现与商品管理能力。\n受影响版本中，AdminExtensionsController、AdminOnboardingController、SetupWizard 与 SetupWizardNoWC 四个安装/激活 WordPress.org 插件的入口仅以 manage_woocommerce 作为权限校验，而 Shop Manager 等持有 manage_woocommerce 的角色并不天然具备 install_plugins 与 activate_plugins。攻击者持有 Shop Manager 凭证向 /dokan/v1/extensions/install 提交任意插件 slug 即可写入任意插件；通过 /dokan/v1/onboarding 触发 create_onboarding，进入 install_required_plugins 后由 SetupWizard::install_plugin 调用 dokan_install_wp_org_plugin 触发后台安装并激活，实现任意代码执行。\n修复版本中通过将四条路径改为基于 install_plugins（必要时叠加 activate_plugins）的判定完成修补：AdminExtensionsController::register_routes 把 permission_callback 改为新增的 check_install_permission，仅要求 install_plugins；SetupWizard::user_can_install_plugin 同时校验 install_plugins 与 activate_plugins；AdminOnboardingController::install_required_plugins 复用该谓词跳过无权限安装；SetupWizardNoWC::install_woocommerce 在调度前调用该谓词拒绝未授权安装，关闭 Shop Manager 触发的提权链。",
+    "description": "Conekta Payment Gateway 是面向 WooCommerce 商城的开源支付网关插件，提供墨西哥市场的信用卡、现金、银行转账、BNPL 以及 Apple Pay / Google Pay 钱包等支付方式，其官方源码以 GPLv2 协议通过 WordPress.org 公共 SVN 分发。\n受影响版本中，对外公开的 WooCommerce API 处理器 WC_Conekta_Gateway::check_for_webhook 通过 add_action('woocommerce_api_wc_conekta', ...) 监听 /?wc-api=wc_conekta 端点，接收任意来源的 POST 请求并将 $event = json_decode(file_get_contents('php://input'), true) 直接交给 WC_Conekta_Plugin::handleOrderPaid；该方法从 $event['data']['object'] 取出所谓 Conekta 订单字段并作为支付事实，既未调用 Conekta OrdersApi 重新校验订单与支付状态，也未校验金额/币种、未做幂等去重、未与特定 WooCommerce 订单建立绑定，任意未认证攻击者仅需向该端点发送伪造的 order.paid 事件载荷，即可让插件把任意 WooCommerce 订单标记为已支付。\n修复版本中通过将 handleOrderPaid 改为先调用 fetch_conekta_order 经 OrdersApi::getOrderById 重新拉取订单与支付状态，仅以 API 返回的 verified_order 作为唯一可信事实来源，并新增金额/币种一致性比对、基于 Conekta order id 的 find_paid_order_for_conekta_id 幂等去重以及与目标 WooCommerce 订单的严格绑定，切断伪造 webhook 标记任意订单为已支付的链路。",
     "effects": [
       {
-        "comp_name": "dokan-lite",
+        "comp_name": "conekta-payment-gateway",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,5.0.14)",
-            "min_fixed_version": "5.0.14",
+            "affected_version": "(-∞,6.2.2)",
+            "min_fixed_version": "6.2.2",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -118,34 +120,36 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "访问控制不当",
     "kind_en": "Improper Access Control",
-    "last_modified_time": "2026-08-21",
+    "last_modified_time": "2026-08-22",
     "level": "High",
-    "mps_id": "MPS-nre1-i2ax",
+    "mps_id": "MPS-avs3-m2o7",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-21",
+    "published_time": "2026-08-22",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-nre1-i2ax",
-        "name": "https://www.oscs1024.com/hd/MPS-nre1-i2ax"
+        "url": "https://www.oscs1024.com/hd/MPS-avs3-m2o7",
+        "name": "https://www.oscs1024.com/hd/MPS-avs3-m2o7"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16576",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-16576"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16738",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-16738"
       },
       {
-        "url": "https://wpscan.com/vulnerability/801e9008-e912-4606-8c21-3d31dc0bd2c7/",
+        "url": "https://wpscan.com/vulnerability/89a2917e-032c-4f0f-be44-1a50b9d6fddf/",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "Dokan插件REST API权限校验缺陷导致任意插件安装"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Conekta 支付网关伪造漏洞"
   },
-  "first_saved_at": "2026-08-21T08:32:43+00:00"
+  "first_saved_at": "2026-08-22T07:26:10+00:00"
 }
