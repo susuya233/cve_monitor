@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-08-22T15:14:23+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-fz73-492v",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75866",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-862",
+    "description": "Punk-OAuth2 是开源 Perl OAuth2 / OpenID Connect 发行版，包含 Punk::OAuth2::Server 授权服务端、Punk::OAuth2::Checker 资源端校验、Punk::OAuth2::Provider / Punk::OAuth2::JWKS 客户端侧等组件，全部以 XS（C）实现，路由 /authorize、/token、/revoke、/introspect、/jwks.json 由 Punk::Plugin::OAuth2 注册。\n受影响版本中，Punk::OAuth2::Server 的 /authorize 与 /token 处理路径缺少对客户端注册的 grant_types 与 scopes 的强制检查，Punk::OAuth2::Server::Store 中虽然以字段形式登记了这两个列表，但任何授权分支都未读取它们。/token 的 pox_srv_token 直接根据请求体中的 grant_type 派发分支，已注册 authorization_code 的客户端可发送 grant_type=client_credentials 直接换取自带任意 scope 的已签名 at+jwt；/authorize 的 pox_srv_authorize 把请求中的 scope 字符串原样写入授权码记录，再由出牌端签名进访问令牌，注册的 redirect_uris 是唯一被强制比对的字段；此外已注册但未配置 secret 的公开客户端在 client_credentials 分支中仅凭 client_id 即可通过认证。\n修复版本中通过在 /authorize 与 /token 入口新增 pox_grant_ok / pox_client_scope_ok 调用，按 Punk::OAuth2::Server::Store 中 deny by default 的 grant_types 与 scopes 重新校验请求，并在 client_credentials 分支拒绝 secret_digest 为空、is_public 为真的客户端，使令牌只能在客户端实际被授予的范围内被签发；不存在的字段或空集视为不允许任何授权，与 redirect_uris 的处理保持一致。",
+    "effects": [
+      {
+        "comp_name": "Punk-OAuth2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.03]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-08-22",
+    "level": "Critical",
+    "mps_id": "MPS-fz73-492v",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fz73-492v",
+        "name": "https://www.oscs1024.com/hd/MPS-fz73-492v"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75866",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75866"
+      },
+      {
+        "url": "https://datatracker.ietf.org/doc/html/rfc6749#section-3.3",
+        "name": ""
+      },
+      {
+        "url": "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/LNATION/Punk-OAuth2-0.03/view/lib/Punk/OAuth2/Server/Store.pm",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/LNATION/Punk-OAuth2-0.04/changes",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Punk-OAuth2 服务端授权缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75866",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-862",
+    "description": "Punk-OAuth2 是开源 Perl OAuth2 / OpenID Connect 发行版，包含 Punk::OAuth2::Server 授权服务端、Punk::OAuth2::Checker 资源端校验、Punk::OAuth2::Provider / Punk::OAuth2::JWKS 客户端侧等组件，全部以 XS（C）实现，路由 /authorize、/token、/revoke、/introspect、/jwks.json 由 Punk::Plugin::OAuth2 注册。\n受影响版本中，Punk::OAuth2::Server 的 /authorize 与 /token 处理路径缺少对客户端注册的 grant_types 与 scopes 的强制检查，Punk::OAuth2::Server::Store 中虽然以字段形式登记了这两个列表，但任何授权分支都未读取它们。/token 的 pox_srv_token 直接根据请求体中的 grant_type 派发分支，已注册 authorization_code 的客户端可发送 grant_type=client_credentials 直接换取自带任意 scope 的已签名 at+jwt；/authorize 的 pox_srv_authorize 把请求中的 scope 字符串原样写入授权码记录，再由出牌端签名进访问令牌，注册的 redirect_uris 是唯一被强制比对的字段；此外已注册但未配置 secret 的公开客户端在 client_credentials 分支中仅凭 client_id 即可通过认证。\n修复版本中通过在 /authorize 与 /token 入口新增 pox_grant_ok / pox_client_scope_ok 调用，按 Punk::OAuth2::Server::Store 中 deny by default 的 grant_types 与 scopes 重新校验请求，并在 client_credentials 分支拒绝 secret_digest 为空、is_public 为真的客户端，使令牌只能在客户端实际被授予的范围内被签发；不存在的字段或空集视为不允许任何授权，与 redirect_uris 的处理保持一致。",
+    "effects": [
+      {
+        "comp_name": "Punk-OAuth2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.03]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-08-22",
+    "level": "Critical",
+    "mps_id": "MPS-fz73-492v",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fz73-492v",
+        "name": "https://www.oscs1024.com/hd/MPS-fz73-492v"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75866",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75866"
+      },
+      {
+        "url": "https://datatracker.ietf.org/doc/html/rfc6749#section-3.3",
+        "name": ""
+      },
+      {
+        "url": "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/LNATION/Punk-OAuth2-0.03/view/lib/Punk/OAuth2/Server/Store.pm",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/LNATION/Punk-OAuth2-0.04/changes",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Punk-OAuth2 服务端授权缺失漏洞"
+  },
+  "first_saved_at": "2026-08-22T15:14:23+00:00"
+}

@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-08-22T15:14:22+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-kbq5-1xg6",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75870",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-1394",
+    "description": "Punk 是面向 Perl 的开源 Web 框架，提供路由、会话、视图与模型等组件，会话机制基于签名 Cookie。\n受影响版本中，Punk::App 的 session DSL 关键字（xs/app.xs 中的 Punk::App::session XSUB）在冻结会话配置时不要求 secret 选项，也不发出任何警告；include/punk/punk_session.h 中 ps_load 读取 Cookie 时和 ps_writeback 写回 Cookie 时都把 HMAC-SHA256 密钥默认为空字符串，使任何熟悉格式的远程攻击者都可以离线伪造包含任意 user_id 或 role 的会话 Cookie，从而冒充任意用户、绕过 Punk::Auth 的 auth_guard。\n修复版本中通过在 Punk::App::session XSUB 中新增 secret 校验，缺省或空 secret 时在启动阶段 croak 拒绝冻结配置；同时在 ps_writeback 中对运行时手工写入的 secret 缺失情况再次发出警告并放弃写 Cookie，达到密钥为空的失败关闭效果。",
+    "effects": [
+      {
+        "comp_name": "Punk",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.18)",
+            "min_fixed_version": "0.18",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "",
+    "kind_en": "",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-kbq5-1xg6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-kbq5-1xg6",
+        "name": "https://www.oscs1024.com/hd/MPS-kbq5-1xg6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75870",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75870"
+      },
+      {
+        "url": "https://metacpan.org/release/LNATION/Punk-0.17/source/include/punk/punk_session.h",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/LNATION/Punk-0.17/view/lib/Punk.pm",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/LNATION/Punk-0.18/source/Changes",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Punk 会话 Cookie HMAC 密钥为空导致伪造漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75870",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-1394",
+    "description": "Punk 是面向 Perl 的开源 Web 框架，提供路由、会话、视图与模型等组件，会话机制基于签名 Cookie。\n受影响版本中，Punk::App 的 session DSL 关键字（xs/app.xs 中的 Punk::App::session XSUB）在冻结会话配置时不要求 secret 选项，也不发出任何警告；include/punk/punk_session.h 中 ps_load 读取 Cookie 时和 ps_writeback 写回 Cookie 时都把 HMAC-SHA256 密钥默认为空字符串，使任何熟悉格式的远程攻击者都可以离线伪造包含任意 user_id 或 role 的会话 Cookie，从而冒充任意用户、绕过 Punk::Auth 的 auth_guard。\n修复版本中通过在 Punk::App::session XSUB 中新增 secret 校验，缺省或空 secret 时在启动阶段 croak 拒绝冻结配置；同时在 ps_writeback 中对运行时手工写入的 secret 缺失情况再次发出警告并放弃写 Cookie，达到密钥为空的失败关闭效果。",
+    "effects": [
+      {
+        "comp_name": "Punk",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.18)",
+            "min_fixed_version": "0.18",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "",
+    "kind_en": "",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-kbq5-1xg6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-kbq5-1xg6",
+        "name": "https://www.oscs1024.com/hd/MPS-kbq5-1xg6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75870",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75870"
+      },
+      {
+        "url": "https://metacpan.org/release/LNATION/Punk-0.17/source/include/punk/punk_session.h",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/LNATION/Punk-0.17/view/lib/Punk.pm",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/LNATION/Punk-0.18/source/Changes",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Punk 会话 Cookie HMAC 密钥为空导致伪造漏洞"
+  },
+  "first_saved_at": "2026-08-22T15:14:22+00:00"
+}

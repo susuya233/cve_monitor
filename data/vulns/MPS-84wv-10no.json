@@ -1,0 +1,213 @@
+{
+  "saved_at": "2026-08-22T15:14:24+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-84wv-10no",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71513",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-502",
+    "description": "NLTK 是开源 Python 自然语言处理工具包，提供语料库、词性标注、句法分析、文本分类等功能。\n受影响版本中，nltk/picklesec.py 中的 AllowlistUnpickler.find_class 仅按前缀校验 pickle 全局对象的 module 是否命中 allowed_modules，从未校验 name，导致 TransitionParser.parse 通过 allowlisted_pickle_load 加载的合法命名空间（如 sklearn）允许通过 getattr 链解析命名空间之外的任意可调用对象。攻击者构造恶意的 transition-parser 模型文件，在 pickle 协议 ≥ 4 下请求 sklearn.os.system、numpy.f2py.crackfortran.myeval 等 dotted name，即可在 unpickle 阶段执行任意系统命令。\n修复版本中通过在 AllowlistUnpickler.find_class 中加入拒绝 dotted name、拒绝 dunder name、拒绝 os/subprocess/sys/builtins/numpy.f2py/nltk.tokenize.repp 等 denylist、解析后拒绝裸模块对象与真实 __module__ 属于被拒模块的对象等守卫，将 punkt 切换为精确 (module, qualname) allowlist，并由 transitionparser.py 显式传入 allowed_globals，配合新守卫确保 numpy/scipy/sklearn 仅能解析到 array 反序列化所需的子模块，切断命名空间穿透与子模块 gadget 利用链。",
+    "effects": [
+      {
+        "comp_name": "nltk",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[3.10.0,3.10.3)",
+            "min_fixed_version": "3.10.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-84wv-10no",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-84wv-10no",
+        "name": "https://www.oscs1024.com/hd/MPS-84wv-10no"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71513",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71513"
+      },
+      {
+        "url": "https://github.com/nltk/nltk",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nltk/nltk/blob/v3.10.2/nltk/picklesec.py#L119-L124",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nltk/nltk/commit/c3e37113742a1ebeeb4f2ca58941f320f98805ea",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nltk-through-remote-code-execution-via-allowlistunpickler-dotted-name-bypass",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "NLTK AllowlistUnpickler反序列化RCE漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71513",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-502",
+    "description": "NLTK 是开源 Python 自然语言处理工具包，提供语料库、词性标注、句法分析、文本分类等功能。\n受影响版本中，nltk/picklesec.py 中的 AllowlistUnpickler.find_class 仅按前缀校验 pickle 全局对象的 module 是否命中 allowed_modules，从未校验 name，导致 TransitionParser.parse 通过 allowlisted_pickle_load 加载的合法命名空间（如 sklearn）允许通过 getattr 链解析命名空间之外的任意可调用对象。攻击者构造恶意的 transition-parser 模型文件，在 pickle 协议 ≥ 4 下请求 sklearn.os.system、numpy.f2py.crackfortran.myeval 等 dotted name，即可在 unpickle 阶段执行任意系统命令。\n修复版本中通过在 AllowlistUnpickler.find_class 中加入拒绝 dotted name、拒绝 dunder name、拒绝 os/subprocess/sys/builtins/numpy.f2py/nltk.tokenize.repp 等 denylist、解析后拒绝裸模块对象与真实 __module__ 属于被拒模块的对象等守卫，将 punkt 切换为精确 (module, qualname) allowlist，并由 transitionparser.py 显式传入 allowed_globals，配合新守卫确保 numpy/scipy/sklearn 仅能解析到 array 反序列化所需的子模块，切断命名空间穿透与子模块 gadget 利用链。",
+    "effects": [
+      {
+        "comp_name": "nltk",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[3.10.0,3.10.3)",
+            "min_fixed_version": "3.10.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-84wv-10no",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-84wv-10no",
+        "name": "https://www.oscs1024.com/hd/MPS-84wv-10no"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71513",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71513"
+      },
+      {
+        "url": "https://github.com/nltk/nltk",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nltk/nltk/blob/v3.10.2/nltk/picklesec.py#L119-L124",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nltk/nltk/commit/c3e37113742a1ebeeb4f2ca58941f320f98805ea",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nltk-through-remote-code-execution-via-allowlistunpickler-dotted-name-bypass",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "NLTK AllowlistUnpickler反序列化RCE漏洞"
+  },
+  "first_saved_at": "2026-08-22T15:14:24+00:00"
+}
