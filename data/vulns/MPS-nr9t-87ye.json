@@ -1,0 +1,275 @@
+{
+  "saved_at": "2026-08-22T17:15:23+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-nr9t-87ye",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 条件竞争漏洞是由于程序中存在多个代码块同时访问同一个条件判断语句而导致的错误。在程序中，条件判断语句通常用于决定是否执行某些代码块。当一个程序有多个代码块同时访问同一个条件判断语句时，这些代码块可能会同时执行，从而导致程序执行结果出现不可预测的错误。",
+        "title": "什么是竞争条件"
+      },
+      {
+        "content": "- 线程切换攻击：线程切换攻击是指攻击者通过利用竞争条件漏洞，使程序在执行时频繁切换线程，从而导致系统资源耗尽，最终实现拒绝服务攻击。\n- 内存泄漏攻击：内存泄漏攻击是指攻击者通过利用竞争条件漏洞，使得程序不断申请内存，但最终无法释放内存，从而导致内存泄漏，最终程序崩溃。\n- 缓存穿透攻击：缓存穿透攻击是指攻击者通过利用竞争条件漏洞，使得程序在访问缓存时，被缓存的数据并非当前最新的数据，从而攻击者可以获取到未更新的数据。\n- 指令重放攻击：指令重放攻击是指攻击者通过利用竞争条件漏洞，在程序执行时，将先前保存的指令序列重新执行，从而实现绕过某些验证，获取系统权限等攻击目的。\n",
+        "title": "竞争条件常见的攻击方式"
+      },
+      {
+        "content": "- 使用互斥锁：在条件判断语句中，使用互斥锁来确保只有一个代码块能够访问变量。使用互斥锁可以提高程序的安全性和可靠性。\n- 使用条件封印：在条件判断语句中，将可能会修改变量的代码块封印起来，以确保这些代码块无法被其他代码块访问。\n- 使用条件过滤：在条件判断语句中，使用条件过滤来过滤掉那些不可能发生的条件判断语句。例如，对于一个包含多个条件判断语句的循环，可以只保留其中一个条件的判断，而将其他条件的判断语句过滤掉。\n- 使用性能优化：对于一些条件判断语句，可以使用性能优化来避免条件竞争的情况。例如，可以使用数组或链表等数据结构来存储条件判断语句中的变量，从而避免条件竞争的情况。",
+        "title": "如何预防竞争条件"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74632",
+    "cvss": {},
+    "cvss_score": 7,
+    "cvss_vector": "",
+    "cwe": "CWE-362",
+    "description": "Linux内核是全球被广泛使用的开源操作系统内核，采用C语言实现，由kernel.org维护并通过git树发布稳定版本与主线版本。\n受影响版本中，mm/huge_memory.c中参考计数化的huge_zero_folio实现存在race condition：get_huge_zero_folio()在分配并安装新的huge zero folio时，会先通过cmpxchg设置huge_zero_folio、再通过WRITE_ONCE写入huge_zero_pfn；而shrinker路径的shrink_huge_zero_folio_scan()在atomic_cmpxchg把huge_zero_refcount清零后，又通过xchg把huge_zero_folio置NULL，并把huge_zero_pfn写为~0UL无效值；两条路径之间没有任何锁保护，因此当shrinker在写huge_zero_pfn之前被长时间抢占、并发缺页刚好在此窗口完成huge_zero_pfn的合法写入时，shrinker会随后用~0UL覆盖该合法PFN，导致is_huge_zero_pfn()与is_huge_zero_pmd()对正常huge zero folio错误返回false，进而把huge zero folio当作普通THP处理甚至被错误地split，引发内核内存子系统状态错乱。\n修复版本中通过新增自旋锁huge_zero_lock，把huge_zero_folio、huge_zero_pfn与huge_zero_refcount的写入放到同一临界区中序列化，get_huge_zero_folio()在锁内WRITE_ONCE写入folio与pfn后再用atomic_set_release发布huge_zero_refcount，shrink_huge_zero_folio_scan()则在scoped_guard(spinlock, &huge_zero_lock)临界区内先atomic_cmpxchg把refcount清零、再WRITE_ONCE清空folio和pfn，从而消除两个CPU之间的race，并通过atomic_set_release/atomic_inc_not_zero的配对关系保证弱序架构上的fast path正确性。",
+    "effects": [
+      {
+        "comp_name": "linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.19.197,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.4.129,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.13,6.12.104)",
+            "min_fixed_version": "6.12.104",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.10.47,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.19-rc1,7.1.9)",
+            "min_fixed_version": "7.1.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.12.14,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.2-rc1,7.2)",
+            "min_fixed_version": "7.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.13-rc1,6.18.45)",
+            "min_fixed_version": "6.18.45",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "竞争条件",
+    "kind_en": "使用共享资源并发执行且同步不正确（“竞争条件”）",
+    "last_modified_time": "2026-08-23",
+    "level": "High",
+    "mps_id": "MPS-nr9t-87ye",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-nr9t-87ye",
+        "name": "https://www.oscs1024.com/hd/MPS-nr9t-87ye"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74632",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74632"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/105d04edbec83010df5728f74d17fd9c108e7553",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/33192a26cddea7a7e4ca66e5c3eebd36fa8be2bb",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/6024f6d0d9b9ca5138bfc4ac6f6e4bdf616e42b3",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/ab7e4b407c7f58d1a003134eff3841f303d5ccc2",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "Linux内核 huge_zero_pfn 竞争漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 条件竞争漏洞是由于程序中存在多个代码块同时访问同一个条件判断语句而导致的错误。在程序中，条件判断语句通常用于决定是否执行某些代码块。当一个程序有多个代码块同时访问同一个条件判断语句时，这些代码块可能会同时执行，从而导致程序执行结果出现不可预测的错误。",
+        "title": "什么是竞争条件"
+      },
+      {
+        "content": "- 线程切换攻击：线程切换攻击是指攻击者通过利用竞争条件漏洞，使程序在执行时频繁切换线程，从而导致系统资源耗尽，最终实现拒绝服务攻击。\n- 内存泄漏攻击：内存泄漏攻击是指攻击者通过利用竞争条件漏洞，使得程序不断申请内存，但最终无法释放内存，从而导致内存泄漏，最终程序崩溃。\n- 缓存穿透攻击：缓存穿透攻击是指攻击者通过利用竞争条件漏洞，使得程序在访问缓存时，被缓存的数据并非当前最新的数据，从而攻击者可以获取到未更新的数据。\n- 指令重放攻击：指令重放攻击是指攻击者通过利用竞争条件漏洞，在程序执行时，将先前保存的指令序列重新执行，从而实现绕过某些验证，获取系统权限等攻击目的。\n",
+        "title": "竞争条件常见的攻击方式"
+      },
+      {
+        "content": "- 使用互斥锁：在条件判断语句中，使用互斥锁来确保只有一个代码块能够访问变量。使用互斥锁可以提高程序的安全性和可靠性。\n- 使用条件封印：在条件判断语句中，将可能会修改变量的代码块封印起来，以确保这些代码块无法被其他代码块访问。\n- 使用条件过滤：在条件判断语句中，使用条件过滤来过滤掉那些不可能发生的条件判断语句。例如，对于一个包含多个条件判断语句的循环，可以只保留其中一个条件的判断，而将其他条件的判断语句过滤掉。\n- 使用性能优化：对于一些条件判断语句，可以使用性能优化来避免条件竞争的情况。例如，可以使用数组或链表等数据结构来存储条件判断语句中的变量，从而避免条件竞争的情况。",
+        "title": "如何预防竞争条件"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74632",
+    "cvss": {},
+    "cvss_score": 7,
+    "cvss_vector": "",
+    "cwe": "CWE-362",
+    "description": "Linux内核是全球被广泛使用的开源操作系统内核，采用C语言实现，由kernel.org维护并通过git树发布稳定版本与主线版本。\n受影响版本中，mm/huge_memory.c中参考计数化的huge_zero_folio实现存在race condition：get_huge_zero_folio()在分配并安装新的huge zero folio时，会先通过cmpxchg设置huge_zero_folio、再通过WRITE_ONCE写入huge_zero_pfn；而shrinker路径的shrink_huge_zero_folio_scan()在atomic_cmpxchg把huge_zero_refcount清零后，又通过xchg把huge_zero_folio置NULL，并把huge_zero_pfn写为~0UL无效值；两条路径之间没有任何锁保护，因此当shrinker在写huge_zero_pfn之前被长时间抢占、并发缺页刚好在此窗口完成huge_zero_pfn的合法写入时，shrinker会随后用~0UL覆盖该合法PFN，导致is_huge_zero_pfn()与is_huge_zero_pmd()对正常huge zero folio错误返回false，进而把huge zero folio当作普通THP处理甚至被错误地split，引发内核内存子系统状态错乱。\n修复版本中通过新增自旋锁huge_zero_lock，把huge_zero_folio、huge_zero_pfn与huge_zero_refcount的写入放到同一临界区中序列化，get_huge_zero_folio()在锁内WRITE_ONCE写入folio与pfn后再用atomic_set_release发布huge_zero_refcount，shrink_huge_zero_folio_scan()则在scoped_guard(spinlock, &huge_zero_lock)临界区内先atomic_cmpxchg把refcount清零、再WRITE_ONCE清空folio和pfn，从而消除两个CPU之间的race，并通过atomic_set_release/atomic_inc_not_zero的配对关系保证弱序架构上的fast path正确性。",
+    "effects": [
+      {
+        "comp_name": "linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.19.197,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.4.129,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.13,6.12.104)",
+            "min_fixed_version": "6.12.104",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.10.47,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.19-rc1,7.1.9)",
+            "min_fixed_version": "7.1.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.12.14,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.2-rc1,7.2)",
+            "min_fixed_version": "7.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.13-rc1,6.18.45)",
+            "min_fixed_version": "6.18.45",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "竞争条件",
+    "kind_en": "Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition')",
+    "last_modified_time": "2026-08-23",
+    "level": "High",
+    "mps_id": "MPS-nr9t-87ye",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-nr9t-87ye",
+        "name": "https://www.oscs1024.com/hd/MPS-nr9t-87ye"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74632",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74632"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/105d04edbec83010df5728f74d17fd9c108e7553",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/33192a26cddea7a7e4ca66e5c3eebd36fa8be2bb",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/6024f6d0d9b9ca5138bfc4ac6f6e4bdf616e42b3",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/ab7e4b407c7f58d1a003134eff3841f303d5ccc2",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "Linux内核 huge_zero_pfn 竞争漏洞"
+  },
+  "first_saved_at": "2026-08-22T17:15:23+00:00"
+}
