@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-22T14:15:07+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-22T14:15:03+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-8153-8373",
+  "source_page": "https://www.oscs1024.com/hd/MPS-jcw7-xamy",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,42 +21,38 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-47879",
-    "cvss": {},
-    "cvss_score": 7,
-    "cvss_vector": "",
+    "cve_id": "CVE-2026-60084",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-22",
-    "description": "Spring Cloud Gateway 是基于 Spring WebFlux 的开源 Java API 网关，提供路由、过滤和协议转换能力；JsonToGrpcGatewayFilterFactory 用于把 HTTP+JSON 请求转换为 gRPC 请求，需要一个 proto descriptor 资源定位。\n受影响版本中，JsonToGrpcGatewayFilterFactory 在调用 apply(Config) 构造 GatewayFilter 时，直接把 Config.protoDescriptor 透传给 resourceLoader.getResource(...) 读取 FileDescriptorSet，任何能够配置或修改 Spring Cloud Gateway 路由的攻击者都可以把 protoDescriptor 写成 file:/、http:// 等任意 Spring Resource 协议，从而读取宿主机文件或访问外部资源，造成敏感文件泄露与 SSRF。\n修复版本中通过为 JsonToGrpcGatewayFilterFactory 增加 EnvironmentAware 与 VALID_PROTO_DESCRIPTOR_PREFIXES_KEY（默认仅允许 classpath: 与 classpath*:），在 apply() 中先用 PathUtils.checkResource 校验 protoDescriptor 必须落在允许前缀内，否则抛出 IllegalArgumentException，从而切断任意 Spring Resource 加载路径。",
+    "description": "SiYuan 是开源的本地优先笔记与知识管理应用，Go 语言实现的服务端提供基于 Web 的 API 来管理文档、模板、附件与配置等用户数据。\n受影响版本中，POST /api/search/removeTemplate 接口的 removeTemplate 处理器从 JSON 请求体取出 path 字段后，未对其做任何路径校验或基目录约束，直接调用 model.RemoveTemplate(path)；该函数再把 path 透传给 filelock.Remove，最终由 Go 标准库的 os.RemoveAll 按客户端传入的字符串递归删除目标。已认证的管理员因此可以传入任意绝对路径，使服务端进程按其文件系统权限删除宿主机上的任意文件或目录，绕过工作区与模板目录的隔离边界。\n修复版本中通过 RemoveTemplate 在调用 filelock.Remove 之前先用 filepath.Join 与模板基目录拼接，再用 gulu.File.IsSubPath 校验解析后路径仍位于模板目录之下，拦截跨越基目录的删除请求，从而切断任意文件删除链路。",
     "effects": [
       {
-        "comp_name": "org.springframework.cloud:spring-cloud-gateway-server-webflux",
-        "ecosystem": "maven",
+        "comp_name": "github.com/siyuan-note/siyuan/kernel",
+        "ecosystem": "go",
         "versions": [
           {
-            "affected_version": "[4.0.0,4.2.10)",
-            "min_fixed_version": "4.2.10",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[4.3.0,4.3.6)",
-            "min_fixed_version": "4.3.6",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[3.0.0,3.1.14)",
-            "min_fixed_version": "3.1.14",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[5.0.0,5.0.3)",
-            "min_fixed_version": "5.0.3",
-            "repository": "maven",
+            "affected_version": "(-∞,3.7.4)",
+            "min_fixed_version": "3.7.4",
+            "repository": "go",
             "solutions": [],
             "upstream": true
           }
@@ -66,30 +62,40 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "路径遍历",
     "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
-    "last_modified_time": "2026-08-21",
+    "last_modified_time": "2026-08-22",
     "level": "High",
-    "mps_id": "MPS-8153-8373",
+    "mps_id": "MPS-jcw7-xamy",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-21",
+    "published_time": "2026-08-22",
     "reference_url_list": [
       {
-        "url": "https://spring.io/security/cve-2026-47879",
+        "url": "https://www.oscs1024.com/hd/MPS-jcw7-xamy",
+        "name": "https://www.oscs1024.com/hd/MPS-jcw7-xamy"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-60084",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-60084"
+      },
+      {
+        "url": "https://github.com/siyuan-note/siyuan/security/advisories/GHSA-w938-w7m4-qrj8",
         "name": ""
       },
       {
-        "url": "https://github.com/spring-cloud/spring-cloud-gateway/commit/6c53fd1c95bad683de58614d92f6116f1a44a873",
+        "url": "https://www.vulncheck.com/advisories/siyuan-before-arbitrary-file-deletion-via-removetemplate",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "Spring Cloud Gateway JsonToGrpc 任意资源读取漏洞",
+    "tags": [
+      "go"
+    ],
+    "title": "SiYuan任意文件删除漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -109,42 +115,38 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-47879",
-    "cvss": {},
-    "cvss_score": 7,
-    "cvss_vector": "",
+    "cve_id": "CVE-2026-60084",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-22",
-    "description": "Spring Cloud Gateway 是基于 Spring WebFlux 的开源 Java API 网关，提供路由、过滤和协议转换能力；JsonToGrpcGatewayFilterFactory 用于把 HTTP+JSON 请求转换为 gRPC 请求，需要一个 proto descriptor 资源定位。\n受影响版本中，JsonToGrpcGatewayFilterFactory 在调用 apply(Config) 构造 GatewayFilter 时，直接把 Config.protoDescriptor 透传给 resourceLoader.getResource(...) 读取 FileDescriptorSet，任何能够配置或修改 Spring Cloud Gateway 路由的攻击者都可以把 protoDescriptor 写成 file:/、http:// 等任意 Spring Resource 协议，从而读取宿主机文件或访问外部资源，造成敏感文件泄露与 SSRF。\n修复版本中通过为 JsonToGrpcGatewayFilterFactory 增加 EnvironmentAware 与 VALID_PROTO_DESCRIPTOR_PREFIXES_KEY（默认仅允许 classpath: 与 classpath*:），在 apply() 中先用 PathUtils.checkResource 校验 protoDescriptor 必须落在允许前缀内，否则抛出 IllegalArgumentException，从而切断任意 Spring Resource 加载路径。",
+    "description": "SiYuan 是开源的本地优先笔记与知识管理应用，Go 语言实现的服务端提供基于 Web 的 API 来管理文档、模板、附件与配置等用户数据。\n受影响版本中，POST /api/search/removeTemplate 接口的 removeTemplate 处理器从 JSON 请求体取出 path 字段后，未对其做任何路径校验或基目录约束，直接调用 model.RemoveTemplate(path)；该函数再把 path 透传给 filelock.Remove，最终由 Go 标准库的 os.RemoveAll 按客户端传入的字符串递归删除目标。已认证的管理员因此可以传入任意绝对路径，使服务端进程按其文件系统权限删除宿主机上的任意文件或目录，绕过工作区与模板目录的隔离边界。\n修复版本中通过 RemoveTemplate 在调用 filelock.Remove 之前先用 filepath.Join 与模板基目录拼接，再用 gulu.File.IsSubPath 校验解析后路径仍位于模板目录之下，拦截跨越基目录的删除请求，从而切断任意文件删除链路。",
     "effects": [
       {
-        "comp_name": "org.springframework.cloud:spring-cloud-gateway-server-webflux",
-        "ecosystem": "maven",
+        "comp_name": "github.com/siyuan-note/siyuan/kernel",
+        "ecosystem": "go",
         "versions": [
           {
-            "affected_version": "[4.0.0,4.2.10)",
-            "min_fixed_version": "4.2.10",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[4.3.0,4.3.6)",
-            "min_fixed_version": "4.3.6",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[3.0.0,3.1.14)",
-            "min_fixed_version": "3.1.14",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[5.0.0,5.0.3)",
-            "min_fixed_version": "5.0.3",
-            "repository": "maven",
+            "affected_version": "(-∞,3.7.4)",
+            "min_fixed_version": "3.7.4",
+            "repository": "go",
             "solutions": [],
             "upstream": true
           }
@@ -154,30 +156,40 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "路径遍历",
     "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
-    "last_modified_time": "2026-08-21",
+    "last_modified_time": "2026-08-22",
     "level": "High",
-    "mps_id": "MPS-8153-8373",
+    "mps_id": "MPS-jcw7-xamy",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-21",
+    "published_time": "2026-08-22",
     "reference_url_list": [
       {
-        "url": "https://spring.io/security/cve-2026-47879",
+        "url": "https://www.oscs1024.com/hd/MPS-jcw7-xamy",
+        "name": "https://www.oscs1024.com/hd/MPS-jcw7-xamy"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-60084",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-60084"
+      },
+      {
+        "url": "https://github.com/siyuan-note/siyuan/security/advisories/GHSA-w938-w7m4-qrj8",
         "name": ""
       },
       {
-        "url": "https://github.com/spring-cloud/spring-cloud-gateway/commit/6c53fd1c95bad683de58614d92f6116f1a44a873",
+        "url": "https://www.vulncheck.com/advisories/siyuan-before-arbitrary-file-deletion-via-removetemplate",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "Spring Cloud Gateway JsonToGrpc 任意资源读取漏洞"
+    "tags": [
+      "go"
+    ],
+    "title": "SiYuan任意文件删除漏洞"
   },
-  "first_saved_at": "2026-08-21T06:35:34+00:00"
+  "first_saved_at": "2026-08-22T14:15:03+00:00"
 }

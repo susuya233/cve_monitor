@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-22T13:26:33+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-22T14:15:06+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-pdk3-1w87",
@@ -43,14 +43,35 @@
     "cvss_score": 8.5,
     "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "better-npm-audit 到 3.11.0 以及 4.0.0-rc.2 预发行版，通过将用户提供的 --registry 选项插入到 src/handlers/handleInput.ts 中的命令字符串中（无需验证或引用）来构建其 npm 审核命令，然后将该字符串传递给 index.ts 中的 child_process.exec()，从而生成 shell。包含 shell 元字符（例如分号、管道或命令替换）的注册表值可以使用运行审核的进程的权限执行任意操作系统命令。",
-    "effects": [],
+    "description": "better-npm-audit 是一款基于 Node.js 的 npm CLI 工具，源代码以 MIT 协议在 GitHub 上开源，用于在项目目录中执行 npm audit 并以表格形式呈现依赖漏洞结果。\n受影响版本中，handleInput 函数通过模板字面量把用户提供的 --registry 参数直接拼接到 auditCommand 字符串，未做任何转义或白名单校验；callback 随后在 index.ts 中调用 child_process.exec(${auditCommand} --json) 把整段字符串交给 /bin/sh -c 解释，攻击者在 --registry 中塞入 ;、|、反引号、$() 等 shell 元字符即可在执行 better-npm-audit 的进程中运行任意操作系统命令，等同于本地命令执行。\n修复版本中通过在 handleInput 中新增 validateRegistryUrl() 对 options.registry 做前置过滤：拒绝包含 ;、&、|、`、$、()、{}、[]、<>、换行、回车等 shell 元字符以及非 http(s):// 协议的输入，不合法时打印错误并 process.exit(1)，从源头切断未过滤字符串注入 exec 命令的链路。",
+    "effects": [
+      {
+        "comp_name": "better-npm-audit",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.0.0-rc.2]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,3.11.0]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "OS命令注入",
     "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
     "last_modified_time": "2026-08-22",
@@ -94,8 +115,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-57998漏洞",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "better-npm-audit --registry 命令注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -137,14 +161,35 @@
     "cvss_score": 8.5,
     "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "better-npm-audit through 3.11.0, and the 4.0.0-rc.2 prerelease, builds its npm audit command by interpolating the user-supplied --registry option into a command string in src/handlers/handleInput.ts without validation or quoting, then passes that string to child_process.exec() in index.ts, which spawns a shell. A registry value containing shell metacharacters such as a semicolon, pipe, or command substitution executes arbitrary operating system commands with the privileges of the process running the audit.",
-    "effects": [],
+    "description": "better-npm-audit 是一款基于 Node.js 的 npm CLI 工具，源代码以 MIT 协议在 GitHub 上开源，用于在项目目录中执行 npm audit 并以表格形式呈现依赖漏洞结果。\n受影响版本中，handleInput 函数通过模板字面量把用户提供的 --registry 参数直接拼接到 auditCommand 字符串，未做任何转义或白名单校验；callback 随后在 index.ts 中调用 child_process.exec(${auditCommand} --json) 把整段字符串交给 /bin/sh -c 解释，攻击者在 --registry 中塞入 ;、|、反引号、$() 等 shell 元字符即可在执行 better-npm-audit 的进程中运行任意操作系统命令，等同于本地命令执行。\n修复版本中通过在 handleInput 中新增 validateRegistryUrl() 对 options.registry 做前置过滤：拒绝包含 ;、&、|、`、$、()、{}、[]、<>、换行、回车等 shell 元字符以及非 http(s):// 协议的输入，不合法时打印错误并 process.exit(1)，从源头切断未过滤字符串注入 exec 命令的链路。",
+    "effects": [
+      {
+        "comp_name": "better-npm-audit",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.0.0-rc.2]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,3.11.0]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "OS命令注入",
     "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
     "last_modified_time": "2026-08-22",
@@ -188,8 +233,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-57998漏洞"
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "better-npm-audit --registry 命令注入漏洞"
   },
   "first_saved_at": "2026-08-22T13:26:33+00:00"
 }

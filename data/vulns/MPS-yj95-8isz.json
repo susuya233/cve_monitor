@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-22T13:26:31+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-22T14:15:07+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-yj95-8isz",
@@ -30,14 +30,28 @@
     "cvss_score": 7.1,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-345",
-    "description": "通过提交 9c39d8c8b4c1f75540788d6b391740852ceb0732 的 WWBN AVideo 在 Users_affiliations add.json.php 端点中包含一个授权绕过漏洞，该漏洞允许经过身份验证的用户通过提供对方的协议时间戳来伪造两方同意记录。攻击者可以创建 status='a' 的伪造从属关系，然后通过 videoAddNew.json.php 端点将视频所有​​权重新分配给任意用户，该端点信任伪造的从属关系作为授权条款。",
-    "effects": [],
+    "description": "WWBN AVideo 是开源 PHP 视频分享与直播平台，提供视频上传、播放、用户管理与联盟化分成能力。\n受影响版本中，plugin/CustomizeUser/View/Users_affiliations/add.json.php 在保存 Users_affiliations 对象时，仅在非管理员分支中强制覆盖当前用户对应一侧的 users_id 与 agree_date，但随后调用 $o->setUsers_id_company($_POST['users_id_company']) 与 $o->setUsers_id_affiliate($_POST['users_id_affiliate']) 以及 setCompany_agree_date / setAffiliate_agree_date / setStatus 时仍直接使用客户端 POST 字段。已认证的普通用户可在一次请求中同时提交两端的 users_id、两份 agree_date 以及 status='a'，伪造一个两方都已同意的 Users_affiliations 记录。objects/videoAddNew.json.php 在为视频重新指派归属用户时信任伪造的 affiliation 作为授权依据，攻击者可借此把任意已有视频的归属改写到目标用户，完成视频归属越权转移，触发 integrity-only 提权。\n修复版本中通过 commit 36a7e8c4 在 add.json.php 中引入三层加固：一是新增 Users_affiliations::canEditAffiliation($_POST['id']) 对编辑既有 affiliation 行的请求做权限校验；二是非管理员分支把对方一侧的 agree_date 改用 $o->getAffiliate_agree_date() 与 $o->getCompany_agree_date() 从已加载对象读取，禁止再由 POST 直接写入；三是对非管理员调用 unset($_POST['status']) 使 status 仅由 Users_affiliations::save() 推导，切断伪造两方同意记录的状态写入路径。",
+    "effects": [
+      {
+        "comp_name": "WWBN AVideo",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,9c39d8c8b4c1f75540788d6b391740852ceb0732]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "对数据真实性的验证不充分",
     "kind_en": "数据真实性验证不足",
     "last_modified_time": "2026-08-22",
@@ -65,8 +79,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-58002漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "AVideo 授权绕过漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -95,14 +111,28 @@
     "cvss_score": 7.1,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-345",
-    "description": "WWBN AVideo through commit 9c39d8c8b4c1f75540788d6b391740852ceb0732 contains an authorization bypass vulnerability in the Users_affiliations add.json.php endpoint that allows authenticated users to forge two-party consent records by supplying the counterparty's agreement timestamp. Attackers can create a forged affiliation with status='a' and then reassign video ownership to arbitrary users through the videoAddNew.json.php endpoint, which trusts the forged affiliation as an authorization term.",
-    "effects": [],
+    "description": "WWBN AVideo 是开源 PHP 视频分享与直播平台，提供视频上传、播放、用户管理与联盟化分成能力。\n受影响版本中，plugin/CustomizeUser/View/Users_affiliations/add.json.php 在保存 Users_affiliations 对象时，仅在非管理员分支中强制覆盖当前用户对应一侧的 users_id 与 agree_date，但随后调用 $o->setUsers_id_company($_POST['users_id_company']) 与 $o->setUsers_id_affiliate($_POST['users_id_affiliate']) 以及 setCompany_agree_date / setAffiliate_agree_date / setStatus 时仍直接使用客户端 POST 字段。已认证的普通用户可在一次请求中同时提交两端的 users_id、两份 agree_date 以及 status='a'，伪造一个两方都已同意的 Users_affiliations 记录。objects/videoAddNew.json.php 在为视频重新指派归属用户时信任伪造的 affiliation 作为授权依据，攻击者可借此把任意已有视频的归属改写到目标用户，完成视频归属越权转移，触发 integrity-only 提权。\n修复版本中通过 commit 36a7e8c4 在 add.json.php 中引入三层加固：一是新增 Users_affiliations::canEditAffiliation($_POST['id']) 对编辑既有 affiliation 行的请求做权限校验；二是非管理员分支把对方一侧的 agree_date 改用 $o->getAffiliate_agree_date() 与 $o->getCompany_agree_date() 从已加载对象读取，禁止再由 POST 直接写入；三是对非管理员调用 unset($_POST['status']) 使 status 仅由 Users_affiliations::save() 推导，切断伪造两方同意记录的状态写入路径。",
+    "effects": [
+      {
+        "comp_name": "WWBN AVideo",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,9c39d8c8b4c1f75540788d6b391740852ceb0732]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "对数据真实性的验证不充分",
     "kind_en": "Insufficient Verification of Data Authenticity",
     "last_modified_time": "2026-08-22",
@@ -130,8 +160,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-58002漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "AVideo 授权绕过漏洞"
   },
   "first_saved_at": "2026-08-22T13:26:31+00:00"
 }
