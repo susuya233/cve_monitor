@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-22T12:25:57+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-22T13:26:35+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-251z-civt",
@@ -35,14 +35,28 @@
     "cvss_score": 8.6,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-79",
-    "description": "Joomla 扩展 - joomgalleryfriends.net - 在 JoomGallery < 4.4.0 中存储 XSS - 经过身份验证的特权可以在任何图像中存储 XSS 有效负载，从而导致每个访问者的浏览器中执行 JS。",
-    "effects": [],
+    "description": "JoomGallery 是 JoomGalleryfriends 维护的开源 Joomla! 图片画廊扩展，基于 PHP 实现，遵循 GPL-3.0 协议，可在 Joomla! 站点中提供图片管理、相册与展示能力。\n受影响版本中，扩展在保存图片元数据或图片相关字段时未对特权用户提交的内容做充分 HTML 转义，导致拥有后台权限的攻击者可以将 JavaScript 载荷嵌入到任意图片记录中。由于渲染流程在访客浏览页面时按原样输出这些字段，任何访问受影响图片或相册页面的访客都会在浏览器中执行攻击者控制的脚本，从而造成会话劫持、未授权操作或权限提升。\n修复版本中通过在图片保存路径上对特权用户可控的字段进行 HTML 净化与转义，并在渲染时对受影响字段执行一致的转义处理，切断恶意脚本进入公共页面输出流的路径；该修复计划随 4.4.0 版本发布，建议升级至 4.4.0 及以上版本。",
+    "effects": [
+      {
+        "comp_name": "com_joomgallery",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.4.0)",
+            "min_fixed_version": "4.4.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "XSS",
     "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
     "last_modified_time": "2026-08-22",
@@ -66,8 +80,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-66917漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "JoomGallery图片存储型XSS漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -101,14 +117,28 @@
     "cvss_score": 8.6,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-79",
-    "description": "Joomla Extension - joomgalleryfriends.net - Stored XSS in JoomGallery < 4.4.0 - An authenticated, privileged can store an XSS payload in any image causing JS execution in every visitor's browser.",
-    "effects": [],
+    "description": "JoomGallery 是 JoomGalleryfriends 维护的开源 Joomla! 图片画廊扩展，基于 PHP 实现，遵循 GPL-3.0 协议，可在 Joomla! 站点中提供图片管理、相册与展示能力。\n受影响版本中，扩展在保存图片元数据或图片相关字段时未对特权用户提交的内容做充分 HTML 转义，导致拥有后台权限的攻击者可以将 JavaScript 载荷嵌入到任意图片记录中。由于渲染流程在访客浏览页面时按原样输出这些字段，任何访问受影响图片或相册页面的访客都会在浏览器中执行攻击者控制的脚本，从而造成会话劫持、未授权操作或权限提升。\n修复版本中通过在图片保存路径上对特权用户可控的字段进行 HTML 净化与转义，并在渲染时对受影响字段执行一致的转义处理，切断恶意脚本进入公共页面输出流的路径；该修复计划随 4.4.0 版本发布，建议升级至 4.4.0 及以上版本。",
+    "effects": [
+      {
+        "comp_name": "com_joomgallery",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.4.0)",
+            "min_fixed_version": "4.4.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "XSS",
     "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
     "last_modified_time": "2026-08-22",
@@ -132,8 +162,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-66917漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "JoomGallery图片存储型XSS漏洞"
   },
   "first_saved_at": "2026-08-22T12:25:57+00:00"
 }
