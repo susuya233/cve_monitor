@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-08-22T00:53:21+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-rjub-ew1s",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-53499",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-346",
+    "description": "FORT Validator 是 NICMx 维护的开源 RPKI 依赖方验证器，使用 C 语言实现，源码托管于 GitHub，向 BGP 路由设备输出经过签名验证的 VRP（验证路由起源）数据集。\n受影响版本中，RRDP 通知解析、URL 下载缓存与快照工作目录清理三个独立缺陷组合形成跨源 RRDP 快照投毒链路：src/object/certificate.c 的 certificate_validate_aia 对 SIA id-ad-rpkiNotify 不做同源校验而恒返回 0，攻击者作为同一 TAL 下合法子 CA 可将 SIA 指向受害 CA 的 RRDP 通知地址；src/cache/local_cache.c 的 cache_download 仅按 URL 在缓存中命中即返回成功，不重新校验本地文件是否仍存在；src/rrdp.c 的 handle_snapshot 在会话号或序列号变化时无条件 delete_rpp 删除受害 CA 的本地工作目录，三者组合后受害 CA 一次例行发布即触发本地缓存被删除而 URL 缓存仍报成功，VRP 在依赖方静默消失。\n修复版本中通过在 src/types/uri.c 新增 uri_same_origin 辅助函数对 URI 的 scheme 与 host 做同源判定，并在 src/rrdp.c 的 parse_notification_snapshot 与 parse_notification_delta 中校验通知 URI 与 snapshot/delta URI 是否同源，拒绝跨源 RRDP 元数据；同步把 handle_snapshot 中 delete_rpp 推迟到 cache_download 返回 changed==true 之后执行，从根因切断跨源快照投毒链路。",
+    "effects": [
+      {
+        "comp_name": "NICMx:FORT-validator",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.6.7]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "源验证错误",
+    "kind_en": "来源验证错误",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-rjub-ew1s",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-rjub-ew1s",
+        "name": "https://www.oscs1024.com/hd/MPS-rjub-ew1s"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-53499",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-53499"
+      },
+      {
+        "url": "https://github.com/NICMx/FORT-validator/security/advisories/GHSA-qfm3-577x-rh54",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FORT Validator 跨源 RRDP 快照投毒漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-53499",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-346",
+    "description": "FORT Validator 是 NICMx 维护的开源 RPKI 依赖方验证器，使用 C 语言实现，源码托管于 GitHub，向 BGP 路由设备输出经过签名验证的 VRP（验证路由起源）数据集。\n受影响版本中，RRDP 通知解析、URL 下载缓存与快照工作目录清理三个独立缺陷组合形成跨源 RRDP 快照投毒链路：src/object/certificate.c 的 certificate_validate_aia 对 SIA id-ad-rpkiNotify 不做同源校验而恒返回 0，攻击者作为同一 TAL 下合法子 CA 可将 SIA 指向受害 CA 的 RRDP 通知地址；src/cache/local_cache.c 的 cache_download 仅按 URL 在缓存中命中即返回成功，不重新校验本地文件是否仍存在；src/rrdp.c 的 handle_snapshot 在会话号或序列号变化时无条件 delete_rpp 删除受害 CA 的本地工作目录，三者组合后受害 CA 一次例行发布即触发本地缓存被删除而 URL 缓存仍报成功，VRP 在依赖方静默消失。\n修复版本中通过在 src/types/uri.c 新增 uri_same_origin 辅助函数对 URI 的 scheme 与 host 做同源判定，并在 src/rrdp.c 的 parse_notification_snapshot 与 parse_notification_delta 中校验通知 URI 与 snapshot/delta URI 是否同源，拒绝跨源 RRDP 元数据；同步把 handle_snapshot 中 delete_rpp 推迟到 cache_download 返回 changed==true 之后执行，从根因切断跨源快照投毒链路。",
+    "effects": [
+      {
+        "comp_name": "NICMx:FORT-validator",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.6.7]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "源验证错误",
+    "kind_en": "Origin Validation Error",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-rjub-ew1s",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-rjub-ew1s",
+        "name": "https://www.oscs1024.com/hd/MPS-rjub-ew1s"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-53499",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-53499"
+      },
+      {
+        "url": "https://github.com/NICMx/FORT-validator/security/advisories/GHSA-qfm3-577x-rh54",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FORT Validator 跨源 RRDP 快照投毒漏洞"
+  },
+  "first_saved_at": "2026-08-22T00:53:21+00:00"
+}

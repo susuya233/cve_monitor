@@ -1,0 +1,261 @@
+{
+  "saved_at": "2026-08-22T00:53:28+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-y275-18qw",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-47735",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "Arc 是开源数据分析平台，使用 DuckDB 作为 SQL 查询引擎，通过 API 执行用户提交的 SQL 语句。\n受影响版本中，internal/api/query.go 的 ValidateSQLRequest 方法使用正则表达式仅阻止了 read_parquet( 和 arc_partition_agg( 两个函数，未覆盖 DuckDB 全部 I/O 函数家族（read_csv_auto、read_csv、read_json、read_json_auto、read_text、read_blob、glob、parquet_metadata、parquet_schema、read_xlsx 等）。同时 RBAC 表引用提取仅检查 FROM/JOIN 子句，导致 SELECT 列表中的标量表函数绕过了两层安全检查。任何持有有效令牌的用户均可通过 SELECT * FROM read_csv_auto(\"/etc/passwd\") 等语句读取服务器任意文件。\n修复版本中通过在 DuckDB 层引入结构化沙箱机制解决该问题：在数据库初始化时执行 SET GLOBAL allowed_directories = [...] 限定 DuckDB 可访问的目录前缀列表，并执行 SET GLOBAL enable_external_access = false 禁止运行时外部访问。沙箱策略在所有连接间统一传播，文件读取超出允许目录时直接拒绝。",
+    "effects": [
+      {
+        "comp_name": "github.com/basekick-labs/arc",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,v0.0.0-20260520141557-91bdc29d1a02)",
+            "min_fixed_version": "v0.0.0-20260520141557-91bdc29d1a02",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "github.com/basekick-labs/arc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.0.0-20260520141557-91bdc29d1a02)",
+            "min_fixed_version": "0.0.0-20260520141557-91bdc29d1a02",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "github.com/basekick-labs/arc/internal/api",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,v26.06.1)",
+            "min_fixed_version": "v26.06.1",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "github.com/basekick-labs/arc/internal/database",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,v26.06.1)",
+            "min_fixed_version": "v26.06.1",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "govulncheck-vulndb",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.0.20260723T184607-160000.1.1)",
+            "min_fixed_version": "0.0.20260723T184607-160000.1.1",
+            "repository": "opensuse:leap:16.0",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      }
+    ],
+    "epss": 0.00029,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-y275-18qw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/Basekick-Labs/arc/security/advisories/GHSA-p2j4-c4g6-rpf5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Basekick-Labs/arc/pull/442",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Basekick-Labs/arc/commit/91bdc29d1a02178ccf8c66375eccf85203108dfb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-p2j4-c4g6-rpf5",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go",
+      "应用软件"
+    ],
+    "title": "Arc DuckDB I/O函数任意文件读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-47735",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "Arc 是开源数据分析平台，使用 DuckDB 作为 SQL 查询引擎，通过 API 执行用户提交的 SQL 语句。\n受影响版本中，internal/api/query.go 的 ValidateSQLRequest 方法使用正则表达式仅阻止了 read_parquet( 和 arc_partition_agg( 两个函数，未覆盖 DuckDB 全部 I/O 函数家族（read_csv_auto、read_csv、read_json、read_json_auto、read_text、read_blob、glob、parquet_metadata、parquet_schema、read_xlsx 等）。同时 RBAC 表引用提取仅检查 FROM/JOIN 子句，导致 SELECT 列表中的标量表函数绕过了两层安全检查。任何持有有效令牌的用户均可通过 SELECT * FROM read_csv_auto(\"/etc/passwd\") 等语句读取服务器任意文件。\n修复版本中通过在 DuckDB 层引入结构化沙箱机制解决该问题：在数据库初始化时执行 SET GLOBAL allowed_directories = [...] 限定 DuckDB 可访问的目录前缀列表，并执行 SET GLOBAL enable_external_access = false 禁止运行时外部访问。沙箱策略在所有连接间统一传播，文件读取超出允许目录时直接拒绝。",
+    "effects": [
+      {
+        "comp_name": "github.com/basekick-labs/arc",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,v0.0.0-20260520141557-91bdc29d1a02)",
+            "min_fixed_version": "v0.0.0-20260520141557-91bdc29d1a02",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "github.com/basekick-labs/arc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.0.0-20260520141557-91bdc29d1a02)",
+            "min_fixed_version": "0.0.0-20260520141557-91bdc29d1a02",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "github.com/basekick-labs/arc/internal/api",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,v26.06.1)",
+            "min_fixed_version": "v26.06.1",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "github.com/basekick-labs/arc/internal/database",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,v26.06.1)",
+            "min_fixed_version": "v26.06.1",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "govulncheck-vulndb",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.0.20260723T184607-160000.1.1)",
+            "min_fixed_version": "0.0.20260723T184607-160000.1.1",
+            "repository": "opensuse:leap:16.0",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      }
+    ],
+    "epss": 0.00029,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-y275-18qw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/Basekick-Labs/arc/security/advisories/GHSA-p2j4-c4g6-rpf5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Basekick-Labs/arc/pull/442",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Basekick-Labs/arc/commit/91bdc29d1a02178ccf8c66375eccf85203108dfb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-p2j4-c4g6-rpf5",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go",
+      "应用软件"
+    ],
+    "title": "Arc DuckDB I/O函数任意文件读取漏洞"
+  },
+  "first_saved_at": "2026-08-22T00:53:28+00:00"
+}

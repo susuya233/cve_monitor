@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-08-22T00:53:25+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-j6pk-nuec",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-48106",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-924",
+    "description": "Arc 是开源的 SQL 原生时序数据库（Go 实现，AGPL-3.0），由 Basekick-Labs 维护，主要用于遥测、工业 IoT、航天与可观测等长期保留时序数据场景；Arc Enterprise 在此基础上提供集群复制能力。\n受影响版本中，internal/cluster/replication/receiver.go 的复制接收端仅对入站消息做线缆层封包校验（长度、操作码），直接接受 MsgReplicateSync 载荷而不进行任何应用层身份鉴别，既无 HMAC、也无签名或每消息随机数；传输层 TLS/mTLS 仅保护链路，不为复制协议提供消息级完整性，任意持有合法 mTLS 证书的节点（包括被攻陷的对等节点、泄露私钥或具备集群网络访问能力的内部角色）都可向集群数据面注入任意记录、覆盖复制数据，并与无路径校验的 applyRegisterFile 形成集群级蠕虫放大链路。\n修复版本中通过在 receiver.go 的复制握手中引入集群共享密钥派生的 HMAC 鉴权并叠加每消息 nonce、时间戳与负载摘要校验，使 MsgReplicateSync 必须在通过 HMAC 校验后才进入 applyEntry，拒绝过期时间戳并复用 nonce_cache.go 的回放保护，且连接级会话密钥通过 HKDF 派生、随连接重建刷新，密钥仅驻内存不落盘。",
+    "effects": [
+      {
+        "comp_name": "Basekick-Labs/arc",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.06.1)",
+            "min_fixed_version": "2026.06.1",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通信信道中传输过程中消息完整性的不正确执行",
+    "kind_en": "通信通道传输过程中消息完整性执行不当",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-j6pk-nuec",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-j6pk-nuec",
+        "name": "https://www.oscs1024.com/hd/MPS-j6pk-nuec"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48106",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-48106"
+      },
+      {
+        "url": "https://github.com/Basekick-Labs/arc/security/advisories/GHSA-wfgr-8x84-22q7",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Arc Enterprise 集群复制接收端缺失应用层认证漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-48106",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-924",
+    "description": "Arc 是开源的 SQL 原生时序数据库（Go 实现，AGPL-3.0），由 Basekick-Labs 维护，主要用于遥测、工业 IoT、航天与可观测等长期保留时序数据场景；Arc Enterprise 在此基础上提供集群复制能力。\n受影响版本中，internal/cluster/replication/receiver.go 的复制接收端仅对入站消息做线缆层封包校验（长度、操作码），直接接受 MsgReplicateSync 载荷而不进行任何应用层身份鉴别，既无 HMAC、也无签名或每消息随机数；传输层 TLS/mTLS 仅保护链路，不为复制协议提供消息级完整性，任意持有合法 mTLS 证书的节点（包括被攻陷的对等节点、泄露私钥或具备集群网络访问能力的内部角色）都可向集群数据面注入任意记录、覆盖复制数据，并与无路径校验的 applyRegisterFile 形成集群级蠕虫放大链路。\n修复版本中通过在 receiver.go 的复制握手中引入集群共享密钥派生的 HMAC 鉴权并叠加每消息 nonce、时间戳与负载摘要校验，使 MsgReplicateSync 必须在通过 HMAC 校验后才进入 applyEntry，拒绝过期时间戳并复用 nonce_cache.go 的回放保护，且连接级会话密钥通过 HKDF 派生、随连接重建刷新，密钥仅驻内存不落盘。",
+    "effects": [
+      {
+        "comp_name": "Basekick-Labs/arc",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.06.1)",
+            "min_fixed_version": "2026.06.1",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通信信道中传输过程中消息完整性的不正确执行",
+    "kind_en": "Improper Enforcement of Message Integrity During Transmission in a Communication Channel",
+    "last_modified_time": "2026-08-22",
+    "level": "High",
+    "mps_id": "MPS-j6pk-nuec",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-j6pk-nuec",
+        "name": "https://www.oscs1024.com/hd/MPS-j6pk-nuec"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48106",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-48106"
+      },
+      {
+        "url": "https://github.com/Basekick-Labs/arc/security/advisories/GHSA-wfgr-8x84-22q7",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Arc Enterprise 集群复制接收端缺失应用层认证漏洞"
+  },
+  "first_saved_at": "2026-08-22T00:53:25+00:00"
+}
