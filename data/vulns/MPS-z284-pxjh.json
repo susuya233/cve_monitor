@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-23T15:15:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-z284-pxjh",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-9769",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-674",
+    "description": "justhtml 是开源的 Python HTML 解析库，可用于把不可信 HTML 字符串转换为 DOM 树结构。\n受影响版本中，JustHTML 构造函数在解析过程中无条件调用 TreeBuilder.finish()，而 finish() 又调用 _populate_selectedcontent()，该方法通过 _find_elements() 和 _find_element() 沿 DOM 树递归遍历子节点而未限制递归深度。攻击者只要能向解析入口投递一段约 1000 层嵌套的 <div> 标签（约 11 KB）即可触发 CPython 默认递归上限，导致未捕获的 RecursionError，使解析中断、请求失败或所在 worker / 进程终止，形成拒绝服务。\n修复版本中通过在 _find_elements() / _find_element() 递归过程中加入深度边界并结合其它硬化处理，阻断极深嵌套 HTML 触发的递归崩溃路径，使解析行为可控，建议升级至 1.10.0 及以上版本。",
+    "effects": [
+      {
+        "comp_name": "justhtml",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.10.0)",
+            "min_fixed_version": "1.10.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-08-23",
+    "level": "High",
+    "mps_id": "MPS-z284-pxjh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-z284-pxjh",
+        "name": "https://www.oscs1024.com/hd/MPS-z284-pxjh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-9769",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-9769"
+      },
+      {
+        "url": "https://github.com/EmilStenstrom/justhtml/security/advisories/GHSA-v7cf-c9rm-wm3j",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/justhtml-before-denial-of-service-via-deeply-nested-html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "justhtml 不可控递归拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-9769",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-674",
+    "description": "justhtml 是开源的 Python HTML 解析库，可用于把不可信 HTML 字符串转换为 DOM 树结构。\n受影响版本中，JustHTML 构造函数在解析过程中无条件调用 TreeBuilder.finish()，而 finish() 又调用 _populate_selectedcontent()，该方法通过 _find_elements() 和 _find_element() 沿 DOM 树递归遍历子节点而未限制递归深度。攻击者只要能向解析入口投递一段约 1000 层嵌套的 <div> 标签（约 11 KB）即可触发 CPython 默认递归上限，导致未捕获的 RecursionError，使解析中断、请求失败或所在 worker / 进程终止，形成拒绝服务。\n修复版本中通过在 _find_elements() / _find_element() 递归过程中加入深度边界并结合其它硬化处理，阻断极深嵌套 HTML 触发的递归崩溃路径，使解析行为可控，建议升级至 1.10.0 及以上版本。",
+    "effects": [
+      {
+        "comp_name": "justhtml",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.10.0)",
+            "min_fixed_version": "1.10.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-08-23",
+    "level": "High",
+    "mps_id": "MPS-z284-pxjh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-z284-pxjh",
+        "name": "https://www.oscs1024.com/hd/MPS-z284-pxjh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-9769",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-9769"
+      },
+      {
+        "url": "https://github.com/EmilStenstrom/justhtml/security/advisories/GHSA-v7cf-c9rm-wm3j",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/justhtml-before-denial-of-service-via-deeply-nested-html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "justhtml 不可控递归拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-08-23T15:15:52+00:00"
+}
