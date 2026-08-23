@@ -1024,5 +1024,6 @@
   "a4e3cbd36409c0b362c2f26090e7fa47ab948255": "CHIRP Kenwood ITM 驱动 eval 注入漏洞",
   "0ab53459d3e6f56102f107ab66274f84c6666cf8": "RestrictMate WordPress 插件在注册过程中角色不受限制，导致未经身份验证的权限升级",
   "cb346d861b2bb4e98c0b7eb3f0b64943a821cf66": "RestrictMate is a WordPress plugin for content restriction and membership, distributed via the WordPress.org plugin directory under the slug `restrictmate`; the public source tree is mirrored at `https://plugins.svn.wordpress.org/restrictmate/`.\n受影响版本中，`RestrictMate\\Ajax::register` 通过 `wp_ajax_nopriv_restrictmate_registration` 暴露给未认证访问者，并将整个 `$_POST` 直接透传给 `restrictmate_register_user`。`restrictmate_register_user` 的 `$defaults` 中虽然将 `role` 默认设为 `subscriber`，但随后通过 `wp_parse_args( $args, $defaults )` 把调用者提供的 `$_POST['role']` 合并进来并原样写入 `$userdata['role']`，再调用 `wp_insert_user` 创建账号；同一处理流程随后调用 `restrictmate_user_logging_in`，对新创建的账号执行 `wp_signon` 并设置认证 cookie，从而实现未认证远程提权至管理员。\n修复版本中通过将 `role` 从 `$defaults` 中移除、在 `$userdata` 中硬编码 `'role' => 'subscriber'` 并对 `username`、`email`、`first_name`、`last_name` 调用 `sanitize_user` / `sanitize_email` / `sanitize_text_field` 进行规范化，断绝调用者控制注册角色以及附带字段污染的可能。",
-  "67234996de90c592d36522d4e92328f6e777bac8": "Brave Popup Builder 反射型 XSS 漏洞"
+  "67234996de90c592d36522d4e92328f6e777bac8": "Brave Popup Builder 反射型 XSS 漏洞",
+  "8205453a44e8b347abd1cf2d5cbfb30b2a659f4a": "不受信任的搜索路径"
 }

@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-23T11:15:50+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-23T11:15:48+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-8153-8373",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3tgj-hm79",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,42 +21,44 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-47879",
-    "cvss": {},
-    "cvss_score": 7,
-    "cvss_vector": "",
+    "cve_id": "CVE-2026-10053",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@gitlab.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
     "cwe": "CWE-22",
-    "description": "Spring Cloud Gateway 是基于 Spring WebFlux 的开源 Java API 网关，提供路由、过滤和协议转换能力；JsonToGrpcGatewayFilterFactory 用于把 HTTP+JSON 请求转换为 gRPC 请求，需要一个 proto descriptor 资源定位。\n受影响版本中，JsonToGrpcGatewayFilterFactory 在调用 apply(Config) 构造 GatewayFilter 时，直接把 Config.protoDescriptor 透传给 resourceLoader.getResource(...) 读取 FileDescriptorSet，任何能够配置或修改 Spring Cloud Gateway 路由的攻击者都可以把 protoDescriptor 写成 file:/、http:// 等任意 Spring Resource 协议，从而读取宿主机文件或访问外部资源，造成敏感文件泄露与 SSRF。\n修复版本中通过为 JsonToGrpcGatewayFilterFactory 增加 EnvironmentAware 与 VALID_PROTO_DESCRIPTOR_PREFIXES_KEY（默认仅允许 classpath: 与 classpath*:），在 apply() 中先用 PathUtils.checkResource 校验 protoDescriptor 必须落在允许前缀内，否则抛出 IllegalArgumentException，从而切断任意 Spring Resource 加载路径。",
+    "description": "GitLab 是一站式开源 DevOps 平台，提供代码托管、CI/CD、Package Registry 等能力，社区版（CE）与企业版（EE）共享同一代码基线。\n受影响版本中，Package Registry 在处理上传制品的文件名或目标路径时未对路径分隔符进行充分校验，攻击者在请求中传入包含 ../ 等穿越片段的内容后，可突破预定的制品目录边界，覆盖或读取 GitLab 进程可访问目录之外的文件，并在满足条件时进一步触发远程代码执行，最终控制运行 GitLab 的服务器。\n修复版本中通过严格校验上传制品的文件名与最终落盘路径，禁止任何包含路径遍历字符或越界前缀的输入，从而切断利用链并消除远程代码执行风险。",
     "effects": [
       {
-        "comp_name": "org.springframework.cloud:spring-cloud-gateway-server-webflux",
-        "ecosystem": "maven",
+        "comp_name": "GitLab",
+        "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "[4.0.0,4.2.10)",
-            "min_fixed_version": "4.2.10",
-            "repository": "maven",
+            "affected_version": "[19.1,19.1.4)",
+            "min_fixed_version": "19.1.4",
+            "repository": "unmanaged",
             "solutions": [],
             "upstream": true
           },
           {
-            "affected_version": "[4.3.0,4.3.6)",
-            "min_fixed_version": "4.3.6",
-            "repository": "maven",
+            "affected_version": "[18.8,19.0.6)",
+            "min_fixed_version": "19.0.6",
+            "repository": "unmanaged",
             "solutions": [],
             "upstream": true
           },
           {
-            "affected_version": "[3.0.0,3.1.14)",
-            "min_fixed_version": "3.1.14",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[5.0.0,5.0.3)",
-            "min_fixed_version": "5.0.3",
-            "repository": "maven",
+            "affected_version": "[19.2,19.2.2)",
+            "min_fixed_version": "19.2.2",
+            "repository": "unmanaged",
             "solutions": [],
             "upstream": true
           }
@@ -66,30 +68,40 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "路径遍历",
     "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
-    "last_modified_time": "2026-08-21",
+    "last_modified_time": "2026-08-23",
     "level": "High",
-    "mps_id": "MPS-8153-8373",
+    "mps_id": "MPS-3tgj-hm79",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-21",
+    "published_time": "2026-08-23",
     "reference_url_list": [
       {
-        "url": "https://spring.io/security/cve-2026-47879",
+        "url": "https://www.oscs1024.com/hd/MPS-3tgj-hm79",
+        "name": "https://www.oscs1024.com/hd/MPS-3tgj-hm79"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-10053",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-10053"
+      },
+      {
+        "url": "https://gitlab.com/gitlab-org/gitlab/-/work_items/601596",
         "name": ""
       },
       {
-        "url": "https://github.com/spring-cloud/spring-cloud-gateway/commit/6c53fd1c95bad683de58614d92f6116f1a44a873",
+        "url": "https://hackerone.com/reports/3754194",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "Spring Cloud Gateway JsonToGrpc 任意资源读取漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "GitLab Package Registry 路径遍历致远程代码执行",
     "_translated": true
   },
   "detail_original": {
@@ -109,42 +121,44 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-47879",
-    "cvss": {},
-    "cvss_score": 7,
-    "cvss_vector": "",
+    "cve_id": "CVE-2026-10053",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@gitlab.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
     "cwe": "CWE-22",
-    "description": "Spring Cloud Gateway 是基于 Spring WebFlux 的开源 Java API 网关，提供路由、过滤和协议转换能力；JsonToGrpcGatewayFilterFactory 用于把 HTTP+JSON 请求转换为 gRPC 请求，需要一个 proto descriptor 资源定位。\n受影响版本中，JsonToGrpcGatewayFilterFactory 在调用 apply(Config) 构造 GatewayFilter 时，直接把 Config.protoDescriptor 透传给 resourceLoader.getResource(...) 读取 FileDescriptorSet，任何能够配置或修改 Spring Cloud Gateway 路由的攻击者都可以把 protoDescriptor 写成 file:/、http:// 等任意 Spring Resource 协议，从而读取宿主机文件或访问外部资源，造成敏感文件泄露与 SSRF。\n修复版本中通过为 JsonToGrpcGatewayFilterFactory 增加 EnvironmentAware 与 VALID_PROTO_DESCRIPTOR_PREFIXES_KEY（默认仅允许 classpath: 与 classpath*:），在 apply() 中先用 PathUtils.checkResource 校验 protoDescriptor 必须落在允许前缀内，否则抛出 IllegalArgumentException，从而切断任意 Spring Resource 加载路径。",
+    "description": "GitLab 是一站式开源 DevOps 平台，提供代码托管、CI/CD、Package Registry 等能力，社区版（CE）与企业版（EE）共享同一代码基线。\n受影响版本中，Package Registry 在处理上传制品的文件名或目标路径时未对路径分隔符进行充分校验，攻击者在请求中传入包含 ../ 等穿越片段的内容后，可突破预定的制品目录边界，覆盖或读取 GitLab 进程可访问目录之外的文件，并在满足条件时进一步触发远程代码执行，最终控制运行 GitLab 的服务器。\n修复版本中通过严格校验上传制品的文件名与最终落盘路径，禁止任何包含路径遍历字符或越界前缀的输入，从而切断利用链并消除远程代码执行风险。",
     "effects": [
       {
-        "comp_name": "org.springframework.cloud:spring-cloud-gateway-server-webflux",
-        "ecosystem": "maven",
+        "comp_name": "GitLab",
+        "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "[4.0.0,4.2.10)",
-            "min_fixed_version": "4.2.10",
-            "repository": "maven",
+            "affected_version": "[19.1,19.1.4)",
+            "min_fixed_version": "19.1.4",
+            "repository": "unmanaged",
             "solutions": [],
             "upstream": true
           },
           {
-            "affected_version": "[4.3.0,4.3.6)",
-            "min_fixed_version": "4.3.6",
-            "repository": "maven",
+            "affected_version": "[18.8,19.0.6)",
+            "min_fixed_version": "19.0.6",
+            "repository": "unmanaged",
             "solutions": [],
             "upstream": true
           },
           {
-            "affected_version": "[3.0.0,3.1.14)",
-            "min_fixed_version": "3.1.14",
-            "repository": "maven",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "[5.0.0,5.0.3)",
-            "min_fixed_version": "5.0.3",
-            "repository": "maven",
+            "affected_version": "[19.2,19.2.2)",
+            "min_fixed_version": "19.2.2",
+            "repository": "unmanaged",
             "solutions": [],
             "upstream": true
           }
@@ -154,30 +168,40 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "路径遍历",
     "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
-    "last_modified_time": "2026-08-21",
+    "last_modified_time": "2026-08-23",
     "level": "High",
-    "mps_id": "MPS-8153-8373",
+    "mps_id": "MPS-3tgj-hm79",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-21",
+    "published_time": "2026-08-23",
     "reference_url_list": [
       {
-        "url": "https://spring.io/security/cve-2026-47879",
+        "url": "https://www.oscs1024.com/hd/MPS-3tgj-hm79",
+        "name": "https://www.oscs1024.com/hd/MPS-3tgj-hm79"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-10053",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-10053"
+      },
+      {
+        "url": "https://gitlab.com/gitlab-org/gitlab/-/work_items/601596",
         "name": ""
       },
       {
-        "url": "https://github.com/spring-cloud/spring-cloud-gateway/commit/6c53fd1c95bad683de58614d92f6116f1a44a873",
+        "url": "https://hackerone.com/reports/3754194",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "Spring Cloud Gateway JsonToGrpc 任意资源读取漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "GitLab Package Registry 路径遍历致远程代码执行"
   },
-  "first_saved_at": "2026-08-21T06:35:34+00:00"
+  "first_saved_at": "2026-08-23T11:15:48+00:00"
 }
