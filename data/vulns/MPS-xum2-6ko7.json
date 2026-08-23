@@ -1,14 +1,14 @@
 {
-  "saved_at": "2026-08-19T23:17:30+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-23T00:57:48+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-2rcu-ml4t",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xum2-6ko7",
   "detail": {
     "analysis_status": 0,
     "articles": [],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-76584",
+    "cve_id": "CVE-2026-78050",
     "cvss": {
       "cvssv2": [
         {
@@ -38,14 +38,14 @@
     "cvss_score": 8.6,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-121",
-    "description": "TRENDnet TV-IP751WIC 是闭源无线日夜型网络摄像机，通过 HTTP 管理界面提供时间同步、视频监控和设备配置功能。\n受影响版本中，alphapd 组件的 /cgi-bin/admin/set_time.cgi 接收 Currenttime 参数，经 websGetVar 读取后以 sprintf(\"date -s %s &\") 写入栈缓冲区并交给 doSystem 执行。攻击者可远程操纵该参数覆盖栈上返回地址，并使设备执行拼接后的系统命令。\n修复版本中通过公开渠道未能确认已发布的补丁固件；TRENDnet 已将 TV-IP751WIC 标为停产，支持页提供的最新固件仍为 1.03.03。在官方修复发布前，应隔离摄像头管理接口并限制对 /cgi-bin/admin/set_time.cgi 的访问。",
+    "description": "COMFAST CF-N1-S V2 是一款消费级无线路由器，运行闭源固件 V2.6.0.1；其内置 Web 管理界面通过 mbox-config CGI 接口对外提供 NTP 设置等配置能力。\n受影响版本中，CGI 处理函数 sub_41AD7C 在解析 POST /cgi-bin/mbox-config?method=SET&section=ntp_timezone 请求体中的 JSON 字段 timestr 后，将该字符串通过 sprintf 与固定格式 \"date -s \\\"%s\\\" > /dev/null\" 拼入栈上的 128 字节缓冲 v10，写入过程缺少长度校验；攻击者在已建立 Web 管理会话的前提下提交超长 timestr，可触发栈缓冲区溢出并覆盖返回地址，从而在设备上以 Web 服务权限执行任意代码。\n修复版本中通过在调用 sprintf 前对 timestr 长度进行边界检查，或改用 snprintf 等带长度限制的格式化函数，避免用户输入覆盖栈缓冲及后续控制数据，从根本上切断溢出路径。",
     "effects": [
       {
-        "comp_name": "tv-ip751wic",
+        "comp_name": "comfast:cf-n1-s",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "[11.03.03,11.03.03]",
+            "affected_version": "(-∞,2.6.0.1]",
             "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
@@ -62,43 +62,39 @@
     "fix_suggestion": "建议修复",
     "kind": "栈缓冲区溢出",
     "kind_en": "基于堆栈的缓冲区溢出",
-    "last_modified_time": "2026-08-20",
+    "last_modified_time": "2026-08-23",
     "level": "High",
-    "mps_id": "MPS-2rcu-ml4t",
+    "mps_id": "MPS-xum2-6ko7",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-20",
+    "published_time": "2026-08-23",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-2rcu-ml4t",
-        "name": "https://www.oscs1024.com/hd/MPS-2rcu-ml4t"
+        "url": "https://www.oscs1024.com/hd/MPS-xum2-6ko7",
+        "name": "https://www.oscs1024.com/hd/MPS-xum2-6ko7"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76584",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76584"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78050",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78050"
       },
       {
-        "url": "https://github.com/meishigana/CVE/blob/main/team15_20260702/07_751wic-apd-time-cmdi/poc/poc-time-injection.py",
+        "url": "https://github.com/AdminSafe/CVE/issues/9",
         "name": ""
       },
       {
-        "url": "https://github.com/meishigana/CVE/tree/main/team15_20260702/07_751wic-apd-time-cmdi",
+        "url": "https://vuldb.com/cve/CVE-2026-78050",
         "name": ""
       },
       {
-        "url": "https://vuldb.com/cve/CVE-2026-76584",
+        "url": "https://vuldb.com/submit/881293",
         "name": ""
       },
       {
-        "url": "https://vuldb.com/submit/877793",
+        "url": "https://vuldb.com/vuln/394291",
         "name": ""
       },
       {
-        "url": "https://vuldb.com/vuln/393043",
-        "name": ""
-      },
-      {
-        "url": "https://vuldb.com/vuln/393043/cti",
+        "url": "https://vuldb.com/vuln/394291/cti",
         "name": ""
       }
     ],
@@ -106,14 +102,14 @@
     "tags": [
       "应用软件"
     ],
-    "title": "TV-IP751WIC栈溢出漏洞",
+    "title": "Comfast CF-N1-S 路由器 ntp_timezone 栈缓冲区溢出漏洞",
     "_translated": true
   },
   "detail_original": {
     "analysis_status": 0,
     "articles": [],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-76584",
+    "cve_id": "CVE-2026-78050",
     "cvss": {
       "cvssv2": [
         {
@@ -143,14 +139,14 @@
     "cvss_score": 8.6,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-121",
-    "description": "TRENDnet TV-IP751WIC 是闭源无线日夜型网络摄像机，通过 HTTP 管理界面提供时间同步、视频监控和设备配置功能。\n受影响版本中，alphapd 组件的 /cgi-bin/admin/set_time.cgi 接收 Currenttime 参数，经 websGetVar 读取后以 sprintf(\"date -s %s &\") 写入栈缓冲区并交给 doSystem 执行。攻击者可远程操纵该参数覆盖栈上返回地址，并使设备执行拼接后的系统命令。\n修复版本中通过公开渠道未能确认已发布的补丁固件；TRENDnet 已将 TV-IP751WIC 标为停产，支持页提供的最新固件仍为 1.03.03。在官方修复发布前，应隔离摄像头管理接口并限制对 /cgi-bin/admin/set_time.cgi 的访问。",
+    "description": "COMFAST CF-N1-S V2 是一款消费级无线路由器，运行闭源固件 V2.6.0.1；其内置 Web 管理界面通过 mbox-config CGI 接口对外提供 NTP 设置等配置能力。\n受影响版本中，CGI 处理函数 sub_41AD7C 在解析 POST /cgi-bin/mbox-config?method=SET&section=ntp_timezone 请求体中的 JSON 字段 timestr 后，将该字符串通过 sprintf 与固定格式 \"date -s \\\"%s\\\" > /dev/null\" 拼入栈上的 128 字节缓冲 v10，写入过程缺少长度校验；攻击者在已建立 Web 管理会话的前提下提交超长 timestr，可触发栈缓冲区溢出并覆盖返回地址，从而在设备上以 Web 服务权限执行任意代码。\n修复版本中通过在调用 sprintf 前对 timestr 长度进行边界检查，或改用 snprintf 等带长度限制的格式化函数，避免用户输入覆盖栈缓冲及后续控制数据，从根本上切断溢出路径。",
     "effects": [
       {
-        "comp_name": "tv-ip751wic",
+        "comp_name": "comfast:cf-n1-s",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "[11.03.03,11.03.03]",
+            "affected_version": "(-∞,2.6.0.1]",
             "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
@@ -167,43 +163,39 @@
     "fix_suggestion": "Recommend",
     "kind": "栈缓冲区溢出",
     "kind_en": "Stack-based Buffer Overflow",
-    "last_modified_time": "2026-08-20",
+    "last_modified_time": "2026-08-23",
     "level": "High",
-    "mps_id": "MPS-2rcu-ml4t",
+    "mps_id": "MPS-xum2-6ko7",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-20",
+    "published_time": "2026-08-23",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-2rcu-ml4t",
-        "name": "https://www.oscs1024.com/hd/MPS-2rcu-ml4t"
+        "url": "https://www.oscs1024.com/hd/MPS-xum2-6ko7",
+        "name": "https://www.oscs1024.com/hd/MPS-xum2-6ko7"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76584",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76584"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78050",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78050"
       },
       {
-        "url": "https://github.com/meishigana/CVE/blob/main/team15_20260702/07_751wic-apd-time-cmdi/poc/poc-time-injection.py",
+        "url": "https://github.com/AdminSafe/CVE/issues/9",
         "name": ""
       },
       {
-        "url": "https://github.com/meishigana/CVE/tree/main/team15_20260702/07_751wic-apd-time-cmdi",
+        "url": "https://vuldb.com/cve/CVE-2026-78050",
         "name": ""
       },
       {
-        "url": "https://vuldb.com/cve/CVE-2026-76584",
+        "url": "https://vuldb.com/submit/881293",
         "name": ""
       },
       {
-        "url": "https://vuldb.com/submit/877793",
+        "url": "https://vuldb.com/vuln/394291",
         "name": ""
       },
       {
-        "url": "https://vuldb.com/vuln/393043",
-        "name": ""
-      },
-      {
-        "url": "https://vuldb.com/vuln/393043/cti",
+        "url": "https://vuldb.com/vuln/394291/cti",
         "name": ""
       }
     ],
@@ -211,7 +203,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "TV-IP751WIC栈溢出漏洞"
+    "title": "Comfast CF-N1-S 路由器 ntp_timezone 栈缓冲区溢出漏洞"
   },
-  "first_saved_at": "2026-08-19T22:18:22+00:00"
+  "first_saved_at": "2026-08-23T00:57:48+00:00"
 }

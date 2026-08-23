@@ -1,0 +1,201 @@
+{
+  "saved_at": "2026-08-23T00:57:51+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-mktl-o3sf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78122",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1220",
+    "description": "docker-socket-proxy 是 Tecnativa 开源的 HAProxy 镜像，基于环境变量对外暴露的 Docker Engine API 端点进行白名单过滤，常用于限制 Traefik、Portainer 等容器编排组件对宿主机 Docker socket 的访问。\n受影响版本中，haproxy.cfg 的 frontend dockerfrontend 段仅对 /containers/{id}/start|stop|restart|kill|pause|unpause 这几个子路径做了显式 ACL，而 ^(/v[\\d\\.]+)?/containers 这条规则只匹配到 /containers 根路径。当运维人员把 CONTAINERS=1 当作“只读查看容器元数据”的安全配置启用时，/containers/{id}/archive、/containers/{id}/export、/containers/{id}/logs、/containers/{id}/top 这四个危险子路径没有命中任何 deny 规则，会一路穿透到 default_backend dockerbackend 并被转发到宿主 /var/run/docker.sock，导致任意联网调用方仅通过 GET 请求就能从任一容器内读取任意文件、下载完整文件系统 tar 包、读取容器日志以及枚举进程命令行。\n修复版本中通过为 /containers/{id}/archive、/containers/{id}/export、/containers/{id}/logs 引入新的 ALLOW_ARCHIVE、ALLOW_EXPORT、ALLOW_LOGS 环境变量，并在对应子路径未启用时显式 http-request deny 把请求阻断，从而把 CONTAINERS=1 的语义收窄为只能访问容器列表与 inspect 等只读元数据，攻击者即使保持 CONTAINERS=1 也无法再触达这四个危险子路径。",
+    "effects": [
+      {
+        "comp_name": "tecnativa/docker-socket-proxy",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.5.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "访问控制的粒度不够",
+    "kind_en": "访问控制粒度不够",
+    "last_modified_time": "2026-08-23",
+    "level": "High",
+    "mps_id": "MPS-mktl-o3sf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mktl-o3sf",
+        "name": "https://www.oscs1024.com/hd/MPS-mktl-o3sf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78122",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78122"
+      },
+      {
+        "url": "https://gist.github.com/nedlir/e4f52f88a757f02c67db1fd5dd70d732",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Tecnativa/docker-socket-proxy",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Tecnativa/docker-socket-proxy/blob/v0.5.0/haproxy.cfg#L49-L61",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Tecnativa/docker-socket-proxy/issues/182",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Tecnativa/docker-socket-proxy/pull/183",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/docker-socket-proxy-through-insufficient-access-control-granularity-exposes-container-filesystems",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "docker-socket-proxy CONTAINERS=1 容器文件系统读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78122",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1220",
+    "description": "docker-socket-proxy 是 Tecnativa 开源的 HAProxy 镜像，基于环境变量对外暴露的 Docker Engine API 端点进行白名单过滤，常用于限制 Traefik、Portainer 等容器编排组件对宿主机 Docker socket 的访问。\n受影响版本中，haproxy.cfg 的 frontend dockerfrontend 段仅对 /containers/{id}/start|stop|restart|kill|pause|unpause 这几个子路径做了显式 ACL，而 ^(/v[\\d\\.]+)?/containers 这条规则只匹配到 /containers 根路径。当运维人员把 CONTAINERS=1 当作“只读查看容器元数据”的安全配置启用时，/containers/{id}/archive、/containers/{id}/export、/containers/{id}/logs、/containers/{id}/top 这四个危险子路径没有命中任何 deny 规则，会一路穿透到 default_backend dockerbackend 并被转发到宿主 /var/run/docker.sock，导致任意联网调用方仅通过 GET 请求就能从任一容器内读取任意文件、下载完整文件系统 tar 包、读取容器日志以及枚举进程命令行。\n修复版本中通过为 /containers/{id}/archive、/containers/{id}/export、/containers/{id}/logs 引入新的 ALLOW_ARCHIVE、ALLOW_EXPORT、ALLOW_LOGS 环境变量，并在对应子路径未启用时显式 http-request deny 把请求阻断，从而把 CONTAINERS=1 的语义收窄为只能访问容器列表与 inspect 等只读元数据，攻击者即使保持 CONTAINERS=1 也无法再触达这四个危险子路径。",
+    "effects": [
+      {
+        "comp_name": "tecnativa/docker-socket-proxy",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.5.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "访问控制的粒度不够",
+    "kind_en": "Insufficient Granularity of Access Control",
+    "last_modified_time": "2026-08-23",
+    "level": "High",
+    "mps_id": "MPS-mktl-o3sf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mktl-o3sf",
+        "name": "https://www.oscs1024.com/hd/MPS-mktl-o3sf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78122",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78122"
+      },
+      {
+        "url": "https://gist.github.com/nedlir/e4f52f88a757f02c67db1fd5dd70d732",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Tecnativa/docker-socket-proxy",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Tecnativa/docker-socket-proxy/blob/v0.5.0/haproxy.cfg#L49-L61",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Tecnativa/docker-socket-proxy/issues/182",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Tecnativa/docker-socket-proxy/pull/183",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/docker-socket-proxy-through-insufficient-access-control-granularity-exposes-container-filesystems",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "docker-socket-proxy CONTAINERS=1 容器文件系统读取漏洞"
+  },
+  "first_saved_at": "2026-08-23T00:57:51+00:00"
+}
