@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-08-24T21:22:27+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-n3v2-7dql",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78555",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-522",
+    "description": "RansomLook 是开源勒索软件情报聚合平台，提供 Web 管理界面与 REST API，用于跟踪勒索组织、泄露站点及相关威胁情报。\n受影响版本中，已登录管理页面 GET /admin/apikeys 对应的 admin_apikeys 视图将完整 API token 写入模板上下文 keys 列表，页面仅显示 token_short，但 enable/disable、private-access 与 delete 表单的隐藏字段仍嵌入完整密钥。访问该页面即可从 HTML 源码或 DOM 取出凭据，调试代理、浏览器缓存、监控系统等保留 HTTP 响应体的组件也可能意外暴露这些密钥；获取密钥后可按该密钥权限完成认证，包括读取其被授予的私有数据。\n修复版本中通过停止在后续页面渲染完整 API 密钥，改用 SHA-256 派生的不透明 handle 标识密钥，管理操作只提交 handle 并由服务端解析回对应 token，使完整密钥仅在首次创建时披露一次。",
+    "effects": [
+      {
+        "comp_name": "ransomlook",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "凭证保护不足",
+    "kind_en": "凭证保护不足",
+    "last_modified_time": "2026-08-25",
+    "level": "Critical",
+    "mps_id": "MPS-n3v2-7dql",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-n3v2-7dql",
+        "name": "https://www.oscs1024.com/hd/MPS-n3v2-7dql"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78555",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78555"
+      },
+      {
+        "url": "https://github.com/RansomLook/RansomLook/commit/b358dfa4f40c677a47c602ebbb4473aeae349f5c",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "RansomLook API密钥泄露",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78555",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-522",
+    "description": "RansomLook 是开源勒索软件情报聚合平台，提供 Web 管理界面与 REST API，用于跟踪勒索组织、泄露站点及相关威胁情报。\n受影响版本中，已登录管理页面 GET /admin/apikeys 对应的 admin_apikeys 视图将完整 API token 写入模板上下文 keys 列表，页面仅显示 token_short，但 enable/disable、private-access 与 delete 表单的隐藏字段仍嵌入完整密钥。访问该页面即可从 HTML 源码或 DOM 取出凭据，调试代理、浏览器缓存、监控系统等保留 HTTP 响应体的组件也可能意外暴露这些密钥；获取密钥后可按该密钥权限完成认证，包括读取其被授予的私有数据。\n修复版本中通过停止在后续页面渲染完整 API 密钥，改用 SHA-256 派生的不透明 handle 标识密钥，管理操作只提交 handle 并由服务端解析回对应 token，使完整密钥仅在首次创建时披露一次。",
+    "effects": [
+      {
+        "comp_name": "ransomlook",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "凭证保护不足",
+    "kind_en": "Insufficiently Protected Credentials",
+    "last_modified_time": "2026-08-25",
+    "level": "Critical",
+    "mps_id": "MPS-n3v2-7dql",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-n3v2-7dql",
+        "name": "https://www.oscs1024.com/hd/MPS-n3v2-7dql"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78555",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78555"
+      },
+      {
+        "url": "https://github.com/RansomLook/RansomLook/commit/b358dfa4f40c677a47c602ebbb4473aeae349f5c",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "RansomLook API密钥泄露"
+  },
+  "first_saved_at": "2026-08-24T21:22:27+00:00"
+}

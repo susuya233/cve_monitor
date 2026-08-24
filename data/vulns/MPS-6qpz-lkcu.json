@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-24T21:22:26+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6qpz-lkcu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 编写代码时没有正确处理输入数据或没有正确验证用户输入而导致的。",
+        "title": "什么是关键资源权限分配不当"
+      },
+      {
+        "content": "- 弱密码或未使用的密码：当管理员或系统管理员在创建帐户时，没有使用强密码或未对帐户进行密码更新时，可能会发生这种情况。弱密码可能会被黑客破解或通过其他方式轻松访问系统。\n- 未正确配置权限：在系统中，不同的资源通常需要不同的权限才能访问。如果管理员未正确配置权限，那么未经授权的用户可能会通过欺骗系统或利用其他漏洞来访问关键资源。\n- 权限重用：在某些情况下，管理员可能会将某些权限分配给某个用户，但这些权限并未被正确地限制或授权给该用户。如果其他用户尝试使用这些权限访问关键资源，那么他们可能会获得未经授权的访问权限。\n- 未正确验证用户输入：当开发人员没有正确验证用户输入时，可能会发生这种情况。例如，如果开发人员未正确过滤用户输入的用户名或密码，那么黑客可能会利用这些信息轻松地访问系统。\n",
+        "title": "关键资源权限分配不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码：管理员应该使用强密码来保护系统，并定期更改密码。强密码应该包括数字、字母和符号，并且应该不同于其他帐户使用的密码。\n- 正确配置权限：管理员应该正确配置系统中不同资源所需的权限。用户可以被授予访问特定资源的权限，但不应该被授予访问其他资源的权限。\n- 权限限制：管理员应该使用权限限制来限制用户对特定资源的访问。例如，用户可以被授予访问特定文件夹的权限，但不能访问其他文件夹。\n- 输入验证：开发人员应该正确验证用户输入。例如，他们可以过滤用户输入的用户名和密码，以确保它们符合预期的格式。\n- 安全培训：管理员和用户应该接受安全培训，以便了解如何识别和避免常见的安全漏洞，例如不正确权限授予漏洞。\n- 定期更新和修补软件：系统软件和应用程序应该定期更新和修补，以确保它们不受最新安全漏洞的影响。",
+        "title": "如何预防关键资源权限分配不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78553",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-732",
+    "description": "RansomLook 是开源勒索软件团伙与暗网市场监控平台，基于 Flask 提供 Web 管理界面、REST API 以及受害者情报采集能力。\n受影响版本中，website/web/helpers.py 的 get_secret_key() 在首次创建 Flask 会话签名密钥文件 secret_key 时调用 Path.open(\"wb\")，未显式限制文件权限，进程在常见 umask 022 下会生成 0644 权限文件。能够访问 RansomLook 主目录的其他本地用户可读取该密钥，伪造已认证会话 Cookie 并冒充包括管理员在内的用户；该密钥还参与遗留 API-key 的 PBKDF2 派生。启用 LDAP 时，user_loader 不要求用户名存在于本地用户表，伪造会话更加直接。\n修复版本中通过改用 os.open 以 0600 权限原子创建 secret_key，并在每次启动时将已有密钥文件权限收紧为仅属主可读写，切断其他本地用户读取会话签名密钥的路径。",
+    "effects": [
+      {
+        "comp_name": "ransomlook",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,2.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键资源权限分配不当",
+    "kind_en": "关键资源的权限分配不正确",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-6qpz-lkcu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6qpz-lkcu",
+        "name": "https://www.oscs1024.com/hd/MPS-6qpz-lkcu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78553",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78553"
+      },
+      {
+        "url": "https://github.com/RansomLook/RansomLook/commit/df9d47edcf02dd0125db869d5bc19d93f426d892",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "RansomLook密钥权限漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 编写代码时没有正确处理输入数据或没有正确验证用户输入而导致的。",
+        "title": "什么是关键资源权限分配不当"
+      },
+      {
+        "content": "- 弱密码或未使用的密码：当管理员或系统管理员在创建帐户时，没有使用强密码或未对帐户进行密码更新时，可能会发生这种情况。弱密码可能会被黑客破解或通过其他方式轻松访问系统。\n- 未正确配置权限：在系统中，不同的资源通常需要不同的权限才能访问。如果管理员未正确配置权限，那么未经授权的用户可能会通过欺骗系统或利用其他漏洞来访问关键资源。\n- 权限重用：在某些情况下，管理员可能会将某些权限分配给某个用户，但这些权限并未被正确地限制或授权给该用户。如果其他用户尝试使用这些权限访问关键资源，那么他们可能会获得未经授权的访问权限。\n- 未正确验证用户输入：当开发人员没有正确验证用户输入时，可能会发生这种情况。例如，如果开发人员未正确过滤用户输入的用户名或密码，那么黑客可能会利用这些信息轻松地访问系统。\n",
+        "title": "关键资源权限分配不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码：管理员应该使用强密码来保护系统，并定期更改密码。强密码应该包括数字、字母和符号，并且应该不同于其他帐户使用的密码。\n- 正确配置权限：管理员应该正确配置系统中不同资源所需的权限。用户可以被授予访问特定资源的权限，但不应该被授予访问其他资源的权限。\n- 权限限制：管理员应该使用权限限制来限制用户对特定资源的访问。例如，用户可以被授予访问特定文件夹的权限，但不能访问其他文件夹。\n- 输入验证：开发人员应该正确验证用户输入。例如，他们可以过滤用户输入的用户名和密码，以确保它们符合预期的格式。\n- 安全培训：管理员和用户应该接受安全培训，以便了解如何识别和避免常见的安全漏洞，例如不正确权限授予漏洞。\n- 定期更新和修补软件：系统软件和应用程序应该定期更新和修补，以确保它们不受最新安全漏洞的影响。",
+        "title": "如何预防关键资源权限分配不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78553",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-732",
+    "description": "RansomLook 是开源勒索软件团伙与暗网市场监控平台，基于 Flask 提供 Web 管理界面、REST API 以及受害者情报采集能力。\n受影响版本中，website/web/helpers.py 的 get_secret_key() 在首次创建 Flask 会话签名密钥文件 secret_key 时调用 Path.open(\"wb\")，未显式限制文件权限，进程在常见 umask 022 下会生成 0644 权限文件。能够访问 RansomLook 主目录的其他本地用户可读取该密钥，伪造已认证会话 Cookie 并冒充包括管理员在内的用户；该密钥还参与遗留 API-key 的 PBKDF2 派生。启用 LDAP 时，user_loader 不要求用户名存在于本地用户表，伪造会话更加直接。\n修复版本中通过改用 os.open 以 0600 权限原子创建 secret_key，并在每次启动时将已有密钥文件权限收紧为仅属主可读写，切断其他本地用户读取会话签名密钥的路径。",
+    "effects": [
+      {
+        "comp_name": "ransomlook",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,2.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键资源权限分配不当",
+    "kind_en": "Incorrect Permission Assignment for Critical Resource",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-6qpz-lkcu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6qpz-lkcu",
+        "name": "https://www.oscs1024.com/hd/MPS-6qpz-lkcu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78553",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78553"
+      },
+      {
+        "url": "https://github.com/RansomLook/RansomLook/commit/df9d47edcf02dd0125db869d5bc19d93f426d892",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "RansomLook密钥权限漏洞"
+  },
+  "first_saved_at": "2026-08-24T21:22:26+00:00"
+}
