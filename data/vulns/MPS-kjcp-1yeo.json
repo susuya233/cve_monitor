@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-24T18:30:53+00:00",
+  "saved_at": "2026-08-24T18:30:44+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-voab-7tie",
+  "source_page": "https://www.oscs1024.com/hd/MPS-kjcp-1yeo",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,53 +21,86 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78381",
+    "cve_id": "CVE-2026-77914",
     "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
       "cvssv4": [
         {
-          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.2
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 8.2,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-22",
-    "description": "RansomLook contains a path traversal vulnerability in the handling of the screen field associated with group posts. The GroupPost.get API handler concatenates the database-controlled screen value directly with the application's source/ directory and opens the resulting path without verifying that the resolved file remains within the intended directory.\n\nBecause the screen field is free-form and can be populated either through the administrative post editor or through data imported from a remote RansomLook instance, a malicious upstream instance can provide traversal sequences such as ../config/generic.json. When the affected post is subsequently retrieved through the API, RansomLook resolves and reads the attacker-controlled path and returns the contents of the referenced file Base64-encoded in the API response.\n\nThis can allow an attacker (being admin) controlling imported post data to read arbitrary files accessible to the RansomLook process, potentially exposing sensitive configuration data, API credentials, password hashes, or other application secrets. The attack does not require the malicious upstream to possess an account on the affected RansomLook instance.\n\nThe vulnerability is addressed by resolving screen paths with os.path.realpath() and verifying that the resolved path remains beneath the application's source/ directory. Validation is performed both when values are written and immediately before files are read. Using canonical paths also prevents traversal through symbolic links that would bypass purely lexical path normalization checks.",
-    "effects": [],
+    "description": "rConfig 是开源网络配置管理平台，用于备份、管理和审计网络设备配置。\n受影响版本中，导出下载接口 FileDownloadController::download_export 将查询参数 filename 未经净化直接拼接到 export_path() 之后作为本地下载路径。已认证用户可在 filename 中传入目录穿越序列，使解析路径离开导出目录并读取应用进程有权访问的任意文件。\n修复版本中通过 basename() 截取请求文件名，并在提供文件前确认解析后的真实路径位于导出目录内，从而阻断目录穿越读取。",
+    "effects": [
+      {
+        "comp_name": "rconfig",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,8.2.13)",
+            "min_fixed_version": "8.2.13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "路径遍历",
     "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-25",
     "level": "High",
-    "mps_id": "MPS-voab-7tie",
+    "mps_id": "MPS-kjcp-1yeo",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-voab-7tie",
-        "name": "https://www.oscs1024.com/hd/MPS-voab-7tie"
+        "url": "https://www.oscs1024.com/hd/MPS-kjcp-1yeo",
+        "name": "https://www.oscs1024.com/hd/MPS-kjcp-1yeo"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78381",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78381"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77914",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77914"
       },
       {
-        "url": "https://github.com/RansomLook/RansomLook/commit/274faccf65898e88ef54f35f304e0821a852a0b8",
+        "url": "https://github.com/rconfig/rconfig/releases/tag/core-8.2.13",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rconfig/rconfig/security/advisories/GHSA-m5rw-jcrm-mmwc",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/rconfig-v8-core-path-traversal-via-export-download-endpoint",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78381漏洞",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "rConfig路径穿越漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -87,53 +120,86 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78381",
+    "cve_id": "CVE-2026-77914",
     "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
       "cvssv4": [
         {
-          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.2
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 8.2,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-22",
-    "description": "RansomLook contains a path traversal vulnerability in the handling of the screen field associated with group posts. The GroupPost.get API handler concatenates the database-controlled screen value directly with the application's source/ directory and opens the resulting path without verifying that the resolved file remains within the intended directory.\n\nBecause the screen field is free-form and can be populated either through the administrative post editor or through data imported from a remote RansomLook instance, a malicious upstream instance can provide traversal sequences such as ../config/generic.json. When the affected post is subsequently retrieved through the API, RansomLook resolves and reads the attacker-controlled path and returns the contents of the referenced file Base64-encoded in the API response.\n\nThis can allow an attacker (being admin) controlling imported post data to read arbitrary files accessible to the RansomLook process, potentially exposing sensitive configuration data, API credentials, password hashes, or other application secrets. The attack does not require the malicious upstream to possess an account on the affected RansomLook instance.\n\nThe vulnerability is addressed by resolving screen paths with os.path.realpath() and verifying that the resolved path remains beneath the application's source/ directory. Validation is performed both when values are written and immediately before files are read. Using canonical paths also prevents traversal through symbolic links that would bypass purely lexical path normalization checks.",
-    "effects": [],
+    "description": "rConfig 是开源网络配置管理平台，用于备份、管理和审计网络设备配置。\n受影响版本中，导出下载接口 FileDownloadController::download_export 将查询参数 filename 未经净化直接拼接到 export_path() 之后作为本地下载路径。已认证用户可在 filename 中传入目录穿越序列，使解析路径离开导出目录并读取应用进程有权访问的任意文件。\n修复版本中通过 basename() 截取请求文件名，并在提供文件前确认解析后的真实路径位于导出目录内，从而阻断目录穿越读取。",
+    "effects": [
+      {
+        "comp_name": "rconfig",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,8.2.13)",
+            "min_fixed_version": "8.2.13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "路径遍历",
     "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-25",
     "level": "High",
-    "mps_id": "MPS-voab-7tie",
+    "mps_id": "MPS-kjcp-1yeo",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-voab-7tie",
-        "name": "https://www.oscs1024.com/hd/MPS-voab-7tie"
+        "url": "https://www.oscs1024.com/hd/MPS-kjcp-1yeo",
+        "name": "https://www.oscs1024.com/hd/MPS-kjcp-1yeo"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78381",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78381"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77914",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77914"
       },
       {
-        "url": "https://github.com/RansomLook/RansomLook/commit/274faccf65898e88ef54f35f304e0821a852a0b8",
+        "url": "https://github.com/rconfig/rconfig/releases/tag/core-8.2.13",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rconfig/rconfig/security/advisories/GHSA-m5rw-jcrm-mmwc",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/rconfig-v8-core-path-traversal-via-export-download-endpoint",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78381漏洞"
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "rConfig路径穿越漏洞"
   },
-  "first_saved_at": "2026-08-24T14:36:04+00:00"
+  "first_saved_at": "2026-08-24T18:30:44+00:00"
 }

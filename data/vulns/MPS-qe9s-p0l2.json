@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-08-24T18:30:45+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-qe9s-p0l2",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77915",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1188",
+    "description": "rConfig 是开源网络设备配置管理平台，基于 PHP Laravel 实现，用于备份、对比和管理路由器、交换机等设备配置。\n受影响版本中，routes/web.php 在已执行 Auth::routes(['register' => false]) 之后再次调用未带参数的 Auth::routes()。Laravel 不会对路由去重或撤回，后一次调用重新注册默认认证路由并恢复 POST /register。RegisterController 使用 RegistersUsers，其 create 方法只写入 name、email 与 password，未设置 role；users.role 列默认值为 Admin，User 模型未限制批量赋值。未认证攻击者向 POST /register 提交注册数据后，系统会创建管理员账号并完成登录，从而读取已存储的设备凭据、用户数据并签发 API token。\n修复版本中通过删除重复的 Auth::routes() 调用使注册路由保持关闭，移除未使用的 RegisterController，并将 users.role 列默认值由 Admin 改为 User，切断未授权自助注册获得管理员权限的路径。",
+    "effects": [
+      {
+        "comp_name": "rconfig",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.0.0,8.2.10)",
+            "min_fixed_version": "8.2.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "资源默认不安全",
+    "kind_en": "使用不安全默认值初始化资源",
+    "last_modified_time": "2026-08-25",
+    "level": "Critical",
+    "mps_id": "MPS-qe9s-p0l2",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qe9s-p0l2",
+        "name": "https://www.oscs1024.com/hd/MPS-qe9s-p0l2"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77915",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77915"
+      },
+      {
+        "url": "https://github.com/rconfig/rconfig/releases#release-core-8.2.10",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rconfig/rconfig/security/advisories/GHSA-w3hx-9cxg-5ccr",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/rconfig-unauthorized-admin-registration-via-web-php",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "rConfig未授权管理员注册",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77915",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1188",
+    "description": "rConfig 是开源网络设备配置管理平台，基于 PHP Laravel 实现，用于备份、对比和管理路由器、交换机等设备配置。\n受影响版本中，routes/web.php 在已执行 Auth::routes(['register' => false]) 之后再次调用未带参数的 Auth::routes()。Laravel 不会对路由去重或撤回，后一次调用重新注册默认认证路由并恢复 POST /register。RegisterController 使用 RegistersUsers，其 create 方法只写入 name、email 与 password，未设置 role；users.role 列默认值为 Admin，User 模型未限制批量赋值。未认证攻击者向 POST /register 提交注册数据后，系统会创建管理员账号并完成登录，从而读取已存储的设备凭据、用户数据并签发 API token。\n修复版本中通过删除重复的 Auth::routes() 调用使注册路由保持关闭，移除未使用的 RegisterController，并将 users.role 列默认值由 Admin 改为 User，切断未授权自助注册获得管理员权限的路径。",
+    "effects": [
+      {
+        "comp_name": "rconfig",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.0.0,8.2.10)",
+            "min_fixed_version": "8.2.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "资源默认不安全",
+    "kind_en": "Initialization of a Resource with an Insecure Default",
+    "last_modified_time": "2026-08-25",
+    "level": "Critical",
+    "mps_id": "MPS-qe9s-p0l2",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qe9s-p0l2",
+        "name": "https://www.oscs1024.com/hd/MPS-qe9s-p0l2"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77915",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77915"
+      },
+      {
+        "url": "https://github.com/rconfig/rconfig/releases#release-core-8.2.10",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rconfig/rconfig/security/advisories/GHSA-w3hx-9cxg-5ccr",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/rconfig-unauthorized-admin-registration-via-web-php",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "rConfig未授权管理员注册"
+  },
+  "first_saved_at": "2026-08-24T18:30:45+00:00"
+}
