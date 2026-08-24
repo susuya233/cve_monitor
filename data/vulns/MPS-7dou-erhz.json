@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-24T10:31:41+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-24T11:21:28+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-7dou-erhz",
@@ -22,8 +22,36 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
     "cwe": "CWE-918",
-    "description": "fast-uri is a URI parser for Node.js. It decodes percent escapes in a hostname during parsing and then decodes the parsed hostname a second time during authority recomposition, so a single call to normalize or resolve can turn nested percent-encoded input into a different network destination such as a loopback hostname or address. For example, a doubly encoded host that spells out a loopback name decodes to that live host in one operation, which contradicts RFC 3986 section 2.4 that an implementation must not decode the same string more than once. An application that normalizes or resolves an untrusted HTTP-family URI before outbound routing, redirect validation, or a host-policy check can receive a destination different from the one the original encoded host represented, giving a server-side request forgery and host-policy bypass primitive. This is an incomplete-fix variant of CVE-2026-6322. The affected versions are 2.4.1 up to but not including 2.4.5, 3.1.2 up to but not including 3.1.6, and 4.0.0 up to but not including 4.1.3. The issue is fixed in 2.4.5, 3.1.6, and 4.1.3, which normalize percent escapes once and preserve encoded percent signs. Users should upgrade to a patched version.",
-    "effects": [],
+    "description": "fast-uri 是 Fastify 组织维护的开源 Node.js RFC 3986 URI 工具库，以 npm 包形式提供 parse、serialize、normalize 和 resolve 接口，用于规范化与解析 URI。\n受影响版本中，parseWithStatus 在解析阶段对 host 调用 unescape 解码百分号转义，serialize 路径中的 recomposeAuthority 再次对同一 host 调用 unescape。攻击者可提交嵌套编码主机名，例如 http://%256c%256f%2563%2561%256c%2568%256f%2573%2574/，一次 normalize 或 resolve 会将其变为 http://localhost/，使出站路由、重定向校验或主机策略检查得到与原始编码主机不同的目标，形成服务端请求伪造与主机策略绕过原语。该问题是 CVE-2026-6322 编码 authority 分隔符修复引入二次解码后的不完整修复变体。\n修复版本中通过将解析与 authority 重组两处 unescape 替换为只解码一次非保留字节的 normalizePercentEncoding(host, true)，保留编码百分号 %25，使嵌套编码主机无法在单次调用中变成真实回环或内网地址。",
+    "effects": [
+      {
+        "comp_name": "fast-uri",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.1.3)",
+            "min_fixed_version": "4.1.3",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.1.2,3.1.6)",
+            "min_fixed_version": "3.1.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.4.1,2.4.5)",
+            "min_fixed_version": "2.4.5",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -57,8 +85,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-75899漏洞",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "fast-uri二次解码漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -79,8 +110,36 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
     "cwe": "CWE-918",
-    "description": "fast-uri is a URI parser for Node.js. It decodes percent escapes in a hostname during parsing and then decodes the parsed hostname a second time during authority recomposition, so a single call to normalize or resolve can turn nested percent-encoded input into a different network destination such as a loopback hostname or address. For example, a doubly encoded host that spells out a loopback name decodes to that live host in one operation, which contradicts RFC 3986 section 2.4 that an implementation must not decode the same string more than once. An application that normalizes or resolves an untrusted HTTP-family URI before outbound routing, redirect validation, or a host-policy check can receive a destination different from the one the original encoded host represented, giving a server-side request forgery and host-policy bypass primitive. This is an incomplete-fix variant of CVE-2026-6322. The affected versions are 2.4.1 up to but not including 2.4.5, 3.1.2 up to but not including 3.1.6, and 4.0.0 up to but not including 4.1.3. The issue is fixed in 2.4.5, 3.1.6, and 4.1.3, which normalize percent escapes once and preserve encoded percent signs. Users should upgrade to a patched version.",
-    "effects": [],
+    "description": "fast-uri 是 Fastify 组织维护的开源 Node.js RFC 3986 URI 工具库，以 npm 包形式提供 parse、serialize、normalize 和 resolve 接口，用于规范化与解析 URI。\n受影响版本中，parseWithStatus 在解析阶段对 host 调用 unescape 解码百分号转义，serialize 路径中的 recomposeAuthority 再次对同一 host 调用 unescape。攻击者可提交嵌套编码主机名，例如 http://%256c%256f%2563%2561%256c%2568%256f%2573%2574/，一次 normalize 或 resolve 会将其变为 http://localhost/，使出站路由、重定向校验或主机策略检查得到与原始编码主机不同的目标，形成服务端请求伪造与主机策略绕过原语。该问题是 CVE-2026-6322 编码 authority 分隔符修复引入二次解码后的不完整修复变体。\n修复版本中通过将解析与 authority 重组两处 unescape 替换为只解码一次非保留字节的 normalizePercentEncoding(host, true)，保留编码百分号 %25，使嵌套编码主机无法在单次调用中变成真实回环或内网地址。",
+    "effects": [
+      {
+        "comp_name": "fast-uri",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.1.3)",
+            "min_fixed_version": "4.1.3",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.1.2,3.1.6)",
+            "min_fixed_version": "3.1.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.4.1,2.4.5)",
+            "min_fixed_version": "2.4.5",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -114,8 +173,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-75899漏洞"
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "fast-uri二次解码漏洞"
   },
   "first_saved_at": "2026-08-24T10:31:38+00:00"
 }

@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-24T10:31:41+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-24T11:21:21+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-qwfg-kshe",
@@ -22,8 +22,36 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
     "cwe": "CWE-918",
-    "description": "fast-uri is a URI parser for Node.js. Its custom parser for bracketed IPv6 literals does not validate the complete IPv6 grammar, so invalid trailing text in an authority can be silently discarded and a malformed attacker-controlled host is turned into a different valid IPv6 destination. For example, a bracketed literal with invalid trailing characters is normalized to the unspecified address, which a Node HTTP client then connects to a local service over loopback, and other malformed literals collapse to private-range addresses. No error is set on the parsed result, so an application checking the error field cannot detect the rewrite. An application that normalizes untrusted URLs before outbound requests, redirects, proxy routing, or address-policy enforcement can be redirected to a local or private IPv6 target, giving a server-side request forgery and address-policy bypass primitive. The affected versions are 2.3.1 up to but not including 2.4.5, 3.0.0 up to but not including 3.1.6, and 4.0.0 up to but not including 4.1.3. The issue is fixed in 2.4.5, 3.1.6, and 4.1.3, which validate bracketed IP literals against the full grammar and mark malformed literals as authority errors. Users should upgrade to a patched version.",
-    "effects": [],
+    "description": "fast-uri 是面向 Node.js 的开源 RFC 3986 URI 解析与规范化库，用于解析、序列化、比较 URI 以及解析相对引用，常见于 Fastify 生态中在出站请求、重定向校验和主机策略检查前处理 URL。\n受影响版本中，括号包裹的 IPv6 字面量未按 RFC 3986 第 3.2.2 节完整文法校验。lib/utils.js 的 getIPV6 与 normalizeIPv6 会跳过括号，并在遇到非法尾随文本时静默丢弃无效内容，把攻击者控制的畸形主机改写成另一个合法 IPv6 地址，且 parse 结果不设置 error。例如 normalize('http://[::not-valid]/private') 返回 http://[::]/private，Node HTTP 客户端会连到回环上的未指定地址；[fc00::not-hex] 与 [fe80::not-hex] 会折叠为唯一本地或链路本地地址。应用若先用 fast-uri 规范化不可信 URL，再据此发起出站请求或执行地址策略，可被导向本地或私网 IPv6 目标，形成服务端请求伪造与地址策略绕过。\n修复版本中通过重写 normalizeIPv6 并新增 normalizeIPv6Address，按完整 IPv6 文法校验括号 IP 字面量；index.js 的 parseWithStatus 在检测到畸形字面量时写入 URI host is malformed 错误，normalize 不再把畸形输入改写成合法地址，从而切断 SSRF 与策略绕过链路。",
+    "effects": [
+      {
+        "comp_name": "fast-uri",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[3.0.0,3.1.6)",
+            "min_fixed_version": "3.1.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.1.3)",
+            "min_fixed_version": "4.1.3",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.3.1,2.4.5)",
+            "min_fixed_version": "2.4.5",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -57,8 +85,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-75975漏洞",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "fast-uri畸形IPv6 SSRF",
     "_translated": true
   },
   "detail_original": {
@@ -79,8 +110,36 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
     "cwe": "CWE-918",
-    "description": "fast-uri is a URI parser for Node.js. Its custom parser for bracketed IPv6 literals does not validate the complete IPv6 grammar, so invalid trailing text in an authority can be silently discarded and a malformed attacker-controlled host is turned into a different valid IPv6 destination. For example, a bracketed literal with invalid trailing characters is normalized to the unspecified address, which a Node HTTP client then connects to a local service over loopback, and other malformed literals collapse to private-range addresses. No error is set on the parsed result, so an application checking the error field cannot detect the rewrite. An application that normalizes untrusted URLs before outbound requests, redirects, proxy routing, or address-policy enforcement can be redirected to a local or private IPv6 target, giving a server-side request forgery and address-policy bypass primitive. The affected versions are 2.3.1 up to but not including 2.4.5, 3.0.0 up to but not including 3.1.6, and 4.0.0 up to but not including 4.1.3. The issue is fixed in 2.4.5, 3.1.6, and 4.1.3, which validate bracketed IP literals against the full grammar and mark malformed literals as authority errors. Users should upgrade to a patched version.",
-    "effects": [],
+    "description": "fast-uri 是面向 Node.js 的开源 RFC 3986 URI 解析与规范化库，用于解析、序列化、比较 URI 以及解析相对引用，常见于 Fastify 生态中在出站请求、重定向校验和主机策略检查前处理 URL。\n受影响版本中，括号包裹的 IPv6 字面量未按 RFC 3986 第 3.2.2 节完整文法校验。lib/utils.js 的 getIPV6 与 normalizeIPv6 会跳过括号，并在遇到非法尾随文本时静默丢弃无效内容，把攻击者控制的畸形主机改写成另一个合法 IPv6 地址，且 parse 结果不设置 error。例如 normalize('http://[::not-valid]/private') 返回 http://[::]/private，Node HTTP 客户端会连到回环上的未指定地址；[fc00::not-hex] 与 [fe80::not-hex] 会折叠为唯一本地或链路本地地址。应用若先用 fast-uri 规范化不可信 URL，再据此发起出站请求或执行地址策略，可被导向本地或私网 IPv6 目标，形成服务端请求伪造与地址策略绕过。\n修复版本中通过重写 normalizeIPv6 并新增 normalizeIPv6Address，按完整 IPv6 文法校验括号 IP 字面量；index.js 的 parseWithStatus 在检测到畸形字面量时写入 URI host is malformed 错误，normalize 不再把畸形输入改写成合法地址，从而切断 SSRF 与策略绕过链路。",
+    "effects": [
+      {
+        "comp_name": "fast-uri",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[3.0.0,3.1.6)",
+            "min_fixed_version": "3.1.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.1.3)",
+            "min_fixed_version": "4.1.3",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.3.1,2.4.5)",
+            "min_fixed_version": "2.4.5",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -114,8 +173,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-75975漏洞"
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "fast-uri畸形IPv6 SSRF"
   },
   "first_saved_at": "2026-08-24T10:31:33+00:00"
 }

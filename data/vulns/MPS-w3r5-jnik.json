@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-24T10:31:41+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-24T11:21:26+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-w3r5-jnik",
@@ -22,8 +22,36 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
     "cwe": "CWE-436",
-    "description": "fast-uri is a URI parser for Node.js. It canonicalizes a host to its ASCII form only when the input carries an explicit scheme, so a scheme-relative reference such as a host preceded by two slashes is returned with its host verbatim and no error set. As a result fast-uri's own entry points disagree with each other: parse, resolve, normalize, and equal can yield different hosts for the same input depending only on whether a scheme is written out, and equal can return opposite verdicts for the same pair of hosts. An application that extracts a host with fast-uri to check it against a policy list and then resolves the same reference can make its decision on one host while the destination is another, enabling host confusion and policy bypass. The affected versions are 2.4.2 up to but not including 2.4.5, 3.1.3 up to but not including 3.1.6, and 4.0.1 up to but not including 4.1.3. The issue is fixed in 2.4.5, 3.1.6, and 4.1.3, which canonicalize the host consistently across the resolve path. Users should upgrade to a patched version.",
-    "effects": [],
+    "description": "fast-uri 是面向 Node.js 的开源 URI 解析库，提供 parse、resolve、normalize 与 equal 等公开接口，广泛用于 Fastify 生态中的 URI 处理。\n受影响版本中，parseWithStatus 仅在输入带有显式 scheme 且对应 schemeHandler.domainHost 为真时，才把 Unicode/IDN 主机规范为 ASCII。scheme-relative 引用在解析阶段没有 scheme，resolve() 在 resolveComponent 继承基 URI 的 http/https 后仍按原文序列化 host。应用若先提取 host 对照策略列表，再对同一引用调用 resolve，会对一个主机做出放行或拦截判断，而实际目的地是另一个主机，形成主机混淆与策略绕过。该问题是 CVE-2026-13676 的不完整修复变体。\n修复版本中通过抽出 canonicalizeHost，在 resolve() 已确定有效 scheme 后对 host 执行同样的 ASCII 规范化，转换失败则抛出错误并失败关闭，使 resolve 路径与后续再解析结果一致。",
+    "effects": [
+      {
+        "comp_name": "fast-uri",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[2.4.2,2.4.5)",
+            "min_fixed_version": "2.4.5",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.1.3,3.1.6)",
+            "min_fixed_version": "3.1.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.1,4.1.3)",
+            "min_fixed_version": "4.1.3",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -57,8 +85,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-75931漏洞",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "fast-uri主机混淆漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -79,8 +110,36 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
     "cwe": "CWE-436",
-    "description": "fast-uri is a URI parser for Node.js. It canonicalizes a host to its ASCII form only when the input carries an explicit scheme, so a scheme-relative reference such as a host preceded by two slashes is returned with its host verbatim and no error set. As a result fast-uri's own entry points disagree with each other: parse, resolve, normalize, and equal can yield different hosts for the same input depending only on whether a scheme is written out, and equal can return opposite verdicts for the same pair of hosts. An application that extracts a host with fast-uri to check it against a policy list and then resolves the same reference can make its decision on one host while the destination is another, enabling host confusion and policy bypass. The affected versions are 2.4.2 up to but not including 2.4.5, 3.1.3 up to but not including 3.1.6, and 4.0.1 up to but not including 4.1.3. The issue is fixed in 2.4.5, 3.1.6, and 4.1.3, which canonicalize the host consistently across the resolve path. Users should upgrade to a patched version.",
-    "effects": [],
+    "description": "fast-uri 是面向 Node.js 的开源 URI 解析库，提供 parse、resolve、normalize 与 equal 等公开接口，广泛用于 Fastify 生态中的 URI 处理。\n受影响版本中，parseWithStatus 仅在输入带有显式 scheme 且对应 schemeHandler.domainHost 为真时，才把 Unicode/IDN 主机规范为 ASCII。scheme-relative 引用在解析阶段没有 scheme，resolve() 在 resolveComponent 继承基 URI 的 http/https 后仍按原文序列化 host。应用若先提取 host 对照策略列表，再对同一引用调用 resolve，会对一个主机做出放行或拦截判断，而实际目的地是另一个主机，形成主机混淆与策略绕过。该问题是 CVE-2026-13676 的不完整修复变体。\n修复版本中通过抽出 canonicalizeHost，在 resolve() 已确定有效 scheme 后对 host 执行同样的 ASCII 规范化，转换失败则抛出错误并失败关闭，使 resolve 路径与后续再解析结果一致。",
+    "effects": [
+      {
+        "comp_name": "fast-uri",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[2.4.2,2.4.5)",
+            "min_fixed_version": "2.4.5",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.1.3,3.1.6)",
+            "min_fixed_version": "3.1.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.1,4.1.3)",
+            "min_fixed_version": "4.1.3",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -114,8 +173,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-75931漏洞"
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "fast-uri主机混淆漏洞"
   },
   "first_saved_at": "2026-08-24T10:31:31+00:00"
 }

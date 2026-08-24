@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-24T10:31:41+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-24T11:21:27+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-kgo3-7adq",
@@ -22,14 +22,49 @@
     "cvss_score": 9.9,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
     "cwe": "CWE-23",
-    "description": "A path traversal vulnerability in LXD's instance template processing allows an attacker with container edit permissions, or any user launching a crafted image, to overwrite arbitrary files on the host system as root. When processing target template paths specified in metadata.yaml, LXD validates the path against a confined os.Root directory handle but subsequently opens and creates the file using os.Create with an unconfined string path. This discrepancy between path resolution checks and file creation allows an attacker to escape directory confinement, overwrite root-owned host files, and achieve host root code execution.",
-    "effects": [],
+    "description": "LXD 是 Canonical 维护的开源系统容器与虚拟机管理平台，用于在 Linux 主机上创建、配置和运行实例。\n受影响版本中，实例模板处理会把 metadata.yaml 里 templates 映射的键当作写入目标路径。lxc.templateApplyNow 仅用 confined os.Root.Stat 校验该路径，并把中间目录不存在时返回的 ENOENT 视为允许创建；随后用 filepath.Join 折叠 \"..\"，再以未受限的 os.Create 打开字符串路径。具备单个容器 can_edit 权限的调用方可通过 PUT /1.0/instances/{name}/metadata 写入形如 /nonexistent/../../tmp/目标 的穿越键，或通过导入恶意镜像使同样的 metadata 落地；容器每次启动都会应用 start 模板，从而以 root 覆盖宿主机已有文件并取得宿主机 root 代码执行。\n修复版本中通过让 templateApplyNow 对目标路径执行 path.Clean，并始终调用 rootfsRoot.OpenFile 在 os.Root 句柄内创建或截断文件，父目录也改为 filesystem.MkdirAllOwner 在同一 Root 下创建，使穿越序列无法逃出容器 rootfs，切断对宿主机任意文件的写入。",
+    "effects": [
+      {
+        "comp_name": "github.com/canonical/lxd",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.0.13)",
+            "min_fixed_version": "4.0.13",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.0.0,5.0.9)",
+            "min_fixed_version": "5.0.9",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.21.0,5.21.7)",
+            "min_fixed_version": "5.21.7",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0.0,6.9]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "相对路径遍历",
     "kind_en": "相对路径遍历",
     "last_modified_time": "2026-08-24",
@@ -53,8 +88,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-66897漏洞",
+    "tags": [
+      "go"
+    ],
+    "title": "LXD模板路径穿越漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -75,14 +112,49 @@
     "cvss_score": 9.9,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
     "cwe": "CWE-23",
-    "description": "A path traversal vulnerability in LXD's instance template processing allows an attacker with container edit permissions, or any user launching a crafted image, to overwrite arbitrary files on the host system as root. When processing target template paths specified in metadata.yaml, LXD validates the path against a confined os.Root directory handle but subsequently opens and creates the file using os.Create with an unconfined string path. This discrepancy between path resolution checks and file creation allows an attacker to escape directory confinement, overwrite root-owned host files, and achieve host root code execution.",
-    "effects": [],
+    "description": "LXD 是 Canonical 维护的开源系统容器与虚拟机管理平台，用于在 Linux 主机上创建、配置和运行实例。\n受影响版本中，实例模板处理会把 metadata.yaml 里 templates 映射的键当作写入目标路径。lxc.templateApplyNow 仅用 confined os.Root.Stat 校验该路径，并把中间目录不存在时返回的 ENOENT 视为允许创建；随后用 filepath.Join 折叠 \"..\"，再以未受限的 os.Create 打开字符串路径。具备单个容器 can_edit 权限的调用方可通过 PUT /1.0/instances/{name}/metadata 写入形如 /nonexistent/../../tmp/目标 的穿越键，或通过导入恶意镜像使同样的 metadata 落地；容器每次启动都会应用 start 模板，从而以 root 覆盖宿主机已有文件并取得宿主机 root 代码执行。\n修复版本中通过让 templateApplyNow 对目标路径执行 path.Clean，并始终调用 rootfsRoot.OpenFile 在 os.Root 句柄内创建或截断文件，父目录也改为 filesystem.MkdirAllOwner 在同一 Root 下创建，使穿越序列无法逃出容器 rootfs，切断对宿主机任意文件的写入。",
+    "effects": [
+      {
+        "comp_name": "github.com/canonical/lxd",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.0.13)",
+            "min_fixed_version": "4.0.13",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.0.0,5.0.9)",
+            "min_fixed_version": "5.0.9",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.21.0,5.21.7)",
+            "min_fixed_version": "5.21.7",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0.0,6.9]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "相对路径遍历",
     "kind_en": "Relative Path Traversal",
     "last_modified_time": "2026-08-24",
@@ -106,8 +178,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-66897漏洞"
+    "tags": [
+      "go"
+    ],
+    "title": "LXD模板路径穿越漏洞"
   },
   "first_saved_at": "2026-08-24T10:31:40+00:00"
 }
