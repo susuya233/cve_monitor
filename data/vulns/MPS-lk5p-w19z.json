@@ -1,0 +1,197 @@
+{
+  "saved_at": "2026-08-24T19:23:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-lk5p-w19z",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76072",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-184",
+    "description": "Continue 是 Apache-2.0 许可的开源编码智能体，Continue CLI（npm 包 @continuedev/cli）用于在终端中调用大模型并自动执行 Bash 等工具。\n受影响版本中，headless（cn -p）与 auto 模式的默认策略把 Bash 工具权限设为 allow，checkToolPermission 仅在 terminal-security 返回 disabled 时硬拦截，isCriticalCommand 成为唯一门禁。hasDangerousPath 只匹配 /、/*、~、~/*、/usr、/etc、/bin、/sbin 及其前缀，rm -rf 针对 /home、/root、/var、/opt、/srv 不会被禁用；命令经 shell-quote 解析后 $HOME 会变成空 token，rm -rf $HOME 同样无法命中危险路径，而 spawn 执行时 shell 会重新展开该变量。find -delete 只被标为高风险，shred、wipefs、truncate、pkexec 未被处理。代理会自主读取网页、仓库文件与 issue 文本，其中的间接提示注入可在无人值守运行中销毁调用者数据。\n修复版本中通过补全危险路径与破坏性命令的 disabled 判定，阻止 rm -rf $HOME、rm -rf /home 以及 find -delete、shred、wipefs、pkexec 在 headless 或 auto 模式下自动执行。官方尚未发布明确修复版本，GitHub issue #13001 仍开放，公开源码仍保留不完整黑名单。",
+    "effects": [
+      {
+        "comp_name": "@continuedev/cli",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5.47]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不完整的黑名单",
+    "kind_en": "不允许的输入的不完整列表",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-lk5p-w19z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lk5p-w19z",
+        "name": "https://www.oscs1024.com/hd/MPS-lk5p-w19z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76072",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76072"
+      },
+      {
+        "url": "https://github.com/continuedev/continue",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/continuedev/continue/blob/main/packages/terminal-security/src/evaluateTerminalCommandSecurity.ts",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/continuedev/continue/issues/13001",
+        "name": ""
+      },
+      {
+        "url": "https://www.npmjs.com/package/@continuedev/cli",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/continue-cli-through-incomplete-destructive-command-denylist-in-headless-and-auto-mode",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "npm",
+      "开源"
+    ],
+    "title": "Continue CLI黑名单绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76072",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-184",
+    "description": "Continue 是 Apache-2.0 许可的开源编码智能体，Continue CLI（npm 包 @continuedev/cli）用于在终端中调用大模型并自动执行 Bash 等工具。\n受影响版本中，headless（cn -p）与 auto 模式的默认策略把 Bash 工具权限设为 allow，checkToolPermission 仅在 terminal-security 返回 disabled 时硬拦截，isCriticalCommand 成为唯一门禁。hasDangerousPath 只匹配 /、/*、~、~/*、/usr、/etc、/bin、/sbin 及其前缀，rm -rf 针对 /home、/root、/var、/opt、/srv 不会被禁用；命令经 shell-quote 解析后 $HOME 会变成空 token，rm -rf $HOME 同样无法命中危险路径，而 spawn 执行时 shell 会重新展开该变量。find -delete 只被标为高风险，shred、wipefs、truncate、pkexec 未被处理。代理会自主读取网页、仓库文件与 issue 文本，其中的间接提示注入可在无人值守运行中销毁调用者数据。\n修复版本中通过补全危险路径与破坏性命令的 disabled 判定，阻止 rm -rf $HOME、rm -rf /home 以及 find -delete、shred、wipefs、pkexec 在 headless 或 auto 模式下自动执行。官方尚未发布明确修复版本，GitHub issue #13001 仍开放，公开源码仍保留不完整黑名单。",
+    "effects": [
+      {
+        "comp_name": "@continuedev/cli",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5.47]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不完整的黑名单",
+    "kind_en": "Incomplete List of Disallowed Inputs",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-lk5p-w19z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lk5p-w19z",
+        "name": "https://www.oscs1024.com/hd/MPS-lk5p-w19z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76072",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76072"
+      },
+      {
+        "url": "https://github.com/continuedev/continue",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/continuedev/continue/blob/main/packages/terminal-security/src/evaluateTerminalCommandSecurity.ts",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/continuedev/continue/issues/13001",
+        "name": ""
+      },
+      {
+        "url": "https://www.npmjs.com/package/@continuedev/cli",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/continue-cli-through-incomplete-destructive-command-denylist-in-headless-and-auto-mode",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "npm",
+      "开源"
+    ],
+    "title": "Continue CLI黑名单绕过"
+  },
+  "first_saved_at": "2026-08-24T19:23:49+00:00"
+}

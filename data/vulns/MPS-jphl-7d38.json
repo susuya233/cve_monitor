@@ -1,0 +1,193 @@
+{
+  "saved_at": "2026-08-24T19:23:45+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-jphl-7d38",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76838",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "Hi.Events 是开源活动管理与售票平台，采用 PHP 与 Laravel 实现，用于创建活动、销售门票，并向外部系统发送 Webhook 通知。\n受影响版本中，事件与主办方 Webhook 仅在注册阶段由 NoInternalUrlRule 使用 gethostbyname() 解析主机名并拦截私有与保留地址，公网主机名可以顺利通过。WebhookDispatchService 在投递时直接读取已存储 URL，经 spatie/laravel-webhook-server 发起请求，且 webhook-server.php 未关闭 Guzzle 默认重定向跟随。攻击者只要登记会重定向到环回、私网或云元数据地址的公网目标，或在登记后改写该主机名的 DNS 记录，即可诱使服务器向内网发起请求。WebhookResponseHandlerService 将响应体写入 Webhook 日志，WebhookLogResource 再通过日志接口返回，攻击者可以直接读取内网服务应答。\n修复版本中通过新增 WebhookUrlValidator 与 SecureCallWebhookJob，在每次投递时重新校验目标、用 CURLOPT_RESOLVE 固定已校验地址、逐跳检查重定向，并解码 IPv6 过渡地址，阻止请求进入内网和云元数据地址。",
+    "effects": [
+      {
+        "comp_name": "Hi.Events",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,1.11.1-beta)",
+            "min_fixed_version": "1.11.1-beta",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-jphl-7d38",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jphl-7d38",
+        "name": "https://www.oscs1024.com/hd/MPS-jphl-7d38"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76838",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76838"
+      },
+      {
+        "url": "https://github.com/HiEventsDev/Hi.Events",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/HiEventsDev/Hi.Events/blob/v.1.11.0-beta/backend/app/Validators/Rules/NoInternalUrlRule.php",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/HiEventsDev/Hi.Events/commit/cfbf468bb5b1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/HiEventsDev/Hi.Events/pull/1311",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/hi-events-before-beta-server-side-request-forgery-via-unvalidated-webhook-redirects",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Hi.Events Webhook SSRF漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76838",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "Hi.Events 是开源活动管理与售票平台，采用 PHP 与 Laravel 实现，用于创建活动、销售门票，并向外部系统发送 Webhook 通知。\n受影响版本中，事件与主办方 Webhook 仅在注册阶段由 NoInternalUrlRule 使用 gethostbyname() 解析主机名并拦截私有与保留地址，公网主机名可以顺利通过。WebhookDispatchService 在投递时直接读取已存储 URL，经 spatie/laravel-webhook-server 发起请求，且 webhook-server.php 未关闭 Guzzle 默认重定向跟随。攻击者只要登记会重定向到环回、私网或云元数据地址的公网目标，或在登记后改写该主机名的 DNS 记录，即可诱使服务器向内网发起请求。WebhookResponseHandlerService 将响应体写入 Webhook 日志，WebhookLogResource 再通过日志接口返回，攻击者可以直接读取内网服务应答。\n修复版本中通过新增 WebhookUrlValidator 与 SecureCallWebhookJob，在每次投递时重新校验目标、用 CURLOPT_RESOLVE 固定已校验地址、逐跳检查重定向，并解码 IPv6 过渡地址，阻止请求进入内网和云元数据地址。",
+    "effects": [
+      {
+        "comp_name": "Hi.Events",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,1.11.1-beta)",
+            "min_fixed_version": "1.11.1-beta",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-jphl-7d38",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jphl-7d38",
+        "name": "https://www.oscs1024.com/hd/MPS-jphl-7d38"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76838",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76838"
+      },
+      {
+        "url": "https://github.com/HiEventsDev/Hi.Events",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/HiEventsDev/Hi.Events/blob/v.1.11.0-beta/backend/app/Validators/Rules/NoInternalUrlRule.php",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/HiEventsDev/Hi.Events/commit/cfbf468bb5b1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/HiEventsDev/Hi.Events/pull/1311",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/hi-events-before-beta-server-side-request-forgery-via-unvalidated-webhook-redirects",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Hi.Events Webhook SSRF漏洞"
+  },
+  "first_saved_at": "2026-08-24T19:23:45+00:00"
+}

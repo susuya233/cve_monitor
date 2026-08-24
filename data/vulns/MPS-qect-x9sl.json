@@ -1,0 +1,189 @@
+{
+  "saved_at": "2026-08-24T19:23:46+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-qect-x9sl",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76073",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "Label Studio 是开源数据标注平台，采用 Apache-2.0 许可证，用于为机器学习任务创建、存储和管理标注结果。\n受影响版本中，公开接口 AnnotationAPI 将 queryset 设为 Annotation.objects.all() 且未覆盖 get_queryset，Django REST Framework 默认按主键取出任意标注对象。视图 permission_required 声明 annotations.view、annotations.change 与 annotations.delete，这些权限在 label_studio/core/permissions.py 中全部注册为 rules.is_authenticated，任意已登录账号可以满足校验，并且没有组织级对象校验。标注主键为连续整数，同一实例上其他组织的已认证用户可通过 /api/annotations/{id}/ 读取、修改和删除不属于本组织的标注。同文件中的 AnnotationConvertAPI 同样使用未按组织过滤的 queryset。\n修复版本中通过将 AnnotationAPI 与 AnnotationConvertAPI 的查询集改为 Annotation.objects.for_user(request.user)，只返回当前用户所属组织的标注，使跨组织按主键访问返回 404。截至本报告分析时，该改动仍位于未合并的上游拉取请求，尚未进入正式发布版本。",
+    "effects": [
+      {
+        "comp_name": "label-studio",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.23.0]",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-qect-x9sl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qect-x9sl",
+        "name": "https://www.oscs1024.com/hd/MPS-qect-x9sl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76073",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76073"
+      },
+      {
+        "url": "https://github.com/HumanSignal/label-studio",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/HumanSignal/label-studio/blob/1.23.0/label_studio/tasks/api.py",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/HumanSignal/label-studio/issues/9796",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/label-studio-through-cross-organization-annotation-access-via-unscoped-annotationapi-queryset",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "Label Studio跨组织越权",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76073",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "Label Studio 是开源数据标注平台，采用 Apache-2.0 许可证，用于为机器学习任务创建、存储和管理标注结果。\n受影响版本中，公开接口 AnnotationAPI 将 queryset 设为 Annotation.objects.all() 且未覆盖 get_queryset，Django REST Framework 默认按主键取出任意标注对象。视图 permission_required 声明 annotations.view、annotations.change 与 annotations.delete，这些权限在 label_studio/core/permissions.py 中全部注册为 rules.is_authenticated，任意已登录账号可以满足校验，并且没有组织级对象校验。标注主键为连续整数，同一实例上其他组织的已认证用户可通过 /api/annotations/{id}/ 读取、修改和删除不属于本组织的标注。同文件中的 AnnotationConvertAPI 同样使用未按组织过滤的 queryset。\n修复版本中通过将 AnnotationAPI 与 AnnotationConvertAPI 的查询集改为 Annotation.objects.for_user(request.user)，只返回当前用户所属组织的标注，使跨组织按主键访问返回 404。截至本报告分析时，该改动仍位于未合并的上游拉取请求，尚未进入正式发布版本。",
+    "effects": [
+      {
+        "comp_name": "label-studio",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.23.0]",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-qect-x9sl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qect-x9sl",
+        "name": "https://www.oscs1024.com/hd/MPS-qect-x9sl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76073",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76073"
+      },
+      {
+        "url": "https://github.com/HumanSignal/label-studio",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/HumanSignal/label-studio/blob/1.23.0/label_studio/tasks/api.py",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/HumanSignal/label-studio/issues/9796",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/label-studio-through-cross-organization-annotation-access-via-unscoped-annotationapi-queryset",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "Label Studio跨组织越权"
+  },
+  "first_saved_at": "2026-08-24T19:23:46+00:00"
+}
