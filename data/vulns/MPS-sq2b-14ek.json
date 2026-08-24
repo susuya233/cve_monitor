@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-24T22:19:24+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-24T22:19:17+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
+  "source_page": "https://www.oscs1024.com/hd/MPS-sq2b-14ek",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,56 +21,81 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78183",
-    "cvss": {},
-    "cvss_score": 9.8,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cve_id": "CVE-2026-7455",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@autodesk.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
     "cwe": "CWE-787",
-    "description": "DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in quote_float.\n\nquote_float() allocates the length of the string + 1, which is the size of the bare numeric symbol plus NULL.  But for special literals NaN, Inf, +Inf, -Inf, Infinity, +Infinity, -Infinity it emits the literal surrounded by quotes plus NULL, which is length + 3 bytes. Every recognised literal (case-insensitive) overflows by 2 bytes, a single quote and a NULL.\n\nThis can be reached by the $dbh->quote method, for example\n\n    $dbh->quote( \"Infinity\", DBI::SQL_NUMERIC ).\n\nThis regression was introduced in 3.21.0 by the quote.c rewrite.",
-    "effects": [],
+    "description": "Autodesk 3ds Max 是 Autodesk 推出的闭源三维建模、动画与渲染软件，用于影视、游戏和可视化内容制作。\n受影响版本中，3ds Max 解析 FLT 文件时会发生越界写入。攻击者可诱使使用者打开或导入恶意 FLT 文件，造成进程崩溃、数据损坏，或在当前进程上下文中执行任意代码。\n修复版本中通过官方安全更新修正 FLT 文件解析过程中的越界写入，使 2026.3.4 与 2027.2.0 及后续对应版本不再因恶意 FLT 文件出现崩溃、数据损坏或任意代码执行；公开资料未披露更细粒度的源码修改。",
+    "effects": [
+      {
+        "comp_name": "3ds_max",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2027.0.0,2027.2.0)",
+            "min_fixed_version": "2027.2.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2026.0.0,2026.3.4)",
+            "min_fixed_version": "2026.3.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "越界写入",
     "kind_en": "越界写入",
-    "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-gncf-koz0",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-sq2b-14ek",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
-        "name": "https://www.oscs1024.com/hd/MPS-gncf-koz0"
+        "url": "https://www.oscs1024.com/hd/MPS-sq2b-14ek",
+        "name": "https://www.oscs1024.com/hd/MPS-sq2b-14ek"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-7455",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-7455"
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/6d6f47ed2403cda55c82b1bad56e388ba7390065.patch",
+        "url": "https://www.autodesk.com/products/autodesk-access/overview",
         "name": ""
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/adacf1de872326a465e13f9e4281a674ebcd227e",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/bucardo/dbdpg/security/advisories/GHSA-785p-fw3v-r822",
-        "name": ""
-      },
-      {
-        "url": "https://metacpan.org/release/TURNSTEP/DBD-Pg-3.21.1/source/Changes",
+        "url": "https://www.autodesk.com/trust/security-advisories/adsk-sa-2026-0014",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78183漏洞",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "3ds Max越界写入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -90,56 +115,81 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78183",
-    "cvss": {},
-    "cvss_score": 9.8,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cve_id": "CVE-2026-7455",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@autodesk.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
     "cwe": "CWE-787",
-    "description": "DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in quote_float.\n\nquote_float() allocates the length of the string + 1, which is the size of the bare numeric symbol plus NULL.  But for special literals NaN, Inf, +Inf, -Inf, Infinity, +Infinity, -Infinity it emits the literal surrounded by quotes plus NULL, which is length + 3 bytes. Every recognised literal (case-insensitive) overflows by 2 bytes, a single quote and a NULL.\n\nThis can be reached by the $dbh->quote method, for example\n\n    $dbh->quote( \"Infinity\", DBI::SQL_NUMERIC ).\n\nThis regression was introduced in 3.21.0 by the quote.c rewrite.",
-    "effects": [],
+    "description": "Autodesk 3ds Max 是 Autodesk 推出的闭源三维建模、动画与渲染软件，用于影视、游戏和可视化内容制作。\n受影响版本中，3ds Max 解析 FLT 文件时会发生越界写入。攻击者可诱使使用者打开或导入恶意 FLT 文件，造成进程崩溃、数据损坏，或在当前进程上下文中执行任意代码。\n修复版本中通过官方安全更新修正 FLT 文件解析过程中的越界写入，使 2026.3.4 与 2027.2.0 及后续对应版本不再因恶意 FLT 文件出现崩溃、数据损坏或任意代码执行；公开资料未披露更细粒度的源码修改。",
+    "effects": [
+      {
+        "comp_name": "3ds_max",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2027.0.0,2027.2.0)",
+            "min_fixed_version": "2027.2.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2026.0.0,2026.3.4)",
+            "min_fixed_version": "2026.3.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "越界写入",
     "kind_en": "Out-of-bounds Write",
-    "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-gncf-koz0",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-sq2b-14ek",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
-        "name": "https://www.oscs1024.com/hd/MPS-gncf-koz0"
+        "url": "https://www.oscs1024.com/hd/MPS-sq2b-14ek",
+        "name": "https://www.oscs1024.com/hd/MPS-sq2b-14ek"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-7455",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-7455"
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/6d6f47ed2403cda55c82b1bad56e388ba7390065.patch",
+        "url": "https://www.autodesk.com/products/autodesk-access/overview",
         "name": ""
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/adacf1de872326a465e13f9e4281a674ebcd227e",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/bucardo/dbdpg/security/advisories/GHSA-785p-fw3v-r822",
-        "name": ""
-      },
-      {
-        "url": "https://metacpan.org/release/TURNSTEP/DBD-Pg-3.21.1/source/Changes",
+        "url": "https://www.autodesk.com/trust/security-advisories/adsk-sa-2026-0014",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78183漏洞"
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "3ds Max越界写入漏洞"
   },
-  "first_saved_at": "2026-08-23T21:15:38+00:00"
+  "first_saved_at": "2026-08-24T22:19:17+00:00"
 }
