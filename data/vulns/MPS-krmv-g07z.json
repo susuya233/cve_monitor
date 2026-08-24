@@ -1,0 +1,147 @@
+{
+  "saved_at": "2026-08-24T14:36:06+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-krmv-g07z",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78376",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-416",
+    "description": "A flaw was found in WebKitGTK. Processing malicious web content can cause a use-after-free issue due to improper memory handling and result in memory corruption.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "UAF",
+    "kind_en": "免费后使用",
+    "last_modified_time": "2026-08-24",
+    "level": "High",
+    "mps_id": "MPS-krmv-g07z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-krmv-g07z",
+        "name": "https://www.oscs1024.com/hd/MPS-krmv-g07z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78376",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78376"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-78376",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2521858",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-78376漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78376",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-416",
+    "description": "A flaw was found in WebKitGTK. Processing malicious web content can cause a use-after-free issue due to improper memory handling and result in memory corruption.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "UAF",
+    "kind_en": "Use After Free",
+    "last_modified_time": "2026-08-24",
+    "level": "High",
+    "mps_id": "MPS-krmv-g07z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-krmv-g07z",
+        "name": "https://www.oscs1024.com/hd/MPS-krmv-g07z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78376",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78376"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-78376",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2521858",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-78376漏洞"
+  },
+  "first_saved_at": "2026-08-24T14:36:02+00:00"
+}

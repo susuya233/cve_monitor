@@ -3,7 +3,7 @@
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-q6jy-pbi2",
+  "source_page": "https://www.oscs1024.com/hd/MPS-apul-rqgy",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,61 +21,53 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78365",
+    "cve_id": "CVE-2026-78380",
     "cvss": {
       "cvssv4": [
         {
-          "source": "4daa8cea-433a-44bd-9456-53b127fc289a",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "critical",
-          "base_score": 9.3
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
         }
       ]
     },
-    "cvss_score": 9.3,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "Authorization Bypass Through User-Controlled Key in the supplier API in Roskus Prospero Flow CRM 4.0.0 through 5.3.1 allows any authenticated user to read and modify another company's supplier record, and to reassign it to their own company, via a PUT request to /api/supplier/{id} setting company_id in the body.",
+    "description": "RansomLook fails to enforce the privacy status of ransomware groups and markets when distributing newly collected victim posts to external notification channels. The post-processing logic checks whether an individual post is marked private but does not verify whether the group or market to which the post belongs is configured as private.\n\nAs a result, newly parsed victim information associated with a private group or market may be automatically published through enabled Rocket.Chat, Mastodon, Bluesky, and e-mail notification channels despite the entity being explicitly configured to prevent public disclosure.\n\nA similar issue affects the public MISP feed. The feed previously determined privacy using groupinfo(), which only queries the group database. Consequently, victim information associated with private markets could be added to the public MISP feed because the corresponding market privacy flag was not evaluated.\n\nAn attacker or other unauthorized party able to access these public notification channels or the MISP feed may obtain victim information that was intended to remain private. Depending on the collected data, this may disclose victim names, ransomware activity, incident information, or other information associated with privately monitored groups and markets.\n\nThe fix introduces a common is_private_entity() check covering both groups and markets and prevents private entity posts from being distributed through external notification channels or the public MISP feed. Internal storage and dashboard alerting remain unaffected.",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "建议修复",
+    "fix_suggestion": "可选修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
     "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-q6jy-pbi2",
+    "level": "High",
+    "mps_id": "MPS-apul-rqgy",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-24",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-q6jy-pbi2",
-        "name": "https://www.oscs1024.com/hd/MPS-q6jy-pbi2"
+        "url": "https://www.oscs1024.com/hd/MPS-apul-rqgy",
+        "name": "https://www.oscs1024.com/hd/MPS-apul-rqgy"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78365",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78365"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78380",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78380"
       },
       {
-        "url": "https://github.com/Roskus/prospero-flow-crm/commit/4a52477e6ed66afa436814c80e7bcd68670dd596",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/Roskus/prospero-flow-crm/releases/tag/v5.5.3",
-        "name": ""
-      },
-      {
-        "url": "https://secur0.com/en/cna/cve-list/cve-2026-78365-idor-supplier-api-cross-tenant-update",
+        "url": "https://github.com/RansomLook/RansomLook/commit/133cbeab3abdd64c22b02165c6505bb3e53698cc",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-78365漏洞",
+    "title": "CVE-2026-78380漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -95,61 +87,53 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78365",
+    "cve_id": "CVE-2026-78380",
     "cvss": {
       "cvssv4": [
         {
-          "source": "4daa8cea-433a-44bd-9456-53b127fc289a",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "critical",
-          "base_score": 9.3
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
         }
       ]
     },
-    "cvss_score": 9.3,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "Authorization Bypass Through User-Controlled Key in the supplier API in Roskus Prospero Flow CRM 4.0.0 through 5.3.1 allows any authenticated user to read and modify another company's supplier record, and to reassign it to their own company, via a PUT request to /api/supplier/{id} setting company_id in the body.",
+    "description": "RansomLook fails to enforce the privacy status of ransomware groups and markets when distributing newly collected victim posts to external notification channels. The post-processing logic checks whether an individual post is marked private but does not verify whether the group or market to which the post belongs is configured as private.\n\nAs a result, newly parsed victim information associated with a private group or market may be automatically published through enabled Rocket.Chat, Mastodon, Bluesky, and e-mail notification channels despite the entity being explicitly configured to prevent public disclosure.\n\nA similar issue affects the public MISP feed. The feed previously determined privacy using groupinfo(), which only queries the group database. Consequently, victim information associated with private markets could be added to the public MISP feed because the corresponding market privacy flag was not evaluated.\n\nAn attacker or other unauthorized party able to access these public notification channels or the MISP feed may obtain victim information that was intended to remain private. Depending on the collected data, this may disclose victim names, ransomware activity, incident information, or other information associated with privately monitored groups and markets.\n\nThe fix introduces a common is_private_entity() check covering both groups and markets and prevents private entity posts from being distributed through external notification channels or the public MISP feed. Internal storage and dashboard alerting remain unaffected.",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Recommend",
+    "fix_suggestion": "Optional",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
     "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-q6jy-pbi2",
+    "level": "High",
+    "mps_id": "MPS-apul-rqgy",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-24",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-q6jy-pbi2",
-        "name": "https://www.oscs1024.com/hd/MPS-q6jy-pbi2"
+        "url": "https://www.oscs1024.com/hd/MPS-apul-rqgy",
+        "name": "https://www.oscs1024.com/hd/MPS-apul-rqgy"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78365",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78365"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78380",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78380"
       },
       {
-        "url": "https://github.com/Roskus/prospero-flow-crm/commit/4a52477e6ed66afa436814c80e7bcd68670dd596",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/Roskus/prospero-flow-crm/releases/tag/v5.5.3",
-        "name": ""
-      },
-      {
-        "url": "https://secur0.com/en/cna/cve-list/cve-2026-78365-idor-supplier-api-cross-tenant-update",
+        "url": "https://github.com/RansomLook/RansomLook/commit/133cbeab3abdd64c22b02165c6505bb3e53698cc",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-78365漏洞"
+    "title": "CVE-2026-78380漏洞"
   },
-  "first_saved_at": "2026-08-24T13:45:20+00:00"
+  "first_saved_at": "2026-08-24T14:36:00+00:00"
 }

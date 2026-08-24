@@ -1,0 +1,113 @@
+{
+  "saved_at": "2026-08-24T14:36:06+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-lpqy-37gs",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78385",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "RansomLook contains insufficient resource validation in the analysis PDF generation functionality. Analysis documents are converted from Markdown to HTML and passed to WeasyPrint for PDF rendering. Prior to the fix, WeasyPrint used its default URL fetcher, allowing resource references contained in an analysis to be resolved without restrictions.\n\nAn authenticated attacker able to create or modify an analysis could embed crafted resource references using schemes such as file:// or http://. When the analysis was subsequently rendered as PDF, WeasyPrint would process these references with the privileges and network access of the RansomLook server.\n\nA malicious file:// reference could cause the renderer to access arbitrary files readable by the RansomLook process, potentially exposing sensitive configuration, credentials, or other local data through rendered resources. Network URLs could cause the server to initiate requests to localhost, internal network services, or external systems, resulting in server-side request forgery (SSRF) and potentially bypassing network-level access restrictions.\n\nThe patch introduces a dedicated WeasyPrint URL fetcher that permits only data: resources, the RansomLook report logo, and files contained within the analysis asset directory. Network resources and filesystem paths outside these explicitly permitted locations are rejected.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-24",
+    "level": "High",
+    "mps_id": "MPS-lpqy-37gs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lpqy-37gs",
+        "name": "https://www.oscs1024.com/hd/MPS-lpqy-37gs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78385",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78385"
+      },
+      {
+        "url": "https://github.com/RansomLook/RansomLook/commit/34dc0285583dae483b4d48c8e98fff942b755f5f",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-78385漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78385",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "RansomLook contains insufficient resource validation in the analysis PDF generation functionality. Analysis documents are converted from Markdown to HTML and passed to WeasyPrint for PDF rendering. Prior to the fix, WeasyPrint used its default URL fetcher, allowing resource references contained in an analysis to be resolved without restrictions.\n\nAn authenticated attacker able to create or modify an analysis could embed crafted resource references using schemes such as file:// or http://. When the analysis was subsequently rendered as PDF, WeasyPrint would process these references with the privileges and network access of the RansomLook server.\n\nA malicious file:// reference could cause the renderer to access arbitrary files readable by the RansomLook process, potentially exposing sensitive configuration, credentials, or other local data through rendered resources. Network URLs could cause the server to initiate requests to localhost, internal network services, or external systems, resulting in server-side request forgery (SSRF) and potentially bypassing network-level access restrictions.\n\nThe patch introduces a dedicated WeasyPrint URL fetcher that permits only data: resources, the RansomLook report logo, and files contained within the analysis asset directory. Network resources and filesystem paths outside these explicitly permitted locations are rejected.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-24",
+    "level": "High",
+    "mps_id": "MPS-lpqy-37gs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lpqy-37gs",
+        "name": "https://www.oscs1024.com/hd/MPS-lpqy-37gs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78385",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78385"
+      },
+      {
+        "url": "https://github.com/RansomLook/RansomLook/commit/34dc0285583dae483b4d48c8e98fff942b755f5f",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-78385漏洞"
+  },
+  "first_saved_at": "2026-08-24T14:36:06+00:00"
+}
