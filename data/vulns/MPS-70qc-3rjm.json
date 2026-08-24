@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-08-24T23:17:19+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-70qc-3rjm",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78267",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-266",
+    "description": "TranslatePress 是 Cozmoslabs 发布的开源 WordPress 多语言翻译插件，插件目录名为 translatepress-multilingual，用于在前端可视化编辑器中翻译站点内容，并支持自动翻译。\n受影响版本中，Translation Editor 预览模式在 TRP_Translation_Manager::conditions_met() 里只判断请求参数 trp-edit-translation 是否为 preview，不调用 current_user_can 校验 trp_translating_capability，未认证访问者可直接进入本应受限的编辑器预览路径。TRP_Translation_Render::translate_page() 在该预览分支把未校验的 data-trpgettextoriginal 写回页面属性，搜索查询等反射输入可借此注入标记并取得站点控制权。\n修复版本中通过新增 sanitize_gettext_original_id() 将 data-trpgettextoriginal 限制为纯数字，并在 setAttribute 与字符串拼接输出时使用 esc_attr()，阻止未校验标识进入预览写回路径。",
+    "effects": [
+      {
+        "comp_name": "translatepress-multilingual",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.3.3)",
+            "min_fixed_version": "3.3.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "特权授予不正确",
+    "kind_en": "权限分配不正确",
+    "last_modified_time": "2026-08-25",
+    "level": "Critical",
+    "mps_id": "MPS-70qc-3rjm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-70qc-3rjm",
+        "name": "https://www.oscs1024.com/hd/MPS-70qc-3rjm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78267",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78267"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/translatepress-multilingual/vulnerability/wordpress-translatepress-plugin-3-3-2-privilege-escalation-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "TranslatePress未授权提权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78267",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-266",
+    "description": "TranslatePress 是 Cozmoslabs 发布的开源 WordPress 多语言翻译插件，插件目录名为 translatepress-multilingual，用于在前端可视化编辑器中翻译站点内容，并支持自动翻译。\n受影响版本中，Translation Editor 预览模式在 TRP_Translation_Manager::conditions_met() 里只判断请求参数 trp-edit-translation 是否为 preview，不调用 current_user_can 校验 trp_translating_capability，未认证访问者可直接进入本应受限的编辑器预览路径。TRP_Translation_Render::translate_page() 在该预览分支把未校验的 data-trpgettextoriginal 写回页面属性，搜索查询等反射输入可借此注入标记并取得站点控制权。\n修复版本中通过新增 sanitize_gettext_original_id() 将 data-trpgettextoriginal 限制为纯数字，并在 setAttribute 与字符串拼接输出时使用 esc_attr()，阻止未校验标识进入预览写回路径。",
+    "effects": [
+      {
+        "comp_name": "translatepress-multilingual",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.3.3)",
+            "min_fixed_version": "3.3.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "特权授予不正确",
+    "kind_en": "Incorrect Privilege Assignment",
+    "last_modified_time": "2026-08-25",
+    "level": "Critical",
+    "mps_id": "MPS-70qc-3rjm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-70qc-3rjm",
+        "name": "https://www.oscs1024.com/hd/MPS-70qc-3rjm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78267",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78267"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/translatepress-multilingual/vulnerability/wordpress-translatepress-plugin-3-3-2-privilege-escalation-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "TranslatePress未授权提权漏洞"
+  },
+  "first_saved_at": "2026-08-24T23:17:19+00:00"
+}
