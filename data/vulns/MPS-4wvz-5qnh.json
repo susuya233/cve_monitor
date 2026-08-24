@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-24T05:33:06+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-24T05:33:03+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-odz2-xs5g",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4wvz-5qnh",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,37 +21,37 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78211",
+    "cve_id": "CVE-2026-59561",
     "cvss": {
-      "cvssv31": [
+      "cvssv3": [
         {
-          "source": "twcert@cert.org.tw",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-          "severity": "critical",
-          "base_score": 9.8
+          "source": "vultures@jpcert.or.jp",
+          "vector": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
         }
       ],
       "cvssv4": [
         {
-          "source": "twcert@cert.org.tw",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "critical",
-          "base_score": 9.3
+          "source": "vultures@jpcert.or.jp",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
         }
       ]
     },
-    "cvss_score": 9.3,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "4MOSAn GCB Doctor 是美丽岛安全科技（4MOSAn Security Technology）开发的商业软件，用于政府组态基准合规检查与管理，源码未公开。\n受影响版本中，产品残留未移除的 ADOdb 测试页面，会将页面参数带入操作系统命令执行路径。未经身份鉴别的远程攻击者可向该测试页面注入恶意指令，在服务器上执行任意系统命令。\n修复版本中通过升级至 20260621 并执行 FreeBSD-GCB 管理中心安全升级，消除该测试页面对外部参数的危险命令处理，阻断未授权远程命令执行。",
+    "description": "Sakura Editor（樱花编辑器）是 Sakura Editor Development Community 维护的开源 Windows 文本编辑器，用于日常文本编辑，并提供从当前文件目录打开 PowerShell 等终端功能。\n受影响版本中，CViewCommander::Command_OPEN_POWERSHELL 将当前编辑文件所在目录路径 strFolder 直接嵌入 powershell.exe 的 -Command 参数，构造 Set-Location -Path '%s'。目录名中的单引号会提前结束该字符串，使后续内容作为 PowerShell 命令执行。用户若打开恶意构造目录中的文件并选择「打开 PowerShell」或「以管理员身份打开 PowerShell」，攻击者可以在用户主机上执行任意操作系统命令。\n修复版本中通过在拼接 -Command 前将目录路径中的单引号替换为 ''，使路径始终作为 PowerShell 单引号字符串的内容处理，阻断目录名注入命令。",
     "effects": [
       {
-        "comp_name": "gcb_doctor",
+        "comp_name": "sakura_editor",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,20260621)",
-            "min_fixed_version": "20260621",
+            "affected_version": "(-∞,2.4.3)",
+            "min_fixed_version": "2.4.3",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -62,41 +62,42 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "OS命令注入",
     "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
     "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-odz2-xs5g",
+    "level": "High",
+    "mps_id": "MPS-4wvz-5qnh",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-24",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-odz2-xs5g",
-        "name": "https://www.oscs1024.com/hd/MPS-odz2-xs5g"
+        "url": "https://www.oscs1024.com/hd/MPS-4wvz-5qnh",
+        "name": "https://www.oscs1024.com/hd/MPS-4wvz-5qnh"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78211",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78211"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59561",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-59561"
       },
       {
-        "url": "https://www.twcert.org.tw/en/cp-139-11122-3d95a-2.html",
+        "url": "https://github.com/sakura-editor/sakura/releases/tag/v2.4.3",
         "name": ""
       },
       {
-        "url": "https://www.twcert.org.tw/tw/cp-132-11118-dfee4-1.html",
+        "url": "https://github.com/sakura-editor/sakura/security/advisories/GHSA-6x2x-729r-wjh5",
+        "name": ""
+      },
+      {
+        "url": "https://jvn.jp/en/jp/JVN74538868/",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [
-      "应用软件",
-      "终端软件"
-    ],
-    "title": "GCB Doctor命令注入漏洞",
+    "tags": [],
+    "title": "樱花编辑器命令注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -116,37 +117,37 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78211",
+    "cve_id": "CVE-2026-59561",
     "cvss": {
-      "cvssv31": [
+      "cvssv3": [
         {
-          "source": "twcert@cert.org.tw",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-          "severity": "critical",
-          "base_score": 9.8
+          "source": "vultures@jpcert.or.jp",
+          "vector": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
         }
       ],
       "cvssv4": [
         {
-          "source": "twcert@cert.org.tw",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "critical",
-          "base_score": 9.3
+          "source": "vultures@jpcert.or.jp",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
         }
       ]
     },
-    "cvss_score": 9.3,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "4MOSAn GCB Doctor 是美丽岛安全科技（4MOSAn Security Technology）开发的商业软件，用于政府组态基准合规检查与管理，源码未公开。\n受影响版本中，产品残留未移除的 ADOdb 测试页面，会将页面参数带入操作系统命令执行路径。未经身份鉴别的远程攻击者可向该测试页面注入恶意指令，在服务器上执行任意系统命令。\n修复版本中通过升级至 20260621 并执行 FreeBSD-GCB 管理中心安全升级，消除该测试页面对外部参数的危险命令处理，阻断未授权远程命令执行。",
+    "description": "Sakura Editor（樱花编辑器）是 Sakura Editor Development Community 维护的开源 Windows 文本编辑器，用于日常文本编辑，并提供从当前文件目录打开 PowerShell 等终端功能。\n受影响版本中，CViewCommander::Command_OPEN_POWERSHELL 将当前编辑文件所在目录路径 strFolder 直接嵌入 powershell.exe 的 -Command 参数，构造 Set-Location -Path '%s'。目录名中的单引号会提前结束该字符串，使后续内容作为 PowerShell 命令执行。用户若打开恶意构造目录中的文件并选择「打开 PowerShell」或「以管理员身份打开 PowerShell」，攻击者可以在用户主机上执行任意操作系统命令。\n修复版本中通过在拼接 -Command 前将目录路径中的单引号替换为 ''，使路径始终作为 PowerShell 单引号字符串的内容处理，阻断目录名注入命令。",
     "effects": [
       {
-        "comp_name": "gcb_doctor",
+        "comp_name": "sakura_editor",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,20260621)",
-            "min_fixed_version": "20260621",
+            "affected_version": "(-∞,2.4.3)",
+            "min_fixed_version": "2.4.3",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -157,41 +158,42 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "OS命令注入",
     "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
     "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-odz2-xs5g",
+    "level": "High",
+    "mps_id": "MPS-4wvz-5qnh",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-24",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-odz2-xs5g",
-        "name": "https://www.oscs1024.com/hd/MPS-odz2-xs5g"
+        "url": "https://www.oscs1024.com/hd/MPS-4wvz-5qnh",
+        "name": "https://www.oscs1024.com/hd/MPS-4wvz-5qnh"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78211",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78211"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59561",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-59561"
       },
       {
-        "url": "https://www.twcert.org.tw/en/cp-139-11122-3d95a-2.html",
+        "url": "https://github.com/sakura-editor/sakura/releases/tag/v2.4.3",
         "name": ""
       },
       {
-        "url": "https://www.twcert.org.tw/tw/cp-132-11118-dfee4-1.html",
+        "url": "https://github.com/sakura-editor/sakura/security/advisories/GHSA-6x2x-729r-wjh5",
+        "name": ""
+      },
+      {
+        "url": "https://jvn.jp/en/jp/JVN74538868/",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [
-      "应用软件",
-      "终端软件"
-    ],
-    "title": "GCB Doctor命令注入漏洞"
+    "tags": [],
+    "title": "樱花编辑器命令注入漏洞"
   },
-  "first_saved_at": "2026-08-24T04:38:36+00:00"
+  "first_saved_at": "2026-08-24T05:33:03+00:00"
 }
