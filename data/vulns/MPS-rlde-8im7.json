@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-24T15:33:36+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-24T16:29:40+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-rlde-8im7",
@@ -22,14 +22,28 @@
     "cvss_score": 7.1,
     "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:H/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-214",
-    "description": "Invocation of Process Using Visible Sensitive Information in Black Duck blackduck-c-cpp 1.0.17 through 3.0.6 allows an actor able to execute code within the scanned project's build to obtain the Black Duck API token via the ambient process environment, which is inherited by subprocesses launched during build capture and signature scanning. This applies only where the token is supplied through the BLACKDUCK_API_TOKEN or BD_HUB_TOKEN environment variable.\n\n\n\nUpgrading does not remediate prior disclosure; any token supplied to an affected version through an environment variable should be rotated.",
-    "effects": [],
+    "description": "blackduck-c-cpp 是 Black Duck 发布的 Python 扫描工具，以 PyPI 包形式分发并采用专有许可，用于通过 Coverity Build Capture 包装 C/C++ 构建并生成软件组成分析物料清单。\n受影响版本中，当 API token 通过 BLACKDUCK_API_TOKEN 或 BD_HUB_TOKEN 环境变量传入时，RunBuildCapture.__init__ 读取 token 后未将其从进程环境中删除。工具随后在构建捕获与签名扫描阶段启动 cov-build、用户 build_cmd 以及签名扫描等子进程，这些子进程默认继承完整环境。能够在被扫描项目构建中执行代码的攻击者可通过 getenv 取得该 token；在文档所述扫描到新项目所需的最小权限下，该 token 可读取实例上的全部项目、物料清单与 code location，并创建、修改或删除项目、版本与 code location。\n修复版本中通过在读取 token 后立即删除 BLACKDUCK_API_TOKEN 与 BD_HUB_TOKEN，并将签名扫描子进程改为仅传递白名单环境变量，切断子进程继承 token 的路径。官方指出升级不能消除既有泄露，已通过环境变量向受影响版本提供过 token 的须轮换该 token。",
+    "effects": [
+      {
+        "comp_name": "blackduck-c-cpp",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[1.0.17,3.0.7)",
+            "min_fixed_version": "3.0.7",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "通过处理环境导致的信息暴露",
     "kind_en": "Invocation of Process Using Visible Sensitive Information",
     "last_modified_time": "2026-08-24",
@@ -57,8 +71,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-76054漏洞",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "blackduck-c-cpp令牌泄露",
     "_translated": true
   },
   "detail_original": {
@@ -79,14 +96,28 @@
     "cvss_score": 7.1,
     "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:H/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-214",
-    "description": "Invocation of Process Using Visible Sensitive Information in Black Duck blackduck-c-cpp 1.0.17 through 3.0.6 allows an actor able to execute code within the scanned project's build to obtain the Black Duck API token via the ambient process environment, which is inherited by subprocesses launched during build capture and signature scanning. This applies only where the token is supplied through the BLACKDUCK_API_TOKEN or BD_HUB_TOKEN environment variable.\n\n\n\nUpgrading does not remediate prior disclosure; any token supplied to an affected version through an environment variable should be rotated.",
-    "effects": [],
+    "description": "blackduck-c-cpp 是 Black Duck 发布的 Python 扫描工具，以 PyPI 包形式分发并采用专有许可，用于通过 Coverity Build Capture 包装 C/C++ 构建并生成软件组成分析物料清单。\n受影响版本中，当 API token 通过 BLACKDUCK_API_TOKEN 或 BD_HUB_TOKEN 环境变量传入时，RunBuildCapture.__init__ 读取 token 后未将其从进程环境中删除。工具随后在构建捕获与签名扫描阶段启动 cov-build、用户 build_cmd 以及签名扫描等子进程，这些子进程默认继承完整环境。能够在被扫描项目构建中执行代码的攻击者可通过 getenv 取得该 token；在文档所述扫描到新项目所需的最小权限下，该 token 可读取实例上的全部项目、物料清单与 code location，并创建、修改或删除项目、版本与 code location。\n修复版本中通过在读取 token 后立即删除 BLACKDUCK_API_TOKEN 与 BD_HUB_TOKEN，并将签名扫描子进程改为仅传递白名单环境变量，切断子进程继承 token 的路径。官方指出升级不能消除既有泄露，已通过环境变量向受影响版本提供过 token 的须轮换该 token。",
+    "effects": [
+      {
+        "comp_name": "blackduck-c-cpp",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[1.0.17,3.0.7)",
+            "min_fixed_version": "3.0.7",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "通过处理环境导致的信息暴露",
     "kind_en": "Invocation of Process Using Visible Sensitive Information",
     "last_modified_time": "2026-08-24",
@@ -114,8 +145,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-76054漏洞"
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "blackduck-c-cpp令牌泄露"
   },
   "first_saved_at": "2026-08-24T15:33:28+00:00"
 }

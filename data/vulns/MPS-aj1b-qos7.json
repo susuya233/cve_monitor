@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-24T15:33:36+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-24T16:29:36+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-aj1b-qos7",
@@ -35,14 +35,28 @@
     "cvss_score": 9.4,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "RansomLook contains an authorization weakness in the web-based configuration editor exposed through the /admin/config endpoint. The endpoint requires an authenticated session but does not perform an explicit privilege or administrator authorization check before allowing access to configuration-management functionality.\n\nAn authenticated low-privileged user able to access the endpoint can submit crafted configuration values that are written directly to the application's config/generic.json file. The affected functionality permits modification of configuration sections including notification, LDAP, SMTP, and general application settings. Successful exploitation could therefore allow an attacker to alter security-sensitive application behavior, redirect integrations or notifications, modify authentication-related configuration, disrupt external services, or render the RansomLook installation unavailable.\n\nThe configuration editor also operated on a configuration file containing sensitive values such as passwords, tokens, secrets, and API keys. Although the affected version contains logic intended to prevent recognized secret values from being returned to the browser, exposing configuration management through insufficiently authorized web functionality significantly increases the impact of a compromised or low-privileged account.\n\nThe patch resolves the issue by completely removing the /admin/config route and associated configuration-editing interface, preventing application configuration from being modified through the web UI.",
-    "effects": [],
+    "description": "RansomLook 是开源 Python 勒索软件情报追踪平台，用于监控勒索团伙站点、泄露信息和通知集成，并提供 Web 管理界面。\n受影响版本中，Flask 路由 /admin/config 对应的 admin_config 仅使用 flask_login.login_required 校验登录会话，没有额外的管理员或特权授权检查。已认证的低权限用户可通过 GET 或 POST 访问该接口，把表单中的配置字段直接写入 config/generic.json，从而改动 notification、LDAP、SMTP 及通用应用设置，并可能改写认证相关配置、重定向通知或集成、干扰外部服务，或造成实例不可用。受影响版本含有避免把已识别口令、令牌和 API 密钥回显到浏览器的逻辑，但配置管理入口本身授权不足。\n修复版本中通过删除 website/web/__init__.py 中的 /admin/config 路由与 admin_config 处理函数，并移除 templates/admin/config.html、static/js/config.js 以及管理页中的配置编辑入口，使应用配置无法再经 Web UI 被修改。",
+    "effects": [
+      {
+        "comp_name": "RansomLook",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
     "last_modified_time": "2026-08-24",
@@ -66,8 +80,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78387漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "RansomLook配置越权漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -101,14 +117,28 @@
     "cvss_score": 9.4,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "RansomLook contains an authorization weakness in the web-based configuration editor exposed through the /admin/config endpoint. The endpoint requires an authenticated session but does not perform an explicit privilege or administrator authorization check before allowing access to configuration-management functionality.\n\nAn authenticated low-privileged user able to access the endpoint can submit crafted configuration values that are written directly to the application's config/generic.json file. The affected functionality permits modification of configuration sections including notification, LDAP, SMTP, and general application settings. Successful exploitation could therefore allow an attacker to alter security-sensitive application behavior, redirect integrations or notifications, modify authentication-related configuration, disrupt external services, or render the RansomLook installation unavailable.\n\nThe configuration editor also operated on a configuration file containing sensitive values such as passwords, tokens, secrets, and API keys. Although the affected version contains logic intended to prevent recognized secret values from being returned to the browser, exposing configuration management through insufficiently authorized web functionality significantly increases the impact of a compromised or low-privileged account.\n\nThe patch resolves the issue by completely removing the /admin/config route and associated configuration-editing interface, preventing application configuration from being modified through the web UI.",
-    "effects": [],
+    "description": "RansomLook 是开源 Python 勒索软件情报追踪平台，用于监控勒索团伙站点、泄露信息和通知集成，并提供 Web 管理界面。\n受影响版本中，Flask 路由 /admin/config 对应的 admin_config 仅使用 flask_login.login_required 校验登录会话，没有额外的管理员或特权授权检查。已认证的低权限用户可通过 GET 或 POST 访问该接口，把表单中的配置字段直接写入 config/generic.json，从而改动 notification、LDAP、SMTP 及通用应用设置，并可能改写认证相关配置、重定向通知或集成、干扰外部服务，或造成实例不可用。受影响版本含有避免把已识别口令、令牌和 API 密钥回显到浏览器的逻辑，但配置管理入口本身授权不足。\n修复版本中通过删除 website/web/__init__.py 中的 /admin/config 路由与 admin_config 处理函数，并移除 templates/admin/config.html、static/js/config.js 以及管理页中的配置编辑入口，使应用配置无法再经 Web UI 被修改。",
+    "effects": [
+      {
+        "comp_name": "RansomLook",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
     "last_modified_time": "2026-08-24",
@@ -132,8 +162,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78387漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "RansomLook配置越权漏洞"
   },
   "first_saved_at": "2026-08-24T15:33:23+00:00"
 }

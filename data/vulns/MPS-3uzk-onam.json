@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-24T15:33:36+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-24T16:29:41+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-3uzk-onam",
@@ -35,14 +35,28 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "Improper Neutralization of Special Elements used in an OS Command in the package manager component of Black Duck blackduck-c-cpp before 3.0.7 allows an actor able to create a file within the scanned build directory to execute operating system commands as the account running the scan.\n\n\n\nFilesystem paths encountered while traversing the scanned directory are interpolated into command strings that are executed through a shell without quoting or escaping, so shell metacharacters within those paths are interpreted rather than treated as literal text. No control over the build command or the tool's configuration is required.",
-    "effects": [],
+    "description": "blackduck-c-cpp 是 Black Duck 发布的 Python 扫描工具，以专有许可通过 PyPI 分发，用于结合 Coverity 构建捕获为 C/C++ 项目生成软件物料清单。\n受影响版本中，包管理器在遍历被扫描构建目录时，会把遇到的文件系统路径直接拼进 dpkg、rpm、ldd 等命令字符串，并通过 shell 执行且未做引号或转义处理。攻击者若能在该目录中创建含 shell 元字符的文件名，便可在扫描账户权限下执行操作系统命令，无需控制构建命令或工具配置。\n修复版本中通过将包管理器子进程改为 argv 列表并以 shell=False 方式调用，切断路径进入 shell 解释的链路，使文件名仅作为字面参数传递。",
+    "effects": [
+      {
+        "comp_name": "blackduck-c-cpp",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0,3.0.7)",
+            "min_fixed_version": "3.0.7",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "OS命令注入",
     "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
     "last_modified_time": "2026-08-24",
@@ -70,8 +84,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-76055漏洞",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "blackduck-c-cpp命令注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -105,14 +122,28 @@
     "cvss_score": 7.5,
     "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "Improper Neutralization of Special Elements used in an OS Command in the package manager component of Black Duck blackduck-c-cpp before 3.0.7 allows an actor able to create a file within the scanned build directory to execute operating system commands as the account running the scan.\n\n\n\nFilesystem paths encountered while traversing the scanned directory are interpolated into command strings that are executed through a shell without quoting or escaping, so shell metacharacters within those paths are interpreted rather than treated as literal text. No control over the build command or the tool's configuration is required.",
-    "effects": [],
+    "description": "blackduck-c-cpp 是 Black Duck 发布的 Python 扫描工具，以专有许可通过 PyPI 分发，用于结合 Coverity 构建捕获为 C/C++ 项目生成软件物料清单。\n受影响版本中，包管理器在遍历被扫描构建目录时，会把遇到的文件系统路径直接拼进 dpkg、rpm、ldd 等命令字符串，并通过 shell 执行且未做引号或转义处理。攻击者若能在该目录中创建含 shell 元字符的文件名，便可在扫描账户权限下执行操作系统命令，无需控制构建命令或工具配置。\n修复版本中通过将包管理器子进程改为 argv 列表并以 shell=False 方式调用，切断路径进入 shell 解释的链路，使文件名仅作为字面参数传递。",
+    "effects": [
+      {
+        "comp_name": "blackduck-c-cpp",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0,3.0.7)",
+            "min_fixed_version": "3.0.7",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "OS命令注入",
     "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
     "last_modified_time": "2026-08-24",
@@ -140,8 +171,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-76055漏洞"
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "blackduck-c-cpp命令注入漏洞"
   },
   "first_saved_at": "2026-08-24T15:33:25+00:00"
 }

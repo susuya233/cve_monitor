@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-24T15:33:36+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-24T16:29:38+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-pvh9-yq0w",
@@ -35,14 +35,28 @@
     "cvss_score": 8,
     "cvss_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
     "cwe": "CWE-79",
-    "description": "Cross-site scripting in the Web Administration interface of Network Optix Nx Witness VMS before version 6.1.3 on Linux, Windows and MacOS allows an adjacent-network attacker to execute arbitrary JavaScript in the browser of an authenticated administrator and steal the administrator's session token, resulting in Administrator Account Takeover. An attacker who controls an Nx server on the same network segment can set that server's site name to a script payload, which executes when an administrator opens the \"Merge with Another Site\" dialog and the site selection list is displayed.Solution:\n\nUpdate to Nx Witness VMS version 6.1.3 or later.",
-    "effects": [],
+    "description": "Nx Witness VMS 是 Network Optix 出品的商业视频管理软件，提供 Web 管理界面用于站点运维和多站点合并。\n受影响版本中，攻击者若在同一网段控制一台 Nx 服务器，可将该服务器的站点名称设置为脚本载荷。已认证管理员打开“Merge with Another Site”对话框并展示站点选择列表时，载荷会在管理员浏览器中执行任意 JavaScript，窃取会话令牌并接管管理员账户。\n修复版本中通过官方安全更新修复 Web 管理界面“Merge Sites”对话框中的跨站脚本问题，阻止恶意站点名称再进入脚本执行路径。",
+    "effects": [
+      {
+        "comp_name": "nx_witness_vms",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.1.3)",
+            "min_fixed_version": "6.1.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "XSS",
     "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
     "last_modified_time": "2026-08-24",
@@ -66,8 +80,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78414漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Nx Witness站点合并XSS",
     "_translated": true
   },
   "detail_original": {
@@ -101,14 +117,28 @@
     "cvss_score": 8,
     "cvss_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
     "cwe": "CWE-79",
-    "description": "Cross-site scripting in the Web Administration interface of Network Optix Nx Witness VMS before version 6.1.3 on Linux, Windows and MacOS allows an adjacent-network attacker to execute arbitrary JavaScript in the browser of an authenticated administrator and steal the administrator's session token, resulting in Administrator Account Takeover. An attacker who controls an Nx server on the same network segment can set that server's site name to a script payload, which executes when an administrator opens the \"Merge with Another Site\" dialog and the site selection list is displayed.Solution:\n\nUpdate to Nx Witness VMS version 6.1.3 or later.",
-    "effects": [],
+    "description": "Nx Witness VMS 是 Network Optix 出品的商业视频管理软件，提供 Web 管理界面用于站点运维和多站点合并。\n受影响版本中，攻击者若在同一网段控制一台 Nx 服务器，可将该服务器的站点名称设置为脚本载荷。已认证管理员打开“Merge with Another Site”对话框并展示站点选择列表时，载荷会在管理员浏览器中执行任意 JavaScript，窃取会话令牌并接管管理员账户。\n修复版本中通过官方安全更新修复 Web 管理界面“Merge Sites”对话框中的跨站脚本问题，阻止恶意站点名称再进入脚本执行路径。",
+    "effects": [
+      {
+        "comp_name": "nx_witness_vms",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.1.3)",
+            "min_fixed_version": "6.1.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "XSS",
     "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
     "last_modified_time": "2026-08-24",
@@ -132,8 +162,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78414漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Nx Witness站点合并XSS"
   },
   "first_saved_at": "2026-08-24T15:33:17+00:00"
 }
