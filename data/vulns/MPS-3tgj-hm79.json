@@ -1,11 +1,11 @@
 {
-  "saved_at": "2026-08-23T14:16:58+00:00",
+  "saved_at": "2026-08-24T03:49:28+00:00",
   "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-3tgj-hm79",
   "detail": {
-    "analysis_status": 0,
+    "analysis_status": 3,
     "articles": [
       {
         "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
@@ -29,28 +29,34 @@
           "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
           "severity": "high",
           "base_score": 8.5
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.5
         }
       ]
     },
     "cvss_score": 8.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
     "cwe": "CWE-22",
-    "description": "GitLab 是一站式开源 DevOps 平台，提供代码托管、CI/CD、Package Registry 等能力，社区版（CE）与企业版（EE）共享同一代码基线。\n受影响版本中，Package Registry 在处理上传制品的文件名或目标路径时未对路径分隔符进行充分校验，攻击者在请求中传入包含 ../ 等穿越片段的内容后，可突破预定的制品目录边界，覆盖或读取 GitLab 进程可访问目录之外的文件，并在满足条件时进一步触发远程代码执行，最终控制运行 GitLab 的服务器。\n修复版本中通过严格校验上传制品的文件名与最终落盘路径，禁止任何包含路径遍历字符或越界前缀的输入，从而切断利用链并消除远程代码执行风险。",
+    "description": "GitLab 是开源 DevOps 平台，社区版和企业版都内置软件包注册表，用来托管 npm 等格式的软件包。\n受影响版本中，对项目拥有 Developer 及以上权限的已认证用户，可以向 npm 发布接口提交 JSON。请求体里的 name 缺少有效约束，后台会把它拼成「name-版本.tgz」当作落盘文件名。GitlabUploader 只在文件进入缓存前检查路径穿越，此时文件名仍是安全值；临时包在后台真正写入磁盘时，文件名已经换成带「../」的路径，检查不再进行。攻击者能以 git 系统用户身份，向其可写目录写入任意内容，直接危害是任意文件写入。远程代码执行还要同时满足这些条件：落盘名称固定带「-语义化版本.tgz」后缀、权限为 0644，无法覆盖 authorized_keys 等固定文件名；写入位置随后必须被当成脚本执行或加载，并且不依赖原始文件名（例如仓库 custom_hooks 目录会执行其中任意文件）；该文件还需要带可执行权限，或再结合其他改权限、加载该文件的能力。默认安装下，仅这次写入通常不足以独立完成代码执行。\n修复版本中通过在 GitlabUploader 落地写入前再次检查 filename、cache_dir、work_dir 和 store_dir，拦截含「../」的路径并抛出 PathTraversalAttackError，文件无法写出。",
     "effects": [
       {
-        "comp_name": "GitLab",
+        "comp_name": "gitlab",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "[19.1,19.1.4)",
-            "min_fixed_version": "19.1.4",
+            "affected_version": "[18.8,19.0.6)",
+            "min_fixed_version": "19.0.6",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
           },
           {
-            "affected_version": "[18.8,19.0.6)",
-            "min_fixed_version": "19.0.6",
+            "affected_version": "[19.1,19.1.4)",
+            "min_fixed_version": "19.1.4",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -69,16 +75,16 @@
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "中",
-    "exploitability": "中",
+    "exploitability": "高",
     "fix_suggestion": "建议修复",
     "kind": "路径遍历",
     "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
-    "last_modified_time": "2026-08-23",
+    "last_modified_time": "2026-08-24",
     "level": "High",
     "mps_id": "MPS-3tgj-hm79",
-    "poc": false,
+    "poc": true,
     "poc_url": [],
-    "published_time": "2026-08-23",
+    "published_time": "2026-08-24",
     "reference_url_list": [
       {
         "url": "https://www.oscs1024.com/hd/MPS-3tgj-hm79",
@@ -95,17 +101,23 @@
       {
         "url": "https://hackerone.com/reports/3754194",
         "name": ""
+      },
+      {
+        "url": "https://gitlab.com/gitlab-org/gitlab/-/commit/435cf863df7c943f4fc26ce5e0f362d216b16fcf",
+        "name": "Commit"
       }
     ],
-    "scope_influence": "",
+    "scope_influence": "广",
     "tags": [
+      "poc",
+      "专家校准",
       "应用软件"
     ],
-    "title": "GitLab Package Registry 路径遍历致远程代码执行",
+    "title": "GitLab软件包注册表路径穿越远程代码执行漏洞",
     "_translated": true
   },
   "detail_original": {
-    "analysis_status": 0,
+    "analysis_status": 3,
     "articles": [
       {
         "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
@@ -129,28 +141,34 @@
           "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
           "severity": "high",
           "base_score": 8.5
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.5
         }
       ]
     },
     "cvss_score": 8.5,
     "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
     "cwe": "CWE-22",
-    "description": "GitLab 是一站式开源 DevOps 平台，提供代码托管、CI/CD、Package Registry 等能力，社区版（CE）与企业版（EE）共享同一代码基线。\n受影响版本中，Package Registry 在处理上传制品的文件名或目标路径时未对路径分隔符进行充分校验，攻击者在请求中传入包含 ../ 等穿越片段的内容后，可突破预定的制品目录边界，覆盖或读取 GitLab 进程可访问目录之外的文件，并在满足条件时进一步触发远程代码执行，最终控制运行 GitLab 的服务器。\n修复版本中通过严格校验上传制品的文件名与最终落盘路径，禁止任何包含路径遍历字符或越界前缀的输入，从而切断利用链并消除远程代码执行风险。",
+    "description": "GitLab 是开源 DevOps 平台，社区版和企业版都内置软件包注册表，用来托管 npm 等格式的软件包。\n受影响版本中，对项目拥有 Developer 及以上权限的已认证用户，可以向 npm 发布接口提交 JSON。请求体里的 name 缺少有效约束，后台会把它拼成「name-版本.tgz」当作落盘文件名。GitlabUploader 只在文件进入缓存前检查路径穿越，此时文件名仍是安全值；临时包在后台真正写入磁盘时，文件名已经换成带「../」的路径，检查不再进行。攻击者能以 git 系统用户身份，向其可写目录写入任意内容，直接危害是任意文件写入。远程代码执行还要同时满足这些条件：落盘名称固定带「-语义化版本.tgz」后缀、权限为 0644，无法覆盖 authorized_keys 等固定文件名；写入位置随后必须被当成脚本执行或加载，并且不依赖原始文件名（例如仓库 custom_hooks 目录会执行其中任意文件）；该文件还需要带可执行权限，或再结合其他改权限、加载该文件的能力。默认安装下，仅这次写入通常不足以独立完成代码执行。\n修复版本中通过在 GitlabUploader 落地写入前再次检查 filename、cache_dir、work_dir 和 store_dir，拦截含「../」的路径并抛出 PathTraversalAttackError，文件无法写出。",
     "effects": [
       {
-        "comp_name": "GitLab",
+        "comp_name": "gitlab",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "[19.1,19.1.4)",
-            "min_fixed_version": "19.1.4",
+            "affected_version": "[18.8,19.0.6)",
+            "min_fixed_version": "19.0.6",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
           },
           {
-            "affected_version": "[18.8,19.0.6)",
-            "min_fixed_version": "19.0.6",
+            "affected_version": "[19.1,19.1.4)",
+            "min_fixed_version": "19.1.4",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -169,16 +187,16 @@
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "中",
-    "exploitability": "中",
+    "exploitability": "高",
     "fix_suggestion": "Recommend",
     "kind": "路径遍历",
     "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
-    "last_modified_time": "2026-08-23",
+    "last_modified_time": "2026-08-24",
     "level": "High",
     "mps_id": "MPS-3tgj-hm79",
-    "poc": false,
+    "poc": true,
     "poc_url": [],
-    "published_time": "2026-08-23",
+    "published_time": "2026-08-24",
     "reference_url_list": [
       {
         "url": "https://www.oscs1024.com/hd/MPS-3tgj-hm79",
@@ -195,13 +213,19 @@
       {
         "url": "https://hackerone.com/reports/3754194",
         "name": ""
+      },
+      {
+        "url": "https://gitlab.com/gitlab-org/gitlab/-/commit/435cf863df7c943f4fc26ce5e0f362d216b16fcf",
+        "name": "Commit"
       }
     ],
-    "scope_influence": "",
+    "scope_influence": "广",
     "tags": [
+      "poc",
+      "专家校准",
       "应用软件"
     ],
-    "title": "GitLab Package Registry 路径遍历致远程代码执行"
+    "title": "GitLab软件包注册表路径穿越远程代码执行漏洞"
   },
   "first_saved_at": "2026-08-23T11:15:48+00:00"
 }

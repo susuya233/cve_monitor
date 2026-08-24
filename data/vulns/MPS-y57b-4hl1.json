@@ -1,0 +1,209 @@
+{
+  "saved_at": "2026-08-24T03:49:30+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-y57b-4hl1",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78169",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:S/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 9
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "UTT HiPER 1250GW 是艾泰推出的商用网关路由器，固件未开源，通过内置 Web 管理界面提供远程 AP 配置等网络管理功能。\n受影响版本中，HTTP 请求处理组件用 websDefineAction_ 将动作 aspRemoteApConfTempSend 注册到处理函数 sub_466DF0。该函数经 websGetVar_ 读取参数 remoteSrcTemp，再调用 strcpy 写入栈上仅 128 字节的 dest。已认证攻击者向 /goform/aspRemoteApConfTempSend 提交超长 remoteSrcTemp 会覆盖栈数据并造成设备拒绝服务。官方描述将参数记为 Profile，公开逆向与 PoC 显示实际读取的是 remoteSrcTemp。\n修复版本中通过官方尚未公布可验证的安全固件更新消除该栈溢出；公开来源仅将 3.2.7-210907-180535 及更早版本列为受影响，在厂商提供修复前应隔离 Web 管理接口。",
+    "effects": [
+      {
+        "comp_name": "hiper_1250gw",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.2.7-210907-180535]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "基于堆栈的缓冲区溢出",
+    "last_modified_time": "2026-08-24",
+    "level": "High",
+    "mps_id": "MPS-y57b-4hl1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-y57b-4hl1",
+        "name": "https://www.oscs1024.com/hd/MPS-y57b-4hl1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78169",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78169"
+      },
+      {
+        "url": "https://github.com/7wkajk/CVE-VUL/blob/main/107.md",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-78169",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/submit/883900",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/vuln/394558",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/vuln/394558/cti",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "UTT HiPER栈溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78169",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:S/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 9
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "UTT HiPER 1250GW 是艾泰推出的商用网关路由器，固件未开源，通过内置 Web 管理界面提供远程 AP 配置等网络管理功能。\n受影响版本中，HTTP 请求处理组件用 websDefineAction_ 将动作 aspRemoteApConfTempSend 注册到处理函数 sub_466DF0。该函数经 websGetVar_ 读取参数 remoteSrcTemp，再调用 strcpy 写入栈上仅 128 字节的 dest。已认证攻击者向 /goform/aspRemoteApConfTempSend 提交超长 remoteSrcTemp 会覆盖栈数据并造成设备拒绝服务。官方描述将参数记为 Profile，公开逆向与 PoC 显示实际读取的是 remoteSrcTemp。\n修复版本中通过官方尚未公布可验证的安全固件更新消除该栈溢出；公开来源仅将 3.2.7-210907-180535 及更早版本列为受影响，在厂商提供修复前应隔离 Web 管理接口。",
+    "effects": [
+      {
+        "comp_name": "hiper_1250gw",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.2.7-210907-180535]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "Stack-based Buffer Overflow",
+    "last_modified_time": "2026-08-24",
+    "level": "High",
+    "mps_id": "MPS-y57b-4hl1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-y57b-4hl1",
+        "name": "https://www.oscs1024.com/hd/MPS-y57b-4hl1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78169",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78169"
+      },
+      {
+        "url": "https://github.com/7wkajk/CVE-VUL/blob/main/107.md",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-78169",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/submit/883900",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/vuln/394558",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/vuln/394558/cti",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "UTT HiPER栈溢出漏洞"
+  },
+  "first_saved_at": "2026-08-24T03:49:30+00:00"
+}

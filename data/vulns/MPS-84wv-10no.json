@@ -1,11 +1,11 @@
 {
-  "saved_at": "2026-08-22T15:14:24+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-24T03:49:27+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-84wv-10no",
   "detail": {
-    "analysis_status": 0,
+    "analysis_status": 3,
     "articles": [
       {
         "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
@@ -37,13 +37,19 @@
           "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
           "base_score": 8.7
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
         }
       ]
     },
     "cvss_score": 8.7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-502",
-    "description": "NLTK 是开源 Python 自然语言处理工具包，提供语料库、词性标注、句法分析、文本分类等功能。\n受影响版本中，nltk/picklesec.py 中的 AllowlistUnpickler.find_class 仅按前缀校验 pickle 全局对象的 module 是否命中 allowed_modules，从未校验 name，导致 TransitionParser.parse 通过 allowlisted_pickle_load 加载的合法命名空间（如 sklearn）允许通过 getattr 链解析命名空间之外的任意可调用对象。攻击者构造恶意的 transition-parser 模型文件，在 pickle 协议 ≥ 4 下请求 sklearn.os.system、numpy.f2py.crackfortran.myeval 等 dotted name，即可在 unpickle 阶段执行任意系统命令。\n修复版本中通过在 AllowlistUnpickler.find_class 中加入拒绝 dotted name、拒绝 dunder name、拒绝 os/subprocess/sys/builtins/numpy.f2py/nltk.tokenize.repp 等 denylist、解析后拒绝裸模块对象与真实 __module__ 属于被拒模块的对象等守卫，将 punkt 切换为精确 (module, qualname) allowlist，并由 transitionparser.py 显式传入 allowed_globals，配合新守卫确保 numpy/scipy/sklearn 仅能解析到 array 反序列化所需的子模块，切断命名空间穿透与子模块 gadget 利用链。",
+    "description": "NLTK 是开源 Python 自然语言处理工具库，提供分词、句法分析、语料加载等能力，其中转移句法分析器会从 pickle 模型文件还原 scikit-learn 分类器。\n受影响版本中，AllowlistUnpickler.find_class 只按模块字符串是否属于 allowed_modules 前缀白名单决定是否还原全局对象，不检查全局名。pickle 协议 4 及以上会把带点号的 name 通过 getattr 链式解析。TransitionParser.parse 对调用方提供的 modelFile 调用 allowlisted_pickle_load，并把 numpy、scipy、sklearn 整棵模块树列入白名单。攻击者可提供不可信模型，使加载过程还原 sklearn.os.system 等白名单外可调用对象，从而执行任意命令。\n修复版本中通过在 find_class 中拒绝带点号的 name，阻止属性穿越到达 os.system，使恶意转移句法分析模型无法再沿该路径执行命令。",
     "effects": [
       {
         "comp_name": "nltk",
@@ -67,12 +73,12 @@
     "fix_suggestion": "建议修复",
     "kind": "反序列化",
     "kind_en": "不可信数据的反序列化",
-    "last_modified_time": "2026-08-22",
+    "last_modified_time": "2026-08-24",
     "level": "High",
     "mps_id": "MPS-84wv-10no",
-    "poc": false,
+    "poc": true,
     "poc_url": [],
-    "published_time": "2026-08-22",
+    "published_time": "2026-08-24",
     "reference_url_list": [
       {
         "url": "https://www.oscs1024.com/hd/MPS-84wv-10no",
@@ -99,16 +105,17 @@
         "name": ""
       }
     ],
-    "scope_influence": "",
+    "scope_influence": "广",
     "tags": [
       "python",
+      "专家校准",
       "开源"
     ],
-    "title": "NLTK AllowlistUnpickler反序列化RCE漏洞",
+    "title": "NLTK模型加载远程代码执行漏洞",
     "_translated": true
   },
   "detail_original": {
-    "analysis_status": 0,
+    "analysis_status": 3,
     "articles": [
       {
         "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
@@ -140,13 +147,19 @@
           "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
           "base_score": 8.7
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
         }
       ]
     },
     "cvss_score": 8.7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-502",
-    "description": "NLTK 是开源 Python 自然语言处理工具包，提供语料库、词性标注、句法分析、文本分类等功能。\n受影响版本中，nltk/picklesec.py 中的 AllowlistUnpickler.find_class 仅按前缀校验 pickle 全局对象的 module 是否命中 allowed_modules，从未校验 name，导致 TransitionParser.parse 通过 allowlisted_pickle_load 加载的合法命名空间（如 sklearn）允许通过 getattr 链解析命名空间之外的任意可调用对象。攻击者构造恶意的 transition-parser 模型文件，在 pickle 协议 ≥ 4 下请求 sklearn.os.system、numpy.f2py.crackfortran.myeval 等 dotted name，即可在 unpickle 阶段执行任意系统命令。\n修复版本中通过在 AllowlistUnpickler.find_class 中加入拒绝 dotted name、拒绝 dunder name、拒绝 os/subprocess/sys/builtins/numpy.f2py/nltk.tokenize.repp 等 denylist、解析后拒绝裸模块对象与真实 __module__ 属于被拒模块的对象等守卫，将 punkt 切换为精确 (module, qualname) allowlist，并由 transitionparser.py 显式传入 allowed_globals，配合新守卫确保 numpy/scipy/sklearn 仅能解析到 array 反序列化所需的子模块，切断命名空间穿透与子模块 gadget 利用链。",
+    "description": "NLTK 是开源 Python 自然语言处理工具库，提供分词、句法分析、语料加载等能力，其中转移句法分析器会从 pickle 模型文件还原 scikit-learn 分类器。\n受影响版本中，AllowlistUnpickler.find_class 只按模块字符串是否属于 allowed_modules 前缀白名单决定是否还原全局对象，不检查全局名。pickle 协议 4 及以上会把带点号的 name 通过 getattr 链式解析。TransitionParser.parse 对调用方提供的 modelFile 调用 allowlisted_pickle_load，并把 numpy、scipy、sklearn 整棵模块树列入白名单。攻击者可提供不可信模型，使加载过程还原 sklearn.os.system 等白名单外可调用对象，从而执行任意命令。\n修复版本中通过在 find_class 中拒绝带点号的 name，阻止属性穿越到达 os.system，使恶意转移句法分析模型无法再沿该路径执行命令。",
     "effects": [
       {
         "comp_name": "nltk",
@@ -170,12 +183,12 @@
     "fix_suggestion": "Recommend",
     "kind": "反序列化",
     "kind_en": "Deserialization of Untrusted Data",
-    "last_modified_time": "2026-08-22",
+    "last_modified_time": "2026-08-24",
     "level": "High",
     "mps_id": "MPS-84wv-10no",
-    "poc": false,
+    "poc": true,
     "poc_url": [],
-    "published_time": "2026-08-22",
+    "published_time": "2026-08-24",
     "reference_url_list": [
       {
         "url": "https://www.oscs1024.com/hd/MPS-84wv-10no",
@@ -202,12 +215,13 @@
         "name": ""
       }
     ],
-    "scope_influence": "",
+    "scope_influence": "广",
     "tags": [
       "python",
+      "专家校准",
       "开源"
     ],
-    "title": "NLTK AllowlistUnpickler反序列化RCE漏洞"
+    "title": "NLTK模型加载远程代码执行漏洞"
   },
   "first_saved_at": "2026-08-22T15:14:24+00:00"
 }
