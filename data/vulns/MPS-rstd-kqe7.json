@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-24T20:22:31+00:00",
+  "saved_at": "2026-08-24T20:22:29+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-t8ai-xde4",
+  "source_page": "https://www.oscs1024.com/hd/MPS-rstd-kqe7",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,12 +21,12 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-39914",
+    "cve_id": "CVE-2026-71508",
     "cvss": {
       "cvssv31": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
           "severity": "medium",
           "base_score": 6.5
         }
@@ -34,52 +34,76 @@
       "cvssv4": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
           "base_score": 7.1
         }
       ]
     },
     "cvss_score": 7.1,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "TIM Flow before 26.0.6 contains an improper authorization vulnerability that allows any authenticated user to submit arbitrary SQL queries to a privileged dashboard Excel export endpoint intended for administrative use only. Attackers can craft and submit unauthorized SQL queries to the export endpoint to retrieve sensitive database contents as a downloadable spreadsheet, bypassing role-based access controls.",
-    "effects": [],
+    "description": "Dolibarr 是开源 ERP 与 CRM 软件，面向中小企业提供人事、薪资、财务和客户管理能力。\n受影响版本中，用户 REST API 更新接口 Users::put() 在通过用户写入权限检查后，将请求体字段逐一赋给 User 对象，拒绝列表仅包含 pass_crypted、pass_indatabase、pass_indatabase_crypted、pass_temp、api_key 等凭证字段，未覆盖 salary、salaryextra、thm、tjm、weeklyhours 等薪资列。持有 user.self.creer/write 或 user.user.creer/write、但不具备薪资权限的调用者可通过 PUT /api/index.php/users/{id} 改写任意用户的薪资、奖金、时薪、日薪和周工时；同文件 _cleanObjectDatas() 在缺少 salaries.read 时会剥离 salary、salaryextra、thm、tjm，使改写结果难以从 HTTP 响应直接察觉，被篡改数值会出现在薪资导出报表中。\n修复版本中通过在 Users::put() 与 Users::post() 的字段赋值循环中增加薪资读权限判定，当 salaries 模块启用且调用者没有 salaries.read 时拒绝写入 salary、salaryextra、thm、tjm，切断无薪资权限账号经用户 API 改写薪资列的路径。",
+    "effects": [
+      {
+        "comp_name": "dolibarr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,24.0.0)",
+            "min_fixed_version": "24.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-25",
     "level": "High",
-    "mps_id": "MPS-t8ai-xde4",
+    "mps_id": "MPS-rstd-kqe7",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-t8ai-xde4",
-        "name": "https://www.oscs1024.com/hd/MPS-t8ai-xde4"
+        "url": "https://www.oscs1024.com/hd/MPS-rstd-kqe7",
+        "name": "https://www.oscs1024.com/hd/MPS-rstd-kqe7"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-39914",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-39914"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71508",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71508"
       },
       {
-        "url": "https://tim-doc.atlassian.net/wiki/spaces/eng/pages/230981636/Release+Notes",
+        "url": "https://codeant.ai/security-research/cve-2026-71508-dolibarr-payroll-mass-assignment",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/tim-flow-unauthorized-sql-query-execution-via-dashboard-export-endpoint",
+        "url": "https://github.com/Dolibarr/dolibarr/commit/c85d0e840725a3c1a2f49b3e97766469c3cb02b6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Dolibarr/dolibarr/releases/tag/24.0.0",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dolibarr-rest-api-improper-authorization-via-user-update-endpoint",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-39914漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dolibarr薪资越权修改漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -99,12 +123,12 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-39914",
+    "cve_id": "CVE-2026-71508",
     "cvss": {
       "cvssv31": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
           "severity": "medium",
           "base_score": 6.5
         }
@@ -112,52 +136,76 @@
       "cvssv4": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
           "base_score": 7.1
         }
       ]
     },
     "cvss_score": 7.1,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "TIM Flow before 26.0.6 contains an improper authorization vulnerability that allows any authenticated user to submit arbitrary SQL queries to a privileged dashboard Excel export endpoint intended for administrative use only. Attackers can craft and submit unauthorized SQL queries to the export endpoint to retrieve sensitive database contents as a downloadable spreadsheet, bypassing role-based access controls.",
-    "effects": [],
+    "description": "Dolibarr 是开源 ERP 与 CRM 软件，面向中小企业提供人事、薪资、财务和客户管理能力。\n受影响版本中，用户 REST API 更新接口 Users::put() 在通过用户写入权限检查后，将请求体字段逐一赋给 User 对象，拒绝列表仅包含 pass_crypted、pass_indatabase、pass_indatabase_crypted、pass_temp、api_key 等凭证字段，未覆盖 salary、salaryextra、thm、tjm、weeklyhours 等薪资列。持有 user.self.creer/write 或 user.user.creer/write、但不具备薪资权限的调用者可通过 PUT /api/index.php/users/{id} 改写任意用户的薪资、奖金、时薪、日薪和周工时；同文件 _cleanObjectDatas() 在缺少 salaries.read 时会剥离 salary、salaryextra、thm、tjm，使改写结果难以从 HTTP 响应直接察觉，被篡改数值会出现在薪资导出报表中。\n修复版本中通过在 Users::put() 与 Users::post() 的字段赋值循环中增加薪资读权限判定，当 salaries 模块启用且调用者没有 salaries.read 时拒绝写入 salary、salaryextra、thm、tjm，切断无薪资权限账号经用户 API 改写薪资列的路径。",
+    "effects": [
+      {
+        "comp_name": "dolibarr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,24.0.0)",
+            "min_fixed_version": "24.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-25",
     "level": "High",
-    "mps_id": "MPS-t8ai-xde4",
+    "mps_id": "MPS-rstd-kqe7",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-t8ai-xde4",
-        "name": "https://www.oscs1024.com/hd/MPS-t8ai-xde4"
+        "url": "https://www.oscs1024.com/hd/MPS-rstd-kqe7",
+        "name": "https://www.oscs1024.com/hd/MPS-rstd-kqe7"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-39914",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-39914"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71508",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71508"
       },
       {
-        "url": "https://tim-doc.atlassian.net/wiki/spaces/eng/pages/230981636/Release+Notes",
+        "url": "https://codeant.ai/security-research/cve-2026-71508-dolibarr-payroll-mass-assignment",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/tim-flow-unauthorized-sql-query-execution-via-dashboard-export-endpoint",
+        "url": "https://github.com/Dolibarr/dolibarr/commit/c85d0e840725a3c1a2f49b3e97766469c3cb02b6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Dolibarr/dolibarr/releases/tag/24.0.0",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dolibarr-rest-api-improper-authorization-via-user-update-endpoint",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-39914漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dolibarr薪资越权修改漏洞"
   },
-  "first_saved_at": "2026-08-24T15:33:36+00:00"
+  "first_saved_at": "2026-08-24T20:22:29+00:00"
 }

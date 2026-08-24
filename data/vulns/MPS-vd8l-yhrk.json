@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-24T20:22:31+00:00",
+  "saved_at": "2026-08-24T20:22:28+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-t8ai-xde4",
+  "source_page": "https://www.oscs1024.com/hd/MPS-vd8l-yhrk",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,12 +21,12 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-39914",
+    "cve_id": "CVE-2026-71509",
     "cvss": {
       "cvssv31": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
           "severity": "medium",
           "base_score": 6.5
         }
@@ -34,52 +34,76 @@
       "cvssv4": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
           "base_score": 7.1
         }
       ]
     },
     "cvss_score": 7.1,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "TIM Flow before 26.0.6 contains an improper authorization vulnerability that allows any authenticated user to submit arbitrary SQL queries to a privileged dashboard Excel export endpoint intended for administrative use only. Attackers can craft and submit unauthorized SQL queries to the export endpoint to retrieve sensitive database contents as a downloadable spreadsheet, bypassing role-based access controls.",
-    "effects": [],
+    "description": "Dolibarr 是开源 ERP 与 CRM 系统，用于企业管理、财务核算和费用报销等工作流。\n受影响版本中，费用报销 REST API 的 ExpenseReports::put 仅校验 expensereport/creer 创建权限与资源归属，随后把请求体中的 fk_statut、fk_user_approve 等字段直接赋给对象并调用 ExpenseReport::update()。具备报销创建权限的认证用户可向 PUT /api/index.php/expensereports/{id} 提交上述字段，在未持有 approve 权限的情况下将报销单推进到已批准（STATUS_APPROVED=5）或已关闭（STATUS_CLOSED=6）状态，并可写入任意审批人身份；该路径不会写入 date_approve，造成审计记录缺失。\n修复版本中通过在 post() 与 put() 的字段赋值循环中排除 fk_statut 与 fk_user_approve，使这些工作流字段只能由 setApproved 等专用审批方法写入，从而切断通用更新接口绕过审批流程的路径。",
+    "effects": [
+      {
+        "comp_name": "dolibarr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,24.0.0)",
+            "min_fixed_version": "24.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-25",
     "level": "High",
-    "mps_id": "MPS-t8ai-xde4",
+    "mps_id": "MPS-vd8l-yhrk",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-t8ai-xde4",
-        "name": "https://www.oscs1024.com/hd/MPS-t8ai-xde4"
+        "url": "https://www.oscs1024.com/hd/MPS-vd8l-yhrk",
+        "name": "https://www.oscs1024.com/hd/MPS-vd8l-yhrk"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-39914",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-39914"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71509",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71509"
       },
       {
-        "url": "https://tim-doc.atlassian.net/wiki/spaces/eng/pages/230981636/Release+Notes",
+        "url": "https://codeant.ai/security-research/cve-2026-71509-dolibarr-mass-assignment-lets-users-self-approve-expenses",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/tim-flow-unauthorized-sql-query-execution-via-dashboard-export-endpoint",
+        "url": "https://github.com/Dolibarr/dolibarr/commit/9c4eb945321f823955879600e9dc58a44d249e44",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Dolibarr/dolibarr/releases/tag/24.0.0",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dolibarr-expense-report-rest-api-improper-authorization-via-update-endpoint",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-39914漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dolibarr报销审批越权漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -99,12 +123,12 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-39914",
+    "cve_id": "CVE-2026-71509",
     "cvss": {
       "cvssv31": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
           "severity": "medium",
           "base_score": 6.5
         }
@@ -112,52 +136,76 @@
       "cvssv4": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
           "base_score": 7.1
         }
       ]
     },
     "cvss_score": 7.1,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "TIM Flow before 26.0.6 contains an improper authorization vulnerability that allows any authenticated user to submit arbitrary SQL queries to a privileged dashboard Excel export endpoint intended for administrative use only. Attackers can craft and submit unauthorized SQL queries to the export endpoint to retrieve sensitive database contents as a downloadable spreadsheet, bypassing role-based access controls.",
-    "effects": [],
+    "description": "Dolibarr 是开源 ERP 与 CRM 系统，用于企业管理、财务核算和费用报销等工作流。\n受影响版本中，费用报销 REST API 的 ExpenseReports::put 仅校验 expensereport/creer 创建权限与资源归属，随后把请求体中的 fk_statut、fk_user_approve 等字段直接赋给对象并调用 ExpenseReport::update()。具备报销创建权限的认证用户可向 PUT /api/index.php/expensereports/{id} 提交上述字段，在未持有 approve 权限的情况下将报销单推进到已批准（STATUS_APPROVED=5）或已关闭（STATUS_CLOSED=6）状态，并可写入任意审批人身份；该路径不会写入 date_approve，造成审计记录缺失。\n修复版本中通过在 post() 与 put() 的字段赋值循环中排除 fk_statut 与 fk_user_approve，使这些工作流字段只能由 setApproved 等专用审批方法写入，从而切断通用更新接口绕过审批流程的路径。",
+    "effects": [
+      {
+        "comp_name": "dolibarr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,24.0.0)",
+            "min_fixed_version": "24.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-25",
     "level": "High",
-    "mps_id": "MPS-t8ai-xde4",
+    "mps_id": "MPS-vd8l-yhrk",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-t8ai-xde4",
-        "name": "https://www.oscs1024.com/hd/MPS-t8ai-xde4"
+        "url": "https://www.oscs1024.com/hd/MPS-vd8l-yhrk",
+        "name": "https://www.oscs1024.com/hd/MPS-vd8l-yhrk"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-39914",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-39914"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71509",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71509"
       },
       {
-        "url": "https://tim-doc.atlassian.net/wiki/spaces/eng/pages/230981636/Release+Notes",
+        "url": "https://codeant.ai/security-research/cve-2026-71509-dolibarr-mass-assignment-lets-users-self-approve-expenses",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/tim-flow-unauthorized-sql-query-execution-via-dashboard-export-endpoint",
+        "url": "https://github.com/Dolibarr/dolibarr/commit/9c4eb945321f823955879600e9dc58a44d249e44",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Dolibarr/dolibarr/releases/tag/24.0.0",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dolibarr-expense-report-rest-api-improper-authorization-via-update-endpoint",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-39914漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dolibarr报销审批越权漏洞"
   },
-  "first_saved_at": "2026-08-24T15:33:36+00:00"
+  "first_saved_at": "2026-08-24T20:22:28+00:00"
 }

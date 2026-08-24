@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-08-24T20:22:30+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-gsd7-qh3y",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71507",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "Dolibarr 是开源 ERP 与 CRM 系统，面向中小企业提供第三方管理、采购结算和供应商付款等功能。\n受影响版本中，REST 接口 Thirdparties::createCompanyBankAccount()、updateCompanyBankAccount() 和 deleteCompanyBankAccount() 只验证调用者是否拥有 societe.creer 权限，未调用 DolibarrApi::_checkAccessToResource('societe', $id) 检查对路径中指定公司的对象级访问权。持有第三方创建权限的认证用户在无法读取目标公司的情况下，仍可创建、替换或删除其银行账户并写入可控 IBAN；系统随后生成 SEPA 贷记转账文件时会将该 IBAN 作为债权人账户，把对外付款转入攻击者控制的账户。\n修复版本中通过在上述三个写路由中增加与读接口 getCompanyBankAccount() 相同的 DolibarrApi::_checkAccessToResource('societe', $id) 校验，未获对象访问权的写请求统一返回 403，阻断越权改写银行账户以及据此重定向供应商付款的路径。",
+    "effects": [
+      {
+        "comp_name": "dolibarr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,24.0.0)",
+            "min_fixed_version": "24.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-gsd7-qh3y",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gsd7-qh3y",
+        "name": "https://www.oscs1024.com/hd/MPS-gsd7-qh3y"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71507",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71507"
+      },
+      {
+        "url": "https://codeant.ai/security-research/cve-2026-71507-dolibarr-bola-lets-attackers-redirect-supplier-payments",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Dolibarr/dolibarr/commit/c100564d059e19c711317c734d302a90b11e2e8b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Dolibarr/dolibarr/releases/tag/24.0.0",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dolibarr-rest-api-broken-object-level-authorization-via-bank-account-routes",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dolibarr银行账户越权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71507",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "Dolibarr 是开源 ERP 与 CRM 系统，面向中小企业提供第三方管理、采购结算和供应商付款等功能。\n受影响版本中，REST 接口 Thirdparties::createCompanyBankAccount()、updateCompanyBankAccount() 和 deleteCompanyBankAccount() 只验证调用者是否拥有 societe.creer 权限，未调用 DolibarrApi::_checkAccessToResource('societe', $id) 检查对路径中指定公司的对象级访问权。持有第三方创建权限的认证用户在无法读取目标公司的情况下，仍可创建、替换或删除其银行账户并写入可控 IBAN；系统随后生成 SEPA 贷记转账文件时会将该 IBAN 作为债权人账户，把对外付款转入攻击者控制的账户。\n修复版本中通过在上述三个写路由中增加与读接口 getCompanyBankAccount() 相同的 DolibarrApi::_checkAccessToResource('societe', $id) 校验，未获对象访问权的写请求统一返回 403，阻断越权改写银行账户以及据此重定向供应商付款的路径。",
+    "effects": [
+      {
+        "comp_name": "dolibarr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,24.0.0)",
+            "min_fixed_version": "24.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-gsd7-qh3y",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gsd7-qh3y",
+        "name": "https://www.oscs1024.com/hd/MPS-gsd7-qh3y"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71507",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71507"
+      },
+      {
+        "url": "https://codeant.ai/security-research/cve-2026-71507-dolibarr-bola-lets-attackers-redirect-supplier-payments",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Dolibarr/dolibarr/commit/c100564d059e19c711317c734d302a90b11e2e8b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Dolibarr/dolibarr/releases/tag/24.0.0",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dolibarr-rest-api-broken-object-level-authorization-via-bank-account-routes",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dolibarr银行账户越权漏洞"
+  },
+  "first_saved_at": "2026-08-24T20:22:30+00:00"
+}
