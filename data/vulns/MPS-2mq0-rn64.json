@@ -1,31 +1,31 @@
 {
-  "saved_at": "2026-08-24T09:40:15+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-24T09:40:11+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-idlm-4kjo",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2mq0-rn64",
   "detail": {
     "analysis_status": 0,
     "articles": [],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78255",
+    "cve_id": "CVE-2026-78306",
     "cvss": {
       "cvssv4": [
         {
           "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.7
+          "base_score": 8.5
         }
       ]
     },
-    "cvss_score": 8.7,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-306",
-    "description": "大疆（DJI）消费级无人机是闭源商业飞行器产品，机体内置 HTTP 媒体服务，用于向接入机体内部网络的客户端提供已存储的照片与视频。\n受影响版本中，该 HTTP 媒体服务通过 `/v2` 接口向外提供机载照片和视频，且不对请求客户端进行身份认证；媒体文件名遵循可预测模式。攻击者一旦加入无人机内部网络，即可枚举有效文件名并导出存储影像，泄露内容可能包含私人地点、财产、行程轨迹、可识别个人以及操控者活动规律。\n修复版本中通过官方固件更新处理该未认证媒体访问问题。公开资料未披露具体代码改动，也未给出独立修复版本号；CNA 将各机型受影响范围标为不超过所列固件版本。在官方公布明确补丁前，应限制不可信设备加入无人机内部网络，并跟进厂商固件安全更新。",
+    "description": "DJI（大疆）消费级无人机是闭源商业飞行器，通过蓝牙和 Wi-Fi 与遥控器及移动应用通信，用于飞行控制、图传和遥测。\n受影响版本中，无人机在蓝牙链路上对外暴露未认证的 DUML 命令接口。处于蓝牙覆盖范围内的攻击者可改写 Wi-Fi 的 SSID、PSK、MAC 地址、监管国家码和信道；将 PSK 改写为已知值后可接入无人机内部 Wi-Fi，并可能进入飞控接口下发飞行指令。同一接口还可关闭或重启 Wi-Fi 与蓝牙、断开 Wi-Fi 客户端或重置无线配置，中断操控、图传和遥测连接。\n修复版本中通过厂商固件更新收紧蓝牙 DUML 命令接口，阻止未认证近距离命令再改写无线配置或中断无线链路。公开资料未披露具体源码改动，需安装厂商发布的修复固件。",
     "effects": [
       {
-        "comp_name": "air_3",
+        "comp_name": "DJI Air 3",
         "ecosystem": "linux",
         "versions": [
           {
@@ -38,7 +38,7 @@
         ]
       },
       {
-        "comp_name": "air_3s",
+        "comp_name": "DJI Air 3S",
         "ecosystem": "linux",
         "versions": [
           {
@@ -51,7 +51,7 @@
         ]
       },
       {
-        "comp_name": "avata_2",
+        "comp_name": "DJI Avata 2",
         "ecosystem": "linux",
         "versions": [
           {
@@ -64,7 +64,7 @@
         ]
       },
       {
-        "comp_name": "avata_360",
+        "comp_name": "DJI Avata 360",
         "ecosystem": "linux",
         "versions": [
           {
@@ -77,7 +77,7 @@
         ]
       },
       {
-        "comp_name": "flip",
+        "comp_name": "DJI Flip",
         "ecosystem": "linux",
         "versions": [
           {
@@ -90,7 +90,7 @@
         ]
       },
       {
-        "comp_name": "mavic_3",
+        "comp_name": "DJI Mavic 3",
         "ecosystem": "linux",
         "versions": [
           {
@@ -103,7 +103,7 @@
         ]
       },
       {
-        "comp_name": "mavic_3_classic",
+        "comp_name": "DJI Mavic 3 Classic",
         "ecosystem": "linux",
         "versions": [
           {
@@ -116,7 +116,7 @@
         ]
       },
       {
-        "comp_name": "mavic_3_pro",
+        "comp_name": "DJI Mavic 3 Pro",
         "ecosystem": "linux",
         "versions": [
           {
@@ -129,7 +129,7 @@
         ]
       },
       {
-        "comp_name": "mavic_4_pro",
+        "comp_name": "DJI Mavic 4 Pro",
         "ecosystem": "linux",
         "versions": [
           {
@@ -142,7 +142,7 @@
         ]
       },
       {
-        "comp_name": "mini_2",
+        "comp_name": "DJI Mini 2",
         "ecosystem": "linux",
         "versions": [
           {
@@ -155,7 +155,7 @@
         ]
       },
       {
-        "comp_name": "mini_3",
+        "comp_name": "DJI Mini 3",
         "ecosystem": "linux",
         "versions": [
           {
@@ -168,7 +168,7 @@
         ]
       },
       {
-        "comp_name": "mini_3_pro",
+        "comp_name": "DJI Mini 3 Pro",
         "ecosystem": "linux",
         "versions": [
           {
@@ -181,7 +181,7 @@
         ]
       },
       {
-        "comp_name": "mini_4_pro",
+        "comp_name": "DJI Mini 4 Pro",
         "ecosystem": "linux",
         "versions": [
           {
@@ -194,7 +194,7 @@
         ]
       },
       {
-        "comp_name": "mini_5_pro",
+        "comp_name": "DJI Mini 5 Pro",
         "ecosystem": "linux",
         "versions": [
           {
@@ -207,7 +207,7 @@
         ]
       },
       {
-        "comp_name": "neo",
+        "comp_name": "DJI Neo",
         "ecosystem": "linux",
         "versions": [
           {
@@ -220,7 +220,7 @@
         ]
       },
       {
-        "comp_name": "neo_2",
+        "comp_name": "DJI Neo 2",
         "ecosystem": "linux",
         "versions": [
           {
@@ -236,25 +236,25 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "关键功能的认证机制缺失",
     "kind_en": "缺少关键功能的身份验证",
     "last_modified_time": "2026-08-24",
     "level": "High",
-    "mps_id": "MPS-idlm-4kjo",
+    "mps_id": "MPS-2mq0-rn64",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-24",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-idlm-4kjo",
-        "name": "https://www.oscs1024.com/hd/MPS-idlm-4kjo"
+        "url": "https://www.oscs1024.com/hd/MPS-2mq0-rn64",
+        "name": "https://www.oscs1024.com/hd/MPS-2mq0-rn64"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78255",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78255"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78306",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78306"
       },
       {
         "url": "https://support.dji.com/help/content?customId=en-us03400011149&amp;spaceId=34&amp;re=US&amp;lang=en",
@@ -263,34 +263,33 @@
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件",
-      "终端软件"
+      "应用软件"
     ],
-    "title": "大疆无人机媒体未认证访问",
+    "title": "DJI无人机蓝牙认证缺失",
     "_translated": true
   },
   "detail_original": {
     "analysis_status": 0,
     "articles": [],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78255",
+    "cve_id": "CVE-2026-78306",
     "cvss": {
       "cvssv4": [
         {
           "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.7
+          "base_score": 8.5
         }
       ]
     },
-    "cvss_score": 8.7,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-306",
-    "description": "大疆（DJI）消费级无人机是闭源商业飞行器产品，机体内置 HTTP 媒体服务，用于向接入机体内部网络的客户端提供已存储的照片与视频。\n受影响版本中，该 HTTP 媒体服务通过 `/v2` 接口向外提供机载照片和视频，且不对请求客户端进行身份认证；媒体文件名遵循可预测模式。攻击者一旦加入无人机内部网络，即可枚举有效文件名并导出存储影像，泄露内容可能包含私人地点、财产、行程轨迹、可识别个人以及操控者活动规律。\n修复版本中通过官方固件更新处理该未认证媒体访问问题。公开资料未披露具体代码改动，也未给出独立修复版本号；CNA 将各机型受影响范围标为不超过所列固件版本。在官方公布明确补丁前，应限制不可信设备加入无人机内部网络，并跟进厂商固件安全更新。",
+    "description": "DJI（大疆）消费级无人机是闭源商业飞行器，通过蓝牙和 Wi-Fi 与遥控器及移动应用通信，用于飞行控制、图传和遥测。\n受影响版本中，无人机在蓝牙链路上对外暴露未认证的 DUML 命令接口。处于蓝牙覆盖范围内的攻击者可改写 Wi-Fi 的 SSID、PSK、MAC 地址、监管国家码和信道；将 PSK 改写为已知值后可接入无人机内部 Wi-Fi，并可能进入飞控接口下发飞行指令。同一接口还可关闭或重启 Wi-Fi 与蓝牙、断开 Wi-Fi 客户端或重置无线配置，中断操控、图传和遥测连接。\n修复版本中通过厂商固件更新收紧蓝牙 DUML 命令接口，阻止未认证近距离命令再改写无线配置或中断无线链路。公开资料未披露具体源码改动，需安装厂商发布的修复固件。",
     "effects": [
       {
-        "comp_name": "air_3",
+        "comp_name": "DJI Air 3",
         "ecosystem": "linux",
         "versions": [
           {
@@ -303,7 +302,7 @@
         ]
       },
       {
-        "comp_name": "air_3s",
+        "comp_name": "DJI Air 3S",
         "ecosystem": "linux",
         "versions": [
           {
@@ -316,7 +315,7 @@
         ]
       },
       {
-        "comp_name": "avata_2",
+        "comp_name": "DJI Avata 2",
         "ecosystem": "linux",
         "versions": [
           {
@@ -329,7 +328,7 @@
         ]
       },
       {
-        "comp_name": "avata_360",
+        "comp_name": "DJI Avata 360",
         "ecosystem": "linux",
         "versions": [
           {
@@ -342,7 +341,7 @@
         ]
       },
       {
-        "comp_name": "flip",
+        "comp_name": "DJI Flip",
         "ecosystem": "linux",
         "versions": [
           {
@@ -355,7 +354,7 @@
         ]
       },
       {
-        "comp_name": "mavic_3",
+        "comp_name": "DJI Mavic 3",
         "ecosystem": "linux",
         "versions": [
           {
@@ -368,7 +367,7 @@
         ]
       },
       {
-        "comp_name": "mavic_3_classic",
+        "comp_name": "DJI Mavic 3 Classic",
         "ecosystem": "linux",
         "versions": [
           {
@@ -381,7 +380,7 @@
         ]
       },
       {
-        "comp_name": "mavic_3_pro",
+        "comp_name": "DJI Mavic 3 Pro",
         "ecosystem": "linux",
         "versions": [
           {
@@ -394,7 +393,7 @@
         ]
       },
       {
-        "comp_name": "mavic_4_pro",
+        "comp_name": "DJI Mavic 4 Pro",
         "ecosystem": "linux",
         "versions": [
           {
@@ -407,7 +406,7 @@
         ]
       },
       {
-        "comp_name": "mini_2",
+        "comp_name": "DJI Mini 2",
         "ecosystem": "linux",
         "versions": [
           {
@@ -420,7 +419,7 @@
         ]
       },
       {
-        "comp_name": "mini_3",
+        "comp_name": "DJI Mini 3",
         "ecosystem": "linux",
         "versions": [
           {
@@ -433,7 +432,7 @@
         ]
       },
       {
-        "comp_name": "mini_3_pro",
+        "comp_name": "DJI Mini 3 Pro",
         "ecosystem": "linux",
         "versions": [
           {
@@ -446,7 +445,7 @@
         ]
       },
       {
-        "comp_name": "mini_4_pro",
+        "comp_name": "DJI Mini 4 Pro",
         "ecosystem": "linux",
         "versions": [
           {
@@ -459,7 +458,7 @@
         ]
       },
       {
-        "comp_name": "mini_5_pro",
+        "comp_name": "DJI Mini 5 Pro",
         "ecosystem": "linux",
         "versions": [
           {
@@ -472,7 +471,7 @@
         ]
       },
       {
-        "comp_name": "neo",
+        "comp_name": "DJI Neo",
         "ecosystem": "linux",
         "versions": [
           {
@@ -485,7 +484,7 @@
         ]
       },
       {
-        "comp_name": "neo_2",
+        "comp_name": "DJI Neo 2",
         "ecosystem": "linux",
         "versions": [
           {
@@ -501,25 +500,25 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "关键功能的认证机制缺失",
     "kind_en": "Missing Authentication for Critical Function",
     "last_modified_time": "2026-08-24",
     "level": "High",
-    "mps_id": "MPS-idlm-4kjo",
+    "mps_id": "MPS-2mq0-rn64",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-24",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-idlm-4kjo",
-        "name": "https://www.oscs1024.com/hd/MPS-idlm-4kjo"
+        "url": "https://www.oscs1024.com/hd/MPS-2mq0-rn64",
+        "name": "https://www.oscs1024.com/hd/MPS-2mq0-rn64"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78255",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78255"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78306",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78306"
       },
       {
         "url": "https://support.dji.com/help/content?customId=en-us03400011149&amp;spaceId=34&amp;re=US&amp;lang=en",
@@ -528,10 +527,9 @@
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件",
-      "终端软件"
+      "应用软件"
     ],
-    "title": "大疆无人机媒体未认证访问"
+    "title": "DJI无人机蓝牙认证缺失"
   },
-  "first_saved_at": "2026-08-24T08:40:17+00:00"
+  "first_saved_at": "2026-08-24T09:40:11+00:00"
 }
