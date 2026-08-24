@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-24T17:25:40+00:00",
+  "saved_at": "2026-08-24T17:25:30+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-k3ia-4yme",
+  "source_page": "https://www.oscs1024.com/hd/MPS-bac9-2ee0",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,53 +21,76 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78386",
-    "cvss": {
-      "cvssv4": [
-        {
-          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "high",
-          "base_score": 8.7
-        }
-      ]
-    },
-    "cvss_score": 8.7,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cve_id": "CVE-2026-75099",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
     "cwe": "CWE-200",
-    "description": "RansomLook exposed sensitive operator-side scraping configuration through multiple unauthenticated API responses. Location records associated with ransomware groups and markets were returned largely verbatim to unauthenticated callers whenever the location itself was not marked as private.\n\n\nThese records could contain internal fields such as header, which may include authentication headers, session cookies, or other credentials used to access monitored websites; init_script, which may contain logic used to bypass CAPTCHA, anti-bot protections, or paywalls; and browser, which discloses details about the scraping environment.\n\n\nAn unauthenticated remote attacker could query the affected API endpoints and obtain these values. Leaked authentication material could potentially be replayed against the monitored service, while disclosure of scraping and bypass logic could allow site operators or other attackers to identify and defeat RansomLook's collection mechanisms.\n\n\nThe patch introduces an explicit allowlist of fields permitted in public location records and strips all operator-side fields before returning data to unauthenticated users.\n\n\nThe accompanying change from <string:postname> to <path:postname> appears to be a functional correction allowing legitimate post titles containing / and does not, based on this patch alone, represent the security issue.",
-    "effects": [],
+    "description": "Apache Allura 是 Apache 软件基金会的开源软件协作平台，用于托管代码仓库、缺陷跟踪、讨论区、Wiki 与博客，并默认提供以 /rest 为前缀的 REST API。\n受影响版本中，部分 REST 控制器未与 Web 界面实施同等访问控制。未认证请求可通过 /rest 路径直接读取本应隐藏的内容：TicketRestController.index 在工单已删除时仍返回完整 JSON；PostRestController.index 对已删除或待审核帖文缺少状态校验；博客草稿与论坛主题级 ACL 也未在 REST 入口强制执行。\n修复版本中通过将 REST 查询与权限检查对齐 Web 控制器切断该泄露路径：已删除工单在缺少 delete 权限时返回 404，已删除或非 ok 状态帖文对非版主隐藏，草稿博客要求 write 权限，论坛主题改为对 topic 执行 read 检查。",
+    "effects": [
+      {
+        "comp_name": "allura",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.20.0)",
+            "min_fixed_version": "1.20.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "未授权敏感信息泄露",
     "kind_en": "向未经授权的行为者泄露敏感信息",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-25",
     "level": "High",
-    "mps_id": "MPS-k3ia-4yme",
+    "mps_id": "MPS-bac9-2ee0",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-k3ia-4yme",
-        "name": "https://www.oscs1024.com/hd/MPS-k3ia-4yme"
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11768.html",
+        "name": ""
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78386",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78386"
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-75099",
+        "name": ""
       },
       {
-        "url": "https://github.com/RansomLook/RansomLook/commit/cc9182930306ff36c7b3424817d49f18df3c85d1",
+        "url": "https://lists.apache.org/thread/lnsfx58o6mx6m44qk4vzqrq8ccmrywcy",
+        "name": ""
+      },
+      {
+        "url": "https://allura.apache.org/posts/2026-allura-1.20.0.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/commit/94e1111a5c4efc5fd743e2387864a2e32ecda12a",
+        "name": ""
+      },
+      {
+        "url": "https://forge-allura.apache.org/p/allura/tickets/8616/",
+        "name": ""
+      },
+      {
+        "url": "https://allura.apache.org/",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78386漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Allura REST未授权泄露",
     "_translated": true
   },
   "detail_original": {
@@ -87,53 +110,76 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78386",
-    "cvss": {
-      "cvssv4": [
-        {
-          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "high",
-          "base_score": 8.7
-        }
-      ]
-    },
-    "cvss_score": 8.7,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cve_id": "CVE-2026-75099",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
     "cwe": "CWE-200",
-    "description": "RansomLook exposed sensitive operator-side scraping configuration through multiple unauthenticated API responses. Location records associated with ransomware groups and markets were returned largely verbatim to unauthenticated callers whenever the location itself was not marked as private.\n\n\nThese records could contain internal fields such as header, which may include authentication headers, session cookies, or other credentials used to access monitored websites; init_script, which may contain logic used to bypass CAPTCHA, anti-bot protections, or paywalls; and browser, which discloses details about the scraping environment.\n\n\nAn unauthenticated remote attacker could query the affected API endpoints and obtain these values. Leaked authentication material could potentially be replayed against the monitored service, while disclosure of scraping and bypass logic could allow site operators or other attackers to identify and defeat RansomLook's collection mechanisms.\n\n\nThe patch introduces an explicit allowlist of fields permitted in public location records and strips all operator-side fields before returning data to unauthenticated users.\n\n\nThe accompanying change from <string:postname> to <path:postname> appears to be a functional correction allowing legitimate post titles containing / and does not, based on this patch alone, represent the security issue.",
-    "effects": [],
+    "description": "Apache Allura 是 Apache 软件基金会的开源软件协作平台，用于托管代码仓库、缺陷跟踪、讨论区、Wiki 与博客，并默认提供以 /rest 为前缀的 REST API。\n受影响版本中，部分 REST 控制器未与 Web 界面实施同等访问控制。未认证请求可通过 /rest 路径直接读取本应隐藏的内容：TicketRestController.index 在工单已删除时仍返回完整 JSON；PostRestController.index 对已删除或待审核帖文缺少状态校验；博客草稿与论坛主题级 ACL 也未在 REST 入口强制执行。\n修复版本中通过将 REST 查询与权限检查对齐 Web 控制器切断该泄露路径：已删除工单在缺少 delete 权限时返回 404，已删除或非 ok 状态帖文对非版主隐藏，草稿博客要求 write 权限，论坛主题改为对 topic 执行 read 检查。",
+    "effects": [
+      {
+        "comp_name": "allura",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.20.0)",
+            "min_fixed_version": "1.20.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "未授权敏感信息泄露",
     "kind_en": "Exposure of Sensitive Information to an Unauthorized Actor",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-25",
     "level": "High",
-    "mps_id": "MPS-k3ia-4yme",
+    "mps_id": "MPS-bac9-2ee0",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-k3ia-4yme",
-        "name": "https://www.oscs1024.com/hd/MPS-k3ia-4yme"
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11768.html",
+        "name": ""
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78386",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78386"
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-75099",
+        "name": ""
       },
       {
-        "url": "https://github.com/RansomLook/RansomLook/commit/cc9182930306ff36c7b3424817d49f18df3c85d1",
+        "url": "https://lists.apache.org/thread/lnsfx58o6mx6m44qk4vzqrq8ccmrywcy",
+        "name": ""
+      },
+      {
+        "url": "https://allura.apache.org/posts/2026-allura-1.20.0.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/commit/94e1111a5c4efc5fd743e2387864a2e32ecda12a",
+        "name": ""
+      },
+      {
+        "url": "https://forge-allura.apache.org/p/allura/tickets/8616/",
+        "name": ""
+      },
+      {
+        "url": "https://allura.apache.org/",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78386漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Allura REST未授权泄露"
   },
-  "first_saved_at": "2026-08-24T14:35:30+00:00"
+  "first_saved_at": "2026-08-24T17:25:30+00:00"
 }

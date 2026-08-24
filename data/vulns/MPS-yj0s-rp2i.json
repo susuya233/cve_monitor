@@ -1,0 +1,167 @@
+{
+  "saved_at": "2026-08-24T17:25:36+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-yj0s-rp2i",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71366",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+    "cwe": "CWE-918",
+    "description": "AWX 是开源 Ansible 自动化控制平台，Red Hat Ansible Automation Platform 的 Automation Controller 基于该项目，用于作业调度、清单管理和通知投递。\n受影响版本中，Webhook、Mattermost、Rocket.Chat 和 Grafana 通知后端把通知模板 URL 直接作为 HTTP 请求目标，未校验目标是否属于私网、回环或保留地址。组织通知管理员可通过通知模板接口写入内部或回环地址，使控制节点向外部不可达的内部服务发起请求。WebhookBackend.send_messages 还会读取 Location 并在主机变化后继续重放 Basic Authentication；GrafanaBackend.send_messages 则把 grafana_key 写入 Authorization 头发往配置的 grafana_url。\n修复版本中通过官方安全更新收紧通知后端对目标 URL 的处理，阻止控制节点向私网、回环或保留地址发起请求，并切断 Webhook 重定向过程中的凭据重放。",
+    "effects": [
+      {
+        "comp_name": "automation-controller",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.6,4.6.32)",
+            "min_fixed_version": "4.6.32",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.7,4.7.16)",
+            "min_fixed_version": "4.7.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-yj0s-rp2i",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-yj0s-rp2i",
+        "name": "https://www.oscs1024.com/hd/MPS-yj0s-rp2i"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71366",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71366"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-71366",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2511902",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "AWX通知后端SSRF漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71366",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+    "cwe": "CWE-918",
+    "description": "AWX 是开源 Ansible 自动化控制平台，Red Hat Ansible Automation Platform 的 Automation Controller 基于该项目，用于作业调度、清单管理和通知投递。\n受影响版本中，Webhook、Mattermost、Rocket.Chat 和 Grafana 通知后端把通知模板 URL 直接作为 HTTP 请求目标，未校验目标是否属于私网、回环或保留地址。组织通知管理员可通过通知模板接口写入内部或回环地址，使控制节点向外部不可达的内部服务发起请求。WebhookBackend.send_messages 还会读取 Location 并在主机变化后继续重放 Basic Authentication；GrafanaBackend.send_messages 则把 grafana_key 写入 Authorization 头发往配置的 grafana_url。\n修复版本中通过官方安全更新收紧通知后端对目标 URL 的处理，阻止控制节点向私网、回环或保留地址发起请求，并切断 Webhook 重定向过程中的凭据重放。",
+    "effects": [
+      {
+        "comp_name": "automation-controller",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.6,4.6.32)",
+            "min_fixed_version": "4.6.32",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.7,4.7.16)",
+            "min_fixed_version": "4.7.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-yj0s-rp2i",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-yj0s-rp2i",
+        "name": "https://www.oscs1024.com/hd/MPS-yj0s-rp2i"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71366",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71366"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-71366",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2511902",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "AWX通知后端SSRF漏洞"
+  },
+  "first_saved_at": "2026-08-24T17:25:36+00:00"
+}

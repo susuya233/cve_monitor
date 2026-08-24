@@ -1,0 +1,187 @@
+{
+  "saved_at": "2026-08-24T17:25:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-tohi-mxb9",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76071",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "Netis NC63 是 Netis Systems 出品的闭源 AC1200 无线双频千兆路由器固件，用于家庭和小型办公场景的无线接入与设备管理。\n受影响版本中，未认证攻击者可向 /cgi-bin/skk_set.cgi 提交 ipFilterList=mod 请求，并将超长 destHost 传入 /bin/netis.cgi 中 FUN_0040f7f4 的类型 0x0c 解析路径。该路径使用无字段宽度的 sscanf(\"%d,%[^,],%[^,]\") 将用户输入写入两个 16 字节栈缓冲区，覆盖保存的返回地址；Boa Web 服务器以 root 运行 CGI，可造成远程代码执行。\n修复版本中通过为 16 字节目标使用带宽度的扫描集并校验三次转换成功，阻止 destHost 覆盖保存的返回地址。公开来源尚未确认厂商已发布包含该修复的固件。",
+    "effects": [
+      {
+        "comp_name": "NC63",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.0.0.3327]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "极高",
+    "fix_suggestion": "建议修复",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "基于堆栈的缓冲区溢出",
+    "last_modified_time": "2026-08-25",
+    "level": "Critical",
+    "mps_id": "MPS-tohi-mxb9",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tohi-mxb9",
+        "name": "https://www.oscs1024.com/hd/MPS-tohi-mxb9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76071",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76071"
+      },
+      {
+        "url": "https://github.com/ozcanpng/CVE-2026-76071",
+        "name": ""
+      },
+      {
+        "url": "https://ozcanpng.dev/blog/cve-2026-76071-netis-nc63-ipfilter-stack-buffer-overflow/",
+        "name": ""
+      },
+      {
+        "url": "https://www.netis-systems.com/products/NC63.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/netis-nc63-stack-buffer-overflow-via-desthost-parameter",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "poc",
+      "应用软件"
+    ],
+    "title": "Netis NC63栈溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76071",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "Netis NC63 是 Netis Systems 出品的闭源 AC1200 无线双频千兆路由器固件，用于家庭和小型办公场景的无线接入与设备管理。\n受影响版本中，未认证攻击者可向 /cgi-bin/skk_set.cgi 提交 ipFilterList=mod 请求，并将超长 destHost 传入 /bin/netis.cgi 中 FUN_0040f7f4 的类型 0x0c 解析路径。该路径使用无字段宽度的 sscanf(\"%d,%[^,],%[^,]\") 将用户输入写入两个 16 字节栈缓冲区，覆盖保存的返回地址；Boa Web 服务器以 root 运行 CGI，可造成远程代码执行。\n修复版本中通过为 16 字节目标使用带宽度的扫描集并校验三次转换成功，阻止 destHost 覆盖保存的返回地址。公开来源尚未确认厂商已发布包含该修复的固件。",
+    "effects": [
+      {
+        "comp_name": "NC63",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.0.0.3327]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "极高",
+    "fix_suggestion": "Recommend",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "Stack-based Buffer Overflow",
+    "last_modified_time": "2026-08-25",
+    "level": "Critical",
+    "mps_id": "MPS-tohi-mxb9",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tohi-mxb9",
+        "name": "https://www.oscs1024.com/hd/MPS-tohi-mxb9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76071",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76071"
+      },
+      {
+        "url": "https://github.com/ozcanpng/CVE-2026-76071",
+        "name": ""
+      },
+      {
+        "url": "https://ozcanpng.dev/blog/cve-2026-76071-netis-nc63-ipfilter-stack-buffer-overflow/",
+        "name": ""
+      },
+      {
+        "url": "https://www.netis-systems.com/products/NC63.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/netis-nc63-stack-buffer-overflow-via-desthost-parameter",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "poc",
+      "应用软件"
+    ],
+    "title": "Netis NC63栈溢出漏洞"
+  },
+  "first_saved_at": "2026-08-24T17:25:32+00:00"
+}

@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-08-24T17:25:31+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-qsa0-xvw6",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78416",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "7004884b-51e2-48e8-b4a2-5ca29e80453e",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-915",
+    "description": "Craft CMS 是开源内容管理系统，基于 PHP 与 Yii 构建网站及内容工作流，可通过 Composer 以 craftcms/cms 安装和更新。\n受影响版本中，控制面板元素搜索接口会读取请求体中的 condition 配置。ElementSearchController::actionSearch 先用 Component::cleanseConfig() 清除外层数组中以 as 或 on 开头的 Yii 行为与事件键，随后 Conditions::createCondition() 将仍为 JSON 字符串的 condition.config 解码并合并进配置，且不再调用 cleanseConfig()。解码后的 as/on 键会进入 ElementCondition::setFieldLayouts()，再由 Fields::createLayout() 通过 Craft::createObject() 实例化 FieldLayout，被 Yii 解释为行为或事件配置，使已登录控制面板的用户能够以 PHP/Web 进程身份执行操作系统命令。\n修复版本中通过在 Conditions::createCondition() 对 JSON 解码结果重新执行 Component::cleanseConfig()，并在 createConditionRule() 合并 type 配置前同样清洗，剥离藏在 JSON 中的 as/on 键，阻止解码后的配置再进入 Yii 行为或事件绑定路径。",
+    "effects": [
+      {
+        "comp_name": "craftcms/cms",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[5.0.0-RC1,5.10.6)",
+            "min_fixed_version": "5.10.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0-RC1,4.18.2)",
+            "min_fixed_version": "4.18.2",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "动态确定对象属性修改的控制不恰当",
+    "kind_en": "动态确定的对象属性的受控修改不当",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-qsa0-xvw6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qsa0-xvw6",
+        "name": "https://www.oscs1024.com/hd/MPS-qsa0-xvw6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78416",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78416"
+      },
+      {
+        "url": "https://github.com/craftcms/cms/releases/tag/5.10.6",
+        "name": ""
+      },
+      {
+        "url": "https://www.hckrt.com/hacktivity/HCKRT-JD662P",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Craft CMS条件配置RCE",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78416",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "7004884b-51e2-48e8-b4a2-5ca29e80453e",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-915",
+    "description": "Craft CMS 是开源内容管理系统，基于 PHP 与 Yii 构建网站及内容工作流，可通过 Composer 以 craftcms/cms 安装和更新。\n受影响版本中，控制面板元素搜索接口会读取请求体中的 condition 配置。ElementSearchController::actionSearch 先用 Component::cleanseConfig() 清除外层数组中以 as 或 on 开头的 Yii 行为与事件键，随后 Conditions::createCondition() 将仍为 JSON 字符串的 condition.config 解码并合并进配置，且不再调用 cleanseConfig()。解码后的 as/on 键会进入 ElementCondition::setFieldLayouts()，再由 Fields::createLayout() 通过 Craft::createObject() 实例化 FieldLayout，被 Yii 解释为行为或事件配置，使已登录控制面板的用户能够以 PHP/Web 进程身份执行操作系统命令。\n修复版本中通过在 Conditions::createCondition() 对 JSON 解码结果重新执行 Component::cleanseConfig()，并在 createConditionRule() 合并 type 配置前同样清洗，剥离藏在 JSON 中的 as/on 键，阻止解码后的配置再进入 Yii 行为或事件绑定路径。",
+    "effects": [
+      {
+        "comp_name": "craftcms/cms",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[5.0.0-RC1,5.10.6)",
+            "min_fixed_version": "5.10.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0-RC1,4.18.2)",
+            "min_fixed_version": "4.18.2",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "动态确定对象属性修改的控制不恰当",
+    "kind_en": "Improperly Controlled Modification of Dynamically-Determined Object Attributes",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-qsa0-xvw6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qsa0-xvw6",
+        "name": "https://www.oscs1024.com/hd/MPS-qsa0-xvw6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78416",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78416"
+      },
+      {
+        "url": "https://github.com/craftcms/cms/releases/tag/5.10.6",
+        "name": ""
+      },
+      {
+        "url": "https://www.hckrt.com/hacktivity/HCKRT-JD662P",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Craft CMS条件配置RCE"
+  },
+  "first_saved_at": "2026-08-24T17:25:31+00:00"
+}
