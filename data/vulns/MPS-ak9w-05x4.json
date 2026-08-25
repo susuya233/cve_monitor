@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-25T10:25:07+00:00",
+  "saved_at": "2026-08-25T10:25:06+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-3u0l-tamj",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ak9w-05x4",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,53 +21,70 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78372",
+    "cve_id": "CVE-2026-77142",
     "cvss": {
       "cvssv4": [
         {
-          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "critical",
-          "base_score": 9.2
+          "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
         }
       ]
     },
-    "cvss_score": 9.2,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "RansomLook does not consistently \nenforce authorization checks when accessing groups, markets, and ransom \nnotes marked as private. An unauthenticated or otherwise unauthorized \nremote attacker can access information associated with private entities \nthrough several web views and API endpoints.\n\n\nThe affected functionality can \ndisclose private group or market names, ransom-note content, and \nmetadata associated with private groups. The /compare\n functionality can also be queried directly with the name of a private \nentity, allowing an unauthorized user to retrieve information such as \npost counts, mirror totals, and uptime even when the entity is excluded \nfrom the normal user interface. The patch explicitly adds a privacy \ncheck before returning this information. \n\n\nRansom-note views, search results, \nand API endpoints were similarly missing consistent filtering. The fix \nintroduces normalized private-group identifiers and alias handling, then\n rejects or filters notes associated with private groups before \nreturning them to unauthorized callers.  \n\n\nAn attacker can exploit the issue \nremotely without authentication or user interaction, resulting in \ndisclosure of information that was explicitly intended to be restricted \nto authorized users.",
-    "effects": [],
+    "description": "yellowpages2（Industry Directory）是 jweiland.net 发布的开源 TYPO3 扩展，用于创建、管理和展示企业黄页目录，并向前台访客提供企业记录自助编辑能力。\n受影响版本中，前台自助编辑只在 Fluid 模板里用 company.hasValidUser 隐藏非所有者的编辑表单，CompanyController::updateAction 在调用 companyRepository->update($company) 时没有再次校验当前访客是否为该记录的 feUser。攻击者只要从公开目录获知企业记录标识，即可直接提交 update 请求并覆盖该记录数据。\n修复版本中通过 RestrictAccessEventListener 在 PreProcessControllerActionEvent 阶段对 Company 的 edit/update 以及 Map 的 update/create 检查 Company::getHasValidUser()，非所有者请求会被改写为 error 动作并清空参数，从而切断越权写入。",
+    "effects": [
+      {
+        "comp_name": "jweiland/yellowpages2",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,8.1.2)",
+            "min_fixed_version": "8.1.2",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
-    "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-3u0l-tamj",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-ak9w-05x4",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-3u0l-tamj",
-        "name": "https://www.oscs1024.com/hd/MPS-3u0l-tamj"
+        "url": "https://www.oscs1024.com/hd/MPS-ak9w-05x4",
+        "name": "https://www.oscs1024.com/hd/MPS-ak9w-05x4"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78372",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78372"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77142",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77142"
       },
       {
-        "url": "https://github.com/RansomLook/RansomLook/commit/dc92d6d5c076bcdbf3476aca42daf0260e8d99d7",
+        "url": "https://typo3.org/security/advisory/typo3-ext-sa-2026-020",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78372漏洞",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "yellowpages2越权修改漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -87,53 +104,70 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78372",
+    "cve_id": "CVE-2026-77142",
     "cvss": {
       "cvssv4": [
         {
-          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "critical",
-          "base_score": 9.2
+          "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
         }
       ]
     },
-    "cvss_score": 9.2,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "RansomLook does not consistently \nenforce authorization checks when accessing groups, markets, and ransom \nnotes marked as private. An unauthenticated or otherwise unauthorized \nremote attacker can access information associated with private entities \nthrough several web views and API endpoints.\n\n\nThe affected functionality can \ndisclose private group or market names, ransom-note content, and \nmetadata associated with private groups. The /compare\n functionality can also be queried directly with the name of a private \nentity, allowing an unauthorized user to retrieve information such as \npost counts, mirror totals, and uptime even when the entity is excluded \nfrom the normal user interface. The patch explicitly adds a privacy \ncheck before returning this information. \n\n\nRansom-note views, search results, \nand API endpoints were similarly missing consistent filtering. The fix \nintroduces normalized private-group identifiers and alias handling, then\n rejects or filters notes associated with private groups before \nreturning them to unauthorized callers.  \n\n\nAn attacker can exploit the issue \nremotely without authentication or user interaction, resulting in \ndisclosure of information that was explicitly intended to be restricted \nto authorized users.",
-    "effects": [],
+    "description": "yellowpages2（Industry Directory）是 jweiland.net 发布的开源 TYPO3 扩展，用于创建、管理和展示企业黄页目录，并向前台访客提供企业记录自助编辑能力。\n受影响版本中，前台自助编辑只在 Fluid 模板里用 company.hasValidUser 隐藏非所有者的编辑表单，CompanyController::updateAction 在调用 companyRepository->update($company) 时没有再次校验当前访客是否为该记录的 feUser。攻击者只要从公开目录获知企业记录标识，即可直接提交 update 请求并覆盖该记录数据。\n修复版本中通过 RestrictAccessEventListener 在 PreProcessControllerActionEvent 阶段对 Company 的 edit/update 以及 Map 的 update/create 检查 Company::getHasValidUser()，非所有者请求会被改写为 error 动作并清空参数，从而切断越权写入。",
+    "effects": [
+      {
+        "comp_name": "jweiland/yellowpages2",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,8.1.2)",
+            "min_fixed_version": "8.1.2",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
-    "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-3u0l-tamj",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-ak9w-05x4",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-3u0l-tamj",
-        "name": "https://www.oscs1024.com/hd/MPS-3u0l-tamj"
+        "url": "https://www.oscs1024.com/hd/MPS-ak9w-05x4",
+        "name": "https://www.oscs1024.com/hd/MPS-ak9w-05x4"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78372",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78372"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77142",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77142"
       },
       {
-        "url": "https://github.com/RansomLook/RansomLook/commit/dc92d6d5c076bcdbf3476aca42daf0260e8d99d7",
+        "url": "https://typo3.org/security/advisory/typo3-ext-sa-2026-020",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78372漏洞"
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "yellowpages2越权修改漏洞"
   },
-  "first_saved_at": "2026-08-24T14:35:57+00:00"
+  "first_saved_at": "2026-08-25T10:25:06+00:00"
 }

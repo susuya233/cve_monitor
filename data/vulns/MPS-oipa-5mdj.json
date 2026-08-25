@@ -1,0 +1,147 @@
+{
+  "saved_at": "2026-08-25T10:25:03+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-oipa-5mdj",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77145",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "jweiland/events2（TYPO3 扩展 Events 2）是开源 PHP 组件，用于在 TYPO3 CMS 中创建、展示和管理单次及周期性活动，并向前台主办方提供活动管理插件。\n受影响版本中，前台管理更新流程在 RestrictAccessEventListener 的 isAccessAllowed() 方法中，把请求参数 event 直接做整数转换后用于主办方权限校验。更新请求里的 event 实际是包含 __identity 的数组，PHP 将非空数组转为整数 1，权限检查因此落在错误的活动记录上，具备前台活动管理权限的用户可以修改其他主办方的活动。\n修复版本中通过从 event 数组的 __identity 字段或标量参数解析真实活动 UID，再对该 UID 调用 getIsCurrentUserAllowedOrganizer() 进行校验，使权限检查目标与随后被 Extbase 更新的记录一致，阻止越权修改。",
+    "effects": [
+      {
+        "comp_name": "jweiland/events2",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[10.0.0,10.2.12)",
+            "min_fixed_version": "10.2.12",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-oipa-5mdj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oipa-5mdj",
+        "name": "https://www.oscs1024.com/hd/MPS-oipa-5mdj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77145",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77145"
+      },
+      {
+        "url": "https://typo3.org/security/advisory/typo3-ext-sa-2026-026",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "events2越权修改漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77145",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "jweiland/events2（TYPO3 扩展 Events 2）是开源 PHP 组件，用于在 TYPO3 CMS 中创建、展示和管理单次及周期性活动，并向前台主办方提供活动管理插件。\n受影响版本中，前台管理更新流程在 RestrictAccessEventListener 的 isAccessAllowed() 方法中，把请求参数 event 直接做整数转换后用于主办方权限校验。更新请求里的 event 实际是包含 __identity 的数组，PHP 将非空数组转为整数 1，权限检查因此落在错误的活动记录上，具备前台活动管理权限的用户可以修改其他主办方的活动。\n修复版本中通过从 event 数组的 __identity 字段或标量参数解析真实活动 UID，再对该 UID 调用 getIsCurrentUserAllowedOrganizer() 进行校验，使权限检查目标与随后被 Extbase 更新的记录一致，阻止越权修改。",
+    "effects": [
+      {
+        "comp_name": "jweiland/events2",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[10.0.0,10.2.12)",
+            "min_fixed_version": "10.2.12",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-oipa-5mdj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oipa-5mdj",
+        "name": "https://www.oscs1024.com/hd/MPS-oipa-5mdj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77145",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77145"
+      },
+      {
+        "url": "https://typo3.org/security/advisory/typo3-ext-sa-2026-026",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "events2越权修改漏洞"
+  },
+  "first_saved_at": "2026-08-25T10:25:03+00:00"
+}
