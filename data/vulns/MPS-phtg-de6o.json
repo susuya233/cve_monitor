@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-08-25T21:21:03+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-phtg-de6o",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55099",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-407",
+    "description": "icalendar 是开源 Python 库，用于按 RFC 5545 解析和生成 iCalendar 文件，供日历同步、邀请处理和日程导入等场景使用。\n受影响版本中，Component.from_ical 接受任意嵌套的 BEGIN:VEVENT 且不限制深度。Component.__eq__ 用两次成员资格循环比较 subcomponents，每次 in 检测都会对子组件再次调用 __eq__，相对嵌套深度呈 O(2^n)。攻击者提交含相同深层嵌套子树的短小 .ics 后，应用一旦执行相等、不等、成员资格、去重或往返比较，即可长时间占用 CPU 并造成拒绝服务。单独解析不会触发该问题。\n修复版本中通过将 Component.__eq__ 改为显式栈迭代比较，使每对嵌套组件只比较一次，把时间复杂度降为线性，并保持原有多重集等价与交换律语义。",
+    "effects": [
+      {
+        "comp_name": "icalendar",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[7.1.0,7.1.3)",
+            "min_fixed_version": "7.1.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "低效算法复杂性",
+    "kind_en": "低效的算法复杂性",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-phtg-de6o",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/collective/icalendar/security/advisories/GHSA-cv84-9p8j-fj68",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/collective/icalendar/commit/b6b2608ae3af6de40695b4e40f71847485aa0b49",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/collective/icalendar/commit/cad40cd112c93fd142ec12cc5b37445a849b8a79",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/collective/icalendar/releases/tag/v7.1.3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-cv84-9p8j-fj68",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "icalendar相等比较拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55099",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-407",
+    "description": "icalendar 是开源 Python 库，用于按 RFC 5545 解析和生成 iCalendar 文件，供日历同步、邀请处理和日程导入等场景使用。\n受影响版本中，Component.from_ical 接受任意嵌套的 BEGIN:VEVENT 且不限制深度。Component.__eq__ 用两次成员资格循环比较 subcomponents，每次 in 检测都会对子组件再次调用 __eq__，相对嵌套深度呈 O(2^n)。攻击者提交含相同深层嵌套子树的短小 .ics 后，应用一旦执行相等、不等、成员资格、去重或往返比较，即可长时间占用 CPU 并造成拒绝服务。单独解析不会触发该问题。\n修复版本中通过将 Component.__eq__ 改为显式栈迭代比较，使每对嵌套组件只比较一次，把时间复杂度降为线性，并保持原有多重集等价与交换律语义。",
+    "effects": [
+      {
+        "comp_name": "icalendar",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[7.1.0,7.1.3)",
+            "min_fixed_version": "7.1.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "低效算法复杂性",
+    "kind_en": "Inefficient Algorithmic Complexity",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-phtg-de6o",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/collective/icalendar/security/advisories/GHSA-cv84-9p8j-fj68",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/collective/icalendar/commit/b6b2608ae3af6de40695b4e40f71847485aa0b49",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/collective/icalendar/commit/cad40cd112c93fd142ec12cc5b37445a849b8a79",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/collective/icalendar/releases/tag/v7.1.3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-cv84-9p8j-fj68",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "icalendar相等比较拒绝服务"
+  },
+  "first_saved_at": "2026-08-25T21:21:03+00:00"
+}

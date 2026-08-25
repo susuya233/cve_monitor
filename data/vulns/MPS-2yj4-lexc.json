@@ -1,9 +1,9 @@
 {
   "saved_at": "2026-08-25T21:21:07+00:00",
-  "first_seen": false,
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2yj4-lexc",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,56 +21,61 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78183",
-    "cvss": {},
-    "cvss_score": 9.8,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cve_id": "CVE-2026-68513",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
     "cwe": "CWE-787",
-    "description": "DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in quote_float.\n\nquote_float() allocates the length of the string + 1, which is the size of the bare numeric symbol plus NULL.  But for special literals NaN, Inf, +Inf, -Inf, Infinity, +Infinity, -Infinity it emits the literal surrounded by quotes plus NULL, which is length + 3 bytes. Every recognised literal (case-insensitive) overflows by 2 bytes, a single quote and a NULL.\n\nThis can be reached by the $dbh->quote method, for example\n\n    $dbh->quote( \"Infinity\", DBI::SQL_NUMERIC ).\n\nThis regression was introduced in 3.21.0 by the quote.c rewrite.",
+    "description": "OpenEXR is the reference implementation and specification for the EXR image format, widely used in the motion picture industry. Versions 3.3.0 through 3.3.12 and 3.4.0 through 3.4.13 contain a heap buffer overflow in PyOpenEXR triggered by a channel-name key collision between literal and prefixed RGB channels. When separate_channels=false, PyOpenEXR maps each physical channel name through channelNameToRGBA() and coalesces the results into a shared RGB array. A crafted flat scanline EXR that contains both a literal channel such as left and prefixed channels such as left.R, left.G, and left.B causes these names to collide, so the wrapper reuses an undersized two-dimensional NumPy array for the coalesced RGB slices and writes out of bounds when OpenEXR.File(path) decodes the pixels. This issue is fixed in versions 3.3.13 and 3.4.14.",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "可选修复",
     "kind": "越界写入",
     "kind_en": "越界写入",
-    "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-gncf-koz0",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-2yj4-lexc",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-26",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
-        "name": "https://www.oscs1024.com/hd/MPS-gncf-koz0"
+        "url": "https://www.oscs1024.com/hd/MPS-2yj4-lexc",
+        "name": "https://www.oscs1024.com/hd/MPS-2yj4-lexc"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-68513",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-68513"
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/6d6f47ed2403cda55c82b1bad56e388ba7390065.patch",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/c1f3ec0d91cfa5a8035ecd00920835ac76e01640",
         "name": ""
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/adacf1de872326a465e13f9e4281a674ebcd227e",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/d134e3cd81a2e343f2919e86bf949f576b1ab16a",
         "name": ""
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/security/advisories/GHSA-785p-fw3v-r822",
-        "name": ""
-      },
-      {
-        "url": "https://metacpan.org/release/TURNSTEP/DBD-Pg-3.21.1/source/Changes",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/security/advisories/GHSA-rw5h-3q4v-c3vc",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-78183漏洞",
+    "title": "CVE-2026-68513漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -90,56 +95,61 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78183",
-    "cvss": {},
-    "cvss_score": 9.8,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cve_id": "CVE-2026-68513",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
     "cwe": "CWE-787",
-    "description": "DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in quote_float.\n\nquote_float() allocates the length of the string + 1, which is the size of the bare numeric symbol plus NULL.  But for special literals NaN, Inf, +Inf, -Inf, Infinity, +Infinity, -Infinity it emits the literal surrounded by quotes plus NULL, which is length + 3 bytes. Every recognised literal (case-insensitive) overflows by 2 bytes, a single quote and a NULL.\n\nThis can be reached by the $dbh->quote method, for example\n\n    $dbh->quote( \"Infinity\", DBI::SQL_NUMERIC ).\n\nThis regression was introduced in 3.21.0 by the quote.c rewrite.",
+    "description": "OpenEXR is the reference implementation and specification for the EXR image format, widely used in the motion picture industry. Versions 3.3.0 through 3.3.12 and 3.4.0 through 3.4.13 contain a heap buffer overflow in PyOpenEXR triggered by a channel-name key collision between literal and prefixed RGB channels. When separate_channels=false, PyOpenEXR maps each physical channel name through channelNameToRGBA() and coalesces the results into a shared RGB array. A crafted flat scanline EXR that contains both a literal channel such as left and prefixed channels such as left.R, left.G, and left.B causes these names to collide, so the wrapper reuses an undersized two-dimensional NumPy array for the coalesced RGB slices and writes out of bounds when OpenEXR.File(path) decodes the pixels. This issue is fixed in versions 3.3.13 and 3.4.14.",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "Optional",
     "kind": "越界写入",
     "kind_en": "Out-of-bounds Write",
-    "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-gncf-koz0",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-2yj4-lexc",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-26",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
-        "name": "https://www.oscs1024.com/hd/MPS-gncf-koz0"
+        "url": "https://www.oscs1024.com/hd/MPS-2yj4-lexc",
+        "name": "https://www.oscs1024.com/hd/MPS-2yj4-lexc"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-68513",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-68513"
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/6d6f47ed2403cda55c82b1bad56e388ba7390065.patch",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/c1f3ec0d91cfa5a8035ecd00920835ac76e01640",
         "name": ""
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/adacf1de872326a465e13f9e4281a674ebcd227e",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/d134e3cd81a2e343f2919e86bf949f576b1ab16a",
         "name": ""
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/security/advisories/GHSA-785p-fw3v-r822",
-        "name": ""
-      },
-      {
-        "url": "https://metacpan.org/release/TURNSTEP/DBD-Pg-3.21.1/source/Changes",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/security/advisories/GHSA-rw5h-3q4v-c3vc",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-78183漏洞"
+    "title": "CVE-2026-68513漏洞"
   },
-  "first_saved_at": "2026-08-23T21:15:38+00:00"
+  "first_saved_at": "2026-08-25T21:21:00+00:00"
 }

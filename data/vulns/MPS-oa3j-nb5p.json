@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-08-25T21:21:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-oa3j-nb5p",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-59981",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H",
+    "cwe": "CWE-125",
+    "description": "OpenEXR is the reference implementation and specification for the EXR image file format, widely used in the motion picture industry. In versions through 3.2.10, 3.3.0 through 3.3.12, and 3.4.0 through 3.4.13, the OpenEXRUtil library returns an out-of-bounds pointer from the SampleCountChannel::row() API when a deep image has a non-zero dataWindow origin. The row() accessor is documented as 0-based and computes its address from an internal base that is offset for absolute pixel coordinates, so the two coordinate models conflict whenever dataWindow.min is non-zero. For a deep image whose data window has a large negative vertical origin, row(0) points far outside the allocated sample-count buffer. An application that opens an attacker-controlled deep EXR file and accesses sample counts through row() performs an out-of-bounds read, which can crash the process or, under a controlled heap layout, return adjacent heap memory as sample-count values. This issue is fixed in versions 3.2.11, 3.3.13, and 3.4.14.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "越界读取",
+    "kind_en": "越界读取",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-oa3j-nb5p",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oa3j-nb5p",
+        "name": "https://www.oscs1024.com/hd/MPS-oa3j-nb5p"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59981",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-59981"
+      },
+      {
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/37f03b6ed90f3dd9910f31de3a40f25f2bc2aca1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/55b7958ecb5ac32c427ff39c1e063f6f7bbee77c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/aef02224ba282a802de65d16c49c1cdb82089dec",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/security/advisories/GHSA-m799-ffc3-8pxc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-59981漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-59981",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H",
+    "cwe": "CWE-125",
+    "description": "OpenEXR is the reference implementation and specification for the EXR image file format, widely used in the motion picture industry. In versions through 3.2.10, 3.3.0 through 3.3.12, and 3.4.0 through 3.4.13, the OpenEXRUtil library returns an out-of-bounds pointer from the SampleCountChannel::row() API when a deep image has a non-zero dataWindow origin. The row() accessor is documented as 0-based and computes its address from an internal base that is offset for absolute pixel coordinates, so the two coordinate models conflict whenever dataWindow.min is non-zero. For a deep image whose data window has a large negative vertical origin, row(0) points far outside the allocated sample-count buffer. An application that opens an attacker-controlled deep EXR file and accesses sample counts through row() performs an out-of-bounds read, which can crash the process or, under a controlled heap layout, return adjacent heap memory as sample-count values. This issue is fixed in versions 3.2.11, 3.3.13, and 3.4.14.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "越界读取",
+    "kind_en": "Out-of-bounds Read",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-oa3j-nb5p",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oa3j-nb5p",
+        "name": "https://www.oscs1024.com/hd/MPS-oa3j-nb5p"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59981",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-59981"
+      },
+      {
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/37f03b6ed90f3dd9910f31de3a40f25f2bc2aca1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/55b7958ecb5ac32c427ff39c1e063f6f7bbee77c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/aef02224ba282a802de65d16c49c1cdb82089dec",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/security/advisories/GHSA-m799-ffc3-8pxc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-59981漏洞"
+  },
+  "first_saved_at": "2026-08-25T21:21:02+00:00"
+}

@@ -1,9 +1,9 @@
 {
   "saved_at": "2026-08-25T21:21:07+00:00",
-  "first_seen": false,
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
+  "source_page": "https://www.oscs1024.com/hd/MPS-gyt8-a3fk",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,56 +21,65 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78183",
-    "cvss": {},
-    "cvss_score": 9.8,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cve_id": "CVE-2026-68515",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
     "cwe": "CWE-787",
-    "description": "DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in quote_float.\n\nquote_float() allocates the length of the string + 1, which is the size of the bare numeric symbol plus NULL.  But for special literals NaN, Inf, +Inf, -Inf, Infinity, +Infinity, -Infinity it emits the literal surrounded by quotes plus NULL, which is length + 3 bytes. Every recognised literal (case-insensitive) overflows by 2 bytes, a single quote and a NULL.\n\nThis can be reached by the $dbh->quote method, for example\n\n    $dbh->quote( \"Infinity\", DBI::SQL_NUMERIC ).\n\nThis regression was introduced in 3.21.0 by the quote.c rewrite.",
+    "description": "OpenEXR is the reference implementation and specification for the EXR image format, widely used in the motion picture industry. In versions before 3.2.11, 3.3.0 through 3.3.12, and 3.4.0 through 3.4.13, exrmultiview can write past a heap allocation when it combines two attacker-supplied, individually valid scanline EXR files whose union dataWindow is not aligned to one view's channel subsampling. The utility allocates sampled channel storage using a truncated union_width / xSampling, then reads the sampled input through a Slice based on the misaligned union window, producing a heap out-of-bounds write. The trigger is normal public-tool processing, such as exrmultiview left A.exr right B.exr out.exr with crafted but valid inputs, so this is not solely an API or caller-precondition issue. This issue is fixed in versions 3.2.11, 3.3.13, and 3.4.14.",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "可选修复",
     "kind": "越界写入",
     "kind_en": "越界写入",
-    "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-gncf-koz0",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-gyt8-a3fk",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-26",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
-        "name": "https://www.oscs1024.com/hd/MPS-gncf-koz0"
+        "url": "https://www.oscs1024.com/hd/MPS-gyt8-a3fk",
+        "name": "https://www.oscs1024.com/hd/MPS-gyt8-a3fk"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-68515",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-68515"
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/6d6f47ed2403cda55c82b1bad56e388ba7390065.patch",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/77ee19c021398b1c56f32c3af8347e365dbd4f33",
         "name": ""
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/adacf1de872326a465e13f9e4281a674ebcd227e",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/c644ac2dfeac82939c81a8551d6f4b7859f63add",
         "name": ""
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/security/advisories/GHSA-785p-fw3v-r822",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/e2300a3d54a93d20a36a86b82f3a506c4c91476f",
         "name": ""
       },
       {
-        "url": "https://metacpan.org/release/TURNSTEP/DBD-Pg-3.21.1/source/Changes",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/security/advisories/GHSA-gjf7-wjjw-xq56",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-78183漏洞",
+    "title": "CVE-2026-68515漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -90,56 +99,65 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78183",
-    "cvss": {},
-    "cvss_score": 9.8,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cve_id": "CVE-2026-68515",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
     "cwe": "CWE-787",
-    "description": "DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in quote_float.\n\nquote_float() allocates the length of the string + 1, which is the size of the bare numeric symbol plus NULL.  But for special literals NaN, Inf, +Inf, -Inf, Infinity, +Infinity, -Infinity it emits the literal surrounded by quotes plus NULL, which is length + 3 bytes. Every recognised literal (case-insensitive) overflows by 2 bytes, a single quote and a NULL.\n\nThis can be reached by the $dbh->quote method, for example\n\n    $dbh->quote( \"Infinity\", DBI::SQL_NUMERIC ).\n\nThis regression was introduced in 3.21.0 by the quote.c rewrite.",
+    "description": "OpenEXR is the reference implementation and specification for the EXR image format, widely used in the motion picture industry. In versions before 3.2.11, 3.3.0 through 3.3.12, and 3.4.0 through 3.4.13, exrmultiview can write past a heap allocation when it combines two attacker-supplied, individually valid scanline EXR files whose union dataWindow is not aligned to one view's channel subsampling. The utility allocates sampled channel storage using a truncated union_width / xSampling, then reads the sampled input through a Slice based on the misaligned union window, producing a heap out-of-bounds write. The trigger is normal public-tool processing, such as exrmultiview left A.exr right B.exr out.exr with crafted but valid inputs, so this is not solely an API or caller-precondition issue. This issue is fixed in versions 3.2.11, 3.3.13, and 3.4.14.",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "Optional",
     "kind": "越界写入",
     "kind_en": "Out-of-bounds Write",
-    "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-gncf-koz0",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-gyt8-a3fk",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-26",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
-        "name": "https://www.oscs1024.com/hd/MPS-gncf-koz0"
+        "url": "https://www.oscs1024.com/hd/MPS-gyt8-a3fk",
+        "name": "https://www.oscs1024.com/hd/MPS-gyt8-a3fk"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-68515",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-68515"
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/6d6f47ed2403cda55c82b1bad56e388ba7390065.patch",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/77ee19c021398b1c56f32c3af8347e365dbd4f33",
         "name": ""
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/adacf1de872326a465e13f9e4281a674ebcd227e",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/c644ac2dfeac82939c81a8551d6f4b7859f63add",
         "name": ""
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/security/advisories/GHSA-785p-fw3v-r822",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/commit/e2300a3d54a93d20a36a86b82f3a506c4c91476f",
         "name": ""
       },
       {
-        "url": "https://metacpan.org/release/TURNSTEP/DBD-Pg-3.21.1/source/Changes",
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/security/advisories/GHSA-gjf7-wjjw-xq56",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-78183漏洞"
+    "title": "CVE-2026-68515漏洞"
   },
-  "first_saved_at": "2026-08-23T21:15:38+00:00"
+  "first_saved_at": "2026-08-25T21:20:58+00:00"
 }
