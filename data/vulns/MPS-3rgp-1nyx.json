@@ -1,0 +1,247 @@
+{
+  "saved_at": "2026-08-25T14:38:28+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3rgp-1nyx",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用了空指针，并在不进行有效检查的情况下对其进行取消引用操作。当程序试图取消引用空指针时，由于空指针不指向任何有效的内存地址，会导致程序崩溃或产生未定义的行为。这种错误通常发生在开发者未对指针进行正确的初始化或验证时。",
+        "title": "什么是空指针取消引用"
+      },
+      {
+        "content": "- 拒绝服务：攻击者可以通过构造恶意输入或请求，触发程序中的空指针取消引用错误，导致程序崩溃或无法正常运行。这可能导致拒绝服务攻击，使系统无法提供正常的服务。\r\n- 内存信息泄露：攻击者可以通过利用空指针取消引用错误，访问程序中的敏感内存信息。这可能包括栈上的变量、函数指针或其他敏感数据，从而暴露系统的机密信息。\r\n- 代码执行：在某些情况下，空指针取消引用错误可能导致执行恶意代码或注入恶意代码的机会。攻击者可以通过精心构造的输入，利用空指针取消引用错误来执行任意的代码，进而获取系统控制权或执行未经授权的操作。",
+        "title": "空指针取消引用常见的攻击方式"
+      },
+      {
+        "content": "- 指针初始化和验证：开发者应该正确地初始化指针，并在使用指针之前进行有效的验证，确保指针不为空。在取消引用指针之前，应始终检查其是否为空。\r\n- 异常处理和错误恢复：程序应该具备健壮的异常处理和错误恢复机制，以便在发生空指针取消引用错误时能够适当地处理异常，而不是导致程序崩溃或暴露敏感信息。\r\n- 防御性编程：采用防御性编程的原则，如避免在未经验证的指针上进行操作，避免使用未初始化的指针等，以防止空指针取消引用错误的发生。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的空指针取消引用错误。这些工具可以帮助发现代码中可能存在的空指针问题，并及时修复。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括良好的指针使用和管理规范，以帮助开发者编写更可靠、安全的代码。",
+        "title": "如何预防空指针取消引用"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-63076",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-476",
+    "description": "OpenSSL 是开源密码学工具库，提供 TLS/SSL 以及证书管理协议（CMP）的客户端与服务端实现，供应用完成证书申请与生命周期管理。\n受影响版本中，校验 CMP 口令基 MAC（id-PasswordBasedMAC）保护时，ossl_cmp_calc_protection() 通过 X509_ALGOR_get0() 读取 header->protectionAlg 的参数类型与取值，只确认取值指针非空便将其强制转换为 ASN1_STRING 并当作 PBMParameter 解析，未核对参数的 ASN.1 类型。攻击者可将该参数编码为 BOOLEAN 等非 SEQUENCE 类型；ASN1_TYPE 联合体把布尔整型与指针字段重叠，使 ppval 成为伪造的非空指针（例如 0xff），随后 ASN1_STRING_get0_data() 发生无效指针解引用。该路径出现在计算 MAC 之前，无需掌握 PBM 共享密钥。远程未认证攻击者可向接受 PBM 保护消息的 CMP 服务端经 OSSL_CMP_SRV_process_request() 传入构造报文，或通过恶意/中间人 CMP 服务端让客户端在 OSSL_CMP_validate_msg() 响应校验中进入同一路径，造成应用崩溃并形成拒绝服务。\n修复版本中通过在解析 PBMParameter 前增加 pptype != V_ASN1_SEQUENCE 判断，拒绝非 SEQUENCE 类型的 protectionAlg 参数，切断无效指针解引用路径。",
+    "effects": [
+      {
+        "comp_name": "openssl",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.6.0,3.6.4)",
+            "min_fixed_version": "3.6.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.22)",
+            "min_fixed_version": "3.0.22",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.0.2)",
+            "min_fixed_version": "4.0.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.5.0,3.5.8)",
+            "min_fixed_version": "3.5.8",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.4.0,3.4.7)",
+            "min_fixed_version": "3.4.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "空指针取消引用",
+    "kind_en": "空指针取消引用",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-3rgp-1nyx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3rgp-1nyx",
+        "name": "https://www.oscs1024.com/hd/MPS-3rgp-1nyx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-63076",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-63076"
+      },
+      {
+        "url": "https://github.com/openssl/openssl/commit/37882aa2e0256e1072442a8f62f7db45b995c45b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/openssl/openssl/commit/a17cc8d612ecff6d94a9b7ca8b5283ddf5ff570e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/openssl/openssl/commit/a1f348ccb328c3afbd4ba6883f9b7c813c043259",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/openssl/openssl/commit/a7af46a92d0ce19a90e669ef56d2576a07924226",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/openssl/openssl/commit/cdacfff557389abfa9e4615abded2ec984517d6c",
+        "name": ""
+      },
+      {
+        "url": "https://openssl-library.org/news/secadv/20260825.txt",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "OpenSSL CMP指针解引用",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用了空指针，并在不进行有效检查的情况下对其进行取消引用操作。当程序试图取消引用空指针时，由于空指针不指向任何有效的内存地址，会导致程序崩溃或产生未定义的行为。这种错误通常发生在开发者未对指针进行正确的初始化或验证时。",
+        "title": "什么是空指针取消引用"
+      },
+      {
+        "content": "- 拒绝服务：攻击者可以通过构造恶意输入或请求，触发程序中的空指针取消引用错误，导致程序崩溃或无法正常运行。这可能导致拒绝服务攻击，使系统无法提供正常的服务。\r\n- 内存信息泄露：攻击者可以通过利用空指针取消引用错误，访问程序中的敏感内存信息。这可能包括栈上的变量、函数指针或其他敏感数据，从而暴露系统的机密信息。\r\n- 代码执行：在某些情况下，空指针取消引用错误可能导致执行恶意代码或注入恶意代码的机会。攻击者可以通过精心构造的输入，利用空指针取消引用错误来执行任意的代码，进而获取系统控制权或执行未经授权的操作。",
+        "title": "空指针取消引用常见的攻击方式"
+      },
+      {
+        "content": "- 指针初始化和验证：开发者应该正确地初始化指针，并在使用指针之前进行有效的验证，确保指针不为空。在取消引用指针之前，应始终检查其是否为空。\r\n- 异常处理和错误恢复：程序应该具备健壮的异常处理和错误恢复机制，以便在发生空指针取消引用错误时能够适当地处理异常，而不是导致程序崩溃或暴露敏感信息。\r\n- 防御性编程：采用防御性编程的原则，如避免在未经验证的指针上进行操作，避免使用未初始化的指针等，以防止空指针取消引用错误的发生。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的空指针取消引用错误。这些工具可以帮助发现代码中可能存在的空指针问题，并及时修复。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括良好的指针使用和管理规范，以帮助开发者编写更可靠、安全的代码。",
+        "title": "如何预防空指针取消引用"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-63076",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-476",
+    "description": "OpenSSL 是开源密码学工具库，提供 TLS/SSL 以及证书管理协议（CMP）的客户端与服务端实现，供应用完成证书申请与生命周期管理。\n受影响版本中，校验 CMP 口令基 MAC（id-PasswordBasedMAC）保护时，ossl_cmp_calc_protection() 通过 X509_ALGOR_get0() 读取 header->protectionAlg 的参数类型与取值，只确认取值指针非空便将其强制转换为 ASN1_STRING 并当作 PBMParameter 解析，未核对参数的 ASN.1 类型。攻击者可将该参数编码为 BOOLEAN 等非 SEQUENCE 类型；ASN1_TYPE 联合体把布尔整型与指针字段重叠，使 ppval 成为伪造的非空指针（例如 0xff），随后 ASN1_STRING_get0_data() 发生无效指针解引用。该路径出现在计算 MAC 之前，无需掌握 PBM 共享密钥。远程未认证攻击者可向接受 PBM 保护消息的 CMP 服务端经 OSSL_CMP_SRV_process_request() 传入构造报文，或通过恶意/中间人 CMP 服务端让客户端在 OSSL_CMP_validate_msg() 响应校验中进入同一路径，造成应用崩溃并形成拒绝服务。\n修复版本中通过在解析 PBMParameter 前增加 pptype != V_ASN1_SEQUENCE 判断，拒绝非 SEQUENCE 类型的 protectionAlg 参数，切断无效指针解引用路径。",
+    "effects": [
+      {
+        "comp_name": "openssl",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.6.0,3.6.4)",
+            "min_fixed_version": "3.6.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.22)",
+            "min_fixed_version": "3.0.22",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.0.2)",
+            "min_fixed_version": "4.0.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.5.0,3.5.8)",
+            "min_fixed_version": "3.5.8",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.4.0,3.4.7)",
+            "min_fixed_version": "3.4.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "空指针取消引用",
+    "kind_en": "NULL Pointer Dereference",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-3rgp-1nyx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3rgp-1nyx",
+        "name": "https://www.oscs1024.com/hd/MPS-3rgp-1nyx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-63076",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-63076"
+      },
+      {
+        "url": "https://github.com/openssl/openssl/commit/37882aa2e0256e1072442a8f62f7db45b995c45b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/openssl/openssl/commit/a17cc8d612ecff6d94a9b7ca8b5283ddf5ff570e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/openssl/openssl/commit/a1f348ccb328c3afbd4ba6883f9b7c813c043259",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/openssl/openssl/commit/a7af46a92d0ce19a90e669ef56d2576a07924226",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/openssl/openssl/commit/cdacfff557389abfa9e4615abded2ec984517d6c",
+        "name": ""
+      },
+      {
+        "url": "https://openssl-library.org/news/secadv/20260825.txt",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "OpenSSL CMP指针解引用"
+  },
+  "first_saved_at": "2026-08-25T14:38:28+00:00"
+}
