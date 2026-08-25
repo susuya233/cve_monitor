@@ -3,7 +3,7 @@
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-apul-rqgy",
+  "source_page": "https://www.oscs1024.com/hd/MPS-mxhw-tq8u",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,21 +21,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78380",
+    "cve_id": "CVE-2026-66109",
     "cvss": {
+      "cvssv3": [
+        {
+          "source": "vultures@jpcert.or.jp",
+          "vector": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
       "cvssv4": [
         {
-          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "source": "vultures@jpcert.or.jp",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.7
+          "base_score": 8.5
         }
       ]
     },
-    "cvss_score": 8.7,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "RansomLook fails to enforce the privacy status of ransomware groups and markets when distributing newly collected victim posts to external notification channels. The post-processing logic checks whether an individual post is marked private but does not verify whether the group or market to which the post belongs is configured as private.\n\nAs a result, newly parsed victim information associated with a private group or market may be automatically published through enabled Rocket.Chat, Mastodon, Bluesky, and e-mail notification channels despite the entity being explicitly configured to prevent public disclosure.\n\nA similar issue affects the public MISP feed. The feed previously determined privacy using groupinfo(), which only queries the group database. Consequently, victim information associated with private markets could be added to the public MISP feed because the corresponding market privacy flag was not evaluated.\n\nAn attacker or other unauthorized party able to access these public notification channels or the MISP feed may obtain victim information that was intended to remain private. Depending on the collected data, this may disclose victim names, ransomware activity, incident information, or other information associated with privately monitored groups and markets.\n\nThe fix introduces a common is_private_entity() check covering both groups and markets and prevents private entity posts from being distributed through external notification channels or the public MISP feed. Internal storage and dashboard alerting remain unaffected.",
+    "description": "A missing authorization vulnerability exists in SKYSEA Client View and SKYMEC IT Manager. If this vulnerability is exploited, an attacker who can log in to the Windows system on which the affected product is installed may execute arbitrary code with SYSTEM privilege.",
     "effects": [],
     "epss": -1,
     "exp": false,
@@ -45,29 +53,33 @@
     "fix_suggestion": "可选修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-25",
     "level": "High",
-    "mps_id": "MPS-apul-rqgy",
+    "mps_id": "MPS-mxhw-tq8u",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-apul-rqgy",
-        "name": "https://www.oscs1024.com/hd/MPS-apul-rqgy"
+        "url": "https://www.oscs1024.com/hd/MPS-mxhw-tq8u",
+        "name": "https://www.oscs1024.com/hd/MPS-mxhw-tq8u"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78380",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78380"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-66109",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-66109"
       },
       {
-        "url": "https://github.com/RansomLook/RansomLook/commit/133cbeab3abdd64c22b02165c6505bb3e53698cc",
+        "url": "https://jvn.jp/en/jp/JVN33423625/",
+        "name": ""
+      },
+      {
+        "url": "https://www.skyseaclientview.net/news/260824_01/",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-78380漏洞",
+    "title": "CVE-2026-66109漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -87,21 +99,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78380",
+    "cve_id": "CVE-2026-66109",
     "cvss": {
+      "cvssv3": [
+        {
+          "source": "vultures@jpcert.or.jp",
+          "vector": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
       "cvssv4": [
         {
-          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "source": "vultures@jpcert.or.jp",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.7
+          "base_score": 8.5
         }
       ]
     },
-    "cvss_score": 8.7,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "RansomLook fails to enforce the privacy status of ransomware groups and markets when distributing newly collected victim posts to external notification channels. The post-processing logic checks whether an individual post is marked private but does not verify whether the group or market to which the post belongs is configured as private.\n\nAs a result, newly parsed victim information associated with a private group or market may be automatically published through enabled Rocket.Chat, Mastodon, Bluesky, and e-mail notification channels despite the entity being explicitly configured to prevent public disclosure.\n\nA similar issue affects the public MISP feed. The feed previously determined privacy using groupinfo(), which only queries the group database. Consequently, victim information associated with private markets could be added to the public MISP feed because the corresponding market privacy flag was not evaluated.\n\nAn attacker or other unauthorized party able to access these public notification channels or the MISP feed may obtain victim information that was intended to remain private. Depending on the collected data, this may disclose victim names, ransomware activity, incident information, or other information associated with privately monitored groups and markets.\n\nThe fix introduces a common is_private_entity() check covering both groups and markets and prevents private entity posts from being distributed through external notification channels or the public MISP feed. Internal storage and dashboard alerting remain unaffected.",
+    "description": "A missing authorization vulnerability exists in SKYSEA Client View and SKYMEC IT Manager. If this vulnerability is exploited, an attacker who can log in to the Windows system on which the affected product is installed may execute arbitrary code with SYSTEM privilege.",
     "effects": [],
     "epss": -1,
     "exp": false,
@@ -111,29 +131,33 @@
     "fix_suggestion": "Optional",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-25",
     "level": "High",
-    "mps_id": "MPS-apul-rqgy",
+    "mps_id": "MPS-mxhw-tq8u",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-apul-rqgy",
-        "name": "https://www.oscs1024.com/hd/MPS-apul-rqgy"
+        "url": "https://www.oscs1024.com/hd/MPS-mxhw-tq8u",
+        "name": "https://www.oscs1024.com/hd/MPS-mxhw-tq8u"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78380",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78380"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-66109",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-66109"
       },
       {
-        "url": "https://github.com/RansomLook/RansomLook/commit/133cbeab3abdd64c22b02165c6505bb3e53698cc",
+        "url": "https://jvn.jp/en/jp/JVN33423625/",
+        "name": ""
+      },
+      {
+        "url": "https://www.skyseaclientview.net/news/260824_01/",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-78380漏洞"
+    "title": "CVE-2026-66109漏洞"
   },
-  "first_saved_at": "2026-08-24T14:36:00+00:00"
+  "first_saved_at": "2026-08-25T07:39:12+00:00"
 }
