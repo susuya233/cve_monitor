@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-08-25T00:55:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-tq2v-4c5s",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-53532",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-617",
+    "description": "OpenEXR 是开源 EXR 图像格式的参考实现，广泛用于影视行业的高动态范围图像存储与处理，并以内置 OpenJPH 支持 HTJ2K 压缩。\n受影响版本中，应用程序对不可信 HTJ2K 压缩 EXR 文件调用公开接口 exr_start_read() 后，解码路径进入 ht_undo_impl()，在 cs.create() 时调用内置 OpenJPH 的 param_qcd::get_irrev_delta()。当 QCD 标记 Sqcd 低 5 位为 0 时，该函数执行 assert((Sqcd & 0x1F) == 2) 并直接 abort()，无法被 OpenEXR 异常处理拦截，造成进程拒绝服务。\n修复版本中通过将 get_irrev_delta() 中的断言替换为 OJPH_ERROR()，在量化参数与不可逆变换不匹配时抛出可捕获错误，由 internal_exr_undo_ht() 捕获并返回 EXR_ERR_CORRUPT_CHUNK，避免进程中止。",
+    "effects": [
+      {
+        "comp_name": "openexr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.4.0,3.4.13)",
+            "min_fixed_version": "3.4.13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "可达断言",
+    "kind_en": "Reachable Assertion",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-tq2v-4c5s",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tq2v-4c5s",
+        "name": "https://www.oscs1024.com/hd/MPS-tq2v-4c5s"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-53532",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-53532"
+      },
+      {
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/releases/tag/v3.4.13",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/security/advisories/GHSA-2f85-52wj-hc3c",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "OpenEXR HTJ2K断言中止漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-53532",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-617",
+    "description": "OpenEXR 是开源 EXR 图像格式的参考实现，广泛用于影视行业的高动态范围图像存储与处理，并以内置 OpenJPH 支持 HTJ2K 压缩。\n受影响版本中，应用程序对不可信 HTJ2K 压缩 EXR 文件调用公开接口 exr_start_read() 后，解码路径进入 ht_undo_impl()，在 cs.create() 时调用内置 OpenJPH 的 param_qcd::get_irrev_delta()。当 QCD 标记 Sqcd 低 5 位为 0 时，该函数执行 assert((Sqcd & 0x1F) == 2) 并直接 abort()，无法被 OpenEXR 异常处理拦截，造成进程拒绝服务。\n修复版本中通过将 get_irrev_delta() 中的断言替换为 OJPH_ERROR()，在量化参数与不可逆变换不匹配时抛出可捕获错误，由 internal_exr_undo_ht() 捕获并返回 EXR_ERR_CORRUPT_CHUNK，避免进程中止。",
+    "effects": [
+      {
+        "comp_name": "openexr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.4.0,3.4.13)",
+            "min_fixed_version": "3.4.13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "可达断言",
+    "kind_en": "Reachable Assertion",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-tq2v-4c5s",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tq2v-4c5s",
+        "name": "https://www.oscs1024.com/hd/MPS-tq2v-4c5s"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-53532",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-53532"
+      },
+      {
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/releases/tag/v3.4.13",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/AcademySoftwareFoundation/openexr/security/advisories/GHSA-2f85-52wj-hc3c",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "OpenEXR HTJ2K断言中止漏洞"
+  },
+  "first_saved_at": "2026-08-25T00:55:32+00:00"
+}
