@@ -1135,5 +1135,13 @@
   "2bddf339fb908bf3e583d20142555f758c938124": "OpenSSL CMS堆溢出",
   "d603e4692ac9a931cc3d253535aec966cb421854": "praisonaiagents SSRF漏洞",
   "c8f93d210c787200de8f48d1645e6ddf8f3e2e09": "Artifactory VCS SSRF漏洞",
-  "b32aebb659e60470f8b0210ff6b9b0e375579c7f": "PraisonAI SSRF漏洞"
+  "b32aebb659e60470f8b0210ff6b9b0e375579c7f": "PraisonAI SSRF漏洞",
+  "9d605cf1688f2e5d8dad06752b2b0fd9afe7334a": "CVE-2026-79782漏洞",
+  "397412acf17813392a0453e576f39d8f35024b2c": "当 S3 重定向将同一主机上的方案从 HTTPS 更改为 HTTP 时，1.74.4 之前的 rclone 无法剥离 X-Amz-Security-Token 标头。攻击者可以拦截纯文本 HTTP 流量以捕获请求标头中发送的 AWS STS 会话令牌。",
+  "fc20db99b5bf602ded0eb50a9b52b878562b2e9d": "CVE-2026-79784漏洞",
+  "0f877b3679589ab2209f0ef886d6c04140218d03": "Vocos 实例化由配置文件命名的类，而不限制可以命名哪个类。 vocos/pretrained.py 中的 instantiate_class 从配置中获取 class_path 值，将其拆分为模块和属性，使用 __import__ 导入模块，使用 getattr 解析属性，并将结果调用为 args_class(*args, **kwargs)，其中 kwargs 是配置自己的 init_args 映射。没有白名单限制点路径，因此配置可以命名任何可导入的可调用对象并提供调用它的参数。 Vocos.from_hparams 为每个 feature_extractor、backbone 和 head 条目实现此目的，而 Vocos.from_pretrained 通过远程文件实现此目的：它从调用者命名的 Hugging Face 存储库下载 config.yaml 并将其直接传递到 from_hparams。从用户无法控制的存储库加载模型，因此会在加载过程中执行存储库所有者选择的代码。下载权重的相邻 torch.load 是一个单独的问题，并且受到 PyTorch 版本的限制，默认weights_only为true，这使得该路径成为可到达的路径。",
+  "31d33d27c84c45b88e35e67e8d30690191d8b4e5": "使用外部控制输入来选择类或代码（“不安全反射”）",
+  "489a19c6137008d3e6ce82cc961cbf221152b830": "CVE-2026-79785漏洞",
+  "d811849491dc9ed285e5ee678438f1bb2f167b42": "X-AnyLabeling 的模型下载器禁用了 TLS 证书验证。 anylabeling/services/auto_labeling/model.py 中的 download_with_retry 使用 ssl._create_unverified_context() 构建了一个上下文并将其传递给 urllib.request.urlopen，因此在任何模型下载时都不会检查证书链和主机名，并且模型是通过 HTTPS 从项目的发布主机获取的。因此，任何拦截该连接的一方都可以用自己选择的内容进行应答。响应被写入 .part 文件并通过 os.replace 移至适当位置，唯一的下载后检查 safe_check_model 验证文件的格式而不是其出处：不会将哈希或签名与预期值进行比较。对于 ONNX 目标，替换文件传递 onnx.checker.check_model，然后用于推理，因此攻击者选择生成应用程序注释的模型。对于附带的 SAM2 视频、YOLOE、UPN 和 open_vision 配置使用的 .pth 或 .pt 目标，检查工作程序在不带 Weights_only 的情况下调用 torch.load，因此替换的文件将被 unpickle，并在早于 Weights_only 默认值的 PyTorch 版本上执行攻击者选择的代码。",
+  "3cd9608f834b63be62a5f02ded29350d3fc01163": "数组索引验证不当"
 }

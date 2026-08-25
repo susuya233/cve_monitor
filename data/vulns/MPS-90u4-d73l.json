@@ -1,0 +1,199 @@
+{
+  "saved_at": "2026-08-25T17:25:53+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-90u4-d73l",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79774",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-693",
+    "description": "Winter CMS 是开源内容管理系统，基于 Laravel 提供后台主题与 Twig 模板编辑能力，其系统模块 winter/wn-system-module 通过 System\\Twig\\SecurityPolicy 限制模板沙箱内可调用的对象方法。\n受影响版本中，针对 CVE-2024-54149 的修复只在 SecurityPolicy::checkMethodAllowed 按对象类型匹配危险方法名，未覆盖 Eloquent 模型经 __call 转发到查询构造器的等价接口。持有 cms.manage_pages、cms.manage_layouts 或 cms.manage_partials 权限的后台用户可在模板中调用 saveQuietly()、deleteQuietly()、increment()、decrement()、newQuery() 等方法，读写任意数据库记录、执行任意 SQL，或经 Halcyon Builder 将 PHP 写入页面、布局或部件的 code 区段以实现远程代码执行。\n修复版本中通过为 SecurityPolicy 引入 blockedForwarders，使查询构造器上被拦截的方法在经模型、Eloquent 构造器或关联转发到达时同样被拦截，并扩展各类黑名单、锁定数据库连接与连接解析器，同时以 SafeCollection 与 SafePaginator 中和高阶集合回调，切断沙箱逃逸与代码注入链路。",
+    "effects": [
+      {
+        "comp_name": "winter/wn-system-module",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[1.2.7,1.2.13)",
+            "min_fixed_version": "1.2.13",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "wintercms/winter",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[1.2.7,1.2.13)",
+            "min_fixed_version": "1.2.13",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "保护机制失效",
+    "kind_en": "保护机制失效",
+    "last_modified_time": "2026-08-26",
+    "level": "Critical",
+    "mps_id": "MPS-90u4-d73l",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-90u4-d73l",
+        "name": "https://www.oscs1024.com/hd/MPS-90u4-d73l"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79774",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79774"
+      },
+      {
+        "url": "https://github.com/wintercms/winter/commit/725bbcda232466f7f71381c271c6916573d576e6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/wintercms/winter/security/advisories/GHSA-8cfw-pcwh-v63w",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/winter-cms-before-twig-sandbox-escape-via-securitypolicy",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Winter CMS沙箱逃逸",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79774",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-693",
+    "description": "Winter CMS 是开源内容管理系统，基于 Laravel 提供后台主题与 Twig 模板编辑能力，其系统模块 winter/wn-system-module 通过 System\\Twig\\SecurityPolicy 限制模板沙箱内可调用的对象方法。\n受影响版本中，针对 CVE-2024-54149 的修复只在 SecurityPolicy::checkMethodAllowed 按对象类型匹配危险方法名，未覆盖 Eloquent 模型经 __call 转发到查询构造器的等价接口。持有 cms.manage_pages、cms.manage_layouts 或 cms.manage_partials 权限的后台用户可在模板中调用 saveQuietly()、deleteQuietly()、increment()、decrement()、newQuery() 等方法，读写任意数据库记录、执行任意 SQL，或经 Halcyon Builder 将 PHP 写入页面、布局或部件的 code 区段以实现远程代码执行。\n修复版本中通过为 SecurityPolicy 引入 blockedForwarders，使查询构造器上被拦截的方法在经模型、Eloquent 构造器或关联转发到达时同样被拦截，并扩展各类黑名单、锁定数据库连接与连接解析器，同时以 SafeCollection 与 SafePaginator 中和高阶集合回调，切断沙箱逃逸与代码注入链路。",
+    "effects": [
+      {
+        "comp_name": "winter/wn-system-module",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[1.2.7,1.2.13)",
+            "min_fixed_version": "1.2.13",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "wintercms/winter",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[1.2.7,1.2.13)",
+            "min_fixed_version": "1.2.13",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "保护机制失效",
+    "kind_en": "Protection Mechanism Failure",
+    "last_modified_time": "2026-08-26",
+    "level": "Critical",
+    "mps_id": "MPS-90u4-d73l",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-90u4-d73l",
+        "name": "https://www.oscs1024.com/hd/MPS-90u4-d73l"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79774",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79774"
+      },
+      {
+        "url": "https://github.com/wintercms/winter/commit/725bbcda232466f7f71381c271c6916573d576e6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/wintercms/winter/security/advisories/GHSA-8cfw-pcwh-v63w",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/winter-cms-before-twig-sandbox-escape-via-securitypolicy",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Winter CMS沙箱逃逸"
+  },
+  "first_saved_at": "2026-08-25T17:25:53+00:00"
+}

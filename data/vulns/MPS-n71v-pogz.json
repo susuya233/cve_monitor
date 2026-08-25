@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-08-25T17:25:47+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-n71v-pogz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79784",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-470",
+    "description": "Vocos 实例化由配置文件命名的类，而不限制可以命名哪个类。 vocos/pretrained.py 中的 instantiate_class 从配置中获取 class_path 值，将其拆分为模块和属性，使用 __import__ 导入模块，使用 getattr 解析属性，并将结果调用为 args_class(*args, **kwargs)，其中 kwargs 是配置自己的 init_args 映射。没有白名单限制点路径，因此配置可以命名任何可导入的可调用对象并提供调用它的参数。 Vocos.from_hparams 为每个 feature_extractor、backbone 和 head 条目实现此目的，而 Vocos.from_pretrained 通过远程文件实现此目的：它从调用者命名的 Hugging Face 存储库下载 config.yaml 并将其直接传递到 from_hparams。从用户无法控制的存储库加载模型，因此会在加载过程中执行存储库所有者选择的代码。下载权重的相邻 torch.load 是一个单独的问题，并且受到 PyTorch 版本的限制，默认weights_only为true，这使得该路径成为可到达的路径。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用外部可控制的输入来选择类或代码（不安全的反射）",
+    "kind_en": "使用外部控制输入来选择类或代码（“不安全反射”）",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-n71v-pogz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-n71v-pogz",
+        "name": "https://www.oscs1024.com/hd/MPS-n71v-pogz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79784",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79784"
+      },
+      {
+        "url": "https://github.com/gemelo-ai/vocos",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gemelo-ai/vocos/blob/main/vocos/pretrained.py",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gemelo-ai/vocos/issues/76",
+        "name": ""
+      },
+      {
+        "url": "https://pypi.org/project/vocos/",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/vocos-through-arbitrary-code-execution-via-unrestricted-class-path-in-model-configuration",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-79784漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79784",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-470",
+    "description": "Vocos instantiates a class named by a configuration file without restricting which class may be named. instantiate_class in vocos/pretrained.py takes the class_path value from the configuration, splits it into a module and an attribute, imports the module with __import__, resolves the attribute with getattr, and calls the result as args_class(*args, **kwargs) where kwargs is the config's own init_args mapping. No allowlist constrains the dotted path, so a configuration may name any importable callable and supply the arguments it is called with. Vocos.from_hparams reaches this for each of the feature_extractor, backbone and head entries, and Vocos.from_pretrained reaches it with a remote file: it downloads config.yaml from a caller-named Hugging Face repository and passes it straight to from_hparams. Loading a model from a repository the user does not control therefore executes code of the repository owner's choosing in the loading process. The neighbouring torch.load of the downloaded weights is a separate matter and is constrained on PyTorch releases that default weights_only to true, which leaves this path as the reachable one.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用外部可控制的输入来选择类或代码（不安全的反射）",
+    "kind_en": "Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection')",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-n71v-pogz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-n71v-pogz",
+        "name": "https://www.oscs1024.com/hd/MPS-n71v-pogz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79784",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79784"
+      },
+      {
+        "url": "https://github.com/gemelo-ai/vocos",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gemelo-ai/vocos/blob/main/vocos/pretrained.py",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gemelo-ai/vocos/issues/76",
+        "name": ""
+      },
+      {
+        "url": "https://pypi.org/project/vocos/",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/vocos-through-arbitrary-code-execution-via-unrestricted-class-path-in-model-configuration",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-79784漏洞"
+  },
+  "first_saved_at": "2026-08-25T17:25:47+00:00"
+}
