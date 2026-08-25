@@ -1,0 +1,275 @@
+{
+  "saved_at": "2026-08-25T09:29:17+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xg4l-32jh",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 当攻击者欺骗合法的基于 Web 的应用程序或站点接受来自可信来源的请求时，就会发生跨站点脚本攻击。\r\n- 这是通过转义 Web 应用程序的上下文来完成的； 然后，Web 应用程序将该数据与其他受信任的动态内容一起交付给其用户，而无需对其进行验证。 浏览器不知不觉地在客户端执行恶意脚本（通过客户端语言；通常是 JavaScript 或 HTML）以执行通常被浏览器的同源策略阻止的操作。\r\n- ֿ注入恶意代码是最普遍的XSS利用方式； 因此，转义字符以防止这种操作是保护代码免受此漏洞影响的首要方法。\r\n- 转义意味着应用程序被编码以标记关键字符，特别是用户输入中包含的关键字符，以防止这些字符在危险的上下文中被解释。 例如，在 HTML 中，< 可以编码为 &lt; 并且>可以被编码为&gt; 为了在文本中被解释和显示为它们自己，而在代码本身中，它们被用于 HTML 标记。 如果将恶意内容注入到转义特殊字符的应用程序中，并且该恶意内容使用 < 和 > 作为 HTML 标记，那么如果这些字符在应用程序代码中正确转义，那么这些字符将不会被浏览器解释为 HTML 标记。 转移未遂攻击的方式。\r\n- XSS 最突出的用途是窃取 cookie（来源：OWASP HttpOnly）和劫持用户会话，但 XSS 漏洞已被用于暴露敏感信息、允许访问特权服务和功能以及传播恶意软件。",
+        "title": "什么是XSS"
+      },
+      {
+        "content": "| 类型        | 描述                                                         |\r\n| ----------- | ------------------------------------------------------------ |\r\n| 存储型      | 攻击者将恶意代码插入到应用程序中（通常作为链接）。 每次用户单击链接时，代码都会被激活。 |\r\n| 反射型      | 攻击者从易受攻击的网站应用程序外部向用户提供恶意链接。 单击时，恶意代码将发送到易受攻击的网站，将攻击反映回用户的浏览器。 |\r\n| 基于 DOM 的 | 攻击者强制用户的浏览器呈现恶意页面。 页面中的数据本身提供跨站点脚本数据。 |\r\n| 变异        | 攻击者注入看似安全的代码，但随后在解析标记时被浏览器重写和修改。 一个例子是重新平衡未闭合的引号，甚至为未引用的参数添加引号。 |",
+        "title": "XSS常见的攻击方式"
+      },
+      {
+        "content": "- 在将 HTTP 请求中的数据输入反射回来之前对其进行清理，确保在将任何数据回显给用户之前验证、过滤或转义所有数据，例如搜索期间的查询参数值。\r\n- 将特殊字符（如 ?、&、/、<、> 和空格）转换为其各自的 HTML 或 URL 编码等价物。\r\n- 为用户提供禁用客户端脚本的选项。\r\n- 重定向无效请求。\r\n- 检测同时登录，包括来自两个不同 IP 地址的登录，并使这些会话无效。\r\n- 使用并执行内容安全策略（Content Safe Policy）来禁用可能被 XSS 攻击操纵的任何功能。\r\n- 阅读代码中引用的所有库的文档，了解哪些元素允许嵌入 HTML。",
+        "title": "如何预防XSS"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-18323",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cwe": "CWE-79",
+    "description": "Forminator Forms 是 WPMU DEV 发布的开源 WordPress 表单插件，用于创建联系表单、支付表单和自定义表单。\n受影响版本中，未认证攻击者可向已启用 Save and Continue 的表单调用 wp_ajax_nopriv_forminator_submit_form_custom-forms 并提交 save_draft 草稿。Forminator_CForm_Front_Action::set_field_data 在草稿模式下跳过 validate_entry，绕过 Forminator_Radio::validate 的选项成员校验；Forminator_Radio::sanitize 使用 wp_kses_post 保留 HTML，payload 写入提交记录后，后台 Submissions 页 content-details.php 再次以 wp_kses_post 输出，bundled Inputmask 会对 data-inputmask 属性中的回调自动执行。\n修复版本中通过将 Radio 字段 sanitize 改为 sanitize_choice_data 去除 HTML 标签，并在 Submissions 页对 radio、select、checkbox 使用 esc_html 输出，切断恶意脚本入库与后台自动执行链路。",
+    "effects": [
+      {
+        "comp_name": "forminator",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.57.0.3)",
+            "min_fixed_version": "1.57.0.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "XSS",
+    "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-xg4l-32jh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xg4l-32jh",
+        "name": "https://www.oscs1024.com/hd/MPS-xg4l-32jh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18323",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18323"
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/admin/views/custom-form/entries/content-details.php#L232",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/abstracts/abstract-class-front-action.php#L127",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/fields/radio.php#L520",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/helpers/helper-fields.php#L1053",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/modules/custom-forms/front/front-action.php#L1112",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/admin/views/custom-form/entries/content-details.php#L232",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/abstracts/abstract-class-front-action.php#L127",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/fields/radio.php#L520",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/helpers/helper-fields.php#L1053",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/modules/custom-forms/front/front-action.php#L1112",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3652725/forminator/trunk/admin/views/custom-form/entries/content-details.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?old_path=%2Fforminator/tags/1.57.0.2&new_path=%2Fforminator/tags/1.57.0.3",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&new=3652727%40forminator%2Ftags%2F1.57.0.3&old=3652717%40forminator%2Ftags%2F1.57.0.2",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/85b02779-d85f-4700-9994-68391e69c1ea?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Forminator存储型XSS漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 当攻击者欺骗合法的基于 Web 的应用程序或站点接受来自可信来源的请求时，就会发生跨站点脚本攻击。\r\n- 这是通过转义 Web 应用程序的上下文来完成的； 然后，Web 应用程序将该数据与其他受信任的动态内容一起交付给其用户，而无需对其进行验证。 浏览器不知不觉地在客户端执行恶意脚本（通过客户端语言；通常是 JavaScript 或 HTML）以执行通常被浏览器的同源策略阻止的操作。\r\n- ֿ注入恶意代码是最普遍的XSS利用方式； 因此，转义字符以防止这种操作是保护代码免受此漏洞影响的首要方法。\r\n- 转义意味着应用程序被编码以标记关键字符，特别是用户输入中包含的关键字符，以防止这些字符在危险的上下文中被解释。 例如，在 HTML 中，< 可以编码为 &lt; 并且>可以被编码为&gt; 为了在文本中被解释和显示为它们自己，而在代码本身中，它们被用于 HTML 标记。 如果将恶意内容注入到转义特殊字符的应用程序中，并且该恶意内容使用 < 和 > 作为 HTML 标记，那么如果这些字符在应用程序代码中正确转义，那么这些字符将不会被浏览器解释为 HTML 标记。 转移未遂攻击的方式。\r\n- XSS 最突出的用途是窃取 cookie（来源：OWASP HttpOnly）和劫持用户会话，但 XSS 漏洞已被用于暴露敏感信息、允许访问特权服务和功能以及传播恶意软件。",
+        "title": "什么是XSS"
+      },
+      {
+        "content": "| 类型        | 描述                                                         |\r\n| ----------- | ------------------------------------------------------------ |\r\n| 存储型      | 攻击者将恶意代码插入到应用程序中（通常作为链接）。 每次用户单击链接时，代码都会被激活。 |\r\n| 反射型      | 攻击者从易受攻击的网站应用程序外部向用户提供恶意链接。 单击时，恶意代码将发送到易受攻击的网站，将攻击反映回用户的浏览器。 |\r\n| 基于 DOM 的 | 攻击者强制用户的浏览器呈现恶意页面。 页面中的数据本身提供跨站点脚本数据。 |\r\n| 变异        | 攻击者注入看似安全的代码，但随后在解析标记时被浏览器重写和修改。 一个例子是重新平衡未闭合的引号，甚至为未引用的参数添加引号。 |",
+        "title": "XSS常见的攻击方式"
+      },
+      {
+        "content": "- 在将 HTTP 请求中的数据输入反射回来之前对其进行清理，确保在将任何数据回显给用户之前验证、过滤或转义所有数据，例如搜索期间的查询参数值。\r\n- 将特殊字符（如 ?、&、/、<、> 和空格）转换为其各自的 HTML 或 URL 编码等价物。\r\n- 为用户提供禁用客户端脚本的选项。\r\n- 重定向无效请求。\r\n- 检测同时登录，包括来自两个不同 IP 地址的登录，并使这些会话无效。\r\n- 使用并执行内容安全策略（Content Safe Policy）来禁用可能被 XSS 攻击操纵的任何功能。\r\n- 阅读代码中引用的所有库的文档，了解哪些元素允许嵌入 HTML。",
+        "title": "如何预防XSS"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-18323",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cwe": "CWE-79",
+    "description": "Forminator Forms 是 WPMU DEV 发布的开源 WordPress 表单插件，用于创建联系表单、支付表单和自定义表单。\n受影响版本中，未认证攻击者可向已启用 Save and Continue 的表单调用 wp_ajax_nopriv_forminator_submit_form_custom-forms 并提交 save_draft 草稿。Forminator_CForm_Front_Action::set_field_data 在草稿模式下跳过 validate_entry，绕过 Forminator_Radio::validate 的选项成员校验；Forminator_Radio::sanitize 使用 wp_kses_post 保留 HTML，payload 写入提交记录后，后台 Submissions 页 content-details.php 再次以 wp_kses_post 输出，bundled Inputmask 会对 data-inputmask 属性中的回调自动执行。\n修复版本中通过将 Radio 字段 sanitize 改为 sanitize_choice_data 去除 HTML 标签，并在 Submissions 页对 radio、select、checkbox 使用 esc_html 输出，切断恶意脚本入库与后台自动执行链路。",
+    "effects": [
+      {
+        "comp_name": "forminator",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.57.0.3)",
+            "min_fixed_version": "1.57.0.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "XSS",
+    "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-xg4l-32jh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xg4l-32jh",
+        "name": "https://www.oscs1024.com/hd/MPS-xg4l-32jh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18323",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18323"
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/admin/views/custom-form/entries/content-details.php#L232",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/abstracts/abstract-class-front-action.php#L127",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/fields/radio.php#L520",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/helpers/helper-fields.php#L1053",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/modules/custom-forms/front/front-action.php#L1112",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/admin/views/custom-form/entries/content-details.php#L232",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/abstracts/abstract-class-front-action.php#L127",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/fields/radio.php#L520",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/helpers/helper-fields.php#L1053",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/modules/custom-forms/front/front-action.php#L1112",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3652725/forminator/trunk/admin/views/custom-form/entries/content-details.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?old_path=%2Fforminator/tags/1.57.0.2&new_path=%2Fforminator/tags/1.57.0.3",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&new=3652727%40forminator%2Ftags%2F1.57.0.3&old=3652717%40forminator%2Ftags%2F1.57.0.2",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/85b02779-d85f-4700-9994-68391e69c1ea?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Forminator存储型XSS漏洞"
+  },
+  "first_saved_at": "2026-08-25T09:29:17+00:00"
+}

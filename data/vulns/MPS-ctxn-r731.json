@@ -1,0 +1,235 @@
+{
+  "saved_at": "2026-08-25T09:29:19+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ctxn-r731",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-16601",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-434",
+    "description": "CM Map Locations 是 CreativeMinds 发布的开源 WordPress 插件，用于在 Google 地图上展示、检索并管理多个地点，可作为门店定位与地点目录使用。\n受影响版本中，前台地点编辑页通过 wp_localize_script 将 cmloc-editor-media nonce 写入 CMLOC_Editor_Images 对象，已登录订阅者可以读取。攻击者向 admin-ajax.php 提交 action=cmloc_route_image_upload、该 nonce 以及 $_FILES 后，DashboardController::cmloc_route_image_upload 只校验 nonce，未检查 upload_files 能力，也未校验 MIME 与真实图片类型，并把文件交给 Attachment::uploadMedia。uploadMedia 把原始文件名拼入上传目录并调用 move_uploaded_file，攻击者可写入可执行文件并实现远程代码执行。\n修复版本中通过在 cmloc_route_image_upload 增加 current_user_can('upload_files') 校验，并用 wp_check_filetype_and_ext 与 getimagesize 将上传限制为 JPEG、PNG、GIF、WebP 图片，阻断订阅者上传可执行文件。",
+    "effects": [
+      {
+        "comp_name": "cm-map-locations",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.1.9)",
+            "min_fixed_version": "2.1.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "任意文件上传",
+    "kind_en": "危险类型文件无限制上传",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-ctxn-r731",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ctxn-r731",
+        "name": "https://www.oscs1024.com/hd/MPS-ctxn-r731"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16601",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-16601"
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/cm-map-locations/tags/2.1.8/controller/DashboardController.php#L105",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/cm-map-locations/tags/2.1.8/controller/DashboardController.php#L385",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/cm-map-locations/tags/2.1.8/core/controller/Controller.php#L45",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/cm-map-locations/tags/2.1.8/model/Attachment.php#L240",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/cm-map-locations/tags/2.1.8/model/Route.php#L362",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3626848/cm-map-locations/trunk/controller/DashboardController.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?old_path=%2Fcm-map-locations/tags/2.1.8&new_path=%2Fcm-map-locations/tags/2.1.9",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&new=3626853%40cm-map-locations%2Ftags%2F2.1.9&old=3544748%40cm-map-locations%2Ftags%2F2.1.8",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/41308ae8-1b3d-4658-808d-630d6e673f3f?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CM Map Locations文件上传漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-16601",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-434",
+    "description": "CM Map Locations 是 CreativeMinds 发布的开源 WordPress 插件，用于在 Google 地图上展示、检索并管理多个地点，可作为门店定位与地点目录使用。\n受影响版本中，前台地点编辑页通过 wp_localize_script 将 cmloc-editor-media nonce 写入 CMLOC_Editor_Images 对象，已登录订阅者可以读取。攻击者向 admin-ajax.php 提交 action=cmloc_route_image_upload、该 nonce 以及 $_FILES 后，DashboardController::cmloc_route_image_upload 只校验 nonce，未检查 upload_files 能力，也未校验 MIME 与真实图片类型，并把文件交给 Attachment::uploadMedia。uploadMedia 把原始文件名拼入上传目录并调用 move_uploaded_file，攻击者可写入可执行文件并实现远程代码执行。\n修复版本中通过在 cmloc_route_image_upload 增加 current_user_can('upload_files') 校验，并用 wp_check_filetype_and_ext 与 getimagesize 将上传限制为 JPEG、PNG、GIF、WebP 图片，阻断订阅者上传可执行文件。",
+    "effects": [
+      {
+        "comp_name": "cm-map-locations",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.1.9)",
+            "min_fixed_version": "2.1.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "任意文件上传",
+    "kind_en": "Unrestricted Upload of File with Dangerous Type",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-ctxn-r731",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ctxn-r731",
+        "name": "https://www.oscs1024.com/hd/MPS-ctxn-r731"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16601",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-16601"
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/cm-map-locations/tags/2.1.8/controller/DashboardController.php#L105",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/cm-map-locations/tags/2.1.8/controller/DashboardController.php#L385",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/cm-map-locations/tags/2.1.8/core/controller/Controller.php#L45",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/cm-map-locations/tags/2.1.8/model/Attachment.php#L240",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/cm-map-locations/tags/2.1.8/model/Route.php#L362",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3626848/cm-map-locations/trunk/controller/DashboardController.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?old_path=%2Fcm-map-locations/tags/2.1.8&new_path=%2Fcm-map-locations/tags/2.1.9",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&new=3626853%40cm-map-locations%2Ftags%2F2.1.9&old=3544748%40cm-map-locations%2Ftags%2F2.1.8",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/41308ae8-1b3d-4658-808d-630d6e673f3f?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CM Map Locations文件上传漏洞"
+  },
+  "first_saved_at": "2026-08-25T09:29:19+00:00"
+}
