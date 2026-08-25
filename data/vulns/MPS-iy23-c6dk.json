@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-25T11:21:38+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-25T11:21:35+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-axwk-0u92",
+  "source_page": "https://www.oscs1024.com/hd/MPS-iy23-c6dk",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,30 +21,30 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78563",
+    "cve_id": "CVE-2026-16231",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "source": "ce714d77-add3-4f53-aff5-83d477b104bb",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 8.1
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
     "cwe": "CWE-79",
-    "description": "NotificationX Pro 是 WPDeveloper 出品的 WordPress 商业插件，用于在站点上展示销售提醒、社会证明和通知栏等营销组件。\n受影响版本中，插件对输入缺少充分净化与输出转义，未认证攻击者可将任意 Web 脚本写入页面，用户访问被注入页面时脚本会在浏览器中执行。\n修复版本中通过补齐输入净化与输出转义切断该存储型脚本注入路径；截至 2026-08-25，厂商尚未发布明确修复版本，公开资料未披露具体源码改动。",
+    "description": "hbs 是开源 npm 组件，作为 Express 的 Handlebars 视图引擎，用于服务端渲染 HTML 模板。\n受影响版本中，registerAsyncHelper 注册的异步 helper 在首次渲染时返回不透明占位符，双花括号表达式仅转义该占位符；渲染结束后，lib/hbs.js 的 middleware 在缓存、非缓存和 layout 三条路径上执行 res.replace(id, values[id])，用 callback 原始返回值替换占位符且不再做 HTML 转义。应用若把攻击者可控内容传入异步 helper 回调，即可向服务端渲染页面注入任意 HTML 与 JavaScript，形成存储型或反射型跨站脚本。\n修复版本中通过在上述替换路径统一调用 handlebars.Utils.escapeExpression 转义异步 helper 输出，切断未转义内容进入页面的链路；如需输出原始 HTML，须显式使用 hbs.SafeString。",
     "effects": [
       {
-        "comp_name": "notificationx-pro",
-        "ecosystem": "linux",
+        "comp_name": "hbs",
+        "ecosystem": "npm",
         "versions": [
           {
-            "affected_version": "(-∞,3.1.4]",
-            "min_fixed_version": "",
-            "repository": "unmanaged",
+            "affected_version": "[2.1.0,4.3.0)",
+            "min_fixed_version": "4.3.0",
+            "repository": "npm",
             "solutions": [],
             "upstream": true
           }
@@ -54,40 +54,41 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "XSS",
     "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
     "last_modified_time": "2026-08-25",
     "level": "High",
-    "mps_id": "MPS-axwk-0u92",
+    "mps_id": "MPS-iy23-c6dk",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-axwk-0u92",
-        "name": "https://www.oscs1024.com/hd/MPS-axwk-0u92"
+        "url": "https://www.oscs1024.com/hd/MPS-iy23-c6dk",
+        "name": "https://www.oscs1024.com/hd/MPS-iy23-c6dk"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78563",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78563"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16231",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-16231"
       },
       {
-        "url": "https://patchstack.com/database/wordpress/plugin/notificationx-pro/vulnerability/wordpress-notificationx-pro-plugin-3-1-4-cross-site-scripting-xss-vulnerability",
+        "url": "https://cna.openjsf.org/security-advisories.html",
         "name": ""
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/0adad1bc-8803-4c20-ae9f-ab8b66d1e6df?source=cve",
+        "url": "https://github.com/pillarjs/hbs/security/advisories/GHSA-rg36-rxv9-2m9q",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "npm",
+      "开源"
     ],
-    "title": "NotificationX Pro存储型XSS",
+    "title": "hbs异步Helper XSS",
     "_translated": true
   },
   "detail_original": {
@@ -107,30 +108,30 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78563",
+    "cve_id": "CVE-2026-16231",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "source": "ce714d77-add3-4f53-aff5-83d477b104bb",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 8.1
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
     "cwe": "CWE-79",
-    "description": "NotificationX Pro 是 WPDeveloper 出品的 WordPress 商业插件，用于在站点上展示销售提醒、社会证明和通知栏等营销组件。\n受影响版本中，插件对输入缺少充分净化与输出转义，未认证攻击者可将任意 Web 脚本写入页面，用户访问被注入页面时脚本会在浏览器中执行。\n修复版本中通过补齐输入净化与输出转义切断该存储型脚本注入路径；截至 2026-08-25，厂商尚未发布明确修复版本，公开资料未披露具体源码改动。",
+    "description": "hbs 是开源 npm 组件，作为 Express 的 Handlebars 视图引擎，用于服务端渲染 HTML 模板。\n受影响版本中，registerAsyncHelper 注册的异步 helper 在首次渲染时返回不透明占位符，双花括号表达式仅转义该占位符；渲染结束后，lib/hbs.js 的 middleware 在缓存、非缓存和 layout 三条路径上执行 res.replace(id, values[id])，用 callback 原始返回值替换占位符且不再做 HTML 转义。应用若把攻击者可控内容传入异步 helper 回调，即可向服务端渲染页面注入任意 HTML 与 JavaScript，形成存储型或反射型跨站脚本。\n修复版本中通过在上述替换路径统一调用 handlebars.Utils.escapeExpression 转义异步 helper 输出，切断未转义内容进入页面的链路；如需输出原始 HTML，须显式使用 hbs.SafeString。",
     "effects": [
       {
-        "comp_name": "notificationx-pro",
-        "ecosystem": "linux",
+        "comp_name": "hbs",
+        "ecosystem": "npm",
         "versions": [
           {
-            "affected_version": "(-∞,3.1.4]",
-            "min_fixed_version": "",
-            "repository": "unmanaged",
+            "affected_version": "[2.1.0,4.3.0)",
+            "min_fixed_version": "4.3.0",
+            "repository": "npm",
             "solutions": [],
             "upstream": true
           }
@@ -140,40 +141,41 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "XSS",
     "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
     "last_modified_time": "2026-08-25",
     "level": "High",
-    "mps_id": "MPS-axwk-0u92",
+    "mps_id": "MPS-iy23-c6dk",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-axwk-0u92",
-        "name": "https://www.oscs1024.com/hd/MPS-axwk-0u92"
+        "url": "https://www.oscs1024.com/hd/MPS-iy23-c6dk",
+        "name": "https://www.oscs1024.com/hd/MPS-iy23-c6dk"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78563",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78563"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16231",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-16231"
       },
       {
-        "url": "https://patchstack.com/database/wordpress/plugin/notificationx-pro/vulnerability/wordpress-notificationx-pro-plugin-3-1-4-cross-site-scripting-xss-vulnerability",
+        "url": "https://cna.openjsf.org/security-advisories.html",
         "name": ""
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/0adad1bc-8803-4c20-ae9f-ab8b66d1e6df?source=cve",
+        "url": "https://github.com/pillarjs/hbs/security/advisories/GHSA-rg36-rxv9-2m9q",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "npm",
+      "开源"
     ],
-    "title": "NotificationX Pro存储型XSS"
+    "title": "hbs异步Helper XSS"
   },
-  "first_saved_at": "2026-08-25T10:24:54+00:00"
+  "first_saved_at": "2026-08-25T11:21:35+00:00"
 }
