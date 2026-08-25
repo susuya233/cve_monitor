@@ -1,0 +1,157 @@
+{
+  "saved_at": "2026-08-25T16:29:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-p04h-7jxz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55534",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+    "cwe": "CWE-306",
+    "description": "PraisonAI 是开源多智能体团队系统，可通过 CLI 将配置的智能体以 HTTP API 对外提供服务。\n受影响版本中，praisonai serve agents 会接收 --api-key 并将密钥写入配置，但 ServeHandler._create_agents_app() 创建 FastAPI 应用时未安装基于该密钥的认证中间件或依赖，网络侧调用方可在不提供凭证的情况下请求 POST /agents 与 POST /agents/{agent_name} 并执行已注册智能体。\n修复版本中通过新增 _install_api_key_middleware()，在 _create_agents_app() 返回应用前安装 APIKeyMiddleware，对请求校验 Authorization Bearer 或 X-API-Key，阻断未认证调用进入智能体执行路径。",
+    "effects": [
+      {
+        "comp_name": "PraisonAI",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[4.6.34,4.6.58)",
+            "min_fixed_version": "4.6.58",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-p04h-7jxz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/security/advisories/GHSA-7ww9-85pg-cv4x",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/commit/2f9677abb2ea68eab864ee8b6a828fd0141612e1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/releases/tag/v4.6.58",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-7ww9-85pg-cv4x",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "PraisonAI认证缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55534",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+    "cwe": "CWE-306",
+    "description": "PraisonAI 是开源多智能体团队系统，可通过 CLI 将配置的智能体以 HTTP API 对外提供服务。\n受影响版本中，praisonai serve agents 会接收 --api-key 并将密钥写入配置，但 ServeHandler._create_agents_app() 创建 FastAPI 应用时未安装基于该密钥的认证中间件或依赖，网络侧调用方可在不提供凭证的情况下请求 POST /agents 与 POST /agents/{agent_name} 并执行已注册智能体。\n修复版本中通过新增 _install_api_key_middleware()，在 _create_agents_app() 返回应用前安装 APIKeyMiddleware，对请求校验 Authorization Bearer 或 X-API-Key，阻断未认证调用进入智能体执行路径。",
+    "effects": [
+      {
+        "comp_name": "PraisonAI",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[4.6.34,4.6.58)",
+            "min_fixed_version": "4.6.58",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-p04h-7jxz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/security/advisories/GHSA-7ww9-85pg-cv4x",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/commit/2f9677abb2ea68eab864ee8b6a828fd0141612e1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/releases/tag/v4.6.58",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-7ww9-85pg-cv4x",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "PraisonAI认证缺失漏洞"
+  },
+  "first_saved_at": "2026-08-25T16:29:32+00:00"
+}

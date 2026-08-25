@@ -1,0 +1,157 @@
+{
+  "saved_at": "2026-08-25T16:29:31+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-r74w-eu2l",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55537",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:L/A:N",
+    "cwe": "CWE-918",
+    "description": "PraisonAI 是开源多智能体协作框架，提供异步 Jobs API，用于提交代理任务并在完成后向 webhook_url 回调结果。\n受影响版本中，JobSubmitRequest.validate_webhook_url() 对 webhook_url 做 DNS 解析并拦截私网地址，但在 socket.gethostbyname() 抛出 socket.gaierror 时走 except socket.gaierror: pass，未解析主机名仍被接受。任务完成后 JobExecutor._send_webhook() 通过 httpx.AsyncClient().post(job.webhook_url) 重新解析该主机名并发起 POST。攻击者可提交当时无法解析的 webhook 主机名，再在任务执行前把 DNS 指向内网地址，使回调打到内部服务并形成 SSRF。\n修复版本中通过将 gaierror 分支改为抛出 ValueError(\"Webhook URL hostname could not be resolved\")，在提交校验阶段拒绝无法解析的 webhook 主机名，切断该 fail-open 利用链。",
+    "effects": [
+      {
+        "comp_name": "PraisonAI",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.6.58)",
+            "min_fixed_version": "4.6.58",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-r74w-eu2l",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/security/advisories/GHSA-rg5q-pp8p-f7jm",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/commit/2f9677abb2ea68eab864ee8b6a828fd0141612e1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/releases/tag/v4.6.58",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-rg5q-pp8p-f7jm",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "PraisonAI SSRF漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55537",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:L/A:N",
+    "cwe": "CWE-918",
+    "description": "PraisonAI 是开源多智能体协作框架，提供异步 Jobs API，用于提交代理任务并在完成后向 webhook_url 回调结果。\n受影响版本中，JobSubmitRequest.validate_webhook_url() 对 webhook_url 做 DNS 解析并拦截私网地址，但在 socket.gethostbyname() 抛出 socket.gaierror 时走 except socket.gaierror: pass，未解析主机名仍被接受。任务完成后 JobExecutor._send_webhook() 通过 httpx.AsyncClient().post(job.webhook_url) 重新解析该主机名并发起 POST。攻击者可提交当时无法解析的 webhook 主机名，再在任务执行前把 DNS 指向内网地址，使回调打到内部服务并形成 SSRF。\n修复版本中通过将 gaierror 分支改为抛出 ValueError(\"Webhook URL hostname could not be resolved\")，在提交校验阶段拒绝无法解析的 webhook 主机名，切断该 fail-open 利用链。",
+    "effects": [
+      {
+        "comp_name": "PraisonAI",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.6.58)",
+            "min_fixed_version": "4.6.58",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-r74w-eu2l",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/security/advisories/GHSA-rg5q-pp8p-f7jm",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/commit/2f9677abb2ea68eab864ee8b6a828fd0141612e1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/releases/tag/v4.6.58",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-rg5q-pp8p-f7jm",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "PraisonAI SSRF漏洞"
+  },
+  "first_saved_at": "2026-08-25T16:29:31+00:00"
+}
