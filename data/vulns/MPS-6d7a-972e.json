@@ -1,0 +1,313 @@
+{
+  "saved_at": "2026-08-25T22:19:40+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6d7a-972e",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能有效地控制资源的使用，导致攻击者可以利用这个漏洞耗尽应用程序所依赖的资源。这些资源可以是计算资源（CPU、内存）、网络带宽、数据库连接或其他系统资源。攻击者可以通过发送特制的请求、恶意输入或其他方式，使应用程序消耗大量资源，导致拒绝服务或系统崩溃。",
+        "title": "什么是拒绝服务"
+      },
+      {
+        "content": "- 消耗计算资源：攻击者可以发送计算密集型的请求，例如复杂的计算、无限循环或递归操作，以耗尽应用程序的计算资源，导致应用程序无法响应其他请求。\r\n- 消耗内存资源：攻击者可以发送大量的数据或恶意输入，以导致应用程序消耗过多的内存资源，从而使系统的可用内存耗尽，并导致应用程序崩溃或变得不可用。\r\n- 消耗网络带宽：攻击者可以发送大量的请求或大型数据包，以消耗应用程序所依赖的网络带宽。这会导致其他合法用户无法正常访问应用程序或降低系统的整体网络性能。\r\n- 消耗存储资源：攻击者可以发送大量的请求或上传大文件，以耗尽应用程序的存储资源，导致系统无法处理其他请求或存储新的数据。",
+        "title": "拒绝服务常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对输入数据进行合理的验证和过滤，防止恶意输入导致资源消耗过高。\r\n- 实施资源限制：应用程序应该实施适当的资源限制策略，例如限制计算操作的时间或次数，限制内存使用量，限制并发连接数等，以防止资源被耗尽。\r\n- 异常处理与错误恢复：应用程序应该具备健壮的异常处理和错误恢复机制，以防止因意外错误导致资源泄漏或无法释放的情况。\r\n- 资源监控与警报：应用程序应该实施适当的资源监控和警报机制，及时发现异常的资源消耗情况，并采取相应的措施来应对。\r\n- 压力测试与性能优化：应用程序应该进行压力测试，以评估其在高负载情况下的性能，并进行必要的性能优化，以确保能够有效地处理大量请求而不耗尽资源。",
+        "title": "如何预防拒绝服务"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-68763",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-400",
+    "description": "Apache Tomcat 是 Apache 软件基金会发布的开源 Java Servlet 容器与 Web 服务器，用于托管 Java Web 应用，并可通过 Http2Protocol 提供 HTTP/2。\n受影响版本中，HTTP/2 连接在连接级流量窗口不足时，会把尚未获得完整窗口分配的流放入 Http2UpgradeHandler 的 backlog，并用 backLogSize 累计待分配字节。客户端发送 RST_STREAM 重置仍处于 backlog 中的流时，replaceStream 未将该流移出 backlog，也未把已授予但未使用的 connectionAllocationMade 归还连接窗口；allocate 在完成部分分配后也未扣减 backLogSize。攻击者可在耗尽连接窗口后反复创建并重置流，使窗口与 backlog 记账持续泄漏，最终造成拒绝服务。\n修复版本中通过在 replaceStream 中移除已重置流及其未完成分配请求并归还剩余窗口、在 allocate 中同步减少 backLogSize，以及在 reserveWindowSize 中拒绝向已关闭流发放窗口、避免重复入队，切断该分配泄漏路径。",
+    "effects": [
+      {
+        "comp_name": "org.apache.tomcat.embed:tomcat-embed-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[11.0.0-M1,11.0.25)",
+            "min_fixed_version": "11.0.25",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.0.39,9.0.121)",
+            "min_fixed_version": "9.0.121",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.5.59,8.5.100]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.1.0-M1,10.1.58)",
+            "min_fixed_version": "10.1.58",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "tomcat",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[11.0.0-M1,11.0.25)",
+            "min_fixed_version": "11.0.25",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.1.0-M1,10.1.58)",
+            "min_fixed_version": "10.1.58",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.0.39,9.0.121)",
+            "min_fixed_version": "9.0.121",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.5.59,8.5.100]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "拒绝服务",
+    "kind_en": "不受控制的资源消耗",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-6d7a-972e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11780.html",
+        "name": ""
+      },
+      {
+        "url": "https://lists.apache.org/thread/tv51ty39ppv41v04hdtkp9dp7tg02nzl",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-68763",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-11.html",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-10.html",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-9.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/2a5ec806971627943db18601203129d9c58d959f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/19d40615620fe145e88536e2bd63c5f01077c253",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/0747dd58cc631f90e044df246bd2ede6e2b48250",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Tomcat HTTP/2拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能有效地控制资源的使用，导致攻击者可以利用这个漏洞耗尽应用程序所依赖的资源。这些资源可以是计算资源（CPU、内存）、网络带宽、数据库连接或其他系统资源。攻击者可以通过发送特制的请求、恶意输入或其他方式，使应用程序消耗大量资源，导致拒绝服务或系统崩溃。",
+        "title": "什么是拒绝服务"
+      },
+      {
+        "content": "- 消耗计算资源：攻击者可以发送计算密集型的请求，例如复杂的计算、无限循环或递归操作，以耗尽应用程序的计算资源，导致应用程序无法响应其他请求。\r\n- 消耗内存资源：攻击者可以发送大量的数据或恶意输入，以导致应用程序消耗过多的内存资源，从而使系统的可用内存耗尽，并导致应用程序崩溃或变得不可用。\r\n- 消耗网络带宽：攻击者可以发送大量的请求或大型数据包，以消耗应用程序所依赖的网络带宽。这会导致其他合法用户无法正常访问应用程序或降低系统的整体网络性能。\r\n- 消耗存储资源：攻击者可以发送大量的请求或上传大文件，以耗尽应用程序的存储资源，导致系统无法处理其他请求或存储新的数据。",
+        "title": "拒绝服务常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对输入数据进行合理的验证和过滤，防止恶意输入导致资源消耗过高。\r\n- 实施资源限制：应用程序应该实施适当的资源限制策略，例如限制计算操作的时间或次数，限制内存使用量，限制并发连接数等，以防止资源被耗尽。\r\n- 异常处理与错误恢复：应用程序应该具备健壮的异常处理和错误恢复机制，以防止因意外错误导致资源泄漏或无法释放的情况。\r\n- 资源监控与警报：应用程序应该实施适当的资源监控和警报机制，及时发现异常的资源消耗情况，并采取相应的措施来应对。\r\n- 压力测试与性能优化：应用程序应该进行压力测试，以评估其在高负载情况下的性能，并进行必要的性能优化，以确保能够有效地处理大量请求而不耗尽资源。",
+        "title": "如何预防拒绝服务"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-68763",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-400",
+    "description": "Apache Tomcat 是 Apache 软件基金会发布的开源 Java Servlet 容器与 Web 服务器，用于托管 Java Web 应用，并可通过 Http2Protocol 提供 HTTP/2。\n受影响版本中，HTTP/2 连接在连接级流量窗口不足时，会把尚未获得完整窗口分配的流放入 Http2UpgradeHandler 的 backlog，并用 backLogSize 累计待分配字节。客户端发送 RST_STREAM 重置仍处于 backlog 中的流时，replaceStream 未将该流移出 backlog，也未把已授予但未使用的 connectionAllocationMade 归还连接窗口；allocate 在完成部分分配后也未扣减 backLogSize。攻击者可在耗尽连接窗口后反复创建并重置流，使窗口与 backlog 记账持续泄漏，最终造成拒绝服务。\n修复版本中通过在 replaceStream 中移除已重置流及其未完成分配请求并归还剩余窗口、在 allocate 中同步减少 backLogSize，以及在 reserveWindowSize 中拒绝向已关闭流发放窗口、避免重复入队，切断该分配泄漏路径。",
+    "effects": [
+      {
+        "comp_name": "org.apache.tomcat.embed:tomcat-embed-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[11.0.0-M1,11.0.25)",
+            "min_fixed_version": "11.0.25",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.0.39,9.0.121)",
+            "min_fixed_version": "9.0.121",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.5.59,8.5.100]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.1.0-M1,10.1.58)",
+            "min_fixed_version": "10.1.58",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "tomcat",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[11.0.0-M1,11.0.25)",
+            "min_fixed_version": "11.0.25",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.1.0-M1,10.1.58)",
+            "min_fixed_version": "10.1.58",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.0.39,9.0.121)",
+            "min_fixed_version": "9.0.121",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.5.59,8.5.100]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "拒绝服务",
+    "kind_en": "Uncontrolled Resource Consumption",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-6d7a-972e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11780.html",
+        "name": ""
+      },
+      {
+        "url": "https://lists.apache.org/thread/tv51ty39ppv41v04hdtkp9dp7tg02nzl",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-68763",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-11.html",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-10.html",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-9.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/2a5ec806971627943db18601203129d9c58d959f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/19d40615620fe145e88536e2bd63c5f01077c253",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/0747dd58cc631f90e044df246bd2ede6e2b48250",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Tomcat HTTP/2拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-08-25T22:19:40+00:00"
+}

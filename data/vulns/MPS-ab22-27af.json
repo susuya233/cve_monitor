@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-08-25T22:19:43+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ab22-27af",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-65927",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-193",
+    "description": "Apache Tomcat 是 Apache 软件基金会维护的开源 Java Servlet 容器，RewriteValve 用于按 rewrite 规则对请求 URI 执行类似 Apache HTTP Server mod_rewrite 的重写处理。\n受影响版本中，RewriteValve.invoke 处理带 [N] 标志的重写规则时存在 off-by-one 错误：规则匹配后将循环下标设为 0 再 continue，for 循环随后自增，使重写处理从第二条规则而非第一条重新开始。攻击者发送可命中 [N] 规则的 HTTP 请求后，第一条用于访问控制的规则会被跳过，造成访问控制绕过。\n修复版本中通过将 [N] 匹配后的循环下标改为 -1，使 continue 之后从第一条规则重新执行，恢复从规则列表起始处重启重写的正确语义，避免访问控制规则被跳过。",
+    "effects": [
+      {
+        "comp_name": "tomcat",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.1.0-M1,10.1.58)",
+            "min_fixed_version": "10.1.58",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.0.0.M1,9.0.121)",
+            "min_fixed_version": "9.0.121",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.0.0-M1,11.0.25)",
+            "min_fixed_version": "11.0.25",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "Off-by-one错误",
+    "kind_en": "Off-by-one Error",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-ab22-27af",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11776.html",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-11.html",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-10.html",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-9.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/bce83410ffb1542752d52b536257e81a5c8dfcb8",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/b80929d65be774dc90e378acdda2d16949d1e5f3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/3097902177a041a93476a036b9c8419b25d5cc0d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/ffa86dc683645f784e36ec87236d51ea866dcadf",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Tomcat重写访问绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-65927",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-193",
+    "description": "Apache Tomcat 是 Apache 软件基金会维护的开源 Java Servlet 容器，RewriteValve 用于按 rewrite 规则对请求 URI 执行类似 Apache HTTP Server mod_rewrite 的重写处理。\n受影响版本中，RewriteValve.invoke 处理带 [N] 标志的重写规则时存在 off-by-one 错误：规则匹配后将循环下标设为 0 再 continue，for 循环随后自增，使重写处理从第二条规则而非第一条重新开始。攻击者发送可命中 [N] 规则的 HTTP 请求后，第一条用于访问控制的规则会被跳过，造成访问控制绕过。\n修复版本中通过将 [N] 匹配后的循环下标改为 -1，使 continue 之后从第一条规则重新执行，恢复从规则列表起始处重启重写的正确语义，避免访问控制规则被跳过。",
+    "effects": [
+      {
+        "comp_name": "tomcat",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.1.0-M1,10.1.58)",
+            "min_fixed_version": "10.1.58",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.0.0.M1,9.0.121)",
+            "min_fixed_version": "9.0.121",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.0.0-M1,11.0.25)",
+            "min_fixed_version": "11.0.25",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "Off-by-one错误",
+    "kind_en": "Off-by-one Error",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-ab22-27af",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11776.html",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-11.html",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-10.html",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-9.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/bce83410ffb1542752d52b536257e81a5c8dfcb8",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/b80929d65be774dc90e378acdda2d16949d1e5f3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/3097902177a041a93476a036b9c8419b25d5cc0d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat/commit/ffa86dc683645f784e36ec87236d51ea866dcadf",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Tomcat重写访问绕过"
+  },
+  "first_saved_at": "2026-08-25T22:19:43+00:00"
+}
