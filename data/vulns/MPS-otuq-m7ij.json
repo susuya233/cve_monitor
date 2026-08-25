@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-08-25T20:21:27+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-otuq-m7ij",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80050",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-434",
+    "description": "ContiNew Admin 是开源的前后端分离中后台管理系统框架，基于 Spring Boot 与 Vue，提供用户权限、文件存储等后台管理能力。\n受影响版本中，MultipartUploadController 映射的 /system/multipart-upload/init、/part、/complete/{uploadId}、/cancel/{uploadId} 四个接口未标注 @SaCheckPermission(\"system:file:upload\")，且 MultipartUploadServiceImpl.initMultipartUpload() 只把 fileName 的扩展名写入元数据，未对照 FileTypeEnum.getAllExtensions() 白名单拒绝。已登录但无文件上传权限的用户可初始化分片、上传分片并完成合并，将 .jsp、.html 等任意扩展名文件写入存储后端；常规 /system/file/upload 路径上的权限与类型校验无法阻止该绕过。\n修复版本中通过为上述四个接口补充 @SaCheckPermission(\"system:file:upload\")，并在 initMultipartUpload() 将扩展名转为小写后与白名单比对、不在名单时拒绝初始化，阻断低权限用户上传危险类型文件。",
+    "effects": [
+      {
+        "comp_name": "top.continew.admin:continew-admin",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.1.0,4.1.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "任意文件上传",
+    "kind_en": "危险类型文件无限制上传",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-otuq-m7ij",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-otuq-m7ij",
+        "name": "https://www.oscs1024.com/hd/MPS-otuq-m7ij"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80050",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80050"
+      },
+      {
+        "url": "https://github.com/continew-org/continew-admin",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/continew-org/continew-admin/blob/v4.1.0/continew-system/src/main/java/top/continew/admin/system/controller/MultipartUploadController.java",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/continew-org/continew-admin/issues/221",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/continew-admin-through-4.1.0-missing-authorization-and-file-type-allowlist-on-multipart-upload-endpoints",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "ContiNew Admin任意文件上传漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80050",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-434",
+    "description": "ContiNew Admin 是开源的前后端分离中后台管理系统框架，基于 Spring Boot 与 Vue，提供用户权限、文件存储等后台管理能力。\n受影响版本中，MultipartUploadController 映射的 /system/multipart-upload/init、/part、/complete/{uploadId}、/cancel/{uploadId} 四个接口未标注 @SaCheckPermission(\"system:file:upload\")，且 MultipartUploadServiceImpl.initMultipartUpload() 只把 fileName 的扩展名写入元数据，未对照 FileTypeEnum.getAllExtensions() 白名单拒绝。已登录但无文件上传权限的用户可初始化分片、上传分片并完成合并，将 .jsp、.html 等任意扩展名文件写入存储后端；常规 /system/file/upload 路径上的权限与类型校验无法阻止该绕过。\n修复版本中通过为上述四个接口补充 @SaCheckPermission(\"system:file:upload\")，并在 initMultipartUpload() 将扩展名转为小写后与白名单比对、不在名单时拒绝初始化，阻断低权限用户上传危险类型文件。",
+    "effects": [
+      {
+        "comp_name": "top.continew.admin:continew-admin",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.1.0,4.1.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "任意文件上传",
+    "kind_en": "Unrestricted Upload of File with Dangerous Type",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-otuq-m7ij",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-otuq-m7ij",
+        "name": "https://www.oscs1024.com/hd/MPS-otuq-m7ij"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80050",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80050"
+      },
+      {
+        "url": "https://github.com/continew-org/continew-admin",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/continew-org/continew-admin/blob/v4.1.0/continew-system/src/main/java/top/continew/admin/system/controller/MultipartUploadController.java",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/continew-org/continew-admin/issues/221",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/continew-admin-through-4.1.0-missing-authorization-and-file-type-allowlist-on-multipart-upload-endpoints",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "ContiNew Admin任意文件上传漏洞"
+  },
+  "first_saved_at": "2026-08-25T20:21:27+00:00"
+}

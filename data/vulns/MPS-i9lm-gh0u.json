@@ -1,0 +1,247 @@
+{
+  "saved_at": "2026-08-25T20:21:31+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-i9lm-gh0u",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79787",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-287",
+    "description": "Alluxio 是开源数据编排平台与分布式虚拟文件系统，提供 S3 兼容 REST 代理，供对象存储客户端访问集群中的文件数据。\n受影响版本中，S3 REST 代理默认将 alluxio.s3.rest.authentication.enabled 设为 false，S3RestUtils.getUser 因此调用 getUserFromAuthorization，仅从 Authorization 头的 Credential 字段解析用户名，不对 AWS Signature Version 4 做密码学校验。未认证攻击者向默认端口 39999 的 /api/v1/s3/ 提交伪造 Credential 后，S3RequestServlet.service 与 S3Handler.doAuthentication（JAX-RS 路径则为 S3AuthenticationFilter.filter）会接受该身份，createFileSystemForUser 以被冒充用户（含 alluxio 服务账号）创建文件系统客户端，从而读取、写入和删除其数据。默认 alluxio.security.authentication.type 为 SIMPLE，Master 信任客户端自称身份。\n修复版本中通过在身份解析路径强制校验 AWS Signature Version 4 并拒绝未验证的 Credential 声明来切断冒充链路；公开仓库截至分析时尚未合入该修复，v2.9.5、v2.9.6 与 main 的 S3RestUtils.getUser 实现一致。",
+    "effects": [
+      {
+        "comp_name": "alluxio",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.9.6]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.alluxio:alluxio-core-server-proxy",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.9.6]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "身份验证不当",
+    "kind_en": "认证不当",
+    "last_modified_time": "2026-08-26",
+    "level": "Critical",
+    "mps_id": "MPS-i9lm-gh0u",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-i9lm-gh0u",
+        "name": "https://www.oscs1024.com/hd/MPS-i9lm-gh0u"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79787",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79787"
+      },
+      {
+        "url": "https://github.com/Alluxio/alluxio",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Alluxio/alluxio/blob/v2.9.5/core/server/proxy/src/main/java/alluxio/proxy/s3/S3RestUtils.java",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Alluxio/alluxio/issues/18755",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/alluxio-through-2.9.5-s3-rest-proxy-authentication-bypass-via-unverified-request-signature",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Alluxio/alluxio/issues/18755",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Alluxio S3认证绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79787",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-287",
+    "description": "Alluxio 是开源数据编排平台与分布式虚拟文件系统，提供 S3 兼容 REST 代理，供对象存储客户端访问集群中的文件数据。\n受影响版本中，S3 REST 代理默认将 alluxio.s3.rest.authentication.enabled 设为 false，S3RestUtils.getUser 因此调用 getUserFromAuthorization，仅从 Authorization 头的 Credential 字段解析用户名，不对 AWS Signature Version 4 做密码学校验。未认证攻击者向默认端口 39999 的 /api/v1/s3/ 提交伪造 Credential 后，S3RequestServlet.service 与 S3Handler.doAuthentication（JAX-RS 路径则为 S3AuthenticationFilter.filter）会接受该身份，createFileSystemForUser 以被冒充用户（含 alluxio 服务账号）创建文件系统客户端，从而读取、写入和删除其数据。默认 alluxio.security.authentication.type 为 SIMPLE，Master 信任客户端自称身份。\n修复版本中通过在身份解析路径强制校验 AWS Signature Version 4 并拒绝未验证的 Credential 声明来切断冒充链路；公开仓库截至分析时尚未合入该修复，v2.9.5、v2.9.6 与 main 的 S3RestUtils.getUser 实现一致。",
+    "effects": [
+      {
+        "comp_name": "alluxio",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.9.6]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.alluxio:alluxio-core-server-proxy",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.9.6]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "身份验证不当",
+    "kind_en": "Improper Authentication",
+    "last_modified_time": "2026-08-26",
+    "level": "Critical",
+    "mps_id": "MPS-i9lm-gh0u",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-i9lm-gh0u",
+        "name": "https://www.oscs1024.com/hd/MPS-i9lm-gh0u"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79787",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79787"
+      },
+      {
+        "url": "https://github.com/Alluxio/alluxio",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Alluxio/alluxio/blob/v2.9.5/core/server/proxy/src/main/java/alluxio/proxy/s3/S3RestUtils.java",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Alluxio/alluxio/issues/18755",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/alluxio-through-2.9.5-s3-rest-proxy-authentication-bypass-via-unverified-request-signature",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Alluxio/alluxio/issues/18755",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Alluxio S3认证绕过"
+  },
+  "first_saved_at": "2026-08-25T20:21:31+00:00"
+}

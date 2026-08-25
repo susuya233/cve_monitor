@@ -1,0 +1,187 @@
+{
+  "saved_at": "2026-08-25T20:21:25+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-th6l-2o17",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79788",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "Dradis Community Edition 是开源协作平台，用于整理渗透测试与安全评估报告，并以 GPL-2.0 许可在 GitHub 发布；其 Echo 插件作为 AI Copilot，可配置 OpenAI、Anthropic、Gemini、Ollama 等模型提供商并驱动内置 Roslin 代理。\n受影响版本中，Dradis::Plugins::Echo::ProvidersController 与 AgentsController 以 before_action :admin_required, if: -> { defined?(Dradis::Pro) } 作为管理门禁，而 Community Edition 从不定义 Dradis::Pro，该回调不会安装。任意已认证非管理员用户可通过 POST /addons/echo/providers 创建 address 为任意 HTTP/HTTPS URL 的 Anthropic 提供商，再以 PATCH /addons/echo/agents/:id 把内置 Roslin 代理改绑到该提供商。Provider::Anthropic#build_uri 直接执行 URI(address) 且不追加路径，攻击者可完整控制服务端请求目标，包括 http://169.254.169.254/ 等链路本地地址。随后在项目中触发 AI 交互时，Provider::HttpStreaming#parse_sse_response 对上述 URL 发起 POST；非 2xx 响应体会被写入异常消息，并由 InteractionJob#perform 通过 Turbo Streams 回显到浏览器，形成可读 SSRF。\n修复版本中通过将 Provider::Anthropic#build_uri 改为 URI(\"#{address}/messages\")，使请求路径不再由 address 单独完整指定；同时以 ReplyJob 取代 InteractionJob，失败时只向用户展示 Message::GENERIC_ERROR 通用提示，不再把提供商原始响应体送回浏览器，从而切断可读 SSRF 回显链。",
+    "effects": [
+      {
+        "comp_name": "dradis-ce",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.1.0,5.3.0)",
+            "min_fixed_version": "5.3.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-th6l-2o17",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-th6l-2o17",
+        "name": "https://www.oscs1024.com/hd/MPS-th6l-2o17"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79788",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79788"
+      },
+      {
+        "url": "https://github.com/dradis/dradis-ce",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dradis/dradis-ce/blob/v5.2.0/engines/dradis-echo/app/controllers/dradis/plugins/echo/providers_controller.rb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dradis/dradis-ce/issues/1641",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dradis-community-edition-5.1.0-through-5.2.0-server-side-request-forgery-via-unrestricted-ai-provider-address",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "Dradis CE SSRF漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79788",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "Dradis Community Edition 是开源协作平台，用于整理渗透测试与安全评估报告，并以 GPL-2.0 许可在 GitHub 发布；其 Echo 插件作为 AI Copilot，可配置 OpenAI、Anthropic、Gemini、Ollama 等模型提供商并驱动内置 Roslin 代理。\n受影响版本中，Dradis::Plugins::Echo::ProvidersController 与 AgentsController 以 before_action :admin_required, if: -> { defined?(Dradis::Pro) } 作为管理门禁，而 Community Edition 从不定义 Dradis::Pro，该回调不会安装。任意已认证非管理员用户可通过 POST /addons/echo/providers 创建 address 为任意 HTTP/HTTPS URL 的 Anthropic 提供商，再以 PATCH /addons/echo/agents/:id 把内置 Roslin 代理改绑到该提供商。Provider::Anthropic#build_uri 直接执行 URI(address) 且不追加路径，攻击者可完整控制服务端请求目标，包括 http://169.254.169.254/ 等链路本地地址。随后在项目中触发 AI 交互时，Provider::HttpStreaming#parse_sse_response 对上述 URL 发起 POST；非 2xx 响应体会被写入异常消息，并由 InteractionJob#perform 通过 Turbo Streams 回显到浏览器，形成可读 SSRF。\n修复版本中通过将 Provider::Anthropic#build_uri 改为 URI(\"#{address}/messages\")，使请求路径不再由 address 单独完整指定；同时以 ReplyJob 取代 InteractionJob，失败时只向用户展示 Message::GENERIC_ERROR 通用提示，不再把提供商原始响应体送回浏览器，从而切断可读 SSRF 回显链。",
+    "effects": [
+      {
+        "comp_name": "dradis-ce",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.1.0,5.3.0)",
+            "min_fixed_version": "5.3.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-th6l-2o17",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-th6l-2o17",
+        "name": "https://www.oscs1024.com/hd/MPS-th6l-2o17"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79788",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79788"
+      },
+      {
+        "url": "https://github.com/dradis/dradis-ce",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dradis/dradis-ce/blob/v5.2.0/engines/dradis-echo/app/controllers/dradis/plugins/echo/providers_controller.rb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dradis/dradis-ce/issues/1641",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dradis-community-edition-5.1.0-through-5.2.0-server-side-request-forgery-via-unrestricted-ai-provider-address",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "Dradis CE SSRF漏洞"
+  },
+  "first_saved_at": "2026-08-25T20:21:25+00:00"
+}
