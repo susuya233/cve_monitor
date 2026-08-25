@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-08-25T18:31:13+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-oia6-9jbg",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-64202",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@ni.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "security@ni.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-125",
+    "description": "NI LabVIEW 是 National Instruments（现 Emerson）提供的闭源图形化编程与测控开发环境，用于仪器控制、数据采集和自动化测试。\n受影响版本中，用户打开恶意 VI 文件时，LabVIEW 在 LVGetFileType 函数中发生越界读取，造成内存损坏，可导致信息泄露或任意代码执行。\n修复版本中通过各支持版本线的官方安全补丁修复 LVGetFileType 中的越界读取，阻止打开恶意 VI 时再触发内存损坏。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界读取",
+    "kind_en": "越界读取",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-oia6-9jbg",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oia6-9jbg",
+        "name": "https://www.oscs1024.com/hd/MPS-oia6-9jbg"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-64202",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-64202"
+      },
+      {
+        "url": "https://www.ni.com/en/support/security/available-critical-and-security-updates-for-ni-software/2026/memory-corruption-vulnerabilities-ni-labview.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "LabVIEW越界读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-64202",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@ni.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "security@ni.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-125",
+    "description": "NI LabVIEW 是 National Instruments（现 Emerson）提供的闭源图形化编程与测控开发环境，用于仪器控制、数据采集和自动化测试。\n受影响版本中，用户打开恶意 VI 文件时，LabVIEW 在 LVGetFileType 函数中发生越界读取，造成内存损坏，可导致信息泄露或任意代码执行。\n修复版本中通过各支持版本线的官方安全补丁修复 LVGetFileType 中的越界读取，阻止打开恶意 VI 时再触发内存损坏。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界读取",
+    "kind_en": "Out-of-bounds Read",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-oia6-9jbg",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oia6-9jbg",
+        "name": "https://www.oscs1024.com/hd/MPS-oia6-9jbg"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-64202",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-64202"
+      },
+      {
+        "url": "https://www.ni.com/en/support/security/available-critical-and-security-updates-for-ni-software/2026/memory-corruption-vulnerabilities-ni-labview.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "LabVIEW越界读取漏洞"
+  },
+  "first_saved_at": "2026-08-25T18:31:13+00:00"
+}

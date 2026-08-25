@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-25T18:31:21+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-25T18:31:11+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
+  "source_page": "https://www.oscs1024.com/hd/MPS-h3y5-g9v6",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,56 +21,61 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78183",
-    "cvss": {},
-    "cvss_score": 9.8,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cve_id": "CVE-2026-64204",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@ni.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "security@ni.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-787",
-    "description": "DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in quote_float.\n\nquote_float() allocates the length of the string + 1, which is the size of the bare numeric symbol plus NULL.  But for special literals NaN, Inf, +Inf, -Inf, Infinity, +Infinity, -Infinity it emits the literal surrounded by quotes plus NULL, which is length + 3 bytes. Every recognised literal (case-insensitive) overflows by 2 bytes, a single quote and a NULL.\n\nThis can be reached by the $dbh->quote method, for example\n\n    $dbh->quote( \"Infinity\", DBI::SQL_NUMERIC ).\n\nThis regression was introduced in 3.21.0 by the quote.c rewrite.",
+    "description": "最近存在内存损坏漏洞\n在NI LabVIEW中发现可能导致信息泄露或任意\n代码执行。  成功利用该漏洞需要攻击者获得\n用户打开一个特制的VI。  该漏洞影响NI\nLabVIEW 2026 Q3 (26.3.0) 及之前版本。",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "越界写入",
     "kind_en": "越界写入",
-    "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-gncf-koz0",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-h3y5-g9v6",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-26",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
-        "name": "https://www.oscs1024.com/hd/MPS-gncf-koz0"
+        "url": "https://www.oscs1024.com/hd/MPS-h3y5-g9v6",
+        "name": "https://www.oscs1024.com/hd/MPS-h3y5-g9v6"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-64204",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-64204"
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/6d6f47ed2403cda55c82b1bad56e388ba7390065.patch",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/bucardo/dbdpg/commit/adacf1de872326a465e13f9e4281a674ebcd227e",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/bucardo/dbdpg/security/advisories/GHSA-785p-fw3v-r822",
-        "name": ""
-      },
-      {
-        "url": "https://metacpan.org/release/TURNSTEP/DBD-Pg-3.21.1/source/Changes",
+        "url": "https://www.ni.com/en/support/security/available-critical-and-security-updates-for-ni-software/2026/memory-corruption-vulnerabilities-ni-labview.html",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-78183漏洞",
+    "title": "CVE-2026-64204漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -90,56 +95,61 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78183",
-    "cvss": {},
-    "cvss_score": 9.8,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cve_id": "CVE-2026-64204",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@ni.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "security@ni.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-787",
-    "description": "DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in quote_float.\n\nquote_float() allocates the length of the string + 1, which is the size of the bare numeric symbol plus NULL.  But for special literals NaN, Inf, +Inf, -Inf, Infinity, +Infinity, -Infinity it emits the literal surrounded by quotes plus NULL, which is length + 3 bytes. Every recognised literal (case-insensitive) overflows by 2 bytes, a single quote and a NULL.\n\nThis can be reached by the $dbh->quote method, for example\n\n    $dbh->quote( \"Infinity\", DBI::SQL_NUMERIC ).\n\nThis regression was introduced in 3.21.0 by the quote.c rewrite.",
+    "description": "There is a memory corruption vulnerability recently\ndiscovered in NI LabVIEW that may result in information disclosure or arbitrary\ncode execution.  Successful exploitation requires an attacker to get a\nuser to open a specially crafted VI.  This vulnerability affects NI\nLabVIEW 2026 Q3 (26.3.0) and prior versions.",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "越界写入",
     "kind_en": "Out-of-bounds Write",
-    "last_modified_time": "2026-08-24",
-    "level": "Critical",
-    "mps_id": "MPS-gncf-koz0",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-h3y5-g9v6",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-26",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
-        "name": "https://www.oscs1024.com/hd/MPS-gncf-koz0"
+        "url": "https://www.oscs1024.com/hd/MPS-h3y5-g9v6",
+        "name": "https://www.oscs1024.com/hd/MPS-h3y5-g9v6"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-64204",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-64204"
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/6d6f47ed2403cda55c82b1bad56e388ba7390065.patch",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/bucardo/dbdpg/commit/adacf1de872326a465e13f9e4281a674ebcd227e",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/bucardo/dbdpg/security/advisories/GHSA-785p-fw3v-r822",
-        "name": ""
-      },
-      {
-        "url": "https://metacpan.org/release/TURNSTEP/DBD-Pg-3.21.1/source/Changes",
+        "url": "https://www.ni.com/en/support/security/available-critical-and-security-updates-for-ni-software/2026/memory-corruption-vulnerabilities-ni-labview.html",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-78183漏洞"
+    "title": "CVE-2026-64204漏洞"
   },
-  "first_saved_at": "2026-08-23T21:15:38+00:00"
+  "first_saved_at": "2026-08-25T18:31:11+00:00"
 }

@@ -1143,5 +1143,19 @@
   "31d33d27c84c45b88e35e67e8d30690191d8b4e5": "使用外部控制输入来选择类或代码（“不安全反射”）",
   "489a19c6137008d3e6ce82cc961cbf221152b830": "CVE-2026-79785漏洞",
   "d811849491dc9ed285e5ee678438f1bb2f167b42": "X-AnyLabeling 的模型下载器禁用了 TLS 证书验证。 anylabeling/services/auto_labeling/model.py 中的 download_with_retry 使用 ssl._create_unverified_context() 构建了一个上下文并将其传递给 urllib.request.urlopen，因此在任何模型下载时都不会检查证书链和主机名，并且模型是通过 HTTPS 从项目的发布主机获取的。因此，任何拦截该连接的一方都可以用自己选择的内容进行应答。响应被写入 .part 文件并通过 os.replace 移至适当位置，唯一的下载后检查 safe_check_model 验证文件的格式而不是其出处：不会将哈希或签名与预期值进行比较。对于 ONNX 目标，替换文件传递 onnx.checker.check_model，然后用于推理，因此攻击者选择生成应用程序注释的模型。对于附带的 SAM2 视频、YOLOE、UPN 和 open_vision 配置使用的 .pth 或 .pt 目标，检查工作程序在不带 Weights_only 的情况下调用 torch.load，因此替换的文件将被 unpickle，并在早于 Weights_only 默认值的 PyTorch 版本上执行攻击者选择的代码。",
-  "3cd9608f834b63be62a5f02ded29350d3fc01163": "数组索引验证不当"
+  "3cd9608f834b63be62a5f02ded29350d3fc01163": "数组索引验证不当",
+  "4a9297575f6086a7b506bebef213ef55d0d190be": "CVE-2026-75496漏洞",
+  "9a49701a062b50bacc3c7ebfdcbb570aab358fe5": "在将文件移动到可公开访问的目录之前，Webkul QloApps 不会对上传的文件扩展名或 MIME 类型执行正确的验证。具有管理权限的经过身份验证的远程攻击者可以上传可执行文件并实现远程代码执行。已在 153ec1c 中修复。",
+  "e5198f9ddcba7599c52a266c3d3b4ad579247c87": "CVE-2026-75498漏洞",
+  "1077d3756edd94b588ca05f9dce4cd12e43c0339": "Webkul QloApps 在数据库查询之前不会验证请求参数。具有管理权限的经过身份验证的远程攻击者可以将精心设计的 SQL 查询发送到“Address.php”文件中的“bo_query”参数。已在 123c97c 中修复。",
+  "b38d0afc22ff60f4ccf8149290242328272e79b2": "CVE-2026-75497漏洞",
+  "abb17292bf876572012b3045acf7f5d44b5d0713": "Webkul QloApps 在数据库查询之前不会验证请求参数。具有管理权限的经过身份验证的远程攻击者可以将精心设计的 SQL 查询发送到“CustomerMessage.php”文件中的“bo_query”参数。已在 123c97c 中修复。",
+  "af0c0e6158fb033e917a54c82600bf76dbec6b0a": "CVE-2026-64204漏洞",
+  "5229624e507f59d9ab86ffb19d720632ce5b66e2": "最近存在内存损坏漏洞\n在NI LabVIEW中发现可能导致信息泄露或任意\n代码执行。  成功利用该漏洞需要攻击者获得\n用户打开一个特制的VI。  该漏洞影响NI\nLabVIEW 2026 Q3 (26.3.0) 及之前版本。",
+  "5a4653e0a4ecd076595160e3e3770712cbb9d96e": "CVE-2026-64201漏洞",
+  "2a78bc8b1c21cf4814f377370d39bb2323c62dc0": "最近存在内存损坏漏洞\n在NI LabVIEW中发现可能导致信息泄露或任意\n代码执行。  成功利用该漏洞需要攻击者获得\n用户打开一个特制的VI。  该漏洞影响 NI LabVIEW 2026 Q3 (26.3.0)\n和之前的版本。",
+  "7cfb7a7d80d42f8fd26192ea0af92debbf137413": "CVE-2026-59189漏洞",
+  "a1d8fb371c494f571237955699270dae36bee647": "OpenEXR 是 EXR 图像格式的参考实现和规范，广泛应用于电影行业。在 OpenEXRUtil 版本 3.3.0 到 3.3.12 以及 3.4.0 到 3.4.12 中，当深度图像具有非零 dataWindow 原点时，已记录的 TypedDeepImageChannel<T>::row() API 可能会返回越界指针，从而导致堆越界读取和崩溃，并在受控堆布局下可能导致信息泄露。出现该缺陷的原因是 ImfDeepImageChannel 使用两个相互冲突的坐标模型：at(x, y) 使用绝对坐标（_base 偏移量为 dataWindow.min），而 row(r) 被记录为基于 0 的逻辑访问。因此，对于非零 dataWindow.min，row(0) 指向 _sampleListPointers 分配之外，而不是第一个逻辑行。此问题已在版本 3.3.13 和 3.4.13 中修复。",
+  "3b437a5781f245fb3a0fa062032c3091a2e5be26": "CVE-2026-59186漏洞",
+  "a0ea8ef77de1d2435c1ee5922fa44181b885edd1": "OpenEXR 是 EXR 图像格式的参考实现和规范，广泛应用于电影行业。在 3.2.11、3.3.0 到 3.3.12 以及 3.4.0 到 3.4.13 之前的版本中，通过公共 TiledRgbaInputFile RGBA API 读取时，精心设计的平铺 EXR 可以在 32 位/ILP32 版本上触发堆越界写入。该文件使用较小的 40x40 数据窗口，但图块大小为 65537x65537。在 ILP32 上，Array2D<Rgba> 图块转换缓冲区大小计算溢出，分配一个小得多的堆缓冲区，并且图块解码会写入超过该分配的内容。此问题已在版本 3.2.11、3.3.13 和 3.4.14 中修复。"
 }
