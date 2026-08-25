@@ -1,0 +1,181 @@
+{
+  "saved_at": "2026-08-25T13:43:30+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d08b-33d9",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-59285",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-502",
+    "description": "Spring for GraphQL 是开源 Java 框架，用于在 Spring 应用中提供 GraphQL 查询与分页能力，源码托管于 GitHub spring-projects/spring-graphql。\n受影响版本中，分页 Connection 查询会把客户端提供的 after 或 before 游标解码后交给 JsonKeysetCursorStrategy.fromCursor。当应用走 Jackson 2.x 回退路径时，Jackson2ObjectMapperCustomizer.customize 通过 allowIfBaseType(Map.class) 启用 polymorphic default typing，任意 Map 子类型可在反序列化实例化阶段执行非预期逻辑；在对外暴露分页字段且类路径存在可滥用类时，攻击者可构造恶意 GraphQL 请求导致远程代码执行。\n修复版本中通过将 Jackson 2.x 的 PolymorphicTypeValidator 收紧为仅允许 LinkedHashMap、HashMap 与 java.util.Collections 子类型，与 Jackson 3.x 配置对齐，阻止危险类型进入游标反序列化路径。",
+    "effects": [
+      {
+        "comp_name": "org.springframework.graphql:spring-graphql",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.0.5)",
+            "min_fixed_version": "2.0.5",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-d08b-33d9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://cybersecuritynews.com/91-spring-vulnerabilities/",
+        "name": ""
+      },
+      {
+        "url": "https://spring.io/security/cve-2026-59285",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-graphql/commit/cb45b282eba10ff2af5c928acec1efb45e08604c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-graphql/releases/tag/v2.0.5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-graphql/issues/1496",
+        "name": ""
+      },
+      {
+        "url": "https://cwe.mitre.org/data/definitions/502.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.sonatype.com/blog/91-spring-cves-highlight-the-growing-ai-vulnerability-consumption-problem",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Spring GraphQL反序列化漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-59285",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-502",
+    "description": "Spring for GraphQL 是开源 Java 框架，用于在 Spring 应用中提供 GraphQL 查询与分页能力，源码托管于 GitHub spring-projects/spring-graphql。\n受影响版本中，分页 Connection 查询会把客户端提供的 after 或 before 游标解码后交给 JsonKeysetCursorStrategy.fromCursor。当应用走 Jackson 2.x 回退路径时，Jackson2ObjectMapperCustomizer.customize 通过 allowIfBaseType(Map.class) 启用 polymorphic default typing，任意 Map 子类型可在反序列化实例化阶段执行非预期逻辑；在对外暴露分页字段且类路径存在可滥用类时，攻击者可构造恶意 GraphQL 请求导致远程代码执行。\n修复版本中通过将 Jackson 2.x 的 PolymorphicTypeValidator 收紧为仅允许 LinkedHashMap、HashMap 与 java.util.Collections 子类型，与 Jackson 3.x 配置对齐，阻止危险类型进入游标反序列化路径。",
+    "effects": [
+      {
+        "comp_name": "org.springframework.graphql:spring-graphql",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.0.5)",
+            "min_fixed_version": "2.0.5",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-d08b-33d9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://cybersecuritynews.com/91-spring-vulnerabilities/",
+        "name": ""
+      },
+      {
+        "url": "https://spring.io/security/cve-2026-59285",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-graphql/commit/cb45b282eba10ff2af5c928acec1efb45e08604c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-graphql/releases/tag/v2.0.5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-graphql/issues/1496",
+        "name": ""
+      },
+      {
+        "url": "https://cwe.mitre.org/data/definitions/502.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.sonatype.com/blog/91-spring-cves-highlight-the-growing-ai-vulnerability-consumption-problem",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Spring GraphQL反序列化漏洞"
+  },
+  "first_saved_at": "2026-08-25T13:43:30+00:00"
+}

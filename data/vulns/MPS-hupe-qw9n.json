@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-25T12:35:55+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-25T13:43:31+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-hupe-qw9n",
@@ -43,12 +43,26 @@
     "cvss_score": 8.5,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "Ech0 before 4.4.3 protects the PUT /user endpoint with the profile:read scope, a read-only scope, but allows write operations including password changes. An attacker with an admin's profile:read access token can change the admin's password and login to obtain an unrestricted session token that bypasses all scope enforcement.",
-    "effects": [],
+    "description": "Ech0 是开源的自托管个人微博客平台，使用 Go 实现，提供访问令牌与细粒度 Scope，用于只读集成等场景。\n受影响版本中，PUT /user 以只读范围 profile:read 作为 RequireScopes 条件，但该接口会执行包括修改密码在内的写操作。攻击者持有管理员的 profile:read 访问令牌时，可向 UserHandler.UpdateUser 提交 password 字段；UserService.UpdateUser 仅校验 user.IsAdmin，随后将 userdto.Password 经 MD5 写入管理员密码。攻击者再用新密码调用 POST /login，获取 Type 为 session 的会话令牌，RequireScopes 对会话令牌直接放行，从而获得不受 Scope 约束的管理员权限。\n修复版本中通过新增 ScopeProfileWrite，将 PUT /user 的 RequireScopes 从 ScopeProfileRead 改为 ScopeProfileWrite，拒绝仅持有 profile:read 的访问令牌执行改密等写操作，切断向无限制会话令牌的提权路径。",
+    "effects": [
+      {
+        "comp_name": "github.com/lin-snow/ech0",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.4.3)",
+            "min_fixed_version": "4.4.3",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "授权检查错误",
@@ -79,7 +93,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-79673漏洞",
+    "title": "Ech0授权范围绕过漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -121,12 +135,26 @@
     "cvss_score": 8.5,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "Ech0 before 4.4.3 protects the PUT /user endpoint with the profile:read scope, a read-only scope, but allows write operations including password changes. An attacker with an admin's profile:read access token can change the admin's password and login to obtain an unrestricted session token that bypasses all scope enforcement.",
-    "effects": [],
+    "description": "Ech0 是开源的自托管个人微博客平台，使用 Go 实现，提供访问令牌与细粒度 Scope，用于只读集成等场景。\n受影响版本中，PUT /user 以只读范围 profile:read 作为 RequireScopes 条件，但该接口会执行包括修改密码在内的写操作。攻击者持有管理员的 profile:read 访问令牌时，可向 UserHandler.UpdateUser 提交 password 字段；UserService.UpdateUser 仅校验 user.IsAdmin，随后将 userdto.Password 经 MD5 写入管理员密码。攻击者再用新密码调用 POST /login，获取 Type 为 session 的会话令牌，RequireScopes 对会话令牌直接放行，从而获得不受 Scope 约束的管理员权限。\n修复版本中通过新增 ScopeProfileWrite，将 PUT /user 的 RequireScopes 从 ScopeProfileRead 改为 ScopeProfileWrite，拒绝仅持有 profile:read 的访问令牌执行改密等写操作，切断向无限制会话令牌的提权路径。",
+    "effects": [
+      {
+        "comp_name": "github.com/lin-snow/ech0",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.4.3)",
+            "min_fixed_version": "4.4.3",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "授权检查错误",
@@ -157,7 +185,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-79673漏洞"
+    "title": "Ech0授权范围绕过漏洞"
   },
   "first_saved_at": "2026-08-25T12:35:44+00:00"
 }

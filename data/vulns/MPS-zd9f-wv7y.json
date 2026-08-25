@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-25T12:35:56+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-25T13:43:39+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-zd9f-wv7y",
@@ -43,14 +43,28 @@
     "cvss_score": 7.1,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "Ech0 before 4.4.3 fails to enforce administrator authorization on dashboard log endpoints, allowing any authenticated user to access system logs. Attackers with valid user sessions can query GET /api/system/logs and subscribe to SSE and WebSocket log streams to retrieve sensitive operational data including file paths, stack traces, and internal URLs.",
-    "effects": [],
+    "description": "Ech0 是开源的自托管个人微博客，使用 Go 实现，提供动态发布、仪表盘与系统运维接口。\n受影响版本中，仪表盘日志路由只校验 JWT 是否有效，不校验管理员身份。已登录的普通用户可调用 GET /api/system/logs，或使用 token 订阅 SSE 与 WebSocket 日志流，读取包含文件路径、堆栈跟踪与内部 URL 的系统日志。\n修复版本中通过在 GET /api/system/logs 与 GET /api/system/logs/stream 上增加 RequireScopes(admin:settings) 中间件，将历史日志查询与 SSE 订阅限制为具备管理员设置权限的调用方。",
+    "effects": [
+      {
+        "comp_name": "github.com/lin-snow/ech0",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.4.3)",
+            "min_fixed_version": "4.4.3",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
     "last_modified_time": "2026-08-25",
@@ -79,7 +93,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-79666漏洞",
+    "title": "Ech0日志接口越权漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -121,14 +135,28 @@
     "cvss_score": 7.1,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "Ech0 before 4.4.3 fails to enforce administrator authorization on dashboard log endpoints, allowing any authenticated user to access system logs. Attackers with valid user sessions can query GET /api/system/logs and subscribe to SSE and WebSocket log streams to retrieve sensitive operational data including file paths, stack traces, and internal URLs.",
-    "effects": [],
+    "description": "Ech0 是开源的自托管个人微博客，使用 Go 实现，提供动态发布、仪表盘与系统运维接口。\n受影响版本中，仪表盘日志路由只校验 JWT 是否有效，不校验管理员身份。已登录的普通用户可调用 GET /api/system/logs，或使用 token 订阅 SSE 与 WebSocket 日志流，读取包含文件路径、堆栈跟踪与内部 URL 的系统日志。\n修复版本中通过在 GET /api/system/logs 与 GET /api/system/logs/stream 上增加 RequireScopes(admin:settings) 中间件，将历史日志查询与 SSE 订阅限制为具备管理员设置权限的调用方。",
+    "effects": [
+      {
+        "comp_name": "github.com/lin-snow/ech0",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.4.3)",
+            "min_fixed_version": "4.4.3",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
     "last_modified_time": "2026-08-25",
@@ -157,7 +185,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-79666漏洞"
+    "title": "Ech0日志接口越权漏洞"
   },
   "first_saved_at": "2026-08-25T12:35:52+00:00"
 }

@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-25T12:35:55+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-25T13:43:36+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-j9dg-7obr",
@@ -43,12 +43,26 @@
     "cvss_score": 8.7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "Ech0 before 4.5.1 contains an authorization bypass vulnerability where session tokens skip scope validation in RequireScopes middleware, allowing logged-in non-admin users to access admin endpoints. Attackers can read system logs, visitor statistics, user emails, and subscribe to live WebSocket logs by sending authenticated session tokens to unprotected endpoints.",
-    "effects": [],
+    "description": "Ech0 是开源的自托管个人微博客，基于 Go 实现，用于在自有服务器发布时间线、管理用户并查看系统运行日志。\n受影响版本中，RequireScopes 中间件在 JWT typ 为 session 时直接调用 ctx.Next() 返回，登录接口签发的会话令牌因此跳过 scope 与 audience 校验。管理接口 GetSystemLogs、GetVisitorStats、CheckUpdate、GetAllUsers 以及 /ws/system/logs 未再检查 IsAdmin，已登录的非管理员携带会话令牌即可读取系统日志、访客统计、用户邮箱，并订阅实时 WebSocket 日志。\n修复版本中通过在 GetAllUsers 中读取调用者身份并校验 IsAdmin，阻止非管理员获取全部用户邮箱与管理员标记。",
+    "effects": [
+      {
+        "comp_name": "github.com/lin-snow/ech0",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[0,4.5.1)",
+            "min_fixed_version": "4.5.1",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
@@ -79,7 +93,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-79665漏洞",
+    "title": "Ech0授权绕过漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -121,12 +135,26 @@
     "cvss_score": 8.7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "Ech0 before 4.5.1 contains an authorization bypass vulnerability where session tokens skip scope validation in RequireScopes middleware, allowing logged-in non-admin users to access admin endpoints. Attackers can read system logs, visitor statistics, user emails, and subscribe to live WebSocket logs by sending authenticated session tokens to unprotected endpoints.",
-    "effects": [],
+    "description": "Ech0 是开源的自托管个人微博客，基于 Go 实现，用于在自有服务器发布时间线、管理用户并查看系统运行日志。\n受影响版本中，RequireScopes 中间件在 JWT typ 为 session 时直接调用 ctx.Next() 返回，登录接口签发的会话令牌因此跳过 scope 与 audience 校验。管理接口 GetSystemLogs、GetVisitorStats、CheckUpdate、GetAllUsers 以及 /ws/system/logs 未再检查 IsAdmin，已登录的非管理员携带会话令牌即可读取系统日志、访客统计、用户邮箱，并订阅实时 WebSocket 日志。\n修复版本中通过在 GetAllUsers 中读取调用者身份并校验 IsAdmin，阻止非管理员获取全部用户邮箱与管理员标记。",
+    "effects": [
+      {
+        "comp_name": "github.com/lin-snow/ech0",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[0,4.5.1)",
+            "min_fixed_version": "4.5.1",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
@@ -157,7 +185,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-79665漏洞"
+    "title": "Ech0授权绕过漏洞"
   },
   "first_saved_at": "2026-08-25T12:35:48+00:00"
 }

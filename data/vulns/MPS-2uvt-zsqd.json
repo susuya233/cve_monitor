@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-25T12:35:55+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-25T13:43:32+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-2uvt-zsqd",
@@ -43,14 +43,28 @@
     "cvss_score": 7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "Ech0 before 4.4.3 fails to enforce scope-based authorization on nine comment panel admin endpoints, allowing access tokens with minimal scopes to perform full comment moderation operations. Attackers with a limited-scope access token can list, approve, reject, delete comments, and modify comment system settings by directly accessing the unprotected panel endpoints.",
-    "effects": [],
+    "description": "Ech0 是开源的自托管个人微博客系统，用于在独立服务器上发布时间线内容，并提供原生评论与带 Scope 的访问令牌能力。\n受影响版本中，setupCommentRoutes 将九个 /api/panel/comments 管理接口直接注册到 AuthRouterGroup，未调用 RequireScopes。JWTAuthMiddleware 在令牌有效时注入 viewer 后，CommentService.requireAdmin 只检查用户是否为管理员或所有者。持有管理员签发且仅含 echo:read 等最小 scope 的访问令牌时，攻击者可以列出、批准、拒绝、删除评论，并读取或修改评论系统设置。\n修复版本中通过为上述九个接口统一添加 RequireScopes(ScopeCommentMod)，使访问令牌必须具备 comment:moderate 才能进入评论面板管理操作，切断最小权限令牌越权审核的路径。",
+    "effects": [
+      {
+        "comp_name": "github.com/lin-snow/ech0",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.4.3)",
+            "min_fixed_version": "4.4.3",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
     "last_modified_time": "2026-08-25",
@@ -79,7 +93,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-79672漏洞",
+    "title": "Ech0评论面板越权漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -121,14 +135,28 @@
     "cvss_score": 7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "Ech0 before 4.4.3 fails to enforce scope-based authorization on nine comment panel admin endpoints, allowing access tokens with minimal scopes to perform full comment moderation operations. Attackers with a limited-scope access token can list, approve, reject, delete comments, and modify comment system settings by directly accessing the unprotected panel endpoints.",
-    "effects": [],
+    "description": "Ech0 是开源的自托管个人微博客系统，用于在独立服务器上发布时间线内容，并提供原生评论与带 Scope 的访问令牌能力。\n受影响版本中，setupCommentRoutes 将九个 /api/panel/comments 管理接口直接注册到 AuthRouterGroup，未调用 RequireScopes。JWTAuthMiddleware 在令牌有效时注入 viewer 后，CommentService.requireAdmin 只检查用户是否为管理员或所有者。持有管理员签发且仅含 echo:read 等最小 scope 的访问令牌时，攻击者可以列出、批准、拒绝、删除评论，并读取或修改评论系统设置。\n修复版本中通过为上述九个接口统一添加 RequireScopes(ScopeCommentMod)，使访问令牌必须具备 comment:moderate 才能进入评论面板管理操作，切断最小权限令牌越权审核的路径。",
+    "effects": [
+      {
+        "comp_name": "github.com/lin-snow/ech0",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.4.3)",
+            "min_fixed_version": "4.4.3",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
     "last_modified_time": "2026-08-25",
@@ -157,7 +185,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-79672漏洞"
+    "title": "Ech0评论面板越权漏洞"
   },
   "first_saved_at": "2026-08-25T12:35:46+00:00"
 }
