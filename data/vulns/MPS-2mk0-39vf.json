@@ -1,0 +1,183 @@
+{
+  "saved_at": "2026-08-25T15:36:45+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2mk0-39vf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55525",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-918",
+    "description": "PraisonAI 是开源的多 Agent 协作框架，其 pip 包 praisonaiagents 对外导出可被模型调用的 web_crawl 工具，用于抓取网页内容并写入 agent 上下文。\n受影响版本中，web_crawl 仅对初始 URL 解析得到的 IP 做私网和回环拦截，随后 _crawl_with_httpx 使用 httpx.Client(follow_redirects=True) 跟随重定向且不再校验目标。攻击者若能影响抓取地址，可提供解析为公网的 URL，使其 302 跳转到 169.254.169.254、127.0.0.1 或其他私网地址；httpx 跟随该跳转取回内部响应，web_crawl 将正文写入结果 content 字段并进入 agent 上下文。默认未设置 ALLOW_LOCAL_CRAWL=true 时，前门校验保持开启但仍被重定向路径绕过。\n修复版本中通过将 _crawl_with_httpx 改为 follow_redirects=False，并新增 _is_safe_crawl_url 对每个 Location 目标重新解析、拦截私网、回环、链路本地、组播及未指定地址，切断重定向绕过 SSRF 校验的路径。",
+    "effects": [
+      {
+        "comp_name": "PraisonAI",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.6.58)",
+            "min_fixed_version": "4.6.58",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "praisonaiagents",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.6.58)",
+            "min_fixed_version": "1.6.58",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-2mk0-39vf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/security/advisories/GHSA-5r34-2g38-6569",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/commit/2f9677abb2ea68eab864ee8b6a828fd0141612e1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/releases/tag/v4.6.58",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-5r34-2g38-6569",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "praisonaiagents SSRF漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55525",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-918",
+    "description": "PraisonAI 是开源的多 Agent 协作框架，其 pip 包 praisonaiagents 对外导出可被模型调用的 web_crawl 工具，用于抓取网页内容并写入 agent 上下文。\n受影响版本中，web_crawl 仅对初始 URL 解析得到的 IP 做私网和回环拦截，随后 _crawl_with_httpx 使用 httpx.Client(follow_redirects=True) 跟随重定向且不再校验目标。攻击者若能影响抓取地址，可提供解析为公网的 URL，使其 302 跳转到 169.254.169.254、127.0.0.1 或其他私网地址；httpx 跟随该跳转取回内部响应，web_crawl 将正文写入结果 content 字段并进入 agent 上下文。默认未设置 ALLOW_LOCAL_CRAWL=true 时，前门校验保持开启但仍被重定向路径绕过。\n修复版本中通过将 _crawl_with_httpx 改为 follow_redirects=False，并新增 _is_safe_crawl_url 对每个 Location 目标重新解析、拦截私网、回环、链路本地、组播及未指定地址，切断重定向绕过 SSRF 校验的路径。",
+    "effects": [
+      {
+        "comp_name": "PraisonAI",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.6.58)",
+            "min_fixed_version": "4.6.58",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "praisonaiagents",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.6.58)",
+            "min_fixed_version": "1.6.58",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-2mk0-39vf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/security/advisories/GHSA-5r34-2g38-6569",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/commit/2f9677abb2ea68eab864ee8b6a828fd0141612e1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MervinPraison/PraisonAI/releases/tag/v4.6.58",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-5r34-2g38-6569",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "praisonaiagents SSRF漏洞"
+  },
+  "first_saved_at": "2026-08-25T15:36:45+00:00"
+}
