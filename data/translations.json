@@ -1119,5 +1119,17 @@
   "d0f9c718b052c15405bc58b4d000273eca527903": "Total Donations SQL注入漏洞",
   "4fd7e50480103a42869a94ba8ec3d1e17647076b": "Telephone Directory越权修改",
   "a0cb45e5ed41d7b0dd6fa276688a92dc30f58440": "Readabler SQL注入漏洞",
-  "2b97b5db92820bd042ad58a2ba00e458bbd5d2b3": "hbs异步Helper XSS"
+  "2b97b5db92820bd042ad58a2ba00e458bbd5d2b3": "hbs异步Helper XSS",
+  "ac67410c896783aee3e8f9a294768fa48cbdd3d3": "CVE-2026-79673漏洞",
+  "f53250225e45732e8f84835b3afa055a25ee86ca": "Ech0 before 4.4.3 protects the PUT /user endpoint with the profile:read scope, a read-only scope, but allows write operations including password changes. An attacker with an admin's profile:read access token can change the admin's password and login to obtain an unrestricted session token that bypasses all scope enforcement.",
+  "ed3532d9c01220520102ed1c53c0062ec16bd4a2": "CVE-2026-79672漏洞",
+  "f8ee7aa4768d56809006584f0515f85b4c21e1e3": "Ech0 before 4.4.3 fails to enforce scope-based authorization on nine comment panel admin endpoints, allowing access tokens with minimal scopes to perform full comment moderation operations. Attackers with a limited-scope access token can list, approve, reject, delete comments, and modify comment system settings by directly accessing the unprotected panel endpoints.",
+  "0694443a16a3f61a8f763c75856c0d48b600f27c": "CVE-2026-79665漏洞",
+  "b8c0f7394f2c90930a41713bbb72a58f1531bbf2": "Ech0 before 4.5.1 contains an authorization bypass vulnerability where session tokens skip scope validation in RequireScopes middleware, allowing logged-in non-admin users to access admin endpoints. Attackers can read system logs, visitor statistics, user emails, and subscribe to live WebSocket logs by sending authenticated session tokens to unprotected endpoints.",
+  "34d020cd125f29530c51615249d556777a4e9b22": "CVE-2026-79667漏洞",
+  "71406a41e6885f7238d08d482734bee1e392a865": "Ech0 version 4.3.4 and earlier fails to reliably enforce scoped access token (least-privilege) restrictions on several privileged admin routes. Multiple privileged endpoints (e.g., /api/inbox, /api/panel/comments, /api/backup/export) omit scope checks and authorize based only on the user's admin role, and the backup export handler discards token scope metadata entirely. An attacker holding a deliberately limited (low-scope) admin access token can reach broader privileged functionality than intended, including reading the inbox and exporting a full database backup ZIP archive. Fixed in 4.4.3.",
+  "ea92580f3dbb84c6be4095592165d492f0d3f02d": "CVE-2026-79666漏洞",
+  "18d53248d6daa26e8ed79849a2818ce124c3aea7": "Ech0 before 4.4.3 fails to enforce administrator authorization on dashboard log endpoints, allowing any authenticated user to access system logs. Attackers with valid user sessions can query GET /api/system/logs and subscribe to SSE and WebSocket log streams to retrieve sensitive operational data including file paths, stack traces, and internal URLs.",
+  "02f0305849bb97f6dfc2bcf9f1e1498a33ccc5f4": "CVE-2026-79664漏洞",
+  "870174c11e70070c94371c0e45bf26813b950822": "Ech0 before 4.7.3 fails to properly revoke access tokens created with never-expire option, allowing attackers to maintain perpetual authenticated access after token theft. Three independent revocation mechanisms fail: logout panics on nil ExpiresAt field, RevokeToken skips when remainTTL is zero, and admin delete does not blacklist the JTI, leaving stolen tokens cryptographically valid until JWT secret rotation."
 }
