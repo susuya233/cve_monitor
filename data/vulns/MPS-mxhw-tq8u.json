@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-25T07:39:15+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-25T08:34:36+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-mxhw-tq8u",
@@ -43,14 +43,48 @@
     "cvss_score": 8.5,
     "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "A missing authorization vulnerability exists in SKYSEA Client View and SKYMEC IT Manager. If this vulnerability is exploited, an attacker who can log in to the Windows system on which the affected product is installed may execute arbitrary code with SYSTEM privilege.",
-    "effects": [],
+    "description": "SKYSEA Client View 是 Sky 株式会社提供的商业客户端运营管理软件，SKYMEC IT Manager 是面向医疗机构的商业 IT 设备管理软件，二者均非开源，用于对 Windows 终端、管理机和服务器进行资产、日志与安全管控。\n受影响版本中，产品存在授权处理缺失。已登录安装受影响产品的 Windows 系统的攻击者可绕过应有授权检查，以 SYSTEM 权限执行任意代码。\n修复版本中通过厂商安全更新与修正模块补齐授权处理，切断本地低权限登录用户提升至 SYSTEM 权限的路径。SKYSEA Client View 应升级至 Ver.21.310.01a 及以上版本或应用修正模块，SKYMEC IT Manager 应应用厂商提供的修正模块。",
+    "effects": [
+      {
+        "comp_name": "SKYMEC IT Manager",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2024.005.10a,2024.005.10a]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2023.225.03a,2023.225.03a]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "SKYSEA Client View",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,21.210.01f]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
     "last_modified_time": "2026-08-25",
@@ -78,8 +112,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-66109漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SKYSEA授权缺失漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -121,14 +157,48 @@
     "cvss_score": 8.5,
     "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "A missing authorization vulnerability exists in SKYSEA Client View and SKYMEC IT Manager. If this vulnerability is exploited, an attacker who can log in to the Windows system on which the affected product is installed may execute arbitrary code with SYSTEM privilege.",
-    "effects": [],
+    "description": "SKYSEA Client View 是 Sky 株式会社提供的商业客户端运营管理软件，SKYMEC IT Manager 是面向医疗机构的商业 IT 设备管理软件，二者均非开源，用于对 Windows 终端、管理机和服务器进行资产、日志与安全管控。\n受影响版本中，产品存在授权处理缺失。已登录安装受影响产品的 Windows 系统的攻击者可绕过应有授权检查，以 SYSTEM 权限执行任意代码。\n修复版本中通过厂商安全更新与修正模块补齐授权处理，切断本地低权限登录用户提升至 SYSTEM 权限的路径。SKYSEA Client View 应升级至 Ver.21.310.01a 及以上版本或应用修正模块，SKYMEC IT Manager 应应用厂商提供的修正模块。",
+    "effects": [
+      {
+        "comp_name": "SKYMEC IT Manager",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2024.005.10a,2024.005.10a]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2023.225.03a,2023.225.03a]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "SKYSEA Client View",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,21.210.01f]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
     "last_modified_time": "2026-08-25",
@@ -156,8 +226,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-66109漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SKYSEA授权缺失漏洞"
   },
   "first_saved_at": "2026-08-25T07:39:12+00:00"
 }
