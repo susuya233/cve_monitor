@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-25T03:42:55+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0isx-tklo",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78676",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "GitPython 是开源 Python 库，用于以编程方式访问 Git 仓库、读写 git-config 并执行克隆与提交等常见操作。\n受影响版本中，GitConfigParser._read 的 string_decode 会把磁盘上符合 Git 规范的多行引号值里的 \\n 转义解码成内存中的真实换行；此后任意无关的配置写回都会走 _write 内 write_section，用 _value_to_string(v).replace(\"\\n\", \"\\n\\t\") 把该换行写成无引号且无反斜杠续行标记的物理新行，使 hooksPath 等指令被 Git 解析为独立配置项，并在后续 hook 触发时执行任意代码。\n修复版本中通过让 write_section 对含换行、制表符、引号或反斜杠的取值改用 Git 兼容转义，并放入带反斜杠续行的引号值中写出，切断休眠多行值在写回时变成新配置指令的链路。",
+    "effects": [
+      {
+        "comp_name": "GitPython",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.1.59)",
+            "min_fixed_version": "3.1.59",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "参数注入或修改",
+    "kind_en": "命令中参数分隔符的不正确中和（“参数注入”）",
+    "last_modified_time": "2026-08-25",
+    "level": "Critical",
+    "mps_id": "MPS-0isx-tklo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0isx-tklo",
+        "name": "https://www.oscs1024.com/hd/MPS-0isx-tklo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78676",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78676"
+      },
+      {
+        "url": "https://github.com/gitpython-developers/GitPython/security/advisories/GHSA-284h-m62q-gf8w",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gitpython-before-remote-code-execution-via-config-injection",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "GitPython配置注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78676",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "GitPython 是开源 Python 库，用于以编程方式访问 Git 仓库、读写 git-config 并执行克隆与提交等常见操作。\n受影响版本中，GitConfigParser._read 的 string_decode 会把磁盘上符合 Git 规范的多行引号值里的 \\n 转义解码成内存中的真实换行；此后任意无关的配置写回都会走 _write 内 write_section，用 _value_to_string(v).replace(\"\\n\", \"\\n\\t\") 把该换行写成无引号且无反斜杠续行标记的物理新行，使 hooksPath 等指令被 Git 解析为独立配置项，并在后续 hook 触发时执行任意代码。\n修复版本中通过让 write_section 对含换行、制表符、引号或反斜杠的取值改用 Git 兼容转义，并放入带反斜杠续行的引号值中写出，切断休眠多行值在写回时变成新配置指令的链路。",
+    "effects": [
+      {
+        "comp_name": "GitPython",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.1.59)",
+            "min_fixed_version": "3.1.59",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "参数注入或修改",
+    "kind_en": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "last_modified_time": "2026-08-25",
+    "level": "Critical",
+    "mps_id": "MPS-0isx-tklo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0isx-tklo",
+        "name": "https://www.oscs1024.com/hd/MPS-0isx-tklo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78676",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78676"
+      },
+      {
+        "url": "https://github.com/gitpython-developers/GitPython/security/advisories/GHSA-284h-m62q-gf8w",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gitpython-before-remote-code-execution-via-config-injection",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "GitPython配置注入漏洞"
+  },
+  "first_saved_at": "2026-08-25T03:42:55+00:00"
+}

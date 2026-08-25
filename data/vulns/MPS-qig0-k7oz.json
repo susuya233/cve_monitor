@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-25T03:43:01+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-qig0-k7oz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78675",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-73",
+    "description": "GitPython 是开源 Python 库，用于以面向对象接口操作 Git 仓库，常被 CI、依赖扫描和代码审查类工具用来克隆并检查第三方仓库。\n受影响版本中，Submodule._config_parser() 构造 SubmoduleConfigParser 解析仓库内 .gitmodules 时未传入 merge_includes=False，沿用 GitConfigParser.__init__ 默认 merge_includes=True。攻击者可在恶意仓库的 .gitmodules 写入 [include] path 指向任意本地可读文件；调用方访问 repo.submodules 时，GitConfigParser.read() 会打开该路径，_read() 在非 git-config 文件上抛出 MissingSectionHeaderError，异常消息原样嵌入目标文件首行，造成本地文件内容泄露。\n修复版本中通过在 Submodule._config_parser() 构造 SubmoduleConfigParser 时显式传入 merge_includes=False，禁止解析 .gitmodules 时合并 include 指令，切断对任意本地文件的打开和首行泄露路径。",
+    "effects": [
+      {
+        "comp_name": "GitPython",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.1.59)",
+            "min_fixed_version": "3.1.59",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "文件名或路径的外部控制",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-qig0-k7oz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qig0-k7oz",
+        "name": "https://www.oscs1024.com/hd/MPS-qig0-k7oz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78675",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78675"
+      },
+      {
+        "url": "https://github.com/gitpython-developers/GitPython/security/advisories/GHSA-7833-fr7j-v32q",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gitpython-before-local-file-content-disclosure-via-gitmodules",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "GitPython文件内容泄露",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78675",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-73",
+    "description": "GitPython 是开源 Python 库，用于以面向对象接口操作 Git 仓库，常被 CI、依赖扫描和代码审查类工具用来克隆并检查第三方仓库。\n受影响版本中，Submodule._config_parser() 构造 SubmoduleConfigParser 解析仓库内 .gitmodules 时未传入 merge_includes=False，沿用 GitConfigParser.__init__ 默认 merge_includes=True。攻击者可在恶意仓库的 .gitmodules 写入 [include] path 指向任意本地可读文件；调用方访问 repo.submodules 时，GitConfigParser.read() 会打开该路径，_read() 在非 git-config 文件上抛出 MissingSectionHeaderError，异常消息原样嵌入目标文件首行，造成本地文件内容泄露。\n修复版本中通过在 Submodule._config_parser() 构造 SubmoduleConfigParser 时显式传入 merge_includes=False，禁止解析 .gitmodules 时合并 include 指令，切断对任意本地文件的打开和首行泄露路径。",
+    "effects": [
+      {
+        "comp_name": "GitPython",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.1.59)",
+            "min_fixed_version": "3.1.59",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "External Control of File Name or Path",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-qig0-k7oz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qig0-k7oz",
+        "name": "https://www.oscs1024.com/hd/MPS-qig0-k7oz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78675",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78675"
+      },
+      {
+        "url": "https://github.com/gitpython-developers/GitPython/security/advisories/GHSA-7833-fr7j-v32q",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gitpython-before-local-file-content-disclosure-via-gitmodules",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "GitPython文件内容泄露"
+  },
+  "first_saved_at": "2026-08-25T03:43:01+00:00"
+}

@@ -1,0 +1,165 @@
+{
+  "saved_at": "2026-08-25T03:42:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-e2ut-9k0q",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78681",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-776",
+    "description": "NLTK 是开源 Python 自然语言处理工具包，提供分词、语料读取、命名实体识别和数据包下载等能力。\n受影响版本中，nltk.internals.ElementWrapper 在入参为字符串时调用 xml.etree.ElementTree.fromstring，nltk.chunk.named_entity.load_ace_file 以及 nltk.downloader.Package.fromxml、Collection.fromxml 仍直接使用 ElementTree 解析 XML。该解析器会展开文档内部 DTD 中的 ENTITY 声明，攻击者提交约数百字节的嵌套实体文档后，解析结果可在内存中膨胀到数兆字节，造成拒绝服务。该缺陷属于内存放大，ElementTree 不会解析外部实体。\n修复版本中通过新增 nltk.xmlsec，将上述入口改为调用拒绝 ENTITY 声明的 parse 与 fromstring。该模块优先使用 defusedxml，缺失时用 xml.parsers.expat 预扫描实体声明，从而切断实体展开路径。",
+    "effects": [
+      {
+        "comp_name": "nltk",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.10.3)",
+            "min_fixed_version": "3.10.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "XML实体扩展",
+    "kind_en": "Improper Restriction of Recursive Entity References in DTDs ('XML Entity Expansion')",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-e2ut-9k0q",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-e2ut-9k0q",
+        "name": "https://www.oscs1024.com/hd/MPS-e2ut-9k0q"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78681",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78681"
+      },
+      {
+        "url": "https://github.com/nltk/nltk/security/advisories/GHSA-97qj-x29f-37w7",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nltk-before-entity-expansion-dos-via-elementtree",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "NLTK XML实体扩展漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78681",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-776",
+    "description": "NLTK 是开源 Python 自然语言处理工具包，提供分词、语料读取、命名实体识别和数据包下载等能力。\n受影响版本中，nltk.internals.ElementWrapper 在入参为字符串时调用 xml.etree.ElementTree.fromstring，nltk.chunk.named_entity.load_ace_file 以及 nltk.downloader.Package.fromxml、Collection.fromxml 仍直接使用 ElementTree 解析 XML。该解析器会展开文档内部 DTD 中的 ENTITY 声明，攻击者提交约数百字节的嵌套实体文档后，解析结果可在内存中膨胀到数兆字节，造成拒绝服务。该缺陷属于内存放大，ElementTree 不会解析外部实体。\n修复版本中通过新增 nltk.xmlsec，将上述入口改为调用拒绝 ENTITY 声明的 parse 与 fromstring。该模块优先使用 defusedxml，缺失时用 xml.parsers.expat 预扫描实体声明，从而切断实体展开路径。",
+    "effects": [
+      {
+        "comp_name": "nltk",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.10.3)",
+            "min_fixed_version": "3.10.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "XML实体扩展",
+    "kind_en": "Improper Restriction of Recursive Entity References in DTDs ('XML Entity Expansion')",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-e2ut-9k0q",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-e2ut-9k0q",
+        "name": "https://www.oscs1024.com/hd/MPS-e2ut-9k0q"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78681",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78681"
+      },
+      {
+        "url": "https://github.com/nltk/nltk/security/advisories/GHSA-97qj-x29f-37w7",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nltk-before-entity-expansion-dos-via-elementtree",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "NLTK XML实体扩展漏洞"
+  },
+  "first_saved_at": "2026-08-25T03:42:54+00:00"
+}

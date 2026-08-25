@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-25T03:43:02+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-1vui-pyj7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76846",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-522",
+    "description": "Grav 是开源 PHP 扁平文件内容管理系统，通过 Composer 包 getgrav/grav 分发，用于站点页面渲染与内容编辑。\n受影响版本中，Twig 沙箱默认拒绝列表 twig_sandbox.config_denied_paths 仅包含 plugins、streams、security、backups、scheduler，未将 system 作为前缀纳入。站点开启非默认项 twig_content.config_access 后，具备页面编辑权限的用户可在页面内容 Twig 中调用 config.get() 或 config.toArray()，读取 system.cache.redis.password 等系统配置机密。\n修复版本中通过将 system.cache.redis.password 写入默认 config_denied_paths，使 SandboxConfig 的 get() 与 toArray() 对该路径返回空值并从批量导出中剔除，阻断页面内容 Twig 读取 Redis 口令等系统机密。",
+    "effects": [
+      {
+        "comp_name": "getgrav/grav",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.16)",
+            "min_fixed_version": "2.0.16",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "凭证保护不足",
+    "kind_en": "凭证保护不足",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-1vui-pyj7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1vui-pyj7",
+        "name": "https://www.oscs1024.com/hd/MPS-1vui-pyj7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76846",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76846"
+      },
+      {
+        "url": "https://github.com/getgrav/grav/security/advisories/GHSA-xjw5-q542-3vmr",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/grav-before-information-disclosure-via-twig-sandbox",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Grav Twig沙箱凭据泄露",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76846",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-522",
+    "description": "Grav 是开源 PHP 扁平文件内容管理系统，通过 Composer 包 getgrav/grav 分发，用于站点页面渲染与内容编辑。\n受影响版本中，Twig 沙箱默认拒绝列表 twig_sandbox.config_denied_paths 仅包含 plugins、streams、security、backups、scheduler，未将 system 作为前缀纳入。站点开启非默认项 twig_content.config_access 后，具备页面编辑权限的用户可在页面内容 Twig 中调用 config.get() 或 config.toArray()，读取 system.cache.redis.password 等系统配置机密。\n修复版本中通过将 system.cache.redis.password 写入默认 config_denied_paths，使 SandboxConfig 的 get() 与 toArray() 对该路径返回空值并从批量导出中剔除，阻断页面内容 Twig 读取 Redis 口令等系统机密。",
+    "effects": [
+      {
+        "comp_name": "getgrav/grav",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.16)",
+            "min_fixed_version": "2.0.16",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "凭证保护不足",
+    "kind_en": "Insufficiently Protected Credentials",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-1vui-pyj7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1vui-pyj7",
+        "name": "https://www.oscs1024.com/hd/MPS-1vui-pyj7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76846",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76846"
+      },
+      {
+        "url": "https://github.com/getgrav/grav/security/advisories/GHSA-xjw5-q542-3vmr",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/grav-before-information-disclosure-via-twig-sandbox",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Grav Twig沙箱凭据泄露"
+  },
+  "first_saved_at": "2026-08-25T03:43:02+00:00"
+}

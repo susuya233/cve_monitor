@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-25T03:43:00+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-r98u-ca41",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78679",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-73",
+    "description": "GitPython 是开源 Python 库，用于以高层 porcelain 或底层 plumbing 方式操作 Git 仓库。\n受影响版本中，TagReference.create() 将调用方控制的 positional 参数 reference 直接传入 git tag，但 Git.check_unsafe_options 只检查 kwargs、传入的 args 列表为空。攻击者把 reference 设为 --file=<path> 后，该值会在默认 allow_unsafe_options=False 下绕过 --file/-F 防护，使 git tag 读取任意文件并把内容写入 annotated tag 的 message。\n修复版本中通过先解析遗留关键字 ref，再把 path 与 reference 一并纳入 _option_candidates 交由 check_unsafe_options 审查，并补充可聚类短选项，阻止 --file、-F 及短选项簇经位置参数进入 git tag，从而切断任意文件读取。",
+    "effects": [
+      {
+        "comp_name": "GitPython",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.1.59)",
+            "min_fixed_version": "3.1.59",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "文件名或路径的外部控制",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-r98u-ca41",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-r98u-ca41",
+        "name": "https://www.oscs1024.com/hd/MPS-r98u-ca41"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78679",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78679"
+      },
+      {
+        "url": "https://github.com/gitpython-developers/GitPython/security/advisories/GHSA-3wxw-xv34-2frg",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gitpython-before-arbitrary-file-read-via-tagreference-create",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "GitPython任意文件读取",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78679",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-73",
+    "description": "GitPython 是开源 Python 库，用于以高层 porcelain 或底层 plumbing 方式操作 Git 仓库。\n受影响版本中，TagReference.create() 将调用方控制的 positional 参数 reference 直接传入 git tag，但 Git.check_unsafe_options 只检查 kwargs、传入的 args 列表为空。攻击者把 reference 设为 --file=<path> 后，该值会在默认 allow_unsafe_options=False 下绕过 --file/-F 防护，使 git tag 读取任意文件并把内容写入 annotated tag 的 message。\n修复版本中通过先解析遗留关键字 ref，再把 path 与 reference 一并纳入 _option_candidates 交由 check_unsafe_options 审查，并补充可聚类短选项，阻止 --file、-F 及短选项簇经位置参数进入 git tag，从而切断任意文件读取。",
+    "effects": [
+      {
+        "comp_name": "GitPython",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.1.59)",
+            "min_fixed_version": "3.1.59",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "External Control of File Name or Path",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-r98u-ca41",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-r98u-ca41",
+        "name": "https://www.oscs1024.com/hd/MPS-r98u-ca41"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78679",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78679"
+      },
+      {
+        "url": "https://github.com/gitpython-developers/GitPython/security/advisories/GHSA-3wxw-xv34-2frg",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gitpython-before-arbitrary-file-read-via-tagreference-create",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "GitPython任意文件读取"
+  },
+  "first_saved_at": "2026-08-25T03:43:00+00:00"
+}

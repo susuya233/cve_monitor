@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-25T03:42:59+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-054m-yr9z",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78680",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-426",
+    "description": "NLTK 是开源 Python 自然语言处理工具包，用于分词、句法分析、机器翻译对齐等文本处理，其中 dependencygraph.dot2img 与 AlignedSent 可视化依赖 Graphviz 的 dot 程序。\n受影响版本中，nltk.parse.dependencygraph.dot2img 虽调用 find_binary(\"dot\")，但丢弃其返回的已校验绝对路径，随后以裸名称 [\"dot\", ...] 执行 subprocess.run；nltk.translate.api.AlignedSent._repr_svg_ 在 IPython SVG 渲染中同样以裸名称调用 subprocess.Popen。攻击者可在当前工作目录或相对 PATH 项中放置名为 dot 的恶意可执行文件，使进程创建解析到该文件而非真实 Graphviz 工具，并以调用方权限执行任意代码。\n修复版本中通过让 dot2img 与 _repr_svg_ 均执行 find_binary(\"dot\") 返回的受信任绝对路径，find_binary 拒绝当前目录相对匹配并只返回经过校验的绝对位置，切断裸名称搜索路径劫持。",
+    "effects": [
+      {
+        "comp_name": "nltk",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.10.3)",
+            "min_fixed_version": "3.10.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不可信的搜索路径",
+    "kind_en": "不受信任的搜索路径",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-054m-yr9z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-054m-yr9z",
+        "name": "https://www.oscs1024.com/hd/MPS-054m-yr9z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78680",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78680"
+      },
+      {
+        "url": "https://github.com/nltk/nltk/security/advisories/GHSA-6hwm-xvph-95vm",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nltk-before-arbitrary-code-execution-via-graphviz-dot-binary",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "NLTK不可信搜索路径漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78680",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-426",
+    "description": "NLTK 是开源 Python 自然语言处理工具包，用于分词、句法分析、机器翻译对齐等文本处理，其中 dependencygraph.dot2img 与 AlignedSent 可视化依赖 Graphviz 的 dot 程序。\n受影响版本中，nltk.parse.dependencygraph.dot2img 虽调用 find_binary(\"dot\")，但丢弃其返回的已校验绝对路径，随后以裸名称 [\"dot\", ...] 执行 subprocess.run；nltk.translate.api.AlignedSent._repr_svg_ 在 IPython SVG 渲染中同样以裸名称调用 subprocess.Popen。攻击者可在当前工作目录或相对 PATH 项中放置名为 dot 的恶意可执行文件，使进程创建解析到该文件而非真实 Graphviz 工具，并以调用方权限执行任意代码。\n修复版本中通过让 dot2img 与 _repr_svg_ 均执行 find_binary(\"dot\") 返回的受信任绝对路径，find_binary 拒绝当前目录相对匹配并只返回经过校验的绝对位置，切断裸名称搜索路径劫持。",
+    "effects": [
+      {
+        "comp_name": "nltk",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.10.3)",
+            "min_fixed_version": "3.10.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不可信的搜索路径",
+    "kind_en": "Untrusted Search Path",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-054m-yr9z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-054m-yr9z",
+        "name": "https://www.oscs1024.com/hd/MPS-054m-yr9z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78680",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78680"
+      },
+      {
+        "url": "https://github.com/nltk/nltk/security/advisories/GHSA-6hwm-xvph-95vm",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nltk-before-arbitrary-code-execution-via-graphviz-dot-binary",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "NLTK不可信搜索路径漏洞"
+  },
+  "first_saved_at": "2026-08-25T03:42:59+00:00"
+}

@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-25T03:42:57+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0noc-5h7t",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78678",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "GitPython 是开源 Python 库，用于以面向对象接口封装 git 命令并操作本地 Git 仓库。\n受影响版本中，Repo.blame() 与 Repo.blame_incremental() 会把调用方传入的 revision 交给 Git.check_unsafe_options()，对照 unsafe_git_revision_options 拦截危险选项。该列表只包含会写入任意路径的 --output 与 -o，未覆盖 git blame 用于读取文件的 --contents 与 -S。攻击者将 revision 设为 --contents=/etc/passwd 后，该选项被放在 -- 分隔符之前并进入 git blame 命令行，目标文件内容随 blame 结果返回给调用方。\n修复版本中通过新增 unsafe_git_blame_options，将 --contents、-S 与 --ignore-revs-file 纳入拒绝列表，并让 blame 与 blame_incremental 在默认 allow_unsafe_options=False 时改用该列表检查，使上述文件读取选项触发 UnsafeOptionError，不再把本地文件内容带回 blame 结果。",
+    "effects": [
+      {
+        "comp_name": "GitPython",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.1.59)",
+            "min_fixed_version": "3.1.59",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "参数注入或修改",
+    "kind_en": "命令中参数分隔符的不正确中和（“参数注入”）",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-0noc-5h7t",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0noc-5h7t",
+        "name": "https://www.oscs1024.com/hd/MPS-0noc-5h7t"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78678",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78678"
+      },
+      {
+        "url": "https://github.com/gitpython-developers/GitPython/security/advisories/GHSA-5xxx-qhh7-9287",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gitpython-before-arbitrary-file-read-via-repo-blame",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "GitPython任意文件读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78678",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "GitPython 是开源 Python 库，用于以面向对象接口封装 git 命令并操作本地 Git 仓库。\n受影响版本中，Repo.blame() 与 Repo.blame_incremental() 会把调用方传入的 revision 交给 Git.check_unsafe_options()，对照 unsafe_git_revision_options 拦截危险选项。该列表只包含会写入任意路径的 --output 与 -o，未覆盖 git blame 用于读取文件的 --contents 与 -S。攻击者将 revision 设为 --contents=/etc/passwd 后，该选项被放在 -- 分隔符之前并进入 git blame 命令行，目标文件内容随 blame 结果返回给调用方。\n修复版本中通过新增 unsafe_git_blame_options，将 --contents、-S 与 --ignore-revs-file 纳入拒绝列表，并让 blame 与 blame_incremental 在默认 allow_unsafe_options=False 时改用该列表检查，使上述文件读取选项触发 UnsafeOptionError，不再把本地文件内容带回 blame 结果。",
+    "effects": [
+      {
+        "comp_name": "GitPython",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.1.59)",
+            "min_fixed_version": "3.1.59",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "参数注入或修改",
+    "kind_en": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "last_modified_time": "2026-08-25",
+    "level": "High",
+    "mps_id": "MPS-0noc-5h7t",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0noc-5h7t",
+        "name": "https://www.oscs1024.com/hd/MPS-0noc-5h7t"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78678",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78678"
+      },
+      {
+        "url": "https://github.com/gitpython-developers/GitPython/security/advisories/GHSA-5xxx-qhh7-9287",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gitpython-before-arbitrary-file-read-via-repo-blame",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "GitPython任意文件读取漏洞"
+  },
+  "first_saved_at": "2026-08-25T03:42:57+00:00"
+}
