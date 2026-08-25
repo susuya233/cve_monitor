@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-25T06:36:16+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-25T06:36:14+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2zf4-njr0",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,56 +21,73 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78183",
-    "cvss": {},
+    "cve_id": "CVE-2026-13214",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
     "cvss_score": 9.8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-787",
-    "description": "DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in quote_float.\n\nquote_float() allocates the length of the string + 1, which is the size of the bare numeric symbol plus NULL.  But for special literals NaN, Inf, +Inf, -Inf, Infinity, +Infinity, -Infinity it emits the literal surrounded by quotes plus NULL, which is length + 3 bytes. Every recognised literal (case-insensitive) overflows by 2 bytes, a single quote and a NULL.\n\nThis can be reached by the $dbh->quote method, for example\n\n    $dbh->quote( \"Infinity\", DBI::SQL_NUMERIC ).\n\nThis regression was introduced in 3.21.0 by the quote.c rewrite.",
-    "effects": [],
+    "description": "Zephyr 是开源实时操作系统，其 OCPP 1.6 客户端子系统用于充电桩经 WebSocket 与中央系统通信。\n受影响版本中，WebSocket 读线程 ocpp_wsreader() 将中央系统下发的报文写入 ui->recv_buf，再经 PDU 表调用 parse_getconfig_msg()。该函数使用无界 strcpy() 把攻击者可控的 JSON key 拷贝到 ocpp_process_server_msg() 中固定 50 字节的栈缓冲 skey[CISTR50]，源串长度仅受 CONFIG_OCPP_RECV_BUFFER_SIZE（默认 2048）限制。控制中央系统端点或在未加密连接上实施中间人攻击的攻击者可发送超过 50 字节的 key，造成读线程栈破坏，至少导致拒绝服务，在缺少栈金丝雀或 MPU 加固时还可能远程执行代码。\n修复版本中通过将 strcpy() 替换为 strncpy(key, payload.key[0], CISTR50 - 1) 并显式写入 NUL 终止符，把拷贝长度限制在目标缓冲以内，阻断超长 key 覆盖栈的路径。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.3.0,4.4.2)",
+            "min_fixed_version": "4.4.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "越界写入",
     "kind_en": "越界写入",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-25",
     "level": "Critical",
-    "mps_id": "MPS-gncf-koz0",
+    "mps_id": "MPS-2zf4-njr0",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
-        "name": "https://www.oscs1024.com/hd/MPS-gncf-koz0"
+        "url": "https://www.oscs1024.com/hd/MPS-2zf4-njr0",
+        "name": "https://www.oscs1024.com/hd/MPS-2zf4-njr0"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-13214",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-13214"
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/6d6f47ed2403cda55c82b1bad56e388ba7390065.patch",
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/afbf880b04188ae53451a0ade4ac62b654fdff34",
         "name": ""
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/adacf1de872326a465e13f9e4281a674ebcd227e",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/bucardo/dbdpg/security/advisories/GHSA-785p-fw3v-r822",
-        "name": ""
-      },
-      {
-        "url": "https://metacpan.org/release/TURNSTEP/DBD-Pg-3.21.1/source/Changes",
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-fqhf-6v24-4px2",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78183漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Zephyr OCPP栈溢出",
     "_translated": true
   },
   "detail_original": {
@@ -90,56 +107,73 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78183",
-    "cvss": {},
+    "cve_id": "CVE-2026-13214",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
     "cvss_score": 9.8,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-787",
-    "description": "DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in quote_float.\n\nquote_float() allocates the length of the string + 1, which is the size of the bare numeric symbol plus NULL.  But for special literals NaN, Inf, +Inf, -Inf, Infinity, +Infinity, -Infinity it emits the literal surrounded by quotes plus NULL, which is length + 3 bytes. Every recognised literal (case-insensitive) overflows by 2 bytes, a single quote and a NULL.\n\nThis can be reached by the $dbh->quote method, for example\n\n    $dbh->quote( \"Infinity\", DBI::SQL_NUMERIC ).\n\nThis regression was introduced in 3.21.0 by the quote.c rewrite.",
-    "effects": [],
+    "description": "Zephyr 是开源实时操作系统，其 OCPP 1.6 客户端子系统用于充电桩经 WebSocket 与中央系统通信。\n受影响版本中，WebSocket 读线程 ocpp_wsreader() 将中央系统下发的报文写入 ui->recv_buf，再经 PDU 表调用 parse_getconfig_msg()。该函数使用无界 strcpy() 把攻击者可控的 JSON key 拷贝到 ocpp_process_server_msg() 中固定 50 字节的栈缓冲 skey[CISTR50]，源串长度仅受 CONFIG_OCPP_RECV_BUFFER_SIZE（默认 2048）限制。控制中央系统端点或在未加密连接上实施中间人攻击的攻击者可发送超过 50 字节的 key，造成读线程栈破坏，至少导致拒绝服务，在缺少栈金丝雀或 MPU 加固时还可能远程执行代码。\n修复版本中通过将 strcpy() 替换为 strncpy(key, payload.key[0], CISTR50 - 1) 并显式写入 NUL 终止符，把拷贝长度限制在目标缓冲以内，阻断超长 key 覆盖栈的路径。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.3.0,4.4.2)",
+            "min_fixed_version": "4.4.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "越界写入",
     "kind_en": "Out-of-bounds Write",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-25",
     "level": "Critical",
-    "mps_id": "MPS-gncf-koz0",
+    "mps_id": "MPS-2zf4-njr0",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-25",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-gncf-koz0",
-        "name": "https://www.oscs1024.com/hd/MPS-gncf-koz0"
+        "url": "https://www.oscs1024.com/hd/MPS-2zf4-njr0",
+        "name": "https://www.oscs1024.com/hd/MPS-2zf4-njr0"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78183"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-13214",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-13214"
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/6d6f47ed2403cda55c82b1bad56e388ba7390065.patch",
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/afbf880b04188ae53451a0ade4ac62b654fdff34",
         "name": ""
       },
       {
-        "url": "https://github.com/bucardo/dbdpg/commit/adacf1de872326a465e13f9e4281a674ebcd227e",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/bucardo/dbdpg/security/advisories/GHSA-785p-fw3v-r822",
-        "name": ""
-      },
-      {
-        "url": "https://metacpan.org/release/TURNSTEP/DBD-Pg-3.21.1/source/Changes",
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-fqhf-6v24-4px2",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-78183漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Zephyr OCPP栈溢出"
   },
-  "first_saved_at": "2026-08-23T21:15:38+00:00"
+  "first_saved_at": "2026-08-25T06:36:14+00:00"
 }
