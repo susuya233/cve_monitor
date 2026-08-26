@@ -1,0 +1,159 @@
+{
+  "saved_at": "2026-08-26T05:28:39+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2035-d23c",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-63041",
+    "cvss": {},
+    "cvss_score": 9.1,
+    "cvss_vector": "",
+    "cwe": "CWE-807",
+    "description": "Apache APISIX 是开源云原生 API 网关，用于对上游服务进行路由、认证鉴权，并可通过插件把已认证消费者的标签附加到请求头。\n受影响版本中，attach-consumer-label 插件的 before_proxy 在 ctx.consumer 不存在或 consumer.labels 为空时直接返回，不会清除客户端提交的、与插件配置同名的请求头。攻击者向已启用该插件的路由发送伪造的 X-Consumer-Role 等标签头后，这些不可信取值会被原样转发到上游，使上游基于伪造身份做出安全决策，造成权限提升或授权绕过。\n修复版本中通过在无标签时对配置头调用 core.request.set_header(ctx, header, nil) 清除客户端取值，并在存在标签时用消费者标签覆盖同名请求头，切断伪造标签进入上游授权逻辑的路径。",
+    "effects": [
+      {
+        "comp_name": "apisix",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.11.0,3.18.0)",
+            "min_fixed_version": "3.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "在安全决策中依赖未经信任的输入",
+    "kind_en": "安全决策中对不可信输入的依赖",
+    "last_modified_time": "2026-08-26",
+    "level": "Critical",
+    "mps_id": "MPS-2035-d23c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11784.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-63041",
+        "name": ""
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-63041",
+        "name": ""
+      },
+      {
+        "url": "https://apisix.apache.org",
+        "name": ""
+      },
+      {
+        "url": "https://apisix.apache.org/docs/apisix/plugins/attach-consumer-label/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/commit/d3f198486af31518e1bf039fc604d90008f732f5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/pull/13590",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "APISIX消费者标签头欺骗",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-63041",
+    "cvss": {},
+    "cvss_score": 9.1,
+    "cvss_vector": "",
+    "cwe": "CWE-807",
+    "description": "Apache APISIX 是开源云原生 API 网关，用于对上游服务进行路由、认证鉴权，并可通过插件把已认证消费者的标签附加到请求头。\n受影响版本中，attach-consumer-label 插件的 before_proxy 在 ctx.consumer 不存在或 consumer.labels 为空时直接返回，不会清除客户端提交的、与插件配置同名的请求头。攻击者向已启用该插件的路由发送伪造的 X-Consumer-Role 等标签头后，这些不可信取值会被原样转发到上游，使上游基于伪造身份做出安全决策，造成权限提升或授权绕过。\n修复版本中通过在无标签时对配置头调用 core.request.set_header(ctx, header, nil) 清除客户端取值，并在存在标签时用消费者标签覆盖同名请求头，切断伪造标签进入上游授权逻辑的路径。",
+    "effects": [
+      {
+        "comp_name": "apisix",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.11.0,3.18.0)",
+            "min_fixed_version": "3.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "在安全决策中依赖未经信任的输入",
+    "kind_en": "Reliance on Untrusted Inputs in a Security Decision",
+    "last_modified_time": "2026-08-26",
+    "level": "Critical",
+    "mps_id": "MPS-2035-d23c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11784.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-63041",
+        "name": ""
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-63041",
+        "name": ""
+      },
+      {
+        "url": "https://apisix.apache.org",
+        "name": ""
+      },
+      {
+        "url": "https://apisix.apache.org/docs/apisix/plugins/attach-consumer-label/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/commit/d3f198486af31518e1bf039fc604d90008f732f5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/pull/13590",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "APISIX消费者标签头欺骗"
+  },
+  "first_saved_at": "2026-08-26T05:28:39+00:00"
+}
