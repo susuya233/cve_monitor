@@ -1,5 +1,5 @@
 {
-  "saved_at": "2026-08-26T02:23:09+00:00",
+  "saved_at": "2026-08-26T03:48:42+00:00",
   "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
@@ -43,8 +43,22 @@
     "cvss_score": 9.2,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "ClipBucket V5's web installer fails to properly validate or escape the php_cli_filepath parameter before passing it to shell execution. Unauthenticated attackers can submit a crafted POST request to the installer with a malicious php_cli_filepath value to execute arbitrary commands as the web server user.",
-    "effects": [],
+    "description": "ClipBucket V5 是开源 PHP 视频分享与内容管理平台，提供 Web 安装向导用于部署时检测 PHP CLI 等运行依赖。\n受影响版本中，安装向导 Pre Check 步骤把 POST 参数 php_cli_filepath 作为 PHP CLI 路径传入 System::get_software_version，并进入 System::get_php_cli_info。该方法未校验或转义 $php_path，直接将其拼入 $cmd 后调用 exec()，未认证攻击者可向安装器提交恶意 php_cli_filepath，以 Web 服务器权限执行任意操作系统命令。\n修复版本中通过在 get_php_cli_info 中使用 realpath 确认路径为可执行文件，并以 escapeshellarg 包裹后再拼入命令，阻止 php_cli_filepath 中的 shell 元字符进入 exec()。",
+    "effects": [
+      {
+        "comp_name": "clipbucket-v5",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.5.1,5.5.3-#153]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -90,8 +104,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-80138漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "ClipBucket安装器命令注入",
     "_translated": true
   },
   "detail_original": {
@@ -133,8 +149,22 @@
     "cvss_score": 9.2,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "ClipBucket V5's web installer fails to properly validate or escape the php_cli_filepath parameter before passing it to shell execution. Unauthenticated attackers can submit a crafted POST request to the installer with a malicious php_cli_filepath value to execute arbitrary commands as the web server user.",
-    "effects": [],
+    "description": "ClipBucket V5 是开源 PHP 视频分享与内容管理平台，提供 Web 安装向导用于部署时检测 PHP CLI 等运行依赖。\n受影响版本中，安装向导 Pre Check 步骤把 POST 参数 php_cli_filepath 作为 PHP CLI 路径传入 System::get_software_version，并进入 System::get_php_cli_info。该方法未校验或转义 $php_path，直接将其拼入 $cmd 后调用 exec()，未认证攻击者可向安装器提交恶意 php_cli_filepath，以 Web 服务器权限执行任意操作系统命令。\n修复版本中通过在 get_php_cli_info 中使用 realpath 确认路径为可执行文件，并以 escapeshellarg 包裹后再拼入命令，阻止 php_cli_filepath 中的 shell 元字符进入 exec()。",
+    "effects": [
+      {
+        "comp_name": "clipbucket-v5",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.5.1,5.5.3-#153]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -180,8 +210,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-80138漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "ClipBucket安装器命令注入"
   },
   "first_saved_at": "2026-08-26T00:56:13+00:00"
 }

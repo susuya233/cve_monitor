@@ -1,5 +1,5 @@
 {
-  "saved_at": "2026-08-26T02:23:09+00:00",
+  "saved_at": "2026-08-26T03:48:45+00:00",
   "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
@@ -35,12 +35,33 @@
     "cvss_score": 7.8,
     "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
     "cwe": "CWE-94",
-    "description": "Compliance-trestle (Trestle) is a Python SDK and command-line tool for managing OSCAL compliance documents. In versions before 3.12.4 and versions 4.0.0 through 4.0.3, Trestle is vulnerable to server-side template injection that can lead to remote code execution. This occurs because the MDCleanInclude and MDSectionInclude Jinja2 tags re-parse untrusted Markdown content as template source code using a non-sandboxed jinja2.Environment. An attacker who controls content that Trestle renders, such as a crafted workspace Markdown file, a third-party SSP document, or a YAML lookup-table value, can inject a Jinja2 expression that traverses Python object internals to execute arbitrary operating system commands in the context of the Trestle process. This issue is fixed in versions 3.12.4 and 4.1.0.",
-    "effects": [],
+    "description": "Compliance-trestle（Trestle）是开源 Python SDK 与命令行工具，用于基于 NIST OSCAL 管理合规文档，并借助 Jinja2 渲染 Markdown。\n受影响版本中，MDCleanInclude.parse 与 MDSectionInclude.parse 会把工作区 Markdown、第三方 SSP 或 YAML 查找表中的不可信内容，交给非沙箱 jinja2.Environment 对应的 Parser 再次解析为模板源码。攻击者可在被 include 的 Markdown 中写入 Jinja 表达式，沿 Python 对象链访问 __globals__，在 Trestle 进程上下文中执行任意操作系统命令。\n修复版本中通过将二次解析改到 SandboxedEnvironment，并在 JinjaCmd._create_jinja_environment 中改用沙箱环境，阻断对 __class__、__globals__ 等危险属性的访问，切断模板注入到命令执行的路径。",
+    "effects": [
+      {
+        "comp_name": "compliance-trestle",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.12.4)",
+            "min_fixed_version": "3.12.4",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.1.0)",
+            "min_fixed_version": "4.1.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "代码注入",
@@ -74,8 +95,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-54757漏洞",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "Trestle模板注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -109,12 +133,33 @@
     "cvss_score": 7.8,
     "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
     "cwe": "CWE-94",
-    "description": "Compliance-trestle (Trestle) is a Python SDK and command-line tool for managing OSCAL compliance documents. In versions before 3.12.4 and versions 4.0.0 through 4.0.3, Trestle is vulnerable to server-side template injection that can lead to remote code execution. This occurs because the MDCleanInclude and MDSectionInclude Jinja2 tags re-parse untrusted Markdown content as template source code using a non-sandboxed jinja2.Environment. An attacker who controls content that Trestle renders, such as a crafted workspace Markdown file, a third-party SSP document, or a YAML lookup-table value, can inject a Jinja2 expression that traverses Python object internals to execute arbitrary operating system commands in the context of the Trestle process. This issue is fixed in versions 3.12.4 and 4.1.0.",
-    "effects": [],
+    "description": "Compliance-trestle（Trestle）是开源 Python SDK 与命令行工具，用于基于 NIST OSCAL 管理合规文档，并借助 Jinja2 渲染 Markdown。\n受影响版本中，MDCleanInclude.parse 与 MDSectionInclude.parse 会把工作区 Markdown、第三方 SSP 或 YAML 查找表中的不可信内容，交给非沙箱 jinja2.Environment 对应的 Parser 再次解析为模板源码。攻击者可在被 include 的 Markdown 中写入 Jinja 表达式，沿 Python 对象链访问 __globals__，在 Trestle 进程上下文中执行任意操作系统命令。\n修复版本中通过将二次解析改到 SandboxedEnvironment，并在 JinjaCmd._create_jinja_environment 中改用沙箱环境，阻断对 __class__、__globals__ 等危险属性的访问，切断模板注入到命令执行的路径。",
+    "effects": [
+      {
+        "comp_name": "compliance-trestle",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.12.4)",
+            "min_fixed_version": "3.12.4",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.1.0)",
+            "min_fixed_version": "4.1.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "代码注入",
@@ -148,8 +193,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-54757漏洞"
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "Trestle模板注入漏洞"
   },
   "first_saved_at": "2026-08-26T00:56:16+00:00"
 }
