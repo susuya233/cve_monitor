@@ -1,0 +1,239 @@
+{
+  "saved_at": "2026-08-26T07:40:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-p4n6-0re2",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "murphysec",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H",
+          "severity": "critical",
+          "base_score": 9.5
+        }
+      ]
+    },
+    "cvss_score": 9.5,
+    "cvss_vector": "",
+    "cwe": "CWE-122",
+    "description": "Next.js 是开源的 React 全栈 Web 框架（npm 包名 next）。自带的图片优化功能会在服务端压缩、缩放图片；处理 AVIF 时，会经 sharp 调用底层 libheif 做解码。\n受影响版本中，对外入口 NextNodeServer.handleNextImageRequest 接收 /_next/image 请求后，由 imageOptimizer()/optimizeImage() 做优化；getSharp() 默认放开 VipsForeignLoadHeif，AVIF 会进入 libheif。上游在处理嵌套 iden/auxl 透明通道的异常 AVIF 时，HeifPixelImage::scale_nearest_neighbor() 按错误位深把高位深样本写入低位深透明平面，造成堆溢出。厂商将其评为可远程代码执行；本地在受影响 Next.js 上可稳定复现为服务进程异常退出。\n修复版本中通过把 AVIF 加入 BYPASS_TYPES，并默认不再放开 VipsForeignLoadHeif，使 imageOptimizer() 对 AVIF 直接返回原图、跳过 optimizeImage()，异常样本进不了有问题的 libheif 路径。",
+    "effects": [
+      {
+        "comp_name": "next",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[10.0.0,15.5.24)",
+            "min_fixed_version": "15.5.24",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[16.0.0,16.3.3)",
+            "min_fixed_version": "16.3.3",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "低",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-08-26",
+    "level": "Critical",
+    "mps_id": "MPS-p4n6-0re2",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-p4n6-0re2",
+        "name": "https://www.oscs1024.com/hd/MPS-p4n6-0re2"
+      },
+      {
+        "url": "https://github.com/vercel/next.js/security/advisories/GHSA-2xp9-vwfh-vxw4",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/strukturag/libheif/security/advisories/GHSA-g89c-p67h-r497",
+        "name": ""
+      },
+      {
+        "url": "https://nextjs.org/blog/august-2026-security-release",
+        "name": ""
+      },
+      {
+        "url": "https://vercel.com/changelog/nextjs-august-2026-security-release",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/releases/tag/v15.5.24",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/releases/tag/v16.3.3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/pull/97875",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/commit/7a5937a8ab20b89d0a961f75eabb11577f5d5998",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/commit/3a15b4ac6ac8e70b1a9b18ecc18e8434462899b3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/commit/409772ec807def20132d251ad48fd8d8ad4c73c2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/strukturag/libheif/releases/tag/v1.23.2",
+        "name": ""
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "npm",
+      "poc",
+      "专家校准",
+      "开源",
+      "终端软件"
+    ],
+    "title": "Next.js Image Optimization AVIF远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "murphysec",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H",
+          "severity": "critical",
+          "base_score": 9.5
+        }
+      ]
+    },
+    "cvss_score": 9.5,
+    "cvss_vector": "",
+    "cwe": "CWE-122",
+    "description": "Next.js 是开源的 React 全栈 Web 框架（npm 包名 next）。自带的图片优化功能会在服务端压缩、缩放图片；处理 AVIF 时，会经 sharp 调用底层 libheif 做解码。\n受影响版本中，对外入口 NextNodeServer.handleNextImageRequest 接收 /_next/image 请求后，由 imageOptimizer()/optimizeImage() 做优化；getSharp() 默认放开 VipsForeignLoadHeif，AVIF 会进入 libheif。上游在处理嵌套 iden/auxl 透明通道的异常 AVIF 时，HeifPixelImage::scale_nearest_neighbor() 按错误位深把高位深样本写入低位深透明平面，造成堆溢出。厂商将其评为可远程代码执行；本地在受影响 Next.js 上可稳定复现为服务进程异常退出。\n修复版本中通过把 AVIF 加入 BYPASS_TYPES，并默认不再放开 VipsForeignLoadHeif，使 imageOptimizer() 对 AVIF 直接返回原图、跳过 optimizeImage()，异常样本进不了有问题的 libheif 路径。",
+    "effects": [
+      {
+        "comp_name": "next",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[10.0.0,15.5.24)",
+            "min_fixed_version": "15.5.24",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[16.0.0,16.3.3)",
+            "min_fixed_version": "16.3.3",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "低",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-08-26",
+    "level": "Critical",
+    "mps_id": "MPS-p4n6-0re2",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-p4n6-0re2",
+        "name": "https://www.oscs1024.com/hd/MPS-p4n6-0re2"
+      },
+      {
+        "url": "https://github.com/vercel/next.js/security/advisories/GHSA-2xp9-vwfh-vxw4",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/strukturag/libheif/security/advisories/GHSA-g89c-p67h-r497",
+        "name": ""
+      },
+      {
+        "url": "https://nextjs.org/blog/august-2026-security-release",
+        "name": ""
+      },
+      {
+        "url": "https://vercel.com/changelog/nextjs-august-2026-security-release",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/releases/tag/v15.5.24",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/releases/tag/v16.3.3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/pull/97875",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/commit/7a5937a8ab20b89d0a961f75eabb11577f5d5998",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/commit/3a15b4ac6ac8e70b1a9b18ecc18e8434462899b3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/commit/409772ec807def20132d251ad48fd8d8ad4c73c2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/strukturag/libheif/releases/tag/v1.23.2",
+        "name": ""
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "npm",
+      "poc",
+      "专家校准",
+      "开源",
+      "终端软件"
+    ],
+    "title": "Next.js Image Optimization AVIF远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-08-26T07:40:32+00:00"
+}
