@@ -1,0 +1,167 @@
+{
+  "saved_at": "2026-08-26T21:33:56+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-js5x-1fwt",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能正确验证和过滤用户输入，将用户提供的数据直接用作操作系统命令的一部分。攻击者可以利用这个漏洞，通过注入恶意的操作系统命令来执行任意系统命令、获取敏感信息或者对系统进行未授权的操作。",
+        "title": "什么是OS命令注入"
+      },
+      {
+        "content": "- 命令拼接：应用程序将用户输入直接拼接到操作系统命令中，而不进行合适的过滤和验证。攻击者可以通过在输入中注入特殊字符、命令分隔符等，来执行额外的命令或修改原始命令的行为。\r\n- 命令注释：攻击者通过在输入中注入特殊字符或命令注释符号，如\"#\"或\"//\"，来注释掉原始命令中的一部分，然后执行自己的恶意命令。\r\n- 命令管道：攻击者通过在输入中注入管道符号\"|\"，将多个命令连接起来执行。这使得攻击者可以在单个注入点上执行多个命令，进一步扩大攻击的范围。",
+        "title": "OS命令注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对用户输入进行严格的验证和过滤，确保只接受预期的有效输入。可以使用白名单验证，限制用户输入的字符集和格式，防止特殊字符和命令注释符的注入。\r\n- 使用参数化命令或预编译语句：应该使用参数化命令或预编译语句，而不是将用户输入直接拼接到命令中。这样可以将输入数据视为参数，而不是命令的一部分，从而避免命令注入漏洞。\r\n- 最小特权原则：应用程序在执行操作系统命令时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。这样即使发生命令注入漏洞，攻击者的权限也会受到限制。\r\n- 安全编码实践：开发人员应避免使用不受信任的用户输入来拼接命令，并使用安全的编码实践，如输入验证、输出编码和参数化查询等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止命令注入攻击。",
+        "title": "如何预防OS命令注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74770",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security_alert@emc.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-78",
+    "description": "Dell PowerProtect One 是戴尔面向企业备份与数据保护场景的商业软件，配套 PowerProtect One DM5510 一体机，用于集中保护、管理和恢复数据，源码不公开。\n受影响版本中，产品在构造操作系统命令时未能正确中和外部输入中的特殊元素，存在操作系统命令注入。具备远程访问能力的低权限攻击者可利用该缺陷在受影响系统上执行代码。\n修复版本中通过厂商安全更新收紧对命令相关输入的处理，阻止恶意特殊元素进入操作系统命令执行路径，官方修复版本为 20.3.0.0。",
+    "effects": [
+      {
+        "comp_name": "powerprotect_one",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,20.3.0.0)",
+            "min_fixed_version": "20.3.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "OS命令注入",
+    "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-js5x-1fwt",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-js5x-1fwt",
+        "name": "https://www.oscs1024.com/hd/MPS-js5x-1fwt"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74770",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74770"
+      },
+      {
+        "url": "https://www.dell.com/support/kbdoc/en-us/000500902/dsa-2026-369-security-update-for-dell-powerprotect-one-multiple-vulnerabilities",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "PowerProtect One命令注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能正确验证和过滤用户输入，将用户提供的数据直接用作操作系统命令的一部分。攻击者可以利用这个漏洞，通过注入恶意的操作系统命令来执行任意系统命令、获取敏感信息或者对系统进行未授权的操作。",
+        "title": "什么是OS命令注入"
+      },
+      {
+        "content": "- 命令拼接：应用程序将用户输入直接拼接到操作系统命令中，而不进行合适的过滤和验证。攻击者可以通过在输入中注入特殊字符、命令分隔符等，来执行额外的命令或修改原始命令的行为。\r\n- 命令注释：攻击者通过在输入中注入特殊字符或命令注释符号，如\"#\"或\"//\"，来注释掉原始命令中的一部分，然后执行自己的恶意命令。\r\n- 命令管道：攻击者通过在输入中注入管道符号\"|\"，将多个命令连接起来执行。这使得攻击者可以在单个注入点上执行多个命令，进一步扩大攻击的范围。",
+        "title": "OS命令注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对用户输入进行严格的验证和过滤，确保只接受预期的有效输入。可以使用白名单验证，限制用户输入的字符集和格式，防止特殊字符和命令注释符的注入。\r\n- 使用参数化命令或预编译语句：应该使用参数化命令或预编译语句，而不是将用户输入直接拼接到命令中。这样可以将输入数据视为参数，而不是命令的一部分，从而避免命令注入漏洞。\r\n- 最小特权原则：应用程序在执行操作系统命令时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。这样即使发生命令注入漏洞，攻击者的权限也会受到限制。\r\n- 安全编码实践：开发人员应避免使用不受信任的用户输入来拼接命令，并使用安全的编码实践，如输入验证、输出编码和参数化查询等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止命令注入攻击。",
+        "title": "如何预防OS命令注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74770",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security_alert@emc.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-78",
+    "description": "Dell PowerProtect One 是戴尔面向企业备份与数据保护场景的商业软件，配套 PowerProtect One DM5510 一体机，用于集中保护、管理和恢复数据，源码不公开。\n受影响版本中，产品在构造操作系统命令时未能正确中和外部输入中的特殊元素，存在操作系统命令注入。具备远程访问能力的低权限攻击者可利用该缺陷在受影响系统上执行代码。\n修复版本中通过厂商安全更新收紧对命令相关输入的处理，阻止恶意特殊元素进入操作系统命令执行路径，官方修复版本为 20.3.0.0。",
+    "effects": [
+      {
+        "comp_name": "powerprotect_one",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,20.3.0.0)",
+            "min_fixed_version": "20.3.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "OS命令注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-js5x-1fwt",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-js5x-1fwt",
+        "name": "https://www.oscs1024.com/hd/MPS-js5x-1fwt"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74770",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74770"
+      },
+      {
+        "url": "https://www.dell.com/support/kbdoc/en-us/000500902/dsa-2026-369-security-update-for-dell-powerprotect-one-multiple-vulnerabilities",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "PowerProtect One命令注入漏洞"
+  },
+  "first_saved_at": "2026-08-26T21:33:56+00:00"
+}
