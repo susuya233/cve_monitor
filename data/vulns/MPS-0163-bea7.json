@@ -1,0 +1,147 @@
+{
+  "saved_at": "2026-08-26T16:12:56+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0163-bea7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75020",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-90",
+    "description": "Apache APISIX 是开源云原生 API 网关，ldap-auth 插件用于将 LDAP 目录账户映射为 Consumer，并对请求执行 Basic 认证。\n受影响版本中，rewrite 从 Authorization 头解析用户名后，按 conf.uid、user.username 与 conf.base_dn 未转义拼接 Distinguished Name，再以该字符串作为 consumers_kv 查找键。用户名中的逗号等 DN 结构字符会改变绑定目标或 Consumer 映射键，使持有某一目录条目有效凭据的调用者通过 APISIX 认证为映射到另一条目的 Consumer，而该条目本应处于插件 base_dn 作用域之外。\n修复版本中通过使用 ldap.ldap_authenticate 返回的、已按 RFC 4514 转义的 bind DN 作为消费者查找键，绑定身份与 Consumer 映射保持一致，切断跨子树身份假冒。",
+    "effects": [
+      {
+        "comp_name": "apisix",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.11.0,3.18.0)",
+            "min_fixed_version": "3.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "LDAP注入",
+    "kind_en": "LDAP 查询中使用的特殊元素的不正确中和（“LDAP 注入”）",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-0163-bea7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11787.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-75020",
+        "name": ""
+      },
+      {
+        "url": "https://apisix.apache.org",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/pull/13805",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/commit/7bae5539816f08b30f3c534a53a43ce527771a2f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/blob/release/3.18/CHANGELOG.md",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "APISIX LDAP注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75020",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-90",
+    "description": "Apache APISIX 是开源云原生 API 网关，ldap-auth 插件用于将 LDAP 目录账户映射为 Consumer，并对请求执行 Basic 认证。\n受影响版本中，rewrite 从 Authorization 头解析用户名后，按 conf.uid、user.username 与 conf.base_dn 未转义拼接 Distinguished Name，再以该字符串作为 consumers_kv 查找键。用户名中的逗号等 DN 结构字符会改变绑定目标或 Consumer 映射键，使持有某一目录条目有效凭据的调用者通过 APISIX 认证为映射到另一条目的 Consumer，而该条目本应处于插件 base_dn 作用域之外。\n修复版本中通过使用 ldap.ldap_authenticate 返回的、已按 RFC 4514 转义的 bind DN 作为消费者查找键，绑定身份与 Consumer 映射保持一致，切断跨子树身份假冒。",
+    "effects": [
+      {
+        "comp_name": "apisix",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.11.0,3.18.0)",
+            "min_fixed_version": "3.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "LDAP注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an LDAP Query ('LDAP Injection')",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-0163-bea7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11787.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-75020",
+        "name": ""
+      },
+      {
+        "url": "https://apisix.apache.org",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/pull/13805",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/commit/7bae5539816f08b30f3c534a53a43ce527771a2f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/blob/release/3.18/CHANGELOG.md",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "APISIX LDAP注入漏洞"
+  },
+  "first_saved_at": "2026-08-26T16:12:56+00:00"
+}

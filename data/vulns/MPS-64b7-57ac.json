@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-08-26T16:12:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-64b7-57ac",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75005",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-407",
+    "description": "Apache APISIX 是开源云原生 API 网关，用于对 HTTP 与 GraphQL 等流量进行路由、鉴权和插件化治理。graphql-limit-count 插件按 GraphQL 查询的选择嵌套深度计算配额并实施限流。\n受影响版本中，该插件在 access 阶段读取 POST 请求体并解析 GraphQL 文档后，由 node_depth 展开 fragment spread 以计算深度。visited 仅标记当前递归路径上的 fragment，走完后立即清除，同一 fragment 被多处引用时会被完整重复遍历。当文档中各 fragment 再双倍引用上一层 fragment 时，遍历代价随 fragment 数量指数上升，单次体积很小的请求即可在扣减限流配额前将网关 worker 长时间占用 100% CPU。\n修复版本中通过为每个 fragment 增加 memo 缓存，使同一 fragment 的深度只计算一次，把遍历复杂度降为与文档规模近似线性，并对 fragment 环返回 400，避免小请求拖垮 worker。",
+    "effects": [
+      {
+        "comp_name": "apisix",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.17.0,3.18.0)",
+            "min_fixed_version": "3.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "低效算法复杂性",
+    "kind_en": "低效的算法复杂性",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-64b7-57ac",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/08/26/13",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-75005",
+        "name": ""
+      },
+      {
+        "url": "https://apisix.apache.org",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/commit/03922900726e086fa1002ecf76cc4edfd0ee2e7e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/pull/13809",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/blob/3.18.0/CHANGELOG.md",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/releases/tag/3.18.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "APISIX无认证CPU耗尽",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75005",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-407",
+    "description": "Apache APISIX 是开源云原生 API 网关，用于对 HTTP 与 GraphQL 等流量进行路由、鉴权和插件化治理。graphql-limit-count 插件按 GraphQL 查询的选择嵌套深度计算配额并实施限流。\n受影响版本中，该插件在 access 阶段读取 POST 请求体并解析 GraphQL 文档后，由 node_depth 展开 fragment spread 以计算深度。visited 仅标记当前递归路径上的 fragment，走完后立即清除，同一 fragment 被多处引用时会被完整重复遍历。当文档中各 fragment 再双倍引用上一层 fragment 时，遍历代价随 fragment 数量指数上升，单次体积很小的请求即可在扣减限流配额前将网关 worker 长时间占用 100% CPU。\n修复版本中通过为每个 fragment 增加 memo 缓存，使同一 fragment 的深度只计算一次，把遍历复杂度降为与文档规模近似线性，并对 fragment 环返回 400，避免小请求拖垮 worker。",
+    "effects": [
+      {
+        "comp_name": "apisix",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.17.0,3.18.0)",
+            "min_fixed_version": "3.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "低效算法复杂性",
+    "kind_en": "Inefficient Algorithmic Complexity",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-64b7-57ac",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/08/26/13",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-75005",
+        "name": ""
+      },
+      {
+        "url": "https://apisix.apache.org",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/commit/03922900726e086fa1002ecf76cc4edfd0ee2e7e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/pull/13809",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/blob/3.18.0/CHANGELOG.md",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/apisix/releases/tag/3.18.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "APISIX无认证CPU耗尽"
+  },
+  "first_saved_at": "2026-08-26T16:12:54+00:00"
+}

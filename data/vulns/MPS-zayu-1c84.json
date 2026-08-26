@@ -1,0 +1,259 @@
+{
+  "saved_at": "2026-08-26T16:13:00+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-zayu-1c84",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74739",
+    "cvss": {},
+    "cvss_score": 7.1,
+    "cvss_vector": "",
+    "cwe": "CWE-125",
+    "description": "Linux 内核是开源操作系统内核，net/sched 子系统中的 u32 分类器（cls_u32）用于按报文头 32 位字段匹配流量并绑定到流量类。\n受影响版本中，u32_walk() 会把哈希表节点 struct tc_u_hnode 与键节点 struct tc_u_knode 一并交给 walker。u32_bind_class() 将传入的 fh 无条件转换为 tc_u_knode 并访问 &n->res，而 tc_u_hnode 不含 tcf_result 成员，导致 tc_cls_bind_class() 越界读取 res->classid，形成内核 slab 越界读。\n修复版本中通过在 u32_bind_class() 中以 TC_U32_KEY(n->handle) == 0 识别哈希表节点并直接返回，跳过对 tc_u_hnode 的 class 绑定，切断 res->classid 越界读取路径。",
+    "effects": [
+      {
+        "comp_name": "linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.14,6.1.184)",
+            "min_fixed_version": "6.1.184",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.19-rc1,7.1.10)",
+            "min_fixed_version": "7.1.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.2-rc1,6.6.153)",
+            "min_fixed_version": "6.6.153",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.2-rc1,7.2)",
+            "min_fixed_version": "7.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.13-rc1,6.18.46)",
+            "min_fixed_version": "6.18.46",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.7-rc1,6.12.105)",
+            "min_fixed_version": "6.12.105",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "越界读取",
+    "kind_en": "越界读取",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-zayu-1c84",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zayu-1c84",
+        "name": "https://www.oscs1024.com/hd/MPS-zayu-1c84"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74739",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74739"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/19d114b93c94bdef70496f26685c2a6b242f41b3",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/31f26a95eeee926946809ac456c61a3217936a62",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/594a064d603202b9ee21e07679d854e5c1750cc4",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/6d3724e616faf952c3adcf8414fc21a828ef3709",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/e71f8e9ed6f311410b14741f6012afe01869c0fa",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/ec5f3005586a785689fd568361b0c5925cb1548b",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "内核u32分类器越界读",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74739",
+    "cvss": {},
+    "cvss_score": 7.1,
+    "cvss_vector": "",
+    "cwe": "CWE-125",
+    "description": "Linux 内核是开源操作系统内核，net/sched 子系统中的 u32 分类器（cls_u32）用于按报文头 32 位字段匹配流量并绑定到流量类。\n受影响版本中，u32_walk() 会把哈希表节点 struct tc_u_hnode 与键节点 struct tc_u_knode 一并交给 walker。u32_bind_class() 将传入的 fh 无条件转换为 tc_u_knode 并访问 &n->res，而 tc_u_hnode 不含 tcf_result 成员，导致 tc_cls_bind_class() 越界读取 res->classid，形成内核 slab 越界读。\n修复版本中通过在 u32_bind_class() 中以 TC_U32_KEY(n->handle) == 0 识别哈希表节点并直接返回，跳过对 tc_u_hnode 的 class 绑定，切断 res->classid 越界读取路径。",
+    "effects": [
+      {
+        "comp_name": "linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.14,6.1.184)",
+            "min_fixed_version": "6.1.184",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.19-rc1,7.1.10)",
+            "min_fixed_version": "7.1.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.2-rc1,6.6.153)",
+            "min_fixed_version": "6.6.153",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.2-rc1,7.2)",
+            "min_fixed_version": "7.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.13-rc1,6.18.46)",
+            "min_fixed_version": "6.18.46",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.7-rc1,6.12.105)",
+            "min_fixed_version": "6.12.105",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "越界读取",
+    "kind_en": "Out-of-bounds Read",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-zayu-1c84",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zayu-1c84",
+        "name": "https://www.oscs1024.com/hd/MPS-zayu-1c84"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74739",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74739"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/19d114b93c94bdef70496f26685c2a6b242f41b3",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/31f26a95eeee926946809ac456c61a3217936a62",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/594a064d603202b9ee21e07679d854e5c1750cc4",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/6d3724e616faf952c3adcf8414fc21a828ef3709",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/e71f8e9ed6f311410b14741f6012afe01869c0fa",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/ec5f3005586a785689fd568361b0c5925cb1548b",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "内核u32分类器越界读"
+  },
+  "first_saved_at": "2026-08-26T16:13:00+00:00"
+}
