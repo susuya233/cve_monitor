@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-08-26T09:34:51+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-wza3-h8l6",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-502",
+    "description": "Apache Log4j2 是 Apache 软件基金会维护的开源 Java 日志框架。log4j-api 提供 FilteredObjectInputStream，用于在反序列化日志事件流时实施类白名单；log4j-core 负责日志事件的序列化表示。\n受影响版本中，FilteredObjectInputStream 默认白名单包含 java.rmi.MarshalledObject，该类把内部对象存放在不透明字节数组 objBytes 中，resolveClass 只能看到外层类型。Log4jLogEvent.LogEventProxy 自 2.8 起将 Message 写入 marshalledMessage，并在 readResolve 调用的 message() 中执行 marshalledMessage.get()，该方法会新建未经过滤的 ObjectInputStream 反序列化载荷。攻击者向使用 FilteredObjectInputStream 的日志接收端写入一条序列化 LogEventProxy 即可绕过白名单触发任意反序列化，在类路径存在 gadget 时可导致远程代码执行，普通写日志不受影响。\n在官方修复发布前，可通过停止接收不可信来源的序列化 LogEvent，或设置 JVM 参数 -Djdk.serialFilter='!java.rmi.MarshalledObject' 阻断该绕过路径。",
+    "effects": [
+      {
+        "comp_name": "org.apache.logging.log4j:log4j-api",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.11.0,2.26.1]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.apache.logging.log4j:log4j-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.8.0,2.26.1]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [
+              {
+                "description": "不要用 FilteredObjectInputStream 接收不可信的序列化 LogEvent，改用 JSON 等非 Java 序列化传输；临时可加 JVM 参数 -Djdk.serialFilter='!java.rmi.MarshalledObject'。",
+                "type": "缓解措施"
+              }
+            ],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-wza3-h8l6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wza3-h8l6",
+        "name": "https://www.oscs1024.com/hd/MPS-wza3-h8l6"
+      },
+      {
+        "url": "https://github.com/apache/logging-log4j2/issues/4255",
+        "name": ""
+      }
+    ],
+    "scope_influence": "小",
+    "tags": [
+      "java",
+      "专家校准",
+      "开源"
+    ],
+    "title": "Apache Log4j2反序列化远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-502",
+    "description": "Apache Log4j2 是 Apache 软件基金会维护的开源 Java 日志框架。log4j-api 提供 FilteredObjectInputStream，用于在反序列化日志事件流时实施类白名单；log4j-core 负责日志事件的序列化表示。\n受影响版本中，FilteredObjectInputStream 默认白名单包含 java.rmi.MarshalledObject，该类把内部对象存放在不透明字节数组 objBytes 中，resolveClass 只能看到外层类型。Log4jLogEvent.LogEventProxy 自 2.8 起将 Message 写入 marshalledMessage，并在 readResolve 调用的 message() 中执行 marshalledMessage.get()，该方法会新建未经过滤的 ObjectInputStream 反序列化载荷。攻击者向使用 FilteredObjectInputStream 的日志接收端写入一条序列化 LogEventProxy 即可绕过白名单触发任意反序列化，在类路径存在 gadget 时可导致远程代码执行，普通写日志不受影响。\n在官方修复发布前，可通过停止接收不可信来源的序列化 LogEvent，或设置 JVM 参数 -Djdk.serialFilter='!java.rmi.MarshalledObject' 阻断该绕过路径。",
+    "effects": [
+      {
+        "comp_name": "org.apache.logging.log4j:log4j-api",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.11.0,2.26.1]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.apache.logging.log4j:log4j-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.8.0,2.26.1]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [
+              {
+                "description": "不要用 FilteredObjectInputStream 接收不可信的序列化 LogEvent，改用 JSON 等非 Java 序列化传输；临时可加 JVM 参数 -Djdk.serialFilter='!java.rmi.MarshalledObject'。",
+                "type": "缓解措施"
+              }
+            ],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-08-26",
+    "level": "High",
+    "mps_id": "MPS-wza3-h8l6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wza3-h8l6",
+        "name": "https://www.oscs1024.com/hd/MPS-wza3-h8l6"
+      },
+      {
+        "url": "https://github.com/apache/logging-log4j2/issues/4255",
+        "name": ""
+      }
+    ],
+    "scope_influence": "小",
+    "tags": [
+      "java",
+      "专家校准",
+      "开源"
+    ],
+    "title": "Apache Log4j2反序列化远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-08-26T09:34:51+00:00"
+}
