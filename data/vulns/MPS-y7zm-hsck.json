@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-26T02:23:09+00:00",
+  "saved_at": "2026-08-26T02:23:08+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-fta2-hk40",
+  "source_page": "https://www.oscs1024.com/hd/MPS-y7zm-hsck",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,7 +21,7 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-80182",
+    "cve_id": "CVE-2026-80184",
     "cvss": {
       "cvssv4": [
         {
@@ -35,33 +35,61 @@
     "cvss_score": 7.6,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "In OpenStack Keystone before 29.0.3, tokens obtained via OAuth1 access token, application credential, or trust-scoped authentication could create new long-lived credentials or authorize new delegations that persist independently of, and outlive, the credential used to obtain them. The delegation restrictions that block these operations did not consistently apply to all delegated token types, allowing an OAuth1-scoped token, for example, to create application credentials or authorize OAuth1 request tokens despite those operations being restricted for other delegated token types. All Keystone deployments that permit delegated authentication through OAuth1 access tokens, application credentials, or trusts are affected.",
-    "effects": [],
+    "description": "OpenStack Keystone 是开源身份认证服务，用于签发令牌、绑定项目范围，并管理 application credential、OAuth1 访问令牌和 trust 等委托凭据。\n受影响版本中，攻击者可将已通过 application credential、OAuth1 访问令牌或 trust 获得的委托令牌提交到 POST /v3/auth/tokens 的 token 认证方法。AuthTokenResource.post 读取请求体中的 auth 数据后，token_authenticate() 对 trust 与 OAuth1 令牌会拒绝再签发，但对 application_credential 令牌只在请求显式 scope 时拦截；省略 scope 时会按凭据所有者的 default_project_id 签发新令牌，使原本绑定项目 A 的委托凭据获得项目 B 的访问能力。\n修复版本中通过在 token_authenticate() 调用 delegation.is_delegated_method(token)，将非主认证方法签发的委托令牌一律拒绝再认证，切断省略 scope 后回落到所有者默认项目的路径。该修复依赖配套补丁提供的委托分类逻辑和 [auth] additional_primary_auth_methods 配置，需成套应用。",
+    "effects": [
+      {
+        "comp_name": "keystone",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[13.0.0,27.0.3)",
+            "min_fixed_version": "27.0.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[28.0.0,28.0.3)",
+            "min_fixed_version": "28.0.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[29.0.0,29.0.3)",
+            "min_fixed_version": "29.0.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "授权检查错误",
     "kind_en": "授权错误",
     "last_modified_time": "2026-08-26",
     "level": "High",
-    "mps_id": "MPS-fta2-hk40",
+    "mps_id": "MPS-y7zm-hsck",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-26",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-fta2-hk40",
-        "name": "https://www.oscs1024.com/hd/MPS-fta2-hk40"
+        "url": "https://www.oscs1024.com/hd/MPS-y7zm-hsck",
+        "name": "https://www.oscs1024.com/hd/MPS-y7zm-hsck"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80182",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80182"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80184",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80184"
       },
       {
-        "url": "https://launchpad.net/bugs/2153453",
+        "url": "https://launchpad.net/bugs/2158538",
         "name": ""
       },
       {
@@ -74,8 +102,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-80182漏洞",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "Keystone委托令牌越权",
     "_translated": true
   },
   "detail_original": {
@@ -95,7 +126,7 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-80182",
+    "cve_id": "CVE-2026-80184",
     "cvss": {
       "cvssv4": [
         {
@@ -109,33 +140,61 @@
     "cvss_score": 7.6,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "In OpenStack Keystone before 29.0.3, tokens obtained via OAuth1 access token, application credential, or trust-scoped authentication could create new long-lived credentials or authorize new delegations that persist independently of, and outlive, the credential used to obtain them. The delegation restrictions that block these operations did not consistently apply to all delegated token types, allowing an OAuth1-scoped token, for example, to create application credentials or authorize OAuth1 request tokens despite those operations being restricted for other delegated token types. All Keystone deployments that permit delegated authentication through OAuth1 access tokens, application credentials, or trusts are affected.",
-    "effects": [],
+    "description": "OpenStack Keystone 是开源身份认证服务，用于签发令牌、绑定项目范围，并管理 application credential、OAuth1 访问令牌和 trust 等委托凭据。\n受影响版本中，攻击者可将已通过 application credential、OAuth1 访问令牌或 trust 获得的委托令牌提交到 POST /v3/auth/tokens 的 token 认证方法。AuthTokenResource.post 读取请求体中的 auth 数据后，token_authenticate() 对 trust 与 OAuth1 令牌会拒绝再签发，但对 application_credential 令牌只在请求显式 scope 时拦截；省略 scope 时会按凭据所有者的 default_project_id 签发新令牌，使原本绑定项目 A 的委托凭据获得项目 B 的访问能力。\n修复版本中通过在 token_authenticate() 调用 delegation.is_delegated_method(token)，将非主认证方法签发的委托令牌一律拒绝再认证，切断省略 scope 后回落到所有者默认项目的路径。该修复依赖配套补丁提供的委托分类逻辑和 [auth] additional_primary_auth_methods 配置，需成套应用。",
+    "effects": [
+      {
+        "comp_name": "keystone",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[13.0.0,27.0.3)",
+            "min_fixed_version": "27.0.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[28.0.0,28.0.3)",
+            "min_fixed_version": "28.0.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[29.0.0,29.0.3)",
+            "min_fixed_version": "29.0.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "授权检查错误",
     "kind_en": "Incorrect Authorization",
     "last_modified_time": "2026-08-26",
     "level": "High",
-    "mps_id": "MPS-fta2-hk40",
+    "mps_id": "MPS-y7zm-hsck",
     "poc": false,
     "poc_url": [],
     "published_time": "2026-08-26",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-fta2-hk40",
-        "name": "https://www.oscs1024.com/hd/MPS-fta2-hk40"
+        "url": "https://www.oscs1024.com/hd/MPS-y7zm-hsck",
+        "name": "https://www.oscs1024.com/hd/MPS-y7zm-hsck"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80182",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80182"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80184",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80184"
       },
       {
-        "url": "https://launchpad.net/bugs/2153453",
+        "url": "https://launchpad.net/bugs/2158538",
         "name": ""
       },
       {
@@ -148,8 +207,11 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-80182漏洞"
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "Keystone委托令牌越权"
   },
-  "first_saved_at": "2026-08-26T00:56:20+00:00"
+  "first_saved_at": "2026-08-26T02:23:08+00:00"
 }

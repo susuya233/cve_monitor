@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-08-26T00:56:21+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-26T02:23:09+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-elyz-f327",
@@ -35,12 +35,26 @@
     "cvss_score": 7.6,
     "cvss_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
     "cwe": "CWE-120",
-    "description": "A stack-based buffer overflow vulnerability exists in BlueZ, the Linux Bluetooth protocol stack. A remote user within Bluetooth radio range can send a specially crafted Extended Inquiry Response (EIR) packet that causes a buffer overflow when the target device performs Bluetooth discovery. This vulnerability can lead to a Denial of Service (DoS) by crashing the bluetoothd service and may allow for arbitrary code execution.",
-    "effects": [],
+    "description": "BlueZ 是开源 Linux 蓝牙协议栈，提供 bluetoothd 守护进程及主机侧协议实现，用于设备发现、配对与配置文件通信。\n受影响版本中，蓝牙发现路径会把远程设备 Extended Inquiry Response 中的名称字段交给 eir_parse，再传入 name2utf8。name2utf8 在 250 字节栈缓冲 utf8_name 上调用 strncpy，且未将 len 限制为 HCI_MAX_NAME_LENGTH；当名称字段 field_len 为 254 时，拷贝长度可达 253 字节，造成 3 字节栈溢出，可导致 bluetoothd 崩溃，并可能进一步执行任意代码。\n修复版本中通过在 name2utf8 中执行 len = MIN(len, HCI_MAX_NAME_LENGTH)，将拷贝长度限制在 248 字节以内，使超长 EIR 设备名无法越过栈缓冲边界，从而阻断该溢出路径。",
+    "effects": [
+      {
+        "comp_name": "bluez",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.86,5.87]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "经典缓冲区溢出",
@@ -75,7 +89,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-80186漏洞",
+    "title": "BlueZ EIR栈溢出漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -109,12 +123,26 @@
     "cvss_score": 7.6,
     "cvss_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
     "cwe": "CWE-120",
-    "description": "A stack-based buffer overflow vulnerability exists in BlueZ, the Linux Bluetooth protocol stack. A remote user within Bluetooth radio range can send a specially crafted Extended Inquiry Response (EIR) packet that causes a buffer overflow when the target device performs Bluetooth discovery. This vulnerability can lead to a Denial of Service (DoS) by crashing the bluetoothd service and may allow for arbitrary code execution.",
-    "effects": [],
+    "description": "BlueZ 是开源 Linux 蓝牙协议栈，提供 bluetoothd 守护进程及主机侧协议实现，用于设备发现、配对与配置文件通信。\n受影响版本中，蓝牙发现路径会把远程设备 Extended Inquiry Response 中的名称字段交给 eir_parse，再传入 name2utf8。name2utf8 在 250 字节栈缓冲 utf8_name 上调用 strncpy，且未将 len 限制为 HCI_MAX_NAME_LENGTH；当名称字段 field_len 为 254 时，拷贝长度可达 253 字节，造成 3 字节栈溢出，可导致 bluetoothd 崩溃，并可能进一步执行任意代码。\n修复版本中通过在 name2utf8 中执行 len = MIN(len, HCI_MAX_NAME_LENGTH)，将拷贝长度限制在 248 字节以内，使超长 EIR 设备名无法越过栈缓冲边界，从而阻断该溢出路径。",
+    "effects": [
+      {
+        "comp_name": "bluez",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.86,5.87]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "经典缓冲区溢出",
@@ -149,7 +177,7 @@
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-80186漏洞"
+    "title": "BlueZ EIR栈溢出漏洞"
   },
   "first_saved_at": "2026-08-26T00:56:21+00:00"
 }
