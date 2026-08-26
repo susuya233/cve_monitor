@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-08-26T18:54:00+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3vb2-kh4x",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81034",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-295",
+    "description": "Netmaker 是开源网络编排软件，用于基于 WireGuard 自动化构建和管理分布式虚拟网络，其 Pro 组件通过 SMTP 发送用户邀请与通知邮件。\n受影响版本中，pro/email/smtp.go 的 SmtpSender.SendEmail 在连接已配置邮件服务器时，无条件将 tls.Config.InsecureSkipVerify 设为 true。源码注释写明生产环境应关闭该选项，但没有任何配置项或代码路径恢复证书校验，客户端会接受邮件服务器出示的任意证书。位于服务器与邮件中继之间的攻击者可劫持该 TLS 会话，读取官方所述密码重置邮件中的一次性令牌以及用户邀请中的注册链接，并抢先使用这些凭证。\n修复版本中通过将 InsecureSkipVerify 改为读取可配置字段 SkipVerify（对应 smtp_skip_tls_verify），并为 TLS 配置设置 ServerName 为 SmtpHost，使发信客户端按配置校验邮件服务器证书。该修复已合入上游开发分支，但截至 2026-08-27 尚无包含该修复的正式发行版本。",
+    "effects": [
+      {
+        "comp_name": "github.com/gravitl/netmaker",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[0.25.0,1.6.0]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "证书验证不恰当",
+    "kind_en": "证书验证不当",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-3vb2-kh4x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3vb2-kh4x",
+        "name": "https://www.oscs1024.com/hd/MPS-3vb2-kh4x"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81034",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81034"
+      },
+      {
+        "url": "https://github.com/gravitl/netmaker",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gravitl/netmaker/blob/v1.6.0/pro/email/smtp.go",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gravitl/netmaker/issues/4062",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/netmaker-through-1.6.0-improper-certificate-validation-in-smtp-client",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Netmaker SMTP证书校验绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81034",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-295",
+    "description": "Netmaker 是开源网络编排软件，用于基于 WireGuard 自动化构建和管理分布式虚拟网络，其 Pro 组件通过 SMTP 发送用户邀请与通知邮件。\n受影响版本中，pro/email/smtp.go 的 SmtpSender.SendEmail 在连接已配置邮件服务器时，无条件将 tls.Config.InsecureSkipVerify 设为 true。源码注释写明生产环境应关闭该选项，但没有任何配置项或代码路径恢复证书校验，客户端会接受邮件服务器出示的任意证书。位于服务器与邮件中继之间的攻击者可劫持该 TLS 会话，读取官方所述密码重置邮件中的一次性令牌以及用户邀请中的注册链接，并抢先使用这些凭证。\n修复版本中通过将 InsecureSkipVerify 改为读取可配置字段 SkipVerify（对应 smtp_skip_tls_verify），并为 TLS 配置设置 ServerName 为 SmtpHost，使发信客户端按配置校验邮件服务器证书。该修复已合入上游开发分支，但截至 2026-08-27 尚无包含该修复的正式发行版本。",
+    "effects": [
+      {
+        "comp_name": "github.com/gravitl/netmaker",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[0.25.0,1.6.0]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "证书验证不恰当",
+    "kind_en": "Improper Certificate Validation",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-3vb2-kh4x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3vb2-kh4x",
+        "name": "https://www.oscs1024.com/hd/MPS-3vb2-kh4x"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81034",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81034"
+      },
+      {
+        "url": "https://github.com/gravitl/netmaker",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gravitl/netmaker/blob/v1.6.0/pro/email/smtp.go",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gravitl/netmaker/issues/4062",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/netmaker-through-1.6.0-improper-certificate-validation-in-smtp-client",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Netmaker SMTP证书校验绕过"
+  },
+  "first_saved_at": "2026-08-26T18:54:00+00:00"
+}

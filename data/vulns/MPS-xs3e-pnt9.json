@@ -1,0 +1,181 @@
+{
+  "saved_at": "2026-08-26T18:53:58+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xs3e-pnt9",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81036",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-601",
+    "description": "Stalwart Mail Server 是开源邮件与协作服务器，提供 IMAP、JMAP、SMTP 及日历联系人协议，并内置 OAuth 2.0 / OpenID Connect 授权服务。\n受影响版本中，OAuth 授权码流程在默认配置下不会把请求中的 redirect_uri 与已注册客户端重定向地址比对。validate_client_registration 在 require_client_authentication 为 false 时直接返回成功，该开关由 OidcProvider.require_client_registration 映射且出厂默认值为 false，任意 redirect_uri 可被写入授权码记录。登录页随后把浏览器连同授权码跳转到该地址，令牌端点只核对兑换时提交的 redirect_uri 与记录值是否一致，攻击者即可换取访问令牌与刷新令牌并读取邮箱。\n修复版本中通过强制校验已注册 redirect_uri 可切断授权码被送到攻击者地址的路径，但公开仓库截至 v0.16.19 与当前 main 分支仍未发布相应修复；部署方可先将 requireClientRegistration 设为 true，并为客户端预注册允许的重定向地址。",
+    "effects": [
+      {
+        "comp_name": "stalwart",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.16.19]",
+            "min_fixed_version": "",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "跨站重定向",
+    "kind_en": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-xs3e-pnt9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xs3e-pnt9",
+        "name": "https://www.oscs1024.com/hd/MPS-xs3e-pnt9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81036",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81036"
+      },
+      {
+        "url": "https://github.com/stalwartlabs/stalwart",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/stalwartlabs/stalwart/blob/v0.16.19/crates/http/src/auth/oauth/registration.rs",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/stalwartlabs/stalwart/issues/3205",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/stalwart-mail-server-through-0.16.19-authorization-code-disclosure-via-unvalidated-oauth-redirect-uri",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Stalwart OAuth开放重定向",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81036",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-601",
+    "description": "Stalwart Mail Server 是开源邮件与协作服务器，提供 IMAP、JMAP、SMTP 及日历联系人协议，并内置 OAuth 2.0 / OpenID Connect 授权服务。\n受影响版本中，OAuth 授权码流程在默认配置下不会把请求中的 redirect_uri 与已注册客户端重定向地址比对。validate_client_registration 在 require_client_authentication 为 false 时直接返回成功，该开关由 OidcProvider.require_client_registration 映射且出厂默认值为 false，任意 redirect_uri 可被写入授权码记录。登录页随后把浏览器连同授权码跳转到该地址，令牌端点只核对兑换时提交的 redirect_uri 与记录值是否一致，攻击者即可换取访问令牌与刷新令牌并读取邮箱。\n修复版本中通过强制校验已注册 redirect_uri 可切断授权码被送到攻击者地址的路径，但公开仓库截至 v0.16.19 与当前 main 分支仍未发布相应修复；部署方可先将 requireClientRegistration 设为 true，并为客户端预注册允许的重定向地址。",
+    "effects": [
+      {
+        "comp_name": "stalwart",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.16.19]",
+            "min_fixed_version": "",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "跨站重定向",
+    "kind_en": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-xs3e-pnt9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xs3e-pnt9",
+        "name": "https://www.oscs1024.com/hd/MPS-xs3e-pnt9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81036",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81036"
+      },
+      {
+        "url": "https://github.com/stalwartlabs/stalwart",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/stalwartlabs/stalwart/blob/v0.16.19/crates/http/src/auth/oauth/registration.rs",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/stalwartlabs/stalwart/issues/3205",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/stalwart-mail-server-through-0.16.19-authorization-code-disclosure-via-unvalidated-oauth-redirect-uri",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Stalwart OAuth开放重定向"
+  },
+  "first_saved_at": "2026-08-26T18:53:58+00:00"
+}

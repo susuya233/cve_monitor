@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-08-26T18:53:59+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-sh8c-54mb",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81032",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "NebulaGraph 是 vesoft-inc 开源的分布式图数据库，采用 Apache-2.0 许可和 C++ 实现，由 metad、storaged、graphd 等守护进程组成，并内置基于 Proxygen 的 HTTP Web 服务用于状态查询、统计导出和运行时 gflags 管理。\n受影响版本中，WebService::start 默认将 ws_ip 绑定到 0.0.0.0，并以无认证方式注册 GET /flags 与 PUT /flags；Router 不提供认证、令牌或地址限制。GetFlagsHandler::getFlags 通过 gflags::GetAllFlags 返回证书路径、密钥路径、CA 路径、口令文件路径、数据目录以及 enable_ssl 等全部运行时标志。SetFlagsHandler::onEOM 将请求 JSON 中的每个键值交给 gflags::SetCommandLineOption，v3.8.0 不拒绝任何标志名，网络可达的调用方能在不重启守护进程的情况下关闭传输安全、改写日志路径或调整 failed_login_attempts、password_lock_time_in_secs 等行为。\n修复版本中通过为该 HTTP 管理接口增加认证并限制监听地址，切断未认证读取与改写运行时 gflags 的路径。截至本报告分析时官方尚未发布修复版本，GitHub issue #6157 仍为开放状态；master 上 PR #5936 仅拒绝修改 enable_authorize，不能阻止未认证读取全部标志以及改写其余运行时配置。",
+    "effects": [
+      {
+        "comp_name": "nebula",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,3.8.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-08-27",
+    "level": "Critical",
+    "mps_id": "MPS-sh8c-54mb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-sh8c-54mb",
+        "name": "https://www.oscs1024.com/hd/MPS-sh8c-54mb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81032",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81032"
+      },
+      {
+        "url": "https://github.com/vesoft-inc/nebula",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vesoft-inc/nebula/blob/v3.8.0/src/webservice/SetFlagsHandler.cpp",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vesoft-inc/nebula/blob/v3.8.0/src/webservice/WebService.cpp",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vesoft-inc/nebula/issues/6157",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nebulagraph-through-3.8.0-unauthenticated-read-and-modification-of-runtime-configuration",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "NebulaGraph未认证配置漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81032",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "NebulaGraph 是 vesoft-inc 开源的分布式图数据库，采用 Apache-2.0 许可和 C++ 实现，由 metad、storaged、graphd 等守护进程组成，并内置基于 Proxygen 的 HTTP Web 服务用于状态查询、统计导出和运行时 gflags 管理。\n受影响版本中，WebService::start 默认将 ws_ip 绑定到 0.0.0.0，并以无认证方式注册 GET /flags 与 PUT /flags；Router 不提供认证、令牌或地址限制。GetFlagsHandler::getFlags 通过 gflags::GetAllFlags 返回证书路径、密钥路径、CA 路径、口令文件路径、数据目录以及 enable_ssl 等全部运行时标志。SetFlagsHandler::onEOM 将请求 JSON 中的每个键值交给 gflags::SetCommandLineOption，v3.8.0 不拒绝任何标志名，网络可达的调用方能在不重启守护进程的情况下关闭传输安全、改写日志路径或调整 failed_login_attempts、password_lock_time_in_secs 等行为。\n修复版本中通过为该 HTTP 管理接口增加认证并限制监听地址，切断未认证读取与改写运行时 gflags 的路径。截至本报告分析时官方尚未发布修复版本，GitHub issue #6157 仍为开放状态；master 上 PR #5936 仅拒绝修改 enable_authorize，不能阻止未认证读取全部标志以及改写其余运行时配置。",
+    "effects": [
+      {
+        "comp_name": "nebula",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,3.8.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-08-27",
+    "level": "Critical",
+    "mps_id": "MPS-sh8c-54mb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-sh8c-54mb",
+        "name": "https://www.oscs1024.com/hd/MPS-sh8c-54mb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81032",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81032"
+      },
+      {
+        "url": "https://github.com/vesoft-inc/nebula",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vesoft-inc/nebula/blob/v3.8.0/src/webservice/SetFlagsHandler.cpp",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vesoft-inc/nebula/blob/v3.8.0/src/webservice/WebService.cpp",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vesoft-inc/nebula/issues/6157",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nebulagraph-through-3.8.0-unauthenticated-read-and-modification-of-runtime-configuration",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "NebulaGraph未认证配置漏洞"
+  },
+  "first_saved_at": "2026-08-26T18:53:59+00:00"
+}

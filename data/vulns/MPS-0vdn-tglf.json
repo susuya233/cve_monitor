@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-26T18:54:02+00:00",
+  "saved_at": "2026-08-26T18:53:57+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-t8ai-xde4",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0vdn-tglf",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,65 +21,87 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-39914",
+    "cve_id": "CVE-2026-81035",
     "cvss": {
       "cvssv31": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-          "severity": "medium",
-          "base_score": 6.5
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
         }
       ],
       "cvssv4": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 7.1
+          "base_score": 7.2
         }
       ]
     },
-    "cvss_score": 7.1,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "TIM Flow before 26.0.6 contains an improper authorization vulnerability that allows any authenticated user to submit arbitrary SQL queries to a privileged dashboard Excel export endpoint intended for administrative use only. Attackers can craft and submit unauthorized SQL queries to the export endpoint to retrieve sensitive database contents as a downloadable spreadsheet, bypassing role-based access controls.",
-    "effects": [],
+    "description": "Midday 是面向自由职业者与小型团队的开源财务操作系统，提供发票、银行连接、文件对账与团队协作能力。\n受影响版本中，tRPC 过程 team.delete 只调用 hasTeamAccess 确认调用者位于 usersOnTeam 表中，该 helper 不读取 role 字段。同一路由里的 deleteMember、updateMember 会通过 getTeamMemberRole 拒绝非 owner，但删除路径未使用该检查。被邀请用户默认角色为 member，可提交 teamId 删除整个团队及团队范围内记录，并在删除前把已存储的银行连接令牌交给 delete-team 清理任务。\n修复版本中通过在 team.delete 中调用 getTeamMemberRole 并仅允许 owner 继续执行删除，使非 owner 请求返回 FORBIDDEN，阻断成员删除团队以及向 delete-team 任务提交银行连接令牌。截至本报告，官方仓库尚未合并该修复，也未发布修复版本。",
+    "effects": [
+      {
+        "comp_name": "midday",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,51587319f26a0ffaa9dfccab1920373cb65689b7]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-27",
     "level": "High",
-    "mps_id": "MPS-t8ai-xde4",
+    "mps_id": "MPS-0vdn-tglf",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-27",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-t8ai-xde4",
-        "name": "https://www.oscs1024.com/hd/MPS-t8ai-xde4"
+        "url": "https://www.oscs1024.com/hd/MPS-0vdn-tglf",
+        "name": "https://www.oscs1024.com/hd/MPS-0vdn-tglf"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-39914",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-39914"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81035",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81035"
       },
       {
-        "url": "https://tim-doc.atlassian.net/wiki/spaces/eng/pages/230981636/Release+Notes",
+        "url": "https://github.com/midday-ai/midday",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/tim-flow-unauthorized-sql-query-execution-via-dashboard-export-endpoint",
+        "url": "https://github.com/midday-ai/midday/blob/e5f45ed0d49cdb34576373623c4579b72daa74c1/apps/api/src/trpc/routers/team.ts",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/midday-ai/midday/issues/890",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/midday-missing-owner-check-on-team-deletion",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-39914漏洞",
+    "title": "Midday团队删除越权",
     "_translated": true
   },
   "detail_original": {
@@ -99,65 +121,87 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-39914",
+    "cve_id": "CVE-2026-81035",
     "cvss": {
       "cvssv31": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-          "severity": "medium",
-          "base_score": 6.5
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
         }
       ],
       "cvssv4": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 7.1
+          "base_score": 7.2
         }
       ]
     },
-    "cvss_score": 7.1,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "TIM Flow before 26.0.6 contains an improper authorization vulnerability that allows any authenticated user to submit arbitrary SQL queries to a privileged dashboard Excel export endpoint intended for administrative use only. Attackers can craft and submit unauthorized SQL queries to the export endpoint to retrieve sensitive database contents as a downloadable spreadsheet, bypassing role-based access controls.",
-    "effects": [],
+    "description": "Midday 是面向自由职业者与小型团队的开源财务操作系统，提供发票、银行连接、文件对账与团队协作能力。\n受影响版本中，tRPC 过程 team.delete 只调用 hasTeamAccess 确认调用者位于 usersOnTeam 表中，该 helper 不读取 role 字段。同一路由里的 deleteMember、updateMember 会通过 getTeamMemberRole 拒绝非 owner，但删除路径未使用该检查。被邀请用户默认角色为 member，可提交 teamId 删除整个团队及团队范围内记录，并在删除前把已存储的银行连接令牌交给 delete-team 清理任务。\n修复版本中通过在 team.delete 中调用 getTeamMemberRole 并仅允许 owner 继续执行删除，使非 owner 请求返回 FORBIDDEN，阻断成员删除团队以及向 delete-team 任务提交银行连接令牌。截至本报告，官方仓库尚未合并该修复，也未发布修复版本。",
+    "effects": [
+      {
+        "comp_name": "midday",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,51587319f26a0ffaa9dfccab1920373cb65689b7]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
-    "last_modified_time": "2026-08-24",
+    "last_modified_time": "2026-08-27",
     "level": "High",
-    "mps_id": "MPS-t8ai-xde4",
+    "mps_id": "MPS-0vdn-tglf",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-24",
+    "published_time": "2026-08-27",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-t8ai-xde4",
-        "name": "https://www.oscs1024.com/hd/MPS-t8ai-xde4"
+        "url": "https://www.oscs1024.com/hd/MPS-0vdn-tglf",
+        "name": "https://www.oscs1024.com/hd/MPS-0vdn-tglf"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-39914",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-39914"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81035",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81035"
       },
       {
-        "url": "https://tim-doc.atlassian.net/wiki/spaces/eng/pages/230981636/Release+Notes",
+        "url": "https://github.com/midday-ai/midday",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/tim-flow-unauthorized-sql-query-execution-via-dashboard-export-endpoint",
+        "url": "https://github.com/midday-ai/midday/blob/e5f45ed0d49cdb34576373623c4579b72daa74c1/apps/api/src/trpc/routers/team.ts",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/midday-ai/midday/issues/890",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/midday-missing-owner-check-on-team-deletion",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [],
-    "title": "CVE-2026-39914漏洞"
+    "title": "Midday团队删除越权"
   },
-  "first_saved_at": "2026-08-24T15:33:36+00:00"
+  "first_saved_at": "2026-08-26T18:53:57+00:00"
 }
