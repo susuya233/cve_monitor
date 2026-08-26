@@ -1,11 +1,11 @@
 {
-  "saved_at": "2026-08-26T07:40:32+00:00",
-  "first_seen": true,
+  "saved_at": "2026-08-26T08:36:12+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-p4n6-0re2",
   "detail": {
-    "analysis_status": 0,
+    "analysis_status": 3,
     "articles": [],
     "cnvd_id": "",
     "cve_id": "",
@@ -22,7 +22,7 @@
     "cvss_score": 9.5,
     "cvss_vector": "",
     "cwe": "CWE-122",
-    "description": "Next.js 是开源的 React 全栈 Web 框架（npm 包名 next）。自带的图片优化功能会在服务端压缩、缩放图片；处理 AVIF 时，会经 sharp 调用底层 libheif 做解码。\n受影响版本中，对外入口 NextNodeServer.handleNextImageRequest 接收 /_next/image 请求后，由 imageOptimizer()/optimizeImage() 做优化；getSharp() 默认放开 VipsForeignLoadHeif，AVIF 会进入 libheif。上游在处理嵌套 iden/auxl 透明通道的异常 AVIF 时，HeifPixelImage::scale_nearest_neighbor() 按错误位深把高位深样本写入低位深透明平面，造成堆溢出。厂商将其评为可远程代码执行；本地在受影响 Next.js 上可稳定复现为服务进程异常退出。\n修复版本中通过把 AVIF 加入 BYPASS_TYPES，并默认不再放开 VipsForeignLoadHeif，使 imageOptimizer() 对 AVIF 直接返回原图、跳过 optimizeImage()，异常样本进不了有问题的 libheif 路径。",
+    "description": "Next.js 是开源的 React 全栈 Web 框架（npm 包名 next）。自带的图片优化功能会在服务端压缩、缩放图片；处理 AVIF 时，会经 sharp 调用底层 libheif 做解码。\n受影响版本中，对外入口 NextNodeServer.handleNextImageRequest 接收 /_next/image 请求后，由 imageOptimizer()/optimizeImage() 做优化；getSharp() 默认放开 VipsForeignLoadHeif，AVIF 会进入 libheif。上游在处理嵌套 iden/auxl 透明通道的异常 AVIF 时，HeifPixelImage::scale_nearest_neighbor() 按错误位深把高位深样本写入低位深透明平面，造成堆溢出，可导致远程代码执行。\n修复版本中通过把 AVIF 加入 BYPASS_TYPES，并默认不再放开 VipsForeignLoadHeif，使 imageOptimizer() 对 AVIF 直接返回原图、跳过 optimizeImage()，异常样本进不了有问题的 libheif 路径。",
     "effects": [
       {
         "comp_name": "next",
@@ -121,7 +121,7 @@
     "_translated": true
   },
   "detail_original": {
-    "analysis_status": 0,
+    "analysis_status": 3,
     "articles": [],
     "cnvd_id": "",
     "cve_id": "",
@@ -138,7 +138,7 @@
     "cvss_score": 9.5,
     "cvss_vector": "",
     "cwe": "CWE-122",
-    "description": "Next.js 是开源的 React 全栈 Web 框架（npm 包名 next）。自带的图片优化功能会在服务端压缩、缩放图片；处理 AVIF 时，会经 sharp 调用底层 libheif 做解码。\n受影响版本中，对外入口 NextNodeServer.handleNextImageRequest 接收 /_next/image 请求后，由 imageOptimizer()/optimizeImage() 做优化；getSharp() 默认放开 VipsForeignLoadHeif，AVIF 会进入 libheif。上游在处理嵌套 iden/auxl 透明通道的异常 AVIF 时，HeifPixelImage::scale_nearest_neighbor() 按错误位深把高位深样本写入低位深透明平面，造成堆溢出。厂商将其评为可远程代码执行；本地在受影响 Next.js 上可稳定复现为服务进程异常退出。\n修复版本中通过把 AVIF 加入 BYPASS_TYPES，并默认不再放开 VipsForeignLoadHeif，使 imageOptimizer() 对 AVIF 直接返回原图、跳过 optimizeImage()，异常样本进不了有问题的 libheif 路径。",
+    "description": "Next.js 是开源的 React 全栈 Web 框架（npm 包名 next）。自带的图片优化功能会在服务端压缩、缩放图片；处理 AVIF 时，会经 sharp 调用底层 libheif 做解码。\n受影响版本中，对外入口 NextNodeServer.handleNextImageRequest 接收 /_next/image 请求后，由 imageOptimizer()/optimizeImage() 做优化；getSharp() 默认放开 VipsForeignLoadHeif，AVIF 会进入 libheif。上游在处理嵌套 iden/auxl 透明通道的异常 AVIF 时，HeifPixelImage::scale_nearest_neighbor() 按错误位深把高位深样本写入低位深透明平面，造成堆溢出，可导致远程代码执行。\n修复版本中通过把 AVIF 加入 BYPASS_TYPES，并默认不再放开 VipsForeignLoadHeif，使 imageOptimizer() 对 AVIF 直接返回原图、跳过 optimizeImage()，异常样本进不了有问题的 libheif 路径。",
     "effects": [
       {
         "comp_name": "next",
