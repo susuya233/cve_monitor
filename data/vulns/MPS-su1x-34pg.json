@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-27T23:27:46+00:00",
+  "saved_at": "2026-08-27T23:27:45+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-fta2-hk40",
+  "source_page": "https://www.oscs1024.com/hd/MPS-su1x-34pg",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,61 +21,89 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-80182",
+    "cve_id": "CVE-2026-81729",
     "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
       "cvssv4": [
         {
-          "source": "cve@mitre.org",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 7.6
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 7.6,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "In OpenStack Keystone before 29.0.3, tokens obtained via OAuth1 access token, application credential, or trust-scoped authentication could create new long-lived credentials or authorize new delegations that persist independently of, and outlive, the credential used to obtain them. The delegation restrictions that block these operations did not consistently apply to all delegated token types, allowing an OAuth1-scoped token, for example, to create application credentials or authorize OAuth1 request tokens despite those operations being restricted for other delegated token types. All Keystone deployments that permit delegated authentication through OAuth1 access tokens, application credentials, or trusts are affected.",
-    "effects": [],
+    "description": "Dolibarr 是开源 ERP/CRM 系统，提供客户、财务、库存与文档管理能力，并通过 REST API 对接第三方系统完成文档下载、上传和删除。\n受影响版本中，REST 接口 Documents::delete() 在处理 DELETE /api/index.php/documents 时，调用 dol_check_secure_access_document() 将 mode 参数设为 'read'，而同文件中会改写存储数据的 builddoc() 正确传入 'write'。仅持有 societe:lire 或 facture:lire 等模块读权限、不具备创建、写入、删除或管理员权限的认证 API 用户可通过校验，永久删除第三方文件、发票、订单、报价、项目文件和已生成 PDF，且没有恢复路径。\n修复版本中通过将 delete() 内 dol_check_secure_access_document() 的 mode 参数改为 'write'，使删除操作必须具备写权限，阻止只读用户进入文档删除路径。",
+    "effects": [
+      {
+        "comp_name": "dolibarr_erp/crm",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,23.0.4)",
+            "min_fixed_version": "23.0.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "授权检查错误",
     "kind_en": "授权错误",
-    "last_modified_time": "2026-08-26",
+    "last_modified_time": "2026-08-28",
     "level": "High",
-    "mps_id": "MPS-fta2-hk40",
+    "mps_id": "MPS-su1x-34pg",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-26",
+    "published_time": "2026-08-28",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-fta2-hk40",
-        "name": "https://www.oscs1024.com/hd/MPS-fta2-hk40"
+        "url": "https://www.oscs1024.com/hd/MPS-su1x-34pg",
+        "name": "https://www.oscs1024.com/hd/MPS-su1x-34pg"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80182",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80182"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81729",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81729"
       },
       {
-        "url": "https://launchpad.net/bugs/2153453",
+        "url": "https://github.com/Dolibarr/dolibarr",
         "name": ""
       },
       {
-        "url": "https://security.openstack.org/ossa/OSSA-2026-037.html",
+        "url": "https://github.com/Dolibarr/dolibarr/blob/23.0.3/htdocs/api/class/api_documents.class.php#L1276",
         "name": ""
       },
       {
-        "url": "https://www.openwall.com/lists/oss-security/2026/08/25/5",
+        "url": "https://github.com/Dolibarr/dolibarr/commit/de1d7a623e98484cc71fe43e93fdd5cd796abee5",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dolibarr-before-23.0.4-incorrect-authorization-on-rest-api-document-deletion",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-80182漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dolibarr文档删除越权",
     "_translated": true
   },
   "detail_original": {
@@ -95,61 +123,89 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-80182",
+    "cve_id": "CVE-2026-81729",
     "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
       "cvssv4": [
         {
-          "source": "cve@mitre.org",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 7.6
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 7.6,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "In OpenStack Keystone before 29.0.3, tokens obtained via OAuth1 access token, application credential, or trust-scoped authentication could create new long-lived credentials or authorize new delegations that persist independently of, and outlive, the credential used to obtain them. The delegation restrictions that block these operations did not consistently apply to all delegated token types, allowing an OAuth1-scoped token, for example, to create application credentials or authorize OAuth1 request tokens despite those operations being restricted for other delegated token types. All Keystone deployments that permit delegated authentication through OAuth1 access tokens, application credentials, or trusts are affected.",
-    "effects": [],
+    "description": "Dolibarr 是开源 ERP/CRM 系统，提供客户、财务、库存与文档管理能力，并通过 REST API 对接第三方系统完成文档下载、上传和删除。\n受影响版本中，REST 接口 Documents::delete() 在处理 DELETE /api/index.php/documents 时，调用 dol_check_secure_access_document() 将 mode 参数设为 'read'，而同文件中会改写存储数据的 builddoc() 正确传入 'write'。仅持有 societe:lire 或 facture:lire 等模块读权限、不具备创建、写入、删除或管理员权限的认证 API 用户可通过校验，永久删除第三方文件、发票、订单、报价、项目文件和已生成 PDF，且没有恢复路径。\n修复版本中通过将 delete() 内 dol_check_secure_access_document() 的 mode 参数改为 'write'，使删除操作必须具备写权限，阻止只读用户进入文档删除路径。",
+    "effects": [
+      {
+        "comp_name": "dolibarr_erp/crm",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,23.0.4)",
+            "min_fixed_version": "23.0.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "授权检查错误",
     "kind_en": "Incorrect Authorization",
-    "last_modified_time": "2026-08-26",
+    "last_modified_time": "2026-08-28",
     "level": "High",
-    "mps_id": "MPS-fta2-hk40",
+    "mps_id": "MPS-su1x-34pg",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-26",
+    "published_time": "2026-08-28",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-fta2-hk40",
-        "name": "https://www.oscs1024.com/hd/MPS-fta2-hk40"
+        "url": "https://www.oscs1024.com/hd/MPS-su1x-34pg",
+        "name": "https://www.oscs1024.com/hd/MPS-su1x-34pg"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80182",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80182"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81729",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81729"
       },
       {
-        "url": "https://launchpad.net/bugs/2153453",
+        "url": "https://github.com/Dolibarr/dolibarr",
         "name": ""
       },
       {
-        "url": "https://security.openstack.org/ossa/OSSA-2026-037.html",
+        "url": "https://github.com/Dolibarr/dolibarr/blob/23.0.3/htdocs/api/class/api_documents.class.php#L1276",
         "name": ""
       },
       {
-        "url": "https://www.openwall.com/lists/oss-security/2026/08/25/5",
+        "url": "https://github.com/Dolibarr/dolibarr/commit/de1d7a623e98484cc71fe43e93fdd5cd796abee5",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dolibarr-before-23.0.4-incorrect-authorization-on-rest-api-document-deletion",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-80182漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dolibarr文档删除越权"
   },
-  "first_saved_at": "2026-08-26T00:56:20+00:00"
+  "first_saved_at": "2026-08-27T23:27:45+00:00"
 }

@@ -1,0 +1,293 @@
+{
+  "saved_at": "2026-08-27T23:27:42+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-k6ys-i7nd",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81934",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "9119a7d8-5eab-497f-8521-727c672e3725",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "9119a7d8-5eab-497f-8521-727c672e3725",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-416",
+    "description": "Redis 是开源内存数据存储组件，提供键值存储、发布订阅与脚本执行能力，并可启用 TLS 加密客户端连接。\n受影响版本中，启用 TLS 后 tlsProcessPendingData() 使用 listIter 遍历 pending_list，listNext() 会预先缓存后继 listNode 指针；当前连接的 tlsHandleEvent() 在执行命令时可能关闭另一条仍位于该列表中的 TLS 连接，connTLSClose() 经 listDelNode() 释放该节点后，迭代器继续解引用已释放内存，远程未认证攻击者可在 redis-server 进程权限下执行任意命令。\n修复版本中通过将 pending_list 遍历改为按 listFirst() 有界取出当前节点，并在调用 tlsHandleEvent() 之前执行 tlsPendingRemove()，避免跨事件处理持有后继节点指针，切断释放后使用路径。",
+    "effects": [
+      {
+        "comp_name": "redis",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.2.0,8.2.9)",
+            "min_fixed_version": "8.2.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.4.0,8.4.6)",
+            "min_fixed_version": "8.4.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.10.0,8.10.1)",
+            "min_fixed_version": "8.10.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.6.0,8.6.6)",
+            "min_fixed_version": "8.6.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.8.0,8.8.2)",
+            "min_fixed_version": "8.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "UAF",
+    "kind_en": "免费后使用",
+    "last_modified_time": "2026-08-28",
+    "level": "Critical",
+    "mps_id": "MPS-k6ys-i7nd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k6ys-i7nd",
+        "name": "https://www.oscs1024.com/hd/MPS-k6ys-i7nd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81934",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81934"
+      },
+      {
+        "url": "https://github.com/redis/redis/commit/6d088c335d5c3ec49a6c28486140b498e70b7834",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/v12-security/pocs/tree/main/redis/server_ssl",
+        "name": ""
+      },
+      {
+        "url": "https://raw.githubusercontent.com/redis/redis/8.10/00-RELEASENOTES",
+        "name": ""
+      },
+      {
+        "url": "https://raw.githubusercontent.com/redis/redis/8.2/00-RELEASENOTES",
+        "name": ""
+      },
+      {
+        "url": "https://raw.githubusercontent.com/redis/redis/8.4/00-RELEASENOTES",
+        "name": ""
+      },
+      {
+        "url": "https://raw.githubusercontent.com/redis/redis/8.6/00-RELEASENOTES",
+        "name": ""
+      },
+      {
+        "url": "https://raw.githubusercontent.com/redis/redis/8.8/00-RELEASENOTES",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "数据库"
+    ],
+    "title": "Redis TLS释放后使用漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81934",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "9119a7d8-5eab-497f-8521-727c672e3725",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "9119a7d8-5eab-497f-8521-727c672e3725",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-416",
+    "description": "Redis 是开源内存数据存储组件，提供键值存储、发布订阅与脚本执行能力，并可启用 TLS 加密客户端连接。\n受影响版本中，启用 TLS 后 tlsProcessPendingData() 使用 listIter 遍历 pending_list，listNext() 会预先缓存后继 listNode 指针；当前连接的 tlsHandleEvent() 在执行命令时可能关闭另一条仍位于该列表中的 TLS 连接，connTLSClose() 经 listDelNode() 释放该节点后，迭代器继续解引用已释放内存，远程未认证攻击者可在 redis-server 进程权限下执行任意命令。\n修复版本中通过将 pending_list 遍历改为按 listFirst() 有界取出当前节点，并在调用 tlsHandleEvent() 之前执行 tlsPendingRemove()，避免跨事件处理持有后继节点指针，切断释放后使用路径。",
+    "effects": [
+      {
+        "comp_name": "redis",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.2.0,8.2.9)",
+            "min_fixed_version": "8.2.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.4.0,8.4.6)",
+            "min_fixed_version": "8.4.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.10.0,8.10.1)",
+            "min_fixed_version": "8.10.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.6.0,8.6.6)",
+            "min_fixed_version": "8.6.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.8.0,8.8.2)",
+            "min_fixed_version": "8.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "UAF",
+    "kind_en": "Use After Free",
+    "last_modified_time": "2026-08-28",
+    "level": "Critical",
+    "mps_id": "MPS-k6ys-i7nd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k6ys-i7nd",
+        "name": "https://www.oscs1024.com/hd/MPS-k6ys-i7nd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81934",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81934"
+      },
+      {
+        "url": "https://github.com/redis/redis/commit/6d088c335d5c3ec49a6c28486140b498e70b7834",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/v12-security/pocs/tree/main/redis/server_ssl",
+        "name": ""
+      },
+      {
+        "url": "https://raw.githubusercontent.com/redis/redis/8.10/00-RELEASENOTES",
+        "name": ""
+      },
+      {
+        "url": "https://raw.githubusercontent.com/redis/redis/8.2/00-RELEASENOTES",
+        "name": ""
+      },
+      {
+        "url": "https://raw.githubusercontent.com/redis/redis/8.4/00-RELEASENOTES",
+        "name": ""
+      },
+      {
+        "url": "https://raw.githubusercontent.com/redis/redis/8.6/00-RELEASENOTES",
+        "name": ""
+      },
+      {
+        "url": "https://raw.githubusercontent.com/redis/redis/8.8/00-RELEASENOTES",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "数据库"
+    ],
+    "title": "Redis TLS释放后使用漏洞"
+  },
+  "first_saved_at": "2026-08-27T23:27:42+00:00"
+}
