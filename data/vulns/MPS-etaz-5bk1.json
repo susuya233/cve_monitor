@@ -1,0 +1,159 @@
+{
+  "saved_at": "2026-08-27T13:36:14+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-etaz-5bk1",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81574",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "2fc02b1f-71e7-4514-a878-169626f68903",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H",
+    "cwe": "CWE-134",
+    "description": "CodeMeter Runtime 是 WIBU-SYSTEMS AG 的闭源商业许可保护与授权运行时，用于在 Windows、Linux 和 macOS 上管理 CmDongle、CmActLicense 以及局域网、广域网和云许可服务。\n受影响版本中，日志记录器在特定情况下未净化输入字符串，攻击者可注入 printf 风格格式化说明符。本地可通过 cmu --set-proxy 写入代理值触发；远程可在 CVE-2026-81573 改写 General.ProxyServer 后再触发，造成 CodeMeter 进程崩溃，并泄露进程内存、栈金丝雀等敏感信息。厂商公告说明本公告所列漏洞仅在 CodeMeter Runtime 配置为网络服务器（IsNetworkServer=1，非默认）时受影响。\n修复版本中通过官方安全更新收紧日志记录器对外部输入字符串的处理，阻止格式化说明符进入危险日志路径，消除进程崩溃与内存信息泄露。8.x 修复版本为 8.41a，9.x 修复版本为 9.10；7.x 无独立补丁，需升级到上述修复版本。",
+    "effects": [
+      {
+        "comp_name": "codemeter-runtime",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.00,8.41a)",
+            "min_fixed_version": "8.41a",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.00,9.10)",
+            "min_fixed_version": "9.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用外部控制的格式字符串",
+    "kind_en": "使用外部控制的格式字符串",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-etaz-5bk1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-etaz-5bk1",
+        "name": "https://www.oscs1024.com/hd/MPS-etaz-5bk1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81574",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81574"
+      },
+      {
+        "url": "https://cdn.wibu.com/fileadmin/wibu_downloads/security_advisories/AdvisoryWIBU-103401.pdf",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CodeMeter格式化字符串漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81574",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "2fc02b1f-71e7-4514-a878-169626f68903",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H",
+    "cwe": "CWE-134",
+    "description": "CodeMeter Runtime 是 WIBU-SYSTEMS AG 的闭源商业许可保护与授权运行时，用于在 Windows、Linux 和 macOS 上管理 CmDongle、CmActLicense 以及局域网、广域网和云许可服务。\n受影响版本中，日志记录器在特定情况下未净化输入字符串，攻击者可注入 printf 风格格式化说明符。本地可通过 cmu --set-proxy 写入代理值触发；远程可在 CVE-2026-81573 改写 General.ProxyServer 后再触发，造成 CodeMeter 进程崩溃，并泄露进程内存、栈金丝雀等敏感信息。厂商公告说明本公告所列漏洞仅在 CodeMeter Runtime 配置为网络服务器（IsNetworkServer=1，非默认）时受影响。\n修复版本中通过官方安全更新收紧日志记录器对外部输入字符串的处理，阻止格式化说明符进入危险日志路径，消除进程崩溃与内存信息泄露。8.x 修复版本为 8.41a，9.x 修复版本为 9.10；7.x 无独立补丁，需升级到上述修复版本。",
+    "effects": [
+      {
+        "comp_name": "codemeter-runtime",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.00,8.41a)",
+            "min_fixed_version": "8.41a",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.00,9.10)",
+            "min_fixed_version": "9.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用外部控制的格式字符串",
+    "kind_en": "Use of Externally-Controlled Format String",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-etaz-5bk1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-etaz-5bk1",
+        "name": "https://www.oscs1024.com/hd/MPS-etaz-5bk1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81574",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81574"
+      },
+      {
+        "url": "https://cdn.wibu.com/fileadmin/wibu_downloads/security_advisories/AdvisoryWIBU-103401.pdf",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CodeMeter格式化字符串漏洞"
+  },
+  "first_saved_at": "2026-08-27T13:36:14+00:00"
+}

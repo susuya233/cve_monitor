@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-27T13:36:09+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-o4in-drm3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序试图读取、写入或复制内存缓冲区时，未对边界进行适当的检查和限制。缓冲区是用于存储数据的一块内存区域，当程序试图在缓冲区之外的位置进行操作时，就可能导致缓冲区溢出或下溢。攻击者可以利用这个漏洞来修改程序的执行流、执行任意代码或导致拒绝服务等安全问题。",
+        "title": "什么是缓冲区溢出"
+      },
+      {
+        "content": "- 缓冲区溢出攻击：攻击者向输入缓冲区中注入超过其容量的数据，导致数据溢出到相邻的内存区域，可能覆盖关键数据、修改变量值或执行恶意代码。\n- 缓冲区下溢攻击：攻击者向输入缓冲区中注入少于其容量的数据，导致数据被读取时越过缓冲区边界，可能泄露敏感信息或破坏程序的正常执行流程。\n- 字符串格式化攻击：攻击者通过控制格式化字符串的输入，可以读取或写入任意内存位置，从而执行恶意操作。",
+        "title": "缓冲区溢出常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和边界检查：对于所有接受用户输入的缓冲区操作，确保验证输入数据的长度和内容，以避免缓冲区溢出或下溢。\n- 使用安全的字符串操作函数：使用安全的字符串操作函数（如strncpy、strncat）替代不安全的函数（如strcpy、strcat），这些函数会在操作时自动限制操作的边界。\n- 使用内存安全工具：使用内存安全工具（如内存分析器、静态分析工具）来检测和修复潜在的缓冲区溢出问题。\n- 采用安全编码实践：遵循安全编码实践，如最小特权原则、避免使用不受信任的输入等。\n- 定期更新和修补程序：及时应用程序厂商提供的安全更新和补丁，以修复已知的缓冲区溢出漏洞。\n- 使用编程语言和框架提供的安全功能：利用编程语言和框架提供的安全特性，如内存安全函数、边界检查等。",
+        "title": "如何预防缓冲区溢出"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81581",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "2fc02b1f-71e7-4514-a878-169626f68903",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-119",
+    "description": "WibuKey 是 WIBU-SYSTEMS AG 提供的商业软件保护与授权组件，用于通过加密狗为 Windows 等平台上的应用程序提供许可证保护，其中 WibuKey64.sys 是以系统权限运行的 Windows 内核驱动。\n受影响版本中，Windows 平台的 WibuKey64.sys 将用户输入用于计算指针地址，但未正确校验内存边界，本地低权限攻击者可将指针设置到程序范围之外。该问题通常导致拒绝服务；因驱动以系统权限运行，官方不能排除代码执行与权限提升。\n修复版本中通过厂商安全更新收紧 WibuKey64.sys 对用户输入指针的校验，阻止将指针设置到程序范围之外，切断越界访问路径。",
+    "effects": [
+      {
+        "comp_name": "wibukey",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,6.71)",
+            "min_fixed_version": "6.71",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "缓冲区溢出",
+    "kind_en": "内存缓冲区范围内的操作限制不当",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-o4in-drm3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-o4in-drm3",
+        "name": "https://www.oscs1024.com/hd/MPS-o4in-drm3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81581",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81581"
+      },
+      {
+        "url": "https://cdn.wibu.com/fileadmin/wibu_downloads/security_advisories/AdvisoryWIBU-100057.pdf",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WibuKey指针校验漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序试图读取、写入或复制内存缓冲区时，未对边界进行适当的检查和限制。缓冲区是用于存储数据的一块内存区域，当程序试图在缓冲区之外的位置进行操作时，就可能导致缓冲区溢出或下溢。攻击者可以利用这个漏洞来修改程序的执行流、执行任意代码或导致拒绝服务等安全问题。",
+        "title": "什么是缓冲区溢出"
+      },
+      {
+        "content": "- 缓冲区溢出攻击：攻击者向输入缓冲区中注入超过其容量的数据，导致数据溢出到相邻的内存区域，可能覆盖关键数据、修改变量值或执行恶意代码。\n- 缓冲区下溢攻击：攻击者向输入缓冲区中注入少于其容量的数据，导致数据被读取时越过缓冲区边界，可能泄露敏感信息或破坏程序的正常执行流程。\n- 字符串格式化攻击：攻击者通过控制格式化字符串的输入，可以读取或写入任意内存位置，从而执行恶意操作。",
+        "title": "缓冲区溢出常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和边界检查：对于所有接受用户输入的缓冲区操作，确保验证输入数据的长度和内容，以避免缓冲区溢出或下溢。\n- 使用安全的字符串操作函数：使用安全的字符串操作函数（如strncpy、strncat）替代不安全的函数（如strcpy、strcat），这些函数会在操作时自动限制操作的边界。\n- 使用内存安全工具：使用内存安全工具（如内存分析器、静态分析工具）来检测和修复潜在的缓冲区溢出问题。\n- 采用安全编码实践：遵循安全编码实践，如最小特权原则、避免使用不受信任的输入等。\n- 定期更新和修补程序：及时应用程序厂商提供的安全更新和补丁，以修复已知的缓冲区溢出漏洞。\n- 使用编程语言和框架提供的安全功能：利用编程语言和框架提供的安全特性，如内存安全函数、边界检查等。",
+        "title": "如何预防缓冲区溢出"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81581",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "2fc02b1f-71e7-4514-a878-169626f68903",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-119",
+    "description": "WibuKey 是 WIBU-SYSTEMS AG 提供的商业软件保护与授权组件，用于通过加密狗为 Windows 等平台上的应用程序提供许可证保护，其中 WibuKey64.sys 是以系统权限运行的 Windows 内核驱动。\n受影响版本中，Windows 平台的 WibuKey64.sys 将用户输入用于计算指针地址，但未正确校验内存边界，本地低权限攻击者可将指针设置到程序范围之外。该问题通常导致拒绝服务；因驱动以系统权限运行，官方不能排除代码执行与权限提升。\n修复版本中通过厂商安全更新收紧 WibuKey64.sys 对用户输入指针的校验，阻止将指针设置到程序范围之外，切断越界访问路径。",
+    "effects": [
+      {
+        "comp_name": "wibukey",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,6.71)",
+            "min_fixed_version": "6.71",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "缓冲区溢出",
+    "kind_en": "Improper Restriction of Operations within the Bounds of a Memory Buffer",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-o4in-drm3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-o4in-drm3",
+        "name": "https://www.oscs1024.com/hd/MPS-o4in-drm3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81581",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81581"
+      },
+      {
+        "url": "https://cdn.wibu.com/fileadmin/wibu_downloads/security_advisories/AdvisoryWIBU-100057.pdf",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WibuKey指针校验漏洞"
+  },
+  "first_saved_at": "2026-08-27T13:36:09+00:00"
+}

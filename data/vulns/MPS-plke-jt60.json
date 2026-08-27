@@ -1,0 +1,213 @@
+{
+  "saved_at": "2026-08-27T13:35:59+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-plke-jt60",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81625",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "info@cert.vde.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "info@cert.vde.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-787",
+    "description": "openvas-scanner 是 Greenbone 开源漏洞扫描引擎，用于执行 NASL 漏洞测试（VT），并被 Greenbone OS 等产品集成。\n受影响版本中，NASL 内置函数 NTLMv1_HASH 由 nasl_ntlmv1_hash 实现，该函数将脚本传入的 passhash 复制到栈上 21 字节数组 p21，未强制 passhash 长度为 16 字节。超长 passhash 会越过 p21 边界写入栈，具备用户权限的远程攻击者可借助恶意或被篡改的 NASL VT 触发栈缓冲区溢出并获取系统完整控制权。\n修复版本中通过在复制前要求 passhash 必须恰好为 16 字节，长度不符则返回错误并拒绝写入，切断超长数据进入栈缓冲的路径。",
+    "effects": [
+      {
+        "comp_name": "greenbone_os",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.0,25.0.6)",
+            "min_fixed_version": "25.0.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "openvas-scanner",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.0,23.49.4)",
+            "min_fixed_version": "23.49.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界写入",
+    "kind_en": "越界写入",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-plke-jt60",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-plke-jt60",
+        "name": "https://www.oscs1024.com/hd/MPS-plke-jt60"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81625",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81625"
+      },
+      {
+        "url": "https://www.greenbone.net/.well-known/csaf/white/2026/gbsa2026-03.json",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "openvas-scanner栈溢出",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81625",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "info@cert.vde.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "info@cert.vde.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-787",
+    "description": "openvas-scanner 是 Greenbone 开源漏洞扫描引擎，用于执行 NASL 漏洞测试（VT），并被 Greenbone OS 等产品集成。\n受影响版本中，NASL 内置函数 NTLMv1_HASH 由 nasl_ntlmv1_hash 实现，该函数将脚本传入的 passhash 复制到栈上 21 字节数组 p21，未强制 passhash 长度为 16 字节。超长 passhash 会越过 p21 边界写入栈，具备用户权限的远程攻击者可借助恶意或被篡改的 NASL VT 触发栈缓冲区溢出并获取系统完整控制权。\n修复版本中通过在复制前要求 passhash 必须恰好为 16 字节，长度不符则返回错误并拒绝写入，切断超长数据进入栈缓冲的路径。",
+    "effects": [
+      {
+        "comp_name": "greenbone_os",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.0,25.0.6)",
+            "min_fixed_version": "25.0.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "openvas-scanner",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.0,23.49.4)",
+            "min_fixed_version": "23.49.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界写入",
+    "kind_en": "Out-of-bounds Write",
+    "last_modified_time": "2026-08-27",
+    "level": "High",
+    "mps_id": "MPS-plke-jt60",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-plke-jt60",
+        "name": "https://www.oscs1024.com/hd/MPS-plke-jt60"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81625",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81625"
+      },
+      {
+        "url": "https://www.greenbone.net/.well-known/csaf/white/2026/gbsa2026-03.json",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "openvas-scanner栈溢出"
+  },
+  "first_saved_at": "2026-08-27T13:35:59+00:00"
+}
