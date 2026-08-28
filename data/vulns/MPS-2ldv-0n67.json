@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-25T11:21:38+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-28T08:32:13+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-axwk-0u92",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2ldv-0n67",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,7 +21,7 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78563",
+    "cve_id": "CVE-2026-77365",
     "cvss": {
       "cvssv31": [
         {
@@ -35,15 +35,15 @@
     "cvss_score": 7.2,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
     "cwe": "CWE-79",
-    "description": "NotificationX Pro 是 WPDeveloper 出品的 WordPress 商业插件，用于在站点上展示销售提醒、社会证明和通知栏等营销组件。\n受影响版本中，插件对输入缺少充分净化与输出转义，未认证攻击者可将任意 Web 脚本写入页面，用户访问被注入页面时脚本会在浏览器中执行。\n修复版本中通过补齐输入净化与输出转义切断该存储型脚本注入路径；截至 2026-08-25，厂商尚未发布明确修复版本，公开资料未披露具体源码改动。",
+    "description": "Optimole（插件目录名 optimole-wp）是开源 WordPress 图片优化插件，提供压缩、WebP/AVIF 转换、CDN 分发和懒加载能力。\n受影响版本中，REST 路由 optml/v1/optimizations 的 permission_callback 为 __return_true，Optml_Rest::optimizations() 读取参数 a（above_fold_images）后只截取前 6 项，未限制为数值 ID 即交给 Profile::store()，并以 array_fill_keys() 作为画像键保存。Profile::get_current_profile_html_comment() 使用默认 json_encode() 把画像写入 HTML 注释，无法转义标签与注释结束符，未认证攻击者可向 a 注入可闭合注释的脚本，使用户访问注入页面时执行。\n修复版本中通过在 optimizations() 内用 is_numeric 与 intval 过滤 a 参数，只保留整数图片 ID，并在 get_current_profile_html_comment() 以 JSON_HEX_TAG 与 JSON_HEX_AMP 编码输出，阻断恶意图片 ID 破坏 HTML 注释并执行脚本。",
     "effects": [
       {
-        "comp_name": "notificationx-pro",
+        "comp_name": "optimole-wp",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,3.1.4]",
-            "min_fixed_version": "",
+            "affected_version": "(-∞,4.2.11)",
+            "min_fixed_version": "4.2.11",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -59,27 +59,71 @@
     "fix_suggestion": "建议修复",
     "kind": "XSS",
     "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
-    "last_modified_time": "2026-08-25",
+    "last_modified_time": "2026-08-28",
     "level": "High",
-    "mps_id": "MPS-axwk-0u92",
+    "mps_id": "MPS-2ldv-0n67",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-25",
+    "published_time": "2026-08-28",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-axwk-0u92",
-        "name": "https://www.oscs1024.com/hd/MPS-axwk-0u92"
+        "url": "https://www.oscs1024.com/hd/MPS-2ldv-0n67",
+        "name": "https://www.oscs1024.com/hd/MPS-2ldv-0n67"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78563",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78563"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77365",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77365"
       },
       {
-        "url": "https://patchstack.com/database/wordpress/plugin/notificationx-pro/vulnerability/wordpress-notificationx-pro-plugin-3-1-4-cross-site-scripting-xss-vulnerability",
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.10/inc/manager.php#L468",
         "name": ""
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/0adad1bc-8803-4c20-ae9f-ab8b66d1e6df?source=cve",
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.10/inc/rest.php#L159",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.10/inc/rest.php#L935",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.10/inc/v2/PageProfiler/Profile.php#L189",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.10/inc/v2/PageProfiler/Profile.php#L485",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.7/inc/manager.php#L468",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.7/inc/rest.php#L159",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.7/inc/rest.php#L935",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.7/inc/v2/PageProfiler/Profile.php#L189",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.7/inc/v2/PageProfiler/Profile.php#L485",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3666687/optimole-wp/trunk/inc/v2/PageProfiler/Profile.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?old_path=%2Foptimole-wp/tags/4.2.10&new_path=%2Foptimole-wp/tags/4.2.11",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/b8634a78-e0d3-4e2e-87d8-4277f56511c6?source=cve",
         "name": ""
       }
     ],
@@ -87,7 +131,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "NotificationX Pro存储型XSS",
+    "title": "Optimole存储型XSS漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -107,7 +151,7 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78563",
+    "cve_id": "CVE-2026-77365",
     "cvss": {
       "cvssv31": [
         {
@@ -121,15 +165,15 @@
     "cvss_score": 7.2,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
     "cwe": "CWE-79",
-    "description": "NotificationX Pro 是 WPDeveloper 出品的 WordPress 商业插件，用于在站点上展示销售提醒、社会证明和通知栏等营销组件。\n受影响版本中，插件对输入缺少充分净化与输出转义，未认证攻击者可将任意 Web 脚本写入页面，用户访问被注入页面时脚本会在浏览器中执行。\n修复版本中通过补齐输入净化与输出转义切断该存储型脚本注入路径；截至 2026-08-25，厂商尚未发布明确修复版本，公开资料未披露具体源码改动。",
+    "description": "Optimole（插件目录名 optimole-wp）是开源 WordPress 图片优化插件，提供压缩、WebP/AVIF 转换、CDN 分发和懒加载能力。\n受影响版本中，REST 路由 optml/v1/optimizations 的 permission_callback 为 __return_true，Optml_Rest::optimizations() 读取参数 a（above_fold_images）后只截取前 6 项，未限制为数值 ID 即交给 Profile::store()，并以 array_fill_keys() 作为画像键保存。Profile::get_current_profile_html_comment() 使用默认 json_encode() 把画像写入 HTML 注释，无法转义标签与注释结束符，未认证攻击者可向 a 注入可闭合注释的脚本，使用户访问注入页面时执行。\n修复版本中通过在 optimizations() 内用 is_numeric 与 intval 过滤 a 参数，只保留整数图片 ID，并在 get_current_profile_html_comment() 以 JSON_HEX_TAG 与 JSON_HEX_AMP 编码输出，阻断恶意图片 ID 破坏 HTML 注释并执行脚本。",
     "effects": [
       {
-        "comp_name": "notificationx-pro",
+        "comp_name": "optimole-wp",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,3.1.4]",
-            "min_fixed_version": "",
+            "affected_version": "(-∞,4.2.11)",
+            "min_fixed_version": "4.2.11",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -145,27 +189,71 @@
     "fix_suggestion": "Recommend",
     "kind": "XSS",
     "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
-    "last_modified_time": "2026-08-25",
+    "last_modified_time": "2026-08-28",
     "level": "High",
-    "mps_id": "MPS-axwk-0u92",
+    "mps_id": "MPS-2ldv-0n67",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-25",
+    "published_time": "2026-08-28",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-axwk-0u92",
-        "name": "https://www.oscs1024.com/hd/MPS-axwk-0u92"
+        "url": "https://www.oscs1024.com/hd/MPS-2ldv-0n67",
+        "name": "https://www.oscs1024.com/hd/MPS-2ldv-0n67"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78563",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78563"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77365",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77365"
       },
       {
-        "url": "https://patchstack.com/database/wordpress/plugin/notificationx-pro/vulnerability/wordpress-notificationx-pro-plugin-3-1-4-cross-site-scripting-xss-vulnerability",
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.10/inc/manager.php#L468",
         "name": ""
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/0adad1bc-8803-4c20-ae9f-ab8b66d1e6df?source=cve",
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.10/inc/rest.php#L159",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.10/inc/rest.php#L935",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.10/inc/v2/PageProfiler/Profile.php#L189",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.10/inc/v2/PageProfiler/Profile.php#L485",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.7/inc/manager.php#L468",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.7/inc/rest.php#L159",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.7/inc/rest.php#L935",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.7/inc/v2/PageProfiler/Profile.php#L189",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.7/inc/v2/PageProfiler/Profile.php#L485",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3666687/optimole-wp/trunk/inc/v2/PageProfiler/Profile.php",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?old_path=%2Foptimole-wp/tags/4.2.10&new_path=%2Foptimole-wp/tags/4.2.11",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/b8634a78-e0d3-4e2e-87d8-4277f56511c6?source=cve",
         "name": ""
       }
     ],
@@ -173,7 +261,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "NotificationX Pro存储型XSS"
+    "title": "Optimole存储型XSS漏洞"
   },
-  "first_saved_at": "2026-08-25T10:24:54+00:00"
+  "first_saved_at": "2026-08-28T08:32:13+00:00"
 }

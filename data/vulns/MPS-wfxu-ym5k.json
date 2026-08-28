@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-25T09:29:17+00:00",
+  "saved_at": "2026-08-28T08:32:16+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-xg4l-32jh",
+  "source_page": "https://www.oscs1024.com/hd/MPS-wfxu-ym5k",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,7 +21,7 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-18323",
+    "cve_id": "CVE-2026-76053",
     "cvss": {
       "cvssv31": [
         {
@@ -35,15 +35,15 @@
     "cvss_score": 7.2,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
     "cwe": "CWE-79",
-    "description": "Forminator Forms 是 WPMU DEV 发布的开源 WordPress 表单插件，用于创建联系表单、支付表单和自定义表单。\n受影响版本中，未认证攻击者可向已启用 Save and Continue 的表单调用 wp_ajax_nopriv_forminator_submit_form_custom-forms 并提交 save_draft 草稿。Forminator_CForm_Front_Action::set_field_data 在草稿模式下跳过 validate_entry，绕过 Forminator_Radio::validate 的选项成员校验；Forminator_Radio::sanitize 使用 wp_kses_post 保留 HTML，payload 写入提交记录后，后台 Submissions 页 content-details.php 再次以 wp_kses_post 输出，bundled Inputmask 会对 data-inputmask 属性中的回调自动执行。\n修复版本中通过将 Radio 字段 sanitize 改为 sanitize_choice_data 去除 HTML 标签，并在 Submissions 页对 radio、select、checkbox 使用 esc_html 输出，切断恶意脚本入库与后台自动执行链路。",
+    "description": "TranslatePress 是开源 WordPress 多语言翻译插件，用于在前台对站点页面进行可视化翻译和自动翻译。\n受影响版本中，未认证攻击者可提交 WordPress 评论 KSES 允许的锚点标签（含 href、title）与 code 标签组合，评论会原样写入数据库。站点以非默认语言渲染页面时，TRP_Translation_Render::translate_page 把整页 HTML 交给内置 simple_html_dom 解析；remove_noise 用可预测的 ___noise___ 加五位序号替换评论和 code 等内容，parse_attr 再对属性值执行 restore_noise。title 中的伪造占位键会把 code 内脚本还原进属性并突破引号，访问该页面即可执行任意脚本。\n修复版本中通过在每次解析时生成随机 salt 并写入全部 noise 占位键，使 restore_noise 只还原带该 salt 的标记，未知或截断占位符被丢弃，攻击者无法再伪造占位键把无关内容写进属性。",
     "effects": [
       {
-        "comp_name": "forminator",
+        "comp_name": "translatepress-multilingual",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,1.57.0.3)",
-            "min_fixed_version": "1.57.0.3",
+            "affected_version": "(-∞,3.3.4)",
+            "min_fixed_version": "3.3.4",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -54,80 +54,84 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "XSS",
     "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
-    "last_modified_time": "2026-08-25",
+    "last_modified_time": "2026-08-28",
     "level": "High",
-    "mps_id": "MPS-xg4l-32jh",
+    "mps_id": "MPS-wfxu-ym5k",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-25",
+    "published_time": "2026-08-28",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-xg4l-32jh",
-        "name": "https://www.oscs1024.com/hd/MPS-xg4l-32jh"
+        "url": "https://www.oscs1024.com/hd/MPS-wfxu-ym5k",
+        "name": "https://www.oscs1024.com/hd/MPS-wfxu-ym5k"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18323",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18323"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76053",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76053"
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/admin/views/custom-form/entries/content-details.php#L232",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.1/assets/lib/simplehtmldom/simple_html_dom.php#L1549",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/abstracts/abstract-class-front-action.php#L127",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.1/assets/lib/simplehtmldom/simple_html_dom.php#L2125",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/fields/radio.php#L520",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.1/assets/lib/simplehtmldom/simple_html_dom.php#L2220",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/helpers/helper-fields.php#L1053",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.1/assets/lib/simplehtmldom/simple_html_dom.php#L497",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/modules/custom-forms/front/front-action.php#L1112",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.1/includes/class-translation-render.php#L1226",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/admin/views/custom-form/entries/content-details.php#L232",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.1/includes/class-translation-render.php#L664",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/abstracts/abstract-class-front-action.php#L127",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.2/assets/lib/simplehtmldom/simple_html_dom.php#L1549",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/fields/radio.php#L520",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.2/assets/lib/simplehtmldom/simple_html_dom.php#L2125",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/helpers/helper-fields.php#L1053",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.2/assets/lib/simplehtmldom/simple_html_dom.php#L2220",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/modules/custom-forms/front/front-action.php#L1112",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.2/assets/lib/simplehtmldom/simple_html_dom.php#L497",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset/3652725/forminator/trunk/admin/views/custom-form/entries/content-details.php",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.2/includes/class-translation-render.php#L1226",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset?old_path=%2Fforminator/tags/1.57.0.2&new_path=%2Fforminator/tags/1.57.0.3",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.2/includes/class-translation-render.php#L664",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&new=3652727%40forminator%2Ftags%2F1.57.0.3&old=3652717%40forminator%2Ftags%2F1.57.0.2",
+        "url": "https://plugins.trac.wordpress.org/changeset/3665013/translatepress-multilingual/trunk/assets/lib/simplehtmldom/simple_html_dom.php",
         "name": ""
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/85b02779-d85f-4700-9994-68391e69c1ea?source=cve",
+        "url": "https://plugins.trac.wordpress.org/changeset?old_path=%2Ftranslatepress-multilingual/tags/3.3.3&new_path=%2Ftranslatepress-multilingual/tags/3.3.4",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/990e04ed-ff17-4e10-9224-64a674a40416?source=cve",
         "name": ""
       }
     ],
@@ -135,7 +139,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "Forminator存储型XSS漏洞",
+    "title": "TranslatePress存储型XSS",
     "_translated": true
   },
   "detail_original": {
@@ -155,7 +159,7 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-18323",
+    "cve_id": "CVE-2026-76053",
     "cvss": {
       "cvssv31": [
         {
@@ -169,15 +173,15 @@
     "cvss_score": 7.2,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
     "cwe": "CWE-79",
-    "description": "Forminator Forms 是 WPMU DEV 发布的开源 WordPress 表单插件，用于创建联系表单、支付表单和自定义表单。\n受影响版本中，未认证攻击者可向已启用 Save and Continue 的表单调用 wp_ajax_nopriv_forminator_submit_form_custom-forms 并提交 save_draft 草稿。Forminator_CForm_Front_Action::set_field_data 在草稿模式下跳过 validate_entry，绕过 Forminator_Radio::validate 的选项成员校验；Forminator_Radio::sanitize 使用 wp_kses_post 保留 HTML，payload 写入提交记录后，后台 Submissions 页 content-details.php 再次以 wp_kses_post 输出，bundled Inputmask 会对 data-inputmask 属性中的回调自动执行。\n修复版本中通过将 Radio 字段 sanitize 改为 sanitize_choice_data 去除 HTML 标签，并在 Submissions 页对 radio、select、checkbox 使用 esc_html 输出，切断恶意脚本入库与后台自动执行链路。",
+    "description": "TranslatePress 是开源 WordPress 多语言翻译插件，用于在前台对站点页面进行可视化翻译和自动翻译。\n受影响版本中，未认证攻击者可提交 WordPress 评论 KSES 允许的锚点标签（含 href、title）与 code 标签组合，评论会原样写入数据库。站点以非默认语言渲染页面时，TRP_Translation_Render::translate_page 把整页 HTML 交给内置 simple_html_dom 解析；remove_noise 用可预测的 ___noise___ 加五位序号替换评论和 code 等内容，parse_attr 再对属性值执行 restore_noise。title 中的伪造占位键会把 code 内脚本还原进属性并突破引号，访问该页面即可执行任意脚本。\n修复版本中通过在每次解析时生成随机 salt 并写入全部 noise 占位键，使 restore_noise 只还原带该 salt 的标记，未知或截断占位符被丢弃，攻击者无法再伪造占位键把无关内容写进属性。",
     "effects": [
       {
-        "comp_name": "forminator",
+        "comp_name": "translatepress-multilingual",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,1.57.0.3)",
-            "min_fixed_version": "1.57.0.3",
+            "affected_version": "(-∞,3.3.4)",
+            "min_fixed_version": "3.3.4",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -188,80 +192,84 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "XSS",
     "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
-    "last_modified_time": "2026-08-25",
+    "last_modified_time": "2026-08-28",
     "level": "High",
-    "mps_id": "MPS-xg4l-32jh",
+    "mps_id": "MPS-wfxu-ym5k",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-25",
+    "published_time": "2026-08-28",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-xg4l-32jh",
-        "name": "https://www.oscs1024.com/hd/MPS-xg4l-32jh"
+        "url": "https://www.oscs1024.com/hd/MPS-wfxu-ym5k",
+        "name": "https://www.oscs1024.com/hd/MPS-wfxu-ym5k"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18323",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18323"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76053",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76053"
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/admin/views/custom-form/entries/content-details.php#L232",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.1/assets/lib/simplehtmldom/simple_html_dom.php#L1549",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/abstracts/abstract-class-front-action.php#L127",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.1/assets/lib/simplehtmldom/simple_html_dom.php#L2125",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/fields/radio.php#L520",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.1/assets/lib/simplehtmldom/simple_html_dom.php#L2220",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/helpers/helper-fields.php#L1053",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.1/assets/lib/simplehtmldom/simple_html_dom.php#L497",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.55.1/library/modules/custom-forms/front/front-action.php#L1112",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.1/includes/class-translation-render.php#L1226",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/admin/views/custom-form/entries/content-details.php#L232",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.1/includes/class-translation-render.php#L664",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/abstracts/abstract-class-front-action.php#L127",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.2/assets/lib/simplehtmldom/simple_html_dom.php#L1549",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/fields/radio.php#L520",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.2/assets/lib/simplehtmldom/simple_html_dom.php#L2125",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/helpers/helper-fields.php#L1053",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.2/assets/lib/simplehtmldom/simple_html_dom.php#L2220",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/library/modules/custom-forms/front/front-action.php#L1112",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.2/assets/lib/simplehtmldom/simple_html_dom.php#L497",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset/3652725/forminator/trunk/admin/views/custom-form/entries/content-details.php",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.2/includes/class-translation-render.php#L1226",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset?old_path=%2Fforminator/tags/1.57.0.2&new_path=%2Fforminator/tags/1.57.0.3",
+        "url": "https://plugins.trac.wordpress.org/browser/translatepress-multilingual/tags/3.3.2/includes/class-translation-render.php#L664",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&new=3652727%40forminator%2Ftags%2F1.57.0.3&old=3652717%40forminator%2Ftags%2F1.57.0.2",
+        "url": "https://plugins.trac.wordpress.org/changeset/3665013/translatepress-multilingual/trunk/assets/lib/simplehtmldom/simple_html_dom.php",
         "name": ""
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/85b02779-d85f-4700-9994-68391e69c1ea?source=cve",
+        "url": "https://plugins.trac.wordpress.org/changeset?old_path=%2Ftranslatepress-multilingual/tags/3.3.3&new_path=%2Ftranslatepress-multilingual/tags/3.3.4",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/990e04ed-ff17-4e10-9224-64a674a40416?source=cve",
         "name": ""
       }
     ],
@@ -269,7 +277,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "Forminator存储型XSS漏洞"
+    "title": "TranslatePress存储型XSS"
   },
-  "first_saved_at": "2026-08-25T09:29:17+00:00"
+  "first_saved_at": "2026-08-28T08:32:16+00:00"
 }

@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-25T09:29:16+00:00",
+  "saved_at": "2026-08-28T08:32:10+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-rt4x-ivfu",
+  "source_page": "https://www.oscs1024.com/hd/MPS-z348-hslt",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,29 +21,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-18328",
+    "cve_id": "CVE-2026-82089",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "source": "cve@mitre.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:L/SC:H/SI:H/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:U/V:C/RE:M/U:Green",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 8.8
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:L/SC:H/SI:H/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:U/V:C/RE:M/U:Green",
     "cwe": "CWE-79",
-    "description": "Forminator Forms 是 WPMU DEV 发布的开源 WordPress 表单构建插件，用于创建联系表单、支付表单和自定义表单，并提供 Stripe 与 PayPal 支付集成。\n受影响版本中，启用 Stripe Checkout Sessions 支付接口的表单在支付回流时会由 ForminatorFrontStripe.getCheckoutReturnErrorMessage 从页面 URL 读取 error_description 或 error_message 参数，再交给 show_error，使用 jQuery .html() 将未转义字符串写入 .forminator-response-message。未认证攻击者可让用户打开带有该查询参数的页面，从而在站点页面上下文执行脚本。该路径仅在承载 Forminator 表单且该表单使用 Stripe Checkout Sessions 支付接口时触发，该接口自 1.56.0 起成为默认。\n修复版本中通过将 show_error 改为先清空节点再以 jQuery .text() 写入纯文本错误信息，阻止 URL 参数作为 HTML 插入 DOM，切断脚本执行路径。",
+    "description": "wallabag Android 应用（Google Play 包名 fr.gaulupeau.apps.InThePoche）是开源 GPL-3.0 客户端，用于同步并阅读保存在 wallabag 服务端的稍后阅读文章。\n受影响版本中，客户端同步 /api/entries 时由 ArticleUpdater.processArticle 将 apiArticle.content 原样写入本地库；用户阅读文章时 ReadArticleActivity.initWebView 调用 setJavaScriptEnabled(true)，getHtmlContent 不对正文做 HTML 转义，loadArticleToWebView 再以 loadDataWithBaseURL 把该 HTML 载入 WebView。攻击者若使恶意 HTML 进入条目内容，可在阅读界面执行脚本。\n修复版本中通过官方安全更新切断上述 WebView 脚本执行链路，但截至 2026-08-28 尚未发布修复版本；CVE.org 仅确认影响到 2.6.0，公开仓库其后提交未见针对该 XSS 的代码修复。",
     "effects": [
       {
-        "comp_name": "forminator",
+        "comp_name": "fr.gaulupeau.apps.InThePoche",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,1.57.0.1)",
-            "min_fixed_version": "1.57.0.1",
+            "affected_version": "(-∞,2.6.0]",
+            "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -59,47 +59,43 @@
     "fix_suggestion": "建议修复",
     "kind": "XSS",
     "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
-    "last_modified_time": "2026-08-25",
+    "last_modified_time": "2026-08-28",
     "level": "High",
-    "mps_id": "MPS-rt4x-ivfu",
+    "mps_id": "MPS-z348-hslt",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-25",
+    "published_time": "2026-08-28",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-rt4x-ivfu",
-        "name": "https://www.oscs1024.com/hd/MPS-rt4x-ivfu"
+        "url": "https://www.oscs1024.com/hd/MPS-z348-hslt",
+        "name": "https://www.oscs1024.com/hd/MPS-z348-hslt"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18328",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18328"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82089",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82089"
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/assets/js/front/front.stripe.js#L1539",
+        "url": "https://github.com/wallabag/android-app/blob/master/app/src/main/java/fr/gaulupeau/apps/Poche/data/StorageHelper.java",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/assets/js/front/front.stripe.js#L196",
+        "url": "https://github.com/wallabag/android-app/blob/master/app/src/main/java/fr/gaulupeau/apps/Poche/events/EventProcessor.java",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/assets/js/front/front.stripe.js#L468",
+        "url": "https://github.com/wallabag/android-app/blob/master/app/src/main/java/fr/gaulupeau/apps/Poche/service/workers/ArticleAsFileDownloader.java",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/assets/js/front/front.stripe.js#L543",
+        "url": "https://github.com/wallabag/android-app/blob/master/app/src/main/java/fr/gaulupeau/apps/Poche/service/workers/ArticleUpdater.java",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset/3652645/forminator/trunk/assets/js/front/front.stripe.js",
+        "url": "https://github.com/wallabag/android-app/blob/master/app/src/main/java/fr/gaulupeau/apps/Poche/ui/ReadArticleActivity.java",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset?old_path=%2Fforminator/tags/1.57.0&new_path=%2Fforminator/tags/1.57.0.1",
-        "name": ""
-      },
-      {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/a669f05d-67c7-45ac-ae56-e7c637ece880?source=cve",
+        "url": "https://github.com/wallabag/wallabag/security/advisories/GHSA-q2g2-www6-wf5h",
         "name": ""
       }
     ],
@@ -107,7 +103,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "Forminator DOM 类型 XSS",
+    "title": "wallabag Android XSS",
     "_translated": true
   },
   "detail_original": {
@@ -127,29 +123,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-18328",
+    "cve_id": "CVE-2026-82089",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "source": "cve@mitre.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:L/SC:H/SI:H/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:U/V:C/RE:M/U:Green",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 8.8
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:L/SC:H/SI:H/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:U/V:C/RE:M/U:Green",
     "cwe": "CWE-79",
-    "description": "Forminator Forms 是 WPMU DEV 发布的开源 WordPress 表单构建插件，用于创建联系表单、支付表单和自定义表单，并提供 Stripe 与 PayPal 支付集成。\n受影响版本中，启用 Stripe Checkout Sessions 支付接口的表单在支付回流时会由 ForminatorFrontStripe.getCheckoutReturnErrorMessage 从页面 URL 读取 error_description 或 error_message 参数，再交给 show_error，使用 jQuery .html() 将未转义字符串写入 .forminator-response-message。未认证攻击者可让用户打开带有该查询参数的页面，从而在站点页面上下文执行脚本。该路径仅在承载 Forminator 表单且该表单使用 Stripe Checkout Sessions 支付接口时触发，该接口自 1.56.0 起成为默认。\n修复版本中通过将 show_error 改为先清空节点再以 jQuery .text() 写入纯文本错误信息，阻止 URL 参数作为 HTML 插入 DOM，切断脚本执行路径。",
+    "description": "wallabag Android 应用（Google Play 包名 fr.gaulupeau.apps.InThePoche）是开源 GPL-3.0 客户端，用于同步并阅读保存在 wallabag 服务端的稍后阅读文章。\n受影响版本中，客户端同步 /api/entries 时由 ArticleUpdater.processArticle 将 apiArticle.content 原样写入本地库；用户阅读文章时 ReadArticleActivity.initWebView 调用 setJavaScriptEnabled(true)，getHtmlContent 不对正文做 HTML 转义，loadArticleToWebView 再以 loadDataWithBaseURL 把该 HTML 载入 WebView。攻击者若使恶意 HTML 进入条目内容，可在阅读界面执行脚本。\n修复版本中通过官方安全更新切断上述 WebView 脚本执行链路，但截至 2026-08-28 尚未发布修复版本；CVE.org 仅确认影响到 2.6.0，公开仓库其后提交未见针对该 XSS 的代码修复。",
     "effects": [
       {
-        "comp_name": "forminator",
+        "comp_name": "fr.gaulupeau.apps.InThePoche",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,1.57.0.1)",
-            "min_fixed_version": "1.57.0.1",
+            "affected_version": "(-∞,2.6.0]",
+            "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -165,47 +161,43 @@
     "fix_suggestion": "Recommend",
     "kind": "XSS",
     "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
-    "last_modified_time": "2026-08-25",
+    "last_modified_time": "2026-08-28",
     "level": "High",
-    "mps_id": "MPS-rt4x-ivfu",
+    "mps_id": "MPS-z348-hslt",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-25",
+    "published_time": "2026-08-28",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-rt4x-ivfu",
-        "name": "https://www.oscs1024.com/hd/MPS-rt4x-ivfu"
+        "url": "https://www.oscs1024.com/hd/MPS-z348-hslt",
+        "name": "https://www.oscs1024.com/hd/MPS-z348-hslt"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18328",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18328"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82089",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82089"
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/assets/js/front/front.stripe.js#L1539",
+        "url": "https://github.com/wallabag/android-app/blob/master/app/src/main/java/fr/gaulupeau/apps/Poche/data/StorageHelper.java",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/assets/js/front/front.stripe.js#L196",
+        "url": "https://github.com/wallabag/android-app/blob/master/app/src/main/java/fr/gaulupeau/apps/Poche/events/EventProcessor.java",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/assets/js/front/front.stripe.js#L468",
+        "url": "https://github.com/wallabag/android-app/blob/master/app/src/main/java/fr/gaulupeau/apps/Poche/service/workers/ArticleAsFileDownloader.java",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.56.0/assets/js/front/front.stripe.js#L543",
+        "url": "https://github.com/wallabag/android-app/blob/master/app/src/main/java/fr/gaulupeau/apps/Poche/service/workers/ArticleUpdater.java",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset/3652645/forminator/trunk/assets/js/front/front.stripe.js",
+        "url": "https://github.com/wallabag/android-app/blob/master/app/src/main/java/fr/gaulupeau/apps/Poche/ui/ReadArticleActivity.java",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset?old_path=%2Fforminator/tags/1.57.0&new_path=%2Fforminator/tags/1.57.0.1",
-        "name": ""
-      },
-      {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/a669f05d-67c7-45ac-ae56-e7c637ece880?source=cve",
+        "url": "https://github.com/wallabag/wallabag/security/advisories/GHSA-q2g2-www6-wf5h",
         "name": ""
       }
     ],
@@ -213,7 +205,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "Forminator DOM型XSS"
+    "title": "wallabag Android XSS"
   },
-  "first_saved_at": "2026-08-25T09:29:16+00:00"
+  "first_saved_at": "2026-08-28T08:32:10+00:00"
 }

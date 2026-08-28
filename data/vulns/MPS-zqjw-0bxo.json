@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-24T20:22:27+00:00",
+  "saved_at": "2026-08-28T08:32:12+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-zh1t-gyru",
+  "source_page": "https://www.oscs1024.com/hd/MPS-zqjw-0bxo",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,29 +21,37 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78541",
+    "cve_id": "CVE-2026-82082",
     "cvss": {
+      "cvssv31": [
+        {
+          "source": "twcert@cert.org.tw",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
       "cvssv4": [
         {
-          "source": "f23511db-6c3e-4e32-a477-6aa17d310630",
-          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "high",
-          "base_score": 8.5
+          "source": "twcert@cert.org.tw",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
         }
       ]
     },
-    "cvss_score": 8.5,
-    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "TP-Link Archer BE3600 是面向家庭场景的商业 Wi-Fi 7 路由器，固件未以 GitHub 开源仓库形式发布，家长控制模块用于创建配置文件并生成相关云报告。\n受影响版本中，家长控制模块在保存配置文件名称时未安全过滤 shell 元字符。已通过认证的相邻网络攻击者在具备管理权限后，可将含有 shell 元字符的配置文件名称写入设备；该名称随后在每日云报告生成过程中被不安全带入操作系统命令，导致在受影响设备上执行任意命令，影响设备机密性、完整性与可用性。\n修复版本中通过官方固件 1.2.6 Build 20260617 更新家长控制模块对配置文件名称的处理，阻断恶意名称进入命令执行路径。公开资料未披露更细粒度的源码修改。",
+    "description": "NUMail 是绿色运算（Green-Computing）开发的商业电子邮件系统，用于提供企业邮件收发、Webmail、行事历与通讯录等服务，当前没有公开可核验的源码仓库。\n受影响版本中，NUMail 存在操作系统命令注入漏洞，未经身份鉴别的远程攻击者可将任意操作系统命令注入并在服务器上执行，造成服务器被完全控制。\n修复版本中通过厂商发布的安全补丁阻断未授权命令注入执行路径，官方要求将 Patch 更新至 202602162 及以后版本。",
     "effects": [
       {
-        "comp_name": "archer_be3600",
+        "comp_name": "NUMail",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,1.2.6 Build 20260617)",
-            "min_fixed_version": "1.2.6 Build 20260617",
+            "affected_version": "(-∞,202602162)",
+            "min_fixed_version": "202602162",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -54,36 +62,32 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "OS命令注入",
     "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
-    "last_modified_time": "2026-08-25",
-    "level": "High",
-    "mps_id": "MPS-zh1t-gyru",
+    "last_modified_time": "2026-08-28",
+    "level": "Critical",
+    "mps_id": "MPS-zqjw-0bxo",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-25",
+    "published_time": "2026-08-28",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-zh1t-gyru",
-        "name": "https://www.oscs1024.com/hd/MPS-zh1t-gyru"
+        "url": "https://www.oscs1024.com/hd/MPS-zqjw-0bxo",
+        "name": "https://www.oscs1024.com/hd/MPS-zqjw-0bxo"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78541",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78541"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82082",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82082"
       },
       {
-        "url": "https://www.tp-link.com/en/support/download/archer-be3600/v1/#Firmware",
+        "url": "https://www.twcert.org.tw/en/cp-139-11145-5361d-2.html",
         "name": ""
       },
       {
-        "url": "https://www.tp-link.com/us/support/download/archer-be3600/v1.26/#Firmware",
-        "name": ""
-      },
-      {
-        "url": "https://www.tp-link.com/us/support/faq/5264/",
+        "url": "https://www.twcert.org.tw/tw/cp-132-11144-45c6a-1.html",
         "name": ""
       }
     ],
@@ -91,7 +95,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "Archer BE3600命令注入漏洞",
+    "title": "NUMail命令注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -111,29 +115,37 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78541",
+    "cve_id": "CVE-2026-82082",
     "cvss": {
+      "cvssv31": [
+        {
+          "source": "twcert@cert.org.tw",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
       "cvssv4": [
         {
-          "source": "f23511db-6c3e-4e32-a477-6aa17d310630",
-          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "high",
-          "base_score": 8.5
+          "source": "twcert@cert.org.tw",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
         }
       ]
     },
-    "cvss_score": 8.5,
-    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "TP-Link Archer BE3600 是面向家庭场景的商业 Wi-Fi 7 路由器，固件未以 GitHub 开源仓库形式发布，家长控制模块用于创建配置文件并生成相关云报告。\n受影响版本中，家长控制模块在保存配置文件名称时未安全过滤 shell 元字符。已通过认证的相邻网络攻击者在具备管理权限后，可将含有 shell 元字符的配置文件名称写入设备；该名称随后在每日云报告生成过程中被不安全带入操作系统命令，导致在受影响设备上执行任意命令，影响设备机密性、完整性与可用性。\n修复版本中通过官方固件 1.2.6 Build 20260617 更新家长控制模块对配置文件名称的处理，阻断恶意名称进入命令执行路径。公开资料未披露更细粒度的源码修改。",
+    "description": "NUMail 是绿色运算（Green-Computing）开发的商业电子邮件系统，用于提供企业邮件收发、Webmail、行事历与通讯录等服务，当前没有公开可核验的源码仓库。\n受影响版本中，NUMail 存在操作系统命令注入漏洞，未经身份鉴别的远程攻击者可将任意操作系统命令注入并在服务器上执行，造成服务器被完全控制。\n修复版本中通过厂商发布的安全补丁阻断未授权命令注入执行路径，官方要求将 Patch 更新至 202602162 及以后版本。",
     "effects": [
       {
-        "comp_name": "archer_be3600",
+        "comp_name": "NUMail",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,1.2.6 Build 20260617)",
-            "min_fixed_version": "1.2.6 Build 20260617",
+            "affected_version": "(-∞,202602162)",
+            "min_fixed_version": "202602162",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -144,36 +156,32 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "OS命令注入",
     "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
-    "last_modified_time": "2026-08-25",
-    "level": "High",
-    "mps_id": "MPS-zh1t-gyru",
+    "last_modified_time": "2026-08-28",
+    "level": "Critical",
+    "mps_id": "MPS-zqjw-0bxo",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-25",
+    "published_time": "2026-08-28",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-zh1t-gyru",
-        "name": "https://www.oscs1024.com/hd/MPS-zh1t-gyru"
+        "url": "https://www.oscs1024.com/hd/MPS-zqjw-0bxo",
+        "name": "https://www.oscs1024.com/hd/MPS-zqjw-0bxo"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78541",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78541"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82082",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82082"
       },
       {
-        "url": "https://www.tp-link.com/en/support/download/archer-be3600/v1/#Firmware",
+        "url": "https://www.twcert.org.tw/en/cp-139-11145-5361d-2.html",
         "name": ""
       },
       {
-        "url": "https://www.tp-link.com/us/support/download/archer-be3600/v1.26/#Firmware",
-        "name": ""
-      },
-      {
-        "url": "https://www.tp-link.com/us/support/faq/5264/",
+        "url": "https://www.twcert.org.tw/tw/cp-132-11144-45c6a-1.html",
         "name": ""
       }
     ],
@@ -181,7 +189,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "Archer BE3600命令注入漏洞"
+    "title": "NUMail命令注入漏洞"
   },
-  "first_saved_at": "2026-08-24T20:22:27+00:00"
+  "first_saved_at": "2026-08-28T08:32:12+00:00"
 }

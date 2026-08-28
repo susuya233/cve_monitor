@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-25T00:55:36+00:00",
-  "first_seen": false,
+  "saved_at": "2026-08-28T08:32:11+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-cedw-jl6g",
+  "source_page": "https://www.oscs1024.com/hd/MPS-643w-fnc1",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,29 +21,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78282",
+    "cve_id": "CVE-2026-82090",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "audit@patchstack.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
-          "severity": "high",
-          "base_score": 7.1
+          "source": "cve@mitre.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
         }
       ]
     },
-    "cvss_score": 7.1,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-79",
-    "description": "Stripe Payments（Accept Stripe Payments）是开源 WordPress 插件，用于通过 Stripe 支付网关在站点上收款、售卖数字商品并接受捐赠。\n受影响版本中，支付弹窗脚本会读取 URL 查询参数 coupon_code 并自动提交优惠码。校验成功后，脚本把返回对象中的 code 写入 coupon-info 的 innerHTML，再拼入订单摘要 HTML，未对优惠码做输出编码。未认证攻击者可诱导用户打开带恶意 coupon_code 的支付弹窗链接，在受害者浏览器中执行脚本。\n修复版本中通过 asp_sanitizeCouponCode 对优惠码做白名单过滤，将 coupon-info 展示从 innerHTML 改为 textContent，订单摘要中的优惠码先过滤再写入 HTML，并用 URLSearchParams 编码 Ajax 参数，切断恶意优惠码进入页面脚本执行路径。",
+    "description": "Pocket 是 Mozilla 与 Read It Later 提供的稍后阅读客户端，Android 包名为 com.ideashower.readitlater.pro，用于保存网页并在应用内阅读；该应用已停止服务，不是 GitHub 开源项目。\n受影响版本中，Save to Pocket 会把外部文章 HTML 注入 WebView DOM。assets/html/j/articleview-mobile.js 的 loadCallback 将远端 content 直接交给 $(document.body).html(content) 且未做净化，页面中的脚本可在应用内执行，并调用 PocketAndroidArticleInterface 等原生桥接方法改写应用状态；后台 DownloadingService 还会自动拉取并渲染已保存文章。\n修复版本中通过卸载受影响应用切断外部 HTML 进入 WebView 的执行路径。官方未发布代码补丁，最终发行版 8.33.0.0 仍包含原 html() 调用，产品已被标记为 unsupported-when-assigned。",
     "effects": [
       {
-        "comp_name": "stripe-payments",
+        "comp_name": "Pocket",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,2.1.3)",
-            "min_fixed_version": "2.1.3",
+            "affected_version": "(-∞,8.33.0.0]",
+            "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -54,28 +54,28 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "XSS",
     "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
-    "last_modified_time": "2026-08-25",
-    "level": "High",
-    "mps_id": "MPS-cedw-jl6g",
+    "last_modified_time": "2026-08-28",
+    "level": "Critical",
+    "mps_id": "MPS-643w-fnc1",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-25",
+    "published_time": "2026-08-28",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-cedw-jl6g",
-        "name": "https://www.oscs1024.com/hd/MPS-cedw-jl6g"
+        "url": "https://www.oscs1024.com/hd/MPS-643w-fnc1",
+        "name": "https://www.oscs1024.com/hd/MPS-643w-fnc1"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78282",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78282"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82090",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82090"
       },
       {
-        "url": "https://patchstack.com/database/wordpress/plugin/stripe-payments/vulnerability/wordpress-stripe-payments-plugin-2-1-2-cross-site-scripting-xss-vulnerability?_s_id=cve",
+        "url": "https://github.com/FUNFACTOR1/pocket-android-xss-0click-cve",
         "name": ""
       }
     ],
@@ -83,7 +83,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "Stripe Payments反射型XSS",
+    "title": "Pocket跨站脚本漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -103,29 +103,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-78282",
+    "cve_id": "CVE-2026-82090",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "audit@patchstack.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
-          "severity": "high",
-          "base_score": 7.1
+          "source": "cve@mitre.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
         }
       ]
     },
-    "cvss_score": 7.1,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-79",
-    "description": "Stripe Payments（Accept Stripe Payments）是开源 WordPress 插件，用于通过 Stripe 支付网关在站点上收款、售卖数字商品并接受捐赠。\n受影响版本中，支付弹窗脚本会读取 URL 查询参数 coupon_code 并自动提交优惠码。校验成功后，脚本把返回对象中的 code 写入 coupon-info 的 innerHTML，再拼入订单摘要 HTML，未对优惠码做输出编码。未认证攻击者可诱导用户打开带恶意 coupon_code 的支付弹窗链接，在受害者浏览器中执行脚本。\n修复版本中通过 asp_sanitizeCouponCode 对优惠码做白名单过滤，将 coupon-info 展示从 innerHTML 改为 textContent，订单摘要中的优惠码先过滤再写入 HTML，并用 URLSearchParams 编码 Ajax 参数，切断恶意优惠码进入页面脚本执行路径。",
+    "description": "Pocket 是 Mozilla 与 Read It Later 提供的稍后阅读客户端，Android 包名为 com.ideashower.readitlater.pro，用于保存网页并在应用内阅读；该应用已停止服务，不是 GitHub 开源项目。\n受影响版本中，Save to Pocket 会把外部文章 HTML 注入 WebView DOM。assets/html/j/articleview-mobile.js 的 loadCallback 将远端 content 直接交给 $(document.body).html(content) 且未做净化，页面中的脚本可在应用内执行，并调用 PocketAndroidArticleInterface 等原生桥接方法改写应用状态；后台 DownloadingService 还会自动拉取并渲染已保存文章。\n修复版本中通过卸载受影响应用切断外部 HTML 进入 WebView 的执行路径。官方未发布代码补丁，最终发行版 8.33.0.0 仍包含原 html() 调用，产品已被标记为 unsupported-when-assigned。",
     "effects": [
       {
-        "comp_name": "stripe-payments",
+        "comp_name": "Pocket",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,2.1.3)",
-            "min_fixed_version": "2.1.3",
+            "affected_version": "(-∞,8.33.0.0]",
+            "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -136,28 +136,28 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "XSS",
     "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
-    "last_modified_time": "2026-08-25",
-    "level": "High",
-    "mps_id": "MPS-cedw-jl6g",
+    "last_modified_time": "2026-08-28",
+    "level": "Critical",
+    "mps_id": "MPS-643w-fnc1",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-25",
+    "published_time": "2026-08-28",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-cedw-jl6g",
-        "name": "https://www.oscs1024.com/hd/MPS-cedw-jl6g"
+        "url": "https://www.oscs1024.com/hd/MPS-643w-fnc1",
+        "name": "https://www.oscs1024.com/hd/MPS-643w-fnc1"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78282",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78282"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82090",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82090"
       },
       {
-        "url": "https://patchstack.com/database/wordpress/plugin/stripe-payments/vulnerability/wordpress-stripe-payments-plugin-2-1-2-cross-site-scripting-xss-vulnerability?_s_id=cve",
+        "url": "https://github.com/FUNFACTOR1/pocket-android-xss-0click-cve",
         "name": ""
       }
     ],
@@ -165,7 +165,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "Stripe Payments反射型XSS"
+    "title": "Pocket跨站脚本漏洞"
   },
-  "first_saved_at": "2026-08-24T23:17:17+00:00"
+  "first_saved_at": "2026-08-28T08:32:11+00:00"
 }
