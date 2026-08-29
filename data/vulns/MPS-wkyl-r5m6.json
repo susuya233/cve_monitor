@@ -1,0 +1,193 @@
+{
+  "saved_at": "2026-08-29T19:04:16+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-wkyl-r5m6",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82473",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "KubeEdge 是 CNCF 开源的云边协同边缘计算平台，采用 Go 语言编写，CloudCore 是其云侧核心组件，默认配置下在 0.0.0.0:10002 启用 HTTPS 服务，负责边缘节点证书下发与节点升级等任务管理。\n受影响版本中，CloudCore 的 HTTPS 服务在 cloud/pkg/cloudhub/servers/httpserver/server.go 的 routes() 中注册 POST /nodeupgrade 与 POST /task/{taskType}/name/{taskID}/node/{nodeID}/status 路由，go-restful 容器与 WebService 均未挂载任何认证过滤器，UpgradeEdge 与 ReportStatus 处理函数读取请求体和路径参数后直接通过 beehiveContext.Send 将任务状态消息投递给 taskmanager 模块，而同一服务的 GET /edge.crt 接口会校验客户端证书或 bearer token 并在缺失时返回 401；攻击者无需任何凭证便能连接 10002 端口伪造节点任务状态，将升级任务标记为成功或失败，欺骗控制平面并阻断后续升级调度。\n修复版本中通过，可参考公开披露建议的修复方向，在 nodetask 路由或 go-restful 容器上挂载与 GET /edge.crt 一致的客户端证书或 bearer token 校验过滤器以拒绝未认证的任务状态上报，并通过网络策略将 10002 端口的可达范围限制在控制平面可信网段内。",
+    "effects": [
+      {
+        "comp_name": "kubeedge",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.23.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-08-30",
+    "level": "High",
+    "mps_id": "MPS-wkyl-r5m6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wkyl-r5m6",
+        "name": "https://www.oscs1024.com/hd/MPS-wkyl-r5m6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82473",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82473"
+      },
+      {
+        "url": "https://github.com/geo-chen/oss/blob/main/kubeedge.md",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kubeedge/kubeedge",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kubeedge/kubeedge/blob/v1.23.1/cloud/pkg/cloudhub/servers/httpserver/nodetask/report_status.go",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kubeedge/kubeedge/blob/v1.23.1/cloud/pkg/cloudhub/servers/httpserver/server.go",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/kubeedge-cloudcore-through-1.23.1-missing-authentication-on-node-task-endpoints",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "KubeEdge CloudCore认证缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82473",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "KubeEdge 是 CNCF 开源的云边协同边缘计算平台，采用 Go 语言编写，CloudCore 是其云侧核心组件，默认配置下在 0.0.0.0:10002 启用 HTTPS 服务，负责边缘节点证书下发与节点升级等任务管理。\n受影响版本中，CloudCore 的 HTTPS 服务在 cloud/pkg/cloudhub/servers/httpserver/server.go 的 routes() 中注册 POST /nodeupgrade 与 POST /task/{taskType}/name/{taskID}/node/{nodeID}/status 路由，go-restful 容器与 WebService 均未挂载任何认证过滤器，UpgradeEdge 与 ReportStatus 处理函数读取请求体和路径参数后直接通过 beehiveContext.Send 将任务状态消息投递给 taskmanager 模块，而同一服务的 GET /edge.crt 接口会校验客户端证书或 bearer token 并在缺失时返回 401；攻击者无需任何凭证便能连接 10002 端口伪造节点任务状态，将升级任务标记为成功或失败，欺骗控制平面并阻断后续升级调度。\n修复版本中通过，可参考公开披露建议的修复方向，在 nodetask 路由或 go-restful 容器上挂载与 GET /edge.crt 一致的客户端证书或 bearer token 校验过滤器以拒绝未认证的任务状态上报，并通过网络策略将 10002 端口的可达范围限制在控制平面可信网段内。",
+    "effects": [
+      {
+        "comp_name": "kubeedge",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.23.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-08-30",
+    "level": "High",
+    "mps_id": "MPS-wkyl-r5m6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wkyl-r5m6",
+        "name": "https://www.oscs1024.com/hd/MPS-wkyl-r5m6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82473",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82473"
+      },
+      {
+        "url": "https://github.com/geo-chen/oss/blob/main/kubeedge.md",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kubeedge/kubeedge",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kubeedge/kubeedge/blob/v1.23.1/cloud/pkg/cloudhub/servers/httpserver/nodetask/report_status.go",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kubeedge/kubeedge/blob/v1.23.1/cloud/pkg/cloudhub/servers/httpserver/server.go",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/kubeedge-cloudcore-through-1.23.1-missing-authentication-on-node-task-endpoints",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "KubeEdge CloudCore认证缺失漏洞"
+  },
+  "first_saved_at": "2026-08-29T19:04:16+00:00"
+}

@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-08-29T19:04:11+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6ers-2zqf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75807",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-287",
+    "description": "SAML Single Sign On – SSO Login 是 miniOrange 发布在 WordPress.org 官方插件目录的开源插件（GPL/Expat 许可），用于在 WordPress 站点与 Okta、Entra ID、Google Workspace 等 SAML 2.0 身份提供商之间建立单点登录。\n受影响版本中，注册在 WordPress init 钩子上的 mo_saml_handle_login_validate() 会把任意访问者提交的 $_POST['SAMLResponse'] 交给 class-mo-saml-login-validate.php 中的 mo_saml_login_validate() 处理，该 ACS 处理器在产生签名校验结论之前（5.4.6 第 236 行）执行 update_option(MO_SAML_REQUIRED_CERTIFICATE, $saml_required_certificate)，把报文中携带的 X.509 证书持久化到 mo_saml_required_certificate 选项，而签名验证所依赖的 mo_saml_find_certificate()（class-mo-saml-utilities.php 第 739 行）在证书指纹不匹配时仅返回 false、不终止请求，未认证攻击者可借此把该选项替换为自有证书；当管理员在测试配置中收到 test_config_error_wpsamlerr004 证书不匹配提示并点击修复按钮后，第 292 行的 mo_saml_fix_certificate 分支会把该选项内容写入受信任的 X509_CERTIFICATE 配置，攻击者随后可用自有私钥为包括管理员在内的任意 WordPress 账户伪造 SAML 断言并获得完整特权会话。\n修复版本中通过删除签名校验结论产生前的证书持久化操作并整体移除 mo_saml_fix_certificate 一键修复分支，收到的证书仅在测试配置错误页经由 mo_saml_display_test_config_error_page()/mo_saml_render_certificate_mismatch_details() 转义展示供管理员人工核对、不再写入数据库，切断了攻击者证书被提升为受信任 IdP 签名证书的利用链。",
+    "effects": [
+      {
+        "comp_name": "miniorange-saml-20-single-sign-on",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.4.7)",
+            "min_fixed_version": "5.4.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "身份验证不当",
+    "kind_en": "认证不当",
+    "last_modified_time": "2026-08-30",
+    "level": "High",
+    "mps_id": "MPS-6ers-2zqf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6ers-2zqf",
+        "name": "https://www.oscs1024.com/hd/MPS-6ers-2zqf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75807",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75807"
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.6/class-mo-saml-login-validate.php#L236",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.6/class-mo-saml-login-validate.php#L292",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.6/class-mo-saml-utilities.php#L739",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.6/mo-saml-settings-page.php#L141",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/9baea072-2c07-40b6-8410-2ebe752b0874?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SAML SSO插件认证绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75807",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-287",
+    "description": "SAML Single Sign On – SSO Login 是 miniOrange 发布在 WordPress.org 官方插件目录的开源插件（GPL/Expat 许可），用于在 WordPress 站点与 Okta、Entra ID、Google Workspace 等 SAML 2.0 身份提供商之间建立单点登录。\n受影响版本中，注册在 WordPress init 钩子上的 mo_saml_handle_login_validate() 会把任意访问者提交的 $_POST['SAMLResponse'] 交给 class-mo-saml-login-validate.php 中的 mo_saml_login_validate() 处理，该 ACS 处理器在产生签名校验结论之前（5.4.6 第 236 行）执行 update_option(MO_SAML_REQUIRED_CERTIFICATE, $saml_required_certificate)，把报文中携带的 X.509 证书持久化到 mo_saml_required_certificate 选项，而签名验证所依赖的 mo_saml_find_certificate()（class-mo-saml-utilities.php 第 739 行）在证书指纹不匹配时仅返回 false、不终止请求，未认证攻击者可借此把该选项替换为自有证书；当管理员在测试配置中收到 test_config_error_wpsamlerr004 证书不匹配提示并点击修复按钮后，第 292 行的 mo_saml_fix_certificate 分支会把该选项内容写入受信任的 X509_CERTIFICATE 配置，攻击者随后可用自有私钥为包括管理员在内的任意 WordPress 账户伪造 SAML 断言并获得完整特权会话。\n修复版本中通过删除签名校验结论产生前的证书持久化操作并整体移除 mo_saml_fix_certificate 一键修复分支，收到的证书仅在测试配置错误页经由 mo_saml_display_test_config_error_page()/mo_saml_render_certificate_mismatch_details() 转义展示供管理员人工核对、不再写入数据库，切断了攻击者证书被提升为受信任 IdP 签名证书的利用链。",
+    "effects": [
+      {
+        "comp_name": "miniorange-saml-20-single-sign-on",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.4.7)",
+            "min_fixed_version": "5.4.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "身份验证不当",
+    "kind_en": "Improper Authentication",
+    "last_modified_time": "2026-08-30",
+    "level": "High",
+    "mps_id": "MPS-6ers-2zqf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6ers-2zqf",
+        "name": "https://www.oscs1024.com/hd/MPS-6ers-2zqf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75807",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75807"
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.6/class-mo-saml-login-validate.php#L236",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.6/class-mo-saml-login-validate.php#L292",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.6/class-mo-saml-utilities.php#L739",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/miniorange-saml-20-single-sign-on/tags/5.4.6/mo-saml-settings-page.php#L141",
+        "name": ""
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/9baea072-2c07-40b6-8410-2ebe752b0874?source=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SAML SSO插件认证绕过漏洞"
+  },
+  "first_saved_at": "2026-08-29T19:04:11+00:00"
+}
