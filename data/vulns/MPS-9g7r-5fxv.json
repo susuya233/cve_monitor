@@ -1,0 +1,405 @@
+{
+  "saved_at": "2026-08-29T03:00:08+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-9g7r-5fxv",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55848",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+    "cwe": "CWE-611",
+    "description": "MapFish Print 是 MapFish 开源地图打印组件，以 Maven 包 org.mapfish.print:print-lib 与 org.mapfish.print:print-servlet 发布，用于按模板渲染地图图层并生成制图 PDF 等打印成果。\n受影响版本中，GmlLayer 类的 createFeatureSource 方法按请求 layers 中 type 为 gml 图层的攻击者可控 url 抓取远程 XML 内容并交给 GeoTools Parser 解析，createParser 生成的解析器未设置 EntityResolver，也未禁用外部实体与外部 DTD，攻击者托管远程 XML 与 DTD 即可让服务端在解析时展开 file:// 本地文件实体，parseGml32 的失败路径把展开后的 gmlData 拼入异常消息返回给客户端，未认证攻击者可借此读取 /etc/passwd、Kubernetes serviceaccount 令牌与证书等本地文件，将实体目标改为内网 HTTP 地址时还可形成 SSRF。\n修复版本中通过在 GmlLayer 中新增 validateXmlInput 校验方法，使用禁用 DOCTYPE、外部实体、外部 DTD 与 XInclude 的 DocumentBuilderFactory 预先解析输入，含 DOCTYPE 的恶意文档在进入 GML 解析前被拒绝，同时为 GeoTools Parser 设置返回空实体的 EntityResolver2 并从异常消息中移除原始 gmlData，切断了本地文件读取与内容回传链路。",
+    "effects": [
+      {
+        "comp_name": "org.mapfish.print:print-lib",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[3.31.0,3.31.24)",
+            "min_fixed_version": "3.31.24",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.34.0,4.0.5)",
+            "min_fixed_version": "4.0.5",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.29.0,3.30.32)",
+            "min_fixed_version": "3.30.32",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.32.0,3.33.16)",
+            "min_fixed_version": "3.33.16",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.28.30)",
+            "min_fixed_version": "3.28.30",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.mapfish.print:print-servlet",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[3.29.0,3.30.32)",
+            "min_fixed_version": "3.30.32",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.28.30)",
+            "min_fixed_version": "3.28.30",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.32.0,3.33.16)",
+            "min_fixed_version": "3.33.16",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.34.0,4.0.5)",
+            "min_fixed_version": "4.0.5",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.31.0,3.31.24)",
+            "min_fixed_version": "3.31.24",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "XXE",
+    "kind_en": "XML外部实体引用限制不当",
+    "last_modified_time": "2026-08-29",
+    "level": "High",
+    "mps_id": "MPS-9g7r-5fxv",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-29",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/mapfish/mapfish-print/security/advisories/GHSA-5v29-34h8-v68r",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/pull/4221",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/pull/4219",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/pull/4217",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/pull/4216",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/pull/4215",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/pull/4212",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/commit/d13911ac6e0509444d64e74830f10b14e4dcfdf1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/commit/a55a24873db5f19b37abac7d59144dc86406c236",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/commit/56c47d3bf70d8428916dea8ed7005518ad07dc7d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/commit/3525e8150fcb5f40095930ccf7aec0d8ce92bbcb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/commit/23a96e7baa15077bdb0e5fc5a72b18da23af9121",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/commit/13beae7a7f970fc3526c1f7ca5db817d8d51fbec",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/releases/tag/3.28.30",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/releases/tag/3.30.32",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/releases/tag/3.31.24",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/releases/tag/4.0.5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-5v29-34h8-v68r",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "MapFish Print XXE漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55848",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+    "cwe": "CWE-611",
+    "description": "MapFish Print 是 MapFish 开源地图打印组件，以 Maven 包 org.mapfish.print:print-lib 与 org.mapfish.print:print-servlet 发布，用于按模板渲染地图图层并生成制图 PDF 等打印成果。\n受影响版本中，GmlLayer 类的 createFeatureSource 方法按请求 layers 中 type 为 gml 图层的攻击者可控 url 抓取远程 XML 内容并交给 GeoTools Parser 解析，createParser 生成的解析器未设置 EntityResolver，也未禁用外部实体与外部 DTD，攻击者托管远程 XML 与 DTD 即可让服务端在解析时展开 file:// 本地文件实体，parseGml32 的失败路径把展开后的 gmlData 拼入异常消息返回给客户端，未认证攻击者可借此读取 /etc/passwd、Kubernetes serviceaccount 令牌与证书等本地文件，将实体目标改为内网 HTTP 地址时还可形成 SSRF。\n修复版本中通过在 GmlLayer 中新增 validateXmlInput 校验方法，使用禁用 DOCTYPE、外部实体、外部 DTD 与 XInclude 的 DocumentBuilderFactory 预先解析输入，含 DOCTYPE 的恶意文档在进入 GML 解析前被拒绝，同时为 GeoTools Parser 设置返回空实体的 EntityResolver2 并从异常消息中移除原始 gmlData，切断了本地文件读取与内容回传链路。",
+    "effects": [
+      {
+        "comp_name": "org.mapfish.print:print-lib",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[3.31.0,3.31.24)",
+            "min_fixed_version": "3.31.24",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.34.0,4.0.5)",
+            "min_fixed_version": "4.0.5",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.29.0,3.30.32)",
+            "min_fixed_version": "3.30.32",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.32.0,3.33.16)",
+            "min_fixed_version": "3.33.16",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.28.30)",
+            "min_fixed_version": "3.28.30",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.mapfish.print:print-servlet",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[3.29.0,3.30.32)",
+            "min_fixed_version": "3.30.32",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.28.30)",
+            "min_fixed_version": "3.28.30",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.32.0,3.33.16)",
+            "min_fixed_version": "3.33.16",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.34.0,4.0.5)",
+            "min_fixed_version": "4.0.5",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.31.0,3.31.24)",
+            "min_fixed_version": "3.31.24",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "XXE",
+    "kind_en": "Improper Restriction of XML External Entity Reference",
+    "last_modified_time": "2026-08-29",
+    "level": "High",
+    "mps_id": "MPS-9g7r-5fxv",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-29",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/mapfish/mapfish-print/security/advisories/GHSA-5v29-34h8-v68r",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/pull/4221",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/pull/4219",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/pull/4217",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/pull/4216",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/pull/4215",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/pull/4212",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/commit/d13911ac6e0509444d64e74830f10b14e4dcfdf1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/commit/a55a24873db5f19b37abac7d59144dc86406c236",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/commit/56c47d3bf70d8428916dea8ed7005518ad07dc7d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/commit/3525e8150fcb5f40095930ccf7aec0d8ce92bbcb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/commit/23a96e7baa15077bdb0e5fc5a72b18da23af9121",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/commit/13beae7a7f970fc3526c1f7ca5db817d8d51fbec",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/releases/tag/3.28.30",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/releases/tag/3.30.32",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/releases/tag/3.31.24",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mapfish/mapfish-print/releases/tag/4.0.5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-5v29-34h8-v68r",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "MapFish Print XXE漏洞"
+  },
+  "first_saved_at": "2026-08-29T03:00:08+00:00"
+}

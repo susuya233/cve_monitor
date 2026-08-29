@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-08-29T03:00:09+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-msrj-1u2a",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 条件竞争漏洞是由于程序中存在多个代码块同时访问同一个条件判断语句而导致的错误。在程序中，条件判断语句通常用于决定是否执行某些代码块。当一个程序有多个代码块同时访问同一个条件判断语句时，这些代码块可能会同时执行，从而导致程序执行结果出现不可预测的错误。",
+        "title": "什么是竞争条件"
+      },
+      {
+        "content": "- 线程切换攻击：线程切换攻击是指攻击者通过利用竞争条件漏洞，使程序在执行时频繁切换线程，从而导致系统资源耗尽，最终实现拒绝服务攻击。\n- 内存泄漏攻击：内存泄漏攻击是指攻击者通过利用竞争条件漏洞，使得程序不断申请内存，但最终无法释放内存，从而导致内存泄漏，最终程序崩溃。\n- 缓存穿透攻击：缓存穿透攻击是指攻击者通过利用竞争条件漏洞，使得程序在访问缓存时，被缓存的数据并非当前最新的数据，从而攻击者可以获取到未更新的数据。\n- 指令重放攻击：指令重放攻击是指攻击者通过利用竞争条件漏洞，在程序执行时，将先前保存的指令序列重新执行，从而实现绕过某些验证，获取系统权限等攻击目的。\n",
+        "title": "竞争条件常见的攻击方式"
+      },
+      {
+        "content": "- 使用互斥锁：在条件判断语句中，使用互斥锁来确保只有一个代码块能够访问变量。使用互斥锁可以提高程序的安全性和可靠性。\n- 使用条件封印：在条件判断语句中，将可能会修改变量的代码块封印起来，以确保这些代码块无法被其他代码块访问。\n- 使用条件过滤：在条件判断语句中，使用条件过滤来过滤掉那些不可能发生的条件判断语句。例如，对于一个包含多个条件判断语句的循环，可以只保留其中一个条件的判断，而将其他条件的判断语句过滤掉。\n- 使用性能优化：对于一些条件判断语句，可以使用性能优化来避免条件竞争的情况。例如，可以使用数组或链表等数据结构来存储条件判断语句中的变量，从而避免条件竞争的情况。",
+        "title": "如何预防竞争条件"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55784",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-362",
+    "description": "free5GC 是开源 5G 核心网实现，其 AUSF 组件通过 SBI/N12 接口为 UE 提供接入认证服务，支持 5G-AKA 与 EAP-AKA' 认证流程，代码以 Go 语言开源发布。\n受影响版本中，AUSF 将每个签约用户的认证状态保存在以 SUPI 为唯一键的全局 sync.Map（AUSFContext.UePool）中，UeAuthPostRequestProcedure 为每个认证请求新建 AusfUeContext 并经 AddAusfUeContextToPool 执行 UePool.Store(Supi, ctx)，无条件覆盖同一 SUPI 的既有上下文；拥有 AUSF SBI/N12 接口访问权的攻击者可对同一目标 SUPI 并发发送 POST /nausf-auth/v1/ue-authentications 请求，使全部认证尝试共享同一逻辑上下文 URL，K_aut、XRES 与 EapID 被持续改写，合法 EAP-AKA' 响应随后被拿去与最新上下文比对，AT_MAC 完整性校验失败，目标签约用户的认证被持续拒绝。\n修复版本中通过，可通过在承载 SBI 接口的网络启用 mTLS 与 OAuth2 访问控制、限制 AUSF 端口暴露范围并对同一 SUPI 的认证请求限速来缓解该风险；上游公告给出的修复方向是以唯一认证会话标识替代 SUPI 作为 UePool 键并在上下文 URL 中返回该标识，或改用 LoadOrStore 原子写入并对并发认证请求返回 AUTHENTICATION_IN_PROGRESS 拒绝。",
+    "effects": [
+      {
+        "comp_name": "github.com/free5gc/ausf",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.4.4]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "竞争条件",
+    "kind_en": "使用共享资源并发执行且同步不正确（“竞争条件”）",
+    "last_modified_time": "2026-08-29",
+    "level": "High",
+    "mps_id": "MPS-msrj-1u2a",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-29",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/free5gc/free5gc/security/advisories/GHSA-334q-h5g3-fpxv",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-334q-h5g3-fpxv",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "free5GC AUSF 认证上下文覆盖致拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 条件竞争漏洞是由于程序中存在多个代码块同时访问同一个条件判断语句而导致的错误。在程序中，条件判断语句通常用于决定是否执行某些代码块。当一个程序有多个代码块同时访问同一个条件判断语句时，这些代码块可能会同时执行，从而导致程序执行结果出现不可预测的错误。",
+        "title": "什么是竞争条件"
+      },
+      {
+        "content": "- 线程切换攻击：线程切换攻击是指攻击者通过利用竞争条件漏洞，使程序在执行时频繁切换线程，从而导致系统资源耗尽，最终实现拒绝服务攻击。\n- 内存泄漏攻击：内存泄漏攻击是指攻击者通过利用竞争条件漏洞，使得程序不断申请内存，但最终无法释放内存，从而导致内存泄漏，最终程序崩溃。\n- 缓存穿透攻击：缓存穿透攻击是指攻击者通过利用竞争条件漏洞，使得程序在访问缓存时，被缓存的数据并非当前最新的数据，从而攻击者可以获取到未更新的数据。\n- 指令重放攻击：指令重放攻击是指攻击者通过利用竞争条件漏洞，在程序执行时，将先前保存的指令序列重新执行，从而实现绕过某些验证，获取系统权限等攻击目的。\n",
+        "title": "竞争条件常见的攻击方式"
+      },
+      {
+        "content": "- 使用互斥锁：在条件判断语句中，使用互斥锁来确保只有一个代码块能够访问变量。使用互斥锁可以提高程序的安全性和可靠性。\n- 使用条件封印：在条件判断语句中，将可能会修改变量的代码块封印起来，以确保这些代码块无法被其他代码块访问。\n- 使用条件过滤：在条件判断语句中，使用条件过滤来过滤掉那些不可能发生的条件判断语句。例如，对于一个包含多个条件判断语句的循环，可以只保留其中一个条件的判断，而将其他条件的判断语句过滤掉。\n- 使用性能优化：对于一些条件判断语句，可以使用性能优化来避免条件竞争的情况。例如，可以使用数组或链表等数据结构来存储条件判断语句中的变量，从而避免条件竞争的情况。",
+        "title": "如何预防竞争条件"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55784",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-362",
+    "description": "free5GC 是开源 5G 核心网实现，其 AUSF 组件通过 SBI/N12 接口为 UE 提供接入认证服务，支持 5G-AKA 与 EAP-AKA' 认证流程，代码以 Go 语言开源发布。\n受影响版本中，AUSF 将每个签约用户的认证状态保存在以 SUPI 为唯一键的全局 sync.Map（AUSFContext.UePool）中，UeAuthPostRequestProcedure 为每个认证请求新建 AusfUeContext 并经 AddAusfUeContextToPool 执行 UePool.Store(Supi, ctx)，无条件覆盖同一 SUPI 的既有上下文；拥有 AUSF SBI/N12 接口访问权的攻击者可对同一目标 SUPI 并发发送 POST /nausf-auth/v1/ue-authentications 请求，使全部认证尝试共享同一逻辑上下文 URL，K_aut、XRES 与 EapID 被持续改写，合法 EAP-AKA' 响应随后被拿去与最新上下文比对，AT_MAC 完整性校验失败，目标签约用户的认证被持续拒绝。\n修复版本中通过，可通过在承载 SBI 接口的网络启用 mTLS 与 OAuth2 访问控制、限制 AUSF 端口暴露范围并对同一 SUPI 的认证请求限速来缓解该风险；上游公告给出的修复方向是以唯一认证会话标识替代 SUPI 作为 UePool 键并在上下文 URL 中返回该标识，或改用 LoadOrStore 原子写入并对并发认证请求返回 AUTHENTICATION_IN_PROGRESS 拒绝。",
+    "effects": [
+      {
+        "comp_name": "github.com/free5gc/ausf",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.4.4]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "竞争条件",
+    "kind_en": "Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition')",
+    "last_modified_time": "2026-08-29",
+    "level": "High",
+    "mps_id": "MPS-msrj-1u2a",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-29",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/free5gc/free5gc/security/advisories/GHSA-334q-h5g3-fpxv",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-334q-h5g3-fpxv",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "free5GC AUSF 认证上下文覆盖致拒绝服务"
+  },
+  "first_saved_at": "2026-08-29T03:00:09+00:00"
+}
