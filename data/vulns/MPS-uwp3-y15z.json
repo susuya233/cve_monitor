@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-08-29T15:24:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-uwp3-y15z",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82457",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-681",
+    "description": "su-exec 是 Natanael Copa 维护的开源 C 工具（MIT 许可），用于在容器入口脚本中以指定 UID/GID 直接 exec 目标程序，是 Alpine 等镜像中替代 su/sudo 的轻量权限降级组件。\n受影响版本中，su-exec.c 的 main 函数使用 strtol 解析 user-spec 中的数字 UID 与 GID，并把带符号 long 结果直接赋给 32 位 uid_t/gid_t，既未检查 errno==ERANGE 与前导符号，也未做转换后回转一致性校验，4294967296 等超范围输入截断为 0，随后 getpwuid(0) 命中 root 账户并把 uid/gid 覆写为 0，进程完成 setgroups、setgid、setuid 后经 execvp 以 root 身份执行目标程序，容器内预期的权限降级被完全绕过。\n修复版本中通过，可通过在容器入口脚本中对 PUID/PGID 等运行时身份参数执行严格范围校验、拒绝任何可截断为 0 的超范围数值来阻断利用；公开披露材料给出的修复方向是以 strtoumax 重写解析，拒绝空串、正负号、ERANGE 与无法回转到 uid_t/gid_t 的值。",
+    "effects": [
+      {
+        "comp_name": "su-exec",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.3]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "数值类型间的不正确转换",
+    "kind_en": "数字类型之间的转换不正确",
+    "last_modified_time": "2026-08-29",
+    "level": "High",
+    "mps_id": "MPS-uwp3-y15z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-uwp3-y15z",
+        "name": "https://www.oscs1024.com/hd/MPS-uwp3-y15z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82457",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82457"
+      },
+      {
+        "url": "https://gist.github.com/thesmartshadow/ed96e2a88643c34a247c9b7cf9e311be",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ncopa/su-exec",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ncopa/su-exec/blob/89c016e6e08749d583efdeda04b9f73e1218e253/su-exec.c",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/su-exec-through-0.3-privilege-escalation-via-numeric-user-id",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "su-exec UID截断提权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82457",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-681",
+    "description": "su-exec 是 Natanael Copa 维护的开源 C 工具（MIT 许可），用于在容器入口脚本中以指定 UID/GID 直接 exec 目标程序，是 Alpine 等镜像中替代 su/sudo 的轻量权限降级组件。\n受影响版本中，su-exec.c 的 main 函数使用 strtol 解析 user-spec 中的数字 UID 与 GID，并把带符号 long 结果直接赋给 32 位 uid_t/gid_t，既未检查 errno==ERANGE 与前导符号，也未做转换后回转一致性校验，4294967296 等超范围输入截断为 0，随后 getpwuid(0) 命中 root 账户并把 uid/gid 覆写为 0，进程完成 setgroups、setgid、setuid 后经 execvp 以 root 身份执行目标程序，容器内预期的权限降级被完全绕过。\n修复版本中通过，可通过在容器入口脚本中对 PUID/PGID 等运行时身份参数执行严格范围校验、拒绝任何可截断为 0 的超范围数值来阻断利用；公开披露材料给出的修复方向是以 strtoumax 重写解析，拒绝空串、正负号、ERANGE 与无法回转到 uid_t/gid_t 的值。",
+    "effects": [
+      {
+        "comp_name": "su-exec",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.3]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "数值类型间的不正确转换",
+    "kind_en": "Incorrect Conversion between Numeric Types",
+    "last_modified_time": "2026-08-29",
+    "level": "High",
+    "mps_id": "MPS-uwp3-y15z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-uwp3-y15z",
+        "name": "https://www.oscs1024.com/hd/MPS-uwp3-y15z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82457",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82457"
+      },
+      {
+        "url": "https://gist.github.com/thesmartshadow/ed96e2a88643c34a247c9b7cf9e311be",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ncopa/su-exec",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ncopa/su-exec/blob/89c016e6e08749d583efdeda04b9f73e1218e253/su-exec.c",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/su-exec-through-0.3-privilege-escalation-via-numeric-user-id",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "su-exec UID截断提权漏洞"
+  },
+  "first_saved_at": "2026-08-29T15:24:07+00:00"
+}

@@ -1,0 +1,181 @@
+{
+  "saved_at": "2026-08-29T15:24:02+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-l1m9-0vxu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82456",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ]
+    },
+    "cvss_score": 10,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1327",
+    "description": "argocd-mcp 是 argoproj-labs 开源的 Argo CD Model Context Protocol（MCP）服务器，以 npm 包形式发布，用于让 LLM 客户端等 MCP 调用方通过标准工具接口查询和操作 Argo CD 的应用、集群与部署资源。\n受影响版本中，0.8.0 的 HTTP 传输通过 app.listen(port) 监听全部网络接口，Express 应用未启用 MCP SDK 的 Host 校验，也不校验 Origin；POST /mcp 的 initialize 请求在调用方未携带任何凭据时，resolveCredentials 回退使用 ARGOCD_API_TOKEN 环境变量建立会话，而该变量是服务器访问 Argo CD 的出站凭据，不构成对调用方的身份认证。能路由到监听端口的攻击者无需凭据便能建立会话，调用 create_application、sync_application 等全部工具，以运维者存储的 Argo CD 令牌创建指向攻击者 Git 仓库的 Application 并触发同步，向目标集群部署攻击者可控的清单。\n修复版本中通过新增 src/server/security.ts 将默认绑定地址收紧为 127.0.0.1，绑定非环回地址时要求设置 MCP_AUTH_TOKEN 入站 Bearer 令牌（常量时间比较校验）或显式传入 --allow-unauthenticated，否则拒绝启动，并在业务路由前统一挂载 bearerAuth、MCP SDK hostHeaderValidation 与 Origin 白名单中间件，仅 /healthz 探活路径保留豁免，切断了无凭据调用方建立会话和执行工具的路径。",
+    "effects": [
+      {
+        "comp_name": "argocd-mcp",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[0.8.0,0.9.0)",
+            "min_fixed_version": "0.9.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "绑定到不受限制的 IP 地址",
+    "kind_en": "绑定到不受限制的IP地址",
+    "last_modified_time": "2026-08-29",
+    "level": "Critical",
+    "mps_id": "MPS-l1m9-0vxu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-l1m9-0vxu",
+        "name": "https://www.oscs1024.com/hd/MPS-l1m9-0vxu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82456",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82456"
+      },
+      {
+        "url": "https://github.com/argoproj-labs/mcp-for-argocd",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/argoproj-labs/mcp-for-argocd/security/advisories/GHSA-rp45-5x3v-48mr",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/argocd-mcp-0.8.0-authentication-bypass-via-unauthenticated-http",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "npm",
+      "开源"
+    ],
+    "title": "argocd-mcp 未授权访问漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82456",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ]
+    },
+    "cvss_score": 10,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1327",
+    "description": "argocd-mcp 是 argoproj-labs 开源的 Argo CD Model Context Protocol（MCP）服务器，以 npm 包形式发布，用于让 LLM 客户端等 MCP 调用方通过标准工具接口查询和操作 Argo CD 的应用、集群与部署资源。\n受影响版本中，0.8.0 的 HTTP 传输通过 app.listen(port) 监听全部网络接口，Express 应用未启用 MCP SDK 的 Host 校验，也不校验 Origin；POST /mcp 的 initialize 请求在调用方未携带任何凭据时，resolveCredentials 回退使用 ARGOCD_API_TOKEN 环境变量建立会话，而该变量是服务器访问 Argo CD 的出站凭据，不构成对调用方的身份认证。能路由到监听端口的攻击者无需凭据便能建立会话，调用 create_application、sync_application 等全部工具，以运维者存储的 Argo CD 令牌创建指向攻击者 Git 仓库的 Application 并触发同步，向目标集群部署攻击者可控的清单。\n修复版本中通过新增 src/server/security.ts 将默认绑定地址收紧为 127.0.0.1，绑定非环回地址时要求设置 MCP_AUTH_TOKEN 入站 Bearer 令牌（常量时间比较校验）或显式传入 --allow-unauthenticated，否则拒绝启动，并在业务路由前统一挂载 bearerAuth、MCP SDK hostHeaderValidation 与 Origin 白名单中间件，仅 /healthz 探活路径保留豁免，切断了无凭据调用方建立会话和执行工具的路径。",
+    "effects": [
+      {
+        "comp_name": "argocd-mcp",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[0.8.0,0.9.0)",
+            "min_fixed_version": "0.9.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "绑定到不受限制的 IP 地址",
+    "kind_en": "Binding to an Unrestricted IP Address",
+    "last_modified_time": "2026-08-29",
+    "level": "Critical",
+    "mps_id": "MPS-l1m9-0vxu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-l1m9-0vxu",
+        "name": "https://www.oscs1024.com/hd/MPS-l1m9-0vxu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82456",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82456"
+      },
+      {
+        "url": "https://github.com/argoproj-labs/mcp-for-argocd",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/argoproj-labs/mcp-for-argocd/security/advisories/GHSA-rp45-5x3v-48mr",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/argocd-mcp-0.8.0-authentication-bypass-via-unauthenticated-http",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "npm",
+      "开源"
+    ],
+    "title": "argocd-mcp 未授权访问漏洞"
+  },
+  "first_saved_at": "2026-08-29T15:24:02+00:00"
+}

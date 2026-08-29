@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-08-29T15:24:03+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ncoz-biat",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82454",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-347",
+    "description": "Omnivore 是一个开源的稍后阅读（read-it-later）应用，支持网页与移动端保存和阅读内容，其 packages/api 为后端 API 服务，支持自建部署。\n受影响版本中，packages/api 的 decodeAppleToken 函数从攻击者提交的 Apple 登录令牌头部读取 alg 字段，并将其作为唯一允许的算法传入 jwt.verify()，所依赖的 jsonwebtoken v8 不校验密钥类型与算法的匹配关系，攻击者把 alg 设为 HS256，以公开可获取的 Apple RSA 公钥作为 HMAC 密钥为伪造令牌签名，使签名校验通过，进而冒充任意绑定 Apple 登录的账号，实现未授权账户接管。\n修复版本中通过不再信任令牌头部的 alg 字段，把 jwt.verify() 的允许算法固定为 Apple 身份服务使用的 ['RS256']，HS256 伪造令牌在签名校验阶段直接失败，切断了算法混淆链路。",
+    "effects": [
+      {
+        "comp_name": "omnivore",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.227.0)",
+            "min_fixed_version": "0.227.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "密码签名验证不当",
+    "last_modified_time": "2026-08-29",
+    "level": "Critical",
+    "mps_id": "MPS-ncoz-biat",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ncoz-biat",
+        "name": "https://www.oscs1024.com/hd/MPS-ncoz-biat"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82454",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82454"
+      },
+      {
+        "url": "https://github.com/omnivore-app/omnivore",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/omnivore-app/omnivore/commit/abf53d6508755d3d22a994e28e370a9193ea977a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/omnivore-app/omnivore/pull/4652",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/omnivore-before-android-0.227.0-authentication-bypass-via-apple-sign-in",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Omnivore Apple登录认证绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82454",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-347",
+    "description": "Omnivore 是一个开源的稍后阅读（read-it-later）应用，支持网页与移动端保存和阅读内容，其 packages/api 为后端 API 服务，支持自建部署。\n受影响版本中，packages/api 的 decodeAppleToken 函数从攻击者提交的 Apple 登录令牌头部读取 alg 字段，并将其作为唯一允许的算法传入 jwt.verify()，所依赖的 jsonwebtoken v8 不校验密钥类型与算法的匹配关系，攻击者把 alg 设为 HS256，以公开可获取的 Apple RSA 公钥作为 HMAC 密钥为伪造令牌签名，使签名校验通过，进而冒充任意绑定 Apple 登录的账号，实现未授权账户接管。\n修复版本中通过不再信任令牌头部的 alg 字段，把 jwt.verify() 的允许算法固定为 Apple 身份服务使用的 ['RS256']，HS256 伪造令牌在签名校验阶段直接失败，切断了算法混淆链路。",
+    "effects": [
+      {
+        "comp_name": "omnivore",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.227.0)",
+            "min_fixed_version": "0.227.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "Improper Verification of Cryptographic Signature",
+    "last_modified_time": "2026-08-29",
+    "level": "Critical",
+    "mps_id": "MPS-ncoz-biat",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ncoz-biat",
+        "name": "https://www.oscs1024.com/hd/MPS-ncoz-biat"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82454",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82454"
+      },
+      {
+        "url": "https://github.com/omnivore-app/omnivore",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/omnivore-app/omnivore/commit/abf53d6508755d3d22a994e28e370a9193ea977a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/omnivore-app/omnivore/pull/4652",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/omnivore-before-android-0.227.0-authentication-bypass-via-apple-sign-in",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Omnivore Apple登录认证绕过漏洞"
+  },
+  "first_saved_at": "2026-08-29T15:24:03+00:00"
+}
