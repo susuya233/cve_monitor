@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-08-30T20:23:03+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-q0y1-i8fr",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81636",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "ash_graphql 是开源 Elixir 组件，作为 Ash 框架的 GraphQL 扩展，用于从 Ash 资源生成 GraphQL API。\n受影响版本中，AshGraphql.Graphql.Resolver.query_complexity/3 仅在参数映射含 :limit 时用页大小乘以子字段复杂度；Relay 与 keyset 分页使用 first 与 last，落入返回 child_complexity + 1 的通配子句。未认证客户端发送嵌套查询如 posts(first: 500){edges{node{comments(first: 500){...}}}} 时，该查询被判定为廉价并通过 Absinthe max_complexity 上限，而等价的 limit 查询被拒绝，完整扇出被物化并导致无界数据库读取。\n修复版本中通过为 query_complexity/3 增加 first 与 last 子句，按请求页大小乘以子复杂度，使 Relay/keyset 分页计入真实扇出，并被复杂度上限拦截。",
+    "effects": [
+      {
+        "comp_name": "ash_graphql",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.16.23,1.11.0)",
+            "min_fixed_version": "1.11.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-08-31",
+    "level": "High",
+    "mps_id": "MPS-q0y1-i8fr",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-q0y1-i8fr",
+        "name": "https://www.oscs1024.com/hd/MPS-q0y1-i8fr"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81636",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81636"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-81636.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ash-project/ash_graphql/commit/c3229f6a65cbabb32fd7ffcac881922d1b3b30ad",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ash-project/ash_graphql/security/advisories/GHSA-mwc4-r9fc-h6mg",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-81636",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "AshGraphql复杂度绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81636",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "ash_graphql 是开源 Elixir 组件，作为 Ash 框架的 GraphQL 扩展，用于从 Ash 资源生成 GraphQL API。\n受影响版本中，AshGraphql.Graphql.Resolver.query_complexity/3 仅在参数映射含 :limit 时用页大小乘以子字段复杂度；Relay 与 keyset 分页使用 first 与 last，落入返回 child_complexity + 1 的通配子句。未认证客户端发送嵌套查询如 posts(first: 500){edges{node{comments(first: 500){...}}}} 时，该查询被判定为廉价并通过 Absinthe max_complexity 上限，而等价的 limit 查询被拒绝，完整扇出被物化并导致无界数据库读取。\n修复版本中通过为 query_complexity/3 增加 first 与 last 子句，按请求页大小乘以子复杂度，使 Relay/keyset 分页计入真实扇出，并被复杂度上限拦截。",
+    "effects": [
+      {
+        "comp_name": "ash_graphql",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.16.23,1.11.0)",
+            "min_fixed_version": "1.11.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-08-31",
+    "level": "High",
+    "mps_id": "MPS-q0y1-i8fr",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-q0y1-i8fr",
+        "name": "https://www.oscs1024.com/hd/MPS-q0y1-i8fr"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81636",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81636"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-81636.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ash-project/ash_graphql/commit/c3229f6a65cbabb32fd7ffcac881922d1b3b30ad",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ash-project/ash_graphql/security/advisories/GHSA-mwc4-r9fc-h6mg",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-81636",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "AshGraphql复杂度绕过漏洞"
+  },
+  "first_saved_at": "2026-08-30T20:23:03+00:00"
+}
