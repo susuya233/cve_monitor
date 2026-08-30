@@ -1,0 +1,243 @@
+{
+  "saved_at": "2026-08-30T12:29:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-e2w5-gbkm",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序试图读取、写入或复制内存缓冲区时，未对边界进行适当的检查和限制。缓冲区是用于存储数据的一块内存区域，当程序试图在缓冲区之外的位置进行操作时，就可能导致缓冲区溢出或下溢。攻击者可以利用这个漏洞来修改程序的执行流、执行任意代码或导致拒绝服务等安全问题。",
+        "title": "什么是缓冲区溢出"
+      },
+      {
+        "content": "- 缓冲区溢出攻击：攻击者向输入缓冲区中注入超过其容量的数据，导致数据溢出到相邻的内存区域，可能覆盖关键数据、修改变量值或执行恶意代码。\n- 缓冲区下溢攻击：攻击者向输入缓冲区中注入少于其容量的数据，导致数据被读取时越过缓冲区边界，可能泄露敏感信息或破坏程序的正常执行流程。\n- 字符串格式化攻击：攻击者通过控制格式化字符串的输入，可以读取或写入任意内存位置，从而执行恶意操作。",
+        "title": "缓冲区溢出常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和边界检查：对于所有接受用户输入的缓冲区操作，确保验证输入数据的长度和内容，以避免缓冲区溢出或下溢。\n- 使用安全的字符串操作函数：使用安全的字符串操作函数（如strncpy、strncat）替代不安全的函数（如strcpy、strcat），这些函数会在操作时自动限制操作的边界。\n- 使用内存安全工具：使用内存安全工具（如内存分析器、静态分析工具）来检测和修复潜在的缓冲区溢出问题。\n- 采用安全编码实践：遵循安全编码实践，如最小特权原则、避免使用不受信任的输入等。\n- 定期更新和修补程序：及时应用程序厂商提供的安全更新和补丁，以修复已知的缓冲区溢出漏洞。\n- 使用编程语言和框架提供的安全功能：利用编程语言和框架提供的安全特性，如内存安全函数、边界检查等。",
+        "title": "如何预防缓冲区溢出"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82539",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:M/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-119",
+    "description": "TOTOLINK A720R 是 TOTOLINK 公司的闭源无线路由器产品，其固件中的 cstecgi.cgi 程序负责处理 Web 管理界面下发的 CGI 请求。\n受影响版本中，cstecgi.cgi 的 setMacFilterRules 函数在处理 MAC 地址过滤规则时，通过 websGetVar 读取请求中的 desc 参数，并使用 strcpy 将该参数复制到大小为 22 字节的栈缓冲区 acStack_c2 中，全程未做长度校验；固件编译时未启用栈保护且未启用地址随机化，已认证的管理员向 /cgi-bin/cstecgi.cgi 提交 topicurl 为 setMacFilterRules、desc 参数超长的请求能够覆写保存的返回地址并劫持进程控制流，公开分析已演示可跳转到二进制内已有的休眠、重启、注销登录、清除日志和开启 Telnet 服务等代码路径。\n修复版本中通过官方后续固件更新消除该越界复制，当前官方尚未发布修复版本，公开资料未披露修复代码；在官方修复发布前，可通过限制 Web 管理界面访问范围、修改管理员默认口令并将管理接口仅暴露给可信网络降低被利用风险。",
+    "effects": [
+      {
+        "comp_name": "a720r",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.1.5cu.630_B20250509]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "缓冲区溢出",
+    "kind_en": "内存缓冲区范围内的操作限制不当",
+    "last_modified_time": "2026-08-30",
+    "level": "High",
+    "mps_id": "MPS-e2w5-gbkm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-e2w5-gbkm",
+        "name": "https://www.oscs1024.com/hd/MPS-e2w5-gbkm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82539",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82539"
+      },
+      {
+        "url": "https://github.com/Xernary/CVE-2026-82539",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-82539",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/submit/888696",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/vuln/397055",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/vuln/397055/cti",
+        "name": ""
+      },
+      {
+        "url": "https://www.totolink.net/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "TOTOLINK A720R缓冲区溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序试图读取、写入或复制内存缓冲区时，未对边界进行适当的检查和限制。缓冲区是用于存储数据的一块内存区域，当程序试图在缓冲区之外的位置进行操作时，就可能导致缓冲区溢出或下溢。攻击者可以利用这个漏洞来修改程序的执行流、执行任意代码或导致拒绝服务等安全问题。",
+        "title": "什么是缓冲区溢出"
+      },
+      {
+        "content": "- 缓冲区溢出攻击：攻击者向输入缓冲区中注入超过其容量的数据，导致数据溢出到相邻的内存区域，可能覆盖关键数据、修改变量值或执行恶意代码。\n- 缓冲区下溢攻击：攻击者向输入缓冲区中注入少于其容量的数据，导致数据被读取时越过缓冲区边界，可能泄露敏感信息或破坏程序的正常执行流程。\n- 字符串格式化攻击：攻击者通过控制格式化字符串的输入，可以读取或写入任意内存位置，从而执行恶意操作。",
+        "title": "缓冲区溢出常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和边界检查：对于所有接受用户输入的缓冲区操作，确保验证输入数据的长度和内容，以避免缓冲区溢出或下溢。\n- 使用安全的字符串操作函数：使用安全的字符串操作函数（如strncpy、strncat）替代不安全的函数（如strcpy、strcat），这些函数会在操作时自动限制操作的边界。\n- 使用内存安全工具：使用内存安全工具（如内存分析器、静态分析工具）来检测和修复潜在的缓冲区溢出问题。\n- 采用安全编码实践：遵循安全编码实践，如最小特权原则、避免使用不受信任的输入等。\n- 定期更新和修补程序：及时应用程序厂商提供的安全更新和补丁，以修复已知的缓冲区溢出漏洞。\n- 使用编程语言和框架提供的安全功能：利用编程语言和框架提供的安全特性，如内存安全函数、边界检查等。",
+        "title": "如何预防缓冲区溢出"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82539",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:M/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-119",
+    "description": "TOTOLINK A720R 是 TOTOLINK 公司的闭源无线路由器产品，其固件中的 cstecgi.cgi 程序负责处理 Web 管理界面下发的 CGI 请求。\n受影响版本中，cstecgi.cgi 的 setMacFilterRules 函数在处理 MAC 地址过滤规则时，通过 websGetVar 读取请求中的 desc 参数，并使用 strcpy 将该参数复制到大小为 22 字节的栈缓冲区 acStack_c2 中，全程未做长度校验；固件编译时未启用栈保护且未启用地址随机化，已认证的管理员向 /cgi-bin/cstecgi.cgi 提交 topicurl 为 setMacFilterRules、desc 参数超长的请求能够覆写保存的返回地址并劫持进程控制流，公开分析已演示可跳转到二进制内已有的休眠、重启、注销登录、清除日志和开启 Telnet 服务等代码路径。\n修复版本中通过官方后续固件更新消除该越界复制，当前官方尚未发布修复版本，公开资料未披露修复代码；在官方修复发布前，可通过限制 Web 管理界面访问范围、修改管理员默认口令并将管理接口仅暴露给可信网络降低被利用风险。",
+    "effects": [
+      {
+        "comp_name": "a720r",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.1.5cu.630_B20250509]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "缓冲区溢出",
+    "kind_en": "Improper Restriction of Operations within the Bounds of a Memory Buffer",
+    "last_modified_time": "2026-08-30",
+    "level": "High",
+    "mps_id": "MPS-e2w5-gbkm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-e2w5-gbkm",
+        "name": "https://www.oscs1024.com/hd/MPS-e2w5-gbkm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82539",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82539"
+      },
+      {
+        "url": "https://github.com/Xernary/CVE-2026-82539",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-82539",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/submit/888696",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/vuln/397055",
+        "name": ""
+      },
+      {
+        "url": "https://vuldb.com/vuln/397055/cti",
+        "name": ""
+      },
+      {
+        "url": "https://www.totolink.net/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "TOTOLINK A720R缓冲区溢出漏洞"
+  },
+  "first_saved_at": "2026-08-30T12:29:52+00:00"
+}
