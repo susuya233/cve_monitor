@@ -1225,5 +1225,10 @@
   "2396724acb0e0176d91853bcd8443f40f6a2084c": "WP Ultimate CSV 导入器 SQL 注入",
   "d46cf5e4df01a67bf91ac16736a68a4d94d8254b": "绑定到不受限制的IP地址",
   "7f7aaffcd085d36483e397a192ef59fec02c24ba": "密码的明文存储",
-  "ad6601fbb8ec0258fbc30de2bfe454e8f5e68241": "数字类型之间的转换不正确"
+  "ad6601fbb8ec0258fbc30de2bfe454e8f5e68241": "数字类型之间的转换不正确",
+  "de04d426a9bd4cfa9e0be3cc117f7510830a6d62": "CVE-2026-15980漏洞",
+  "7f5b2da84ea6df65c7efba705e04b4f27ea22b4b": "WordPress 的 MyHome Core 插件在 4.4.5 及之前的所有版本中都容易受到身份验证绕过的影响。这是由于 send_link() AJAX 处理程序中缺少授权以及 activate() 函数中的令牌验证不正确造成的。这使得未经身份验证的攻击者可以为未经确认的用户帐户生成激活令牌，并获取该帐户（包括管理员）的有效身份验证 cookie。成功利用该漏洞需要在传统/WPBakery 模式下配置 MyHome 主题，并启用前端注册和确认电子邮件，并且目标帐户不得已具有 myhome_agent_confirmed 用户元集。",
+  "d2d7432d9699f253649c5424fb54aab17cbdb494": "通过备用名称绕过身份验证",
+  "b0b64b9e3fcd0d7c122ddf5d42572fa6f1171698": "CVE-2026-75759漏洞",
+  "46fc5a58af19ae3b960830200b8999091af3d7fc": "erlef oidcc 中的加密签名验证不当漏洞允许未经身份验证的攻击者通过加密的 ID 令牌或不携带嵌套签名的 JARM 响应来冒充任意用户。 OpenID Connect Core 1.0 第 2 部分要求对加密的 ID 令牌进行签名然后加密，结果是嵌套 JWT，而 JARM 处理规则 5 要求客户端无条件检查签名。相反，oidcc 接受将未签名声明包装为完全验证的 JWE，因此持有依赖方公共加密密钥的任何人都可以使用任意 sub、iss 和 aud 铸造令牌，而无需拥有提供者的签名密钥。\n\n在 oidcc_jwt_util:verify_decrypted_token/4 中，非签名 JWS 的解密有效负载退回到解析明文声明并在没有验证密钥的情况下返回它们。 oidcc_token:int_validate_jwt/4 然后匹配 JOSE 结构类型，而不是匹配签名是否已验证，并返回成功。 oidcc_token:validate_jarm/3 中的 JARM 路径可通过浏览器前端通道访问。 UserInfo 响应不受影响，因为 OpenID Connect Core 1.0 第 5.3.2 节允许对它们进行加密而无需签名。\n\n此问题影响 oidcc：从 3.2.0-beta.1 到 3.9.0。"
 }
