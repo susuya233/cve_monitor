@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-31T02:57:39+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0pxd-un4w",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75760",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-209",
+    "description": "ash_ai 是面向 Ash 框架的开源 Elixir 组件，用于为大模型应用提供文本嵌入生成与属性向量化能力。\n受影响版本中，AshAi.Changes.Vectorize 的 change/3 在 embedding_model.generate/2 返回 {:error, error} 时，把原始错误项以 inspect(error) 写入 Ash.Changeset.add_error 的 message，生成 Ash.Error.Changes.InvalidChanges（:invalid 类）。AshJsonApi 与 AshGraphql 会将该类错误原文返回调用方；错误项未经脱敏，可包含请求 URL、提供方响应体，以及 HTTP 客户端保存在错误结构中的 Authorization 头和提供方 API 密钥。攻击者可通过提交超大或畸形的向量化内容使嵌入调用失败，并在用户可见的校验错误中读取这些敏感信息。\n修复版本中通过将原始错误仅记录到服务端日志，并向调用方返回固定通用消息，阻止原始提供方错误进入用户可见校验响应。",
+    "effects": [
+      {
+        "comp_name": "ash_ai",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.1.0,1.0.0)",
+            "min_fixed_version": "1.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过错误消息导致的信息暴露",
+    "kind_en": "生成包含敏感信息的错误消息",
+    "last_modified_time": "2026-08-31",
+    "level": "High",
+    "mps_id": "MPS-0pxd-un4w",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0pxd-un4w",
+        "name": "https://www.oscs1024.com/hd/MPS-0pxd-un4w"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75760",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75760"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-75760.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ash-project/ash_ai/commit/088a2562e16d65f36cec178070de683636479f58",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ash-project/ash_ai/security/advisories/GHSA-p5cr-mmmf-6w39",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-75760",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "ash_ai错误信息泄露漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75760",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-209",
+    "description": "ash_ai 是面向 Ash 框架的开源 Elixir 组件，用于为大模型应用提供文本嵌入生成与属性向量化能力。\n受影响版本中，AshAi.Changes.Vectorize 的 change/3 在 embedding_model.generate/2 返回 {:error, error} 时，把原始错误项以 inspect(error) 写入 Ash.Changeset.add_error 的 message，生成 Ash.Error.Changes.InvalidChanges（:invalid 类）。AshJsonApi 与 AshGraphql 会将该类错误原文返回调用方；错误项未经脱敏，可包含请求 URL、提供方响应体，以及 HTTP 客户端保存在错误结构中的 Authorization 头和提供方 API 密钥。攻击者可通过提交超大或畸形的向量化内容使嵌入调用失败，并在用户可见的校验错误中读取这些敏感信息。\n修复版本中通过将原始错误仅记录到服务端日志，并向调用方返回固定通用消息，阻止原始提供方错误进入用户可见校验响应。",
+    "effects": [
+      {
+        "comp_name": "ash_ai",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.1.0,1.0.0)",
+            "min_fixed_version": "1.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过错误消息导致的信息暴露",
+    "kind_en": "Generation of Error Message Containing Sensitive Information",
+    "last_modified_time": "2026-08-31",
+    "level": "High",
+    "mps_id": "MPS-0pxd-un4w",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0pxd-un4w",
+        "name": "https://www.oscs1024.com/hd/MPS-0pxd-un4w"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75760",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75760"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-75760.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ash-project/ash_ai/commit/088a2562e16d65f36cec178070de683636479f58",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ash-project/ash_ai/security/advisories/GHSA-p5cr-mmmf-6w39",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-75760",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "ash_ai错误信息泄露漏洞"
+  },
+  "first_saved_at": "2026-08-31T02:57:39+00:00"
+}

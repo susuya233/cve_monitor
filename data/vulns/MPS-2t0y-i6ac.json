@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-08-31T02:57:38+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2t0y-i6ac",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82564",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "ash_ai 是开源 Elixir 组件，为 Ash 应用提供大模型工具调用与 MCP 服务能力。\n受影响版本中，AshAi.Tool.Execution 的 identity_filter/3 在处理显式配置 identity 的 update/destroy 工具时，把原始工具参数直接组装成过滤条件并交给 Ash.Query.do_filter/2。调用方若传入形如 {\"public_ref\": {\"not_eq\": \"<own-ref>\"}} 的 Map，该值会被解析为谓词表达式而非等值匹配；再叠加 Ash.Query.limit(1) 与 Ash.bulk_update!/Ash.bulk_destroy! 后，写入目标会被改到调用方从未标识的记录，甚至可遍历整表。省略 identity 键时会生成 IS NULL 过滤并命中任意一行。\n修复版本中通过在构造 identity 过滤器前将每个字段值按目标类型执行 Ash.Type.cast_input/3 与 apply_constraints/3，拒绝非标量输入，使操作符 Map 无法再改写查询谓词，切断对未标识记录的更新与删除。",
+    "effects": [
+      {
+        "comp_name": "ash_ai",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.6.0,1.0.0)",
+            "min_fixed_version": "1.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-08-31",
+    "level": "High",
+    "mps_id": "MPS-2t0y-i6ac",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2t0y-i6ac",
+        "name": "https://www.oscs1024.com/hd/MPS-2t0y-i6ac"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82564",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82564"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-82564.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ash-project/ash_ai/commit/87f616d5bfbf7af43346f0701ae17f853789a602",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ash-project/ash_ai/security/advisories/GHSA-jg86-xh36-h5xc",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-82564",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "ash_ai身份绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82564",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "ash_ai 是开源 Elixir 组件，为 Ash 应用提供大模型工具调用与 MCP 服务能力。\n受影响版本中，AshAi.Tool.Execution 的 identity_filter/3 在处理显式配置 identity 的 update/destroy 工具时，把原始工具参数直接组装成过滤条件并交给 Ash.Query.do_filter/2。调用方若传入形如 {\"public_ref\": {\"not_eq\": \"<own-ref>\"}} 的 Map，该值会被解析为谓词表达式而非等值匹配；再叠加 Ash.Query.limit(1) 与 Ash.bulk_update!/Ash.bulk_destroy! 后，写入目标会被改到调用方从未标识的记录，甚至可遍历整表。省略 identity 键时会生成 IS NULL 过滤并命中任意一行。\n修复版本中通过在构造 identity 过滤器前将每个字段值按目标类型执行 Ash.Type.cast_input/3 与 apply_constraints/3，拒绝非标量输入，使操作符 Map 无法再改写查询谓词，切断对未标识记录的更新与删除。",
+    "effects": [
+      {
+        "comp_name": "ash_ai",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.6.0,1.0.0)",
+            "min_fixed_version": "1.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-08-31",
+    "level": "High",
+    "mps_id": "MPS-2t0y-i6ac",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-08-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2t0y-i6ac",
+        "name": "https://www.oscs1024.com/hd/MPS-2t0y-i6ac"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82564",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82564"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-82564.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ash-project/ash_ai/commit/87f616d5bfbf7af43346f0701ae17f853789a602",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ash-project/ash_ai/security/advisories/GHSA-jg86-xh36-h5xc",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-82564",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "ash_ai身份绕过漏洞"
+  },
+  "first_saved_at": "2026-08-31T02:57:38+00:00"
+}
