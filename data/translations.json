@@ -1232,5 +1232,15 @@
   "b0b64b9e3fcd0d7c122ddf5d42572fa6f1171698": "CVE-2026-75759漏洞",
   "46fc5a58af19ae3b960830200b8999091af3d7fc": "erlef oidcc 中的加密签名验证不当漏洞允许未经身份验证的攻击者通过加密的 ID 令牌或不携带嵌套签名的 JARM 响应来冒充任意用户。 OpenID Connect Core 1.0 第 2 部分要求对加密的 ID 令牌进行签名然后加密，结果是嵌套 JWT，而 JARM 处理规则 5 要求客户端无条件检查签名。相反，oidcc 接受将未签名声明包装为完全验证的 JWE，因此持有依赖方公共加密密钥的任何人都可以使用任意 sub、iss 和 aud 铸造令牌，而无需拥有提供者的签名密钥。\n\n在 oidcc_jwt_util:verify_decrypted_token/4 中，非签名 JWS 的解密有效负载退回到解析明文声明并在没有验证密钥的情况下返回它们。 oidcc_token:int_validate_jwt/4 然后匹配 JOSE 结构类型，而不是匹配签名是否已验证，并返回成功。 oidcc_token:validate_jarm/3 中的 JARM 路径可通过浏览器前端通道访问。 UserInfo 响应不受影响，因为 OpenID Connect Core 1.0 第 5.3.2 节允许对它们进行加密而无需签名。\n\n此问题影响 oidcc：从 3.2.0-beta.1 到 3.9.0。",
   "643ffc0dec7bb1b70c251f42572cbeff85e0d3be": "Unchecked Return Value",
-  "85f0a6985a24e4fbb2589587c400cb44ab2f06b5": "Uncontrolled Search Path Element"
+  "85f0a6985a24e4fbb2589587c400cb44ab2f06b5": "Uncontrolled Search Path Element",
+  "ab76964af3116677db6fea9ee0cd028581fbebca": "CVE-2026-83596漏洞",
+  "a83987a53f79e73de69ef2684e58a124c391d296": "WebKitGTK 中发现了一个缺陷。由于内存处理不当，处理恶意 Web 内容可能会导致内存损坏。",
+  "059975fe1d4de1fb0569dc9762cc7581cbc9314d": "CVE-2026-82392漏洞",
+  "e12f6092628260e96525f00b753928d26f0b16d4": "pnpm 是一个包管理器。在 10.34.5 之前以及从 11.0.0 到 11.11.0，pnpm 使用 dp.parse(depPath).name 解析攻击者控制的 pnpm-lock.yaml 包密钥中的包名称，并在 deps/graph-builder/src/lockfileToDepGraph.ts 中使用它而不进行验证， pnpm11/deps/graph-builder/src/lockfileToDepGraph.ts。名称达到path.join(modules, pkgName)、storeController.importPackage和pnpm11/lockfile/to-pnp/src/index.ts，允许当用户运行pnpm install时将包内容写入node_modules之外。当angerlyAllowAllBuilds或匹配的allowBuilds条目允许生命周期脚本时，转义的包可以使用用户的权限执行代码。此问题已在版本 10.34.5 和 11.11.0 中修复。",
+  "ad84bdcff6d42dea450bac0f758f02bc0fde8ecd": "CVE-2026-82908漏洞",
+  "4196ab133247fb78bbd6fb8413a23e5bf5332537": "MSI Dragon Center 中发现漏洞，最高版本为 2.0.155.0。受此漏洞影响的是组件MMIO Write Path Handler的库NTIOLib_X64.sys中的函数MmioWritePath。对参数 count/elementSize 执行操作会导致整数溢出。攻击需要本地方法。该漏洞已被公开并且可以被使用。我们很早就就此事联系了供应商，但没有以任何方式做出回应。",
+  "4caedf96f955ff6ae57b41373e48649ecb40e2e6": "CVE-2026-82346漏洞",
+  "91eae150bd672ec354256e094139d69feff0bf18": "5.0.0.36 之前版本的 HP ImageDiags 中已发现潜在的安全漏洞。由于访问控制不足，该漏洞可能允许本地攻击者提升权限。",
+  "ba406d270fc5d5fb5c627f3de2a2dbc3b1bcef31": "CVE-2026-82229漏洞",
+  "03c95e2537e84edf0cffb7e25c1af366fa808755": "WordPress 社交登录和注册 <= 7.8.2 版本中存在未经身份验证的跨站脚本 (XSS)。"
 }
