@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-09-01T17:11:01+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-mvk9-7gcn",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84205",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "GROWI 是 growilabs 开源的 Node.js 协作 Wiki 系统，用于团队知识库的页面编写、权限管理与内容共享。\n受影响版本中，GET /_api/v3/revisions/:id 的处理函数按 query 参数 pageId 调用 Page.isAccessiblePageByViewer 校验页面访问权限，随后以路径参数 id 执行 prisma.revisions.findUnique 获取修订记录并返回正文，未校验 revision.pageId 与 pageId 是否指向同一页面；已认证攻击者可将可访问页面的 pageId 与任意 revisionId 组合成请求，绕过权限校验读取无权访问页面的修订内容。\n修复版本中通过在取得修订记录后新增 revision 为空或 revision.pageId 与已校验 pageId 不一致时返回 403 的判断，确保返回内容与权限校验对象为同一页面，同批修改还为 GET /_api/v3/attachment/:id 补充了所属页面的访问权限校验。",
+    "effects": [
+      {
+        "comp_name": "growi",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,8.0.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-mvk9-7gcn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mvk9-7gcn",
+        "name": "https://www.oscs1024.com/hd/MPS-mvk9-7gcn"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84205",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84205"
+      },
+      {
+        "url": "https://github.com/growilabs/growi",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/growilabs/growi/blob/v8.0.2/apps/app/src/server/routes/apiv3/revisions.js",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/growilabs/growi/commit/d298e0b1dbbf568c99db657fa0f7e90f72ddc59b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/growilabs/growi/pull/11810",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/growi-through-8.0.2-authorization-bypass-through-user-controlled-key-on-apiv3-revision-retrieval",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "GROWI 越权读取页面修订内容",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84205",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "GROWI 是 growilabs 开源的 Node.js 协作 Wiki 系统，用于团队知识库的页面编写、权限管理与内容共享。\n受影响版本中，GET /_api/v3/revisions/:id 的处理函数按 query 参数 pageId 调用 Page.isAccessiblePageByViewer 校验页面访问权限，随后以路径参数 id 执行 prisma.revisions.findUnique 获取修订记录并返回正文，未校验 revision.pageId 与 pageId 是否指向同一页面；已认证攻击者可将可访问页面的 pageId 与任意 revisionId 组合成请求，绕过权限校验读取无权访问页面的修订内容。\n修复版本中通过在取得修订记录后新增 revision 为空或 revision.pageId 与已校验 pageId 不一致时返回 403 的判断，确保返回内容与权限校验对象为同一页面，同批修改还为 GET /_api/v3/attachment/:id 补充了所属页面的访问权限校验。",
+    "effects": [
+      {
+        "comp_name": "growi",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,8.0.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-mvk9-7gcn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mvk9-7gcn",
+        "name": "https://www.oscs1024.com/hd/MPS-mvk9-7gcn"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84205",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84205"
+      },
+      {
+        "url": "https://github.com/growilabs/growi",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/growilabs/growi/blob/v8.0.2/apps/app/src/server/routes/apiv3/revisions.js",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/growilabs/growi/commit/d298e0b1dbbf568c99db657fa0f7e90f72ddc59b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/growilabs/growi/pull/11810",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/growi-through-8.0.2-authorization-bypass-through-user-controlled-key-on-apiv3-revision-retrieval",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "GROWI 越权读取页面修订内容"
+  },
+  "first_saved_at": "2026-09-01T17:11:01+00:00"
+}

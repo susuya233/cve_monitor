@@ -1,0 +1,175 @@
+{
+  "saved_at": "2026-09-01T17:10:59+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-r2da-blcv",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84268",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-122",
+    "description": "gvfs 是 GNOME 桌面环境默认使用的开源虚拟文件系统框架，通过 sftp、smb、ftp 等后端守护进程为文件管理器与 GIO 应用提供统一的网络文件系统挂载和读写能力，本次漏洞涉及其 SFTP 后端进程 gvfsd-sftp。\n受影响版本中，daemon/gvfsbackendsftp.c 的 read_reply() 把服务器返回的 32 位数据长度 count 直接作为读取长度，调用 g_input_stream_read_all() 写入按客户端请求大小 g_malloc (bytes_requested) 分配的 GVfsJobRead 缓冲区，全程未将 count 与 bytes_requested 比较；恶意 SFTP 服务器在响应 SSH_FXP_READ 时返回超过请求量的长度，便能向该堆缓冲区后方越界写入数据，破坏相邻堆内存，gvfsd-sftp 因 glibc 检测到堆损坏而 abort，形成可靠拒绝服务，越界数据可到达回复对象的 free_func 指针等控制流数据，存在进一步演变为代码执行的空间。\n修复版本中通过在 read_reply() 中增加服务器长度校验解决该问题：上游提交 5ab77256 先以 count = MIN (count, G_VFS_JOB_READ (job)->bytes_requested) 将读取长度截断到客户端请求大小，随后提交 1ff24454 与稳定分支提交 1590471a 按 SFTP 规范改为当 count 大于 bytes_requested 时直接返回 Invalid reply received 错误，使服务器返回的超长数据无法再越过客户端请求的缓冲区边界。",
+    "effects": [
+      {
+        "comp_name": "gvfs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.60.2)",
+            "min_fixed_version": "1.60.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.61.90)",
+            "min_fixed_version": "1.61.90",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-r2da-blcv",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-r2da-blcv",
+        "name": "https://www.oscs1024.com/hd/MPS-r2da-blcv"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84268",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84268"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-84268",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2526485",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.gnome.org/GNOME/gvfs/-/issues/862",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "gvfs SFTP后端堆缓冲区溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84268",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-122",
+    "description": "gvfs 是 GNOME 桌面环境默认使用的开源虚拟文件系统框架，通过 sftp、smb、ftp 等后端守护进程为文件管理器与 GIO 应用提供统一的网络文件系统挂载和读写能力，本次漏洞涉及其 SFTP 后端进程 gvfsd-sftp。\n受影响版本中，daemon/gvfsbackendsftp.c 的 read_reply() 把服务器返回的 32 位数据长度 count 直接作为读取长度，调用 g_input_stream_read_all() 写入按客户端请求大小 g_malloc (bytes_requested) 分配的 GVfsJobRead 缓冲区，全程未将 count 与 bytes_requested 比较；恶意 SFTP 服务器在响应 SSH_FXP_READ 时返回超过请求量的长度，便能向该堆缓冲区后方越界写入数据，破坏相邻堆内存，gvfsd-sftp 因 glibc 检测到堆损坏而 abort，形成可靠拒绝服务，越界数据可到达回复对象的 free_func 指针等控制流数据，存在进一步演变为代码执行的空间。\n修复版本中通过在 read_reply() 中增加服务器长度校验解决该问题：上游提交 5ab77256 先以 count = MIN (count, G_VFS_JOB_READ (job)->bytes_requested) 将读取长度截断到客户端请求大小，随后提交 1ff24454 与稳定分支提交 1590471a 按 SFTP 规范改为当 count 大于 bytes_requested 时直接返回 Invalid reply received 错误，使服务器返回的超长数据无法再越过客户端请求的缓冲区边界。",
+    "effects": [
+      {
+        "comp_name": "gvfs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.60.2)",
+            "min_fixed_version": "1.60.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.61.90)",
+            "min_fixed_version": "1.61.90",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-r2da-blcv",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-r2da-blcv",
+        "name": "https://www.oscs1024.com/hd/MPS-r2da-blcv"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84268",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84268"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-84268",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2526485",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.gnome.org/GNOME/gvfs/-/issues/862",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "gvfs SFTP后端堆缓冲区溢出漏洞"
+  },
+  "first_saved_at": "2026-09-01T17:10:59+00:00"
+}
