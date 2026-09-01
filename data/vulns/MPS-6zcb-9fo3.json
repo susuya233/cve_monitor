@@ -1,0 +1,157 @@
+{
+  "saved_at": "2026-09-01T20:23:34+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6zcb-9fo3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-52130",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-674",
+    "description": "llama.cpp 是开源 C/C++ 大模型推理框架，提供本地推理库与官方 HTTP 服务 llama-server，可将 JSON Schema 转为 GBNF 语法以约束模型输出。\n受影响版本中，common/json-schema-to-grammar.cpp 的 common_schema_converter::visit 在处理 oneOf、anyOf 以及嵌套 items 时会递归调用 _generate_union_rule，且没有递归深度上限。攻击者向 llama-server 的 POST /completions 提交深度嵌套的 json_schema 后，转换过程耗尽线程栈，导致进程崩溃形成拒绝服务。公开复现显示在默认 8 MB 栈的 x86-64 Linux 上，嵌套深度达到 7000 可稳定触发；POST /v1/chat/completions 将 json_schema 交给 jinja 引擎，不走该转换路径。\n修复版本中通过为 common_schema_converter::visit 与 _generate_union_rule 增加递归深度上限并拒绝过深嵌套 JSON Schema，切断栈耗尽路径。公开仓库后续提交未加入该深度限制，官方也未给出已验证修复版本。",
+    "effects": [
+      {
+        "comp_name": "llama.cpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,b5693]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-6zcb-9fo3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6zcb-9fo3",
+        "name": "https://www.oscs1024.com/hd/MPS-6zcb-9fo3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-52130",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-52130"
+      },
+      {
+        "url": "https://blog.ph4nt0m.xyz/ko/cves/cve-2026-52130/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ggml-org/llama.cpp",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "llama.cpp无控制递归漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-52130",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-674",
+    "description": "llama.cpp 是开源 C/C++ 大模型推理框架，提供本地推理库与官方 HTTP 服务 llama-server，可将 JSON Schema 转为 GBNF 语法以约束模型输出。\n受影响版本中，common/json-schema-to-grammar.cpp 的 common_schema_converter::visit 在处理 oneOf、anyOf 以及嵌套 items 时会递归调用 _generate_union_rule，且没有递归深度上限。攻击者向 llama-server 的 POST /completions 提交深度嵌套的 json_schema 后，转换过程耗尽线程栈，导致进程崩溃形成拒绝服务。公开复现显示在默认 8 MB 栈的 x86-64 Linux 上，嵌套深度达到 7000 可稳定触发；POST /v1/chat/completions 将 json_schema 交给 jinja 引擎，不走该转换路径。\n修复版本中通过为 common_schema_converter::visit 与 _generate_union_rule 增加递归深度上限并拒绝过深嵌套 JSON Schema，切断栈耗尽路径。公开仓库后续提交未加入该深度限制，官方也未给出已验证修复版本。",
+    "effects": [
+      {
+        "comp_name": "llama.cpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,b5693]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-6zcb-9fo3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6zcb-9fo3",
+        "name": "https://www.oscs1024.com/hd/MPS-6zcb-9fo3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-52130",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-52130"
+      },
+      {
+        "url": "https://blog.ph4nt0m.xyz/ko/cves/cve-2026-52130/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ggml-org/llama.cpp",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "llama.cpp无控制递归漏洞"
+  },
+  "first_saved_at": "2026-09-01T20:23:34+00:00"
+}

@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-09-01T20:23:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xm6t-lzkp",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-83551",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-312",
+    "description": "Amazon SageMaker Python SDK 是 AWS 官方开源 Python 库，用于在 Amazon SageMaker 上训练、部署机器学习模型，并通过 @step、@remote 装饰器将 Python 函数编译为流水线步骤或远程作业。\n受影响版本中，@step 与 @remote 装饰器流水线组件使用 HMAC 校验上传到 S3 的 cloudpickle 函数载荷。StepsCompiler 用 secrets.token_hex(32) 生成对称 HMAC 密钥，_Job.compile 将其写入训练作业 Environment 的 REMOTE_FUNCTION_SECRET_KEY，并随流水线定义持久化。同一 AWS 账号内具备 sagemaker:DescribePipeline 权限的身份可从 DescribePipeline 响应提取该明文密钥，伪造带有效 HMAC 的载荷并覆盖 S3 对象，使受害用户流水线在其执行角色上下文中反序列化执行攻击者代码。\n修复版本中通过将 v3 步骤编译器的 _function_step_secret_token 替换为客户端持有的 ECDSA 私钥、仅把公钥写入流水线定义，并在 v2 中移除 hmac_key 及 REMOTE_FUNCTION_SECRET_KEY 存储，阻止对称密钥经 DescribePipeline 泄露后被用于伪造完整性签名。已用 @step 创建的流水线需在升级后调用 pipeline.upsert() 替换旧密钥材料；@remote 用户升级 SDK 即可，因每次调用会创建不含持久化密钥的新作业。",
+    "effects": [
+      {
+        "comp_name": "sagemaker",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.256.0)",
+            "min_fixed_version": "2.256.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.11.0)",
+            "min_fixed_version": "3.11.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "敏感数据的明文存储",
+    "kind_en": "敏感信息的明文存储",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-xm6t-lzkp",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xm6t-lzkp",
+        "name": "https://www.oscs1024.com/hd/MPS-xm6t-lzkp"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83551",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-83551"
+      },
+      {
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-093-aws/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/aws/sagemaker-python-sdk/releases/tag/v2.256.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/aws/sagemaker-python-sdk/releases/tag/v3.11.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/aws/sagemaker-python-sdk/security/advisories/GHSA-7xmc-crrw-fv5r",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "SageMaker明文存储密钥",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-83551",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-312",
+    "description": "Amazon SageMaker Python SDK 是 AWS 官方开源 Python 库，用于在 Amazon SageMaker 上训练、部署机器学习模型，并通过 @step、@remote 装饰器将 Python 函数编译为流水线步骤或远程作业。\n受影响版本中，@step 与 @remote 装饰器流水线组件使用 HMAC 校验上传到 S3 的 cloudpickle 函数载荷。StepsCompiler 用 secrets.token_hex(32) 生成对称 HMAC 密钥，_Job.compile 将其写入训练作业 Environment 的 REMOTE_FUNCTION_SECRET_KEY，并随流水线定义持久化。同一 AWS 账号内具备 sagemaker:DescribePipeline 权限的身份可从 DescribePipeline 响应提取该明文密钥，伪造带有效 HMAC 的载荷并覆盖 S3 对象，使受害用户流水线在其执行角色上下文中反序列化执行攻击者代码。\n修复版本中通过将 v3 步骤编译器的 _function_step_secret_token 替换为客户端持有的 ECDSA 私钥、仅把公钥写入流水线定义，并在 v2 中移除 hmac_key 及 REMOTE_FUNCTION_SECRET_KEY 存储，阻止对称密钥经 DescribePipeline 泄露后被用于伪造完整性签名。已用 @step 创建的流水线需在升级后调用 pipeline.upsert() 替换旧密钥材料；@remote 用户升级 SDK 即可，因每次调用会创建不含持久化密钥的新作业。",
+    "effects": [
+      {
+        "comp_name": "sagemaker",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.256.0)",
+            "min_fixed_version": "2.256.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.11.0)",
+            "min_fixed_version": "3.11.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "敏感数据的明文存储",
+    "kind_en": "Cleartext Storage of Sensitive Information",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-xm6t-lzkp",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xm6t-lzkp",
+        "name": "https://www.oscs1024.com/hd/MPS-xm6t-lzkp"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83551",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-83551"
+      },
+      {
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-093-aws/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/aws/sagemaker-python-sdk/releases/tag/v2.256.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/aws/sagemaker-python-sdk/releases/tag/v3.11.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/aws/sagemaker-python-sdk/security/advisories/GHSA-7xmc-crrw-fv5r",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "SageMaker明文存储密钥"
+  },
+  "first_saved_at": "2026-09-01T20:23:33+00:00"
+}

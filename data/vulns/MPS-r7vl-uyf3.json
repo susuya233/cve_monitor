@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-09-01T20:23:36+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-r7vl-uyf3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-52111",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-863",
+    "description": "Fast Note Sync Service 是开源笔记同步与在线管理服务，提供 WebGUI、远程 REST API 以及与 Obsidian 的笔记同步能力。\n受影响版本中，默认配置开启用户注册且将 admin-uid 设为 0。AdminControlHandler 的 CheckAdmin 与 GetConfig 把 AdminUID 为 0 当作不限制管理员身份，任意已认证用户都能访问 GET /api/admin/config 并取得 AuthTokenKey。用户 JWT 使用 AuthTokenKey 与 machine_id 拼接后签名，Docker 部署下 GetMachineID() 可能返回空串。攻击者可先调用 POST /api/user/register 获得普通账号，再读取签名密钥并伪造任意用户令牌，从而冒充管理员并读取、修改或删除同步笔记。\n修复版本中通过 UserService.IsRegisterEnabled 在 AdminUID 为 0 且系统已存在用户时自动关闭注册，切断未指定管理员时的自注册入口，阻止攻击者继续获取可用于越权的认证令牌。",
+    "effects": [
+      {
+        "comp_name": "github.com/haierkeys/fast-note-sync-service",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.13.8)",
+            "min_fixed_version": "2.13.8",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查错误",
+    "kind_en": "授权错误",
+    "last_modified_time": "2026-09-02",
+    "level": "Critical",
+    "mps_id": "MPS-r7vl-uyf3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-r7vl-uyf3",
+        "name": "https://www.oscs1024.com/hd/MPS-r7vl-uyf3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-52111",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-52111"
+      },
+      {
+        "url": "https://gist.github.com/L4wCat/924c10c36d6d11651049787d547d411b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/haierkeys/fast-note-sync-service/issues/268",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Fast Note Sync越权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-52111",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-863",
+    "description": "Fast Note Sync Service 是开源笔记同步与在线管理服务，提供 WebGUI、远程 REST API 以及与 Obsidian 的笔记同步能力。\n受影响版本中，默认配置开启用户注册且将 admin-uid 设为 0。AdminControlHandler 的 CheckAdmin 与 GetConfig 把 AdminUID 为 0 当作不限制管理员身份，任意已认证用户都能访问 GET /api/admin/config 并取得 AuthTokenKey。用户 JWT 使用 AuthTokenKey 与 machine_id 拼接后签名，Docker 部署下 GetMachineID() 可能返回空串。攻击者可先调用 POST /api/user/register 获得普通账号，再读取签名密钥并伪造任意用户令牌，从而冒充管理员并读取、修改或删除同步笔记。\n修复版本中通过 UserService.IsRegisterEnabled 在 AdminUID 为 0 且系统已存在用户时自动关闭注册，切断未指定管理员时的自注册入口，阻止攻击者继续获取可用于越权的认证令牌。",
+    "effects": [
+      {
+        "comp_name": "github.com/haierkeys/fast-note-sync-service",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.13.8)",
+            "min_fixed_version": "2.13.8",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查错误",
+    "kind_en": "Incorrect Authorization",
+    "last_modified_time": "2026-09-02",
+    "level": "Critical",
+    "mps_id": "MPS-r7vl-uyf3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-r7vl-uyf3",
+        "name": "https://www.oscs1024.com/hd/MPS-r7vl-uyf3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-52111",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-52111"
+      },
+      {
+        "url": "https://gist.github.com/L4wCat/924c10c36d6d11651049787d547d411b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/haierkeys/fast-note-sync-service/issues/268",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Fast Note Sync越权漏洞"
+  },
+  "first_saved_at": "2026-09-01T20:23:36+00:00"
+}
