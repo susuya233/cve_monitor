@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-09-02T05:20:34+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xo3d-ipkw",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-14957",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "d42dc95b-23f1-4e06-9076-20753a0fb0df",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-617",
+    "description": "Libreswan 是开源 IPsec 实现，提供 IKEv1 与 IKEv2 密钥交换，用于在不可信网络上建立加密 VPN 隧道。\n受影响版本中，FIPS 模式下 add_decoded_cert() 调用 CERT_ExtractPublicKey() 后执行 passert(pk != NULL)。远程攻击者可在对等认证完成前发送公钥无法提取的畸形 X.509 CERT 载荷（例如 RSA 指数为 0），CERT_ExtractPublicKey() 返回 NULL 后断言失败，pluto 守护进程中止并重启；重复发送可造成拒绝服务，官方确认无法远程代码执行。\n修复版本中通过取消该空指针断言，在公钥提取失败时记录 NSS 错误并直接返回，拒绝该证书且保持 pluto 进程继续运行，切断畸形 CERT 载荷导致的拒绝服务路径。",
+    "effects": [
+      {
+        "comp_name": "libreswan",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.0,5.3.2)",
+            "min_fixed_version": "5.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "可达断言",
+    "kind_en": "Reachable Assertion",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-xo3d-ipkw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xo3d-ipkw",
+        "name": "https://www.oscs1024.com/hd/MPS-xo3d-ipkw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-14957",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-14957"
+      },
+      {
+        "url": "https://libreswan.org/security/CVE-2026-14957/",
+        "name": ""
+      },
+      {
+        "url": "https://libreswan.org/security/CVE-2026-14957/CVE-2026-14957.txt",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "开源",
+      "终端软件"
+    ],
+    "title": "Libreswan FIPS断言崩溃",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-14957",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "d42dc95b-23f1-4e06-9076-20753a0fb0df",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-617",
+    "description": "Libreswan 是开源 IPsec 实现，提供 IKEv1 与 IKEv2 密钥交换，用于在不可信网络上建立加密 VPN 隧道。\n受影响版本中，FIPS 模式下 add_decoded_cert() 调用 CERT_ExtractPublicKey() 后执行 passert(pk != NULL)。远程攻击者可在对等认证完成前发送公钥无法提取的畸形 X.509 CERT 载荷（例如 RSA 指数为 0），CERT_ExtractPublicKey() 返回 NULL 后断言失败，pluto 守护进程中止并重启；重复发送可造成拒绝服务，官方确认无法远程代码执行。\n修复版本中通过取消该空指针断言，在公钥提取失败时记录 NSS 错误并直接返回，拒绝该证书且保持 pluto 进程继续运行，切断畸形 CERT 载荷导致的拒绝服务路径。",
+    "effects": [
+      {
+        "comp_name": "libreswan",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.0,5.3.2)",
+            "min_fixed_version": "5.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "可达断言",
+    "kind_en": "Reachable Assertion",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-xo3d-ipkw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xo3d-ipkw",
+        "name": "https://www.oscs1024.com/hd/MPS-xo3d-ipkw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-14957",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-14957"
+      },
+      {
+        "url": "https://libreswan.org/security/CVE-2026-14957/",
+        "name": ""
+      },
+      {
+        "url": "https://libreswan.org/security/CVE-2026-14957/CVE-2026-14957.txt",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "开源",
+      "终端软件"
+    ],
+    "title": "Libreswan FIPS断言崩溃"
+  },
+  "first_saved_at": "2026-09-02T05:20:34+00:00"
+}

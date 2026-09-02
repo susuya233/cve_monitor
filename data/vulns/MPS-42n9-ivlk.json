@@ -1,0 +1,655 @@
+{
+  "saved_at": "2026-09-02T05:20:35+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-42n9-ivlk",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "应用程序未能正确验证和过滤用户输入，将用户提供的数据直接用作操作系统命令的一部分。攻击者可以利用这个漏洞，通过注入恶意的操作系统命令来执行任意系统命令、获取敏感信息或者对系统进行未授权的操作。",
+        "title": "什么是OS命令注入"
+      },
+      {
+        "content": "- 命令拼接：应用程序将用户输入直接拼接到操作系统命令中，而不进行合适的过滤和验证。攻击者可以通过在输入中注入特殊字符、命令分隔符等，来执行额外的命令或修改原始命令的行为。\r\n- 命令注释：攻击者通过在输入中注入特殊字符或命令注释符号，如\"#\"或\"//\"，来注释掉原始命令中的一部分，然后执行自己的恶意命令。\r\n- 命令管道：攻击者通过在输入中注入管道符号\"|\"，将多个命令连接起来执行。这使得攻击者可以在单个注入点上执行多个命令，进一步扩大攻击的范围。",
+        "title": "OS命令注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对用户输入进行严格的验证和过滤，确保只接受预期的有效输入。可以使用白名单验证，限制用户输入的字符集和格式，防止特殊字符和命令注释符的注入。\r\n- 使用参数化命令或预编译语句：应该使用参数化命令或预编译语句，而不是将用户输入直接拼接到命令中。这样可以将输入数据视为参数，而不是命令的一部分，从而避免命令注入漏洞。\r\n- 最小特权原则：应用程序在执行操作系统命令时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。这样即使发生命令注入漏洞，攻击者的权限也会受到限制。\r\n- 安全编码实践：开发人员应避免使用不受信任的用户输入来拼接命令，并使用安全的编码实践，如输入验证、输出编码和参数化查询等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止命令注入攻击。",
+        "title": "如何预防OS命令注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84233",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-78",
+    "description": "RPM 是开源软件包管理器，提供 Linux 软件包构建、安装与查询能力；其中 rpmuncompress 用于在构建流程中解压源码归档，包括 RubyGems 的 .gem 文件。\n受影响版本中，rpmuncompress 以 -x 解压 .gem 时，doUntar() 会从文件名取出 basename，去掉 .gem 后缀后将其传入 rpmGetPath()。rpmGetPath() 会调用 rpmExpand()，文件名中的 %() 宏会在构造解压命令阶段经由 doShellEscape() 以 popen() 执行，且该展开发生在 dry-run 判断之前。攻击者提供含宏语法的 .gem 文件名，在用户或自动化流程对其调用 rpmuncompress -x 后，即可在调用者权限下执行任意命令。\n修复版本中通过停止将文件名派生内容传入 rpmGetPath()，改为使用普通字符串拼接生成 .gemspec 路径，避免攻击者控制的 basename 进入宏展开与命令执行路径。上游 rpm 6.1.0 已于 2026-08-20 正式发布，doUntar() 改为用 fs::path(fn).stem() 拼接 .gemspec。",
+    "effects": [
+      {
+        "comp_name": "librpm-dev",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpm10",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpm9",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpmbuild10",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpmbuild9",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpmio10",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpmio9",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpmsign10",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpmsign9",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "python3-rpm",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "rpm",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.18.0,6.1.0)",
+            "min_fixed_version": "6.1.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:14",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:13",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "rpm-common",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "rpm-i18n",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "rpm2cpio",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "高",
+    "fix_suggestion": "建议修复",
+    "kind": "OS命令注入",
+    "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-42n9-ivlk",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-42n9-ivlk",
+        "name": "https://www.oscs1024.com/hd/MPS-42n9-ivlk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84233",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84233"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-84233",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2478409",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rpm-software-management/rpm/commit/4611060978d31f15084f5cd5df3bf0b799091f9f",
+        "name": "Commit"
+      }
+    ],
+    "scope_influence": "小",
+    "tags": [
+      "poc",
+      "专家校准",
+      "开源",
+      "终端软件"
+    ],
+    "title": "rpm命令注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "应用程序未能正确验证和过滤用户输入，将用户提供的数据直接用作操作系统命令的一部分。攻击者可以利用这个漏洞，通过注入恶意的操作系统命令来执行任意系统命令、获取敏感信息或者对系统进行未授权的操作。",
+        "title": "什么是OS命令注入"
+      },
+      {
+        "content": "- 命令拼接：应用程序将用户输入直接拼接到操作系统命令中，而不进行合适的过滤和验证。攻击者可以通过在输入中注入特殊字符、命令分隔符等，来执行额外的命令或修改原始命令的行为。\r\n- 命令注释：攻击者通过在输入中注入特殊字符或命令注释符号，如\"#\"或\"//\"，来注释掉原始命令中的一部分，然后执行自己的恶意命令。\r\n- 命令管道：攻击者通过在输入中注入管道符号\"|\"，将多个命令连接起来执行。这使得攻击者可以在单个注入点上执行多个命令，进一步扩大攻击的范围。",
+        "title": "OS命令注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对用户输入进行严格的验证和过滤，确保只接受预期的有效输入。可以使用白名单验证，限制用户输入的字符集和格式，防止特殊字符和命令注释符的注入。\r\n- 使用参数化命令或预编译语句：应该使用参数化命令或预编译语句，而不是将用户输入直接拼接到命令中。这样可以将输入数据视为参数，而不是命令的一部分，从而避免命令注入漏洞。\r\n- 最小特权原则：应用程序在执行操作系统命令时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。这样即使发生命令注入漏洞，攻击者的权限也会受到限制。\r\n- 安全编码实践：开发人员应避免使用不受信任的用户输入来拼接命令，并使用安全的编码实践，如输入验证、输出编码和参数化查询等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止命令注入攻击。",
+        "title": "如何预防OS命令注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84233",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-78",
+    "description": "RPM 是开源软件包管理器，提供 Linux 软件包构建、安装与查询能力；其中 rpmuncompress 用于在构建流程中解压源码归档，包括 RubyGems 的 .gem 文件。\n受影响版本中，rpmuncompress 以 -x 解压 .gem 时，doUntar() 会从文件名取出 basename，去掉 .gem 后缀后将其传入 rpmGetPath()。rpmGetPath() 会调用 rpmExpand()，文件名中的 %() 宏会在构造解压命令阶段经由 doShellEscape() 以 popen() 执行，且该展开发生在 dry-run 判断之前。攻击者提供含宏语法的 .gem 文件名，在用户或自动化流程对其调用 rpmuncompress -x 后，即可在调用者权限下执行任意命令。\n修复版本中通过停止将文件名派生内容传入 rpmGetPath()，改为使用普通字符串拼接生成 .gemspec 路径，避免攻击者控制的 basename 进入宏展开与命令执行路径。上游 rpm 6.1.0 已于 2026-08-20 正式发布，doUntar() 改为用 fs::path(fn).stem() 拼接 .gemspec。",
+    "effects": [
+      {
+        "comp_name": "librpm-dev",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpm10",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpm9",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpmbuild10",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpmbuild9",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpmio10",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpmio9",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpmsign10",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "librpmsign9",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "python3-rpm",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "rpm",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.18.0,6.1.0)",
+            "min_fixed_version": "6.1.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:14",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:13",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "rpm-common",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "rpm-i18n",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      },
+      {
+        "comp_name": "rpm2cpio",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "高",
+    "fix_suggestion": "Recommend",
+    "kind": "OS命令注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-42n9-ivlk",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-42n9-ivlk",
+        "name": "https://www.oscs1024.com/hd/MPS-42n9-ivlk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84233",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84233"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-84233",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2478409",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rpm-software-management/rpm/commit/4611060978d31f15084f5cd5df3bf0b799091f9f",
+        "name": "Commit"
+      }
+    ],
+    "scope_influence": "小",
+    "tags": [
+      "poc",
+      "专家校准",
+      "开源",
+      "终端软件"
+    ],
+    "title": "rpm命令注入漏洞"
+  },
+  "first_saved_at": "2026-09-02T05:20:35+00:00"
+}

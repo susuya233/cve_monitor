@@ -1,0 +1,227 @@
+{
+  "saved_at": "2026-09-02T05:20:37+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-hr8x-eyma",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84715",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "FeatherPanel 是 MythicalLTD 维护的开源服务器托管面板，采用 AGPL-3.0 许可，用于管理游戏服务器、子用户权限、备份与节点配置。\n受影响版本中，已认证子用户访问 PATCH /api/user/servers/{uuidShort}/subusers/{subuserId} 时，ServerMiddleware 经 ServerGateway::canUserAccessServer 只确认调用者属于该服务器，SubuserController::updateSubuser 未再校验 user.update，也未禁止修改自身权限记录，请求体中的 permissions 数组会被 json_encode 后直接交给 Subuser::updateSubuser 写入，最低权限子用户可借此授予自己完整服务器控制权并访问敏感数据、备份与服务器配置。\n修复版本中通过在 updateSubuser 中强制检查 user.update、拒绝修改自身子用户记录、校验权限名是否属于已知集合，并限制子用户只能授予自己已持有的权限，切断低权限子用户自我提权路径。",
+    "effects": [
+      {
+        "comp_name": "FeatherPanel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.3.7.10)",
+            "min_fixed_version": "1.3.7.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-hr8x-eyma",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hr8x-eyma",
+        "name": "https://www.oscs1024.com/hd/MPS-hr8x-eyma"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84715",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84715"
+      },
+      {
+        "url": "https://github.com/MythicalLTD/FeatherPanel",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MythicalLTD/FeatherPanel/blob/376b003aa9685b74153d239d2b3f64a752cdc0f0/backend/app/Controllers/User/Server/SubuserController.php#L454",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MythicalLTD/FeatherPanel/blob/376b003aa9685b74153d239d2b3f64a752cdc0f0/backend/app/Helpers/ServerGateway.php",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MythicalLTD/FeatherPanel/commit/06ef8dcac471201748516ca743694159cb846a9d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MythicalLTD/FeatherPanel/releases/tag/v1.3.7.10",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/featherpanel-before-1.3.7.10-privilege-escalation-via-subuser-permission-update",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FeatherPanel子用户提权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84715",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "FeatherPanel 是 MythicalLTD 维护的开源服务器托管面板，采用 AGPL-3.0 许可，用于管理游戏服务器、子用户权限、备份与节点配置。\n受影响版本中，已认证子用户访问 PATCH /api/user/servers/{uuidShort}/subusers/{subuserId} 时，ServerMiddleware 经 ServerGateway::canUserAccessServer 只确认调用者属于该服务器，SubuserController::updateSubuser 未再校验 user.update，也未禁止修改自身权限记录，请求体中的 permissions 数组会被 json_encode 后直接交给 Subuser::updateSubuser 写入，最低权限子用户可借此授予自己完整服务器控制权并访问敏感数据、备份与服务器配置。\n修复版本中通过在 updateSubuser 中强制检查 user.update、拒绝修改自身子用户记录、校验权限名是否属于已知集合，并限制子用户只能授予自己已持有的权限，切断低权限子用户自我提权路径。",
+    "effects": [
+      {
+        "comp_name": "FeatherPanel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.3.7.10)",
+            "min_fixed_version": "1.3.7.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-hr8x-eyma",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hr8x-eyma",
+        "name": "https://www.oscs1024.com/hd/MPS-hr8x-eyma"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84715",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84715"
+      },
+      {
+        "url": "https://github.com/MythicalLTD/FeatherPanel",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MythicalLTD/FeatherPanel/blob/376b003aa9685b74153d239d2b3f64a752cdc0f0/backend/app/Controllers/User/Server/SubuserController.php#L454",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MythicalLTD/FeatherPanel/blob/376b003aa9685b74153d239d2b3f64a752cdc0f0/backend/app/Helpers/ServerGateway.php",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MythicalLTD/FeatherPanel/commit/06ef8dcac471201748516ca743694159cb846a9d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MythicalLTD/FeatherPanel/releases/tag/v1.3.7.10",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/featherpanel-before-1.3.7.10-privilege-escalation-via-subuser-permission-update",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FeatherPanel子用户提权漏洞"
+  },
+  "first_saved_at": "2026-09-02T05:20:37+00:00"
+}
