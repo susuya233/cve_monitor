@@ -1,0 +1,131 @@
+{
+  "saved_at": "2026-09-02T14:53:24+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6rct-75dk",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81161",
+    "cvss": {},
+    "cvss_score": 7.2,
+    "cvss_vector": "",
+    "cwe": "CWE-267",
+    "description": "Content Moderation Notifications 是 Drupal 的开源贡献模块（PHP 编写，基于 GPL 协议发布），用于在内容经过内容审核工作流发生状态流转时，按管理员配置的规则向指定角色、内容作者或指定邮箱发送通知邮件，其通知标题、正文与收件地址等字段支持编写 Twig 模板代码。\n受影响版本中，模块在 content_moderation_notifications.permissions.yml 中声明的 administer content moderation notifications 权限缺少 restrict access: true 元数据，Drupal 权限管理界面不会将该权限标示为受限权限；持有该权限的用户可以在 /admin/config/workflow/notifications 下的通知配置表单中编辑允许 Twig 代码的邮件字段，模板代码会在通知邮件生成时于服务器端渲染，被误授予该权限的低信任用户可借助模板代码访问仅限高信任管理员使用的功能与数据，实现权限提升。\n修复版本中通过在权限定义中为该权限补充 restrict access: true 元数据完成修复，Drupal 权限界面据此将该权限标记为受限权限并向管理员展示警告提示，明确该权限允许编写具有安全影响的 Twig 模板，避免权限被误授予低信任角色，切断由此形成的权限提升路径。",
+    "effects": [
+      {
+        "comp_name": "drupal/content_moderation_notifications",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[0.0.0,3.9.0)",
+            "min_fixed_version": "3.9.0",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "特权定义了不安全动作",
+    "kind_en": "使用不安全操作定义的权限",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-6rct-75dk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6rct-75dk",
+        "name": "https://www.oscs1024.com/hd/MPS-6rct-75dk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81161",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81161"
+      },
+      {
+        "url": "https://www.drupal.org/sa-contrib-2026-107",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Content Moderation Notifications 权限提升漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81161",
+    "cvss": {},
+    "cvss_score": 7.2,
+    "cvss_vector": "",
+    "cwe": "CWE-267",
+    "description": "Content Moderation Notifications 是 Drupal 的开源贡献模块（PHP 编写，基于 GPL 协议发布），用于在内容经过内容审核工作流发生状态流转时，按管理员配置的规则向指定角色、内容作者或指定邮箱发送通知邮件，其通知标题、正文与收件地址等字段支持编写 Twig 模板代码。\n受影响版本中，模块在 content_moderation_notifications.permissions.yml 中声明的 administer content moderation notifications 权限缺少 restrict access: true 元数据，Drupal 权限管理界面不会将该权限标示为受限权限；持有该权限的用户可以在 /admin/config/workflow/notifications 下的通知配置表单中编辑允许 Twig 代码的邮件字段，模板代码会在通知邮件生成时于服务器端渲染，被误授予该权限的低信任用户可借助模板代码访问仅限高信任管理员使用的功能与数据，实现权限提升。\n修复版本中通过在权限定义中为该权限补充 restrict access: true 元数据完成修复，Drupal 权限界面据此将该权限标记为受限权限并向管理员展示警告提示，明确该权限允许编写具有安全影响的 Twig 模板，避免权限被误授予低信任角色，切断由此形成的权限提升路径。",
+    "effects": [
+      {
+        "comp_name": "drupal/content_moderation_notifications",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[0.0.0,3.9.0)",
+            "min_fixed_version": "3.9.0",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "特权定义了不安全动作",
+    "kind_en": "Privilege Defined With Unsafe Actions",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-6rct-75dk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6rct-75dk",
+        "name": "https://www.oscs1024.com/hd/MPS-6rct-75dk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81161",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81161"
+      },
+      {
+        "url": "https://www.drupal.org/sa-contrib-2026-107",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Content Moderation Notifications 权限提升漏洞"
+  },
+  "first_saved_at": "2026-09-02T14:53:24+00:00"
+}
