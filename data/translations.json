@@ -1279,5 +1279,19 @@
   "0b19bede3c7b75be349dbff6098dd3b11575a53b": "Simple Ajax Chat存储型XSS",
   "3c5d2c8a15a8165d71e8dc4d5feed846078a87ea": "Drupal ldap_auth LDAP注入漏洞",
   "4526cda005a7e4c1660cb1e43d3120787019dbcd": "Content Moderation Notifications 权限提升漏洞",
-  "ec76d8101fa6d0348a46c87e70f4d8a4f816aabb": "使用不安全操作定义的权限"
+  "ec76d8101fa6d0348a46c87e70f4d8a4f816aabb": "使用不安全操作定义的权限",
+  "9eef8faa628479015be1c2259798e366e2e19c57": "CVE-2026-84811漏洞",
+  "bb5841b79c798990d67517de1526d49d481f2268": "agentverus-scanner 无法分析配套代码目录中已编译的 Python 字节码文件，从而允许攻击者通过将恶意 __pycache__ 条目与良性源文件一起传送来绕过安全扫描。攻击者可以在导入时执行任意 Python 字节码，而扫描器会在静态和语义分析模式下报告具有高信任分数的 CERTIFIED 判决。",
+  "1737290f723dd256134b8cfd85e45827c767bf74": "CVE-2026-84810漏洞",
+  "14b375ef23e76a1ad35d213e733c56217c05542e": "claude-skill-antivirus 在扫描本地技能目录时无法分析可执行文件，仅读取 SKILL.md，而忽略脚本目录中的 Python 源代码、字节码和其他工件。攻击者可以在非清单文件中分发包含恶意代码的技能，尽管包含未分析的可执行有效负载，但这些文件仍会收到信任分数为 100/100 的 SAFE 判定。",
+  "a905b80aa7b3f8751c9bc6b99fb2a96df91de5d8": "CVE-2026-84809漏洞",
+  "740c3666a701aba7d0398941e4ad99cc6ea6a1de": "腾讯 AI-Infra-Guard 的技能扫描组件通过将 __pycache__ 目录和 .pyc/.pyo/.pyd 扩展名硬编码到多个扫描表面的跳过列表中，将已编译的 Python 字节码文件排除在分析之外。攻击者可以使用良性 Python 源文件以及恶意编译的字节码来分发技能，这些字节码在导入时执行，同时扫描器报告安全结论，从而在操作员安装技能时启用代码执行。",
+  "6787514329974ece966a339eb9798e849131462a": "CVE-2026-82404漏洞",
+  "2d237fad7a499dbb4a79eb28e48490269a39042b": "TOON 是 LLM 提示的紧凑、人类可读的 JSON 数据序列化。在 2.3.1 之前，使用 __proto__、构造函数或原型键解码攻击者控制的 TOON，通过对象原型链写入而不是创建自己的属性，从而污染运行时的 Object.prototype。在 packages/toon/src/decode/expand.ts 中，expandPaths: 'safe' 路径和 insertPathSafe 函数使点键（例如 a.__proto__.x）成为最强向量，而普通嵌套对象、表格行、带引号的键和流式解码也受到影响。编码器还删除了自己的 __proto__ 属性，并可以在规范化期间调用继承的 setter。解码不受信任的 TOON 的服务可能会遇到拒绝服务，或者当存在合适的下游小工具时，可能会遇到远程代码执行。此问题已在 2.3.1 版本中修复。",
+  "c8c0877c3bd4f24eabf7589e30132cb92327d984": "CVE-2026-79756漏洞",
+  "898bf1d226e0bd682558bf1bba21e7f7c1e4472b": "Nuclio 是一个用于实时事件和数据处理的“无服务器”框架。在版本 1.17.4 之前，本地/Docker 平台上 nuclio 仪表板中未经身份验证的操作系统命令注入的修复不完整。该修复为函数名称添加了 validateFunctionName，为命名资源 shell 命令路径添加了 common.Quote()，但列出所有资源路径（在未提供特定资源名称时触发）仍然会将不带引号的 resourceNamespace 参数插入到 /bin/sh -c 命令字符串中。未经身份验证的攻击者可以通过 X-Nuclio-Function-Namespace、X-Nuclio-Project-Namespace 或 X-Nuclio-Function-Event-Namespace HTTP 标头注入 shell 元字符，以在仪表板容器内实现任意命令执行。该问题已在1.17.4版本中修复。",
+  "2c067f28bb1c07131c7a781150c2d64be5ffb539": "CVE-2026-79755漏洞",
+  "d3a135959ba24bb4fe2a8631d4db75cdeba47480": "Nuclio 是一个用于实时事件和数据处理的“无服务器”框架。在版本 1.17.4 之前，在 Nuclio 本地 Docker 平台上，函数命名空间被插入（未经验证）到通过主机 shell (/bin/sh -c) 执行的双引号 docker ps --filter \"label=nuclio.io/namespace=<value>\" 命令中。由于默认的身份验证类型是 nop（未经身份验证），因此远程攻击者可以注入以 root 身份在仪表板容器内运行的任意操作系统命令，该容器保存着 Docker 套接字 → 主机妥协。该问题已在1.17.4版本中修复。",
+  "7f1522d9db2b7a07e5277b1bb94152bc2dff2bf8": "CVE-2026-79754漏洞",
+  "73bce9b2bc956eab06dcd0d1b3d296b5ff0bbd0c": "Nuclio 是一个用于实时事件和数据处理的“无服务器”框架。从版本 1.6.19 到版本 1.17.2 之前，Nuclio 的 Dashboard 构建管道在使用 spec.build.tempDir 字段构建 shell 命令之前不会对其进行清理。启用 Kaniko 容器构建器后，具有函数创建权限的用户可以将 shell 元字符注入此字段，并在 Dashboard 容器内实现任意命令执行，该容器使用 Kubernetes 服务帐户运行，该帐户持有对其命名空间中的 Secret、Pod、作业和部署的通配符访问权限。该问题已在1.17.2版本中修复。"
 }
