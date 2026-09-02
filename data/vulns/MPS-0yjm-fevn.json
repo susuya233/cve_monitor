@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-09-02T00:47:05+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0yjm-fevn",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84480",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-613",
+    "description": "WWBN AVideo 是开源音视频平台，用于自建视频网站、直播与内容分发。\n受影响版本中，密码重置接口 objects/userRecoverPassSave.json.php 只把 POST 参数 recoverPassword 与 User::getRecoverPass() 的存储值做字符串比较，没有调用 checkRecoverPass()，因此不会进入 isRecoverPassValid() 去检查 createRecoverPass() 写入的 $json->valid（默认 86400 秒）。攻击者只要获得历史恢复令牌，便可以在过期后继续重置目标账户密码并接管账户，用户自行改密也不会清除该令牌。\n修复版本中通过把该接口改为调用 checkRecoverPass($_POST['recoverPassword'])，使重置密码路径必须通过 isRecoverPassValid() 的 time() < $json->valid 校验，并把所有权判断从 $this->id < $json->id 改为 (int)$this->id === (int)$json->id，从而拒绝过期令牌。该修复已合入上游 master 提交 7ce2ff9a254b，官方尚未发布包含该提交的版本号。",
+    "effects": [
+      {
+        "comp_name": "wwbn/avideo",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,29.0]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不充分的会话过期机制",
+    "kind_en": "会话过期时间不足",
+    "last_modified_time": "2026-09-02",
+    "level": "Critical",
+    "mps_id": "MPS-0yjm-fevn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0yjm-fevn",
+        "name": "https://www.oscs1024.com/hd/MPS-0yjm-fevn"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84480",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84480"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo/security/advisories/GHSA-j9p7-hm85-9v77",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wwbn-avideo-password-recovery-token-expiration-bypass",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "AVideo恢复令牌不过期",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84480",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-613",
+    "description": "WWBN AVideo 是开源音视频平台，用于自建视频网站、直播与内容分发。\n受影响版本中，密码重置接口 objects/userRecoverPassSave.json.php 只把 POST 参数 recoverPassword 与 User::getRecoverPass() 的存储值做字符串比较，没有调用 checkRecoverPass()，因此不会进入 isRecoverPassValid() 去检查 createRecoverPass() 写入的 $json->valid（默认 86400 秒）。攻击者只要获得历史恢复令牌，便可以在过期后继续重置目标账户密码并接管账户，用户自行改密也不会清除该令牌。\n修复版本中通过把该接口改为调用 checkRecoverPass($_POST['recoverPassword'])，使重置密码路径必须通过 isRecoverPassValid() 的 time() < $json->valid 校验，并把所有权判断从 $this->id < $json->id 改为 (int)$this->id === (int)$json->id，从而拒绝过期令牌。该修复已合入上游 master 提交 7ce2ff9a254b，官方尚未发布包含该提交的版本号。",
+    "effects": [
+      {
+        "comp_name": "wwbn/avideo",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,29.0]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不充分的会话过期机制",
+    "kind_en": "Insufficient Session Expiration",
+    "last_modified_time": "2026-09-02",
+    "level": "Critical",
+    "mps_id": "MPS-0yjm-fevn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0yjm-fevn",
+        "name": "https://www.oscs1024.com/hd/MPS-0yjm-fevn"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84480",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84480"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo/security/advisories/GHSA-j9p7-hm85-9v77",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wwbn-avideo-password-recovery-token-expiration-bypass",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "AVideo恢复令牌不过期"
+  },
+  "first_saved_at": "2026-09-02T00:47:05+00:00"
+}

@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-09-02T00:47:04+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ykzg-nvq5",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84482",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-346",
+    "description": "WWBN AVideo 是开源音视频平台，用于自建点播、直播与广播站点。\n受影响版本中，objects/functions.php 内 get_domain() 使用正则 (?P<domain>[a-z0-9][a-z0-9\\-]{1,63}\\.[a-z\\.]{2,6})$ 提取主机，会把兄弟子域折叠为同一父域，并在长 gTLD 等无法解析的主机上返回 false；isSameDomain() 以 === 比较两侧结果，使 false === false 被判定为同源。requestComesFromSameDomainAsMyAVideo() 把 Referer 或 Origin 送入该比较，作为 autoCSRFGuard 与 ObjectYPT::save()/delete() 的真实性门禁。攻击者可从兄弟子域或不可解析来源伪造已登录管理员的 ObjectYPT 写入，包括新增 live_servers 配置。\n修复版本中通过改写 isSameDomain()，在任一侧 get_domain() 结果为空时返回 false，并将 get_domain() 改为返回完整小写主机名，阻断兄弟子域折叠与解析失败即放行。官方公告尚未给出发行修复版本；GitHub 仓库 master 已合入提交 8cad029f29f61878f8f2ff99a4e49733e96fa044。",
+    "effects": [
+      {
+        "comp_name": "wwbn/avideo",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,9c39d8c8b4c1f75540788d6b391740852ceb0732]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "源验证错误",
+    "kind_en": "来源验证错误",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-ykzg-nvq5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ykzg-nvq5",
+        "name": "https://www.oscs1024.com/hd/MPS-ykzg-nvq5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84482",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84482"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo/security/advisories/GHSA-jm6j-xqvq-r8p5",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wwbn-avideo-cross-site-request-forgery-via-get-domain-validation",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "AVideo域校验CSRF漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84482",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-346",
+    "description": "WWBN AVideo 是开源音视频平台，用于自建点播、直播与广播站点。\n受影响版本中，objects/functions.php 内 get_domain() 使用正则 (?P<domain>[a-z0-9][a-z0-9\\-]{1,63}\\.[a-z\\.]{2,6})$ 提取主机，会把兄弟子域折叠为同一父域，并在长 gTLD 等无法解析的主机上返回 false；isSameDomain() 以 === 比较两侧结果，使 false === false 被判定为同源。requestComesFromSameDomainAsMyAVideo() 把 Referer 或 Origin 送入该比较，作为 autoCSRFGuard 与 ObjectYPT::save()/delete() 的真实性门禁。攻击者可从兄弟子域或不可解析来源伪造已登录管理员的 ObjectYPT 写入，包括新增 live_servers 配置。\n修复版本中通过改写 isSameDomain()，在任一侧 get_domain() 结果为空时返回 false，并将 get_domain() 改为返回完整小写主机名，阻断兄弟子域折叠与解析失败即放行。官方公告尚未给出发行修复版本；GitHub 仓库 master 已合入提交 8cad029f29f61878f8f2ff99a4e49733e96fa044。",
+    "effects": [
+      {
+        "comp_name": "wwbn/avideo",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,9c39d8c8b4c1f75540788d6b391740852ceb0732]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "源验证错误",
+    "kind_en": "Origin Validation Error",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-ykzg-nvq5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ykzg-nvq5",
+        "name": "https://www.oscs1024.com/hd/MPS-ykzg-nvq5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84482",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84482"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo/security/advisories/GHSA-jm6j-xqvq-r8p5",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wwbn-avideo-cross-site-request-forgery-via-get-domain-validation",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "AVideo域校验CSRF漏洞"
+  },
+  "first_saved_at": "2026-09-02T00:47:04+00:00"
+}

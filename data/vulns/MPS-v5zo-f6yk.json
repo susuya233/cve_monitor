@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-09-02T00:47:03+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-v5zo-f6yk",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84479",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-290",
+    "description": "AVideo（WWBN/AVideo）是开源音视频平台，可用于自建点播、直播与频道站点。\n受影响版本中，登录阶段的三项安全控制只依赖客户端 User-Agent。objects/functionsAVideo.php 里的 isAVideoEncoder() 与 isAVideoMobileApp() 将 HTTP_USER_AGENT 与公开硬编码字面量 AVideoEncoder、AVideoMobileApp 做正则匹配，没有 IP 校验或共享密钥。攻击者在提交有效凭证的同时设置 User-Agent: AVideoEncoder，即可让 User::login 跳过暴力破解验证码升级，并让 LoginControl::onUserSignIn 提前返回，从而绕过双因子认证且不写入登录/设备审计记录。\n修复版本中通过取消登录路径对 User-Agent 的信任来恢复上述控制。官方尚未发布修复版本；GitHub Security Advisory 所附建议补丁从 User::login 与 LoginControl::onUserSignIn 中移除 isAVideoEncoder()/isAVideoMobileApp() 豁免，并将 2FA 邮件发送失败改为失败关闭。在上游合入并发布前，应在反向代理或 WAF 侧拒绝不可信来源使用上述 User-Agent。",
+    "effects": [
+      {
+        "comp_name": "AVideo",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,e01e41ecc]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,29.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用欺骗进行的认证绕过",
+    "kind_en": "通过欺骗绕过身份验证",
+    "last_modified_time": "2026-09-02",
+    "level": "Critical",
+    "mps_id": "MPS-v5zo-f6yk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-v5zo-f6yk",
+        "name": "https://www.oscs1024.com/hd/MPS-v5zo-f6yk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84479",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84479"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo/security/advisories/GHSA-m9m3-gwh2-337c",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wwbn-avideo-authentication-bypass-via-user-agent-header",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "AVideo认证绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84479",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-290",
+    "description": "AVideo（WWBN/AVideo）是开源音视频平台，可用于自建点播、直播与频道站点。\n受影响版本中，登录阶段的三项安全控制只依赖客户端 User-Agent。objects/functionsAVideo.php 里的 isAVideoEncoder() 与 isAVideoMobileApp() 将 HTTP_USER_AGENT 与公开硬编码字面量 AVideoEncoder、AVideoMobileApp 做正则匹配，没有 IP 校验或共享密钥。攻击者在提交有效凭证的同时设置 User-Agent: AVideoEncoder，即可让 User::login 跳过暴力破解验证码升级，并让 LoginControl::onUserSignIn 提前返回，从而绕过双因子认证且不写入登录/设备审计记录。\n修复版本中通过取消登录路径对 User-Agent 的信任来恢复上述控制。官方尚未发布修复版本；GitHub Security Advisory 所附建议补丁从 User::login 与 LoginControl::onUserSignIn 中移除 isAVideoEncoder()/isAVideoMobileApp() 豁免，并将 2FA 邮件发送失败改为失败关闭。在上游合入并发布前，应在反向代理或 WAF 侧拒绝不可信来源使用上述 User-Agent。",
+    "effects": [
+      {
+        "comp_name": "AVideo",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,e01e41ecc]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,29.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用欺骗进行的认证绕过",
+    "kind_en": "Authentication Bypass by Spoofing",
+    "last_modified_time": "2026-09-02",
+    "level": "Critical",
+    "mps_id": "MPS-v5zo-f6yk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-v5zo-f6yk",
+        "name": "https://www.oscs1024.com/hd/MPS-v5zo-f6yk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84479",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84479"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo/security/advisories/GHSA-m9m3-gwh2-337c",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wwbn-avideo-authentication-bypass-via-user-agent-header",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "AVideo认证绕过漏洞"
+  },
+  "first_saved_at": "2026-09-02T00:47:03+00:00"
+}

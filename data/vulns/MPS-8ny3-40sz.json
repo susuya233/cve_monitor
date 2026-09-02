@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-09-02T00:47:06+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-8ny3-40sz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84476",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-290",
+    "description": "WWBN AVideo 是开源视频托管与直播平台，用于自建视频站点与广播网络。\n受影响版本中，objects/functions.php 的 getRealIpAddr() 在 REMOTE_ADDR 为私网或回环地址时，会直接采信请求头 X-Real-IP 或 X-Forwarded-For，且未校验来源是否为受信任代理；getForwardedClientIpFromServerArray() 还优先返回调用方注入的首个合法 IPv4。objects/login.json.php 在校验凭据前调用 enforceRateLimit('login', 30, 300)，而限流键由 getRealIpAddr() 拼接。攻击者可对每次登录请求轮换伪造头，使计数分散到不同桶，绕过登录限流并无限制猜测账户口令。\n修复版本中通过新增 isRequestFromTrustedProxy()，将 getRealIpAddr() 读取转发头的条件从 isPrivateOrLoopbackIP($remoteAddr) 改为仅当 REMOTE_ADDR 位于 $global['trustedProxies'] 时才采信转发地址，并拒绝由转发头得到的回环地址，使未列入信任列表的客户端无法再指定限流键。",
+    "effects": [
+      {
+        "comp_name": "AVideo",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,29.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用欺骗进行的认证绕过",
+    "kind_en": "通过欺骗绕过身份验证",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-8ny3-40sz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8ny3-40sz",
+        "name": "https://www.oscs1024.com/hd/MPS-8ny3-40sz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84476",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84476"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo/security/advisories/GHSA-gg65-574p-h4wc",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wwbn-avideo-authentication-bypass-via-x-real-ip-header",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "AVideo IP伪造绕过限流",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84476",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-290",
+    "description": "WWBN AVideo 是开源视频托管与直播平台，用于自建视频站点与广播网络。\n受影响版本中，objects/functions.php 的 getRealIpAddr() 在 REMOTE_ADDR 为私网或回环地址时，会直接采信请求头 X-Real-IP 或 X-Forwarded-For，且未校验来源是否为受信任代理；getForwardedClientIpFromServerArray() 还优先返回调用方注入的首个合法 IPv4。objects/login.json.php 在校验凭据前调用 enforceRateLimit('login', 30, 300)，而限流键由 getRealIpAddr() 拼接。攻击者可对每次登录请求轮换伪造头，使计数分散到不同桶，绕过登录限流并无限制猜测账户口令。\n修复版本中通过新增 isRequestFromTrustedProxy()，将 getRealIpAddr() 读取转发头的条件从 isPrivateOrLoopbackIP($remoteAddr) 改为仅当 REMOTE_ADDR 位于 $global['trustedProxies'] 时才采信转发地址，并拒绝由转发头得到的回环地址，使未列入信任列表的客户端无法再指定限流键。",
+    "effects": [
+      {
+        "comp_name": "AVideo",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,29.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用欺骗进行的认证绕过",
+    "kind_en": "Authentication Bypass by Spoofing",
+    "last_modified_time": "2026-09-02",
+    "level": "High",
+    "mps_id": "MPS-8ny3-40sz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8ny3-40sz",
+        "name": "https://www.oscs1024.com/hd/MPS-8ny3-40sz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84476",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84476"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo/security/advisories/GHSA-gg65-574p-h4wc",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wwbn-avideo-authentication-bypass-via-x-real-ip-header",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "AVideo IP伪造绕过限流"
+  },
+  "first_saved_at": "2026-09-02T00:47:06+00:00"
+}

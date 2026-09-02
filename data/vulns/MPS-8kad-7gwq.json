@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-08-30T17:07:02+00:00",
+  "saved_at": "2026-09-02T00:47:07+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-omxe-ba5y",
+  "source_page": "https://www.oscs1024.com/hd/MPS-8kad-7gwq",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,7 +21,7 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-82655",
+    "cve_id": "CVE-2026-84208",
     "cvss": {
       "cvssv31": [
         {
@@ -43,15 +43,15 @@
     "cvss_score": 8.7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-89",
-    "description": "Admidio 是 PHP 语言开发的开源会员管理系统，面向组织与团体提供用户、角色与权限管理能力，可通过 Composer 以 admidio/admidio 包安装部署。\n受影响版本中，模块页面 modules/groups-roles/lists_show.php 加载 system/common.php 后未校验登录状态，其读取 GET 参数 relation_type_list 并未经格式校验即拆分为数组传入 ListConfiguration，getSQL 方法在该文件第 989 行至第 996 行将数组元素以单引号包裹拼接进 urt_uuid IN (...) 子句并以空参数数组执行查询，攻击者可利用反斜杠转义闭合单引号注入任意 SQL，并借助子查询报错与正常响应的差异形成布尔盲注；配合 role_list 传入格式合法但不存在的 UUID 时角色权限检查不会执行，未认证攻击者可读取包括用户密码哈希在内的全部数据库内容。\n修复版本中通过在 lists_show.php 中对 relation_type_list 的每个元素执行 Uuid::isValid 校验、遇到非法 UUID 直接抛出异常终止请求，并将 role_list 对非法值的静默剔除改为抛出异常，非 UUID 字符无法进入 SQL 拼接点，注入路径被切断，修复版本 5.0.12 已发布。",
+    "description": "AVideo 是 WWBN 维护的开源音视频平台（Composer 包 wwbn/avideo），用于自建直播、点播与内容分发，User_Location 插件提供基于 IP 的地理位置识别。\n受影响版本中，plugin/User_Location/regions.json.php 与 cities.json.php 无认证校验，将 GET 参数 country、region 传入 IP2Location::getRegions() 与 getCities()，并以 country_name = '{$country_name}'、region_name = '{$region_name}' 拼入查询后调用 sqlDAL::readSql($sql)。未绑定占位符导致攻击者可用 UNION 注入读取 users 密码哈希及其他库数据。\n修复版本中通过把上述语句改为 country_name = ? 与 region_name = ?，并分别以 sqlDAL::readSql($sql, 's', [$country_name]) 与 sqlDAL::readSql($sql, 'ss', [$country_name, $region_name]) 绑定参数，使外部输入不再进入 SQL 文本，切断未认证读取。",
     "effects": [
       {
-        "comp_name": "admidio/admidio",
+        "comp_name": "wwbn/avideo",
         "ecosystem": "composer",
         "versions": [
           {
-            "affected_version": "(-∞,5.0.12)",
-            "min_fixed_version": "5.0.12",
+            "affected_version": "(-∞,29.0]",
+            "min_fixed_version": "",
             "repository": "composer",
             "solutions": [],
             "upstream": true
@@ -62,32 +62,32 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "SQL注入",
     "kind_en": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
-    "last_modified_time": "2026-08-30",
+    "last_modified_time": "2026-09-02",
     "level": "High",
-    "mps_id": "MPS-omxe-ba5y",
+    "mps_id": "MPS-8kad-7gwq",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-30",
+    "published_time": "2026-09-02",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-omxe-ba5y",
-        "name": "https://www.oscs1024.com/hd/MPS-omxe-ba5y"
+        "url": "https://www.oscs1024.com/hd/MPS-8kad-7gwq",
+        "name": "https://www.oscs1024.com/hd/MPS-8kad-7gwq"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82655",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82655"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84208",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84208"
       },
       {
-        "url": "https://github.com/Admidio/admidio/security/advisories/GHSA-p5cp-mhvx-w392",
+        "url": "https://github.com/WWBN/AVideo/security/advisories/GHSA-xj29-cg44-33q6",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/admidio-before-5.0.12-sql-injection-via-relation-type-list",
+        "url": "https://www.vulncheck.com/advisories/avideo-user-location-plugin-unauthenticated-sql-injection",
         "name": ""
       }
     ],
@@ -96,7 +96,7 @@
       "php",
       "开源"
     ],
-    "title": "Admidio SQL注入漏洞",
+    "title": "AVideo SQL注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -116,7 +116,7 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-82655",
+    "cve_id": "CVE-2026-84208",
     "cvss": {
       "cvssv31": [
         {
@@ -138,15 +138,15 @@
     "cvss_score": 8.7,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-89",
-    "description": "Admidio 是 PHP 语言开发的开源会员管理系统，面向组织与团体提供用户、角色与权限管理能力，可通过 Composer 以 admidio/admidio 包安装部署。\n受影响版本中，模块页面 modules/groups-roles/lists_show.php 加载 system/common.php 后未校验登录状态，其读取 GET 参数 relation_type_list 并未经格式校验即拆分为数组传入 ListConfiguration，getSQL 方法在该文件第 989 行至第 996 行将数组元素以单引号包裹拼接进 urt_uuid IN (...) 子句并以空参数数组执行查询，攻击者可利用反斜杠转义闭合单引号注入任意 SQL，并借助子查询报错与正常响应的差异形成布尔盲注；配合 role_list 传入格式合法但不存在的 UUID 时角色权限检查不会执行，未认证攻击者可读取包括用户密码哈希在内的全部数据库内容。\n修复版本中通过在 lists_show.php 中对 relation_type_list 的每个元素执行 Uuid::isValid 校验、遇到非法 UUID 直接抛出异常终止请求，并将 role_list 对非法值的静默剔除改为抛出异常，非 UUID 字符无法进入 SQL 拼接点，注入路径被切断，修复版本 5.0.12 已发布。",
+    "description": "AVideo 是 WWBN 维护的开源音视频平台（Composer 包 wwbn/avideo），用于自建直播、点播与内容分发，User_Location 插件提供基于 IP 的地理位置识别。\n受影响版本中，plugin/User_Location/regions.json.php 与 cities.json.php 无认证校验，将 GET 参数 country、region 传入 IP2Location::getRegions() 与 getCities()，并以 country_name = '{$country_name}'、region_name = '{$region_name}' 拼入查询后调用 sqlDAL::readSql($sql)。未绑定占位符导致攻击者可用 UNION 注入读取 users 密码哈希及其他库数据。\n修复版本中通过把上述语句改为 country_name = ? 与 region_name = ?，并分别以 sqlDAL::readSql($sql, 's', [$country_name]) 与 sqlDAL::readSql($sql, 'ss', [$country_name, $region_name]) 绑定参数，使外部输入不再进入 SQL 文本，切断未认证读取。",
     "effects": [
       {
-        "comp_name": "admidio/admidio",
+        "comp_name": "wwbn/avideo",
         "ecosystem": "composer",
         "versions": [
           {
-            "affected_version": "(-∞,5.0.12)",
-            "min_fixed_version": "5.0.12",
+            "affected_version": "(-∞,29.0]",
+            "min_fixed_version": "",
             "repository": "composer",
             "solutions": [],
             "upstream": true
@@ -157,32 +157,32 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "SQL注入",
     "kind_en": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
-    "last_modified_time": "2026-08-30",
+    "last_modified_time": "2026-09-02",
     "level": "High",
-    "mps_id": "MPS-omxe-ba5y",
+    "mps_id": "MPS-8kad-7gwq",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-08-30",
+    "published_time": "2026-09-02",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-omxe-ba5y",
-        "name": "https://www.oscs1024.com/hd/MPS-omxe-ba5y"
+        "url": "https://www.oscs1024.com/hd/MPS-8kad-7gwq",
+        "name": "https://www.oscs1024.com/hd/MPS-8kad-7gwq"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82655",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82655"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84208",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84208"
       },
       {
-        "url": "https://github.com/Admidio/admidio/security/advisories/GHSA-p5cp-mhvx-w392",
+        "url": "https://github.com/WWBN/AVideo/security/advisories/GHSA-xj29-cg44-33q6",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/admidio-before-5.0.12-sql-injection-via-relation-type-list",
+        "url": "https://www.vulncheck.com/advisories/avideo-user-location-plugin-unauthenticated-sql-injection",
         "name": ""
       }
     ],
@@ -191,7 +191,7 @@
       "php",
       "开源"
     ],
-    "title": "Admidio SQL注入漏洞"
+    "title": "AVideo SQL注入漏洞"
   },
-  "first_saved_at": "2026-08-30T17:07:02+00:00"
+  "first_saved_at": "2026-09-02T00:47:07+00:00"
 }
