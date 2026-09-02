@@ -1,0 +1,177 @@
+{
+  "saved_at": "2026-09-02T21:30:08+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4wzm-i9cu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84292",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ce714d77-add3-4f53-aff5-83d477b104bb",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+    "cwe": "CWE-116",
+    "description": "fast-uri 是 fastify 组织开源的零依赖 RFC 3986 URI 处理库（npm 包 fast-uri），提供 serialize、parse、normalize、equal、resolve 等 URI 组装、解析与比较能力，被 Node.js 生态大量服务端组件用于构造内部与外部请求地址。\n受影响版本中，serialize() 组装 authority 时对 userinfo 与 host 做了转义，而 lib/utils.js 的 recomposeAuthority() 将 port 值直接字符串拼接进结果，未按 RFC 3986 校验其是否为纯数字序列。应用以固定 host 配合来自用户输入或服务注册记录的 port 构造 URI 时，攻击者可让 port 携带 @127.0.0.1:8124 之类的值，使序列化结果变为 http://trusted.example:@127.0.0.1:8124/app，原 host 被降级为 userinfo，authority 实际指向攻击者控制的主机；fast-uri 与 Node 的 URL 回读该结果时均不报错，应用对生成 URI 的再校验无法发现异常，请求会发往攻击者主机。\n修复版本中通过在 recomposeAuthority() 中新增 isPort（/^\\d*$/）校验切断该链路，port 不是数字序列时抛出 TypeError: URI port is malformed.，拒绝完成序列化，修复随 4.1.4、3.1.7、2.4.6 覆盖 v4、v3、v2 三条支持线发布。",
+    "effects": [
+      {
+        "comp_name": "fast-uri",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[3.0.0,3.1.7)",
+            "min_fixed_version": "3.1.7",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.1.4)",
+            "min_fixed_version": "4.1.4",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.6)",
+            "min_fixed_version": "2.4.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对输出编码和转义不恰当",
+    "kind_en": "输出编码或转义不当",
+    "last_modified_time": "2026-09-03",
+    "level": "High",
+    "mps_id": "MPS-4wzm-i9cu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4wzm-i9cu",
+        "name": "https://www.oscs1024.com/hd/MPS-4wzm-i9cu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84292",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84292"
+      },
+      {
+        "url": "https://cna.openjsf.org/security-advisories.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-qw65-cvwx-89v3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "fast-uri 端口注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84292",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ce714d77-add3-4f53-aff5-83d477b104bb",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+    "cwe": "CWE-116",
+    "description": "fast-uri 是 fastify 组织开源的零依赖 RFC 3986 URI 处理库（npm 包 fast-uri），提供 serialize、parse、normalize、equal、resolve 等 URI 组装、解析与比较能力，被 Node.js 生态大量服务端组件用于构造内部与外部请求地址。\n受影响版本中，serialize() 组装 authority 时对 userinfo 与 host 做了转义，而 lib/utils.js 的 recomposeAuthority() 将 port 值直接字符串拼接进结果，未按 RFC 3986 校验其是否为纯数字序列。应用以固定 host 配合来自用户输入或服务注册记录的 port 构造 URI 时，攻击者可让 port 携带 @127.0.0.1:8124 之类的值，使序列化结果变为 http://trusted.example:@127.0.0.1:8124/app，原 host 被降级为 userinfo，authority 实际指向攻击者控制的主机；fast-uri 与 Node 的 URL 回读该结果时均不报错，应用对生成 URI 的再校验无法发现异常，请求会发往攻击者主机。\n修复版本中通过在 recomposeAuthority() 中新增 isPort（/^\\d*$/）校验切断该链路，port 不是数字序列时抛出 TypeError: URI port is malformed.，拒绝完成序列化，修复随 4.1.4、3.1.7、2.4.6 覆盖 v4、v3、v2 三条支持线发布。",
+    "effects": [
+      {
+        "comp_name": "fast-uri",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[3.0.0,3.1.7)",
+            "min_fixed_version": "3.1.7",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.1.4)",
+            "min_fixed_version": "4.1.4",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.6)",
+            "min_fixed_version": "2.4.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对输出编码和转义不恰当",
+    "kind_en": "Improper Encoding or Escaping of Output",
+    "last_modified_time": "2026-09-03",
+    "level": "High",
+    "mps_id": "MPS-4wzm-i9cu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4wzm-i9cu",
+        "name": "https://www.oscs1024.com/hd/MPS-4wzm-i9cu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84292",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84292"
+      },
+      {
+        "url": "https://cna.openjsf.org/security-advisories.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-qw65-cvwx-89v3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "fast-uri 端口注入漏洞"
+  },
+  "first_saved_at": "2026-09-02T21:30:08+00:00"
+}
