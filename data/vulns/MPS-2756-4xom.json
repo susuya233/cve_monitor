@@ -1,0 +1,113 @@
+{
+  "saved_at": "2026-09-03T16:50:45+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2756-4xom",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85237",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-307",
+    "description": "MISP 基于电子邮件的一次性密码 (OTP) 身份验证流程中存在漏洞，允许攻击者执行不受限制次数的 OTP 验证尝试。\n\n\n在验证提交的 OTP 值时，email_otp() 端点未应用暴力保护。已达到 OTP 验证阶段的攻击者（例如，在成功提供用户的主要身份验证凭据后）可以重复提交候选 OTP 值，同时同一 OTP 仍然有效。这显着增加了猜测 OTP 并绕过额外身份验证因素的可能性，从而可能导致未经授权访问受影响用户的帐户。\n\n\n由于 OTP 与用户而不是与单个挂起的登录会话关联，从而允许多个并发会话尝试猜测同一有效 OTP，这一事实加剧了该问题。\n\n\n该补丁将现有的 MISP 暴力保护机制集成到电子邮件 OTP 流程中。现在，失败的 OTP 尝试会针对用户进行计数，一旦达到配置的阈值，进一步的尝试就会被拒绝，并且当尝试预算耗尽时，活动的 OTP 将失效。列入黑名单的用户也无法请求生成新的 OTP。此外，OTP 比较现在使用 hash_equals() 并验证提交的值是否为字符串。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "过多认证尝试的限制不恰当",
+    "kind_en": "对过多身份验证尝试的不当限制",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-2756-4xom",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2756-4xom",
+        "name": "https://www.oscs1024.com/hd/MPS-2756-4xom"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85237",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85237"
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/8658062ea",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-85237漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85237",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-307",
+    "description": "A vulnerability in MISP's email-based one-time password (OTP) authentication flow allowed an attacker to perform an unrestricted number of OTP verification attempts.\n\n\nThe email_otp() endpoint did not apply brute-force protection when validating submitted OTP values. An attacker who had reached the OTP verification stage, for example after successfully providing a user's primary authentication credentials, could repeatedly submit candidate OTP values while the same OTP remained valid. This significantly increased the feasibility of guessing the OTP and bypassing the additional authentication factor, potentially resulting in unauthorized access to the affected user's account.\n\n\nThe issue was exacerbated by the fact that the OTP is associated with the user rather than with an individual pending login session, allowing multiple concurrent sessions to attempt guesses against the same valid OTP.\n\n\nThe patch integrates the existing MISP brute-force protection mechanism into the email OTP flow. Failed OTP attempts are now counted against the user, further attempts are rejected once the configured threshold is reached, and the active OTP is invalidated when the attempt budget is exhausted. Blocklisted users are also prevented from requesting the generation of a fresh OTP. In addition, OTP comparison now uses hash_equals() and validates that the submitted value is a string.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "过多认证尝试的限制不恰当",
+    "kind_en": "Improper Restriction of Excessive Authentication Attempts",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-2756-4xom",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2756-4xom",
+        "name": "https://www.oscs1024.com/hd/MPS-2756-4xom"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85237",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85237"
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/8658062ea",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-85237漏洞"
+  },
+  "first_saved_at": "2026-09-03T16:50:45+00:00"
+}

@@ -1,0 +1,113 @@
+{
+  "saved_at": "2026-09-03T16:50:39+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2msn-i8ao",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85238",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-384",
+    "description": "MISP 在 CustomAuth 身份验证（自定义配置）流程中包含会话固定漏洞。当用户通过 CustomAuth 成功进行身份验证时，MISP 将经过身份验证的用户身份存储在现有会话中，而无需先轮换会话标识符。\n\n\n因此，如果攻击者可以使受害者在身份验证之前使用攻击者已知的会话标识符，则在受害者成功进行身份验证后，相同的会话标识符仍然有效。随后，攻击者可以重复使用固定会话标识符来访问受害者经过身份验证的 MISP 会话，从而可能获得与受害者帐户相关的特权。\n\n\n出现此问题的原因是 __customAuthentication() 将经过身份验证的用户写入现有的 CakePHP 会话，而对 Session->renew() 的调用之前已被禁用。当发生新的身份验证或经过身份验证的用户发生更改时，该补丁会恢复会话标识符轮换，同时避免每个请求上不必要的会话更新。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "会话固定",
+    "kind_en": "会话固定",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-2msn-i8ao",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2msn-i8ao",
+        "name": "https://www.oscs1024.com/hd/MPS-2msn-i8ao"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85238",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85238"
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/e2eb2f058",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-85238漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85238",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-384",
+    "description": "MISP contains a session fixation vulnerability in the CustomAuth authentication (a custom configuration) flow. When a user was successfully authenticated through CustomAuth, MISP stored the authenticated user identity in the existing session without first rotating the session identifier.\n\n\nAs a result, if an attacker can cause a victim to use a session identifier known to the attacker before authentication, that same session identifier remains valid after the victim successfully authenticates. The attacker could subsequently reuse the fixed session identifier to access the victim's authenticated MISP session, potentially gaining the privileges associated with the victim's account.\n\n\nThe issue occurs because __customAuthentication() wrote the authenticated user into the existing CakePHP session while the call to Session->renew() had previously been disabled. The patch restores session identifier rotation when a new authentication occurs or when the authenticated user changes, while avoiding unnecessary session renewal on every request.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "会话固定",
+    "kind_en": "Session Fixation",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-2msn-i8ao",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2msn-i8ao",
+        "name": "https://www.oscs1024.com/hd/MPS-2msn-i8ao"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85238",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85238"
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/e2eb2f058",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-85238漏洞"
+  },
+  "first_saved_at": "2026-09-03T16:50:39+00:00"
+}

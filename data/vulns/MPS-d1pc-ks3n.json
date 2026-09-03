@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-09-03T16:50:36+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d1pc-ks3n",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨站点请求伪造 (CSRF)通过利用网站对用户请求的信任进行攻击。当用户在网站A登录并在同一浏览器会话中访问网站B时，攻击者可以构造特制的请求并诱使用户执行，以使网站B误以为这些请求是用户合法发起的。\n攻击者通常通过欺骗用户点击恶意链接、在受信任的网站中植入恶意代码或通过钓鱼等手段来实施CSRF攻击，一旦用户执行了恶意请求，攻击者可以以用户的身份执行任意操作，包括更改用户密码、发起资金转账或删除重要数据等。",
+        "title": "什么是CSRF"
+      },
+      {
+        "content": "- 链接欺骗：攻击者通过向用户发送包含恶意链接的电子邮件或社交媒体消息，诱使用户点击并执行恶意请求。\n- 图片引用攻击：攻击者通过在恶意网站上包含指向目标网站的图片引用，以触发用户浏览器自动发送目标网站的请求。\n- XSS利用：如果目标网站存在XSS漏洞，攻击者可以注入恶意脚本，以使用户在浏览器中执行恶意请求。",
+        "title": "CSRF常见的攻击方式"
+      },
+      {
+        "content": "- 随机令牌：网站可以在每个请求中包含一个随机生成的令牌（CSRF Token），并验证该令牌的有效性，以确认请求的来源是合法的。\n- SameSite Cookie：使用SameSite属性来限制跨站点请求，将Cookie的发送限制在同一站点上，减少了跨站请求伪造的风险。\n- 双重验证：对于敏感操作，网站可以要求用户进行额外的验证，例如输入验证码、提供第二个因素的身份验证等。\n- 强化浏览器策略：网站可以设置Content-Security-Policy（CSP）头，限制浏览器执行恶意脚本的能力，减少CSRF攻击的风险。\n- 限制用户操作：网站可以要求用户在执行敏感操作之前进行明确的确认或授权，防止恶意请求被误触发。\n- 安全编码实践：开发人员应遵循安全编码实践，对用户输入进行适当的验证和过滤，防止恶意请求的注入。",
+        "title": "如何预防CSRF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85236",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-352",
+    "description": "MISP 的 cullEmptyEvents 操作中存在跨站点请求伪造 (CSRF) 漏洞。端点在接受 HTTP GET 请求时执行了状态更改且不可逆的操作。\n\n\n由于无正文 GET 请求不受 CakePHP 的 CSRF 验证的约束，因此攻击者只需通过使浏览器加载精心设计的 URL（例如通过嵌入的图像或其他自动请求的资源）即可使具有足够权限的经过身份验证的 MISP 用户调用端点。\n\n\n成功利用该漏洞会触发删除已发布的空事件。删除特别重要，因为该操作使用skipBlocklist，这意味着删除的事件不会留下可能阻止或跟踪其后续同步的块列表条目。这可能会导致在没有显式用户交互的情况下意外且可能不可逆转地删除 MISP 事件记录。\n\n\n该漏洞已通过将 cullEmptyEvents 限制为 HTTP POST 请求来解决，确保 CakePHP 的正常 CSRF 保护应用于该操作。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "CSRF",
+    "kind_en": "跨站请求伪造 (CSRF)",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-d1pc-ks3n",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-d1pc-ks3n",
+        "name": "https://www.oscs1024.com/hd/MPS-d1pc-ks3n"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85236",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85236"
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/2b6b3ac90",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/50106c9a0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/66ecb5acb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/9c1346ce1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/cfc8b8a6d",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-85236漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨站点请求伪造 (CSRF)通过利用网站对用户请求的信任进行攻击。当用户在网站A登录并在同一浏览器会话中访问网站B时，攻击者可以构造特制的请求并诱使用户执行，以使网站B误以为这些请求是用户合法发起的。\n攻击者通常通过欺骗用户点击恶意链接、在受信任的网站中植入恶意代码或通过钓鱼等手段来实施CSRF攻击，一旦用户执行了恶意请求，攻击者可以以用户的身份执行任意操作，包括更改用户密码、发起资金转账或删除重要数据等。",
+        "title": "什么是CSRF"
+      },
+      {
+        "content": "- 链接欺骗：攻击者通过向用户发送包含恶意链接的电子邮件或社交媒体消息，诱使用户点击并执行恶意请求。\n- 图片引用攻击：攻击者通过在恶意网站上包含指向目标网站的图片引用，以触发用户浏览器自动发送目标网站的请求。\n- XSS利用：如果目标网站存在XSS漏洞，攻击者可以注入恶意脚本，以使用户在浏览器中执行恶意请求。",
+        "title": "CSRF常见的攻击方式"
+      },
+      {
+        "content": "- 随机令牌：网站可以在每个请求中包含一个随机生成的令牌（CSRF Token），并验证该令牌的有效性，以确认请求的来源是合法的。\n- SameSite Cookie：使用SameSite属性来限制跨站点请求，将Cookie的发送限制在同一站点上，减少了跨站请求伪造的风险。\n- 双重验证：对于敏感操作，网站可以要求用户进行额外的验证，例如输入验证码、提供第二个因素的身份验证等。\n- 强化浏览器策略：网站可以设置Content-Security-Policy（CSP）头，限制浏览器执行恶意脚本的能力，减少CSRF攻击的风险。\n- 限制用户操作：网站可以要求用户在执行敏感操作之前进行明确的确认或授权，防止恶意请求被误触发。\n- 安全编码实践：开发人员应遵循安全编码实践，对用户输入进行适当的验证和过滤，防止恶意请求的注入。",
+        "title": "如何预防CSRF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85236",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-352",
+    "description": "A cross-site request forgery (CSRF) vulnerability existed in the cullEmptyEvents action of MISP. The endpoint performed a state-changing and irreversible operation while accepting HTTP GET requests.\n\n\nBecause bodyless GET requests are not subject to CakePHP's CSRF validation, an attacker could cause an authenticated MISP user with sufficient privileges to invoke the endpoint simply by causing their browser to load a crafted URL, for example through an embedded image or other automatically requested resource.\n\n\nSuccessful exploitation triggers the deletion of published empty events. The deletion is particularly significant because the operation uses skipBlocklist, meaning the removed events do not leave blocklist entries that could prevent or track their subsequent synchronization. This can result in unintended and potentially irreversible deletion of MISP event records without explicit user interaction.\n\n\nThe vulnerability was addressed by restricting cullEmptyEvents to HTTP POST requests, ensuring that CakePHP's normal CSRF protections are applied to the operation.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "CSRF",
+    "kind_en": "Cross-Site Request Forgery (CSRF)",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-d1pc-ks3n",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-d1pc-ks3n",
+        "name": "https://www.oscs1024.com/hd/MPS-d1pc-ks3n"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85236",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85236"
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/2b6b3ac90",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/50106c9a0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/66ecb5acb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/9c1346ce1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/cfc8b8a6d",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-85236漏洞"
+  },
+  "first_saved_at": "2026-09-03T16:50:36+00:00"
+}

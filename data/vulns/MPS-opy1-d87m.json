@@ -1,0 +1,113 @@
+{
+  "saved_at": "2026-09-03T16:50:42+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-opy1-d87m",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85239",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-20",
+    "description": "MISP 的事件模板处理中存在漏洞，允许具有创建或修改事件模板权限的经过身份验证的用户绕过模板定义字段的验证。\n\nEventTemplate::beforeValidate() 方法仅在提供的定义已表示为数组时执行语义验证。如果调用者提供了预编码字符串，包括格式错误的 JSON 或表示意外数据类型的 JSON，则该值会绕过 validateDefinition()，并且只需要满足通用 notBlank 验证规则。因此，无效的事件模板定义可能会永久存储在数据库中。\n\n随后检索事件模板时，EventTemplate::afterFind() 尝试使用 JsonTool::decode() 解码存储的定义，而不处理解码失败。因此，包含无效 JSON 的定义可能会在检索期间触发异常。由于事件模板索引可供所有经过身份验证的用户使用，因此单个恶意或格式错误的模板可能会使事件模板列表和依赖于 EventTemplate 查询的其他功能返回 HTTP 500 错误，直到手动修复有问题的数据库行。\n\n表示意外类型的有效 JSON（而不是预期的 JSON 对象）同样可能导致下游消费者收到无效数据。\n\n因此，能够保存事件模板以保留格式错误的模板数据的用户可以利用该漏洞，并导致其他用户持续拒绝针对事件模板功能的服务。\n\n该补丁强制要求事件模板定义在保存之前必须作为结构化对象提供，并且始终应用语义验证。检索时，格式错误的 JSON 和未解码为预期结构的定义将被捕获、记录并替换为空定义，从而防止格式错误的数据库条目破坏所有事件模板查询。\n\n 根据首席开发人员的说法，中毒似乎无法实现。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "输入验证不恰当",
+    "kind_en": "输入验证不当",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-opy1-d87m",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-opy1-d87m",
+        "name": "https://www.oscs1024.com/hd/MPS-opy1-d87m"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85239",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85239"
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/a90d552b3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-85239漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85239",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-20",
+    "description": "A vulnerability in MISP's event template handling allowed an authenticated user with permission to create or modify event templates to bypass validation of the template definition field.\n\nThe EventTemplate::beforeValidate() method only performed semantic validation when the supplied definition was already represented as an array. If a caller instead supplied a pre-encoded string, including malformed JSON or JSON representing an unexpected data type, the value bypassed validateDefinition() and only needed to satisfy the generic notBlank validation rule. As a result, an invalid event template definition could be stored persistently in the database.\n\nWhen event templates were subsequently retrieved, EventTemplate::afterFind() attempted to decode the stored definition using JsonTool::decode() without handling decoding failures. A definition containing invalid JSON could therefore trigger an exception during retrieval. Because the event template index is available to all authenticated users, a single malicious or malformed template could make the event template listing and other functionality relying on EventTemplate queries return HTTP 500 errors until the offending database row was manually repaired.\n\nValid JSON representing an unexpected type, rather than the expected JSON object, could similarly result in invalid data reaching downstream consumers.\n\nThe vulnerability can therefore be exploited by a user capable of saving event templates to persist malformed template data and cause a persistent denial of service against event-template functionality for other users.\n\nThe patch enforces that event template definitions must be supplied as structured objects before saving and always applies semantic validation. On retrieval, malformed JSON and definitions that do not decode to the expected structure are caught, logged, and replaced with an empty definition, preventing a malformed database entry from breaking all event template queries.\n\n Poisoning doesn't seem reachable according to the lead developer.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "输入验证不恰当",
+    "kind_en": "Improper Input Validation",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-opy1-d87m",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-opy1-d87m",
+        "name": "https://www.oscs1024.com/hd/MPS-opy1-d87m"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85239",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85239"
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/a90d552b3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-85239漏洞"
+  },
+  "first_saved_at": "2026-09-03T16:50:42+00:00"
+}
