@@ -1,0 +1,187 @@
+{
+  "saved_at": "2026-09-03T12:28:22+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-14a5-f407",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "由于整数类型的有限范围，在进行算术运算或操作时，结果可能超出类型的表示范围，导致溢出或环绕。溢出指的是结果超过了类型的最大值或小于了最小值，而环绕指的是结果绕回到类型的最小值或最大值。",
+        "title": "什么是整数溢出或环绕"
+      },
+      {
+        "content": "- 缓冲区溢出：整数溢出可能导致缓冲区溢出漏洞。当整数溢出导致分配的缓冲区大小不足以容纳结果时，攻击者可以利用这个漏洞覆盖相邻的内存区域，执行恶意代码或篡改程序的状态。\r\n- 身份验证绕过：在进行身份验证或访问控制时，整数溢出可能导致绕过验证的漏洞。攻击者可以构造特殊的输入，使溢出的整数值绕过了预期的验证逻辑，从而获得未经授权的访问权限。\r\n- 数据篡改：整数溢出可能导致数据篡改漏洞。攻击者可以通过使整数溢出，修改计数器、索引或其他控制数据的值，导致程序在处理数据时发生错误或执行意外的操作。",
+        "title": "整数溢出或环绕常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与限制：对用户输入的整数进行合理的验证和限制，确保其在允许的范围内。\r\n- 使用安全的整数操作函数：使用安全的整数操作函数，如`add_with_overflow()`、`sub_with_overflow()`、`mul_with_overflow()`等，这些函数会检查并处理溢出情况，确保计算结果在安全范围内。\r\n- 类型检查和转换：在进行整数运算或操作之前，进行类型检查和转换，确保操作数的类型和范围是合适的。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括对整数运算和操作的规范和限制，以帮助程序员编写更可靠、安全的代码。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的整数溢出问题。这些工具可以帮助发现代码中可能存在的溢出漏洞，并及时修复。",
+        "title": "如何预防整数溢出或环绕"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-59346",
+    "cvss": {},
+    "cvss_score": 9.3,
+    "cvss_vector": "",
+    "cwe": "CWE-190",
+    "description": "VMware Workstation 与 VMware Fusion 是 Broadcom 旗下的闭源商业桌面虚拟化产品，分别运行于 Windows/Linux 与 macOS 主机，用于在桌面环境中创建和管理虚拟机，其 VMXNET3 虚拟网卡由宿主机侧的 VMX 进程模拟。\n受影响版本中，VMXNET3 虚拟网络适配器的设备模型实现存在整数溢出缺陷，在客户机内拥有本地管理员权限的攻击者可经由该虚拟网卡向宿主机侧的设备模拟逻辑提交触发溢出的输入，破坏宿主机进程的内存状态，最终实现虚拟机逃逸并在宿主机上执行代码。VMXNET3 是两类产品支持的常用高性能半虚拟化网卡，攻击由客户机本地发起，无需网络可达性与宿主机侧用户交互。\n修复版本中通过发布 26H1u1 更新修复 VMXNET3 设备模型中的整数溢出缺陷，Workstation Pro 26H1u1 与 Fusion 26H1u1 的官方发布说明均确认解决该问题；Broadcom 同时声明无可用变通措施，需通过升级完成修复。",
+    "effects": [
+      {
+        "comp_name": "vmware_fusion",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[25H2,26H1u1)",
+            "min_fixed_version": "26H1u1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "vmware_workstation",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[25H2,26H1u1)",
+            "min_fixed_version": "26H1u1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "整数溢出或环绕",
+    "kind_en": "整数溢出或环绕",
+    "last_modified_time": "2026-09-03",
+    "level": "Critical",
+    "mps_id": "MPS-14a5-f407",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-03",
+    "reference_url_list": [
+      {
+        "url": "https://cybersecuritynews.com/vmware-workstation-and-fusion-vulnerabilities/",
+        "name": ""
+      },
+      {
+        "url": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/38288",
+        "name": ""
+      },
+      {
+        "url": "https://techdocs.broadcom.com/us/en/vmware-cis/desktop-hypervisors/workstation-pro/26H1/release-notes/vmware-workstation-pro-26h1u1-release-notes.html",
+        "name": ""
+      },
+      {
+        "url": "https://securityonline.info/vmware-cve-2026-59346-code-execution-host/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "VMware VMXNET3 整数溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "由于整数类型的有限范围，在进行算术运算或操作时，结果可能超出类型的表示范围，导致溢出或环绕。溢出指的是结果超过了类型的最大值或小于了最小值，而环绕指的是结果绕回到类型的最小值或最大值。",
+        "title": "什么是整数溢出或环绕"
+      },
+      {
+        "content": "- 缓冲区溢出：整数溢出可能导致缓冲区溢出漏洞。当整数溢出导致分配的缓冲区大小不足以容纳结果时，攻击者可以利用这个漏洞覆盖相邻的内存区域，执行恶意代码或篡改程序的状态。\r\n- 身份验证绕过：在进行身份验证或访问控制时，整数溢出可能导致绕过验证的漏洞。攻击者可以构造特殊的输入，使溢出的整数值绕过了预期的验证逻辑，从而获得未经授权的访问权限。\r\n- 数据篡改：整数溢出可能导致数据篡改漏洞。攻击者可以通过使整数溢出，修改计数器、索引或其他控制数据的值，导致程序在处理数据时发生错误或执行意外的操作。",
+        "title": "整数溢出或环绕常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与限制：对用户输入的整数进行合理的验证和限制，确保其在允许的范围内。\r\n- 使用安全的整数操作函数：使用安全的整数操作函数，如`add_with_overflow()`、`sub_with_overflow()`、`mul_with_overflow()`等，这些函数会检查并处理溢出情况，确保计算结果在安全范围内。\r\n- 类型检查和转换：在进行整数运算或操作之前，进行类型检查和转换，确保操作数的类型和范围是合适的。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括对整数运算和操作的规范和限制，以帮助程序员编写更可靠、安全的代码。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的整数溢出问题。这些工具可以帮助发现代码中可能存在的溢出漏洞，并及时修复。",
+        "title": "如何预防整数溢出或环绕"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-59346",
+    "cvss": {},
+    "cvss_score": 9.3,
+    "cvss_vector": "",
+    "cwe": "CWE-190",
+    "description": "VMware Workstation 与 VMware Fusion 是 Broadcom 旗下的闭源商业桌面虚拟化产品，分别运行于 Windows/Linux 与 macOS 主机，用于在桌面环境中创建和管理虚拟机，其 VMXNET3 虚拟网卡由宿主机侧的 VMX 进程模拟。\n受影响版本中，VMXNET3 虚拟网络适配器的设备模型实现存在整数溢出缺陷，在客户机内拥有本地管理员权限的攻击者可经由该虚拟网卡向宿主机侧的设备模拟逻辑提交触发溢出的输入，破坏宿主机进程的内存状态，最终实现虚拟机逃逸并在宿主机上执行代码。VMXNET3 是两类产品支持的常用高性能半虚拟化网卡，攻击由客户机本地发起，无需网络可达性与宿主机侧用户交互。\n修复版本中通过发布 26H1u1 更新修复 VMXNET3 设备模型中的整数溢出缺陷，Workstation Pro 26H1u1 与 Fusion 26H1u1 的官方发布说明均确认解决该问题；Broadcom 同时声明无可用变通措施，需通过升级完成修复。",
+    "effects": [
+      {
+        "comp_name": "vmware_fusion",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[25H2,26H1u1)",
+            "min_fixed_version": "26H1u1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "vmware_workstation",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[25H2,26H1u1)",
+            "min_fixed_version": "26H1u1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "整数溢出或环绕",
+    "kind_en": "Integer Overflow or Wraparound",
+    "last_modified_time": "2026-09-03",
+    "level": "Critical",
+    "mps_id": "MPS-14a5-f407",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-03",
+    "reference_url_list": [
+      {
+        "url": "https://cybersecuritynews.com/vmware-workstation-and-fusion-vulnerabilities/",
+        "name": ""
+      },
+      {
+        "url": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/38288",
+        "name": ""
+      },
+      {
+        "url": "https://techdocs.broadcom.com/us/en/vmware-cis/desktop-hypervisors/workstation-pro/26H1/release-notes/vmware-workstation-pro-26h1u1-release-notes.html",
+        "name": ""
+      },
+      {
+        "url": "https://securityonline.info/vmware-cve-2026-59346-code-execution-host/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "VMware VMXNET3 整数溢出漏洞"
+  },
+  "first_saved_at": "2026-09-03T12:28:22+00:00"
+}
