@@ -1,0 +1,165 @@
+{
+  "saved_at": "2026-09-04T14:41:51+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-40yr-ptq3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74237",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "GFI Exinda AI 是 GFI Software 旗下 Exinda Network Orchestrator 广域网流量编排设备中的商业闭源组件，用于流量监控、优化与配置建议，其 Web 管理界面在 Configuration > System > Tools 下内置 Iperf Client 网络性能测试工具。\n受影响版本中，Tools Iperf Client 功能由 web_tools_cmd() 函数使用 server 与 options 参数拼接 iperf 命令行，全程未做过滤，具备最低 Unprivileged 权限的认证用户可在 options 中注入任意 iperf 标志，配合 -F 标志使设备读取系统任意文件并将内容发送至攻击者控制的 iperf 服务器，造成敏感文件泄露。\n修复版本中通过 7.6.5 对 Iperf Client 命令构造流程的修复消除该参数注入问题，升级后 options 参数无法再携带任意 iperf 标志，经设备读取任意文件并外传的路径被切断。",
+    "effects": [
+      {
+        "comp_name": "GFI Exinda AI",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.6.5)",
+            "min_fixed_version": "7.6.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "参数注入或修改",
+    "kind_en": "命令中参数分隔符的不正确中和（“参数注入”）",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-40yr-ptq3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-40yr-ptq3",
+        "name": "https://www.oscs1024.com/hd/MPS-40yr-ptq3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74237",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74237"
+      },
+      {
+        "url": "https://gfi.ai/products-and-solutions/network-management-solutions/exinda-networkorchestrator/resources/documentation/product-releases",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gfi-exinda-ai-argument-injection-via-tools-iperf-client",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Exinda AI 参数注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74237",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "GFI Exinda AI 是 GFI Software 旗下 Exinda Network Orchestrator 广域网流量编排设备中的商业闭源组件，用于流量监控、优化与配置建议，其 Web 管理界面在 Configuration > System > Tools 下内置 Iperf Client 网络性能测试工具。\n受影响版本中，Tools Iperf Client 功能由 web_tools_cmd() 函数使用 server 与 options 参数拼接 iperf 命令行，全程未做过滤，具备最低 Unprivileged 权限的认证用户可在 options 中注入任意 iperf 标志，配合 -F 标志使设备读取系统任意文件并将内容发送至攻击者控制的 iperf 服务器，造成敏感文件泄露。\n修复版本中通过 7.6.5 对 Iperf Client 命令构造流程的修复消除该参数注入问题，升级后 options 参数无法再携带任意 iperf 标志，经设备读取任意文件并外传的路径被切断。",
+    "effects": [
+      {
+        "comp_name": "GFI Exinda AI",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.6.5)",
+            "min_fixed_version": "7.6.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "参数注入或修改",
+    "kind_en": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-40yr-ptq3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-40yr-ptq3",
+        "name": "https://www.oscs1024.com/hd/MPS-40yr-ptq3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74237",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74237"
+      },
+      {
+        "url": "https://gfi.ai/products-and-solutions/network-management-solutions/exinda-networkorchestrator/resources/documentation/product-releases",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gfi-exinda-ai-argument-injection-via-tools-iperf-client",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Exinda AI 参数注入漏洞"
+  },
+  "first_saved_at": "2026-09-04T14:41:51+00:00"
+}

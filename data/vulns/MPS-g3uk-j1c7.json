@@ -1,0 +1,165 @@
+{
+  "saved_at": "2026-09-04T14:41:47+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-g3uk-j1c7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85649",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.9
+        }
+      ]
+    },
+    "cvss_score": 7.9,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:N",
+    "cwe": "CWE-636",
+    "description": "software-actualizer 是 (Holloway) Chew, Kean Ho 在 GitHub 开源的 Shell 编写 Debian 最小系统安装构建工具，通过 Shell/debian-minbase-install.sh 在构建主机上完成依赖检查、磁盘分区、debootstrap 与用户初始化，产出可部署的系统镜像。\n受影响版本中，该脚本顶层的 Alpha 用户与 root 用户口令循环把 mkpasswd --method=yescrypt --stdin 的输出直接赋给 TARGET_PASSWORD_USER、TARGET_PASSWORD_ROOT，不检查命令退出状态且 stderr 被丢弃，赋值后无条件 break 跳出循环；构建主机的 mkpasswd 缺少 yescrypt 支持（如误装 makepasswd 包或 libxcrypt 过旧）时输出为空哈希，空值随构建流程进入 chroot 内的 usermod -p 步骤，使镜像中 root 与 alpha 账户口令字段为空，攻击者可无口令登录目标系统。\n修复版本中通过在依赖检查阶段模拟 mkpasswd 的 yescrypt 哈希并要求输出以 $y$ 开头，同时在 Alpha 与 root 口令赋值后增加相同的 $y$ 前缀 case 校验，任一环节不满足即输出错误并以退出码 1 终止安装，阻断含空口令字段镜像的生成。",
+    "effects": [
+      {
+        "comp_name": "software-actualizer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.2.1)",
+            "min_fixed_version": "1.2.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未能安全地进行程序失效（Failing Open）",
+    "kind_en": "未安全失败（“打开失败”）",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-g3uk-j1c7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-g3uk-j1c7",
+        "name": "https://www.oscs1024.com/hd/MPS-g3uk-j1c7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85649",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85649"
+      },
+      {
+        "url": "https://doi.org/10.5281/zenodo.22169659",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ChewKeanHo/software-actualizer/blob/v1.2.0/Shell/debian-minbase-install.sh#L788",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ChewKeanHo/software-actualizer/commit/50a0932ac705635d9af62955c353e7c6df003a61.patch",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ChewKeanHo/software-actualizer/releases/tag/v1.2.1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Actualizer 空口令构建漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85649",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.9
+        }
+      ]
+    },
+    "cvss_score": 7.9,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:N",
+    "cwe": "CWE-636",
+    "description": "software-actualizer 是 (Holloway) Chew, Kean Ho 在 GitHub 开源的 Shell 编写 Debian 最小系统安装构建工具，通过 Shell/debian-minbase-install.sh 在构建主机上完成依赖检查、磁盘分区、debootstrap 与用户初始化，产出可部署的系统镜像。\n受影响版本中，该脚本顶层的 Alpha 用户与 root 用户口令循环把 mkpasswd --method=yescrypt --stdin 的输出直接赋给 TARGET_PASSWORD_USER、TARGET_PASSWORD_ROOT，不检查命令退出状态且 stderr 被丢弃，赋值后无条件 break 跳出循环；构建主机的 mkpasswd 缺少 yescrypt 支持（如误装 makepasswd 包或 libxcrypt 过旧）时输出为空哈希，空值随构建流程进入 chroot 内的 usermod -p 步骤，使镜像中 root 与 alpha 账户口令字段为空，攻击者可无口令登录目标系统。\n修复版本中通过在依赖检查阶段模拟 mkpasswd 的 yescrypt 哈希并要求输出以 $y$ 开头，同时在 Alpha 与 root 口令赋值后增加相同的 $y$ 前缀 case 校验，任一环节不满足即输出错误并以退出码 1 终止安装，阻断含空口令字段镜像的生成。",
+    "effects": [
+      {
+        "comp_name": "software-actualizer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.2.1)",
+            "min_fixed_version": "1.2.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未能安全地进行程序失效（Failing Open）",
+    "kind_en": "Not Failing Securely ('Failing Open')",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-g3uk-j1c7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-g3uk-j1c7",
+        "name": "https://www.oscs1024.com/hd/MPS-g3uk-j1c7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85649",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85649"
+      },
+      {
+        "url": "https://doi.org/10.5281/zenodo.22169659",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ChewKeanHo/software-actualizer/blob/v1.2.0/Shell/debian-minbase-install.sh#L788",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ChewKeanHo/software-actualizer/commit/50a0932ac705635d9af62955c353e7c6df003a61.patch",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ChewKeanHo/software-actualizer/releases/tag/v1.2.1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Actualizer 空口令构建漏洞"
+  },
+  "first_saved_at": "2026-09-04T14:41:47+00:00"
+}
