@@ -1,0 +1,255 @@
+{
+  "saved_at": "2026-09-04T10:21:57+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xstv-9qnd",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85525",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "412d305a-227d-44f9-a262-a31ba44f2aea",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-347",
+    "description": "Snowflake Python、Go、JDBC 与 Node.js 驱动是 Snowflake 官方开源（Apache-2.0）的数据库客户端驱动，负责在客户端与 Snowflake 数据云之间建立 TLS 连接并执行查询与 stage 文件传输。\n受影响版本中，驱动在 TLS 握手后的 OCSP 吊销校验中未把 OCSP 响应与被校验证书的 CertID（颁发者名称哈希、颁发者密钥哈希与序列号）绑定，并且在默认的 fail-open 模式下把确定性的校验失败当作暂时性故障放行：Python 连接器 ocsp_snowflake.py 的 verify_fail_open 方法仅当 errno 通过 is 身份比较命中 REVOKED 时才中断连接，从缓存反序列化重建的整数与签名无效等结果一律返回 None，连接照常建立。持有针对 Snowflake 或 stage 主机名的已吊销证书及其私钥的中间人攻击者，可使驱动与受控端点完成 TLS 会话，读取并篡改该连接内传输的数据。\n修复版本中通过在吊销校验流程中新增 CertID 绑定检查，响应与被校验证书不一致时直接判定失败（Python 新增 ER_OCSP_RESPONSE_CERT_ID_MISMATCH，Node.js 新增 ERR_OCSP_RESPONSE_CERT_MISMATCH，JDBC 新增 CERTIFICATE_ID_MISMATCH），并把 REVOKED、CertID 不匹配与签名无效列为 fail-open 模式下也必须中断连接的确定性结果，同时对缓存读取的响应重新校验并剔除被投毒的缓存条目，使已吊销证书无法再被接受。",
+    "effects": [
+      {
+        "comp_name": "github.com/snowflakedb/gosnowflake",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.2.0)",
+            "min_fixed_version": "2.2.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "net.snowflake:snowflake-jdbc",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.3.4)",
+            "min_fixed_version": "4.3.4",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "snowflake-connector-python",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.7.3)",
+            "min_fixed_version": "4.7.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "snowflake-sdk",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.3.0)",
+            "min_fixed_version": "3.3.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "密码签名验证不当",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-xstv-9qnd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xstv-9qnd",
+        "name": "https://www.oscs1024.com/hd/MPS-xstv-9qnd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85525",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85525"
+      },
+      {
+        "url": "https://docs.snowflake.com/en/release-notes/clients-drivers/golang-2026",
+        "name": ""
+      },
+      {
+        "url": "https://docs.snowflake.com/en/release-notes/clients-drivers/jdbc-2026",
+        "name": ""
+      },
+      {
+        "url": "https://docs.snowflake.com/en/release-notes/clients-drivers/nodejs-2026",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/snowflakedb/snowflake-connector-python/releases/tag/v4.7.3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go",
+      "java",
+      "npm",
+      "python",
+      "开源"
+    ],
+    "title": "Snowflake 驱动 OCSP 校验缺陷",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85525",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "412d305a-227d-44f9-a262-a31ba44f2aea",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-347",
+    "description": "Snowflake Python、Go、JDBC 与 Node.js 驱动是 Snowflake 官方开源（Apache-2.0）的数据库客户端驱动，负责在客户端与 Snowflake 数据云之间建立 TLS 连接并执行查询与 stage 文件传输。\n受影响版本中，驱动在 TLS 握手后的 OCSP 吊销校验中未把 OCSP 响应与被校验证书的 CertID（颁发者名称哈希、颁发者密钥哈希与序列号）绑定，并且在默认的 fail-open 模式下把确定性的校验失败当作暂时性故障放行：Python 连接器 ocsp_snowflake.py 的 verify_fail_open 方法仅当 errno 通过 is 身份比较命中 REVOKED 时才中断连接，从缓存反序列化重建的整数与签名无效等结果一律返回 None，连接照常建立。持有针对 Snowflake 或 stage 主机名的已吊销证书及其私钥的中间人攻击者，可使驱动与受控端点完成 TLS 会话，读取并篡改该连接内传输的数据。\n修复版本中通过在吊销校验流程中新增 CertID 绑定检查，响应与被校验证书不一致时直接判定失败（Python 新增 ER_OCSP_RESPONSE_CERT_ID_MISMATCH，Node.js 新增 ERR_OCSP_RESPONSE_CERT_MISMATCH，JDBC 新增 CERTIFICATE_ID_MISMATCH），并把 REVOKED、CertID 不匹配与签名无效列为 fail-open 模式下也必须中断连接的确定性结果，同时对缓存读取的响应重新校验并剔除被投毒的缓存条目，使已吊销证书无法再被接受。",
+    "effects": [
+      {
+        "comp_name": "github.com/snowflakedb/gosnowflake",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.2.0)",
+            "min_fixed_version": "2.2.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "net.snowflake:snowflake-jdbc",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.3.4)",
+            "min_fixed_version": "4.3.4",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "snowflake-connector-python",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.7.3)",
+            "min_fixed_version": "4.7.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "snowflake-sdk",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.3.0)",
+            "min_fixed_version": "3.3.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "Improper Verification of Cryptographic Signature",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-xstv-9qnd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xstv-9qnd",
+        "name": "https://www.oscs1024.com/hd/MPS-xstv-9qnd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85525",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85525"
+      },
+      {
+        "url": "https://docs.snowflake.com/en/release-notes/clients-drivers/golang-2026",
+        "name": ""
+      },
+      {
+        "url": "https://docs.snowflake.com/en/release-notes/clients-drivers/jdbc-2026",
+        "name": ""
+      },
+      {
+        "url": "https://docs.snowflake.com/en/release-notes/clients-drivers/nodejs-2026",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/snowflakedb/snowflake-connector-python/releases/tag/v4.7.3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go",
+      "java",
+      "npm",
+      "python",
+      "开源"
+    ],
+    "title": "Snowflake 驱动 OCSP 校验缺陷"
+  },
+  "first_saved_at": "2026-09-04T10:21:57+00:00"
+}

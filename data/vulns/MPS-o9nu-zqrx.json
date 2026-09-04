@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-09-04T10:22:00+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-o9nu-zqrx",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81665",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-122",
+    "description": "Corosync 是一款开源的高可用集群通信引擎，实现了 Totem 冗余环协议，为 Pacemaker 等集群资源管理器提供成员关系与消息传递服务，广泛用于 Red Hat Enterprise Linux 高可用附加组件等场景。\n受影响版本中，exec/totempg.c 的 totempg_deliver_fn 在重组网络对端发来的分片组播报文时，把报文数据追加到堆上 struct assembly 的 data 缓冲（MESSAGE_SIZE_MAX+KNET_MAX_PACKET_SIZE 字节），追加前仅使用 assert 校验 assembly->index+msg_len 边界，release 构建中该断言被编译掉，缓冲区缺少任何运行时边界检查，网络相邻的攻击者发送携带超长分片的 Totem 协议报文，memcpy 携带攻击者数据越过缓冲区末尾写入堆内存，可导致 corosync 守护进程崩溃、整个集群拒绝服务，并可能在堆布局可控时被进一步利用。\n修复版本中通过将断言替换为常规运行时边界检查阻断该路径：当 assembly->index 与 msg_len 之和达到 assembly->data 容量时，totempg_deliver_fn 记录告警日志并丢弃该报文，不再执行越界 memcpy，消除堆缓冲区溢出。",
+    "effects": [
+      {
+        "comp_name": "corosync",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.1.10]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-o9nu-zqrx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-o9nu-zqrx",
+        "name": "https://www.oscs1024.com/hd/MPS-o9nu-zqrx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81665",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81665"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-81665",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2524910",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Corosync 堆缓冲区溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81665",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-122",
+    "description": "Corosync 是一款开源的高可用集群通信引擎，实现了 Totem 冗余环协议，为 Pacemaker 等集群资源管理器提供成员关系与消息传递服务，广泛用于 Red Hat Enterprise Linux 高可用附加组件等场景。\n受影响版本中，exec/totempg.c 的 totempg_deliver_fn 在重组网络对端发来的分片组播报文时，把报文数据追加到堆上 struct assembly 的 data 缓冲（MESSAGE_SIZE_MAX+KNET_MAX_PACKET_SIZE 字节），追加前仅使用 assert 校验 assembly->index+msg_len 边界，release 构建中该断言被编译掉，缓冲区缺少任何运行时边界检查，网络相邻的攻击者发送携带超长分片的 Totem 协议报文，memcpy 携带攻击者数据越过缓冲区末尾写入堆内存，可导致 corosync 守护进程崩溃、整个集群拒绝服务，并可能在堆布局可控时被进一步利用。\n修复版本中通过将断言替换为常规运行时边界检查阻断该路径：当 assembly->index 与 msg_len 之和达到 assembly->data 容量时，totempg_deliver_fn 记录告警日志并丢弃该报文，不再执行越界 memcpy，消除堆缓冲区溢出。",
+    "effects": [
+      {
+        "comp_name": "corosync",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.1.10]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-o9nu-zqrx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-o9nu-zqrx",
+        "name": "https://www.oscs1024.com/hd/MPS-o9nu-zqrx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81665",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81665"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-81665",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2524910",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Corosync 堆缓冲区溢出漏洞"
+  },
+  "first_saved_at": "2026-09-04T10:22:00+00:00"
+}
