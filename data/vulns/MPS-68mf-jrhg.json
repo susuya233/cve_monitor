@@ -1,0 +1,121 @@
+{
+  "saved_at": "2026-09-04T17:59:01+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-68mf-jrhg",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84961",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ce714d77-add3-4f53-aff5-83d477b104bb",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-295",
+    "description": "undici 的 BalancedPool 构造函数通过内部深度克隆传递其整个选项对象，该深度克隆将值序列化并重新解析为 JSON。由于 JSON 无法表示函数，因此任何函数值 TLS 选项（例如调用者提供的 checkServerIdentity 回调或 connect 选项内的自定义连接器）在到达 TLS 层之前都会被悄悄丢弃。因此，当通过 BalancedPool 到达时，应用程序的自定义 checkServerIdentity 的证书被写入拒绝，但仍通过节点的默认主机名和链检查的对等点将被接受。客户端、池和代理调度程序不受影响，因为它们在克隆之前提取 connect 和 tls 选项。这会影响从 7.24.1 到 7.29.1 以及从 8.0.0 到 8.10.2 的 undici 版本，并且仅当应用程序向 BalancedPool 提供函数值连接或 tls 选项时。用户应升级到 undici 7.29.1 或 8.10.2。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "证书验证不恰当",
+    "kind_en": "证书验证不当",
+    "last_modified_time": "2026-09-05",
+    "level": "High",
+    "mps_id": "MPS-68mf-jrhg",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-68mf-jrhg",
+        "name": "https://www.oscs1024.com/hd/MPS-68mf-jrhg"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84961",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84961"
+      },
+      {
+        "url": "https://cna.openjsf.org/security-advisories.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nodejs/undici/security/advisories/GHSA-w293-vg96-wgc3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-84961漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84961",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ce714d77-add3-4f53-aff5-83d477b104bb",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-295",
+    "description": "undici's BalancedPool constructor passes its entire options object through an internal deep-clone that serializes and reparses the value as JSON. Because JSON cannot represent functions, any function-valued TLS option, such as a caller-supplied checkServerIdentity callback or a custom connector inside the connect option, is silently discarded before it reaches the TLS layer. As a result a peer whose certificate the application's custom checkServerIdentity was written to reject, but which still passes Node's default hostname and chain checks, is accepted when reached through BalancedPool. The Client, Pool, and Agent dispatchers are not affected because they extract the connect and tls options before cloning. This affects undici versions from 7.24.1 up to 7.29.1 and from 8.0.0 up to 8.10.2, and only when the application supplies a function-valued connect or tls option to BalancedPool. Users should upgrade to undici 7.29.1 or 8.10.2.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "证书验证不恰当",
+    "kind_en": "Improper Certificate Validation",
+    "last_modified_time": "2026-09-05",
+    "level": "High",
+    "mps_id": "MPS-68mf-jrhg",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-68mf-jrhg",
+        "name": "https://www.oscs1024.com/hd/MPS-68mf-jrhg"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84961",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84961"
+      },
+      {
+        "url": "https://cna.openjsf.org/security-advisories.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nodejs/undici/security/advisories/GHSA-w293-vg96-wgc3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-84961漏洞"
+  },
+  "first_saved_at": "2026-09-04T17:59:01+00:00"
+}
