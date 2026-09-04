@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-09-04T20:32:51+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3r9x-is2q",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80118",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-497",
+    "description": "11.1 build 1012 之前的 PassMark PerformanceTest、11.1 build 1000 之前的 BurnInTest 和 11.1 build 1016 之前的 OSForensics 在 DirectIo64.sys 中包含未经身份验证的物理内存泄露，非特权本地用户可以通过单个 IOCTL 访问，无需调用方身份检查。该处理程序将所有物理内存的故障转储格式 (PAGEDU64) 映像写入系统上下文中调用者提供的文件路径，允许标准用户在他们无法写入的位置创建文件，并恢复属于其他用户进程的内存。该映像前面有一个标头，该标头公开了内核加载模块列表、活动进程列表和 PFN 数据库指针，从而击败了 KASLR。同一处理程序还取消引用内部内核结构定位器的返回值，而无需进行 NULL 检查；该定位器在三个不同的失败路径上返回 NULL，并且在采用任何这些路径的构建上都会导致内核崩溃。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "将系统数据暴露到未授权控制的范围",
+    "kind_en": "将敏感系统信息暴露给未经授权的控制领域",
+    "last_modified_time": "2026-09-05",
+    "level": "High",
+    "mps_id": "MPS-3r9x-is2q",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3r9x-is2q",
+        "name": "https://www.oscs1024.com/hd/MPS-3r9x-is2q"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80118",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80118"
+      },
+      {
+        "url": "https://dkom.dev/posts/directio64-disclosure/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/floppywiggler/directio64-disclosure",
+        "name": ""
+      },
+      {
+        "url": "https://www.osforensics.com/whats-new.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.passmark.com/products/burnintest/history.php",
+        "name": ""
+      },
+      {
+        "url": "https://www.passmark.com/products/performancetest/history.php",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/passmark-performancetest-burnintest-and-osforensics-kernel-null-pointer-dereference-via-directio64-sys-ioctl",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-80118漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80118",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-497",
+    "description": "PassMark PerformanceTest before 11.1 build 1012, BurnInTest before 11.1 build 1000, and OSForensics before 11.1 build 1016 contain an unauthenticated physical memory disclosure in DirectIo64.sys, reachable by unprivileged local users through a single IOCTL with no caller-identity check. The handler writes a crash-dump-format (PAGEDU64) image of all physical memory to a caller-supplied file path in the SYSTEM context, allowing a standard user to create files in locations they cannot otherwise write and to recover memory belonging to processes of other users. The image is preceded by a header that exposes the kernel loaded-module list, active-process list and PFN database pointers, defeating KASLR. The same handler also dereferences the return value of an internal kernel-structure locator without a NULL check; that locator returns NULL on three distinct failure paths, and a kernel crash results on builds where any of those paths is taken.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "将系统数据暴露到未授权控制的范围",
+    "kind_en": "Exposure of Sensitive System Information to an Unauthorized Control Sphere",
+    "last_modified_time": "2026-09-05",
+    "level": "High",
+    "mps_id": "MPS-3r9x-is2q",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3r9x-is2q",
+        "name": "https://www.oscs1024.com/hd/MPS-3r9x-is2q"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80118",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80118"
+      },
+      {
+        "url": "https://dkom.dev/posts/directio64-disclosure/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/floppywiggler/directio64-disclosure",
+        "name": ""
+      },
+      {
+        "url": "https://www.osforensics.com/whats-new.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.passmark.com/products/burnintest/history.php",
+        "name": ""
+      },
+      {
+        "url": "https://www.passmark.com/products/performancetest/history.php",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/passmark-performancetest-burnintest-and-osforensics-kernel-null-pointer-dereference-via-directio64-sys-ioctl",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-80118漏洞"
+  },
+  "first_saved_at": "2026-09-04T20:32:51+00:00"
+}

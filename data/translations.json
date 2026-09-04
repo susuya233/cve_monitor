@@ -1339,5 +1339,14 @@
   "f6e2134b5457f8c3581a23be020e939aa39fc0a3": "CVE-2026-75430漏洞",
   "b6258642bddf04c8aa4da4c74f2dc470f9f38237": "PowerJob Worker 版本 5.1.2（以及可能的早期版本）公开 /worker/deployContainer HTTP 端点，无需在默认传输端口上进行身份验证。这允许远程攻击者执行任意代码。",
   "96b6bced8ba806dcb3599f32c9f9ddd5c0b989b1": "CVE-2026-18221漏洞",
-  "cc9b9d8740bd16cdbb807d89f326a96d1dea23a8": "由于对客户端提供的身份验证参数的验证不正确，IBM i 7.6、7.5、7.4 和 7.3 可能允许远程攻击者获得未经授权的访问。"
+  "cc9b9d8740bd16cdbb807d89f326a96d1dea23a8": "由于对客户端提供的身份验证参数的验证不正确，IBM i 7.6、7.5、7.4 和 7.3 可能允许远程攻击者获得未经授权的访问。",
+  "54d8c9c9e55312789b90b650bef088b47383f9d2": "CVE-2026-80116漏洞",
+  "b81486718974878206701e3b2d665568035e9684": "11.1 build 1012 之前的 PassMark PerformanceTest、11.1 build 1000 之前的 BurnInTest 和 11.1 build 1016 之前的 OSForensics 包含 DirectIo64.sys 中的权限提升漏洞，该漏洞允许本地用户通过利用公开的 IOCTL 来修改硬件配置，而无需验证设备选择、寄存器偏移量或值。攻击者可以获取设备句柄并发出任意 PCI 配置空间读/写操作，以在任何 PCI 设备上启用总线主控 DMA，通过清除命令寄存器来停止存储控制器 I/O，或者重新映射基地址寄存器以将 DMA 重定向到攻击者选择的物理地址。",
+  "1ef04059f1113372e55a1c1236f2fd2e424c80e7": "访问控制不足的公开 IOCTL",
+  "0d31c4ad19c01f24901d92136809c68351bddf2d": "CVE-2026-80118漏洞",
+  "e5634f83ab03cf055a92204df6d583c14d69272d": "11.1 build 1012 之前的 PassMark PerformanceTest、11.1 build 1000 之前的 BurnInTest 和 11.1 build 1016 之前的 OSForensics 在 DirectIo64.sys 中包含未经身份验证的物理内存泄露，非特权本地用户可以通过单个 IOCTL 访问，无需调用方身份检查。该处理程序将所有物理内存的故障转储格式 (PAGEDU64) 映像写入系统上下文中调用者提供的文件路径，允许标准用户在他们无法写入的位置创建文件，并恢复属于其他用户进程的内存。该映像前面有一个标头，该标头公开了内核加载模块列表、活动进程列表和 PFN 数据库指针，从而击败了 KASLR。同一处理程序还取消引用内部内核结构定位器的返回值，而无需进行 NULL 检查；该定位器在三个不同的失败路径上返回 NULL，并且在采用任何这些路径的构建上都会导致内核崩溃。",
+  "10cb187d2c15442f8ca1ae49247c6bc84b75e56a": "CVE-2026-80114漏洞",
+  "8dff4bd1d7bfd9f77ee3f41f0c3da5d6b31c4db4": "11.1 build 1012 之前的 PassMark PerformanceTest、11.1 build 1000 之前的 BurnInTest 和 11.1 build 1016 之前的 OSForensics 在 DirectIo64.sys 中包含硬编码凭据漏洞，该漏洞允许本地攻击者通过提取作为硬编码文本嵌入到分布式二进制文件中的 8 字节密钥并计算任意 IOCTL 写入请求的有效 MD5 身份验证标签来执行任意物理内存写入。攻击者还可以通过使用驱动程序自己的位清除 IOCTL 来清除门控指令的位移字节中的单个位，从而绕过辅助验证门，从而导致所有后续写入请求完全跳过 MAC 验证、大小检查和供应商 ID 检查。",
+  "ab489440b4bfe79cf46893849c1f3cb76a1c3e73": "CVE-2026-80119漏洞",
+  "9f5bb6fd732e36ced8c1480f05b03b9f481cd38e": "11.1 build 1012 之前的 PassMark PerformanceTest、11.1 build 1000 之前的 BurnInTest 和 11.1 build 1016 之前的 OSForensics 包含 DirectIo64.sys 中的信息泄露漏洞，该漏洞允许未经身份验证的本地攻击者通过向暴露的 IOCTL 提供调用者控制的文件路径来转储完整的物理内存内容。攻击者可以发出单个 IOCTL 调用来触发驱动程序通过 MmGetPhysicalMemoryRanges 迭代所有物理内存范围，并通过 PhysicalMemory 部分对象上的 ZwMapViewOfSection 映射每个页面，将完整的 RAM 映像写入系统上下文中攻击者指定的路径，绕过用户模式 ​​ACL 并暴露来自所有正在运行的进程的 LSASS 工作集、进程内存和加密材料。"
 }
