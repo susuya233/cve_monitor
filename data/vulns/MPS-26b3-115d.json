@@ -1,0 +1,159 @@
+{
+  "saved_at": "2026-09-04T00:37:44+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-26b3-115d",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80180",
+    "cvss": {},
+    "cvss_score": 8.7,
+    "cvss_vector": "",
+    "cwe": "CWE-80",
+    "description": "Apache Allura 是 Apache 软件基金会开源的软件协作平台（forge），提供 Wiki、缺陷跟踪、讨论区、代码仓库浏览等协作工具，站内用户内容普遍以 Markdown 形式提交并渲染为 HTML 展示。\n受影响版本中，Markdown 渲染产物由 allura/lib/utils.py 的 ForgeHTMLSanitizerFilter.sanitize_token 做 HTML 白名单过滤，该过滤器继承了 html5lib 默认白名单并放行 SVG、MathML 外来内容元素，class 与 id 清洗仅作用于 StartTag 而遗漏 img 等自闭合元素，且 src 命中 YouTube 白名单的 iframe 被放行后其原始文本主体随序列化输出保留，攻击者构造的内容在浏览器按外来内容与 rawtext 规则二次解析时标签边界发生突变，最终在访问相关页面的用户浏览器中执行注入脚本。\n修复版本中通过将 SVG 命名空间元素整体移出白名单、丢弃已放行 iframe 主体内的字符 token、把 class 与 id 清洗扩展到自闭合元素，并同步提升 Markdown 渲染缓存 bugfix_rev 使历史缓存全部失效，切断标签边界突变路径并强制对已存内容重新渲染。",
+    "effects": [
+      {
+        "comp_name": "allura",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.21.0)",
+            "min_fixed_version": "1.21.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "基本跨站脚本",
+    "kind_en": "网页中与脚本相关的 HTML 标签的不正确中和（基本 XSS）",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-26b3-115d",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/03/3",
+        "name": ""
+      },
+      {
+        "url": "https://allura.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-80180",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/commit/e518d9e13391b3ee14ae13f8cbbe60d23cddea6f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/commit/17f1a88131e015865354f90adc9c3d5a605a148d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/commit/9e70d61f14b5f87b307167be01485a2dcf1eb580",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/compare/rel/1.20.0...rel/1.21.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Apache Allura 存储型 XSS 漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80180",
+    "cvss": {},
+    "cvss_score": 8.7,
+    "cvss_vector": "",
+    "cwe": "CWE-80",
+    "description": "Apache Allura 是 Apache 软件基金会开源的软件协作平台（forge），提供 Wiki、缺陷跟踪、讨论区、代码仓库浏览等协作工具，站内用户内容普遍以 Markdown 形式提交并渲染为 HTML 展示。\n受影响版本中，Markdown 渲染产物由 allura/lib/utils.py 的 ForgeHTMLSanitizerFilter.sanitize_token 做 HTML 白名单过滤，该过滤器继承了 html5lib 默认白名单并放行 SVG、MathML 外来内容元素，class 与 id 清洗仅作用于 StartTag 而遗漏 img 等自闭合元素，且 src 命中 YouTube 白名单的 iframe 被放行后其原始文本主体随序列化输出保留，攻击者构造的内容在浏览器按外来内容与 rawtext 规则二次解析时标签边界发生突变，最终在访问相关页面的用户浏览器中执行注入脚本。\n修复版本中通过将 SVG 命名空间元素整体移出白名单、丢弃已放行 iframe 主体内的字符 token、把 class 与 id 清洗扩展到自闭合元素，并同步提升 Markdown 渲染缓存 bugfix_rev 使历史缓存全部失效，切断标签边界突变路径并强制对已存内容重新渲染。",
+    "effects": [
+      {
+        "comp_name": "allura",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.21.0)",
+            "min_fixed_version": "1.21.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "基本跨站脚本",
+    "kind_en": "Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-26b3-115d",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/03/3",
+        "name": ""
+      },
+      {
+        "url": "https://allura.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-80180",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/commit/e518d9e13391b3ee14ae13f8cbbe60d23cddea6f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/commit/17f1a88131e015865354f90adc9c3d5a605a148d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/commit/9e70d61f14b5f87b307167be01485a2dcf1eb580",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/compare/rel/1.20.0...rel/1.21.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Apache Allura 存储型 XSS 漏洞"
+  },
+  "first_saved_at": "2026-09-04T00:37:44+00:00"
+}

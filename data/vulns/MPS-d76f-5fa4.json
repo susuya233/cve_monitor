@@ -1,0 +1,143 @@
+{
+  "saved_at": "2026-09-04T00:37:46+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d76f-5fa4",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80181",
+    "cvss": {},
+    "cvss_score": 7.1,
+    "cvss_vector": "",
+    "cwe": "CWE-918",
+    "description": "Apache Allura 是 Apache 软件基金会开源的软件项目协作平台（forge），提供代码托管、工单跟踪、Wiki、讨论区与 Webhook 等功能。\n受影响版本中，Webhook 目标地址由项目管理员提交，创建时仅允许 http/https 协议并拒绝解析到私网地址的主机；任务进程实际发送 Webhook 时通过全局 urllib opener 请求 hook_url，该 opener 仍注册 FTP、file、data 等非 HTTP 处理器，私网地址检查只挂在 http/https 处理器上，请求跟随重定向到 ftp:// 等地址时会绕过检查，由 Allura 服务器向本机或内网资源发起请求，形成服务端请求伪造。\n修复版本中通过在 allura/lib/helpers.py 新增 _build_http_only_opener 并经 install_opener 全局安装，仅保留 http/https 处理链，移除 FTP/file/data 处理器，使重定向无法切换到非 HTTP 协议绕过私网主机检查。",
+    "effects": [
+      {
+        "comp_name": "allura",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.21.0)",
+            "min_fixed_version": "1.21.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-d76f-5fa4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/03/4",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-80181",
+        "name": ""
+      },
+      {
+        "url": "https://allura.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/commit/1a2c209c071373c9224e95651d92729c355056b2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/tree/rel/1.21.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Apache Allura Webhooks SSRF 漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80181",
+    "cvss": {},
+    "cvss_score": 7.1,
+    "cvss_vector": "",
+    "cwe": "CWE-918",
+    "description": "Apache Allura 是 Apache 软件基金会开源的软件项目协作平台（forge），提供代码托管、工单跟踪、Wiki、讨论区与 Webhook 等功能。\n受影响版本中，Webhook 目标地址由项目管理员提交，创建时仅允许 http/https 协议并拒绝解析到私网地址的主机；任务进程实际发送 Webhook 时通过全局 urllib opener 请求 hook_url，该 opener 仍注册 FTP、file、data 等非 HTTP 处理器，私网地址检查只挂在 http/https 处理器上，请求跟随重定向到 ftp:// 等地址时会绕过检查，由 Allura 服务器向本机或内网资源发起请求，形成服务端请求伪造。\n修复版本中通过在 allura/lib/helpers.py 新增 _build_http_only_opener 并经 install_opener 全局安装，仅保留 http/https 处理链，移除 FTP/file/data 处理器，使重定向无法切换到非 HTTP 协议绕过私网主机检查。",
+    "effects": [
+      {
+        "comp_name": "allura",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.21.0)",
+            "min_fixed_version": "1.21.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-09-04",
+    "level": "High",
+    "mps_id": "MPS-d76f-5fa4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/03/4",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-80181",
+        "name": ""
+      },
+      {
+        "url": "https://allura.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/commit/1a2c209c071373c9224e95651d92729c355056b2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/allura/tree/rel/1.21.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Apache Allura Webhooks SSRF 漏洞"
+  },
+  "first_saved_at": "2026-09-04T00:37:46+00:00"
+}
