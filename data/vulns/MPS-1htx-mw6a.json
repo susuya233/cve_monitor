@@ -1,0 +1,207 @@
+{
+  "saved_at": "2026-09-04T05:20:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-1htx-mw6a",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-94",
+    "description": "ShowDoc 是开源在线文档系统，开源版默认把用户数据存在 SQLite 文件里。\n受影响版本中，注册接口 registerByVerify 对用户名 username 只做 trim，不限制字符，User::register 把它原样写入数据库；同时这份数据库文件名叫 Sqlite/showdoc.db.php，放在网站目录下，访问时会被 PHP 当成脚本运行。因此把 <?php system($_GET['c']); ?> 当作用户名注册后，再打开 /Sqlite/showdoc.db.php，服务器会执行这段 PHP，造成远程代码执行漏洞。\n修复版本中通过给 username 增加白名单正则 /^[a-zA-Z0-9_\\-\\x{4e00}-\\x{9fa5}]{2,30}$/u，只允许字母、数字、下划线、横线和中文，含 <?php 的用户名无法注册，恶意代码写不进库文件。",
+    "effects": [
+      {
+        "comp_name": "showdoc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.9.3)",
+            "min_fixed_version": "3.9.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "showdoc/showdoc",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.9.3)",
+            "min_fixed_version": "3.9.3",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "极高",
+    "fix_suggestion": "强烈建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-09-04",
+    "level": "Critical",
+    "mps_id": "MPS-1htx-mw6a",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1htx-mw6a",
+        "name": "https://www.oscs1024.com/hd/MPS-1htx-mw6a"
+      },
+      {
+        "url": "https://github.com/star7th/showdoc/releases/tag/v3.9.3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/star7th/showdoc/commit/2053c3cd0f85d39d3290c5580bcda844df077d17",
+        "name": ""
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "php",
+      "poc",
+      "专家校准",
+      "开源",
+      "强烈建议修复",
+      "终端软件"
+    ],
+    "title": "ShowDoc注册接口远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-94",
+    "description": "ShowDoc 是开源在线文档系统，开源版默认把用户数据存在 SQLite 文件里。\n受影响版本中，注册接口 registerByVerify 对用户名 username 只做 trim，不限制字符，User::register 把它原样写入数据库；同时这份数据库文件名叫 Sqlite/showdoc.db.php，放在网站目录下，访问时会被 PHP 当成脚本运行。因此把 <?php system($_GET['c']); ?> 当作用户名注册后，再打开 /Sqlite/showdoc.db.php，服务器会执行这段 PHP，造成远程代码执行漏洞。\n修复版本中通过给 username 增加白名单正则 /^[a-zA-Z0-9_\\-\\x{4e00}-\\x{9fa5}]{2,30}$/u，只允许字母、数字、下划线、横线和中文，含 <?php 的用户名无法注册，恶意代码写不进库文件。",
+    "effects": [
+      {
+        "comp_name": "showdoc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.9.3)",
+            "min_fixed_version": "3.9.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "showdoc/showdoc",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.9.3)",
+            "min_fixed_version": "3.9.3",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "极高",
+    "fix_suggestion": "StrongRecommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-09-04",
+    "level": "Critical",
+    "mps_id": "MPS-1htx-mw6a",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-09-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1htx-mw6a",
+        "name": "https://www.oscs1024.com/hd/MPS-1htx-mw6a"
+      },
+      {
+        "url": "https://github.com/star7th/showdoc/releases/tag/v3.9.3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/star7th/showdoc/commit/2053c3cd0f85d39d3290c5580bcda844df077d17",
+        "name": ""
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "php",
+      "poc",
+      "专家校准",
+      "开源",
+      "强烈建议修复",
+      "终端软件"
+    ],
+    "title": "ShowDoc注册接口远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-09-04T05:20:49+00:00"
+}
