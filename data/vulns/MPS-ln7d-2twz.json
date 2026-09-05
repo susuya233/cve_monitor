@@ -1,0 +1,217 @@
+{
+  "saved_at": "2026-09-05T20:53:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ln7d-2twz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86060",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cvd@cert.pl",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "MikroTik RouterOS 是 MikroTik 公司开发的闭源网络操作系统，运行于其路由器、交换机等网络设备，提供路由、防火墙、VPN 以及 SSH、WebFig 等管理通道，在运营商与中小企业网络中部署广泛。\n受影响版本中，SSH 登录路径未过滤以连字符开头的用户名：/nova/bin/login 保留了供内部组件经管道传递受信任登录信息的文件描述符传输逻辑，参数以“-”开头时 login 将剩余部分经 atoi 解析为文件描述符编号，并从该描述符读取受信任的用户名与授权策略掩码字段；攻击者以形如“-2”的用户名发起 SSH 会话触达登录辅助进程后，login 转而从攻击者可控的 PTY 输入读取这两个字段，注入的策略掩码（如 654958，对应完整权限集合 0x9fe6e）经 strtoul 解析后直接成为会话授权策略，受限会话由此获得完整管理员权限。\n修复版本中通过在 libumsg.so 新增 validLoginParamInput 校验函数切断上述链路：SSH 登录路径在派生 login 子进程前校验存储的 SSH 用户名，拒绝空值、前导“-”或空格、尾随空格以及控制字符与 DEL，构造用户名“-2”被 invalid user input 拒绝，受信任字段只能来自内部受控管道，会话授权策略掩码不再可被外部输入变更。",
+    "effects": [
+      {
+        "comp_name": "routeros",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.0.0,7.23.4)",
+            "min_fixed_version": "7.23.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0.0,6.49.21)",
+            "min_fixed_version": "6.49.21",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.24,7.24.2)",
+            "min_fixed_version": "7.24.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "参数注入或修改",
+    "kind_en": "命令中参数分隔符的不正确中和（“参数注入”）",
+    "last_modified_time": "2026-09-06",
+    "level": "Critical",
+    "mps_id": "MPS-ln7d-2twz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ln7d-2twz",
+        "name": "https://www.oscs1024.com/hd/MPS-ln7d-2twz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86060",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86060"
+      },
+      {
+        "url": "https://cert.pl/en/posts/2026/09/mikrotik-routeros-cve",
+        "name": ""
+      },
+      {
+        "url": "https://cert.pl/en/posts/2026/09/vulnerabilities-in-mikrotik-routeros-actively-exploited/",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/6-49-21-long-term-is-released/272802",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-23-4-long-term-is-released/272801",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-24-2-stable-is-released/272800",
+        "name": ""
+      },
+      {
+        "url": "https://mikrotik.com/supportsec/september-2026-vulnerability/",
+        "name": ""
+      },
+      {
+        "url": "https://npratley.net/reversing-mikrotiks-silent-patch-the-routeros-7-23-4-fix-they-wouldnt-explain/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "RouterOS SSH 参数注入提权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86060",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cvd@cert.pl",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "MikroTik RouterOS 是 MikroTik 公司开发的闭源网络操作系统，运行于其路由器、交换机等网络设备，提供路由、防火墙、VPN 以及 SSH、WebFig 等管理通道，在运营商与中小企业网络中部署广泛。\n受影响版本中，SSH 登录路径未过滤以连字符开头的用户名：/nova/bin/login 保留了供内部组件经管道传递受信任登录信息的文件描述符传输逻辑，参数以“-”开头时 login 将剩余部分经 atoi 解析为文件描述符编号，并从该描述符读取受信任的用户名与授权策略掩码字段；攻击者以形如“-2”的用户名发起 SSH 会话触达登录辅助进程后，login 转而从攻击者可控的 PTY 输入读取这两个字段，注入的策略掩码（如 654958，对应完整权限集合 0x9fe6e）经 strtoul 解析后直接成为会话授权策略，受限会话由此获得完整管理员权限。\n修复版本中通过在 libumsg.so 新增 validLoginParamInput 校验函数切断上述链路：SSH 登录路径在派生 login 子进程前校验存储的 SSH 用户名，拒绝空值、前导“-”或空格、尾随空格以及控制字符与 DEL，构造用户名“-2”被 invalid user input 拒绝，受信任字段只能来自内部受控管道，会话授权策略掩码不再可被外部输入变更。",
+    "effects": [
+      {
+        "comp_name": "routeros",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.0.0,7.23.4)",
+            "min_fixed_version": "7.23.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0.0,6.49.21)",
+            "min_fixed_version": "6.49.21",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.24,7.24.2)",
+            "min_fixed_version": "7.24.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "参数注入或修改",
+    "kind_en": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "last_modified_time": "2026-09-06",
+    "level": "Critical",
+    "mps_id": "MPS-ln7d-2twz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ln7d-2twz",
+        "name": "https://www.oscs1024.com/hd/MPS-ln7d-2twz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86060",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86060"
+      },
+      {
+        "url": "https://cert.pl/en/posts/2026/09/mikrotik-routeros-cve",
+        "name": ""
+      },
+      {
+        "url": "https://cert.pl/en/posts/2026/09/vulnerabilities-in-mikrotik-routeros-actively-exploited/",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/6-49-21-long-term-is-released/272802",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-23-4-long-term-is-released/272801",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-24-2-stable-is-released/272800",
+        "name": ""
+      },
+      {
+        "url": "https://mikrotik.com/supportsec/september-2026-vulnerability/",
+        "name": ""
+      },
+      {
+        "url": "https://npratley.net/reversing-mikrotiks-silent-patch-the-routeros-7-23-4-fix-they-wouldnt-explain/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "RouterOS SSH 参数注入提权漏洞"
+  },
+  "first_saved_at": "2026-09-05T20:53:33+00:00"
+}

@@ -1,0 +1,221 @@
+{
+  "saved_at": "2026-09-05T20:53:37+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-h302-es1i",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-67281",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cvd@cert.pl",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-824",
+    "description": "MikroTik RouterOS 是 MikroTik 路由器使用的闭源网络操作系统，WebFig 是其内置的基于 Web 的图形化管理界面。\n受影响版本中，WebFig 的 /jsproxy 路径在分配新会话时会保留一个陈旧且未初始化的 principal 指针并将其用于文件授权判断；未认证攻击者可先通过请求整理堆分配器布局，使文件服务路径以足够权限解引用该指针并通过授权检查，随后在加密 URI 中注入父目录组件逃逸 WebFig 文件命名空间，最终以 root 权限读取路由器上的文件，包括包含凭据的配置存储。\n修复版本中通过发布包含修复的 RouterOS 版本切断该未认证文件读取链，官方已在 6.49.21（Long-term）、7.23.4（Long-term）、7.24.2（Stable）及 7.25beta3 中完成修复；厂商未公开代码级修复细节，建议受影响用户升级至上述版本。",
+    "effects": [
+      {
+        "comp_name": "routeros",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.0.0,7.23.4)",
+            "min_fixed_version": "7.23.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0.0,6.49.21)",
+            "min_fixed_version": "6.49.21",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.24,7.24.2)",
+            "min_fixed_version": "7.24.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用未经初始化的指针",
+    "kind_en": "访问未初始化的指针",
+    "last_modified_time": "2026-09-06",
+    "level": "High",
+    "mps_id": "MPS-h302-es1i",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-h302-es1i",
+        "name": "https://www.oscs1024.com/hd/MPS-h302-es1i"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67281",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-67281"
+      },
+      {
+        "url": "https://cert.pl/en/posts/2026/09/mikrotik-routeros-cve",
+        "name": ""
+      },
+      {
+        "url": "https://cert.pl/en/posts/2026/09/vulnerabilities-in-mikrotik-routeros-actively-exploited/",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/6-49-21-long-term-is-released/272802",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-23-4-long-term-is-released/272801",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-24-2-stable-is-released/272800",
+        "name": ""
+      },
+      {
+        "url": "https://mikrotik.com/supportsec/september-2026-vulnerability/",
+        "name": ""
+      },
+      {
+        "url": "https://npratley.net/reversing-mikrotiks-silent-patch-the-routeros-7-23-4-fix-they-wouldnt-explain/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MikroTik RouterOS WebFig 任意文件读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-67281",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cvd@cert.pl",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-824",
+    "description": "MikroTik RouterOS 是 MikroTik 路由器使用的闭源网络操作系统，WebFig 是其内置的基于 Web 的图形化管理界面。\n受影响版本中，WebFig 的 /jsproxy 路径在分配新会话时会保留一个陈旧且未初始化的 principal 指针并将其用于文件授权判断；未认证攻击者可先通过请求整理堆分配器布局，使文件服务路径以足够权限解引用该指针并通过授权检查，随后在加密 URI 中注入父目录组件逃逸 WebFig 文件命名空间，最终以 root 权限读取路由器上的文件，包括包含凭据的配置存储。\n修复版本中通过发布包含修复的 RouterOS 版本切断该未认证文件读取链，官方已在 6.49.21（Long-term）、7.23.4（Long-term）、7.24.2（Stable）及 7.25beta3 中完成修复；厂商未公开代码级修复细节，建议受影响用户升级至上述版本。",
+    "effects": [
+      {
+        "comp_name": "routeros",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.0.0,7.23.4)",
+            "min_fixed_version": "7.23.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0.0,6.49.21)",
+            "min_fixed_version": "6.49.21",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.24,7.24.2)",
+            "min_fixed_version": "7.24.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用未经初始化的指针",
+    "kind_en": "Access of Uninitialized Pointer",
+    "last_modified_time": "2026-09-06",
+    "level": "High",
+    "mps_id": "MPS-h302-es1i",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-h302-es1i",
+        "name": "https://www.oscs1024.com/hd/MPS-h302-es1i"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67281",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-67281"
+      },
+      {
+        "url": "https://cert.pl/en/posts/2026/09/mikrotik-routeros-cve",
+        "name": ""
+      },
+      {
+        "url": "https://cert.pl/en/posts/2026/09/vulnerabilities-in-mikrotik-routeros-actively-exploited/",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/6-49-21-long-term-is-released/272802",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-23-4-long-term-is-released/272801",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-24-2-stable-is-released/272800",
+        "name": ""
+      },
+      {
+        "url": "https://mikrotik.com/supportsec/september-2026-vulnerability/",
+        "name": ""
+      },
+      {
+        "url": "https://npratley.net/reversing-mikrotiks-silent-patch-the-routeros-7-23-4-fix-they-wouldnt-explain/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MikroTik RouterOS WebFig 任意文件读取漏洞"
+  },
+  "first_saved_at": "2026-09-05T20:53:37+00:00"
+}

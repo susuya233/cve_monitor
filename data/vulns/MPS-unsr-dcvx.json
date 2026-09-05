@@ -1,0 +1,221 @@
+{
+  "saved_at": "2026-09-05T20:53:34+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-unsr-dcvx",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-67277",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cvd@cert.pl",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "MikroTik RouterOS 是 MikroTik 路由器设备使用的闭源网络操作系统，基于 Linux 内核，提供路由、防火墙、带宽测试（btest）等网络服务，广泛部署于企业、运营商与家庭网络的边界位置。\n受影响版本中，btest 带宽测试服务在对应主会话完成认证之前接受 related 关联连接，未认证客户端可借助该状态启动 IPv4 UDP 测试；当测试参数为 random-data=false 时，发送端会携带内核数据包缓冲区中未初始化的尾部数据，造成内核内存信息泄露；一个未做校验且方向反转的数据包大小区间触发无符号整数下溢，产生异常庞大的分片输出，可导致 RouterOS 内核重启。\n修复版本中通过不再接受主会话认证完成前的 related btest 连接，并对数据包大小区间补充边界校验，切断未认证客户端进入测试启动状态的路径，消除内核内存泄露与内核重启风险。",
+    "effects": [
+      {
+        "comp_name": "routeros",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.24,7.24.2)",
+            "min_fixed_version": "7.24.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.0.0,7.23.4)",
+            "min_fixed_version": "7.23.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0.0,6.49.21)",
+            "min_fixed_version": "6.49.21",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-09-06",
+    "level": "High",
+    "mps_id": "MPS-unsr-dcvx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-unsr-dcvx",
+        "name": "https://www.oscs1024.com/hd/MPS-unsr-dcvx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67277",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-67277"
+      },
+      {
+        "url": "https://cert.pl/en/posts/2026/09/mikrotik-routeros-cve",
+        "name": ""
+      },
+      {
+        "url": "https://cert.pl/en/posts/2026/09/vulnerabilities-in-mikrotik-routeros-actively-exploited/",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/6-49-21-long-term-is-released/272802",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-23-4-long-term-is-released/272801",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-24-2-stable-is-released/272800",
+        "name": ""
+      },
+      {
+        "url": "https://mikrotik.com/supportsec/september-2026-vulnerability/",
+        "name": ""
+      },
+      {
+        "url": "https://npratley.net/reversing-mikrotiks-silent-patch-the-routeros-7-23-4-fix-they-wouldnt-explain/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "RouterOS认证缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-67277",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cvd@cert.pl",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "MikroTik RouterOS 是 MikroTik 路由器设备使用的闭源网络操作系统，基于 Linux 内核，提供路由、防火墙、带宽测试（btest）等网络服务，广泛部署于企业、运营商与家庭网络的边界位置。\n受影响版本中，btest 带宽测试服务在对应主会话完成认证之前接受 related 关联连接，未认证客户端可借助该状态启动 IPv4 UDP 测试；当测试参数为 random-data=false 时，发送端会携带内核数据包缓冲区中未初始化的尾部数据，造成内核内存信息泄露；一个未做校验且方向反转的数据包大小区间触发无符号整数下溢，产生异常庞大的分片输出，可导致 RouterOS 内核重启。\n修复版本中通过不再接受主会话认证完成前的 related btest 连接，并对数据包大小区间补充边界校验，切断未认证客户端进入测试启动状态的路径，消除内核内存泄露与内核重启风险。",
+    "effects": [
+      {
+        "comp_name": "routeros",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.24,7.24.2)",
+            "min_fixed_version": "7.24.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.0.0,7.23.4)",
+            "min_fixed_version": "7.23.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0.0,6.49.21)",
+            "min_fixed_version": "6.49.21",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-09-06",
+    "level": "High",
+    "mps_id": "MPS-unsr-dcvx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-unsr-dcvx",
+        "name": "https://www.oscs1024.com/hd/MPS-unsr-dcvx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67277",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-67277"
+      },
+      {
+        "url": "https://cert.pl/en/posts/2026/09/mikrotik-routeros-cve",
+        "name": ""
+      },
+      {
+        "url": "https://cert.pl/en/posts/2026/09/vulnerabilities-in-mikrotik-routeros-actively-exploited/",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/6-49-21-long-term-is-released/272802",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-23-4-long-term-is-released/272801",
+        "name": ""
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-24-2-stable-is-released/272800",
+        "name": ""
+      },
+      {
+        "url": "https://mikrotik.com/supportsec/september-2026-vulnerability/",
+        "name": ""
+      },
+      {
+        "url": "https://npratley.net/reversing-mikrotiks-silent-patch-the-routeros-7-23-4-fix-they-wouldnt-explain/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "RouterOS认证缺失漏洞"
+  },
+  "first_saved_at": "2026-09-05T20:53:34+00:00"
+}
