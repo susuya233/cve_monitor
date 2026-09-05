@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-09-05T16:28:11+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-f83s-twnj",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86192",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "SiYuan（思源笔记）是一款开源的隐私优先个人知识管理与笔记软件，内核采用 Go 语言编写，支持本地部署，并可通过发布服务把文档分享给外部读者访问。\n受影响版本中，发布读者可调用的 POST /api/av/getAttributeViewKeys 接口在只读角色下会调用 kernel/model/publish_access.go 中的 FilterBlockAttributeViewKeysByPublishAccess 过滤属性视图键值，该过滤逻辑仅校验 BlockIDs 指向文档的发布可访问性，随后清除 ItemPositions 并把原始对象直接加入返回结果，未清理或重建其中的 KeyValues，绑定在隐藏文档上的数据库行值（文本、数字、日期、链接、资源、关联与汇总等单元格内容）原样返回，发布读者可在未授权情况下获取私有数据库内容。\n修复版本中通过重写该过滤逻辑切断泄露链路，先丢弃绑定文档不可访问的整行数据，再按行值逐一校验 value.BlockID 的发布可访问性并经 filterValue 清洗，返回全新构造的响应对象而非原始对象，所有行均不可访问的数据库键值不再返回。",
+    "effects": [
+      {
+        "comp_name": "siyuan",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.8.2)",
+            "min_fixed_version": "3.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-09-05",
+    "level": "High",
+    "mps_id": "MPS-f83s-twnj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-f83s-twnj",
+        "name": "https://www.oscs1024.com/hd/MPS-f83s-twnj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86192",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86192"
+      },
+      {
+        "url": "https://github.com/siyuan-note/siyuan/security/advisories/GHSA-vc7j-5f5p-3x75",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/siyuan-before-3.8.2-information-disclosure-via-attribute-view",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "SiYuan属性视图信息泄露漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86192",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "SiYuan（思源笔记）是一款开源的隐私优先个人知识管理与笔记软件，内核采用 Go 语言编写，支持本地部署，并可通过发布服务把文档分享给外部读者访问。\n受影响版本中，发布读者可调用的 POST /api/av/getAttributeViewKeys 接口在只读角色下会调用 kernel/model/publish_access.go 中的 FilterBlockAttributeViewKeysByPublishAccess 过滤属性视图键值，该过滤逻辑仅校验 BlockIDs 指向文档的发布可访问性，随后清除 ItemPositions 并把原始对象直接加入返回结果，未清理或重建其中的 KeyValues，绑定在隐藏文档上的数据库行值（文本、数字、日期、链接、资源、关联与汇总等单元格内容）原样返回，发布读者可在未授权情况下获取私有数据库内容。\n修复版本中通过重写该过滤逻辑切断泄露链路，先丢弃绑定文档不可访问的整行数据，再按行值逐一校验 value.BlockID 的发布可访问性并经 filterValue 清洗，返回全新构造的响应对象而非原始对象，所有行均不可访问的数据库键值不再返回。",
+    "effects": [
+      {
+        "comp_name": "siyuan",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.8.2)",
+            "min_fixed_version": "3.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-09-05",
+    "level": "High",
+    "mps_id": "MPS-f83s-twnj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-f83s-twnj",
+        "name": "https://www.oscs1024.com/hd/MPS-f83s-twnj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86192",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86192"
+      },
+      {
+        "url": "https://github.com/siyuan-note/siyuan/security/advisories/GHSA-vc7j-5f5p-3x75",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/siyuan-before-3.8.2-information-disclosure-via-attribute-view",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "SiYuan属性视图信息泄露漏洞"
+  },
+  "first_saved_at": "2026-09-05T16:28:11+00:00"
+}

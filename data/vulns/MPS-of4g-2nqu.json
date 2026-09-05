@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-09-05T16:28:08+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-of4g-2nqu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86196",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-290",
+    "description": "Grav API 插件（getgrav/grav-plugin-api）是 Grav CMS 官方维护的开源 RESTful API 插件，为 Grav 2.0 站点提供令牌认证、用户与页面管理等 HTTP 接口。\n受影响版本中，POST /api/v1/auth/forgot-password 生成密码重置链接时依赖请求 Host 头：ResolvesAdminBaseUrl::resolveAdminBaseUrl() 的兜底返回值与 allowedAdminOrigins() 的白名单种子均取自 Uri::rootUrl(true)，在默认未设置 system.custom_base_url 时该值的主机部分来自 $_SERVER['HTTP_HOST']；未认证攻击者以任意账户邮箱和伪造的 Host 头调用该接口后，受害者邮箱收到的重置链接指向攻击者域名并携带服务端有效的重置令牌，受害者点击后，攻击者从自身访问日志读取令牌并调用 POST /api/v1/auth/reset-password 完成账号接管，超级管理员账号被接管将导致全站失陷。\n修复版本中通过新增 trustedAdminBaseUrl() 将重置、邀请与单点登录链接锚定到运维配置的 system.custom_base_url（未设置时取 plugins.login.site_host），resolveAdminBaseUrl() 与 allowedAdminOrigins() 不再使用请求派生的根 URL，并在 require_trusted_host 开启且无可信主机配置时扣发重置邮件，使重置链接无法再被投毒。",
+    "effects": [
+      {
+        "comp_name": "getgrav/grav-plugin-api",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.20)",
+            "min_fixed_version": "1.0.20",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用欺骗进行的认证绕过",
+    "kind_en": "通过欺骗绕过身份验证",
+    "last_modified_time": "2026-09-05",
+    "level": "High",
+    "mps_id": "MPS-of4g-2nqu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-of4g-2nqu",
+        "name": "https://www.oscs1024.com/hd/MPS-of4g-2nqu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86196",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86196"
+      },
+      {
+        "url": "https://github.com/getgrav/grav/security/advisories/GHSA-262p-56vv-7v5r",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/grav-api-plugin-before-1.0.20-authentication-bypass-via-host-header",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Grav API 插件 Host 头投毒致账号接管",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86196",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-290",
+    "description": "Grav API 插件（getgrav/grav-plugin-api）是 Grav CMS 官方维护的开源 RESTful API 插件，为 Grav 2.0 站点提供令牌认证、用户与页面管理等 HTTP 接口。\n受影响版本中，POST /api/v1/auth/forgot-password 生成密码重置链接时依赖请求 Host 头：ResolvesAdminBaseUrl::resolveAdminBaseUrl() 的兜底返回值与 allowedAdminOrigins() 的白名单种子均取自 Uri::rootUrl(true)，在默认未设置 system.custom_base_url 时该值的主机部分来自 $_SERVER['HTTP_HOST']；未认证攻击者以任意账户邮箱和伪造的 Host 头调用该接口后，受害者邮箱收到的重置链接指向攻击者域名并携带服务端有效的重置令牌，受害者点击后，攻击者从自身访问日志读取令牌并调用 POST /api/v1/auth/reset-password 完成账号接管，超级管理员账号被接管将导致全站失陷。\n修复版本中通过新增 trustedAdminBaseUrl() 将重置、邀请与单点登录链接锚定到运维配置的 system.custom_base_url（未设置时取 plugins.login.site_host），resolveAdminBaseUrl() 与 allowedAdminOrigins() 不再使用请求派生的根 URL，并在 require_trusted_host 开启且无可信主机配置时扣发重置邮件，使重置链接无法再被投毒。",
+    "effects": [
+      {
+        "comp_name": "getgrav/grav-plugin-api",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.20)",
+            "min_fixed_version": "1.0.20",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用欺骗进行的认证绕过",
+    "kind_en": "Authentication Bypass by Spoofing",
+    "last_modified_time": "2026-09-05",
+    "level": "High",
+    "mps_id": "MPS-of4g-2nqu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-of4g-2nqu",
+        "name": "https://www.oscs1024.com/hd/MPS-of4g-2nqu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86196",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86196"
+      },
+      {
+        "url": "https://github.com/getgrav/grav/security/advisories/GHSA-262p-56vv-7v5r",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/grav-api-plugin-before-1.0.20-authentication-bypass-via-host-header",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Grav API 插件 Host 头投毒致账号接管"
+  },
+  "first_saved_at": "2026-09-05T16:28:08+00:00"
+}

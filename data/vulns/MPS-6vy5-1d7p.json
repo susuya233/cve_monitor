@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-09-05T16:28:14+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6vy5-1d7p",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86189",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-73",
+    "description": "WWBN AVideo 是一个开源 PHP 视频平台，提供视频点播、直播与转码管理能力，支持通过独立编码主机（standAloneFFMPEG）分担视频编码任务。\n受影响版本中，plugin/API/notify.ffmpeg.json.php 作为对外回调接口，仅将 notifyCode 参数解密后判断非空即视为通过认证，而该站点签发的任意密文（如编码接口返回的 video_id_hash）解密结果均非空，未鉴权攻击者重放任一历史密文可通过校验；随后 objects/functionsFFMPEG.php 的 buildLocalPathForNotify() 将 notify 参数中的 avideoRelativePath 直接拼接在 systemRootPath 之后作为写入路径，mp4/mp3 格式检查作用于另一字段 avideoPath，攻击者由此可将编码主机返回的内容写入应用根目录及任意子路径，造成任意文件写入与覆盖。\n修复版本中通过在接口入口要求 notifyCode 解密结果为 86400 秒内的数值时间戳，重放的历史密文不再通过校验，并在 buildLocalPathForNotify() 中拒绝空值、NUL 字节、目录穿越与绝对路径，将写入位置限制在 videos 目录内，路径非法时调用方中止写入，阻断未鉴权的任意路径写入。",
+    "effects": [
+      {
+        "comp_name": "avideo",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,29.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "文件名或路径的外部控制",
+    "last_modified_time": "2026-09-05",
+    "level": "Critical",
+    "mps_id": "MPS-6vy5-1d7p",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6vy5-1d7p",
+        "name": "https://www.oscs1024.com/hd/MPS-6vy5-1d7p"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86189",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86189"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo/security/advisories/GHSA-cprx-fggj-7vpq",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wwbn-avideo-unauthenticated-path-traversal-via-notify-ffmpeg-json-php",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "WWBN AVideo 路径穿越漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86189",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-73",
+    "description": "WWBN AVideo 是一个开源 PHP 视频平台，提供视频点播、直播与转码管理能力，支持通过独立编码主机（standAloneFFMPEG）分担视频编码任务。\n受影响版本中，plugin/API/notify.ffmpeg.json.php 作为对外回调接口，仅将 notifyCode 参数解密后判断非空即视为通过认证，而该站点签发的任意密文（如编码接口返回的 video_id_hash）解密结果均非空，未鉴权攻击者重放任一历史密文可通过校验；随后 objects/functionsFFMPEG.php 的 buildLocalPathForNotify() 将 notify 参数中的 avideoRelativePath 直接拼接在 systemRootPath 之后作为写入路径，mp4/mp3 格式检查作用于另一字段 avideoPath，攻击者由此可将编码主机返回的内容写入应用根目录及任意子路径，造成任意文件写入与覆盖。\n修复版本中通过在接口入口要求 notifyCode 解密结果为 86400 秒内的数值时间戳，重放的历史密文不再通过校验，并在 buildLocalPathForNotify() 中拒绝空值、NUL 字节、目录穿越与绝对路径，将写入位置限制在 videos 目录内，路径非法时调用方中止写入，阻断未鉴权的任意路径写入。",
+    "effects": [
+      {
+        "comp_name": "avideo",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,29.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "External Control of File Name or Path",
+    "last_modified_time": "2026-09-05",
+    "level": "Critical",
+    "mps_id": "MPS-6vy5-1d7p",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6vy5-1d7p",
+        "name": "https://www.oscs1024.com/hd/MPS-6vy5-1d7p"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86189",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86189"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo/security/advisories/GHSA-cprx-fggj-7vpq",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/wwbn-avideo-unauthenticated-path-traversal-via-notify-ffmpeg-json-php",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "WWBN AVideo 路径穿越漏洞"
+  },
+  "first_saved_at": "2026-09-05T16:28:14+00:00"
+}
