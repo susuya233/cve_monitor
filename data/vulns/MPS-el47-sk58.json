@@ -1,0 +1,147 @@
+{
+  "saved_at": "2026-09-05T05:10:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-el47-sk58",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-52767",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L",
+    "cwe": "CWE-347",
+    "description": "YesWiki 是开源 PHP Wiki 引擎，其 Bazar 模块通过 ActivityPub 协议处理跨实例联邦内容；入站收件箱控制器调用 HttpSignatureService::verifySignature 校验请求签名时，以 `!openssl_verify(...)` 的布尔取反判定签名成败，但 `openssl_verify` 在内部错误时返回 `-1`（PHP 真值规则下为真），导致校验失败抛错被跳过，攻击者可在未认证情况下向启用 ActivityPub 的 Bazar 表单投递 Create/Update/Delete 活动，触发对 EntryManager::create/update/delete 的未授权调用。\n受影响版本中，`tools/bazar/services/HttpSignatureService.php` 中 `HttpSignatureService::verifySignature(Request $request)` 方法（v4.6.5 = origin/doryphore-dev HEAD）使用 `if (!openssl_verify(join(\"\\n\", $sigParts), base64_decode($sigConf['signature']), $actorPublicKey, strtoupper($sigConf['algorithm'])))` 判定签名；攻击者将 `keyId` 指向自建 actor URL、actor 文档返回 DSA 公钥、签名头中 `algorithm` 设为 `RSA-SHA256`，PHP 8.3 + OpenSSL 3.x 下 `openssl_verify` 因算法与公钥类型不匹配返回 `-1`，`!(-1)` 为 `false`，`throw new Exception('Signature verification failed')` 被跳过，控制器随后进入 `processActivity()` 并依次调用 `EntryManager::create()`、`EntryManager::update()`、`EntryManager::delete()` 对 `yeswiki_pages` 与 `yeswiki_triples` 表进行未授权 CRUD；composer 包 `yeswiki/yeswiki` 受影响版本区间为 `[4.6.2, 4.6.6)`。\n修复版本中通过提交 d1795e0301e1a1078f17b4b98f56fff70de2029e（已合入 v4.6.6）将 `if (!openssl_verify(...))` 改为 `if (openssl_verify(...) !== 1)`，仅在返回码严格等于成功值 `1` 时放行，从而同时拒绝签名无效（`0`）、内部错误（`-1`）与入参错误（`false`），切断攻击者通过伪造 actor 公钥与算法名触发 `-1` 的旁路逻辑。",
+    "effects": [
+      {
+        "comp_name": "yeswiki/yeswiki",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[4.6.2,4.6.6)",
+            "min_fixed_version": "4.6.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "密码签名验证不当",
+    "last_modified_time": "2026-07-12",
+    "level": "High",
+    "mps_id": "MPS-el47-sk58",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/YesWiki/yeswiki/security/advisories/GHSA-mv28-wj57-f57g",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/YesWiki/yeswiki/commit/d1795e0301e1a1078f17b4b98f56fff70de2029e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-mv28-wj57-f57g",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "YesWiki ActivityPub 签名验证绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-52767",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L",
+    "cwe": "CWE-347",
+    "description": "YesWiki 是开源 PHP Wiki 引擎，其 Bazar 模块通过 ActivityPub 协议处理跨实例联邦内容；入站收件箱控制器调用 HttpSignatureService::verifySignature 校验请求签名时，以 `!openssl_verify(...)` 的布尔取反判定签名成败，但 `openssl_verify` 在内部错误时返回 `-1`（PHP 真值规则下为真），导致校验失败抛错被跳过，攻击者可在未认证情况下向启用 ActivityPub 的 Bazar 表单投递 Create/Update/Delete 活动，触发对 EntryManager::create/update/delete 的未授权调用。\n受影响版本中，`tools/bazar/services/HttpSignatureService.php` 中 `HttpSignatureService::verifySignature(Request $request)` 方法（v4.6.5 = origin/doryphore-dev HEAD）使用 `if (!openssl_verify(join(\"\\n\", $sigParts), base64_decode($sigConf['signature']), $actorPublicKey, strtoupper($sigConf['algorithm'])))` 判定签名；攻击者将 `keyId` 指向自建 actor URL、actor 文档返回 DSA 公钥、签名头中 `algorithm` 设为 `RSA-SHA256`，PHP 8.3 + OpenSSL 3.x 下 `openssl_verify` 因算法与公钥类型不匹配返回 `-1`，`!(-1)` 为 `false`，`throw new Exception('Signature verification failed')` 被跳过，控制器随后进入 `processActivity()` 并依次调用 `EntryManager::create()`、`EntryManager::update()`、`EntryManager::delete()` 对 `yeswiki_pages` 与 `yeswiki_triples` 表进行未授权 CRUD；composer 包 `yeswiki/yeswiki` 受影响版本区间为 `[4.6.2, 4.6.6)`。\n修复版本中通过提交 d1795e0301e1a1078f17b4b98f56fff70de2029e（已合入 v4.6.6）将 `if (!openssl_verify(...))` 改为 `if (openssl_verify(...) !== 1)`，仅在返回码严格等于成功值 `1` 时放行，从而同时拒绝签名无效（`0`）、内部错误（`-1`）与入参错误（`false`），切断攻击者通过伪造 actor 公钥与算法名触发 `-1` 的旁路逻辑。",
+    "effects": [
+      {
+        "comp_name": "yeswiki/yeswiki",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[4.6.2,4.6.6)",
+            "min_fixed_version": "4.6.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "Improper Verification of Cryptographic Signature",
+    "last_modified_time": "2026-07-12",
+    "level": "High",
+    "mps_id": "MPS-el47-sk58",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/YesWiki/yeswiki/security/advisories/GHSA-mv28-wj57-f57g",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/YesWiki/yeswiki/commit/d1795e0301e1a1078f17b4b98f56fff70de2029e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-mv28-wj57-f57g",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "YesWiki ActivityPub 签名验证绕过漏洞"
+  },
+  "first_saved_at": "2026-09-05T05:10:32+00:00"
+}

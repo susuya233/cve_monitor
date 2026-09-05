@@ -1,0 +1,187 @@
+{
+  "saved_at": "2026-09-05T05:10:37+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-rga5-ds1j",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-52766",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+    "cwe": "CWE-862",
+    "description": "YesWiki 是一款开源的 PHP wiki 引擎，通过动作（action）插件机制向访客暴露页面编辑与管理能力；在默认 `default_write_acl='*'` 配置下，匿名用户可借助 `{{erasespamedcomments}}` 动作触发对任意 wiki 页面的删除操作，导致包括首页与管理页面在内的页面被永久删除。\n受影响版本中，YesWiki <=4.6.5（artifact yeswiki/yeswiki）`actions/EraseSpamedCommentsAction.php::run()` 在处理 `$_POST['clean']` 与 `$_POST['suppr'][]` 前未做任何身份或权限校验、亦未校验目标 tag 是否为评论页面，其底层调用 `PageManager::deleteOrphaned()` 名义上仅删除孤立页面、实则对 `pages`、`links`、`acls`、`triples`、`referrers`、`tags` 表发起无条件 `DELETE`；由于默认动作 ACL 模型在 `includes/YesWiki.php` 中允许 `*` 通过 `CheckModuleACL`，匿名用户只需先创建一个内容为 `{{erasespamedcomments}}` 的触发页面，再以 `clean=yes&suppr[]=<目标 tag>` 提交 POST 请求，便可从数据库中永久删除 `PagePrincipale` 等任意页面，并写入“Effacement de : …”回显日志。\n修复版本中通过 commit ed5b548a705c8091ba0282aaaba73ddda976abef 在 YesWiki 4.6.6 中对 `EraseSpamedCommentsAction::run()` 设置三道防线：入口处调用 `$wiki->UserIsAdmin()` 拒绝非管理员；循环体内使用 `$wiki->LoadPage($page)` 校验 `$pageData['comment_on']` 非空，仅删除真正的评论页面；同时把回显的 `$_POST['suppr']` 值以 `htmlspecialchars()` 转义，缓解响应型 XSS 风险，由此切断匿名用户借助 `suppr[]` 触发任意页面删除的因果链。",
+    "effects": [
+      {
+        "comp_name": "yeswiki/yeswiki",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.6.5]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,4.6.6)",
+            "min_fixed_version": "4.6.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-09-05",
+    "level": "Critical",
+    "mps_id": "MPS-rga5-ds1j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/YesWiki/yeswiki/security/advisories/GHSA-6x7x-gcmf-7r8x",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/YesWiki/yeswiki/commit/ed5b548a705c8091ba0282aaaba73ddda976abef",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-6x7x-gcmf-7r8x",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "YesWiki erasespamedcomments 动作未授权任意页面删除漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-52766",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+    "cwe": "CWE-862",
+    "description": "YesWiki 是一款开源的 PHP wiki 引擎，通过动作（action）插件机制向访客暴露页面编辑与管理能力；在默认 `default_write_acl='*'` 配置下，匿名用户可借助 `{{erasespamedcomments}}` 动作触发对任意 wiki 页面的删除操作，导致包括首页与管理页面在内的页面被永久删除。\n受影响版本中，YesWiki <=4.6.5（artifact yeswiki/yeswiki）`actions/EraseSpamedCommentsAction.php::run()` 在处理 `$_POST['clean']` 与 `$_POST['suppr'][]` 前未做任何身份或权限校验、亦未校验目标 tag 是否为评论页面，其底层调用 `PageManager::deleteOrphaned()` 名义上仅删除孤立页面、实则对 `pages`、`links`、`acls`、`triples`、`referrers`、`tags` 表发起无条件 `DELETE`；由于默认动作 ACL 模型在 `includes/YesWiki.php` 中允许 `*` 通过 `CheckModuleACL`，匿名用户只需先创建一个内容为 `{{erasespamedcomments}}` 的触发页面，再以 `clean=yes&suppr[]=<目标 tag>` 提交 POST 请求，便可从数据库中永久删除 `PagePrincipale` 等任意页面，并写入“Effacement de : …”回显日志。\n修复版本中通过 commit ed5b548a705c8091ba0282aaaba73ddda976abef 在 YesWiki 4.6.6 中对 `EraseSpamedCommentsAction::run()` 设置三道防线：入口处调用 `$wiki->UserIsAdmin()` 拒绝非管理员；循环体内使用 `$wiki->LoadPage($page)` 校验 `$pageData['comment_on']` 非空，仅删除真正的评论页面；同时把回显的 `$_POST['suppr']` 值以 `htmlspecialchars()` 转义，缓解响应型 XSS 风险，由此切断匿名用户借助 `suppr[]` 触发任意页面删除的因果链。",
+    "effects": [
+      {
+        "comp_name": "yeswiki/yeswiki",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.6.5]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,4.6.6)",
+            "min_fixed_version": "4.6.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-09-05",
+    "level": "Critical",
+    "mps_id": "MPS-rga5-ds1j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/YesWiki/yeswiki/security/advisories/GHSA-6x7x-gcmf-7r8x",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/YesWiki/yeswiki/commit/ed5b548a705c8091ba0282aaaba73ddda976abef",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-6x7x-gcmf-7r8x",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "YesWiki erasespamedcomments 动作未授权任意页面删除漏洞"
+  },
+  "first_saved_at": "2026-09-05T05:10:37+00:00"
+}

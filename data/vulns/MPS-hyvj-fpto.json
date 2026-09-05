@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-09-05T05:10:35+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-hyvj-fpto",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-52770",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-89",
+    "description": "YesWiki 是一款基于 PHP 编写的开源协作维基系统，其内置 Bazar 模块对外提供的条目列表 API 在处理数值型字段过滤条件时仅对用户输入执行 mysqli_real_escape_string 转义却未加引号或进行数值合法性校验，导致未认证远程攻击者可在 query / queries GET 参数中注入布尔 SQL 子查询，并依据返回条目数差异推断数据库内容。\n受影响版本中，yeswiki/yeswiki 组件在低于 4.6.6 的版本内，SearchManager::buildQueriesConditions() 方法在字段 _type_ 等于 number 时将经 mysqli_real_escape_string 转义但未加引号、未做数值校验的 $vValue 裸值拼接到 'CAST(... AS DOUBLE) ' . $vComparisonOperator . ' ' . $vValue 的 SQL 片段中，攻击者通过 ACL=public 的 /api/forms/{formId}/entries/{output}/{selectedEntries}、/api/entries/{output}/{selectedEntries} 和 /api/entries/bazarlist 路由在 query / queries GET 参数传入例如 100 OR (SELECT COUNT(*) FROM yeswiki_users)>0 的载荷，在 WHERE 子句中嵌入任意只读布尔 SQL 表达式，利用返回条目数差异构成 boolean oracle 来推断 yeswiki_* 表中账号、密码哈希、密码恢复素材及维基元数据等敏感内容。\n修复版本中通过在 tools/bazar/services/SearchManager.php 的 SearchManager::buildQueriesConditions() 方法生成数值 WHERE 子句前对 trim($vValue) 增加 is_numeric 与 is_finite 双重校验，对非法数值用常量 FALSE 替代、对合法数值以 (float) trim($vValue) 强制转换后再拼接到 CAST 表达式右侧，从而切断 WHERE 子句中任意 SQL 表达式的写入路径；该修复在 yeswiki/yeswiki 4.6.6 版本中以 commit f3b0dd093a7ace47dc29a515faeb02635baceae2（commit message：fix(bazar): GHSA-qg78-vmvc-fhjw）落地。",
+    "effects": [
+      {
+        "comp_name": "yeswiki/yeswiki",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.6.6)",
+            "min_fixed_version": "4.6.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SQL注入",
+    "kind_en": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
+    "last_modified_time": "2026-07-12",
+    "level": "High",
+    "mps_id": "MPS-hyvj-fpto",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/YesWiki/yeswiki/security/advisories/GHSA-qg78-vmvc-fhjw",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/YesWiki/yeswiki/commit/f3b0dd093a7ace47dc29a515faeb02635baceae2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-qg78-vmvc-fhjw",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "YesWiki 公共 Bazar 列表 API 数值过滤器 SQL 注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-52770",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-89",
+    "description": "YesWiki 是一款基于 PHP 编写的开源协作维基系统，其内置 Bazar 模块对外提供的条目列表 API 在处理数值型字段过滤条件时仅对用户输入执行 mysqli_real_escape_string 转义却未加引号或进行数值合法性校验，导致未认证远程攻击者可在 query / queries GET 参数中注入布尔 SQL 子查询，并依据返回条目数差异推断数据库内容。\n受影响版本中，yeswiki/yeswiki 组件在低于 4.6.6 的版本内，SearchManager::buildQueriesConditions() 方法在字段 _type_ 等于 number 时将经 mysqli_real_escape_string 转义但未加引号、未做数值校验的 $vValue 裸值拼接到 'CAST(... AS DOUBLE) ' . $vComparisonOperator . ' ' . $vValue 的 SQL 片段中，攻击者通过 ACL=public 的 /api/forms/{formId}/entries/{output}/{selectedEntries}、/api/entries/{output}/{selectedEntries} 和 /api/entries/bazarlist 路由在 query / queries GET 参数传入例如 100 OR (SELECT COUNT(*) FROM yeswiki_users)>0 的载荷，在 WHERE 子句中嵌入任意只读布尔 SQL 表达式，利用返回条目数差异构成 boolean oracle 来推断 yeswiki_* 表中账号、密码哈希、密码恢复素材及维基元数据等敏感内容。\n修复版本中通过在 tools/bazar/services/SearchManager.php 的 SearchManager::buildQueriesConditions() 方法生成数值 WHERE 子句前对 trim($vValue) 增加 is_numeric 与 is_finite 双重校验，对非法数值用常量 FALSE 替代、对合法数值以 (float) trim($vValue) 强制转换后再拼接到 CAST 表达式右侧，从而切断 WHERE 子句中任意 SQL 表达式的写入路径；该修复在 yeswiki/yeswiki 4.6.6 版本中以 commit f3b0dd093a7ace47dc29a515faeb02635baceae2（commit message：fix(bazar): GHSA-qg78-vmvc-fhjw）落地。",
+    "effects": [
+      {
+        "comp_name": "yeswiki/yeswiki",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.6.6)",
+            "min_fixed_version": "4.6.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SQL注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "last_modified_time": "2026-07-12",
+    "level": "High",
+    "mps_id": "MPS-hyvj-fpto",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/YesWiki/yeswiki/security/advisories/GHSA-qg78-vmvc-fhjw",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/YesWiki/yeswiki/commit/f3b0dd093a7ace47dc29a515faeb02635baceae2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-qg78-vmvc-fhjw",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "YesWiki 公共 Bazar 列表 API 数值过滤器 SQL 注入漏洞"
+  },
+  "first_saved_at": "2026-09-05T05:10:35+00:00"
+}

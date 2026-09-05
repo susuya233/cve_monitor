@@ -1,0 +1,147 @@
+{
+  "saved_at": "2026-09-05T05:10:36+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-imdu-vtlo",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-52769",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
+    "cwe": "CWE-918",
+    "description": "未鉴权攻击者通过向 YesWiki 公开的 POST /api/forms/{formId}/actor/inbox 路由发送带有任意 keyId URL 的 HTTP Signature 头部，可在未进行 URL 校验或签名验证前触发服务端向任意主机（包括 169.254.169.254 等云元数据地址）发起 HTTP GET 请求，从而构成可被用于内网端口扫描、服务枚举与云 IAM 凭据窃取的未经身份验证 SSRF。\n受影响版本中，composer 包 yeswiki/yeswiki 4.6.2 ≤ 版本 < 4.6.6 的 doryphore-dev 分支（即 v4.6.2、v4.6.3、v4.6.4、v4.6.5 四个发布版本）受此漏洞影响，触发点位于 bazar 组件的 tools/bazar/controllers/ApiController.php 控制器 postFormActorInbox() 与 tools/bazar/services/HttpSignatureService.php 中 HttpSignatureService::verifySignature() 方法，原因是 verifySignature() 通过 parse_ini_string 解析 Signature 头部后，把攻击者可控的 sigConf['keyId'] 直接作为 URL 传入 httpClient->request('GET', $sigConf['keyId']) 进行出站请求，既未限制协议（HTTPS-only）、也未校验目标是否落在私网/回环/链路本地地址范围内，且需至少一个 Bazar 表单启用 ActivityPub（bn_activitypub_enable='1'）即可达此流程。\n修复版本中通过在 v4.6.6 中合并的提交 87e627f33e79879827a3669fee2aa1244612c487（commit message：fix(bazar): GHSA-vw42-752g-5mrp）在 HttpSignatureService.php 新增私有方法 validateKeyIdUrl()，强制 keyId URL 必须为 https 协议、把主机解析得到的所有 IPv4（gethostbyname）与 IPv6（dns_get_record DNS_AAAA）地址均使用 FILTER_FLAG_NO_PRIV_RANGE|FILTER_FLAG_NO_RES_RANGE 校验拒绝 127.x、10.x、172.16/12、192.168.x、169.254.x、0.x、240.x、::1、fc00::/7，并单独补检 IPv6 fe80::/10 链路本地地址，随后在 verifySignature() 发起 httpClient->request('GET', $keyId) 之前调用该新方法，由此切断任意出站目标到达出站 HTTP 请求的全部路径，公网以外的恶意 keyId 将被拒绝而不再触发服务端请求。",
+    "effects": [
+      {
+        "comp_name": "yeswiki/yeswiki",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[4.6.2,4.6.6)",
+            "min_fixed_version": "4.6.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-07-12",
+    "level": "High",
+    "mps_id": "MPS-imdu-vtlo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/YesWiki/yeswiki/security/advisories/GHSA-vw42-752g-5mrp",
+        "name": ""
+      },
+      {
+        "url": "http://github.com/YesWiki/yeswiki/commit/87e627f33e79879827a3669fee2aa1244612c487",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-vw42-752g-5mrp",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "YesWiki 未经身份验证 SSRF 漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-52769",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
+    "cwe": "CWE-918",
+    "description": "未鉴权攻击者通过向 YesWiki 公开的 POST /api/forms/{formId}/actor/inbox 路由发送带有任意 keyId URL 的 HTTP Signature 头部，可在未进行 URL 校验或签名验证前触发服务端向任意主机（包括 169.254.169.254 等云元数据地址）发起 HTTP GET 请求，从而构成可被用于内网端口扫描、服务枚举与云 IAM 凭据窃取的未经身份验证 SSRF。\n受影响版本中，composer 包 yeswiki/yeswiki 4.6.2 ≤ 版本 < 4.6.6 的 doryphore-dev 分支（即 v4.6.2、v4.6.3、v4.6.4、v4.6.5 四个发布版本）受此漏洞影响，触发点位于 bazar 组件的 tools/bazar/controllers/ApiController.php 控制器 postFormActorInbox() 与 tools/bazar/services/HttpSignatureService.php 中 HttpSignatureService::verifySignature() 方法，原因是 verifySignature() 通过 parse_ini_string 解析 Signature 头部后，把攻击者可控的 sigConf['keyId'] 直接作为 URL 传入 httpClient->request('GET', $sigConf['keyId']) 进行出站请求，既未限制协议（HTTPS-only）、也未校验目标是否落在私网/回环/链路本地地址范围内，且需至少一个 Bazar 表单启用 ActivityPub（bn_activitypub_enable='1'）即可达此流程。\n修复版本中通过在 v4.6.6 中合并的提交 87e627f33e79879827a3669fee2aa1244612c487（commit message：fix(bazar): GHSA-vw42-752g-5mrp）在 HttpSignatureService.php 新增私有方法 validateKeyIdUrl()，强制 keyId URL 必须为 https 协议、把主机解析得到的所有 IPv4（gethostbyname）与 IPv6（dns_get_record DNS_AAAA）地址均使用 FILTER_FLAG_NO_PRIV_RANGE|FILTER_FLAG_NO_RES_RANGE 校验拒绝 127.x、10.x、172.16/12、192.168.x、169.254.x、0.x、240.x、::1、fc00::/7，并单独补检 IPv6 fe80::/10 链路本地地址，随后在 verifySignature() 发起 httpClient->request('GET', $keyId) 之前调用该新方法，由此切断任意出站目标到达出站 HTTP 请求的全部路径，公网以外的恶意 keyId 将被拒绝而不再触发服务端请求。",
+    "effects": [
+      {
+        "comp_name": "yeswiki/yeswiki",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[4.6.2,4.6.6)",
+            "min_fixed_version": "4.6.6",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-07-12",
+    "level": "High",
+    "mps_id": "MPS-imdu-vtlo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-05",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/YesWiki/yeswiki/security/advisories/GHSA-vw42-752g-5mrp",
+        "name": ""
+      },
+      {
+        "url": "http://github.com/YesWiki/yeswiki/commit/87e627f33e79879827a3669fee2aa1244612c487",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-vw42-752g-5mrp",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "YesWiki 未经身份验证 SSRF 漏洞"
+  },
+  "first_saved_at": "2026-09-05T05:10:36+00:00"
+}
