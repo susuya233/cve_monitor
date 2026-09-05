@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-02T05:20:37+00:00",
+  "saved_at": "2026-09-05T00:33:18+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-hr8x-eyma",
+  "source_page": "https://www.oscs1024.com/hd/MPS-1qrk-5vu3",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,97 +21,81 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-84715",
+    "cve_id": "CVE-2026-86090",
     "cvss": {
       "cvssv31": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:H",
           "severity": "high",
-          "base_score": 8.8
+          "base_score": 7.1
         }
       ],
       "cvssv4": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.7
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 8.7,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "FeatherPanel 是 MythicalLTD 维护的开源服务器托管面板，采用 AGPL-3.0 许可，用于管理游戏服务器、子用户权限、备份与节点配置。\n受影响版本中，已认证子用户访问 PATCH /api/user/servers/{uuidShort}/subusers/{subuserId} 时，ServerMiddleware 经 ServerGateway::canUserAccessServer 只确认调用者属于该服务器，SubuserController::updateSubuser 未再校验 user.update，也未禁止修改自身权限记录，请求体中的 permissions 数组会被 json_encode 后直接交给 Subuser::updateSubuser 写入，最低权限子用户可借此授予自己完整服务器控制权并访问敏感数据、备份与服务器配置。\n修复版本中通过在 updateSubuser 中强制检查 user.update、拒绝修改自身子用户记录、校验权限名是否属于已知集合，并限制子用户只能授予自己已持有的权限，切断低权限子用户自我提权路径。",
-    "effects": [
-      {
-        "comp_name": "FeatherPanel",
-        "ecosystem": "linux",
-        "versions": [
-          {
-            "affected_version": "(-∞,1.3.7.10)",
-            "min_fixed_version": "1.3.7.10",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          }
-        ]
-      }
-    ],
+    "description": "6.7.260717 之前的 ntopng 无法在删除端点和收件人 REST v2 处理程序中执行授权检查。经过身份验证的非管理员用户可以发出 POST 请求，以不可逆地删除所有已配置的通知端点和收件人，从而消除所有警报。",
+    "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
-    "last_modified_time": "2026-09-02",
+    "last_modified_time": "2026-09-05",
     "level": "High",
-    "mps_id": "MPS-hr8x-eyma",
+    "mps_id": "MPS-1qrk-5vu3",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-02",
+    "published_time": "2026-09-05",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-hr8x-eyma",
-        "name": "https://www.oscs1024.com/hd/MPS-hr8x-eyma"
+        "url": "https://www.oscs1024.com/hd/MPS-1qrk-5vu3",
+        "name": "https://www.oscs1024.com/hd/MPS-1qrk-5vu3"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84715",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84715"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86090",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86090"
       },
       {
-        "url": "https://github.com/MythicalLTD/FeatherPanel",
+        "url": "https://github.com/ntop/ntopng",
         "name": ""
       },
       {
-        "url": "https://github.com/MythicalLTD/FeatherPanel/blob/376b003aa9685b74153d239d2b3f64a752cdc0f0/backend/app/Controllers/User/Server/SubuserController.php#L454",
+        "url": "https://github.com/ntop/ntopng/blob/f41cc1beff90e40e12bbc2cc135bdbf649ec559f/scripts/lua/rest/v2/delete/endpoints.lua",
         "name": ""
       },
       {
-        "url": "https://github.com/MythicalLTD/FeatherPanel/blob/376b003aa9685b74153d239d2b3f64a752cdc0f0/backend/app/Helpers/ServerGateway.php",
+        "url": "https://github.com/ntop/ntopng/blob/f41cc1beff90e40e12bbc2cc135bdbf649ec559f/scripts/lua/rest/v2/delete/recipients.lua",
         "name": ""
       },
       {
-        "url": "https://github.com/MythicalLTD/FeatherPanel/commit/06ef8dcac471201748516ca743694159cb846a9d",
+        "url": "https://github.com/ntop/ntopng/commit/7d830f31af367745431c5d92e2e82fc432f6bdd8",
         "name": ""
       },
       {
-        "url": "https://github.com/MythicalLTD/FeatherPanel/releases/tag/v1.3.7.10",
+        "url": "https://github.com/ntop/ntopng/security/advisories/GHSA-m22w-f647-vx88",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/featherpanel-before-1.3.7.10-privilege-escalation-via-subuser-permission-update",
+        "url": "https://www.vulncheck.com/advisories/ntopng-before-6.7.260717-missing-authorization-on-the-notification-endpoint-and-recipient-delete-handlers",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [
-      "应用软件"
-    ],
-    "title": "FeatherPanel子用户提权漏洞",
+    "tags": [],
+    "title": "CVE-2026-86090漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -131,97 +115,81 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-84715",
+    "cve_id": "CVE-2026-86090",
     "cvss": {
       "cvssv31": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:H",
           "severity": "high",
-          "base_score": 8.8
+          "base_score": 7.1
         }
       ],
       "cvssv4": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.7
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 8.7,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "FeatherPanel 是 MythicalLTD 维护的开源服务器托管面板，采用 AGPL-3.0 许可，用于管理游戏服务器、子用户权限、备份与节点配置。\n受影响版本中，已认证子用户访问 PATCH /api/user/servers/{uuidShort}/subusers/{subuserId} 时，ServerMiddleware 经 ServerGateway::canUserAccessServer 只确认调用者属于该服务器，SubuserController::updateSubuser 未再校验 user.update，也未禁止修改自身权限记录，请求体中的 permissions 数组会被 json_encode 后直接交给 Subuser::updateSubuser 写入，最低权限子用户可借此授予自己完整服务器控制权并访问敏感数据、备份与服务器配置。\n修复版本中通过在 updateSubuser 中强制检查 user.update、拒绝修改自身子用户记录、校验权限名是否属于已知集合，并限制子用户只能授予自己已持有的权限，切断低权限子用户自我提权路径。",
-    "effects": [
-      {
-        "comp_name": "FeatherPanel",
-        "ecosystem": "linux",
-        "versions": [
-          {
-            "affected_version": "(-∞,1.3.7.10)",
-            "min_fixed_version": "1.3.7.10",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          }
-        ]
-      }
-    ],
+    "description": "ntopng before 6.7.260717 fails to perform authorization checks in the delete endpoints and recipients REST v2 handlers. Authenticated non-administrator users can issue POST requests to irreversibly delete all configured notification endpoints and recipients, silencing all alerts.",
+    "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
-    "last_modified_time": "2026-09-02",
+    "last_modified_time": "2026-09-05",
     "level": "High",
-    "mps_id": "MPS-hr8x-eyma",
+    "mps_id": "MPS-1qrk-5vu3",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-02",
+    "published_time": "2026-09-05",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-hr8x-eyma",
-        "name": "https://www.oscs1024.com/hd/MPS-hr8x-eyma"
+        "url": "https://www.oscs1024.com/hd/MPS-1qrk-5vu3",
+        "name": "https://www.oscs1024.com/hd/MPS-1qrk-5vu3"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84715",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84715"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86090",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86090"
       },
       {
-        "url": "https://github.com/MythicalLTD/FeatherPanel",
+        "url": "https://github.com/ntop/ntopng",
         "name": ""
       },
       {
-        "url": "https://github.com/MythicalLTD/FeatherPanel/blob/376b003aa9685b74153d239d2b3f64a752cdc0f0/backend/app/Controllers/User/Server/SubuserController.php#L454",
+        "url": "https://github.com/ntop/ntopng/blob/f41cc1beff90e40e12bbc2cc135bdbf649ec559f/scripts/lua/rest/v2/delete/endpoints.lua",
         "name": ""
       },
       {
-        "url": "https://github.com/MythicalLTD/FeatherPanel/blob/376b003aa9685b74153d239d2b3f64a752cdc0f0/backend/app/Helpers/ServerGateway.php",
+        "url": "https://github.com/ntop/ntopng/blob/f41cc1beff90e40e12bbc2cc135bdbf649ec559f/scripts/lua/rest/v2/delete/recipients.lua",
         "name": ""
       },
       {
-        "url": "https://github.com/MythicalLTD/FeatherPanel/commit/06ef8dcac471201748516ca743694159cb846a9d",
+        "url": "https://github.com/ntop/ntopng/commit/7d830f31af367745431c5d92e2e82fc432f6bdd8",
         "name": ""
       },
       {
-        "url": "https://github.com/MythicalLTD/FeatherPanel/releases/tag/v1.3.7.10",
+        "url": "https://github.com/ntop/ntopng/security/advisories/GHSA-m22w-f647-vx88",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/featherpanel-before-1.3.7.10-privilege-escalation-via-subuser-permission-update",
+        "url": "https://www.vulncheck.com/advisories/ntopng-before-6.7.260717-missing-authorization-on-the-notification-endpoint-and-recipient-delete-handlers",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [
-      "应用软件"
-    ],
-    "title": "FeatherPanel子用户提权漏洞"
+    "tags": [],
+    "title": "CVE-2026-86090漏洞"
   },
-  "first_saved_at": "2026-09-02T05:20:37+00:00"
+  "first_saved_at": "2026-09-05T00:33:18+00:00"
 }
