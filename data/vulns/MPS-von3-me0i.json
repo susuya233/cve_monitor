@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-09-05T22:34:39+00:00",
-  "first_seen": true,
+  "saved_at": "2026-09-06T00:29:31+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-von3-me0i",
@@ -51,12 +51,26 @@
     "cvss_score": 9.4,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "Tenda CP3 27.5.57.1​​01 中发现安全漏洞。该漏洞影响组件Kylin的Apis/system.c文件的SystemAsh函数。对参数 AlarmVoiceURL 的操作会导致操作系统命令注入。可以远程发起攻击。",
-    "effects": [],
+    "description": "Tenda CP3 是腾达（Tenda）面向家庭与小型商户场景的 300 万像素云台式 Wi-Fi 智能摄像头，运行厂商专有闭源固件，固件中的 Kylin 组件负责云端业务与系统命令执行接口处理，其中 AlarmVoiceURL 字段用于配置告警语音资源的下载地址。\n受影响版本中，Kylin 组件对 AlarmVoiceURL 参数缺少命令元字符过滤，设置该字段时相关逻辑以 sprintf 将参数值直接拼接进待执行的 shell 命令字符串，并交给 Apis/system.c 中的共享 shell 封装函数 SystemAsh 执行；具备管理员权限的远程攻击者提交携带 shell 元字符的 AlarmVoiceURL 值，可改变实际执行的命令，在设备上以固件进程身份执行任意操作系统命令，进而完全控制摄像头。\n修复版本中通过升级厂商后续发布的固件版本消除该风险，截至报告日官方尚未公布具体修复版本与补丁，建议在官方修复可用前将摄像头管理入口限制在可信网络内并使用高强度管理员口令，降低被利用风险。",
+    "effects": [
+      {
+        "comp_name": "cp3_firmware",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,27.5.57.101]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "OS命令注入",
@@ -98,8 +112,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-86148漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Tenda CP3命令注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -149,12 +165,26 @@
     "cvss_score": 9.4,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "A security flaw has been discovered in Tenda CP3 27.5.57.101. This vulnerability affects the function SystemAsh of the file Apis/system.c of the component Kylin. The manipulation of the argument AlarmVoiceURL results in os command injection. It is possible to launch the attack remotely.",
-    "effects": [],
+    "description": "Tenda CP3 是腾达（Tenda）面向家庭与小型商户场景的 300 万像素云台式 Wi-Fi 智能摄像头，运行厂商专有闭源固件，固件中的 Kylin 组件负责云端业务与系统命令执行接口处理，其中 AlarmVoiceURL 字段用于配置告警语音资源的下载地址。\n受影响版本中，Kylin 组件对 AlarmVoiceURL 参数缺少命令元字符过滤，设置该字段时相关逻辑以 sprintf 将参数值直接拼接进待执行的 shell 命令字符串，并交给 Apis/system.c 中的共享 shell 封装函数 SystemAsh 执行；具备管理员权限的远程攻击者提交携带 shell 元字符的 AlarmVoiceURL 值，可改变实际执行的命令，在设备上以固件进程身份执行任意操作系统命令，进而完全控制摄像头。\n修复版本中通过升级厂商后续发布的固件版本消除该风险，截至报告日官方尚未公布具体修复版本与补丁，建议在官方修复可用前将摄像头管理入口限制在可信网络内并使用高强度管理员口令，降低被利用风险。",
+    "effects": [
+      {
+        "comp_name": "cp3_firmware",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,27.5.57.101]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "OS命令注入",
@@ -196,8 +226,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-86148漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Tenda CP3命令注入漏洞"
   },
   "first_saved_at": "2026-09-05T22:34:39+00:00"
 }
