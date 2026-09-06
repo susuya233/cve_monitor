@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-09-06T13:53:38+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-swko-59hu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86253",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 5.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-22",
+    "description": "h3 是 h3js 团队开源的轻量级 TypeScript HTTP 框架，被 Nuxt、Nitro 等项目用作底层请求处理层，其 serveStatic() 工具用于为应用提供静态文件服务。\n受影响版本中，serveStatic() 通过 decodeURI(withLeadingSlash(withoutTrailingSlash(event.url.pathname))) 计算请求文件标识，而 Node.js 部署下 event.url 由 srvx 的 FastURL 以字符串切片方式解析，不归一化点段，%2e%2e 被原样保留；decodeURI() 将 %2e 解码为 .. 后生成含 ../ 的路径，该路径未经任何穿越校验即传入 getMeta()/getContents() 回调执行文件系统读取，未认证攻击者发送 GET /%2e%2e/%2e%2e/…/etc/passwd 类请求可以读出静态根目录之外的任意文件；v1 分支在 src/utils/static.ts 中经 ufo 的 decodePath() 解码 parseURL(event.path).pathname，存在相同问题。\n修复版本中通过在 src/utils/internal/path.ts 新增 resolveDotSegments() 消解路径中的 . 与 .. 点段，并在 serveStatic() 中以该函数包裹 decodeURI() 结果（v2 修复 commit 0e751b4），传入回调的文件标识不再包含 .. 且无法越过根路径；v1 分支修复（commit 6465e1b）在 serveStatic() 中直接拒绝包含 .. 的请求路径并返回 404，对应升级版本分别为 1.15.6 与 2.0.1-rc.15。",
+    "effects": [
+      {
+        "comp_name": "h3",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[2.0.0-beta.0,2.0.1-rc.15)",
+            "min_fixed_version": "2.0.1-rc.15",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.15.6)",
+            "min_fixed_version": "1.15.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "路径遍历",
+    "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
+    "last_modified_time": "2026-09-06",
+    "level": "High",
+    "mps_id": "MPS-swko-59hu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-swko-59hu",
+        "name": "https://www.oscs1024.com/hd/MPS-swko-59hu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86253",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86253"
+      },
+      {
+        "url": "https://github.com/h3js/h3/security/advisories/GHSA-wr4h-v87w-p3r7",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/h3-before-1.15.6-path-traversal-via-percent-encoded-dot-segments",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "h3 serveStatic 路径穿越漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86253",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 5.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-22",
+    "description": "h3 是 h3js 团队开源的轻量级 TypeScript HTTP 框架，被 Nuxt、Nitro 等项目用作底层请求处理层，其 serveStatic() 工具用于为应用提供静态文件服务。\n受影响版本中，serveStatic() 通过 decodeURI(withLeadingSlash(withoutTrailingSlash(event.url.pathname))) 计算请求文件标识，而 Node.js 部署下 event.url 由 srvx 的 FastURL 以字符串切片方式解析，不归一化点段，%2e%2e 被原样保留；decodeURI() 将 %2e 解码为 .. 后生成含 ../ 的路径，该路径未经任何穿越校验即传入 getMeta()/getContents() 回调执行文件系统读取，未认证攻击者发送 GET /%2e%2e/%2e%2e/…/etc/passwd 类请求可以读出静态根目录之外的任意文件；v1 分支在 src/utils/static.ts 中经 ufo 的 decodePath() 解码 parseURL(event.path).pathname，存在相同问题。\n修复版本中通过在 src/utils/internal/path.ts 新增 resolveDotSegments() 消解路径中的 . 与 .. 点段，并在 serveStatic() 中以该函数包裹 decodeURI() 结果（v2 修复 commit 0e751b4），传入回调的文件标识不再包含 .. 且无法越过根路径；v1 分支修复（commit 6465e1b）在 serveStatic() 中直接拒绝包含 .. 的请求路径并返回 404，对应升级版本分别为 1.15.6 与 2.0.1-rc.15。",
+    "effects": [
+      {
+        "comp_name": "h3",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[2.0.0-beta.0,2.0.1-rc.15)",
+            "min_fixed_version": "2.0.1-rc.15",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.15.6)",
+            "min_fixed_version": "1.15.6",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "路径遍历",
+    "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "last_modified_time": "2026-09-06",
+    "level": "High",
+    "mps_id": "MPS-swko-59hu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-swko-59hu",
+        "name": "https://www.oscs1024.com/hd/MPS-swko-59hu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86253",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86253"
+      },
+      {
+        "url": "https://github.com/h3js/h3/security/advisories/GHSA-wr4h-v87w-p3r7",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/h3-before-1.15.6-path-traversal-via-percent-encoded-dot-segments",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "h3 serveStatic 路径穿越漏洞"
+  },
+  "first_saved_at": "2026-09-06T13:53:38+00:00"
+}

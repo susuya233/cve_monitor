@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-09-06T13:53:35+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-73zh-flbs",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86259",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9
+        }
+      ]
+    },
+    "cvss_score": 9,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "OpenMAIC（Open Multi-Agent Interactive Classroom）是一个以 MIT 许可开源的 TypeScript 多智能体互动课堂与 AI 课程生成平台，基于 Next.js 构建，通过智能体工作台调用大模型、图像、视频等 Provider 自动生成课件。\n受影响版本中，生成类 API 路由在非受管 Provider 场景下接受客户端通过 x-base-url 请求头（或 baseUrl 参数）指定的出站地址，而 validateUrlForSSRF 校验仅在 process.env.NODE_ENV === 'production' 时执行，开发、预发等非生产构建中该校验被整体跳过；实例未设置 ACCESS_CODE 时中间件默认放行请求，未认证攻击者可将出站地址指向 169.254.169.254 等云实例元数据或内网目标，服务端经 generateImage 等调用以该地址发起请求并把响应返回给调用方，造成云访问凭证与实例元数据泄露，lib/server/resolve-model.ts 的模型解析路径存在相同的门控。\n修复版本中通过移除 NODE_ENV 门控使 validateUrlForSSRF 在所有构建中无条件执行，本地网络放行统一收敛到 ssrf-guard 的 ALLOW_LOCAL_NETWORKS 开关，并新增仓库扫描测试防止门控调用点复发；出站 Provider 请求的每一跳重定向也经新增的共享 transport 重新校验，1.0.1 起切断了该利用链。",
+    "effects": [
+      {
+        "comp_name": "OpenMAIC",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.1)",
+            "min_fixed_version": "1.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-09-06",
+    "level": "Critical",
+    "mps_id": "MPS-73zh-flbs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-73zh-flbs",
+        "name": "https://www.oscs1024.com/hd/MPS-73zh-flbs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86259",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86259"
+      },
+      {
+        "url": "https://github.com/THU-MAIC/OpenMAIC",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/THU-MAIC/OpenMAIC/blob/v1.0.0/app/api/generate/image/route.ts#L73-L78",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/THU-MAIC/OpenMAIC/blob/v1.0.0/middleware.ts#L60-L63",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/THU-MAIC/OpenMAIC/releases/tag/v1.0.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/THU-MAIC/OpenMAIC/security/advisories/GHSA-9m7h-vh2h-rc3w",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/openmaic-before-1.0.1-ssrf-via-environment-gated-url-validation",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "OpenMAIC 未授权 SSRF 漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86259",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9
+        }
+      ]
+    },
+    "cvss_score": 9,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "OpenMAIC（Open Multi-Agent Interactive Classroom）是一个以 MIT 许可开源的 TypeScript 多智能体互动课堂与 AI 课程生成平台，基于 Next.js 构建，通过智能体工作台调用大模型、图像、视频等 Provider 自动生成课件。\n受影响版本中，生成类 API 路由在非受管 Provider 场景下接受客户端通过 x-base-url 请求头（或 baseUrl 参数）指定的出站地址，而 validateUrlForSSRF 校验仅在 process.env.NODE_ENV === 'production' 时执行，开发、预发等非生产构建中该校验被整体跳过；实例未设置 ACCESS_CODE 时中间件默认放行请求，未认证攻击者可将出站地址指向 169.254.169.254 等云实例元数据或内网目标，服务端经 generateImage 等调用以该地址发起请求并把响应返回给调用方，造成云访问凭证与实例元数据泄露，lib/server/resolve-model.ts 的模型解析路径存在相同的门控。\n修复版本中通过移除 NODE_ENV 门控使 validateUrlForSSRF 在所有构建中无条件执行，本地网络放行统一收敛到 ssrf-guard 的 ALLOW_LOCAL_NETWORKS 开关，并新增仓库扫描测试防止门控调用点复发；出站 Provider 请求的每一跳重定向也经新增的共享 transport 重新校验，1.0.1 起切断了该利用链。",
+    "effects": [
+      {
+        "comp_name": "OpenMAIC",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.1)",
+            "min_fixed_version": "1.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-09-06",
+    "level": "Critical",
+    "mps_id": "MPS-73zh-flbs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-73zh-flbs",
+        "name": "https://www.oscs1024.com/hd/MPS-73zh-flbs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86259",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86259"
+      },
+      {
+        "url": "https://github.com/THU-MAIC/OpenMAIC",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/THU-MAIC/OpenMAIC/blob/v1.0.0/app/api/generate/image/route.ts#L73-L78",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/THU-MAIC/OpenMAIC/blob/v1.0.0/middleware.ts#L60-L63",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/THU-MAIC/OpenMAIC/releases/tag/v1.0.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/THU-MAIC/OpenMAIC/security/advisories/GHSA-9m7h-vh2h-rc3w",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/openmaic-before-1.0.1-ssrf-via-environment-gated-url-validation",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "OpenMAIC 未授权 SSRF 漏洞"
+  },
+  "first_saved_at": "2026-09-06T13:53:35+00:00"
+}
