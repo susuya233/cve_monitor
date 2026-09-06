@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-09-06T16:39:08+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ygno-tkpu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86283",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "MISP 是一个开源的威胁情报共享平台（PHP/CakePHP 编写），用于组织间共享威胁事件、指标与归因信息，UiBeta 为其 2.5 系列提供新版界面的主题。\n受影响版本中，集合详情页控制器 CollectionsController::view() 通过 Event::fetchSimpleEvents($user, ...) 按调用者 ACL 解析集合元素，而 UiBeta 主题模板 app/View/Themed/UiBeta/Collections/view.ctp 随后仅以 ['Event.uuid' => $eventUuids] 条件对同一批元素 UUID 执行二次查询，缺失 Event::createEventConditions() 授权过滤；集合元素 UUID 由 CollectionElementsController::add() 保存时不做事件级授权校验，拥有集合查看权限的认证用户可读取无权访问事件的编号、info、日期、创建组织、全部事件标签与 galaxy cluster，形成事件边界的横向越权。\n修复版本中通过在模板内补齐调用者 ACL，以 $_me = $this->get('me') 取当前登录用户并用 Event::createEventConditions($_me) 构造授权条件、在其 AND 分支叠加 Event.uuid IN (...) 后再执行查询，同时将 attachClustersToEventIndex() 的用户参数统一为当前登录用户，未授权事件被 ACL 过滤，越权读取路径被切断。",
+    "effects": [
+      {
+        "comp_name": "MISP",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.5.41,2.5.46)",
+            "min_fixed_version": "2.5.46",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-09-06",
+    "level": "High",
+    "mps_id": "MPS-ygno-tkpu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ygno-tkpu",
+        "name": "https://www.oscs1024.com/hd/MPS-ygno-tkpu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86283",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86283"
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/44573e4a8.patch",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MISP 集合视图越权访问漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86283",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "MISP 是一个开源的威胁情报共享平台（PHP/CakePHP 编写），用于组织间共享威胁事件、指标与归因信息，UiBeta 为其 2.5 系列提供新版界面的主题。\n受影响版本中，集合详情页控制器 CollectionsController::view() 通过 Event::fetchSimpleEvents($user, ...) 按调用者 ACL 解析集合元素，而 UiBeta 主题模板 app/View/Themed/UiBeta/Collections/view.ctp 随后仅以 ['Event.uuid' => $eventUuids] 条件对同一批元素 UUID 执行二次查询，缺失 Event::createEventConditions() 授权过滤；集合元素 UUID 由 CollectionElementsController::add() 保存时不做事件级授权校验，拥有集合查看权限的认证用户可读取无权访问事件的编号、info、日期、创建组织、全部事件标签与 galaxy cluster，形成事件边界的横向越权。\n修复版本中通过在模板内补齐调用者 ACL，以 $_me = $this->get('me') 取当前登录用户并用 Event::createEventConditions($_me) 构造授权条件、在其 AND 分支叠加 Event.uuid IN (...) 后再执行查询，同时将 attachClustersToEventIndex() 的用户参数统一为当前登录用户，未授权事件被 ACL 过滤，越权读取路径被切断。",
+    "effects": [
+      {
+        "comp_name": "MISP",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.5.41,2.5.46)",
+            "min_fixed_version": "2.5.46",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-09-06",
+    "level": "High",
+    "mps_id": "MPS-ygno-tkpu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ygno-tkpu",
+        "name": "https://www.oscs1024.com/hd/MPS-ygno-tkpu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86283",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86283"
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/44573e4a8.patch",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MISP 集合视图越权访问漏洞"
+  },
+  "first_saved_at": "2026-09-06T16:39:08+00:00"
+}
