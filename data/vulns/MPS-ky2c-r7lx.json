@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-09-06T18:48:15+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ky2c-r7lx",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86219",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-294",
+    "description": "Authen-SASL 是开源 Perl SASL 认证框架，提供 DIGEST-MD5 等机制的客户端与服务端实现，供 LDAP、SMTP 等协议在 Perl 应用中完成 SASL 认证。\n受影响版本中，Authen::SASL::Perl::DIGEST_MD5 的 server_start 会生成新 nonce 并写入挑战，但 server_step 未将该值与客户端返回的 nonce 比对。server_step 按客户端自带参数计算期望摘要，nonce_counts 又以客户端提供的 nonce 为键且每个新 server 对象为空表，捕获的首次响应（nc=00000001）可在后续会话通过校验。攻击者观察到一次成功的 qop=auth 交换后，可将该响应重放到同一 service、host、realm 和用户的后续会话，在不知密码的情况下通过认证。\n修复版本中通过在 server_step 使用客户端 nonce 前校验 $cparams{nonce} 与 $self->{nonce} 一致，拒绝不匹配的响应，把认证绑定到本次挑战签发的 nonce，阻断跨会话重放。",
+    "effects": [
+      {
+        "comp_name": "Authen-SASL",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.2100)",
+            "min_fixed_version": "2.2100",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "使用捕获-重放进行的认证绕过",
+    "kind_en": "通过捕获重放绕过身份验证",
+    "last_modified_time": "2026-09-07",
+    "level": "High",
+    "mps_id": "MPS-ky2c-r7lx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ky2c-r7lx",
+        "name": "https://www.oscs1024.com/hd/MPS-ky2c-r7lx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86219",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86219"
+      },
+      {
+        "url": "https://datatracker.ietf.org/doc/html/rfc2831#section-2.1.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/perl-authen-sasl/perl-authen-sasl/commit/94337367030612842924f697cead29964a96448d.patch",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/EHUELS/Authen-SASL-2.2000/source/lib/Authen/SASL/Perl/DIGEST_MD5.pm#L203-222",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/EHUELS/Authen-SASL-2.2000/source/lib/Authen/SASL/Perl/DIGEST_MD5.pm#L410-414",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/EHUELS/Authen-SASL-2.2100/changes",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2025-40918",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Authen-SASL认证重放漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86219",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-294",
+    "description": "Authen-SASL 是开源 Perl SASL 认证框架，提供 DIGEST-MD5 等机制的客户端与服务端实现，供 LDAP、SMTP 等协议在 Perl 应用中完成 SASL 认证。\n受影响版本中，Authen::SASL::Perl::DIGEST_MD5 的 server_start 会生成新 nonce 并写入挑战，但 server_step 未将该值与客户端返回的 nonce 比对。server_step 按客户端自带参数计算期望摘要，nonce_counts 又以客户端提供的 nonce 为键且每个新 server 对象为空表，捕获的首次响应（nc=00000001）可在后续会话通过校验。攻击者观察到一次成功的 qop=auth 交换后，可将该响应重放到同一 service、host、realm 和用户的后续会话，在不知密码的情况下通过认证。\n修复版本中通过在 server_step 使用客户端 nonce 前校验 $cparams{nonce} 与 $self->{nonce} 一致，拒绝不匹配的响应，把认证绑定到本次挑战签发的 nonce，阻断跨会话重放。",
+    "effects": [
+      {
+        "comp_name": "Authen-SASL",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.2100)",
+            "min_fixed_version": "2.2100",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "使用捕获-重放进行的认证绕过",
+    "kind_en": "Authentication Bypass by Capture-replay",
+    "last_modified_time": "2026-09-07",
+    "level": "High",
+    "mps_id": "MPS-ky2c-r7lx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ky2c-r7lx",
+        "name": "https://www.oscs1024.com/hd/MPS-ky2c-r7lx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86219",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86219"
+      },
+      {
+        "url": "https://datatracker.ietf.org/doc/html/rfc2831#section-2.1.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/perl-authen-sasl/perl-authen-sasl/commit/94337367030612842924f697cead29964a96448d.patch",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/EHUELS/Authen-SASL-2.2000/source/lib/Authen/SASL/Perl/DIGEST_MD5.pm#L203-222",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/EHUELS/Authen-SASL-2.2000/source/lib/Authen/SASL/Perl/DIGEST_MD5.pm#L410-414",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/EHUELS/Authen-SASL-2.2100/changes",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2025-40918",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Authen-SASL认证重放漏洞"
+  },
+  "first_saved_at": "2026-09-06T18:48:15+00:00"
+}

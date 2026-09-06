@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-09-06T18:48:18+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-j8zt-14xq",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82751",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1284",
+    "description": "mpp 是 ZenHive 开源的 Machine Payments Protocol（MPP）Elixir 实现，以 Hex 包发布，作为面向 AI 代理与机器间交易的 HTTP 402 支付中间件，支持在 Tempo 区块链上验证客户端支付凭证，并支持服务端为客户端交易代付 Gas。\n受影响版本中，MPP.Methods.Tempo.FeePayerPolicy 的 measure/3 对客户端签名 0x76 交易信封的 gas_limit、max_fee_per_gas、总费用预算、有效期与访问列表设置了上限，但校验清单中不存在对信封可选 key_authorization 字段的检查。未认证的远程客户端可在正常支付调用旁附带一份完整签名的密钥授权，在自己账户上预配带代币限额的新访问密钥；密钥及每条限额记录作为链上持久化存储写入按固有 Gas 计费并计入赞助方成本，仅受 gas_limit 上限约束，单笔赞助成本可从约 46,587 gas 膨胀至约 1,808,700 gas，客户端免费保留一个可用访问密钥。\n修复版本中通过在 measure/3 校验链新增 check_authorization_list 与 check_key_authorization，拒绝声明 EIP-7702 授权列表以及携带与策略期望值不匹配的 key_authorization 的信封，并新增 expect_key_authorization/2 供订阅激活链路固定已验证的授权，未携带期望授权的信封一律拒绝赞助，切断赞助方为客户端密钥预配买单的路径。",
+    "effects": [
+      {
+        "comp_name": "mpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.2.0,0.16.1)",
+            "min_fixed_version": "0.16.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "输入中指定数量的验证不当",
+    "kind_en": "输入中指定数量的验证不正确",
+    "last_modified_time": "2026-09-07",
+    "level": "High",
+    "mps_id": "MPS-j8zt-14xq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-j8zt-14xq",
+        "name": "https://www.oscs1024.com/hd/MPS-j8zt-14xq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82751",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82751"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-82751.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ZenHive/mpp/commit/0482572b47e1ffe1537ab80ab613d47b92833c2d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ZenHive/mpp/security/advisories/GHSA-rpwj-vrf7-4x36",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-82751",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "mpp费用赞助Gas膨胀漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82751",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1284",
+    "description": "mpp 是 ZenHive 开源的 Machine Payments Protocol（MPP）Elixir 实现，以 Hex 包发布，作为面向 AI 代理与机器间交易的 HTTP 402 支付中间件，支持在 Tempo 区块链上验证客户端支付凭证，并支持服务端为客户端交易代付 Gas。\n受影响版本中，MPP.Methods.Tempo.FeePayerPolicy 的 measure/3 对客户端签名 0x76 交易信封的 gas_limit、max_fee_per_gas、总费用预算、有效期与访问列表设置了上限，但校验清单中不存在对信封可选 key_authorization 字段的检查。未认证的远程客户端可在正常支付调用旁附带一份完整签名的密钥授权，在自己账户上预配带代币限额的新访问密钥；密钥及每条限额记录作为链上持久化存储写入按固有 Gas 计费并计入赞助方成本，仅受 gas_limit 上限约束，单笔赞助成本可从约 46,587 gas 膨胀至约 1,808,700 gas，客户端免费保留一个可用访问密钥。\n修复版本中通过在 measure/3 校验链新增 check_authorization_list 与 check_key_authorization，拒绝声明 EIP-7702 授权列表以及携带与策略期望值不匹配的 key_authorization 的信封，并新增 expect_key_authorization/2 供订阅激活链路固定已验证的授权，未携带期望授权的信封一律拒绝赞助，切断赞助方为客户端密钥预配买单的路径。",
+    "effects": [
+      {
+        "comp_name": "mpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.2.0,0.16.1)",
+            "min_fixed_version": "0.16.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "输入中指定数量的验证不当",
+    "kind_en": "Improper Validation of Specified Quantity in Input",
+    "last_modified_time": "2026-09-07",
+    "level": "High",
+    "mps_id": "MPS-j8zt-14xq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-j8zt-14xq",
+        "name": "https://www.oscs1024.com/hd/MPS-j8zt-14xq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82751",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82751"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-82751.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ZenHive/mpp/commit/0482572b47e1ffe1537ab80ab613d47b92833c2d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ZenHive/mpp/security/advisories/GHSA-rpwj-vrf7-4x36",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-82751",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "mpp费用赞助Gas膨胀漏洞"
+  },
+  "first_saved_at": "2026-09-06T18:48:18+00:00"
+}

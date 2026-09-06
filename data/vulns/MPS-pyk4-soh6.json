@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-09-06T18:48:19+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-pyk4-soh6",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82750",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1284",
+    "description": "mpp 是 ZenHive 开源的 Elixir 语言 Machine Payments Protocol（MPP）实现（Hex 包 mpp，MIT 许可），为 AI 代理与机器间支付提供 HTTP 402 支付中间件，其 Tempo 方法在服务端校验客户端支付凭据，并支持启用费用代付（fee payer）为客户端交易垫付 gas。\n受影响版本中，服务器启用费用代付时，MPP.Methods.Tempo.verify/2 接收客户端凭据 payload 中的 RLP 签名 0x76 信封并交给 MPP.Methods.Tempo.FeePayerPolicy 校验，校验管线只约束 gas_limit（默认上限 2,000,000）、max_fee_per_gas、总费用预算、nonce key、有效期与 access list，从不读取信封的 aa_authorization_list 字段；客户端可在正常支付调用外附带任意多条由其 authority 密钥签名的 EIP-7702 委托授权，每条授权在支付调用执行前按固定 intrinsic gas 计费并作为持久 set-code 委托生效，7 条授权可将赞助方单笔成本从约 46,575 gas 抬升至约 1,884,087 gas（约 40 倍），同时攻击者借助赞助方资金将自己的账户永久升级为委托代码。\n修复版本中通过在 FeePayerPolicy 校验管线新增 check_authorization_list/1，对非空或畸形的 aa_authorization_list 直接拒绝赞助签名，使赞助支付不再承担任何委托授权的 intrinsic gas，并新增 check_key_authorization/2 与 expect_key_authorization/2 将可选 key authorization 字段限定为服务器自身已验证的场景，同步把订阅交易路径纳入同一策略，在服务端签名入口处切断了借代付夹带委托授权与额外信封字段的利用链。",
+    "effects": [
+      {
+        "comp_name": "mpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.2.0,0.16.1)",
+            "min_fixed_version": "0.16.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "输入中指定数量的验证不当",
+    "kind_en": "输入中指定数量的验证不正确",
+    "last_modified_time": "2026-09-07",
+    "level": "High",
+    "mps_id": "MPS-pyk4-soh6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pyk4-soh6",
+        "name": "https://www.oscs1024.com/hd/MPS-pyk4-soh6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82750",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82750"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-82750.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ZenHive/mpp/commit/0482572b47e1ffe1537ab80ab613d47b92833c2d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ZenHive/mpp/security/advisories/GHSA-5qrp-r24c-w6jr",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-82750",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "mpp 代付 Gas 膨胀漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82750",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1284",
+    "description": "mpp 是 ZenHive 开源的 Elixir 语言 Machine Payments Protocol（MPP）实现（Hex 包 mpp，MIT 许可），为 AI 代理与机器间支付提供 HTTP 402 支付中间件，其 Tempo 方法在服务端校验客户端支付凭据，并支持启用费用代付（fee payer）为客户端交易垫付 gas。\n受影响版本中，服务器启用费用代付时，MPP.Methods.Tempo.verify/2 接收客户端凭据 payload 中的 RLP 签名 0x76 信封并交给 MPP.Methods.Tempo.FeePayerPolicy 校验，校验管线只约束 gas_limit（默认上限 2,000,000）、max_fee_per_gas、总费用预算、nonce key、有效期与 access list，从不读取信封的 aa_authorization_list 字段；客户端可在正常支付调用外附带任意多条由其 authority 密钥签名的 EIP-7702 委托授权，每条授权在支付调用执行前按固定 intrinsic gas 计费并作为持久 set-code 委托生效，7 条授权可将赞助方单笔成本从约 46,575 gas 抬升至约 1,884,087 gas（约 40 倍），同时攻击者借助赞助方资金将自己的账户永久升级为委托代码。\n修复版本中通过在 FeePayerPolicy 校验管线新增 check_authorization_list/1，对非空或畸形的 aa_authorization_list 直接拒绝赞助签名，使赞助支付不再承担任何委托授权的 intrinsic gas，并新增 check_key_authorization/2 与 expect_key_authorization/2 将可选 key authorization 字段限定为服务器自身已验证的场景，同步把订阅交易路径纳入同一策略，在服务端签名入口处切断了借代付夹带委托授权与额外信封字段的利用链。",
+    "effects": [
+      {
+        "comp_name": "mpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.2.0,0.16.1)",
+            "min_fixed_version": "0.16.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "输入中指定数量的验证不当",
+    "kind_en": "Improper Validation of Specified Quantity in Input",
+    "last_modified_time": "2026-09-07",
+    "level": "High",
+    "mps_id": "MPS-pyk4-soh6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pyk4-soh6",
+        "name": "https://www.oscs1024.com/hd/MPS-pyk4-soh6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82750",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82750"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-82750.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ZenHive/mpp/commit/0482572b47e1ffe1537ab80ab613d47b92833c2d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ZenHive/mpp/security/advisories/GHSA-5qrp-r24c-w6jr",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-82750",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "mpp 代付 Gas 膨胀漏洞"
+  },
+  "first_saved_at": "2026-09-06T18:48:19+00:00"
+}

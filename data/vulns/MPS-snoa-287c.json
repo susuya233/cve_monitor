@@ -1,0 +1,143 @@
+{
+  "saved_at": "2026-09-06T18:48:16+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-snoa-287c",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80230",
+    "cvss": {},
+    "cvss_score": 7.3,
+    "cvss_vector": "",
+    "cwe": "CWE-295",
+    "description": "curl 是由 Daniel Stenberg 主导开发的开源命令行工具与 libcurl 跨平台数据传输库，广泛用于各类应用的 HTTP/HTTPS 等协议数据传输，可选用 OpenSSL 及其分支（BoringSSL、AWS-LC、LibreSSL、QuicTLS 等）作为 TLS 后端。\n受影响版本中，当应用配置 CURLOPT_PINNEDPUBLICKEY 并同时将 CURLOPT_SSL_VERIFYPEER 与 CURLOPT_SSL_VERIFYHOST 置 0 时，若服务器在 TLS 握手中不提供证书（如启用 AECDH-AES128-SHA 等匿名密码套件），lib/vtls/openssl.c 的 Curl_ossl_check_peer_cert 在获取到的服务器证书为空且两个校验开关均关闭时提前 goto out 并返回 CURLE_OK，跳过函数末尾的 ossl_check_pinned_key 公钥绑定比对，本应被拒绝的未认证连接被放行，中间人可冒充服务器完成传输。\n修复版本中通过在 Curl_ossl_check_peer_cert 中新增 pinned() 辅助函数读取当前连接的公钥绑定配置，并将无证书场景的提前放行条件收紧为对端校验全部关闭且未配置公钥绑定，配置 CURLOPT_PINNEDPUBLICKEY 而服务器未提供证书时返回 CURLE_PEER_FAILED_VERIFICATION 拒绝连接，公钥绑定在无证书握手中恢复强制执行。",
+    "effects": [
+      {
+        "comp_name": "curl",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.45.0,8.22.0)",
+            "min_fixed_version": "8.22.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "证书验证不恰当",
+    "kind_en": "证书验证不当",
+    "last_modified_time": "2026-09-07",
+    "level": "High",
+    "mps_id": "MPS-snoa-287c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-snoa-287c",
+        "name": "https://www.oscs1024.com/hd/MPS-snoa-287c"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80230",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80230"
+      },
+      {
+        "url": "https://curl.se/docs/CVE-2026-80230.html",
+        "name": ""
+      },
+      {
+        "url": "https://curl.se/docs/CVE-2026-80230.json",
+        "name": ""
+      },
+      {
+        "url": "https://hackerone.com/reports/3969300",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "终端软件"
+    ],
+    "title": "curl 公钥绑定校验绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80230",
+    "cvss": {},
+    "cvss_score": 7.3,
+    "cvss_vector": "",
+    "cwe": "CWE-295",
+    "description": "curl 是由 Daniel Stenberg 主导开发的开源命令行工具与 libcurl 跨平台数据传输库，广泛用于各类应用的 HTTP/HTTPS 等协议数据传输，可选用 OpenSSL 及其分支（BoringSSL、AWS-LC、LibreSSL、QuicTLS 等）作为 TLS 后端。\n受影响版本中，当应用配置 CURLOPT_PINNEDPUBLICKEY 并同时将 CURLOPT_SSL_VERIFYPEER 与 CURLOPT_SSL_VERIFYHOST 置 0 时，若服务器在 TLS 握手中不提供证书（如启用 AECDH-AES128-SHA 等匿名密码套件），lib/vtls/openssl.c 的 Curl_ossl_check_peer_cert 在获取到的服务器证书为空且两个校验开关均关闭时提前 goto out 并返回 CURLE_OK，跳过函数末尾的 ossl_check_pinned_key 公钥绑定比对，本应被拒绝的未认证连接被放行，中间人可冒充服务器完成传输。\n修复版本中通过在 Curl_ossl_check_peer_cert 中新增 pinned() 辅助函数读取当前连接的公钥绑定配置，并将无证书场景的提前放行条件收紧为对端校验全部关闭且未配置公钥绑定，配置 CURLOPT_PINNEDPUBLICKEY 而服务器未提供证书时返回 CURLE_PEER_FAILED_VERIFICATION 拒绝连接，公钥绑定在无证书握手中恢复强制执行。",
+    "effects": [
+      {
+        "comp_name": "curl",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.45.0,8.22.0)",
+            "min_fixed_version": "8.22.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "证书验证不恰当",
+    "kind_en": "Improper Certificate Validation",
+    "last_modified_time": "2026-09-07",
+    "level": "High",
+    "mps_id": "MPS-snoa-287c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-snoa-287c",
+        "name": "https://www.oscs1024.com/hd/MPS-snoa-287c"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80230",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80230"
+      },
+      {
+        "url": "https://curl.se/docs/CVE-2026-80230.html",
+        "name": ""
+      },
+      {
+        "url": "https://curl.se/docs/CVE-2026-80230.json",
+        "name": ""
+      },
+      {
+        "url": "https://hackerone.com/reports/3969300",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "终端软件"
+    ],
+    "title": "curl 公钥绑定校验绕过漏洞"
+  },
+  "first_saved_at": "2026-09-06T18:48:16+00:00"
+}
