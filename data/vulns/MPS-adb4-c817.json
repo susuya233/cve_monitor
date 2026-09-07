@@ -1,0 +1,183 @@
+{
+  "saved_at": "2026-09-07T05:35:00+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-adb4-c817",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-67399",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-502",
+    "description": "WHMCS 是商业闭源的主机业务自动化与计费软件，用于订单、账单、客户门户，并对接主机面板、支付网关和域名注册商。\n受影响版本中，系统对伪造载荷缺少充分限制，未认证攻击者可提交伪造载荷，经多阶段请求进入不安全反序列化对象注入路径，在 WHMCS 主机上执行任意代码并完全控制安装及其数据。\n修复版本中通过官方安全更新收紧对伪造载荷的校验与反序列化限制，切断未认证请求进入危险执行路径；公开资料未披露更细粒度的源码修改。",
+    "effects": [
+      {
+        "comp_name": "whmcs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.0.0,8.13.7)",
+            "min_fixed_version": "8.13.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.0.0,9.0.8)",
+            "min_fixed_version": "9.0.8",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-09-07",
+    "level": "Critical",
+    "mps_id": "MPS-adb4-c817",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-07",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/whmcs-security-update-cve-2026-67399/",
+        "name": ""
+      },
+      {
+        "url": "https://help.whmcs.com/m/125386/l/2118034-cve-2026-67399-whmcs-security-update-2026-09-03",
+        "name": ""
+      },
+      {
+        "url": "https://docs.whmcs.com/releases/9-0/9-0-change-log/",
+        "name": ""
+      },
+      {
+        "url": "https://docs.whmcs.com/releases/8-13/8-13-change-log/",
+        "name": ""
+      },
+      {
+        "url": "https://www.landian.news/archives/126685.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WHMCS远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-67399",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-502",
+    "description": "WHMCS 是商业闭源的主机业务自动化与计费软件，用于订单、账单、客户门户，并对接主机面板、支付网关和域名注册商。\n受影响版本中，系统对伪造载荷缺少充分限制，未认证攻击者可提交伪造载荷，经多阶段请求进入不安全反序列化对象注入路径，在 WHMCS 主机上执行任意代码并完全控制安装及其数据。\n修复版本中通过官方安全更新收紧对伪造载荷的校验与反序列化限制，切断未认证请求进入危险执行路径；公开资料未披露更细粒度的源码修改。",
+    "effects": [
+      {
+        "comp_name": "whmcs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.0.0,8.13.7)",
+            "min_fixed_version": "8.13.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.0.0,9.0.8)",
+            "min_fixed_version": "9.0.8",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-09-07",
+    "level": "Critical",
+    "mps_id": "MPS-adb4-c817",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-07",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/whmcs-security-update-cve-2026-67399/",
+        "name": ""
+      },
+      {
+        "url": "https://help.whmcs.com/m/125386/l/2118034-cve-2026-67399-whmcs-security-update-2026-09-03",
+        "name": ""
+      },
+      {
+        "url": "https://docs.whmcs.com/releases/9-0/9-0-change-log/",
+        "name": ""
+      },
+      {
+        "url": "https://docs.whmcs.com/releases/8-13/8-13-change-log/",
+        "name": ""
+      },
+      {
+        "url": "https://www.landian.news/archives/126685.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WHMCS远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-09-07T05:35:00+00:00"
+}
