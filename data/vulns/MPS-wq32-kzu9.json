@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-09-07T00:36:48+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-wq32-kzu9",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86304",
+    "cvss": {},
+    "cvss_score": 9.1,
+    "cvss_vector": "",
+    "cwe": "CWE-347",
+    "description": "MojoX::Authentication 是开源 Perl 模块，用于为 Mojolicious 应用提供本地账号认证与 SAML 2.0 单点登录能力。\n受影响版本中，MojoX::Authentication::Model::SAML2 的 parse_assertion 调用 Net::SAML2::Binding::POST->new 时未传入 cacert、cert_text 或 anchors。随后虽把 IdP 签名证书交给 Assertion->new_from_xml，但在 Net::SAML2 0.86 之前该证书只约束加密断言，未加密断言的签名会对照响应自身携带的证书校验。攻击者先发起 SAML 登录，再提交用自有证书签名的 SAMLResponse，即可满足后续 audience、InResponseTo 与时间戳检查，并以任意 NameID 完成认证。\n修复版本中通过将 IdP 签名证书作为 cacert 传入 Binding::POST->new，使 HTTP-POST 绑定在解析响应时使用既定信任锚校验签名，从而拒绝攻击者自签的 SAML 响应。",
+    "effects": [
+      {
+        "comp_name": "MojoX-Authentication",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.006)",
+            "min_fixed_version": "0.006",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "密码签名验证不当",
+    "last_modified_time": "2026-09-07",
+    "level": "Critical",
+    "mps_id": "MPS-wq32-kzu9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wq32-kzu9",
+        "name": "https://www.oscs1024.com/hd/MPS-wq32-kzu9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86304",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86304"
+      },
+      {
+        "url": "https://metacpan.org/release/POLETTIX/MojoX-Authentication-0.004/source/lib/MojoX/Authentication/Model/SAML2.pm#L188",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/POLETTIX/MojoX-Authentication-0.006/source/Changes",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-18089",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MojoX SAML认证绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86304",
+    "cvss": {},
+    "cvss_score": 9.1,
+    "cvss_vector": "",
+    "cwe": "CWE-347",
+    "description": "MojoX::Authentication 是开源 Perl 模块，用于为 Mojolicious 应用提供本地账号认证与 SAML 2.0 单点登录能力。\n受影响版本中，MojoX::Authentication::Model::SAML2 的 parse_assertion 调用 Net::SAML2::Binding::POST->new 时未传入 cacert、cert_text 或 anchors。随后虽把 IdP 签名证书交给 Assertion->new_from_xml，但在 Net::SAML2 0.86 之前该证书只约束加密断言，未加密断言的签名会对照响应自身携带的证书校验。攻击者先发起 SAML 登录，再提交用自有证书签名的 SAMLResponse，即可满足后续 audience、InResponseTo 与时间戳检查，并以任意 NameID 完成认证。\n修复版本中通过将 IdP 签名证书作为 cacert 传入 Binding::POST->new，使 HTTP-POST 绑定在解析响应时使用既定信任锚校验签名，从而拒绝攻击者自签的 SAML 响应。",
+    "effects": [
+      {
+        "comp_name": "MojoX-Authentication",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.006)",
+            "min_fixed_version": "0.006",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "Improper Verification of Cryptographic Signature",
+    "last_modified_time": "2026-09-07",
+    "level": "Critical",
+    "mps_id": "MPS-wq32-kzu9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wq32-kzu9",
+        "name": "https://www.oscs1024.com/hd/MPS-wq32-kzu9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86304",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86304"
+      },
+      {
+        "url": "https://metacpan.org/release/POLETTIX/MojoX-Authentication-0.004/source/lib/MojoX/Authentication/Model/SAML2.pm#L188",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/POLETTIX/MojoX-Authentication-0.006/source/Changes",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-18089",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MojoX SAML认证绕过"
+  },
+  "first_saved_at": "2026-09-07T00:36:48+00:00"
+}
