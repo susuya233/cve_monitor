@@ -1,0 +1,141 @@
+{
+  "saved_at": "2026-09-07T20:59:55+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-mhn1-quba",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86502",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@jetbrains.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-306",
+    "description": "JetBrains IntelliJ IDEA 是跨平台 Java/Kotlin IDE，社区版源码公开；其中 IJent 作为远程开发代理，在远程主机上通过 gRPC 提供进程执行与文件系统等能力。\n受影响版本中，经 jetbrainsd 部署到远程开发主机的 IJent gRPC 服务在回环地址以明文、未认证的 HTTP/2 监听。同一主机上的其他本地用户可直接连接该接口并调用完整 IJent API，从而在远程开发主机上执行代码。\n修复版本中通过为远程开发启动路径启用双向 TLS：会话生成证书后以 --use-tls 启动 IJent，并在绑定端口前注入 PEM 证书材料，未持有对应证书的本地调用方无法再驱动 IJent API。",
+    "effects": [
+      {
+        "comp_name": "intellij_idea",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.2.2)",
+            "min_fixed_version": "2026.2.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-09-08",
+    "level": "High",
+    "mps_id": "MPS-mhn1-quba",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mhn1-quba",
+        "name": "https://www.oscs1024.com/hd/MPS-mhn1-quba"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86502",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86502"
+      },
+      {
+        "url": "https://www.jetbrains.com/privacy-security/issues-fixed/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "IntelliJ IJent认证缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86502",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@jetbrains.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-306",
+    "description": "JetBrains IntelliJ IDEA 是跨平台 Java/Kotlin IDE，社区版源码公开；其中 IJent 作为远程开发代理，在远程主机上通过 gRPC 提供进程执行与文件系统等能力。\n受影响版本中，经 jetbrainsd 部署到远程开发主机的 IJent gRPC 服务在回环地址以明文、未认证的 HTTP/2 监听。同一主机上的其他本地用户可直接连接该接口并调用完整 IJent API，从而在远程开发主机上执行代码。\n修复版本中通过为远程开发启动路径启用双向 TLS：会话生成证书后以 --use-tls 启动 IJent，并在绑定端口前注入 PEM 证书材料，未持有对应证书的本地调用方无法再驱动 IJent API。",
+    "effects": [
+      {
+        "comp_name": "intellij_idea",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.2.2)",
+            "min_fixed_version": "2026.2.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-09-08",
+    "level": "High",
+    "mps_id": "MPS-mhn1-quba",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mhn1-quba",
+        "name": "https://www.oscs1024.com/hd/MPS-mhn1-quba"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86502",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86502"
+      },
+      {
+        "url": "https://www.jetbrains.com/privacy-security/issues-fixed/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "IntelliJ IJent认证缺失漏洞"
+  },
+  "first_saved_at": "2026-09-07T20:59:55+00:00"
+}

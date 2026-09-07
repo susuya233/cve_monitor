@@ -1,0 +1,143 @@
+{
+  "saved_at": "2026-09-07T20:59:51+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-zm6k-47ln",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-16028",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-401",
+    "description": "Protocol::HTTP2 是开源 Perl HTTP/2 协议实现（RFC 7540），提供 Client 与 Server 的有状态帧编解码，用于在自选事件循环上实现 HTTP/2 客户端或服务端。\n受影响版本中，stream_state 在流进入 CLOSED 时会归还并发槽位并清理流对象上的大部分键，但不会从连接流表 $self->{streams} 删除该条目。流标识单调递增，对端可在同一连接上反复打开并关闭流，每条已关闭流都会留下约 920 字节残留；SETTINGS_MAX_CONCURRENT_STREAMS 只限制同时存活的流，无法约束已释放条目的累计增长，10 万次顺序请求约增加 88 MiB 常驻内存，导致内存耗尽拒绝服务。客户端使用同一流表，在面对敌对服务端时同样会增长。\n修复版本中通过在 stream_state 进入 CLOSED 时把 stream_id 记入 closed_streams，并在数量超过 max_closed_streams（默认 65535）时删除最旧的已关闭流表项，切断流表无限增长。",
+    "effects": [
+      {
+        "comp_name": "Protocol-HTTP2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.14)",
+            "min_fixed_version": "1.14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "内存泄漏",
+    "kind_en": "有效生命周期后内存丢失释放",
+    "last_modified_time": "2026-09-08",
+    "level": "High",
+    "mps_id": "MPS-zm6k-47ln",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zm6k-47ln",
+        "name": "https://www.oscs1024.com/hd/MPS-zm6k-47ln"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16028",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-16028"
+      },
+      {
+        "url": "https://github.com/vlet/p5-Protocol-HTTP2/commit/27a488a34d74fd16f123e5e6186d4f677faa246f.patch",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/CRUX/Protocol-HTTP2-1.13/source/lib/Protocol/HTTP2/Stream.pm#L113-126",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/CRUX/Protocol-HTTP2-1.14/changes",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Protocol::HTTP2内存耗尽漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-16028",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-401",
+    "description": "Protocol::HTTP2 是开源 Perl HTTP/2 协议实现（RFC 7540），提供 Client 与 Server 的有状态帧编解码，用于在自选事件循环上实现 HTTP/2 客户端或服务端。\n受影响版本中，stream_state 在流进入 CLOSED 时会归还并发槽位并清理流对象上的大部分键，但不会从连接流表 $self->{streams} 删除该条目。流标识单调递增，对端可在同一连接上反复打开并关闭流，每条已关闭流都会留下约 920 字节残留；SETTINGS_MAX_CONCURRENT_STREAMS 只限制同时存活的流，无法约束已释放条目的累计增长，10 万次顺序请求约增加 88 MiB 常驻内存，导致内存耗尽拒绝服务。客户端使用同一流表，在面对敌对服务端时同样会增长。\n修复版本中通过在 stream_state 进入 CLOSED 时把 stream_id 记入 closed_streams，并在数量超过 max_closed_streams（默认 65535）时删除最旧的已关闭流表项，切断流表无限增长。",
+    "effects": [
+      {
+        "comp_name": "Protocol-HTTP2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.14)",
+            "min_fixed_version": "1.14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "内存泄漏",
+    "kind_en": "Missing Release of Memory after Effective Lifetime",
+    "last_modified_time": "2026-09-08",
+    "level": "High",
+    "mps_id": "MPS-zm6k-47ln",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zm6k-47ln",
+        "name": "https://www.oscs1024.com/hd/MPS-zm6k-47ln"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16028",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-16028"
+      },
+      {
+        "url": "https://github.com/vlet/p5-Protocol-HTTP2/commit/27a488a34d74fd16f123e5e6186d4f677faa246f.patch",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/CRUX/Protocol-HTTP2-1.13/source/lib/Protocol/HTTP2/Stream.pm#L113-126",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/CRUX/Protocol-HTTP2-1.14/changes",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Protocol::HTTP2内存耗尽漏洞"
+  },
+  "first_saved_at": "2026-09-07T20:59:51+00:00"
+}
