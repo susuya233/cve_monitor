@@ -1,0 +1,367 @@
+{
+  "saved_at": "2026-09-07T23:23:27+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xlk9-cibs",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75650",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@adobe.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ]
+    },
+    "cvss_score": 10,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-1336",
+    "description": "Adobe Commerce 与 Magento Open Source 是电子商务平台，后者以开源形式发布，前者为商业发行版，用于在线商店、商品目录、订单与支付处理。\n受影响版本中，邮件模板引擎未能正确中和 styles 等特殊元素。未认证攻击者可向公开 GraphQL 接口提交带有 styles、text 等参数的请求，使模板指令进入 Magento\\Email\\Model\\AbstractTemplate::getProcessedTemplate 过滤流程，并经对象注入调用 Magento\\Setup\\Module\\Di\\Code\\Scanner\\ArrayScanner::collectEntities，对攻击者指定路径执行 include，从而在当前用户上下文执行任意代码。该漏洞已被用于在野攻击。\n修复版本中通过 Adobe 官方热修复补丁 VULN-39341 收紧模板引擎对特殊元素的处理，切断未认证输入进入危险 include 执行路径；官方同时要求轮换加密密钥及受该密钥保护的相关凭据。",
+    "effects": [
+      {
+        "comp_name": "magento/extension-b2b",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5.2-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.3.4-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.3.3-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.5.3-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.4.2-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "magento/product-community-edition",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.4.9-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.8-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.7-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.6-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "magento/product-enterprise-edition",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.4.9-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.7-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.4-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.5-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.8-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.6-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "模板注入",
+    "kind_en": "模板引擎中使用的特殊元素的不正确中和",
+    "last_modified_time": "2026-09-08",
+    "level": "Critical",
+    "mps_id": "MPS-xlk9-cibs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xlk9-cibs",
+        "name": "https://www.oscs1024.com/hd/MPS-xlk9-cibs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75650",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75650"
+      },
+      {
+        "url": "https://helpx.adobe.com/security/products/magento/apsb26-146.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Magento模板注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75650",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@adobe.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ]
+    },
+    "cvss_score": 10,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-1336",
+    "description": "Adobe Commerce 与 Magento Open Source 是电子商务平台，后者以开源形式发布，前者为商业发行版，用于在线商店、商品目录、订单与支付处理。\n受影响版本中，邮件模板引擎未能正确中和 styles 等特殊元素。未认证攻击者可向公开 GraphQL 接口提交带有 styles、text 等参数的请求，使模板指令进入 Magento\\Email\\Model\\AbstractTemplate::getProcessedTemplate 过滤流程，并经对象注入调用 Magento\\Setup\\Module\\Di\\Code\\Scanner\\ArrayScanner::collectEntities，对攻击者指定路径执行 include，从而在当前用户上下文执行任意代码。该漏洞已被用于在野攻击。\n修复版本中通过 Adobe 官方热修复补丁 VULN-39341 收紧模板引擎对特殊元素的处理，切断未认证输入进入危险 include 执行路径；官方同时要求轮换加密密钥及受该密钥保护的相关凭据。",
+    "effects": [
+      {
+        "comp_name": "magento/extension-b2b",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5.2-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.3.4-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.3.3-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.5.3-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.4.2-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "magento/product-community-edition",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.4.9-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.8-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.7-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.6-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "magento/product-enterprise-edition",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.4.9-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.7-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.4-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.5-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.8-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.4.6-2026-aug]",
+            "min_fixed_version": "",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "模板注入",
+    "kind_en": "Improper Neutralization of Special Elements Used in a Template Engine",
+    "last_modified_time": "2026-09-08",
+    "level": "Critical",
+    "mps_id": "MPS-xlk9-cibs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xlk9-cibs",
+        "name": "https://www.oscs1024.com/hd/MPS-xlk9-cibs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75650",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75650"
+      },
+      {
+        "url": "https://helpx.adobe.com/security/products/magento/apsb26-146.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Magento模板注入漏洞"
+  },
+  "first_saved_at": "2026-09-07T23:23:27+00:00"
+}
