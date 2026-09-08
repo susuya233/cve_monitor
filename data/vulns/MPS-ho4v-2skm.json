@@ -1,0 +1,227 @@
+{
+  "saved_at": "2026-09-08T12:31:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ho4v-2skm",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {},
+    "cvss_score": 8.8,
+    "cvss_vector": "",
+    "cwe": "CWE-620",
+    "description": "MariaDB Server 是开源关系型数据库，提供 SQL 账户管理与 GRANT PROXY 代理授权能力。\n受影响版本中，GRANT PROXY 在 grantee 上使用 IDENTIFIED VIA 空认证方法时，LEX_USER::has_auth() 只检查首个 USER_AUTH 节点的 plugin、auth_str、pwtext 是否非空，空首节点使 copy_and_check_auth() 跳过 check_alter_user()，而 replace_user_table() 仍会写入后续认证节点，导致仅有 USAGE 权限的用户可以修改已存在管理员账户的密码并接管其权限。\n修复版本中通过将 LEX_USER::has_auth() 改为只要存在 auth 指针即视为已指定认证，使空密码与空插件名仍触发授权检查，阻止低权限用户通过 GRANT PROXY 改写其他账户认证信息。",
+    "effects": [
+      {
+        "comp_name": "mariadb",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.6.1,10.6.28)",
+            "min_fixed_version": "10.6.28",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.0.1,13.0.2)",
+            "min_fixed_version": "13.0.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.11.1,10.11.19)",
+            "min_fixed_version": "10.11.19",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[12.3.1,12.3.3)",
+            "min_fixed_version": "12.3.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.4.1,11.4.13)",
+            "min_fixed_version": "11.4.13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.8.1,11.8.9)",
+            "min_fixed_version": "11.8.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "高",
+    "fix_suggestion": "建议修复",
+    "kind": "未经验证的口令修改",
+    "kind_en": "未经验证的密码更改",
+    "last_modified_time": "2026-09-08",
+    "level": "High",
+    "mps_id": "MPS-ho4v-2skm",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-09-08",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/MariaDB/server/security/advisories/GHSA-625w-4hgq-qwmr",
+        "name": ""
+      },
+      {
+        "url": "https://jira.mariadb.org/browse/MDEV-40470",
+        "name": ""
+      },
+      {
+        "url": "https://hackerone.com/reports/3876430",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MariaDB/server/commit/dbd60d0ad8daa2d01050346aa50b7b102490e456",
+        "name": ""
+      },
+      {
+        "url": "https://mariadb.com/docs/release-notes/community-server/10.6/10.6.28",
+        "name": ""
+      },
+      {
+        "url": "https://mariadb.com/docs/release-notes/enterprise-server/10.6/10.6.28-24",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "poc",
+      "专家校准",
+      "应用软件",
+      "数据库"
+    ],
+    "title": "MariaDB GRANT PROXY权限提升漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {},
+    "cvss_score": 8.8,
+    "cvss_vector": "",
+    "cwe": "CWE-620",
+    "description": "MariaDB Server 是开源关系型数据库，提供 SQL 账户管理与 GRANT PROXY 代理授权能力。\n受影响版本中，GRANT PROXY 在 grantee 上使用 IDENTIFIED VIA 空认证方法时，LEX_USER::has_auth() 只检查首个 USER_AUTH 节点的 plugin、auth_str、pwtext 是否非空，空首节点使 copy_and_check_auth() 跳过 check_alter_user()，而 replace_user_table() 仍会写入后续认证节点，导致仅有 USAGE 权限的用户可以修改已存在管理员账户的密码并接管其权限。\n修复版本中通过将 LEX_USER::has_auth() 改为只要存在 auth 指针即视为已指定认证，使空密码与空插件名仍触发授权检查，阻止低权限用户通过 GRANT PROXY 改写其他账户认证信息。",
+    "effects": [
+      {
+        "comp_name": "mariadb",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.6.1,10.6.28)",
+            "min_fixed_version": "10.6.28",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.0.1,13.0.2)",
+            "min_fixed_version": "13.0.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.11.1,10.11.19)",
+            "min_fixed_version": "10.11.19",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[12.3.1,12.3.3)",
+            "min_fixed_version": "12.3.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.4.1,11.4.13)",
+            "min_fixed_version": "11.4.13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.8.1,11.8.9)",
+            "min_fixed_version": "11.8.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "高",
+    "fix_suggestion": "Recommend",
+    "kind": "未经验证的口令修改",
+    "kind_en": "Unverified Password Change",
+    "last_modified_time": "2026-09-08",
+    "level": "High",
+    "mps_id": "MPS-ho4v-2skm",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-09-08",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/MariaDB/server/security/advisories/GHSA-625w-4hgq-qwmr",
+        "name": ""
+      },
+      {
+        "url": "https://jira.mariadb.org/browse/MDEV-40470",
+        "name": ""
+      },
+      {
+        "url": "https://hackerone.com/reports/3876430",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/MariaDB/server/commit/dbd60d0ad8daa2d01050346aa50b7b102490e456",
+        "name": ""
+      },
+      {
+        "url": "https://mariadb.com/docs/release-notes/community-server/10.6/10.6.28",
+        "name": ""
+      },
+      {
+        "url": "https://mariadb.com/docs/release-notes/enterprise-server/10.6/10.6.28-24",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "poc",
+      "专家校准",
+      "应用软件",
+      "数据库"
+    ],
+    "title": "MariaDB GRANT PROXY权限提升漏洞"
+  },
+  "first_saved_at": "2026-09-08T12:31:07+00:00"
+}
