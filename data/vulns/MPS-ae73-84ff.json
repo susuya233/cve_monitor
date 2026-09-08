@@ -1,0 +1,197 @@
+{
+  "saved_at": "2026-09-08T16:59:16+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ae73-84ff",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75156",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-287",
+    "description": "Apache Airflow FAB provider（apache-airflow-providers-fab）是开源工作流平台 Apache Airflow 的 Flask App Builder 认证管理组件，用于提供 Web UI 登录、角色权限控制以及 Azure AD 等 OAuth 单点登录。\n受影响版本中，FAB 认证管理器在 Azure AD OAuth 登录路径上由 get_oauth_user_info 读取 resp 中的 id_token，再交由 _decode_and_validate_azure_jwt 处理。该方法使用 Microsoft 多租户 JWKS 校验签名，但调用 authlib_jwt.decode 时未传入 claims_options，claims.validate() 不检查 issuer 与 audience。攻击者可在自建 Azure 租户中签发通过签名校验的 id_token，使系统按令牌内 oid、email、roles 完成登录与角色分配，从而在无该部署既有访问权限的情况下进入 Airflow UI。\n修复版本中通过在 _decode_and_validate_azure_jwt 中解析部署所配置的 Azure 租户，并向 decode 传入 claims_options，要求 iss 属于该租户、aud 等于应用 client_id；当配置无法确定单一租户时拒绝接受令牌，切断跨租户令牌进入身份与角色映射的路径。",
+    "effects": [
+      {
+        "comp_name": "apache-airflow-providers-fab",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[3.7.3,3.8.1)",
+            "min_fixed_version": "3.8.1",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "身份验证不当",
+    "kind_en": "认证不当",
+    "last_modified_time": "2026-09-09",
+    "level": "Critical",
+    "mps_id": "MPS-ae73-84ff",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/08/13",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-75156",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/airflow/pull/71735",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/airflow/commit/75ecbdd36d89db8ae41b891bc0d41acf9b655723",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/airflow/blob/providers-fab/3.8.1/providers/fab/docs/changelog.rst",
+        "name": ""
+      },
+      {
+        "url": "https://pypi.org/project/apache-airflow-providers-fab/3.8.1/",
+        "name": ""
+      },
+      {
+        "url": "https://airflow.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-59243",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源",
+      "终端软件"
+    ],
+    "title": "Airflow FAB认证绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-75156",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-287",
+    "description": "Apache Airflow FAB provider（apache-airflow-providers-fab）是开源工作流平台 Apache Airflow 的 Flask App Builder 认证管理组件，用于提供 Web UI 登录、角色权限控制以及 Azure AD 等 OAuth 单点登录。\n受影响版本中，FAB 认证管理器在 Azure AD OAuth 登录路径上由 get_oauth_user_info 读取 resp 中的 id_token，再交由 _decode_and_validate_azure_jwt 处理。该方法使用 Microsoft 多租户 JWKS 校验签名，但调用 authlib_jwt.decode 时未传入 claims_options，claims.validate() 不检查 issuer 与 audience。攻击者可在自建 Azure 租户中签发通过签名校验的 id_token，使系统按令牌内 oid、email、roles 完成登录与角色分配，从而在无该部署既有访问权限的情况下进入 Airflow UI。\n修复版本中通过在 _decode_and_validate_azure_jwt 中解析部署所配置的 Azure 租户，并向 decode 传入 claims_options，要求 iss 属于该租户、aud 等于应用 client_id；当配置无法确定单一租户时拒绝接受令牌，切断跨租户令牌进入身份与角色映射的路径。",
+    "effects": [
+      {
+        "comp_name": "apache-airflow-providers-fab",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[3.7.3,3.8.1)",
+            "min_fixed_version": "3.8.1",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "身份验证不当",
+    "kind_en": "Improper Authentication",
+    "last_modified_time": "2026-09-09",
+    "level": "Critical",
+    "mps_id": "MPS-ae73-84ff",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/08/13",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-75156",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/airflow/pull/71735",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/airflow/commit/75ecbdd36d89db8ae41b891bc0d41acf9b655723",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/airflow/blob/providers-fab/3.8.1/providers/fab/docs/changelog.rst",
+        "name": ""
+      },
+      {
+        "url": "https://pypi.org/project/apache-airflow-providers-fab/3.8.1/",
+        "name": ""
+      },
+      {
+        "url": "https://airflow.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-59243",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源",
+      "终端软件"
+    ],
+    "title": "Airflow FAB认证绕过"
+  },
+  "first_saved_at": "2026-09-08T16:59:16+00:00"
+}
