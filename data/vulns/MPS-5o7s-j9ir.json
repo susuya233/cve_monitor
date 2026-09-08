@@ -1,0 +1,509 @@
+{
+  "saved_at": "2026-09-08T19:47:36+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5o7s-j9ir",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "由于整数类型的有限范围，在进行算术运算或操作时，结果可能超出类型的表示范围，导致溢出或环绕。溢出指的是结果超过了类型的最大值或小于了最小值，而环绕指的是结果绕回到类型的最小值或最大值。",
+        "title": "什么是整数溢出或环绕"
+      },
+      {
+        "content": "- 缓冲区溢出：整数溢出可能导致缓冲区溢出漏洞。当整数溢出导致分配的缓冲区大小不足以容纳结果时，攻击者可以利用这个漏洞覆盖相邻的内存区域，执行恶意代码或篡改程序的状态。\r\n- 身份验证绕过：在进行身份验证或访问控制时，整数溢出可能导致绕过验证的漏洞。攻击者可以构造特殊的输入，使溢出的整数值绕过了预期的验证逻辑，从而获得未经授权的访问权限。\r\n- 数据篡改：整数溢出可能导致数据篡改漏洞。攻击者可以通过使整数溢出，修改计数器、索引或其他控制数据的值，导致程序在处理数据时发生错误或执行意外的操作。",
+        "title": "整数溢出或环绕常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与限制：对用户输入的整数进行合理的验证和限制，确保其在允许的范围内。\r\n- 使用安全的整数操作函数：使用安全的整数操作函数，如`add_with_overflow()`、`sub_with_overflow()`、`mul_with_overflow()`等，这些函数会检查并处理溢出情况，确保计算结果在安全范围内。\r\n- 类型检查和转换：在进行整数运算或操作之前，进行类型检查和转换，确保操作数的类型和范围是合适的。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括对整数运算和操作的规范和限制，以帮助程序员编写更可靠、安全的代码。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的整数溢出问题。这些工具可以帮助发现代码中可能存在的溢出漏洞，并及时修复。",
+        "title": "如何预防整数溢出或环绕"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84000",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secure@microsoft.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-190",
+    "description": "Microsoft 图形组件中基于堆的缓冲区溢出允许授权攻击者在本地执行代码。",
+    "effects": [
+      {
+        "comp_name": "windows_10_1607",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.14393.0,10.0.14393.9512)",
+            "min_fixed_version": "10.0.14393.9512",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_10_1809",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.17763.0,10.0.17763.9245)",
+            "min_fixed_version": "10.0.17763.9245",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_10_21H2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.19044.0,10.0.19044.7725)",
+            "min_fixed_version": "10.0.19044.7725",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_10_22H2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.19045.0,10.0.19045.7725)",
+            "min_fixed_version": "10.0.19045.7725",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_11_23H2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.22631.0,10.0.22631.7582)",
+            "min_fixed_version": "10.0.22631.7582",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_11_24H2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.26100.0,10.0.26100.9445)",
+            "min_fixed_version": "10.0.26100.9445",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_11_25H2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.26200.0,10.0.26200.9445)",
+            "min_fixed_version": "10.0.26200.9445",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_11_26H1",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.28000.0,10.0.28000.2954)",
+            "min_fixed_version": "10.0.28000.2954",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_server_2012",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.2.9200.0,6.2.9200.26349)",
+            "min_fixed_version": "6.2.9200.26349",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_server_2012_R2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.3.9600.0,6.3.9600.23397)",
+            "min_fixed_version": "6.3.9600.23397",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_server_2016",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.14393.0,10.0.14393.9512)",
+            "min_fixed_version": "10.0.14393.9512",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_server_2019",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.17763.0,10.0.17763.9245)",
+            "min_fixed_version": "10.0.17763.9245",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_server_2022",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.20348.0,10.0.20348.5622)",
+            "min_fixed_version": "10.0.20348.5622",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_server_2025",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.26100.0,10.0.26100.33438)",
+            "min_fixed_version": "10.0.26100.33438",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "整数溢出或环绕",
+    "kind_en": "整数溢出或环绕",
+    "last_modified_time": "2026-09-09",
+    "level": "High",
+    "mps_id": "MPS-5o7s-j9ir",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5o7s-j9ir",
+        "name": "https://www.oscs1024.com/hd/MPS-5o7s-j9ir"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84000",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84000"
+      },
+      {
+        "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-84000",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "Microsoft图形组件远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "由于整数类型的有限范围，在进行算术运算或操作时，结果可能超出类型的表示范围，导致溢出或环绕。溢出指的是结果超过了类型的最大值或小于了最小值，而环绕指的是结果绕回到类型的最小值或最大值。",
+        "title": "什么是整数溢出或环绕"
+      },
+      {
+        "content": "- 缓冲区溢出：整数溢出可能导致缓冲区溢出漏洞。当整数溢出导致分配的缓冲区大小不足以容纳结果时，攻击者可以利用这个漏洞覆盖相邻的内存区域，执行恶意代码或篡改程序的状态。\r\n- 身份验证绕过：在进行身份验证或访问控制时，整数溢出可能导致绕过验证的漏洞。攻击者可以构造特殊的输入，使溢出的整数值绕过了预期的验证逻辑，从而获得未经授权的访问权限。\r\n- 数据篡改：整数溢出可能导致数据篡改漏洞。攻击者可以通过使整数溢出，修改计数器、索引或其他控制数据的值，导致程序在处理数据时发生错误或执行意外的操作。",
+        "title": "整数溢出或环绕常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与限制：对用户输入的整数进行合理的验证和限制，确保其在允许的范围内。\r\n- 使用安全的整数操作函数：使用安全的整数操作函数，如`add_with_overflow()`、`sub_with_overflow()`、`mul_with_overflow()`等，这些函数会检查并处理溢出情况，确保计算结果在安全范围内。\r\n- 类型检查和转换：在进行整数运算或操作之前，进行类型检查和转换，确保操作数的类型和范围是合适的。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括对整数运算和操作的规范和限制，以帮助程序员编写更可靠、安全的代码。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的整数溢出问题。这些工具可以帮助发现代码中可能存在的溢出漏洞，并及时修复。",
+        "title": "如何预防整数溢出或环绕"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84000",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secure@microsoft.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-190",
+    "description": "Heap-based buffer overflow in Microsoft Graphics Component allows an authorized attacker to execute code locally.",
+    "effects": [
+      {
+        "comp_name": "windows_10_1607",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.14393.0,10.0.14393.9512)",
+            "min_fixed_version": "10.0.14393.9512",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_10_1809",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.17763.0,10.0.17763.9245)",
+            "min_fixed_version": "10.0.17763.9245",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_10_21H2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.19044.0,10.0.19044.7725)",
+            "min_fixed_version": "10.0.19044.7725",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_10_22H2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.19045.0,10.0.19045.7725)",
+            "min_fixed_version": "10.0.19045.7725",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_11_23H2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.22631.0,10.0.22631.7582)",
+            "min_fixed_version": "10.0.22631.7582",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_11_24H2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.26100.0,10.0.26100.9445)",
+            "min_fixed_version": "10.0.26100.9445",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_11_25H2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.26200.0,10.0.26200.9445)",
+            "min_fixed_version": "10.0.26200.9445",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_11_26H1",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.28000.0,10.0.28000.2954)",
+            "min_fixed_version": "10.0.28000.2954",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_server_2012",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.2.9200.0,6.2.9200.26349)",
+            "min_fixed_version": "6.2.9200.26349",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_server_2012_R2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.3.9600.0,6.3.9600.23397)",
+            "min_fixed_version": "6.3.9600.23397",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_server_2016",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.14393.0,10.0.14393.9512)",
+            "min_fixed_version": "10.0.14393.9512",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_server_2019",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.17763.0,10.0.17763.9245)",
+            "min_fixed_version": "10.0.17763.9245",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_server_2022",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.20348.0,10.0.20348.5622)",
+            "min_fixed_version": "10.0.20348.5622",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "windows_server_2025",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.26100.0,10.0.26100.33438)",
+            "min_fixed_version": "10.0.26100.33438",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "整数溢出或环绕",
+    "kind_en": "Integer Overflow or Wraparound",
+    "last_modified_time": "2026-09-09",
+    "level": "High",
+    "mps_id": "MPS-5o7s-j9ir",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5o7s-j9ir",
+        "name": "https://www.oscs1024.com/hd/MPS-5o7s-j9ir"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84000",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84000"
+      },
+      {
+        "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-84000",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "Microsoft Graphics Component Remote Code Execution Vulnerability"
+  },
+  "first_saved_at": "2026-09-08T19:47:36+00:00"
+}
