@@ -1454,5 +1454,13 @@
   "25d0e939a531577302a5f6afbf1d244efc1912e6": "CVE-2026-80122漏洞",
   "bd4955778cf679131d702a642ed05e6e1486d220": "5.36.00.16 之前的 Dell SCG 5.0 设备版本和 5.36.00.00 之前的 Dell SCG 5.0 应用程序版本包含不正确的证书验证漏洞。未经身份验证的远程访问攻击者可能会利用此漏洞，导致未经授权的访问。",
   "dd2c55a7493b7d9b21810be8001b584bf7484c4d": "通过不完整的标准库拒绝列表在 Google ADK for Python 中远程执行代码",
-  "092da472210469d177c3da0866a1610934751eb9": "在安装了 pytest 的 Python (OSS)、Cloud Run 和 GKE 环境中，适用于 Python 版本 2.0.0 至 2.6.0 的 Google Cloud Agent Development Kit (ADK) 中的 adk web 中存在代码注入漏洞，允许未经身份验证的远程攻击者使用精心设计的测试会话重放来执行任意代码。"
+  "092da472210469d177c3da0866a1610934751eb9": "在安装了 pytest 的 Python (OSS)、Cloud Run 和 GKE 环境中，适用于 Python 版本 2.0.0 至 2.6.0 的 Google Cloud Agent Development Kit (ADK) 中的 adk web 中存在代码注入漏洞，允许未经身份验证的远程攻击者使用精心设计的测试会话重放来执行任意代码。",
+  "31fbca5333c4c01d2953c6ee0b75b87b9fb37887": "0.30.0 之前已知通过文档 API 进行路径遍历",
+  "1cbbae8779cdac3d6429536b009392fde067a51f": "known（npm 包）版本 <= 0.29.1 包含文档 API 中的路径遍历漏洞。 Internal/server/routes/docs.go 中的 HTTP 处理程序使用 cleanDocPath() 规范化用户提供的文档路径，该路径会去除前导/尾随斜杠和 .md 后缀，但不会中和 ../ 遍历序列，然后，internal/storage/doc_store.go 使用 filepath.Join(ds.docsDir(), filepath.FromSlash(doc.Path)+\".md\") 而不验证解析的路径是否保留在文档目录中。在默认部署中，管理 API 未经身份验证并绑定到所有接口，远程未经身份验证的攻击者可以提供遍历有效负载（例如，向 POST /api/docs 提供 {\"path\": \"../../../../tmp/knowns_pwn_marker\"} ，或向 GET /api/docs/... 提供编码路径），以读取、创建、覆盖或删除主机上任何位置具有 .md 扩展名的任意文件。文件系统并通过 os.MkdirAll 创建任意目录。这可能会暴露其他项目文档中存储的敏感数据，损坏或破坏文件，并提供可能链接到代码执行的任意写入原语。该问题已在 0.30.0 版本中修复。",
+  "81f7e054f6eadd913dba7a656029b600ab848f55": "8.7.0 之前的 Snipe-IT 通过 SAML 用户名排序绕过身份验证",
+  "b0ba303ca2553c9507c86c53750234c461686c12": "8.7.0 之前的 Snipe-IT 在 SAML 身份验证期间无法验证用户名大小写敏感性，从而允许攻击者通过使用受害者用户名的重音或大小写变体注册 IdP 帐户来以不同用户身份进行身份验证。攻击者可以利用默认的 utf8mb4_unicode_ci 数据库排序规则绕过用户名匹配，并通过联合登录路径（包括 SAML、LDAP 和 OAuth）实现帐户接管。",
+  "34ef438b21b47a225ce453ab80e2566b1974f248": "8.7.0 之前的 Snipe-IT 通过 employee_num 进行服务器端请求伪造",
+  "cc975060a897305ea8e7d5ab7655c2cad331e2a4": "8.7.0之前的Snipe-IT版本无法对验收PDF生成器中的employee_num字段进行HTML转义，从而允许具有users.edit权限的攻击者将img标签注入TCPDF的writeHTML()函数中。攻击者可以制作包含带有任意 HTTP(S) URL 的 img 标签的恶意 employee_num 值，以在受害者签署资产接受协议时触发对内部服务、云元数据端点或外部目标的服务器端请求。",
+  "7125f2bfa9642ac74f1562ad760ea75d23674b0b": "Snipe-IT 8.6.3 通过资产更新端点绕过授权",
+  "fc7888a486b7a0baa7b2262a43a82fe738efd008": "当分配字段提交到资产更新端点时，8.7.0 之前的 Snipe-IT 版本无法强制执行结帐授权。具有编辑权限但明确拒绝签出权限的经过身份验证的用户可以通过向 PATCH /api/v1/hardware/{id} 提交分配的_用户、分配的_资产或分配的_位置参数来重新分配资产、绕过签入程序以及更改保管记录。"
 }
