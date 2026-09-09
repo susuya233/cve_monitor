@@ -1446,5 +1446,13 @@
   "8abc754326425fd8129f7aad5537d7782ad480c3": "ColdFusion 受到不当访问控制漏洞的影响，该漏洞可能导致任意文件系统读取。攻击者可以利用此漏洞访问预期访问范围之外的敏感文件和目录。利用此问题不需要用户交互。",
   "14f15c1703927bda8051ca5b43d43e20288595d1": "Photoshop Desktop | Integer Overflow or Wraparound (CWE-190)",
   "0e0510075b0386b55d0bbb8223847ad512256785": "Photoshop Desktop is affected by an Integer Overflow or Wraparound vulnerability that could result in arbitrary code execution in the context of the current user. Exploitation of this issue requires user interaction in that a victim must open a malicious file.",
-  "ba998139f5fa82febb9c2552c9ccfb2ae7c2f429": "ColdFusion Eval注入漏洞"
+  "ba998139f5fa82febb9c2552c9ccfb2ae7c2f429": "ColdFusion Eval注入漏洞",
+  "f63c5c0f97a43485ddbae7bde0a61a131b26a2a6": "CVE-2026-87766 漏洞",
+  "89e5f454eb340ad763a242f114cf8f0398e4d8f1": "气泡膜中发现缺陷。在沙箱设置期间，在新根目录下创建文件或目录可以通过 /oldroot 遵循到主机的父符号链接，以启动用户身份在沙箱外部写入攻击者选择的路径。这发生在沙盒进程开始之前。此问题是 GHSA-pxhw-h44j-8pfx。它已在 bubblewrap 0.12.0 中修复。",
+  "a3224a9c2ebed26ef6e6f4db0ec9c63422d154d7": "CVE-2026-80099漏洞",
+  "b058549d178221b224b14b00b1fa66ed7744eab8": "多个 Newfold 插件容易遭到身份验证绕过。该漏洞的存在是因为插件捆绑了 wp-module-data 模块。在该模块中，“authenticate()”方法（在“rest_authentication_errors”过滤器上注册，因此对每个未经身份验证的 REST API 请求进行评估）执行 HMAC 风格的 Bearer 令牌比较，当“HiiveConnection::get_auth_token()”返回“false”时，该比较会退化：PHP 将“strrev(false)”强制为“strrev('')”，将秘密盐折叠为公开的盐常量 `hash('sha256', '') = e3b0c44...`，而所有剩余的哈希输入（HTTP 方法、请求 URL、原始请求正文和 `X-Timestamp` 标头）仍然完全由攻击者控制。这使得未经身份验证的攻击者可以完全离线计算有效的 Bearer 令牌，通过令牌相等性检查，并对 get_users(['role' => 'administrator'])` 返回的第一个管理员调用 `wp_set_current_user()`，授予完全管理员级别的访问权限并启用任意 REST API 操作，例如创建新的管理员帐户和实现完全站点接管。易受攻击的版本为WP Plugin Crazy Domains (<= 2.5.2)、WP Plugin Web (<= 2.3.4)、WP Plugin Hostgator (<= 3.1.0)、WP Plugin Bluehost (<= 4.17.1)。受影响的模块在 2.9.4 及以下版本中容易受到攻击。",
+  "25d0e939a531577302a5f6afbf1d244efc1912e6": "CVE-2026-80122漏洞",
+  "bd4955778cf679131d702a642ed05e6e1486d220": "5.36.00.16 之前的 Dell SCG 5.0 设备版本和 5.36.00.00 之前的 Dell SCG 5.0 应用程序版本包含不正确的证书验证漏洞。未经身份验证的远程访问攻击者可能会利用此漏洞，导致未经授权的访问。",
+  "dd2c55a7493b7d9b21810be8001b584bf7484c4d": "通过不完整的标准库拒绝列表在 Google ADK for Python 中远程执行代码",
+  "092da472210469d177c3da0866a1610934751eb9": "在安装了 pytest 的 Python (OSS)、Cloud Run 和 GKE 环境中，适用于 Python 版本 2.0.0 至 2.6.0 的 Google Cloud Agent Development Kit (ADK) 中的 adk web 中存在代码注入漏洞，允许未经身份验证的远程攻击者使用精心设计的测试会话重放来执行任意代码。"
 }
