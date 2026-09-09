@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-09-09T05:46:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-21es-p4ir",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79721",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6f8de1f0-f67e-45a6-b68f-98777fdb759c",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-829",
+    "description": "MLflow 是开源机器学习平台，用于实验跟踪、模型打包、注册与部署，属于大模型与机器学习基础设施。\n受影响版本中，公开入口 mlflow.pyfunc.load_model 会解析模型 URI 对应工件并读取 MLmodel 中的 python_function 配置。该函数调用 _add_code_from_conf_to_system_path，把配置里的 code 目录插入 sys.path 首位，再通过 importlib.import_module 导入 loader_module 指定的模块。攻击者若能让使用者加载其控制的模型工件，即可在模块导入阶段执行模块级代码，使加载进程以当前权限执行任意代码。远程 runs:/ 或 models:/ URI 会先下载工件再进入同一加载路径。\n修复版本中通过官方补丁收紧 MLmodel 配置驱动的模块导入来切断该执行链；当前公开来源未提供已验证修复版本或修复提交，应避免加载来源不可信的模型工件。",
+    "effects": [
+      {
+        "comp_name": "mlflow",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0.0.1,+∞)",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [
+              {
+                "description": "官方尚未发布修复版本。仅加载可信来源的模型产物；对 runs:/、models:/ 等远程 URI 做来源与完整性校验。",
+                "type": "缓解措施"
+              }
+            ],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "低",
+    "fix_suggestion": "建议修复",
+    "kind": "从非可信控制范围包含功能例程",
+    "kind_en": "包含来自不可信控制领域的功能",
+    "last_modified_time": "2026-09-09",
+    "level": "High",
+    "mps_id": "MPS-21es-p4ir",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-09-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-21es-p4ir",
+        "name": "https://www.oscs1024.com/hd/MPS-21es-p4ir"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79721",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79721"
+      },
+      {
+        "url": "https://www.hiddenlayer.com/sai-security-advisory/2026-09-mlflow",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-jw72-756q-9hfr",
+        "name": ""
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "AI",
+      "poc",
+      "python",
+      "专家校准",
+      "开源",
+      "终端软件"
+    ],
+    "title": "MLflow模型加载代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79721",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6f8de1f0-f67e-45a6-b68f-98777fdb759c",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-829",
+    "description": "MLflow 是开源机器学习平台，用于实验跟踪、模型打包、注册与部署，属于大模型与机器学习基础设施。\n受影响版本中，公开入口 mlflow.pyfunc.load_model 会解析模型 URI 对应工件并读取 MLmodel 中的 python_function 配置。该函数调用 _add_code_from_conf_to_system_path，把配置里的 code 目录插入 sys.path 首位，再通过 importlib.import_module 导入 loader_module 指定的模块。攻击者若能让使用者加载其控制的模型工件，即可在模块导入阶段执行模块级代码，使加载进程以当前权限执行任意代码。远程 runs:/ 或 models:/ URI 会先下载工件再进入同一加载路径。\n修复版本中通过官方补丁收紧 MLmodel 配置驱动的模块导入来切断该执行链；当前公开来源未提供已验证修复版本或修复提交，应避免加载来源不可信的模型工件。",
+    "effects": [
+      {
+        "comp_name": "mlflow",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0.0.1,+∞)",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [
+              {
+                "description": "官方尚未发布修复版本。仅加载可信来源的模型产物；对 runs:/、models:/ 等远程 URI 做来源与完整性校验。",
+                "type": "缓解措施"
+              }
+            ],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "低",
+    "fix_suggestion": "Recommend",
+    "kind": "从非可信控制范围包含功能例程",
+    "kind_en": "Inclusion of Functionality from Untrusted Control Sphere",
+    "last_modified_time": "2026-09-09",
+    "level": "High",
+    "mps_id": "MPS-21es-p4ir",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-09-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-21es-p4ir",
+        "name": "https://www.oscs1024.com/hd/MPS-21es-p4ir"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79721",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79721"
+      },
+      {
+        "url": "https://www.hiddenlayer.com/sai-security-advisory/2026-09-mlflow",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-jw72-756q-9hfr",
+        "name": ""
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "AI",
+      "poc",
+      "python",
+      "专家校准",
+      "开源",
+      "终端软件"
+    ],
+    "title": "MLflow模型加载代码执行漏洞"
+  },
+  "first_saved_at": "2026-09-09T05:46:52+00:00"
+}

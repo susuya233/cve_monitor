@@ -1,5 +1,5 @@
 {
-  "saved_at": "2026-09-09T00:58:11+00:00",
+  "saved_at": "2026-09-09T05:46:53+00:00",
   "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
@@ -22,8 +22,29 @@
     "cvss_score": 8.6,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:N",
     "cwe": "CWE-95",
-    "description": "ColdFusion 受到动态评估代码中指令不正确中和（“评估注入”）漏洞的影响，该漏洞可能导致在当前用户的上下文中执行任意代码。攻击者可以利用此漏洞执行任意代码。利用此问题不需要用户交互。范围已更改。",
-    "effects": [],
+    "description": "Adobe ColdFusion 是商业闭源应用服务器，用于构建和运行基于 CFML 的 Web 应用与后端服务。\n受影响版本中，动态求值代码里的指令未得到正确中和，存在 Eval Injection 缺陷。未授权远程攻击者可在无需用户交互的情况下利用该缺陷，在当前用户上下文中执行任意代码，且影响范围会扩展到当前组件之外。\n修复版本中通过 Adobe APSB26-119 安全更新收紧动态求值路径对不可信输入的处理，阻止恶意指令再进入被求值代码，切断任意代码执行链路。",
+    "effects": [
+      {
+        "comp_name": "coldfusion",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2025.0.13)",
+            "min_fixed_version": "2025.0.13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2023.0.24)",
+            "min_fixed_version": "2023.0.24",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -53,8 +74,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-76190漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "ColdFusion Eval注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -75,8 +98,29 @@
     "cvss_score": 8.6,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:N",
     "cwe": "CWE-95",
-    "description": "ColdFusion is affected by an Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
-    "effects": [],
+    "description": "Adobe ColdFusion 是商业闭源应用服务器，用于构建和运行基于 CFML 的 Web 应用与后端服务。\n受影响版本中，动态求值代码里的指令未得到正确中和，存在 Eval Injection 缺陷。未授权远程攻击者可在无需用户交互的情况下利用该缺陷，在当前用户上下文中执行任意代码，且影响范围会扩展到当前组件之外。\n修复版本中通过 Adobe APSB26-119 安全更新收紧动态求值路径对不可信输入的处理，阻止恶意指令再进入被求值代码，切断任意代码执行链路。",
+    "effects": [
+      {
+        "comp_name": "coldfusion",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2025.0.13)",
+            "min_fixed_version": "2025.0.13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2023.0.24)",
+            "min_fixed_version": "2023.0.24",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -106,8 +150,10 @@
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "CVE-2026-76190漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "ColdFusion Eval注入漏洞"
   },
   "first_saved_at": "2026-09-08T22:16:54+00:00"
 }
