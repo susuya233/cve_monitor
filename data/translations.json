@@ -1462,5 +1462,18 @@
   "34ef438b21b47a225ce453ab80e2566b1974f248": "8.7.0 之前的 Snipe-IT 通过 employee_num 进行服务器端请求伪造",
   "cc975060a897305ea8e7d5ab7655c2cad331e2a4": "8.7.0之前的Snipe-IT版本无法对验收PDF生成器中的employee_num字段进行HTML转义，从而允许具有users.edit权限的攻击者将img标签注入TCPDF的writeHTML()函数中。攻击者可以制作包含带有任意 HTTP(S) URL 的 img 标签的恶意 employee_num 值，以在受害者签署资产接受协议时触发对内部服务、云元数据端点或外部目标的服务器端请求。",
   "7125f2bfa9642ac74f1562ad760ea75d23674b0b": "Snipe-IT 8.6.3 通过资产更新端点绕过授权",
-  "fc7888a486b7a0baa7b2262a43a82fe738efd008": "当分配字段提交到资产更新端点时，8.7.0 之前的 Snipe-IT 版本无法强制执行结帐授权。具有编辑权限但明确拒绝签出权限的经过身份验证的用户可以通过向 PATCH /api/v1/hardware/{id} 提交分配的_用户、分配的_资产或分配的_位置参数来重新分配资产、绕过签入程序以及更改保管记录。"
+  "fc7888a486b7a0baa7b2262a43a82fe738efd008": "当分配字段提交到资产更新端点时，8.7.0 之前的 Snipe-IT 版本无法强制执行结帐授权。具有编辑权限但明确拒绝签出权限的经过身份验证的用户可以通过向 PATCH /api/v1/hardware/{id} 提交分配的_用户、分配的_资产或分配的_位置参数来重新分配资产、绕过签入程序以及更改保管记录。",
+  "020cb9e7cd777e33a9a2cbaae16774a0be6f17ad": "CVE-2026-8044漏洞",
+  "9150b62070ec84683531ea19fd0e2e5c2175267f": "CWE-88：存在命令中参数分隔符的不正确中和（“参数注入”）漏洞，当提供恶意参数作为备份配置参数时，可能会导致具有特权帐户的攻击者远程执行代码。",
+  "19c2471a3804e6f6276d8492ad91a4449fa8d1b3": "CVE-2026-87874漏洞",
+  "1d7d52a899486af4cdae28ab7ff2492a7970c62e": "Ansible 社区的 memcached 缓存插件发现缺陷\n收藏。尽管它的文档声明记录存储在 JSON 中\n格式，该插件不执行显式序列化并依赖于\npython-memcached，它在写入时腌制值并在读取时取消腌制它们。\n由于 memcached 未经身份验证并且缓存密钥是可预测的，因此攻击者\n能够访问网络公开或共享的 memcached 实例可以编写精心设计的\npickle 有效负载在 Ansible 控制器上反序列化并执行\n接下来读取中毒的事实缓存，从而导致远程代码执行。",
+  "25f6cc3274c2a93b1a821c48a9312a9030b7da60": "MaxSite CMS 通过硬编码加密密钥绕过 109.6 身份验证",
+  "78db4cbf9999b32cb84bd9ff6977719316f25a7a": "MaxSite CMS 到 109.6 版本均在 application/config/config.php 中附带硬编码的会话加密密钥，该密钥在安装过程中不会更改，从而允许未经身份验证的攻击者伪造管理员会话 cookie。攻击者可以通过使用公开的加密密钥计算 HMAC-SHA1，绕过 is_login() 和 mso_check_allow() 函数中的身份验证检查，创建具有管理员权限的恶意 ci_session cookie。",
+  "60e430b131c915fb8f537bb44cd2b9d6beef9b6d": "MaxSite CMS 通过 109.6 通过 ajax 调度程序包含本地文件",
+  "1f951949a92c18472cce1334ae9b6e26d0f7204a": "MaxSite CMS 到 109.6 在 ajax 和 require-maxsite 调度程序中包含本地文件包含漏洞，允许未经身份验证的攻击者通过提供 Base64 编码的路径遍历序列来执行特权处理程序文件。攻击者可以绕过路径验证检查并执行管理控制的处理程序操作，而无需进行身份验证来访问敏感功能。",
+  "7e61fc5ecdf6c5bb1f20ca780e81b70e847dca8d": "MaxSite CMS 通过 ci_session 通过 109.6 PHP 对象注入",
+  "bcdc2f26ccc6d7ef914aeb7afbef1bd47f03d9f5": "MaxSite CMS 通过 109.6 将 ci_session cookie 传递给 unserialize()，而没有类限制，从而允许未经身份验证的攻击者注入 PHP 对象。攻击者可以使用硬编码加密密钥伪造有效的会话 cookie，以触发魔术方法并破坏应用程序状态或在小工具类存在的情况下实现代码执行。",
+  "273851c47f9b19402a16f73220d1f9c493e02569": "sssd：sssd：idp身份验证前缀比较允许跨用户模拟",
+  "db16bb6eb9b11c43274c4f04cfd3ea378eced84c": "SSSD 的 IdP 身份验证提供商中发现了一个缺陷。 eval_access_token_buf() 函数使用 strncmp() 将 OIDC 主体标识符与经过身份验证的用户标识符长度进行比较，执行前缀比较而不是精确匹配。 IdP 标识符是目标用户标识符的严格前缀的攻击者可以作为目标用户进行身份验证。",
+  "9f6894e23a2d8d98b07488455b446f20f7d7a3bd": "部分字符串比较"
 }
