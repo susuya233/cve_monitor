@@ -1,0 +1,157 @@
+{
+  "saved_at": "2026-09-10T16:50:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-uq1n-v84r",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-88018",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-306",
+    "description": "rclone 是一个命令行程序，用于在不同的云存储提供商之间同步文件和目录。在 1.75.1 之前，rclone 服务 s3 配置了 --auth-proxy 但没有 --auth-key，允许 authPairMiddleware 使用空的 ws.s3Secret 注册任何客户端选择的 accessKeyID。然后，gofakes3 根据相同的空密钥验证请求的 SigV4 签名，而 Server.auth 将访问密钥标识符作为用户和身份验证值传递给代理，而无需独立的每个身份密钥。因此，未经身份验证的网络攻击者可以选择任意访问密钥，使用空密钥进行签名，并到达身份验证代理脚本为该身份解析的任何后端。此问题已在版本 1.75.1 中修复。",
+    "effects": [
+      {
+        "comp_name": "rclone",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.75.1)",
+            "min_fixed_version": "1.75.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-uq1n-v84r",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-uq1n-v84r",
+        "name": "https://www.oscs1024.com/hd/MPS-uq1n-v84r"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88018",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88018"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/security/advisories/GHSA-xwwr-4h3p-r22c",
+        "name": "https://github.com/rclone/rclone/security/advisories/GHSA-xwwr-4h3p-r22c"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/commit/90595f34f27f569be6b27c57fe5ab65057d323bd",
+        "name": "https://github.com/rclone/rclone/commit/90595f34f27f569be6b27c57fe5ab65057d323bd"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/releases/tag/v1.75.1",
+        "name": "https://github.com/rclone/rclone/releases/tag/v1.75.1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-88018漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-88018",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-306",
+    "description": "rclone is a command-line program to sync files and directories to and from different cloud storage providers. Prior to 1.75.1, rclone serve s3 configured with --auth-proxy but without --auth-key allows authPairMiddleware to register any client-chosen accessKeyID with an empty ws.s3Secret. gofakes3 then verifies the request’s SigV4 signature against that same empty secret, while Server.auth passes the access key identifier as both the user and authentication value to the proxy without an independent per-identity secret. An unauthenticated network attacker can therefore choose an arbitrary access key, sign with an empty secret, and reach whatever backend the auth-proxy script resolves for that identity. This issue is fixed in version 1.75.1.",
+    "effects": [
+      {
+        "comp_name": "rclone",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.75.1)",
+            "min_fixed_version": "1.75.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-uq1n-v84r",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-uq1n-v84r",
+        "name": "https://www.oscs1024.com/hd/MPS-uq1n-v84r"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88018",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88018"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/security/advisories/GHSA-xwwr-4h3p-r22c",
+        "name": "https://github.com/rclone/rclone/security/advisories/GHSA-xwwr-4h3p-r22c"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/commit/90595f34f27f569be6b27c57fe5ab65057d323bd",
+        "name": "https://github.com/rclone/rclone/commit/90595f34f27f569be6b27c57fe5ab65057d323bd"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/releases/tag/v1.75.1",
+        "name": "https://github.com/rclone/rclone/releases/tag/v1.75.1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-88018漏洞"
+  },
+  "first_saved_at": "2026-09-10T16:50:52+00:00"
+}

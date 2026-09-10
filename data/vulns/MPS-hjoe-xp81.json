@@ -1,0 +1,157 @@
+{
+  "saved_at": "2026-09-10T16:50:55+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-hjoe-xp81",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-88017",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-488",
+    "description": "rclone 是一个命令行程序，用于在不同的云存储提供商之间同步文件和目录。从 1.64.0 到 1.75.1，cmd/serve/ftp/ftp.go 中的 FTP auth-proxy 驱动程序在服务器范围内的 userPass map[string]string 中为每个用户名存储一个模糊密码，而不是将凭证或 VFS 绑定到经过身份验证的会话。如果两个接受的凭据使用相同的用户名但解析为不同的代理后端，则稍后的 CheckPasswd 登录将覆盖 userPass[user]，并且第一个会话上的后续 getVFS 操作将使用后来的密码重新授权。然后，第一个会话可以使用第二个凭据的后端权限读取、创建、覆盖、重命名或删除对象。利用该漏洞需要在第一个会话保持打开状态时进行稍后的相同用户名登录。此问题已在版本 1.75.1 中修复。",
+    "effects": [
+      {
+        "comp_name": "rclone",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.64.0,1.75.1)",
+            "min_fixed_version": "1.75.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对错误会话暴露数据元素",
+    "kind_en": "数据元素暴露于错误会话",
+    "last_modified_time": "2026-09-11",
+    "level": "High",
+    "mps_id": "MPS-hjoe-xp81",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hjoe-xp81",
+        "name": "https://www.oscs1024.com/hd/MPS-hjoe-xp81"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88017",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88017"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/security/advisories/GHSA-c476-6w5q-jw77",
+        "name": "https://github.com/rclone/rclone/security/advisories/GHSA-c476-6w5q-jw77"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/commit/c6af0b57c2b4af848bc968c2b407354476184b99",
+        "name": "https://github.com/rclone/rclone/commit/c6af0b57c2b4af848bc968c2b407354476184b99"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/releases/tag/v1.75.1",
+        "name": "https://github.com/rclone/rclone/releases/tag/v1.75.1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "rclone：FTP 跨会话身份验证代理后端混淆",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-88017",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-488",
+    "description": "rclone is a command-line program to sync files and directories to and from different cloud storage providers. From 1.64.0 until 1.75.1, the FTP auth-proxy driver in cmd/serve/ftp/ftp.go stores one obscured password per username in the server-wide userPass map[string]string instead of binding the credential or VFS to the authenticated session. If two accepted credentials use the same username but resolve to different proxy backends, a later CheckPasswd login overwrites userPass[user], and subsequent getVFS operations on the first session are reauthorized with the later password. The first session can then read, create, overwrite, rename, or delete objects using the second credential’s backend authority. Exploitation requires the later same-username login to occur while the first session remains open. This issue is fixed in version 1.75.1.",
+    "effects": [
+      {
+        "comp_name": "rclone",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.64.0,1.75.1)",
+            "min_fixed_version": "1.75.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对错误会话暴露数据元素",
+    "kind_en": "Exposure of Data Element to Wrong Session",
+    "last_modified_time": "2026-09-11",
+    "level": "High",
+    "mps_id": "MPS-hjoe-xp81",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hjoe-xp81",
+        "name": "https://www.oscs1024.com/hd/MPS-hjoe-xp81"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88017",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88017"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/security/advisories/GHSA-c476-6w5q-jw77",
+        "name": "https://github.com/rclone/rclone/security/advisories/GHSA-c476-6w5q-jw77"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/commit/c6af0b57c2b4af848bc968c2b407354476184b99",
+        "name": "https://github.com/rclone/rclone/commit/c6af0b57c2b4af848bc968c2b407354476184b99"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/releases/tag/v1.75.1",
+        "name": "https://github.com/rclone/rclone/releases/tag/v1.75.1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "rclone: FTP cross-session auth-proxy backend confusion"
+  },
+  "first_saved_at": "2026-09-10T16:50:55+00:00"
+}

@@ -1,0 +1,165 @@
+{
+  "saved_at": "2026-09-10T16:50:59+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3ati-49ne",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-88016",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:H/A:L",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:H/A:L",
+    "cwe": "CWE-281",
+    "description": "rclone 是一个命令行程序，用于在不同的云存储提供商之间同步文件和目录。在 1.75.1 之前，当 backend/local 使用 --links 运行时，源 .rclonelink 对象可以在目标中植入符号链接，并通过该路径应用稍后的目录元数据。 MkdirMetadata、writeMetadataToFile 和 setTimes 在 Directory.translatedLink=false 时运行，因此 os.Chown、os.Chmod、os.Chtimes 和出生时间处理可以绕过 os.Root 限制并遵循符号链接。因此，控制源内容的攻击者可以将选定的所有权、权限、修改时间或出生时间应用到目标外部的文件或目录，其中 chmod 和 chown 需要 --metadata，而修改时间由正常目录工作流程应用。此问题已在版本 1.75.1 中修复。",
+    "effects": [
+      {
+        "comp_name": "rclone",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.75.1)",
+            "min_fixed_version": "1.75.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "权限预留不恰当",
+    "kind_en": "权限保留不当",
+    "last_modified_time": "2026-09-11",
+    "level": "High",
+    "mps_id": "MPS-3ati-49ne",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3ati-49ne",
+        "name": "https://www.oscs1024.com/hd/MPS-3ati-49ne"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88016",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88016"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/security/advisories/GHSA-f8g7-2xjc-7mfh",
+        "name": "https://github.com/rclone/rclone/security/advisories/GHSA-f8g7-2xjc-7mfh"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/commit/17b0c03338a857bcb0a68d2d4c82ddbdec3f7893",
+        "name": "https://github.com/rclone/rclone/commit/17b0c03338a857bcb0a68d2d4c82ddbdec3f7893"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/commit/a7ab39d3d1958afa1446982c1dc4e4a73a887e3e",
+        "name": "https://github.com/rclone/rclone/commit/a7ab39d3d1958afa1446982c1dc4e4a73a887e3e"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/releases/tag/v1.75.1",
+        "name": "https://github.com/rclone/rclone/releases/tag/v1.75.1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-88016漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-88016",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:H/A:L",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:H/A:L",
+    "cwe": "CWE-281",
+    "description": "rclone is a command-line program to sync files and directories to and from different cloud storage providers. Prior to 1.75.1, when backend/local runs with --links, a source .rclonelink object can plant a symlink in the destination and later directory metadata is applied through that path. MkdirMetadata, writeMetadataToFile, and setTimes operate when Directory.translatedLink=false, so os.Chown, os.Chmod, os.Chtimes, and birth-time handling can bypass os.Root confinement and follow the symlink. An attacker controlling source contents can therefore apply selected ownership, permissions, modification times, or birth times to a file or directory outside the destination, with --metadata required for chmod and chown while modification time is applied by the normal directory workflow. This issue is fixed in version 1.75.1.",
+    "effects": [
+      {
+        "comp_name": "rclone",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.75.1)",
+            "min_fixed_version": "1.75.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "权限预留不恰当",
+    "kind_en": "Improper Preservation of Permissions",
+    "last_modified_time": "2026-09-11",
+    "level": "High",
+    "mps_id": "MPS-3ati-49ne",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3ati-49ne",
+        "name": "https://www.oscs1024.com/hd/MPS-3ati-49ne"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88016",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88016"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/security/advisories/GHSA-f8g7-2xjc-7mfh",
+        "name": "https://github.com/rclone/rclone/security/advisories/GHSA-f8g7-2xjc-7mfh"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/commit/17b0c03338a857bcb0a68d2d4c82ddbdec3f7893",
+        "name": "https://github.com/rclone/rclone/commit/17b0c03338a857bcb0a68d2d4c82ddbdec3f7893"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/commit/a7ab39d3d1958afa1446982c1dc4e4a73a887e3e",
+        "name": "https://github.com/rclone/rclone/commit/a7ab39d3d1958afa1446982c1dc4e4a73a887e3e"
+      },
+      {
+        "url": "https://github.com/rclone/rclone/releases/tag/v1.75.1",
+        "name": "https://github.com/rclone/rclone/releases/tag/v1.75.1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-88016漏洞"
+  },
+  "first_saved_at": "2026-09-10T16:50:59+00:00"
+}

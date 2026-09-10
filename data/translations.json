@@ -1488,5 +1488,17 @@
   "7b4dd6eeb8840717b8fce83181189033f6686474": "Open WebUI 是一个可扩展、功能丰富且用户友好的自托管人工智能平台。从 0.9.6 到 0.11.1，backend/open_webui/retrieval/web/utils.py 中的 SafePlaywrightURLLoader 在 Python 中验证了用户控制的主机名，然后让 Playwright 浏览器在同步和异步请求拦截器中再次解析它。控制权威 DNS 的经过身份验证的用户可以将公共地址返回到验证，并将内部地址返回到浏览器，从而通过 Web 搜索或 URL 提取公开来自内部服务或云元数据的响应。此问题已在 0.11.1 版本中修复。",
   "57eb02d92c45c912442c2ba754310b8c50db7312": "Incorrect Implementation of Authentication Algorithm",
   "303dfd9f49fcc1d4f30b386408b18c77949a1d39": "Apache Camel K YAML 注入漏洞",
-  "245db372476f518428c3081f32e80bfa138c3585": "SP Property 存储型 XSS"
+  "245db372476f518428c3081f32e80bfa138c3585": "SP Property 存储型 XSS",
+  "0bc0fd994e197bed2276081522bfeeefcb0ea4f2": "CVE-2026-88959漏洞",
+  "dd846e4db08874805806ba08a41ab5ebeb9cf17a": "Anchor CMS 到 0.12.7 无法在管理员用户管理端点中强制实施基于角色的访问控制，从而允许任何经过身份验证的低权限用户创建管理员帐户或修改现有帐户。具有编辑者或用户角色的攻击者可以直接 POST 到 admin/users/add 或 admin/users/edit 端点来创建新的管理员帐户或更改现有管理员的密码，从而获得完全的管理访问权限。",
+  "93f27f601b09f0e6ad3af0a4cfb91a1734bd7767": "通过 code.find MCP 工具通过 0.33.0 进行路径遍历",
+  "c436ad581bd191ea4d7f073f11f4c02a79f524a9": "knowns 到 0.33.0 无法将 code.find MCP 工具的路径参数限制到项目根目录，从而允许 AI 代理会话读取主机上任何位置的源文件。攻击者可以向路径参数提供绝对路径或相对遍历序列，并从预期项目目录外部检索完整文件内容。",
+  "1ede4172de86b6336c472e98711dc336f5da0cbf": "CVE-2026-88018漏洞",
+  "2baf9890dc0f587f400ebbfe084e6e74ac15d19b": "rclone 是一个命令行程序，用于在不同的云存储提供商之间同步文件和目录。在 1.75.1 之前，rclone 服务 s3 配置了 --auth-proxy 但没有 --auth-key，允许 authPairMiddleware 使用空的 ws.s3Secret 注册任何客户端选择的 accessKeyID。然后，gofakes3 根据相同的空密钥验证请求的 SigV4 签名，而 Server.auth 将访问密钥标识符作为用户和身份验证值传递给代理，而无需独立的每个身份密钥。因此，未经身份验证的网络攻击者可以选择任意访问密钥，使用空密钥进行签名，并到达身份验证代理脚本为该身份解析的任何后端。此问题已在版本 1.75.1 中修复。",
+  "ae3cf0c2f71af30e67a0caf1734500f9c3e49c80": "rclone：FTP 跨会话身份验证代理后端混淆",
+  "8d0fe9738cba6f2b7325db92bdc4f0aff6678a75": "rclone 是一个命令行程序，用于在不同的云存储提供商之间同步文件和目录。从 1.64.0 到 1.75.1，cmd/serve/ftp/ftp.go 中的 FTP auth-proxy 驱动程序在服务器范围内的 userPass map[string]string 中为每个用户名存储一个模糊密码，而不是将凭证或 VFS 绑定到经过身份验证的会话。如果两个接受的凭据使用相同的用户名但解析为不同的代理后端，则稍后的 CheckPasswd 登录将覆盖 userPass[user]，并且第一个会话上的后续 getVFS 操作将使用后来的密码重新授权。然后，第一个会话可以使用第二个凭据的后端权限读取、创建、覆盖、重命名或删除对象。利用该漏洞需要在第一个会话保持打开状态时进行稍后的相同用户名登录。此问题已在版本 1.75.1 中修复。",
+  "0372986791fa209bf08fed27fb17d452a2fa159e": "数据元素暴露于错误会话",
+  "3c9ea958494894756b96d2a6fdb215744fa1fe9f": "CVE-2026-88016漏洞",
+  "0778e4dc0f30709460aba76792da38254688b8a1": "rclone 是一个命令行程序，用于在不同的云存储提供商之间同步文件和目录。在 1.75.1 之前，当 backend/local 使用 --links 运行时，源 .rclonelink 对象可以在目标中植入符号链接，并通过该路径应用稍后的目录元数据。 MkdirMetadata、writeMetadataToFile 和 setTimes 在 Directory.translatedLink=false 时运行，因此 os.Chown、os.Chmod、os.Chtimes 和出生时间处理可以绕过 os.Root 限制并遵循符号链接。因此，控制源内容的攻击者可以将选定的所有权、权限、修改时间或出生时间应用到目标外部的文件或目录，其中 chmod 和 chown 需要 --metadata，而修改时间由正常目录工作流程应用。此问题已在版本 1.75.1 中修复。",
+  "ebf4bbf30c685f1a50fc91199a6810b805617a96": "权限保留不当"
 }

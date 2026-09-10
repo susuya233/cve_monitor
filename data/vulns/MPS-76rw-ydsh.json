@@ -1,0 +1,193 @@
+{
+  "saved_at": "2026-09-10T16:50:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-76rw-ydsh",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-88899",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-73",
+    "description": "knowns 是一款以 MIT 许可开源的开发工作流管理工具，经 npm 分发，内置 Web 管理界面并与 OpenCode AI 编码代理集成，浏览器请求经 /api/opencode 反向代理转发到本地 OpenCode 代理守护进程。\n受影响版本中，internal/server/server.go 的 proxyOpenCode 在处理 /api/opencode/* 请求时，仅在 x-opencode-directory 请求头为空时才注入项目根目录 activeRoot，?directory 查询参数的注入又仅覆盖 GET /session 场景，攻击者自带的非空目录值不经清洗即被 proxy.ServeHTTP 原样转发；OpenCode 代理守护进程将其视为权威工作目录，在此初始化文件树、git 接口与终端执行环境，使 AI 代理的文件读写与命令执行可作用于项目根之外的任意主机目录。\n修复版本中通过移除嵌入式 OpenCode Chat UI 切断利用链：删除 /api/opencode 路由注册、proxyOpenCode 反向代理与 internal/agents/opencode 运行时，攻击面随之消失，v0.30.x 及更早版本无官方补丁。",
+    "effects": [
+      {
+        "comp_name": "knowns",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.31.0)",
+            "min_fixed_version": "0.31.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "文件名或路径的外部控制",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-76rw-ydsh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-76rw-ydsh",
+        "name": "https://www.oscs1024.com/hd/MPS-76rw-ydsh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88899",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88899"
+      },
+      {
+        "url": "https://github.com/knowns-dev/knowns/security/advisories/GHSA-9h2q-r9fh-f98w",
+        "name": "GitHub Security Advisory (GHSA-9h2q-r9fh-f98w)"
+      },
+      {
+        "url": "https://github.com/knowns-dev/knowns/blob/v0.30.0/internal/server/server.go#L1283-L1296",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/knowns-dev/knowns/commit/37db0561b37b48b8bd035a417d7f1da6258ae657",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/knowns-dev/knowns/releases/tag/v0.31.0",
+        "name": "knowns v0.31.0 Release Notes"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/knowns-before-0.31.0-external-control-of-agent-working-directory-via-x-opencode-directory-header",
+        "name": "VulnCheck Advisory: knowns before 0.31.0 External Control of Agent Working Directory via x-opencode-directory Header"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI"
+    ],
+    "title": "knowns 代理目录头注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-88899",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-73",
+    "description": "knowns 是一款以 MIT 许可开源的开发工作流管理工具，经 npm 分发，内置 Web 管理界面并与 OpenCode AI 编码代理集成，浏览器请求经 /api/opencode 反向代理转发到本地 OpenCode 代理守护进程。\n受影响版本中，internal/server/server.go 的 proxyOpenCode 在处理 /api/opencode/* 请求时，仅在 x-opencode-directory 请求头为空时才注入项目根目录 activeRoot，?directory 查询参数的注入又仅覆盖 GET /session 场景，攻击者自带的非空目录值不经清洗即被 proxy.ServeHTTP 原样转发；OpenCode 代理守护进程将其视为权威工作目录，在此初始化文件树、git 接口与终端执行环境，使 AI 代理的文件读写与命令执行可作用于项目根之外的任意主机目录。\n修复版本中通过移除嵌入式 OpenCode Chat UI 切断利用链：删除 /api/opencode 路由注册、proxyOpenCode 反向代理与 internal/agents/opencode 运行时，攻击面随之消失，v0.30.x 及更早版本无官方补丁。",
+    "effects": [
+      {
+        "comp_name": "knowns",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.31.0)",
+            "min_fixed_version": "0.31.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "External Control of File Name or Path",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-76rw-ydsh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-76rw-ydsh",
+        "name": "https://www.oscs1024.com/hd/MPS-76rw-ydsh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88899",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88899"
+      },
+      {
+        "url": "https://github.com/knowns-dev/knowns/security/advisories/GHSA-9h2q-r9fh-f98w",
+        "name": "GitHub Security Advisory (GHSA-9h2q-r9fh-f98w)"
+      },
+      {
+        "url": "https://github.com/knowns-dev/knowns/blob/v0.30.0/internal/server/server.go#L1283-L1296",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/knowns-dev/knowns/commit/37db0561b37b48b8bd035a417d7f1da6258ae657",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/knowns-dev/knowns/releases/tag/v0.31.0",
+        "name": "knowns v0.31.0 Release Notes"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/knowns-before-0.31.0-external-control-of-agent-working-directory-via-x-opencode-directory-header",
+        "name": "VulnCheck Advisory: knowns before 0.31.0 External Control of Agent Working Directory via x-opencode-directory Header"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI"
+    ],
+    "title": "knowns 代理目录头注入漏洞"
+  },
+  "first_saved_at": "2026-09-10T16:50:49+00:00"
+}
