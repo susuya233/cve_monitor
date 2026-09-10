@@ -1,0 +1,167 @@
+{
+  "saved_at": "2026-09-10T22:11:12+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ln3s-igfr",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89094",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-1336",
+    "description": "Forgejo 是由 Codeberg 社区基于 Gitea 分支开发的开源自托管代码协作平台，提供仓库托管、代码评审与 CI/CD 等功能，采用 Go 语言编写并以 MIT 许可证发布。\n受影响版本中，用户以模板仓库创建新仓库时，服务端克隆模板仓库、删除 .git 目录后读取 .forgejo/template 中列出的 glob 并对匹配文件执行变量模板扩展，文件路径本身同样参与扩展且扩展后未再次清理 .git 目录；攻击者在模板仓库中放置名为 .g${REPO_NAME}/config 的文件并在 .forgejo/template 中列出 .g*/config，将新仓库命名为 it 使该路径扩展为 .git/config，git init 初始化新仓库时沿用该目录中攻击者构造的 git 配置，随后的 git add、git commit、git push 以 Forgejo 进程权限执行，攻击者可借此在宿主机上执行任意进程并读取任意数据。\n修复版本中通过在模板变量扩展完成后、git 仓库初始化之前删除临时目录中已存在的 .git 目录，切断扩展产物进入 git 初始化的路径，使恶意模板仓库无法再植入 git 配置，消除任意进程执行与任意数据读取风险。",
+    "effects": [
+      {
+        "comp_name": "forgejo.org",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,15.0.8)",
+            "min_fixed_version": "15.0.8",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[16.0.0,16.0.4)",
+            "min_fixed_version": "16.0.4",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "模板注入",
+    "kind_en": "模板引擎中使用的特殊元素的不正确中和",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-ln3s-igfr",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ln3s-igfr",
+        "name": "https://www.oscs1024.com/hd/MPS-ln3s-igfr"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89094",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89094"
+      },
+      {
+        "url": "https://news.ycombinator.com/item?id=49645907",
+        "name": ""
+      },
+      {
+        "url": "https://codeberg.org/forgejo/forgejo/milestone/139655",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Forgejo 模板仓库生成远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89094",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-1336",
+    "description": "Forgejo 是由 Codeberg 社区基于 Gitea 分支开发的开源自托管代码协作平台，提供仓库托管、代码评审与 CI/CD 等功能，采用 Go 语言编写并以 MIT 许可证发布。\n受影响版本中，用户以模板仓库创建新仓库时，服务端克隆模板仓库、删除 .git 目录后读取 .forgejo/template 中列出的 glob 并对匹配文件执行变量模板扩展，文件路径本身同样参与扩展且扩展后未再次清理 .git 目录；攻击者在模板仓库中放置名为 .g${REPO_NAME}/config 的文件并在 .forgejo/template 中列出 .g*/config，将新仓库命名为 it 使该路径扩展为 .git/config，git init 初始化新仓库时沿用该目录中攻击者构造的 git 配置，随后的 git add、git commit、git push 以 Forgejo 进程权限执行，攻击者可借此在宿主机上执行任意进程并读取任意数据。\n修复版本中通过在模板变量扩展完成后、git 仓库初始化之前删除临时目录中已存在的 .git 目录，切断扩展产物进入 git 初始化的路径，使恶意模板仓库无法再植入 git 配置，消除任意进程执行与任意数据读取风险。",
+    "effects": [
+      {
+        "comp_name": "forgejo.org",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,15.0.8)",
+            "min_fixed_version": "15.0.8",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[16.0.0,16.0.4)",
+            "min_fixed_version": "16.0.4",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "模板注入",
+    "kind_en": "Improper Neutralization of Special Elements Used in a Template Engine",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-ln3s-igfr",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ln3s-igfr",
+        "name": "https://www.oscs1024.com/hd/MPS-ln3s-igfr"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89094",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89094"
+      },
+      {
+        "url": "https://news.ycombinator.com/item?id=49645907",
+        "name": ""
+      },
+      {
+        "url": "https://codeberg.org/forgejo/forgejo/milestone/139655",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Forgejo 模板仓库生成远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-09-10T22:11:12+00:00"
+}
