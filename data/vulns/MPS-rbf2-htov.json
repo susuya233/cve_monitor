@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-09-09T23:45:46+00:00",
-  "first_seen": true,
+  "saved_at": "2026-09-10T02:37:56+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-rbf2-htov",
@@ -35,14 +35,14 @@
     "cvss_score": 9.3,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-22",
-    "description": "Pandora 的档案提取工作程序中包含路径遍历漏洞。在处理特制的存档或磁盘映像时，可以使用攻击者控制的文件路径，而无需确保生成的目标保留在预期的提取目录中。\n\n能够提交恶意文件进行分析的攻击者可以使用路径遍历序列或精心设计的路径，导致提取的内容写入指定的提取目录之外，从而可能覆盖 Pandora 工作进程可访问的文件。成功利用该漏洞可能会导致对应用程序或系统文件进行未经授权的修改、拒绝服务，并可能导致进一步的危害，具体取决于 Pandora 进程的权限和可覆盖的文件。\n\n通过在写入之前解析每个提取目标路径并验证它是否保留在预期的提取目录下，可以解决该漏洞。解析此目录之外的提取尝试将被拒绝并报告为路径遍历尝试。",
+    "description": "Pandora 是 pandora-analysis 团队开源（AGPL-3.0）的文件恶意软件分析框架，采用 worker 架构对用户提交的文件自动解包、转换并做静态检测，其中 extractor worker 负责将归档与磁盘镜像中的内容解压到任务目录。\n受影响版本中，extractor worker 把 ISO/CAB 等归档内部的文件名与解压目录直接拼接后写盘：_extract_iso 使用磁盘镜像目录记录中的 filename 构造 filepath，_extract_cab 使用 CAB 记录中的 filename 字段构造 file_path，两者写盘前未对最终路径做 resolve 与目录包含校验。拥有文件提交权限的用户上传携带越权路径的 ISO 或 CAB 文件，extractor worker 分析该文件时会把内容写到任务解压目录之外，覆盖 worker 进程可写的应用或系统文件，导致文件被篡改与拒绝服务，并可能借助被覆盖文件获得进一步入侵能力。\n修复版本中通过新增的 __safe_save 统一收口写盘动作：写入前对目标路径执行 resolve，并用 is_relative_to 校验其仍位于指定解压目录之下，越界时抛出新增的 PathTransversal 异常并拒绝写入，analyse 捕获该异常后将任务报告置为 ALERT 并记录路径穿越告警，从而切断越界写入链路。该修复当前位于仓库 develop 分支（commit d86ac5b260fb9a41e07f1da1bbd326cdcfc188a7），截至 2026-09-10 尚未包含在任何正式发布版本中。",
     "effects": [
       {
         "comp_name": "pandora",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(0,1.12.7]",
+            "affected_version": "(-∞,1.12.7]",
             "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
@@ -54,7 +54,7 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "路径遍历",
@@ -84,7 +84,7 @@
       "应用软件",
       "终端软件"
     ],
-    "title": "CVE-2026-88069漏洞",
+    "title": "Pandora 解压路径穿越漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -118,14 +118,14 @@
     "cvss_score": 9.3,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-22",
-    "description": "Pandora contains a path traversal vulnerability in its archive extraction worker. When processing a specially crafted archive or disk image, attacker-controlled file paths could be used without ensuring that the resulting destination remained within the intended extraction directory.\n\nAn attacker able to submit a malicious file for analysis could use path traversal sequences or crafted paths to cause extracted content to be written outside the designated extraction directory, potentially overwriting files accessible to the Pandora worker process. Successful exploitation could result in unauthorized modification of application or system files, denial of service, and potentially further compromise depending on the permissions of the Pandora process and the files that can be overwritten.\n\nThe vulnerability is addressed by resolving each extraction destination path before writing and verifying that it remains below the expected extraction directory. Extraction attempts resolving outside this directory are rejected and reported as path traversal attempts.",
+    "description": "Pandora 是 pandora-analysis 团队开源（AGPL-3.0）的文件恶意软件分析框架，采用 worker 架构对用户提交的文件自动解包、转换并做静态检测，其中 extractor worker 负责将归档与磁盘镜像中的内容解压到任务目录。\n受影响版本中，extractor worker 把 ISO/CAB 等归档内部的文件名与解压目录直接拼接后写盘：_extract_iso 使用磁盘镜像目录记录中的 filename 构造 filepath，_extract_cab 使用 CAB 记录中的 filename 字段构造 file_path，两者写盘前未对最终路径做 resolve 与目录包含校验。拥有文件提交权限的用户上传携带越权路径的 ISO 或 CAB 文件，extractor worker 分析该文件时会把内容写到任务解压目录之外，覆盖 worker 进程可写的应用或系统文件，导致文件被篡改与拒绝服务，并可能借助被覆盖文件获得进一步入侵能力。\n修复版本中通过新增的 __safe_save 统一收口写盘动作：写入前对目标路径执行 resolve，并用 is_relative_to 校验其仍位于指定解压目录之下，越界时抛出新增的 PathTransversal 异常并拒绝写入，analyse 捕获该异常后将任务报告置为 ALERT 并记录路径穿越告警，从而切断越界写入链路。该修复当前位于仓库 develop 分支（commit d86ac5b260fb9a41e07f1da1bbd326cdcfc188a7），截至 2026-09-10 尚未包含在任何正式发布版本中。",
     "effects": [
       {
         "comp_name": "pandora",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(0,1.12.7]",
+            "affected_version": "(-∞,1.12.7]",
             "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
@@ -137,7 +137,7 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "路径遍历",
@@ -167,7 +167,7 @@
       "应用软件",
       "终端软件"
     ],
-    "title": "CVE-2026-88069漏洞"
+    "title": "Pandora 解压路径穿越漏洞"
   },
   "first_saved_at": "2026-09-09T23:45:46+00:00"
 }
