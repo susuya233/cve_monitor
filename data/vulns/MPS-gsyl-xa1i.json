@@ -1,0 +1,239 @@
+{
+  "saved_at": "2026-09-10T12:37:06+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-gsyl-xa1i",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87961",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-125",
+    "description": "ESP32-audioI2S 是 schreibfaul1 在 GitHub 开源的 ESP32 音频解码库（GPL-3.0 许可证），用于在 ESP32 上播放网络音频流与本地音频文件，支持 MP3 等格式解码及 ID3 元数据解析，被广泛用于网络收音机等物联网音频项目。\n受影响版本中，Audio::read_ID3_Header 函数在处理 ID3v2 同步歌词帧 SYLT 与旧版 ID3v2.2 SLT 帧时，块内各自声明的局部变量 size_t len = 0 遮蔽了函数形参 len（表示本次调用实际缓冲的字节数）；由于 size_t 为无符号类型，边界检查 if (m_ID3Hdr.SYLT.size < len) return 0 恒为假并失效，随后 syltBuff.copy_from(data, m_ID3Hdr.SYLT.size) 直接按标签声明的帧大小从 data 缓冲区复制数据，攻击者在恶意 MP3 文件或 HTTP 音频流中声明超出实际缓冲数据量的帧大小，可读取分配边界之外的堆内存，导致设备崩溃或泄露相邻堆数据。\n修复版本中通过移除 SYLT 与 SLT 两处遮蔽形参的局部 len 声明，将边界检查修正为 if (m_ID3Hdr.SYLT.size > len) return 0，使超出实际缓冲数据量的帧大小声明返回 0 并等待更多数据，同时将 SLT 块中复用的 len 重命名为 descLen，从而切断堆越界读取路径。",
+    "effects": [
+      {
+        "comp_name": "ESP32-audioI2S",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.4.4,4.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界读取",
+    "kind_en": "越界读取",
+    "last_modified_time": "2026-09-10",
+    "level": "High",
+    "mps_id": "MPS-gsyl-xa1i",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gsyl-xa1i",
+        "name": "https://www.oscs1024.com/hd/MPS-gsyl-xa1i"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87961",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87961"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S/issues/1380",
+        "name": "GitHub Issue #1380"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S/pull/1381",
+        "name": "GitHub Pull Request #1381"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S/commit/4dc4614b9dab2de7b342d682b1c18b109d75b677",
+        "name": "Merge commit 4dc4614"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S/blob/490ff729eca344f06581f3e9bda9cfba948fd5a1/src/Audio.cpp#L2526-L2531",
+        "name": "Audio.cpp SYLT block at 4.0.0"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S/blob/490ff729eca344f06581f3e9bda9cfba948fd5a1/src/Audio.cpp#L2629-L2635",
+        "name": "Audio.cpp legacy ID3v2.2 SLT block at 4.0.0"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S/blob/f01ad7923dcf3355eeca7fb99bf8a4d9945e7478/src/Audio.cpp#L2270-L2276",
+        "name": "Audio.cpp legacy ID3v2.2 SLT block at 3.4.4"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/esp32-audioi2s-3.4.4-through-4.0.0-heap-based-out-of-bounds-read-via-shadowed-length-parameter-in-read-id3-header",
+        "name": "VulnCheck Advisory: ESP32-audioI2S 3.4.4 through 4.0.0 Heap-based Out-of-Bounds Read via Shadowed Length Parameter in read_ID3_Header"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "ESP32-audioI2S堆越界读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87961",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-125",
+    "description": "ESP32-audioI2S 是 schreibfaul1 在 GitHub 开源的 ESP32 音频解码库（GPL-3.0 许可证），用于在 ESP32 上播放网络音频流与本地音频文件，支持 MP3 等格式解码及 ID3 元数据解析，被广泛用于网络收音机等物联网音频项目。\n受影响版本中，Audio::read_ID3_Header 函数在处理 ID3v2 同步歌词帧 SYLT 与旧版 ID3v2.2 SLT 帧时，块内各自声明的局部变量 size_t len = 0 遮蔽了函数形参 len（表示本次调用实际缓冲的字节数）；由于 size_t 为无符号类型，边界检查 if (m_ID3Hdr.SYLT.size < len) return 0 恒为假并失效，随后 syltBuff.copy_from(data, m_ID3Hdr.SYLT.size) 直接按标签声明的帧大小从 data 缓冲区复制数据，攻击者在恶意 MP3 文件或 HTTP 音频流中声明超出实际缓冲数据量的帧大小，可读取分配边界之外的堆内存，导致设备崩溃或泄露相邻堆数据。\n修复版本中通过移除 SYLT 与 SLT 两处遮蔽形参的局部 len 声明，将边界检查修正为 if (m_ID3Hdr.SYLT.size > len) return 0，使超出实际缓冲数据量的帧大小声明返回 0 并等待更多数据，同时将 SLT 块中复用的 len 重命名为 descLen，从而切断堆越界读取路径。",
+    "effects": [
+      {
+        "comp_name": "ESP32-audioI2S",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.4.4,4.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界读取",
+    "kind_en": "Out-of-bounds Read",
+    "last_modified_time": "2026-09-10",
+    "level": "High",
+    "mps_id": "MPS-gsyl-xa1i",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gsyl-xa1i",
+        "name": "https://www.oscs1024.com/hd/MPS-gsyl-xa1i"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87961",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87961"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S/issues/1380",
+        "name": "GitHub Issue #1380"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S/pull/1381",
+        "name": "GitHub Pull Request #1381"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S/commit/4dc4614b9dab2de7b342d682b1c18b109d75b677",
+        "name": "Merge commit 4dc4614"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S/blob/490ff729eca344f06581f3e9bda9cfba948fd5a1/src/Audio.cpp#L2526-L2531",
+        "name": "Audio.cpp SYLT block at 4.0.0"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S/blob/490ff729eca344f06581f3e9bda9cfba948fd5a1/src/Audio.cpp#L2629-L2635",
+        "name": "Audio.cpp legacy ID3v2.2 SLT block at 4.0.0"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S/blob/f01ad7923dcf3355eeca7fb99bf8a4d9945e7478/src/Audio.cpp#L2270-L2276",
+        "name": "Audio.cpp legacy ID3v2.2 SLT block at 3.4.4"
+      },
+      {
+        "url": "https://github.com/schreibfaul1/ESP32-audioI2S",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/esp32-audioi2s-3.4.4-through-4.0.0-heap-based-out-of-bounds-read-via-shadowed-length-parameter-in-read-id3-header",
+        "name": "VulnCheck Advisory: ESP32-audioI2S 3.4.4 through 4.0.0 Heap-based Out-of-Bounds Read via Shadowed Length Parameter in read_ID3_Header"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "ESP32-audioI2S堆越界读取漏洞"
+  },
+  "first_saved_at": "2026-09-10T12:37:06+00:00"
+}
