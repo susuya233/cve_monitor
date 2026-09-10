@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-09-10T07:46:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3bab-2fa2",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80351",
+    "cvss": {},
+    "cvss_score": 9.2,
+    "cvss_vector": "",
+    "cwe": "CWE-95",
+    "description": "Apache Camel K 是 Apache 软件基金会开源的 Kubernetes operator，用于以 Integration 等自定义资源声明式构建、部署和管理 Apache Camel 集成应用，受影响代码以 Go 编写并随 operator 容器镜像分发。\n受影响版本中，租户可通过 Integration/IntegrationKit 的 spec.repositories 字段或 kamel run --maven-repository 参数提交任意 Maven 仓库字符串，builderTrait 的 builderTask 生成构建任务时未做任何白名单校验，直接经 mvn.NewRepository 解析后写入 Maven 配置，pkg/util/maven 的 extraRepositories.apply 将该字符串同时写入 settings 的 repositories 与 pluginRepositories，并支持 @mirrorOf=、@checksumpolicy= 等指令，默认构建策略 routine 使 Maven 在 operator Pod 内执行，租户可控仓库因此影响 operator 内依赖与插件解析，租户最终能以 operator 权限执行任意代码。\n修复版本中通过新增 Maven 仓库白名单切断该链路：platform 包新增 IsMavenRepoAllowed，按 operator 环境变量 MAVEN_REPOSITORIES_ALLOWED（默认仅 Maven Central）对仓库全串精确匹配，builder trait 与 camel trait 在写入 Maven 配置前逐一校验，白名单外仓库直接使构建报错终止，阻止租户可控仓库到达 operator 内的 Maven 执行。",
+    "effects": [
+      {
+        "comp_name": "camel_k",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.10.0,2.10.2)",
+            "min_fixed_version": "2.10.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0,2.9.3)",
+            "min_fixed_version": "2.9.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "eval注入",
+    "kind_en": "动态评估代码中指令的不当中和（“评估注入”）",
+    "last_modified_time": "2026-09-10",
+    "level": "Critical",
+    "mps_id": "MPS-3bab-2fa2",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-10",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11867.html",
+        "name": ""
+      },
+      {
+        "url": "https://camel.apache.org/security/CVE-2026-80351.html",
+        "name": ""
+      },
+      {
+        "url": "https://camel.apache.org/security/CVE-2026-80351.txt.asc",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-80351",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel-k/pull/6786",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel-k/commit/42b4573a779c4202a205a088e42c781cea3e4ed4",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel-k/commit/954ff98054a28e3369712ecc8522811a70afa802",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Apache Camel K 任意代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80351",
+    "cvss": {},
+    "cvss_score": 9.2,
+    "cvss_vector": "",
+    "cwe": "CWE-95",
+    "description": "Apache Camel K 是 Apache 软件基金会开源的 Kubernetes operator，用于以 Integration 等自定义资源声明式构建、部署和管理 Apache Camel 集成应用，受影响代码以 Go 编写并随 operator 容器镜像分发。\n受影响版本中，租户可通过 Integration/IntegrationKit 的 spec.repositories 字段或 kamel run --maven-repository 参数提交任意 Maven 仓库字符串，builderTrait 的 builderTask 生成构建任务时未做任何白名单校验，直接经 mvn.NewRepository 解析后写入 Maven 配置，pkg/util/maven 的 extraRepositories.apply 将该字符串同时写入 settings 的 repositories 与 pluginRepositories，并支持 @mirrorOf=、@checksumpolicy= 等指令，默认构建策略 routine 使 Maven 在 operator Pod 内执行，租户可控仓库因此影响 operator 内依赖与插件解析，租户最终能以 operator 权限执行任意代码。\n修复版本中通过新增 Maven 仓库白名单切断该链路：platform 包新增 IsMavenRepoAllowed，按 operator 环境变量 MAVEN_REPOSITORIES_ALLOWED（默认仅 Maven Central）对仓库全串精确匹配，builder trait 与 camel trait 在写入 Maven 配置前逐一校验，白名单外仓库直接使构建报错终止，阻止租户可控仓库到达 operator 内的 Maven 执行。",
+    "effects": [
+      {
+        "comp_name": "camel_k",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.10.0,2.10.2)",
+            "min_fixed_version": "2.10.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0,2.9.3)",
+            "min_fixed_version": "2.9.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "eval注入",
+    "kind_en": "Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection')",
+    "last_modified_time": "2026-09-10",
+    "level": "Critical",
+    "mps_id": "MPS-3bab-2fa2",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-10",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11867.html",
+        "name": ""
+      },
+      {
+        "url": "https://camel.apache.org/security/CVE-2026-80351.html",
+        "name": ""
+      },
+      {
+        "url": "https://camel.apache.org/security/CVE-2026-80351.txt.asc",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-80351",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel-k/pull/6786",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel-k/commit/42b4573a779c4202a205a088e42c781cea3e4ed4",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel-k/commit/954ff98054a28e3369712ecc8522811a70afa802",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Apache Camel K 任意代码执行漏洞"
+  },
+  "first_saved_at": "2026-09-10T07:46:33+00:00"
+}

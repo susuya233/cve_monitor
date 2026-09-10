@@ -1,0 +1,503 @@
+{
+  "saved_at": "2026-09-10T07:46:34+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-8c47-6ab9",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-0310",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "psirt@paloaltonetworks.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Red",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Red",
+    "cwe": "CWE-787",
+    "description": "PAN-OS 是 Palo Alto Networks 开发的闭源商业防火墙操作系统，运行于 PA-Series 硬件防火墙与 VM-Series 虚拟化防火墙，并支撑 Panorama 管理平台以及 Cloud NGFW、Prisma Access 等云交付服务。\n受影响版本中，PAN-OS 的 XML 处理功能存在越界写入缺陷（CWE-787），未经身份验证的攻击者在网络可达管理 Web 接口或数据面接口的条件下提交恶意构造的 XML 数据可触发该缺陷，在 PA-Series 硬件防火墙上以 root 权限执行任意代码，在 VM-Series 虚拟化防火墙上导致拒绝服务，官方确认 Panorama 同样受影响。\n修复版本中通过修正 XML 处理功能消除了该越界写入缺陷，受影响用户需升级至 PAN-OS 12.2.3、12.1.10、11.2.13-h2、11.1.16-h2、10.2.18-h10 或所在分支对应的修复版本，并将管理接口访问限制为可信内部 IP 地址以降低风险。",
+    "effects": [
+      {
+        "comp_name": "cloud-ngfw",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "pan-os",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.2.0,10.2.7-h37)",
+            "min_fixed_version": "10.2.7-h37",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.2.8,10.2.10-h40)",
+            "min_fixed_version": "10.2.10-h40",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.2.17,10.2.18-h10)",
+            "min_fixed_version": "10.2.18-h10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.1.0,11.1.4-h36)",
+            "min_fixed_version": "11.1.4-h36",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.2.11,10.2.13-h24)",
+            "min_fixed_version": "10.2.13-h24",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.2.14,10.2.16-h10)",
+            "min_fixed_version": "10.2.16-h10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.1.5,11.1.6-h38)",
+            "min_fixed_version": "11.1.6-h38",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.1.7,11.1.7-h10)",
+            "min_fixed_version": "11.1.7-h10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.1.8,11.1.10-h33)",
+            "min_fixed_version": "11.1.10-h33",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.1.11,11.1.13-h12)",
+            "min_fixed_version": "11.1.13-h12",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.1.14,11.1.16-h2)",
+            "min_fixed_version": "11.1.16-h2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.2.0,11.2.4-h21)",
+            "min_fixed_version": "11.2.4-h21",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.2.5,11.2.7-h20)",
+            "min_fixed_version": "11.2.7-h20",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.2.8,11.2.10-h14)",
+            "min_fixed_version": "11.2.10-h14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.2.11,11.2.13-h2)",
+            "min_fixed_version": "11.2.13-h2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[12.1.0,12.1.4-h10)",
+            "min_fixed_version": "12.1.4-h10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[12.1.5,12.1.7-h5)",
+            "min_fixed_version": "12.1.7-h5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[12.1.8,12.1.10)",
+            "min_fixed_version": "12.1.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[12.2.0,12.2.3)",
+            "min_fixed_version": "12.2.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "prisma-access",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.2.0,10.2.10-h40)",
+            "min_fixed_version": "10.2.10-h40",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.2.0,11.2.7-h20)",
+            "min_fixed_version": "11.2.7-h20",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[12.1.2,12.1.7-h5)",
+            "min_fixed_version": "12.1.7-h5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界写入",
+    "kind_en": "越界写入",
+    "last_modified_time": "2026-09-10",
+    "level": "High",
+    "mps_id": "MPS-8c47-6ab9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-10",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/pan-os-buffer-overflow-flaw/",
+        "name": ""
+      },
+      {
+        "url": "https://security.paloaltonetworks.com/CVE-2026-0310",
+        "name": ""
+      },
+      {
+        "url": "https://security.paloaltonetworks.com/json/CVE-2026-0310",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "PAN-OS XML处理缓冲区溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-0310",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "psirt@paloaltonetworks.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Red",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Red",
+    "cwe": "CWE-787",
+    "description": "PAN-OS 是 Palo Alto Networks 开发的闭源商业防火墙操作系统，运行于 PA-Series 硬件防火墙与 VM-Series 虚拟化防火墙，并支撑 Panorama 管理平台以及 Cloud NGFW、Prisma Access 等云交付服务。\n受影响版本中，PAN-OS 的 XML 处理功能存在越界写入缺陷（CWE-787），未经身份验证的攻击者在网络可达管理 Web 接口或数据面接口的条件下提交恶意构造的 XML 数据可触发该缺陷，在 PA-Series 硬件防火墙上以 root 权限执行任意代码，在 VM-Series 虚拟化防火墙上导致拒绝服务，官方确认 Panorama 同样受影响。\n修复版本中通过修正 XML 处理功能消除了该越界写入缺陷，受影响用户需升级至 PAN-OS 12.2.3、12.1.10、11.2.13-h2、11.1.16-h2、10.2.18-h10 或所在分支对应的修复版本，并将管理接口访问限制为可信内部 IP 地址以降低风险。",
+    "effects": [
+      {
+        "comp_name": "cloud-ngfw",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "pan-os",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.2.0,10.2.7-h37)",
+            "min_fixed_version": "10.2.7-h37",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.2.8,10.2.10-h40)",
+            "min_fixed_version": "10.2.10-h40",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.2.17,10.2.18-h10)",
+            "min_fixed_version": "10.2.18-h10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.1.0,11.1.4-h36)",
+            "min_fixed_version": "11.1.4-h36",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.2.11,10.2.13-h24)",
+            "min_fixed_version": "10.2.13-h24",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.2.14,10.2.16-h10)",
+            "min_fixed_version": "10.2.16-h10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.1.5,11.1.6-h38)",
+            "min_fixed_version": "11.1.6-h38",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.1.7,11.1.7-h10)",
+            "min_fixed_version": "11.1.7-h10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.1.8,11.1.10-h33)",
+            "min_fixed_version": "11.1.10-h33",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.1.11,11.1.13-h12)",
+            "min_fixed_version": "11.1.13-h12",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.1.14,11.1.16-h2)",
+            "min_fixed_version": "11.1.16-h2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.2.0,11.2.4-h21)",
+            "min_fixed_version": "11.2.4-h21",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.2.5,11.2.7-h20)",
+            "min_fixed_version": "11.2.7-h20",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.2.8,11.2.10-h14)",
+            "min_fixed_version": "11.2.10-h14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.2.11,11.2.13-h2)",
+            "min_fixed_version": "11.2.13-h2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[12.1.0,12.1.4-h10)",
+            "min_fixed_version": "12.1.4-h10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[12.1.5,12.1.7-h5)",
+            "min_fixed_version": "12.1.7-h5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[12.1.8,12.1.10)",
+            "min_fixed_version": "12.1.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[12.2.0,12.2.3)",
+            "min_fixed_version": "12.2.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "prisma-access",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.2.0,10.2.10-h40)",
+            "min_fixed_version": "10.2.10-h40",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.2.0,11.2.7-h20)",
+            "min_fixed_version": "11.2.7-h20",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[12.1.2,12.1.7-h5)",
+            "min_fixed_version": "12.1.7-h5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界写入",
+    "kind_en": "Out-of-bounds Write",
+    "last_modified_time": "2026-09-10",
+    "level": "High",
+    "mps_id": "MPS-8c47-6ab9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-10",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/pan-os-buffer-overflow-flaw/",
+        "name": ""
+      },
+      {
+        "url": "https://security.paloaltonetworks.com/CVE-2026-0310",
+        "name": ""
+      },
+      {
+        "url": "https://security.paloaltonetworks.com/json/CVE-2026-0310",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "PAN-OS XML处理缓冲区溢出漏洞"
+  },
+  "first_saved_at": "2026-09-10T07:46:34+00:00"
+}
