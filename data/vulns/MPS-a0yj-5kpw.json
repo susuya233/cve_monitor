@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-09-10T19:25:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-a0yj-5kpw",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89042",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-347",
+    "description": "passport-saml-encrypted 是 krakenjs 组织在 GitHub 开源的 Node.js Passport 认证策略库（npm 包 passport-saml-encrypted），用于在 Express 等应用中解析经加密的 SAML 2.0 认证响应并生成用户身份。\n受影响版本中，lib/saml.js 的 SAML.prototype.validateResponse 把签名校验建立在可选的 cert 选项之上：lib/saml.js:296 与 lib/saml.js:321 两处均为 if (self.options.cert && !self.validateSignature(...))，未配置 cert 时条件短路，对 SAML Response 与解密后 Assertion 的签名验证被完全跳过，而 SAML.prototype.initialize 仅为 protocol/path/issuer/identifierFormat 设置默认值，不强制要求 cert，README 的推荐配置示例亦未包含 cert；Strategy.prototype.authenticate 将 req.body.SAMLResponse 直接传入该函数，攻击者向 ACS 端点提交任意未签名的伪造 SAML Response，即可获得 err 为 null、NameID 与 role 等属性完全受控的认证 profile。\n修复版本中通过，可通过为策略配置 cert（IdP 受信任证书）使 lib/saml.js 的签名校验生效并拒绝未签名响应缓解该风险；npm 最新版本 0.1.13（2025-08-19 发布）仍包含上述缺陷代码，上游 issue #29 建议在 SAML.prototype.initialize 中将 cert 设为必填、更新文档示例并补充回归测试，用户需跟踪上游修复进展或迁移至强制签名校验的维护版本 SAML 库。",
+    "effects": [
+      {
+        "comp_name": "passport-saml-encrypted",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.13]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "密码签名验证不当",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-a0yj-5kpw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-a0yj-5kpw",
+        "name": "https://www.oscs1024.com/hd/MPS-a0yj-5kpw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89042",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89042"
+      },
+      {
+        "url": "https://github.com/krakenjs/passport-saml-encrypted/issues/29",
+        "name": "Reporter advisory: authentication bypass when cert is not configured"
+      },
+      {
+        "url": "https://github.com/krakenjs/passport-saml-encrypted/blob/v0.1.13/lib/saml.js#L296",
+        "name": "Signature check gated on options.cert at v0.1.13"
+      },
+      {
+        "url": "https://github.com/krakenjs/passport-saml-encrypted/blob/v0.1.13/lib/saml.js#L321",
+        "name": "Same gate on the decrypted-assertion path at v0.1.13"
+      },
+      {
+        "url": "https://github.com/krakenjs/passport-saml-encrypted",
+        "name": "krakenjs/passport-saml-encrypted"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/passport-saml-encrypted-through-0.1.13-authentication-bypass-via-missing-signature-verification",
+        "name": "VulnCheck Advisory: passport-saml-encrypted through 0.1.13 Authentication Bypass via Missing Signature Verification"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "passport-saml-encrypted认证绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89042",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-347",
+    "description": "passport-saml-encrypted 是 krakenjs 组织在 GitHub 开源的 Node.js Passport 认证策略库（npm 包 passport-saml-encrypted），用于在 Express 等应用中解析经加密的 SAML 2.0 认证响应并生成用户身份。\n受影响版本中，lib/saml.js 的 SAML.prototype.validateResponse 把签名校验建立在可选的 cert 选项之上：lib/saml.js:296 与 lib/saml.js:321 两处均为 if (self.options.cert && !self.validateSignature(...))，未配置 cert 时条件短路，对 SAML Response 与解密后 Assertion 的签名验证被完全跳过，而 SAML.prototype.initialize 仅为 protocol/path/issuer/identifierFormat 设置默认值，不强制要求 cert，README 的推荐配置示例亦未包含 cert；Strategy.prototype.authenticate 将 req.body.SAMLResponse 直接传入该函数，攻击者向 ACS 端点提交任意未签名的伪造 SAML Response，即可获得 err 为 null、NameID 与 role 等属性完全受控的认证 profile。\n修复版本中通过，可通过为策略配置 cert（IdP 受信任证书）使 lib/saml.js 的签名校验生效并拒绝未签名响应缓解该风险；npm 最新版本 0.1.13（2025-08-19 发布）仍包含上述缺陷代码，上游 issue #29 建议在 SAML.prototype.initialize 中将 cert 设为必填、更新文档示例并补充回归测试，用户需跟踪上游修复进展或迁移至强制签名校验的维护版本 SAML 库。",
+    "effects": [
+      {
+        "comp_name": "passport-saml-encrypted",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.13]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "Improper Verification of Cryptographic Signature",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-a0yj-5kpw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-a0yj-5kpw",
+        "name": "https://www.oscs1024.com/hd/MPS-a0yj-5kpw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89042",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89042"
+      },
+      {
+        "url": "https://github.com/krakenjs/passport-saml-encrypted/issues/29",
+        "name": "Reporter advisory: authentication bypass when cert is not configured"
+      },
+      {
+        "url": "https://github.com/krakenjs/passport-saml-encrypted/blob/v0.1.13/lib/saml.js#L296",
+        "name": "Signature check gated on options.cert at v0.1.13"
+      },
+      {
+        "url": "https://github.com/krakenjs/passport-saml-encrypted/blob/v0.1.13/lib/saml.js#L321",
+        "name": "Same gate on the decrypted-assertion path at v0.1.13"
+      },
+      {
+        "url": "https://github.com/krakenjs/passport-saml-encrypted",
+        "name": "krakenjs/passport-saml-encrypted"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/passport-saml-encrypted-through-0.1.13-authentication-bypass-via-missing-signature-verification",
+        "name": "VulnCheck Advisory: passport-saml-encrypted through 0.1.13 Authentication Bypass via Missing Signature Verification"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "passport-saml-encrypted认证绕过漏洞"
+  },
+  "first_saved_at": "2026-09-10T19:25:32+00:00"
+}
