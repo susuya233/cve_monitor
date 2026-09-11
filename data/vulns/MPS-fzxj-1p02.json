@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-09-11T14:47:36+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-fzxj-1p02",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89258",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.3
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-59",
+    "description": "Hugo 是使用 Go 编写的开源静态站点生成器（github.com/gohugoio/hugo），将 Markdown 内容、模板与挂载的资源目录构建为静态网站，广泛用于博客与文档站点。\n受影响版本中，挂载文件系统在直接资源查找时只校验路径最后一个元素是否为符号链接，hugofs/rootmapping_fs.go 的 statRoot 经 LstatIfPossible 取得文件信息后仅拒绝最终元素为符号链接的情况，而 Lstat 不会展开路径中间目录，攻击者在挂载目录（如本地 vendored 主题 themes/）内放置指向项目边界之外的符号链接目录后，模板中 resources.Get、os.ReadFile 等直接查找函数解析途经该目录的路径时读到挂载根之外的文件，内容随构建结果发布，造成敏感信息泄露；以 Go Modules 方式从 GitHub 拉取的主题在下载时已去除符号链接，多目录遍历（content/asset 遍历）也不受影响。\n修复版本中通过在 hugofs/nosymlinks_fs.go 新增 hasSymlinkParent，从目标路径逐级向上遍历至挂载根并拒绝任一父目录为符号链接的路径，RootMappingFs.statRoot 与 DropSymlinksFs.Stat 在直接查找时执行该检查并返回 os.ErrNotExist，切断了经符号链接父目录逃逸挂载边界的读取链路。",
+    "effects": [
+      {
+        "comp_name": "github.com/gohugoio/hugo",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(0.123.0,0.165.0)",
+            "min_fixed_version": "0.165.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "在文件访问前对链接解析不恰当（链接跟随）",
+    "kind_en": "文件访问前的链接解析不正确（“链接跟踪”）",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-fzxj-1p02",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fzxj-1p02",
+        "name": "https://www.oscs1024.com/hd/MPS-fzxj-1p02"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89258",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89258"
+      },
+      {
+        "url": "https://github.com/gohugoio/hugo/security/advisories/GHSA-vrv5-r5rf-6v4j",
+        "name": "GitHub Security Advisory (GHSA-vrv5-r5rf-6v4j)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/hugo-before-0.165.0-symlink-confinement-bypass-via-resources-get",
+        "name": "VulnCheck Advisory: Hugo before v0.165.0 Symlink Confinement Bypass via resources.Get"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Hugo 符号链接限制绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89258",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.3
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-59",
+    "description": "Hugo 是使用 Go 编写的开源静态站点生成器（github.com/gohugoio/hugo），将 Markdown 内容、模板与挂载的资源目录构建为静态网站，广泛用于博客与文档站点。\n受影响版本中，挂载文件系统在直接资源查找时只校验路径最后一个元素是否为符号链接，hugofs/rootmapping_fs.go 的 statRoot 经 LstatIfPossible 取得文件信息后仅拒绝最终元素为符号链接的情况，而 Lstat 不会展开路径中间目录，攻击者在挂载目录（如本地 vendored 主题 themes/）内放置指向项目边界之外的符号链接目录后，模板中 resources.Get、os.ReadFile 等直接查找函数解析途经该目录的路径时读到挂载根之外的文件，内容随构建结果发布，造成敏感信息泄露；以 Go Modules 方式从 GitHub 拉取的主题在下载时已去除符号链接，多目录遍历（content/asset 遍历）也不受影响。\n修复版本中通过在 hugofs/nosymlinks_fs.go 新增 hasSymlinkParent，从目标路径逐级向上遍历至挂载根并拒绝任一父目录为符号链接的路径，RootMappingFs.statRoot 与 DropSymlinksFs.Stat 在直接查找时执行该检查并返回 os.ErrNotExist，切断了经符号链接父目录逃逸挂载边界的读取链路。",
+    "effects": [
+      {
+        "comp_name": "github.com/gohugoio/hugo",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(0.123.0,0.165.0)",
+            "min_fixed_version": "0.165.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "在文件访问前对链接解析不恰当（链接跟随）",
+    "kind_en": "Improper Link Resolution Before File Access ('Link Following')",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-fzxj-1p02",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fzxj-1p02",
+        "name": "https://www.oscs1024.com/hd/MPS-fzxj-1p02"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89258",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89258"
+      },
+      {
+        "url": "https://github.com/gohugoio/hugo/security/advisories/GHSA-vrv5-r5rf-6v4j",
+        "name": "GitHub Security Advisory (GHSA-vrv5-r5rf-6v4j)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/hugo-before-0.165.0-symlink-confinement-bypass-via-resources-get",
+        "name": "VulnCheck Advisory: Hugo before v0.165.0 Symlink Confinement Bypass via resources.Get"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Hugo 符号链接限制绕过漏洞"
+  },
+  "first_saved_at": "2026-09-11T14:47:36+00:00"
+}

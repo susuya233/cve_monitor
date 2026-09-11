@@ -1,0 +1,157 @@
+{
+  "saved_at": "2026-09-11T14:47:29+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-mhra-blwj",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71416",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-1385",
+    "description": "Headroom 是一个 Apache-2.0 开源的本地 LLM 代理与上下文压缩工具，在请求到达大语言模型前压缩 prompt 与工具输出，并为 OpenAI Responses API 提供 WebSocket 转发通道。\n受影响版本中，headroom/providers/proxy_routes.py 将 /v1/responses 等 WebSocket 路由交由 OpenAIHandlerMixin.handle_openai_responses_ws 处理，该处理器在接受客户端连接前不校验 Origin 头即调用 websocket.accept() 并向上游转发；当客户端未携带 Authorization 时，代理自动以 OPENAI_API_KEY 环境变量注入上游密钥，恶意页面中的 WebSocket 客户端无需任何凭证即可发起任意 LLM 请求，指定任意 instructions、input 与工具，造成配额消耗与敏感信息泄露，借助 shell 工具可进一步实现命令执行。\n修复版本中通过新增 _is_allowed_websocket_origin 在会话接受与上游转发前校验 Origin，默认仅放行回环来源并支持 HEADROOM_WS_ORIGINS 显式配置，不满足策略的连接以 1008 关闭，切断跨站 WebSocket 劫持链路。",
+    "effects": [
+      {
+        "comp_name": "headroom",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0.23.0,0.28.0)",
+            "min_fixed_version": "0.28.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "WebSockets 中缺少来源验证",
+    "kind_en": "WebSocket 中缺少来源验证",
+    "last_modified_time": "2026-09-11",
+    "level": "High",
+    "mps_id": "MPS-mhra-blwj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mhra-blwj",
+        "name": "https://www.oscs1024.com/hd/MPS-mhra-blwj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71416",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71416"
+      },
+      {
+        "url": "https://github.com/headroomlabs-ai/headroom/security/advisories/GHSA-h46j-26q3-rggf",
+        "name": "https://github.com/headroomlabs-ai/headroom/security/advisories/GHSA-h46j-26q3-rggf"
+      },
+      {
+        "url": "https://github.com/headroomlabs-ai/headroom/releases/tag/v0.35.0",
+        "name": "https://github.com/headroomlabs-ai/headroom/releases/tag/v0.35.0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "Headroom WebSocket 跨站劫持漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71416",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-1385",
+    "description": "Headroom 是一个 Apache-2.0 开源的本地 LLM 代理与上下文压缩工具，在请求到达大语言模型前压缩 prompt 与工具输出，并为 OpenAI Responses API 提供 WebSocket 转发通道。\n受影响版本中，headroom/providers/proxy_routes.py 将 /v1/responses 等 WebSocket 路由交由 OpenAIHandlerMixin.handle_openai_responses_ws 处理，该处理器在接受客户端连接前不校验 Origin 头即调用 websocket.accept() 并向上游转发；当客户端未携带 Authorization 时，代理自动以 OPENAI_API_KEY 环境变量注入上游密钥，恶意页面中的 WebSocket 客户端无需任何凭证即可发起任意 LLM 请求，指定任意 instructions、input 与工具，造成配额消耗与敏感信息泄露，借助 shell 工具可进一步实现命令执行。\n修复版本中通过新增 _is_allowed_websocket_origin 在会话接受与上游转发前校验 Origin，默认仅放行回环来源并支持 HEADROOM_WS_ORIGINS 显式配置，不满足策略的连接以 1008 关闭，切断跨站 WebSocket 劫持链路。",
+    "effects": [
+      {
+        "comp_name": "headroom",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0.23.0,0.28.0)",
+            "min_fixed_version": "0.28.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "WebSockets 中缺少来源验证",
+    "kind_en": "Missing Origin Validation in WebSockets",
+    "last_modified_time": "2026-09-11",
+    "level": "High",
+    "mps_id": "MPS-mhra-blwj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mhra-blwj",
+        "name": "https://www.oscs1024.com/hd/MPS-mhra-blwj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71416",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71416"
+      },
+      {
+        "url": "https://github.com/headroomlabs-ai/headroom/security/advisories/GHSA-h46j-26q3-rggf",
+        "name": "https://github.com/headroomlabs-ai/headroom/security/advisories/GHSA-h46j-26q3-rggf"
+      },
+      {
+        "url": "https://github.com/headroomlabs-ai/headroom/releases/tag/v0.35.0",
+        "name": "https://github.com/headroomlabs-ai/headroom/releases/tag/v0.35.0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "Headroom WebSocket 跨站劫持漏洞"
+  },
+  "first_saved_at": "2026-09-11T14:47:29+00:00"
+}
