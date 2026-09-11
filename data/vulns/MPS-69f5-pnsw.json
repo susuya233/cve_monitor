@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-09-11T18:05:28+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-69f5-pnsw",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72710",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-915",
+    "description": "SPIP 是一个用 PHP 编写的开源内容管理系统（CMS），通过 spip.php 对外暴露 action 接口并内置基于 spip_jobs 表的定时任务队列，被广泛用于企业官网、媒体与机构站点的内容发布。\n受影响版本中，ecrire/action/editer_objet.php 的 objet_modifier() 在目标表未显式声明 champs_editables 时，把数据表全部字段（array_keys($desc['field'])）作为可写字段列表；arg 参数解析出对象类型与编号，攻击者携带有效 action nonce 以 arg=job/0 定位 spip_jobs 表，把请求参数写入 fonction、args、inclure 等列；定时任务队列调度时 inc/queue.php 的 queue_start_job() 对该行 args 执行 unserialize 并以 $fonction(...$args) 形式调用，形成任意 PHP 函数执行，最终导致远程代码执行。\n修复版本中通过将 objet_modifier() 的可写字段列表默认置空、仅接受显式声明的 champs_editables，并对 URL 直接调用补充 autoriser() 权限校验；同时为 spip_jobs 行引入基于 SpipCles::secret_des_actions() 的任务签名，queue_start_job() 在反序列化与调用前先经 queue_verify_signed_job() 校验，切断注入任务行被执行的路径。",
+    "effects": [
+      {
+        "comp_name": "spip",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.4.18)",
+            "min_fixed_version": "4.4.18",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "动态确定对象属性修改的控制不恰当",
+    "kind_en": "动态确定的对象属性的受控修改不当",
+    "last_modified_time": "2026-09-12",
+    "level": "Critical",
+    "mps_id": "MPS-69f5-pnsw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-69f5-pnsw",
+        "name": "https://www.oscs1024.com/hd/MPS-69f5-pnsw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72710",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72710"
+      },
+      {
+        "url": "https://blog.lexfo.fr/casse-spip-sqli-to-rce.html",
+        "name": "Researcher Blog"
+      },
+      {
+        "url": "https://blog.spip.net/Mise-a-jour-critique-de-securite-sortie-de-SPIP-4-4-18.html",
+        "name": "Release Notes"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/spip-remote-code-execution-via-editer-objet-php-job-queue-injection",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "SPIP editer_objet远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72710",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-915",
+    "description": "SPIP 是一个用 PHP 编写的开源内容管理系统（CMS），通过 spip.php 对外暴露 action 接口并内置基于 spip_jobs 表的定时任务队列，被广泛用于企业官网、媒体与机构站点的内容发布。\n受影响版本中，ecrire/action/editer_objet.php 的 objet_modifier() 在目标表未显式声明 champs_editables 时，把数据表全部字段（array_keys($desc['field'])）作为可写字段列表；arg 参数解析出对象类型与编号，攻击者携带有效 action nonce 以 arg=job/0 定位 spip_jobs 表，把请求参数写入 fonction、args、inclure 等列；定时任务队列调度时 inc/queue.php 的 queue_start_job() 对该行 args 执行 unserialize 并以 $fonction(...$args) 形式调用，形成任意 PHP 函数执行，最终导致远程代码执行。\n修复版本中通过将 objet_modifier() 的可写字段列表默认置空、仅接受显式声明的 champs_editables，并对 URL 直接调用补充 autoriser() 权限校验；同时为 spip_jobs 行引入基于 SpipCles::secret_des_actions() 的任务签名，queue_start_job() 在反序列化与调用前先经 queue_verify_signed_job() 校验，切断注入任务行被执行的路径。",
+    "effects": [
+      {
+        "comp_name": "spip",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.4.18)",
+            "min_fixed_version": "4.4.18",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "动态确定对象属性修改的控制不恰当",
+    "kind_en": "Improperly Controlled Modification of Dynamically-Determined Object Attributes",
+    "last_modified_time": "2026-09-12",
+    "level": "Critical",
+    "mps_id": "MPS-69f5-pnsw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-69f5-pnsw",
+        "name": "https://www.oscs1024.com/hd/MPS-69f5-pnsw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72710",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72710"
+      },
+      {
+        "url": "https://blog.lexfo.fr/casse-spip-sqli-to-rce.html",
+        "name": "Researcher Blog"
+      },
+      {
+        "url": "https://blog.spip.net/Mise-a-jour-critique-de-securite-sortie-de-SPIP-4-4-18.html",
+        "name": "Release Notes"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/spip-remote-code-execution-via-editer-objet-php-job-queue-injection",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "SPIP editer_objet远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-09-11T18:05:28+00:00"
+}

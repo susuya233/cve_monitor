@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-09-11T18:05:31+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-oyd0-m7zq",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54047",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-602",
+    "description": "Laci Synchroni 是一个开源（AGPL-3.0）的去中心化 FFXIV 模组与外观同步系统的服务端及 Dalamud 插件，其中 AuthService 负责用户的 OAuth2 登录认证与会话令牌签发。\n受影响版本中，OAuth2 登录流程信任客户端本地 config.json 中 Authentications 对象的 UID 字段，公开接口 OAuthController.CreateTokenWithOAuth 将攻击者可控的 uid 直接传入 SecretKeyAuthenticatorService.AuthorizeOauthAsync；该函数在确认已认证身份 primaryUid 存在后，仅按 requestedUid 单独检索 Auth 表记录并基于该记录返回成功认证响应，两次查询之间未将请求 UID 与已认证身份绑定或比对，攻击者以自身 OAuth 令牌可换取服务器上任意目标用户的认证凭据并以其身份执行操作。\n修复版本中通过在 AuthorizeOauthAsync 按 requestedUid 检索前增加 auth == authUser 查询约束，将检索范围严格绑定到已认证身份对应的同一条 Auth 记录，requestedUid 与已认证身份不一致时查询结果为空并返回认证失败，服务器不再为非本人 UID 加载或返回会话令牌。",
+    "effects": [
+      {
+        "comp_name": "laci_synchroni_server",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.2.3)",
+            "min_fixed_version": "1.2.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "服务端安全的客户端实施",
+    "kind_en": "服务器端安全的客户端实施",
+    "last_modified_time": "2026-09-12",
+    "level": "Critical",
+    "mps_id": "MPS-oyd0-m7zq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oyd0-m7zq",
+        "name": "https://www.oscs1024.com/hd/MPS-oyd0-m7zq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54047",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-54047"
+      },
+      {
+        "url": "https://github.com/LaciSynchroni/server/security/advisories/GHSA-gq4p-pxvg-6x9j",
+        "name": "https://github.com/LaciSynchroni/server/security/advisories/GHSA-gq4p-pxvg-6x9j"
+      },
+      {
+        "url": "https://github.com/LaciSynchroni/server/pull/28",
+        "name": "https://github.com/LaciSynchroni/server/pull/28"
+      },
+      {
+        "url": "https://github.com/LaciSynchroni/server/commit/5bc3efd68b738328b8faeff089dd18a826ec9ca4",
+        "name": "https://github.com/LaciSynchroni/server/commit/5bc3efd68b738328b8faeff089dd18a826ec9ca4"
+      },
+      {
+        "url": "https://github.com/LaciSynchroni/server/releases/tag/v1.2.3",
+        "name": "https://github.com/LaciSynchroni/server/releases/tag/v1.2.3"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Laci Synchroni OAuth 身份仿冒漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54047",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-602",
+    "description": "Laci Synchroni 是一个开源（AGPL-3.0）的去中心化 FFXIV 模组与外观同步系统的服务端及 Dalamud 插件，其中 AuthService 负责用户的 OAuth2 登录认证与会话令牌签发。\n受影响版本中，OAuth2 登录流程信任客户端本地 config.json 中 Authentications 对象的 UID 字段，公开接口 OAuthController.CreateTokenWithOAuth 将攻击者可控的 uid 直接传入 SecretKeyAuthenticatorService.AuthorizeOauthAsync；该函数在确认已认证身份 primaryUid 存在后，仅按 requestedUid 单独检索 Auth 表记录并基于该记录返回成功认证响应，两次查询之间未将请求 UID 与已认证身份绑定或比对，攻击者以自身 OAuth 令牌可换取服务器上任意目标用户的认证凭据并以其身份执行操作。\n修复版本中通过在 AuthorizeOauthAsync 按 requestedUid 检索前增加 auth == authUser 查询约束，将检索范围严格绑定到已认证身份对应的同一条 Auth 记录，requestedUid 与已认证身份不一致时查询结果为空并返回认证失败，服务器不再为非本人 UID 加载或返回会话令牌。",
+    "effects": [
+      {
+        "comp_name": "laci_synchroni_server",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.2.3)",
+            "min_fixed_version": "1.2.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "服务端安全的客户端实施",
+    "kind_en": "Client-Side Enforcement of Server-Side Security",
+    "last_modified_time": "2026-09-12",
+    "level": "Critical",
+    "mps_id": "MPS-oyd0-m7zq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oyd0-m7zq",
+        "name": "https://www.oscs1024.com/hd/MPS-oyd0-m7zq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54047",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-54047"
+      },
+      {
+        "url": "https://github.com/LaciSynchroni/server/security/advisories/GHSA-gq4p-pxvg-6x9j",
+        "name": "https://github.com/LaciSynchroni/server/security/advisories/GHSA-gq4p-pxvg-6x9j"
+      },
+      {
+        "url": "https://github.com/LaciSynchroni/server/pull/28",
+        "name": "https://github.com/LaciSynchroni/server/pull/28"
+      },
+      {
+        "url": "https://github.com/LaciSynchroni/server/commit/5bc3efd68b738328b8faeff089dd18a826ec9ca4",
+        "name": "https://github.com/LaciSynchroni/server/commit/5bc3efd68b738328b8faeff089dd18a826ec9ca4"
+      },
+      {
+        "url": "https://github.com/LaciSynchroni/server/releases/tag/v1.2.3",
+        "name": "https://github.com/LaciSynchroni/server/releases/tag/v1.2.3"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Laci Synchroni OAuth 身份仿冒漏洞"
+  },
+  "first_saved_at": "2026-09-11T18:05:31+00:00"
+}

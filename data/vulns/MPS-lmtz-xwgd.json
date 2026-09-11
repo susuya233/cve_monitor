@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-09-11T18:05:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-lmtz-xwgd",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89262",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "MoguBlog（蘑菇博客）是 moxi624 开源的基于微服务架构的前后端分离博客系统，后端采用 Spring Boot、Spring Cloud 与 Spring Security/JWT 构建，mogu_web 模块对外提供前台评论接口。\n受影响版本中，mogu_web 模块 CommentRestApi 的 deleteBatch 方法（POST /web/comment/delete）校验评论属主时，将数据库中评论记录的 userUid 与请求体传入的 commentVO.getUserUid() 直接比对，未与登录主体关联；WebSecurityConfig 将 /web/comment/** 配置为 permitAll，该接口无需认证访问，攻击者从同样无需认证的 /web/comment/getList 响应中获取目标评论的 uid 与作者 userUid 后构造删除请求，可删除任意评论，getToCommentList 还会递归将其全部子评论置为禁用，导致站点公开评论内容被清除。\n修复版本中通过，可通过网关或反向代理限制外部对 /web/comment/delete 接口的匿名访问，或自行修改源码将属主校验改为与 JWT 解析出的登录用户 userUid 比对，避免信任请求体中的属主字段；截至 2026-09-12，官方最新发行版 6.2 与主分支最新代码仍保留该请求体属主校验，尚未发布修复版本。",
+    "effects": [
+      {
+        "comp_name": "mogublog",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-09-12",
+    "level": "High",
+    "mps_id": "MPS-lmtz-xwgd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lmtz-xwgd",
+        "name": "https://www.oscs1024.com/hd/MPS-lmtz-xwgd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89262",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89262"
+      },
+      {
+        "url": "https://github.com/LinYuanyi1/cve-request-poc/blob/master/mogublog-poc/C04_comment_delete_idor.py",
+        "name": "C04 - POST /web/comment/delete proof of concept"
+      },
+      {
+        "url": "https://github.com/moxi624/mogu_blog_v2/blob/025d78c7ac7e19b1abf796fa3cc158d855723d15/mogu_web/src/main/java/com/moxi/mogublog/web/restapi/CommentRestApi.java",
+        "name": "CommentRestApi.deleteBatch compares the stored author uid against a request-body field"
+      },
+      {
+        "url": "https://github.com/moxi624/mogu_blog_v2/blob/025d78c7ac7e19b1abf796fa3cc158d855723d15/mogu_web/src/main/java/com/moxi/mogublog/web/config/WebSecurityConfig.java",
+        "name": "mogu_web WebSecurityConfig permits /web/comment/** for all callers"
+      },
+      {
+        "url": "https://gitee.com/moxi159753/mogu_blog_v2/releases",
+        "name": "MoguBlog releases"
+      },
+      {
+        "url": "https://github.com/moxi624/mogu_blog_v2",
+        "name": "Product"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/mogublog-through-6.2-arbitrary-comment-deletion-via-request-body-ownership-check",
+        "name": "VulnCheck Advisory: MoguBlog through 6.2 Arbitrary Comment Deletion via Request-Body Ownership Check"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "MoguBlog评论删除越权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89262",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "MoguBlog（蘑菇博客）是 moxi624 开源的基于微服务架构的前后端分离博客系统，后端采用 Spring Boot、Spring Cloud 与 Spring Security/JWT 构建，mogu_web 模块对外提供前台评论接口。\n受影响版本中，mogu_web 模块 CommentRestApi 的 deleteBatch 方法（POST /web/comment/delete）校验评论属主时，将数据库中评论记录的 userUid 与请求体传入的 commentVO.getUserUid() 直接比对，未与登录主体关联；WebSecurityConfig 将 /web/comment/** 配置为 permitAll，该接口无需认证访问，攻击者从同样无需认证的 /web/comment/getList 响应中获取目标评论的 uid 与作者 userUid 后构造删除请求，可删除任意评论，getToCommentList 还会递归将其全部子评论置为禁用，导致站点公开评论内容被清除。\n修复版本中通过，可通过网关或反向代理限制外部对 /web/comment/delete 接口的匿名访问，或自行修改源码将属主校验改为与 JWT 解析出的登录用户 userUid 比对，避免信任请求体中的属主字段；截至 2026-09-12，官方最新发行版 6.2 与主分支最新代码仍保留该请求体属主校验，尚未发布修复版本。",
+    "effects": [
+      {
+        "comp_name": "mogublog",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-09-12",
+    "level": "High",
+    "mps_id": "MPS-lmtz-xwgd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lmtz-xwgd",
+        "name": "https://www.oscs1024.com/hd/MPS-lmtz-xwgd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89262",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89262"
+      },
+      {
+        "url": "https://github.com/LinYuanyi1/cve-request-poc/blob/master/mogublog-poc/C04_comment_delete_idor.py",
+        "name": "C04 - POST /web/comment/delete proof of concept"
+      },
+      {
+        "url": "https://github.com/moxi624/mogu_blog_v2/blob/025d78c7ac7e19b1abf796fa3cc158d855723d15/mogu_web/src/main/java/com/moxi/mogublog/web/restapi/CommentRestApi.java",
+        "name": "CommentRestApi.deleteBatch compares the stored author uid against a request-body field"
+      },
+      {
+        "url": "https://github.com/moxi624/mogu_blog_v2/blob/025d78c7ac7e19b1abf796fa3cc158d855723d15/mogu_web/src/main/java/com/moxi/mogublog/web/config/WebSecurityConfig.java",
+        "name": "mogu_web WebSecurityConfig permits /web/comment/** for all callers"
+      },
+      {
+        "url": "https://gitee.com/moxi159753/mogu_blog_v2/releases",
+        "name": "MoguBlog releases"
+      },
+      {
+        "url": "https://github.com/moxi624/mogu_blog_v2",
+        "name": "Product"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/mogublog-through-6.2-arbitrary-comment-deletion-via-request-body-ownership-check",
+        "name": "VulnCheck Advisory: MoguBlog through 6.2 Arbitrary Comment Deletion via Request-Body Ownership Check"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "MoguBlog评论删除越权漏洞"
+  },
+  "first_saved_at": "2026-09-11T18:05:32+00:00"
+}
