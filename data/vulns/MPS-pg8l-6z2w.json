@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-09-11T05:32:05+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-pg8l-6z2w",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-8778",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-434",
+    "description": "MIPL Grouped Checkout Fields for WooCommerce（插件标识 mipl-wc-checkout-fields）是一款在 WordPress.org 开源发布的 WooCommerce 结账字段定制插件，用于在结账页面创建、分组与整理自定义字段。\n受影响版本中，插件在 mipl-wc-checkout-fields.php 的 rest_api_init 回调中以 permission_callback 为 __return_true 注册 POST 路由 mipl-wc-cf/v1/upload_file_data，未认证攻击者可直接访问该端点；回调 include/class-mipl-wc-cf-checkout-block.php 中的 mipl_wc_upload_file 读取 $_FILES['mipl_wc_file'] 后仅执行 basename、sanitize_text_field、sanitize_title 处理，未校验文件类型与扩展名，move_uploaded_file 将任意内容写入 uploads/mipl-wc-checkout-fields/mipl_checkout_files/年/月 目录并在响应中返回 file_url，攻击者可上传 .php 等可执行文件，在 Web 服务器解析该目录 PHP 的环境下可导致远程代码执行。\n修复版本中通过在 mipl_wc_upload_file 中新增 $allowed_mimes 文件类型白名单并调用 wp_check_filetype_and_ext 校验上传文件的真实扩展名与 MIME 类型，校验失败时终止请求，同时将 upload_file_data 路由的 permission_callback 改为要求已登录用户且通过 wp_rest nonce 校验，自 1.2.3 起从入口阻断未认证任意文件上传。",
+    "effects": [
+      {
+        "comp_name": "mipl-wc-checkout-fields",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.2.0,1.2.3)",
+            "min_fixed_version": "1.2.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "任意文件上传",
+    "kind_en": "危险类型文件无限制上传",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-pg8l-6z2w",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pg8l-6z2w",
+        "name": "https://www.oscs1024.com/hd/MPS-pg8l-6z2w"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-8778",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-8778"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/ac1257a9-7c8e-43aa-b21a-93a77b456aa4?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/tags/1.2.1/mipl-wc-checkout-fields.php#L260",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/trunk/mipl-wc-checkout-fields.php#L260",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/tags/1.2.1/include/class-mipl-wc-cf-checkout-block.php#L415",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/trunk/include/class-mipl-wc-cf-checkout-block.php#L415",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?sfp_email=&sfph_mail=&reponame=&new=3552029%40mipl-wc-checkout-fields%2Ftrunk%2Finclude%2Fclass-mipl-wc-cf-checkout-block.php&old=3549283%40mipl-wc-checkout-fields%2Ftrunk%2Finclude%2Fclass-mipl-wc-cf-checkout-block.php&sfp_email=&sfph_mail=",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MIPL WooCommerce插件任意文件上传漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-8778",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-434",
+    "description": "MIPL Grouped Checkout Fields for WooCommerce（插件标识 mipl-wc-checkout-fields）是一款在 WordPress.org 开源发布的 WooCommerce 结账字段定制插件，用于在结账页面创建、分组与整理自定义字段。\n受影响版本中，插件在 mipl-wc-checkout-fields.php 的 rest_api_init 回调中以 permission_callback 为 __return_true 注册 POST 路由 mipl-wc-cf/v1/upload_file_data，未认证攻击者可直接访问该端点；回调 include/class-mipl-wc-cf-checkout-block.php 中的 mipl_wc_upload_file 读取 $_FILES['mipl_wc_file'] 后仅执行 basename、sanitize_text_field、sanitize_title 处理，未校验文件类型与扩展名，move_uploaded_file 将任意内容写入 uploads/mipl-wc-checkout-fields/mipl_checkout_files/年/月 目录并在响应中返回 file_url，攻击者可上传 .php 等可执行文件，在 Web 服务器解析该目录 PHP 的环境下可导致远程代码执行。\n修复版本中通过在 mipl_wc_upload_file 中新增 $allowed_mimes 文件类型白名单并调用 wp_check_filetype_and_ext 校验上传文件的真实扩展名与 MIME 类型，校验失败时终止请求，同时将 upload_file_data 路由的 permission_callback 改为要求已登录用户且通过 wp_rest nonce 校验，自 1.2.3 起从入口阻断未认证任意文件上传。",
+    "effects": [
+      {
+        "comp_name": "mipl-wc-checkout-fields",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.2.0,1.2.3)",
+            "min_fixed_version": "1.2.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "任意文件上传",
+    "kind_en": "Unrestricted Upload of File with Dangerous Type",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-pg8l-6z2w",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pg8l-6z2w",
+        "name": "https://www.oscs1024.com/hd/MPS-pg8l-6z2w"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-8778",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-8778"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/ac1257a9-7c8e-43aa-b21a-93a77b456aa4?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/tags/1.2.1/mipl-wc-checkout-fields.php#L260",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/trunk/mipl-wc-checkout-fields.php#L260",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/tags/1.2.1/include/class-mipl-wc-cf-checkout-block.php#L415",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/mipl-wc-checkout-fields/trunk/include/class-mipl-wc-cf-checkout-block.php#L415",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?sfp_email=&sfph_mail=&reponame=&new=3552029%40mipl-wc-checkout-fields%2Ftrunk%2Finclude%2Fclass-mipl-wc-cf-checkout-block.php&old=3549283%40mipl-wc-checkout-fields%2Ftrunk%2Finclude%2Fclass-mipl-wc-cf-checkout-block.php&sfp_email=&sfph_mail=",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MIPL WooCommerce插件任意文件上传漏洞"
+  },
+  "first_saved_at": "2026-09-11T05:32:05+00:00"
+}

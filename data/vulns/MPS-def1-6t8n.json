@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-09-11T05:32:04+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-def1-6t8n",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89161",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-590",
+    "description": "PCRE2 是一个用 C 语言编写的开源 Perl 兼容正则表达式库，提供 JIT 加速的匹配快路径接口 pcre2_jit_match，被广泛集成于各类软件中作为正则引擎。\n受影响版本中，pcre2_jit_match（src/pcre2_jit_match_inc.h）入口处缺少与 pcre2_match、pcre2_dfa_match 一致的守卫逻辑，匹配后无条件重设 match_data->subject；当应用把先前经 pcre2_match 以 PCRE2_COPY_MATCHED_SUBJECT 匹配过的同一 match_data 复用传入该接口时，主题串堆拷贝被覆盖造成泄漏，PCRE2_MD_COPIED_SUBJECT 标志残留且 subject 转而指向调用方内存，pcre2_match_data_free（src/pcre2_match_data.c）随后依据残留标志调用 memctl.free 释放该指针，形成对非堆内存的错误释放，主题串位于堆上时该错误释放可提前释放存活内存，导致内存破坏或进程崩溃。\n修复版本中通过在 JIT 快路径入口检测 match_data->flags 的 PCRE2_MD_COPIED_SUBJECT 标志，置位时先经 match_data->memctl.free 释放旧的主题串拷贝并清除该标志，切断泄漏与错误释放的因果链，并同步更新 pcre2jit 文档、在 pcre2test 与 test 17 中补充快路径复用场景的回归测试。",
+    "effects": [
+      {
+        "comp_name": "pcre2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,10.48)",
+            "min_fixed_version": "10.48",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "释放不在堆上的内存",
+    "last_modified_time": "2026-09-11",
+    "level": "High",
+    "mps_id": "MPS-def1-6t8n",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-def1-6t8n",
+        "name": "https://www.oscs1024.com/hd/MPS-def1-6t8n"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89161",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89161"
+      },
+      {
+        "url": "https://github.com/PCRE2Project/pcre2/releases/tag/pcre2-10.48",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/PCRE2Project/pcre2/pull/937",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "PCRE2 快路径错误释放漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89161",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-590",
+    "description": "PCRE2 是一个用 C 语言编写的开源 Perl 兼容正则表达式库，提供 JIT 加速的匹配快路径接口 pcre2_jit_match，被广泛集成于各类软件中作为正则引擎。\n受影响版本中，pcre2_jit_match（src/pcre2_jit_match_inc.h）入口处缺少与 pcre2_match、pcre2_dfa_match 一致的守卫逻辑，匹配后无条件重设 match_data->subject；当应用把先前经 pcre2_match 以 PCRE2_COPY_MATCHED_SUBJECT 匹配过的同一 match_data 复用传入该接口时，主题串堆拷贝被覆盖造成泄漏，PCRE2_MD_COPIED_SUBJECT 标志残留且 subject 转而指向调用方内存，pcre2_match_data_free（src/pcre2_match_data.c）随后依据残留标志调用 memctl.free 释放该指针，形成对非堆内存的错误释放，主题串位于堆上时该错误释放可提前释放存活内存，导致内存破坏或进程崩溃。\n修复版本中通过在 JIT 快路径入口检测 match_data->flags 的 PCRE2_MD_COPIED_SUBJECT 标志，置位时先经 match_data->memctl.free 释放旧的主题串拷贝并清除该标志，切断泄漏与错误释放的因果链，并同步更新 pcre2jit 文档、在 pcre2test 与 test 17 中补充快路径复用场景的回归测试。",
+    "effects": [
+      {
+        "comp_name": "pcre2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,10.48)",
+            "min_fixed_version": "10.48",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Free of Memory not on the Heap",
+    "last_modified_time": "2026-09-11",
+    "level": "High",
+    "mps_id": "MPS-def1-6t8n",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-def1-6t8n",
+        "name": "https://www.oscs1024.com/hd/MPS-def1-6t8n"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89161",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89161"
+      },
+      {
+        "url": "https://github.com/PCRE2Project/pcre2/releases/tag/pcre2-10.48",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/PCRE2Project/pcre2/pull/937",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "PCRE2 快路径错误释放漏洞"
+  },
+  "first_saved_at": "2026-09-11T05:32:04+00:00"
+}

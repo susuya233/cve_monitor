@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-09-11T05:32:02+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-rwqe-01ix",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85706",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ]
+    },
+    "cvss_score": 10,
+    "cvss_vector": "",
+    "cwe": "CWE-22",
+    "description": "GitLab 是开源 DevSecOps 平台，Community Edition 与 Enterprise Edition 均提供仓库托管、CI/CD 与项目管理，并对外暴露 repository commits REST API。\n受影响版本中，Workhorse 只按正则 ^/api/v4/projects/[^/]+/repository/commits\\z 改写上传元数据，未认证 POST 使用 /api/v4/projects/:id/repository/commits/ 或 .../commits.json 即可避开改写。公开项目上 before 过滤器仅执行 authorize_read_code!，创建提交入口没有 authenticate!，file_params_from_body_upload 把攻击者可控的 params['file.path'] 当作本地路径并调用 File.exist?、File.read、Oj.load_file。application/x-www-form-urlencoded 解析失败时还会把文件原文写入 HTTP 400 响应，未认证攻击者可读取 GitLab 服务器上的密钥、配置与业务数据，形成任意文件读取漏洞。\n修复版本中通过在 authorize 与创建入口补上 authenticate!，并只信任中间件生成的 UploadedFile，使未认证请求在读取文件前被拒绝，响应不再回显文件内容。",
+    "effects": [
+      {
+        "comp_name": "gitlab",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[19.2,19.2.6)",
+            "min_fixed_version": "19.2.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[18.7,19.1.8)",
+            "min_fixed_version": "19.1.8",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[19.3,19.3.2)",
+            "min_fixed_version": "19.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "极高",
+    "fix_suggestion": "建议修复",
+    "kind": "路径遍历",
+    "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-rwqe-01ix",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-rwqe-01ix",
+        "name": "https://www.oscs1024.com/hd/MPS-rwqe-01ix"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85706",
+        "name": ""
+      },
+      {
+        "url": "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-3-2-released/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gitlabhq/gitlabhq/commit/e986c922de87f9c685ba9d063c90f3c04a1195ac",
+        "name": ""
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "poc",
+      "专家校准",
+      "应用软件"
+    ],
+    "title": "GitLab仓库提交API未授权任意文件读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85706",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ]
+    },
+    "cvss_score": 10,
+    "cvss_vector": "",
+    "cwe": "CWE-22",
+    "description": "GitLab 是开源 DevSecOps 平台，Community Edition 与 Enterprise Edition 均提供仓库托管、CI/CD 与项目管理，并对外暴露 repository commits REST API。\n受影响版本中，Workhorse 只按正则 ^/api/v4/projects/[^/]+/repository/commits\\z 改写上传元数据，未认证 POST 使用 /api/v4/projects/:id/repository/commits/ 或 .../commits.json 即可避开改写。公开项目上 before 过滤器仅执行 authorize_read_code!，创建提交入口没有 authenticate!，file_params_from_body_upload 把攻击者可控的 params['file.path'] 当作本地路径并调用 File.exist?、File.read、Oj.load_file。application/x-www-form-urlencoded 解析失败时还会把文件原文写入 HTTP 400 响应，未认证攻击者可读取 GitLab 服务器上的密钥、配置与业务数据，形成任意文件读取漏洞。\n修复版本中通过在 authorize 与创建入口补上 authenticate!，并只信任中间件生成的 UploadedFile，使未认证请求在读取文件前被拒绝，响应不再回显文件内容。",
+    "effects": [
+      {
+        "comp_name": "gitlab",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[19.2,19.2.6)",
+            "min_fixed_version": "19.2.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[18.7,19.1.8)",
+            "min_fixed_version": "19.1.8",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[19.3,19.3.2)",
+            "min_fixed_version": "19.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "极高",
+    "fix_suggestion": "Recommend",
+    "kind": "路径遍历",
+    "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-rwqe-01ix",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-rwqe-01ix",
+        "name": "https://www.oscs1024.com/hd/MPS-rwqe-01ix"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85706",
+        "name": ""
+      },
+      {
+        "url": "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-3-2-released/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gitlabhq/gitlabhq/commit/e986c922de87f9c685ba9d063c90f3c04a1195ac",
+        "name": ""
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "poc",
+      "专家校准",
+      "应用软件"
+    ],
+    "title": "GitLab仓库提交API未授权任意文件读取漏洞"
+  },
+  "first_saved_at": "2026-09-11T05:32:02+00:00"
+}
