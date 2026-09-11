@@ -1,0 +1,147 @@
+{
+  "saved_at": "2026-09-11T10:25:46+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-thf1-jqv6",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-19486",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "f45cbf4e-4146-4068-b7e1-655ffc2c548c",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Amber",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Amber",
+    "cwe": "CWE-918",
+    "description": "Google Cloud Gemini Enterprise Agent Platform App Builder（Agent Studio 中的应用构建功能，前身为 Vertex AI Studio App Builder）是 Google Cloud 托管的提示词转 Web 应用生成服务，可将提示词快速部署为托管在 Cloud Run 上的 Web 应用，为闭源托管服务，无公开源码仓库。\n受影响版本中，2026-07-01 前由 Agent Studio 自动生成的应用后端包含 /api-proxy 转发接口，该接口未校验客户端指定的目标主机名，未认证攻击者可向可公开访问的应用发送构造请求，使其向实例元数据服务等内部地址发起服务端请求，进而读取 Compute Engine 默认服务账号的访问令牌，该账号在官方部署流程中被用作应用的部署服务账号。\n修复版本中通过在自动生成的 /api-proxy 后端代码中加入严格的域名白名单校验，要求转发目标主机名以允许的 Google Cloud 域名结尾（如 *-aiplatform.clients6.google.com），切断了向白名单外地址发起服务端请求的路径，存量受影响应用需从 Agent Studio 重新生成并重新部署以获得修复。",
+    "effects": [
+      {
+        "comp_name": "gemini_enterprise_agent_platform_app_builder",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026-06-01)",
+            "min_fixed_version": "2026-06-01",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-09-11",
+    "level": "High",
+    "mps_id": "MPS-thf1-jqv6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-thf1-jqv6",
+        "name": "https://www.oscs1024.com/hd/MPS-thf1-jqv6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19486",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-19486"
+      },
+      {
+        "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#July_20_2026",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "App Builder SSRF漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-19486",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "f45cbf4e-4146-4068-b7e1-655ffc2c548c",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Amber",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Amber",
+    "cwe": "CWE-918",
+    "description": "Google Cloud Gemini Enterprise Agent Platform App Builder（Agent Studio 中的应用构建功能，前身为 Vertex AI Studio App Builder）是 Google Cloud 托管的提示词转 Web 应用生成服务，可将提示词快速部署为托管在 Cloud Run 上的 Web 应用，为闭源托管服务，无公开源码仓库。\n受影响版本中，2026-07-01 前由 Agent Studio 自动生成的应用后端包含 /api-proxy 转发接口，该接口未校验客户端指定的目标主机名，未认证攻击者可向可公开访问的应用发送构造请求，使其向实例元数据服务等内部地址发起服务端请求，进而读取 Compute Engine 默认服务账号的访问令牌，该账号在官方部署流程中被用作应用的部署服务账号。\n修复版本中通过在自动生成的 /api-proxy 后端代码中加入严格的域名白名单校验，要求转发目标主机名以允许的 Google Cloud 域名结尾（如 *-aiplatform.clients6.google.com），切断了向白名单外地址发起服务端请求的路径，存量受影响应用需从 Agent Studio 重新生成并重新部署以获得修复。",
+    "effects": [
+      {
+        "comp_name": "gemini_enterprise_agent_platform_app_builder",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026-06-01)",
+            "min_fixed_version": "2026-06-01",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-09-11",
+    "level": "High",
+    "mps_id": "MPS-thf1-jqv6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-thf1-jqv6",
+        "name": "https://www.oscs1024.com/hd/MPS-thf1-jqv6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19486",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-19486"
+      },
+      {
+        "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#July_20_2026",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "App Builder SSRF漏洞"
+  },
+  "first_saved_at": "2026-09-11T10:25:46+00:00"
+}
