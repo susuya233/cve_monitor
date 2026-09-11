@@ -1,0 +1,175 @@
+{
+  "saved_at": "2026-09-11T00:46:10+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ieln-a0uv",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84889",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@us.ibm.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-22",
+    "description": "Langflow 是 IBM 开源的 LLM 应用可视化编排框架，用于以拖拽工作流方式构建 Agent 与 RAG 等大模型应用，提供 REST API、文件上传以及本地、S3、Google Drive 等多种文件存储后端。\n受影响版本中，文件上传接口 upload_user_file 直接信任 multipart 请求 Content-Disposition 中的文件名并拼入存储路径，携带 ../ 序列的文件名可把上传内容写到用户存储边界之外；Write File 组件 SaveToFileComponent 的 save_to_file 方法在本地保存分支 _save_to_local 中对租户可控的 file_name 输入执行 Path(...).expanduser() 展开，未做路径包含校验即创建父目录并写入文件。持有有效 API key 的低权限认证用户可将任意内容写入服务器进程可访问的任意路径，覆盖敏感文件后实现任意代码执行。\n修复版本中通过双重收敛切断该攻击链：upload_user_file 在入口拒绝包含路径分隔符、.. 序列、空字节与控制字符的文件名并仅保留基名；Write File 组件新增 _get_safe_local_file_name 仅接受纯文件名，并把本地写入路径收敛到认证用户的存储命名空间，越界时由 enforce_local_file_access 失败关闭。",
+    "effects": [
+      {
+        "comp_name": "langflow",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.11.0)",
+            "min_fixed_version": "1.11.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "路径遍历",
+    "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
+    "last_modified_time": "2026-09-11",
+    "level": "High",
+    "mps_id": "MPS-ieln-a0uv",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ieln-a0uv",
+        "name": "https://www.oscs1024.com/hd/MPS-ieln-a0uv"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84889",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84889"
+      },
+      {
+        "url": "https://www.ibm.com/support/pages/node/7286656",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "Langflow 路径穿越任意代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84889",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@us.ibm.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-22",
+    "description": "Langflow 是 IBM 开源的 LLM 应用可视化编排框架，用于以拖拽工作流方式构建 Agent 与 RAG 等大模型应用，提供 REST API、文件上传以及本地、S3、Google Drive 等多种文件存储后端。\n受影响版本中，文件上传接口 upload_user_file 直接信任 multipart 请求 Content-Disposition 中的文件名并拼入存储路径，携带 ../ 序列的文件名可把上传内容写到用户存储边界之外；Write File 组件 SaveToFileComponent 的 save_to_file 方法在本地保存分支 _save_to_local 中对租户可控的 file_name 输入执行 Path(...).expanduser() 展开，未做路径包含校验即创建父目录并写入文件。持有有效 API key 的低权限认证用户可将任意内容写入服务器进程可访问的任意路径，覆盖敏感文件后实现任意代码执行。\n修复版本中通过双重收敛切断该攻击链：upload_user_file 在入口拒绝包含路径分隔符、.. 序列、空字节与控制字符的文件名并仅保留基名；Write File 组件新增 _get_safe_local_file_name 仅接受纯文件名，并把本地写入路径收敛到认证用户的存储命名空间，越界时由 enforce_local_file_access 失败关闭。",
+    "effects": [
+      {
+        "comp_name": "langflow",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.11.0)",
+            "min_fixed_version": "1.11.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "路径遍历",
+    "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "last_modified_time": "2026-09-11",
+    "level": "High",
+    "mps_id": "MPS-ieln-a0uv",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ieln-a0uv",
+        "name": "https://www.oscs1024.com/hd/MPS-ieln-a0uv"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84889",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84889"
+      },
+      {
+        "url": "https://www.ibm.com/support/pages/node/7286656",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "Langflow 路径穿越任意代码执行漏洞"
+  },
+  "first_saved_at": "2026-09-11T00:46:10+00:00"
+}

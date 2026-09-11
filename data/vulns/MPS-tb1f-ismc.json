@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-11T00:46:12+00:00",
+  "saved_at": "2026-09-11T00:46:05+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-0y6k-czhp",
+  "source_page": "https://www.oscs1024.com/hd/MPS-tb1f-ismc",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,56 +21,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-75771",
+    "cve_id": "CVE-2026-16174",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "psirt@adobe.com",
-          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "source": "psirt@netskope.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 7.8
+          "base_score": 8.7
         }
       ]
     },
-    "cvss_score": 7.8,
-    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-190",
-    "description": "Photoshop Desktop is affected by an Integer Overflow or Wraparound vulnerability that could result in arbitrary code execution in the context of the current user. Exploitation of this issue requires user interaction in that a victim must open a malicious file.",
+    "description": "Netskope Endpoint DLP（EPDLP）是 Netskope Client 面向 Windows 终端的数据防泄漏模块，属于闭源商业组件，通过内核驱动与用户态进程监控终端数据外发行为。\n受影响版本中，EPDLP 组件处理发送至 EPDLP 进程端口的消息时对长度相关参数执行整数运算且缺少溢出校验，本地高权限攻击者向该端口发送构造消息可触发整数溢出，导致内核池溢出与内存破坏，可能造成本地拒绝服务、任意代码执行或权限提升；成功利用需要客户端配置中启用 EPDLP 模块，且目标系统关闭内存完整性（Memory Integrity）保护。\n修复版本中通过修复该整数运算缺陷切断内核池溢出路径，官方将 141.0 及以上版本列为不受影响版本，建议用户升级至 141.0 及以上版本，并保持内存完整性（Memory Integrity）保护开启以降低风险。",
     "effects": [
       {
-        "comp_name": "Photoshop 2025",
+        "comp_name": "netskope_endpoint_dlp",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,26.11.7]",
-            "min_fixed_version": "",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "(0,26.11.6]",
-            "min_fixed_version": "",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          }
-        ]
-      },
-      {
-        "comp_name": "Photoshop 2026",
-        "ecosystem": "linux",
-        "versions": [
-          {
-            "affected_version": "(0,27.6]",
-            "min_fixed_version": "",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "(-∞,27.7]",
-            "min_fixed_version": "",
+            "affected_version": "(-∞,141.0)",
+            "min_fixed_version": "141.0",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -81,28 +54,28 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "整数溢出或环绕",
     "kind_en": "整数溢出或环绕",
-    "last_modified_time": "2026-09-09",
+    "last_modified_time": "2026-09-11",
     "level": "High",
-    "mps_id": "MPS-0y6k-czhp",
+    "mps_id": "MPS-tb1f-ismc",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-09",
+    "published_time": "2026-09-11",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-0y6k-czhp",
-        "name": "https://www.oscs1024.com/hd/MPS-0y6k-czhp"
+        "url": "https://www.oscs1024.com/hd/MPS-tb1f-ismc",
+        "name": "https://www.oscs1024.com/hd/MPS-tb1f-ismc"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75771",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75771"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16174",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-16174"
       },
       {
-        "url": "https://helpx.adobe.com/security/products/photoshop/apsb26-130.html",
+        "url": "https://support.netskope.com/s/article/Netskope-Security-Advisory-Netskope-Client-Endpoint-DLP-Security-Notice---NSKPSA-2026-010",
         "name": ""
       }
     ],
@@ -110,7 +83,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "Photoshop Desktop | Integer Overflow or Wraparound (CWE-190)",
+    "title": "Netskope Endpoint DLP整数溢出漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -130,56 +103,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-75771",
+    "cve_id": "CVE-2026-16174",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "psirt@adobe.com",
-          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "source": "psirt@netskope.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 7.8
+          "base_score": 8.7
         }
       ]
     },
-    "cvss_score": 7.8,
-    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-190",
-    "description": "Photoshop Desktop is affected by an Integer Overflow or Wraparound vulnerability that could result in arbitrary code execution in the context of the current user. Exploitation of this issue requires user interaction in that a victim must open a malicious file.",
+    "description": "Netskope Endpoint DLP（EPDLP）是 Netskope Client 面向 Windows 终端的数据防泄漏模块，属于闭源商业组件，通过内核驱动与用户态进程监控终端数据外发行为。\n受影响版本中，EPDLP 组件处理发送至 EPDLP 进程端口的消息时对长度相关参数执行整数运算且缺少溢出校验，本地高权限攻击者向该端口发送构造消息可触发整数溢出，导致内核池溢出与内存破坏，可能造成本地拒绝服务、任意代码执行或权限提升；成功利用需要客户端配置中启用 EPDLP 模块，且目标系统关闭内存完整性（Memory Integrity）保护。\n修复版本中通过修复该整数运算缺陷切断内核池溢出路径，官方将 141.0 及以上版本列为不受影响版本，建议用户升级至 141.0 及以上版本，并保持内存完整性（Memory Integrity）保护开启以降低风险。",
     "effects": [
       {
-        "comp_name": "Photoshop 2025",
+        "comp_name": "netskope_endpoint_dlp",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,26.11.7]",
-            "min_fixed_version": "",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "(0,26.11.6]",
-            "min_fixed_version": "",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          }
-        ]
-      },
-      {
-        "comp_name": "Photoshop 2026",
-        "ecosystem": "linux",
-        "versions": [
-          {
-            "affected_version": "(0,27.6]",
-            "min_fixed_version": "",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "(-∞,27.7]",
-            "min_fixed_version": "",
+            "affected_version": "(-∞,141.0)",
+            "min_fixed_version": "141.0",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -190,28 +136,28 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "整数溢出或环绕",
     "kind_en": "Integer Overflow or Wraparound",
-    "last_modified_time": "2026-09-09",
+    "last_modified_time": "2026-09-11",
     "level": "High",
-    "mps_id": "MPS-0y6k-czhp",
+    "mps_id": "MPS-tb1f-ismc",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-09",
+    "published_time": "2026-09-11",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-0y6k-czhp",
-        "name": "https://www.oscs1024.com/hd/MPS-0y6k-czhp"
+        "url": "https://www.oscs1024.com/hd/MPS-tb1f-ismc",
+        "name": "https://www.oscs1024.com/hd/MPS-tb1f-ismc"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75771",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75771"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16174",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-16174"
       },
       {
-        "url": "https://helpx.adobe.com/security/products/photoshop/apsb26-130.html",
+        "url": "https://support.netskope.com/s/article/Netskope-Security-Advisory-Netskope-Client-Endpoint-DLP-Security-Notice---NSKPSA-2026-010",
         "name": ""
       }
     ],
@@ -219,7 +165,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "Photoshop Desktop | Integer Overflow or Wraparound (CWE-190)"
+    "title": "Netskope Endpoint DLP整数溢出漏洞"
   },
-  "first_saved_at": "2026-09-09T00:58:19+00:00"
+  "first_saved_at": "2026-09-11T00:46:05+00:00"
 }

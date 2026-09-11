@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-09-11T00:46:06+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-vfdz-u10a",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82100",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@us.ibm.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.6
+        }
+      ]
+    },
+    "cvss_score": 9.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
+    "cwe": "CWE-22",
+    "description": "IBM DataStage 是 IBM 提供的商业化数据集成（ETL）组件，随 Cloud Pak for Data 交付，用于企业级数据的抽取、转换与加载，属于闭源软件，未公开源代码。\n受影响版本中，产品对用户提供的路径缺少限制，远程认证用户可提交包含路径穿越序列的请求越过受控目录边界（CWE-22），导致服务不可用，形成拒绝服务。\n修复版本中通过修复路径穿越问题，阻断认证用户越过受限目录的访问路径，消除拒绝服务风险；官方公告要求升级至 5.4 patch 5 或更高版本。",
+    "effects": [
+      {
+        "comp_name": "IBM DataStage on Cloud Pak for Data",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.4.0.0,5.4.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "路径遍历",
+    "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-vfdz-u10a",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-vfdz-u10a",
+        "name": "https://www.oscs1024.com/hd/MPS-vfdz-u10a"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82100",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82100"
+      },
+      {
+        "url": "https://www.ibm.com/support/pages/node/7286562",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "IBM DataStage 路径穿越漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82100",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@us.ibm.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.6
+        }
+      ]
+    },
+    "cvss_score": 9.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
+    "cwe": "CWE-22",
+    "description": "IBM DataStage 是 IBM 提供的商业化数据集成（ETL）组件，随 Cloud Pak for Data 交付，用于企业级数据的抽取、转换与加载，属于闭源软件，未公开源代码。\n受影响版本中，产品对用户提供的路径缺少限制，远程认证用户可提交包含路径穿越序列的请求越过受控目录边界（CWE-22），导致服务不可用，形成拒绝服务。\n修复版本中通过修复路径穿越问题，阻断认证用户越过受限目录的访问路径，消除拒绝服务风险；官方公告要求升级至 5.4 patch 5 或更高版本。",
+    "effects": [
+      {
+        "comp_name": "IBM DataStage on Cloud Pak for Data",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.4.0.0,5.4.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "路径遍历",
+    "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "last_modified_time": "2026-09-11",
+    "level": "Critical",
+    "mps_id": "MPS-vfdz-u10a",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-vfdz-u10a",
+        "name": "https://www.oscs1024.com/hd/MPS-vfdz-u10a"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82100",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82100"
+      },
+      {
+        "url": "https://www.ibm.com/support/pages/node/7286562",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "IBM DataStage 路径穿越漏洞"
+  },
+  "first_saved_at": "2026-09-11T00:46:06+00:00"
+}

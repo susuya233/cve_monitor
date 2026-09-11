@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-07T17:02:48+00:00",
+  "saved_at": "2026-09-11T00:46:12+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-xlnp-d0zk",
+  "source_page": "https://www.oscs1024.com/hd/MPS-79ru-wpx2",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,36 +21,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-80127",
+    "cve_id": "CVE-2026-82098",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security_alert@emc.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "source": "psirt@us.ibm.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 8.8
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-78",
-    "description": "Dell Secure Connect Gateway 是戴尔提供的企业监控与支持网关产品，以 Application 应用版和 Appliance 虚拟设备两种形态交付，用于监测戴尔服务器、存储和网络设备并采集故障遥测，源码未公开。\n受影响版本中，产品对操作系统命令所用特殊元素过滤不完整，已具备高权限且可远程访问的攻击者可将恶意内容注入操作系统命令并提升权限。\n修复版本中通过官方安全更新收紧命令参数处理，切断该命令注入路径；Application 升级至 5.36.00.00 及以上，Appliance 升级至 5.36.00.16 及以上。",
+    "description": "IBM DataStage on Cloud Pak for Data 是 IBM 商业闭源的数据集成组件，运行于 IBM Software Hub（原 Cloud Pak for Data）平台，用于企业级数据的抽取、转换与加载。\n受影响版本中，5.4.0.0 对进入操作系统命令执行路径的输入缺乏充分的中和处理（CWE-78），远程认证攻击者在可控制输入中拼接命令分隔符等特殊元素后，命令语义被改变并以服务进程权限执行任意命令，可导致机密性、完整性与可用性全面失陷。\n修复版本中通过对命令相关输入的中和与校验加固切断注入路径，IBM 于 2026-09-07 发布官方公告，修复载体为 5.4 Patch 5 及以上版本，升级后任意命令执行风险消除。",
     "effects": [
       {
-        "comp_name": "secure_connect_gateway",
+        "comp_name": "IBM DataStage on Cloud Pak for Data",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,5.36.00.00)",
-            "min_fixed_version": "5.36.00.00",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "(-∞,5.36.00.16)",
-            "min_fixed_version": "5.36.00.16",
+            "affected_version": "[5.4.0.0,5.4.0.0]",
+            "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -66,29 +59,31 @@
     "fix_suggestion": "建议修复",
     "kind": "OS命令注入",
     "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
-    "last_modified_time": "2026-09-08",
+    "last_modified_time": "2026-09-11",
     "level": "High",
-    "mps_id": "MPS-xlnp-d0zk",
+    "mps_id": "MPS-79ru-wpx2",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-08",
+    "published_time": "2026-09-11",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-xlnp-d0zk",
-        "name": "https://www.oscs1024.com/hd/MPS-xlnp-d0zk"
+        "url": "https://www.oscs1024.com/hd/MPS-79ru-wpx2",
+        "name": "https://www.oscs1024.com/hd/MPS-79ru-wpx2"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80127",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80127"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82098",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82098"
       },
       {
-        "url": "https://www.dell.com/support/kbdoc/en-in/000503426/dsa-2026-382-security-update-for-dell-secure-connect-gateway-virtual-edition-multiple-vulnerabilities?msockid=3021cac2195069ed3194ddad186a68f9",
+        "url": "https://www.ibm.com/support/pages/node/7286562",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "Dell SCG命令注入漏洞",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DataStage命令注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -108,36 +103,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-80127",
+    "cve_id": "CVE-2026-82098",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security_alert@emc.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "source": "psirt@us.ibm.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 8.8
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-78",
-    "description": "Dell Secure Connect Gateway 是戴尔提供的企业监控与支持网关产品，以 Application 应用版和 Appliance 虚拟设备两种形态交付，用于监测戴尔服务器、存储和网络设备并采集故障遥测，源码未公开。\n受影响版本中，产品对操作系统命令所用特殊元素过滤不完整，已具备高权限且可远程访问的攻击者可将恶意内容注入操作系统命令并提升权限。\n修复版本中通过官方安全更新收紧命令参数处理，切断该命令注入路径；Application 升级至 5.36.00.00 及以上，Appliance 升级至 5.36.00.16 及以上。",
+    "description": "IBM DataStage on Cloud Pak for Data 是 IBM 商业闭源的数据集成组件，运行于 IBM Software Hub（原 Cloud Pak for Data）平台，用于企业级数据的抽取、转换与加载。\n受影响版本中，5.4.0.0 对进入操作系统命令执行路径的输入缺乏充分的中和处理（CWE-78），远程认证攻击者在可控制输入中拼接命令分隔符等特殊元素后，命令语义被改变并以服务进程权限执行任意命令，可导致机密性、完整性与可用性全面失陷。\n修复版本中通过对命令相关输入的中和与校验加固切断注入路径，IBM 于 2026-09-07 发布官方公告，修复载体为 5.4 Patch 5 及以上版本，升级后任意命令执行风险消除。",
     "effects": [
       {
-        "comp_name": "secure_connect_gateway",
+        "comp_name": "IBM DataStage on Cloud Pak for Data",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,5.36.00.00)",
-            "min_fixed_version": "5.36.00.00",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          },
-          {
-            "affected_version": "(-∞,5.36.00.16)",
-            "min_fixed_version": "5.36.00.16",
+            "affected_version": "[5.4.0.0,5.4.0.0]",
+            "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -153,29 +141,31 @@
     "fix_suggestion": "Recommend",
     "kind": "OS命令注入",
     "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
-    "last_modified_time": "2026-09-08",
+    "last_modified_time": "2026-09-11",
     "level": "High",
-    "mps_id": "MPS-xlnp-d0zk",
+    "mps_id": "MPS-79ru-wpx2",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-08",
+    "published_time": "2026-09-11",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-xlnp-d0zk",
-        "name": "https://www.oscs1024.com/hd/MPS-xlnp-d0zk"
+        "url": "https://www.oscs1024.com/hd/MPS-79ru-wpx2",
+        "name": "https://www.oscs1024.com/hd/MPS-79ru-wpx2"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80127",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80127"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82098",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82098"
       },
       {
-        "url": "https://www.dell.com/support/kbdoc/en-in/000503426/dsa-2026-382-security-update-for-dell-secure-connect-gateway-virtual-edition-multiple-vulnerabilities?msockid=3021cac2195069ed3194ddad186a68f9",
+        "url": "https://www.ibm.com/support/pages/node/7286562",
         "name": ""
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "Dell SCG命令注入漏洞"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DataStage命令注入漏洞"
   },
-  "first_saved_at": "2026-09-07T17:02:48+00:00"
+  "first_saved_at": "2026-09-11T00:46:12+00:00"
 }
