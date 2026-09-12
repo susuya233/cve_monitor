@@ -1523,5 +1523,15 @@
   "8ef6b9c17a8287466cf53b5e2be285ed206dd8cb": "stb_vorbis 通过 1.22 通过码本被乘数实现堆缓冲区溢出",
   "7bdea7cf139b2a66641a4bd5c0af91cde35a9309": "stb_vorbis 到 1.22 包含 start_decoder() 中的堆缓冲区溢出，其中码本被乘数分配大小从 size_t 截断为 int。攻击者可以制作具有大条目和维度值的恶意 Ogg Vorbis 文件，以触发越界写入，从而导致进程崩溃或堆损坏。",
   "951ec174a06975608b18e415cbf7dcfb25e00dda": "GitLab 中不可信数据的反序列化",
-  "bfc4d713a22432464dccec7f4abcaf82ece907e2": "GitLab 已修复了 GitLab EE 中影响 19.1.8 之前的 18.3、19.2.6 之前的 19.2 和 19.3.2 之前的 19.3 的所有版本的问题，该问题在某些情况下可能允许具有 Duo Chat 访问权限的经过身份验证的用户使用特制的 GraphQL 订阅参数来绕过序列化并执行服务器对象查找，从而获取高级搜索实例配置和敏感凭据。"
+  "bfc4d713a22432464dccec7f4abcaf82ece907e2": "GitLab 已修复了 GitLab EE 中影响 19.1.8 之前的 18.3、19.2.6 之前的 19.2 和 19.3.2 之前的 19.3 的所有版本的问题，该问题在某些情况下可能允许具有 Duo Chat 访问权限的经过身份验证的用户使用特制的 GraphQL 订阅参数来绕过序列化并执行服务器对象查找，从而获取高级搜索实例配置和敏感凭据。",
+  "4e64ec5c3ff3a0ba63581ac2be11fcdcf5dae324": "1.0.32 之前的 MCPhub OAuth 2.0 身份验证绕过",
+  "b237cf9fed7a9961d9d1e4c1a4f04c74a47afd4e": "1.0.32 之前的 MCPhub 在其嵌入式 OAuth 2.0 授权服务器中包含身份验证绕过漏洞，其中默认禁用客户端身份验证，并且 PKCE 强制执行是可选的。通过拦截获得授权代码的攻击者可以将其兑换为访问令牌，而无需提供客户端密钥或 PKCE 验证程序，从而获得对受害者帐户及其权限的访问权限。",
+  "c1d59d91a5a61bd8f9a777a521669037410babb9": "CVE-2026-78159漏洞",
+  "c0437b4ebf162fc79657d173438013b88c2b125c": "WordPress 的事件日历插件在 6.17.3 及之前的所有版本中都容易通过 parse_array 函数受到远程代码执行的攻击。这是由于对小部件“类”映射的验证不足，允许普通数组有效负载绕过 is_safe_widget_instance() 对象检查并到达 Element_Classes::parse_array() 中的可调用调用接收器。这使得未经身份验证的攻击者可以在服务器上执行代码。利用该漏洞需要目标网站在tribe_events帖子上启用评论，并且至少提交一条包含精心设计的wp:legacy-widget块的评论，因为当do_blocks()处理包括评论区域的单事件HTML时，会触发攻击链。",
+  "874be668ab239a97dee58ecc277e2455990ebd93": "CVE-2026-78006漏洞",
+  "69b160b321d7ad8373bcafe631756354a922f78c": "WordPress 的事件日历插件在 6.17.4 及之前的所有版本中都容易通过 is_safe_widget_instance 函数受到远程代码执行的攻击。这是由于 is_safe_widget_instance 中的保护不足造成的，可以绕过它，因为 PHP 在预解析期间会触发魔术方法，并在达到 unserialize() 之前结合 enable_rendering_widget_copied() 伪造有效的 wp_hash 完整性属性。这使得未经身份验证的攻击者可以在服务器上执行代码。无需身份验证或批准即可利用此漏洞，因为该插件的 V2 单事件模板在缓冲的评论 HTML 上运行 do_blocks()，并且 WordPress 返回一个审核哈希 URL，允许未经身份验证的评论者立即查看自己的待处理评论，从而在发生任何审核之前将注入的块标记传递到易受攻击的代码路径。这确实需要启用评论并在事件中可见。",
+  "46be7f424d301b4cdff332a1bafaa488afb70d82": "GEO my WP <= 4.5.5.3 - 未经身份验证的本地文件包含",
+  "f3acbd65b019d5e85da54332beaa0651953be8bb": "WordPress 的 GEO my WP 插件在 4.5.5.3 及之前的所有版本中都容易通过 gmw_posts_locator_ajax_info_window_loader 函数受到本地文件包含的影响。这使得未经身份验证的攻击者可以在服务器上包含并执行任意 .php 文件，从而允许执行这些文件中的任何 PHP 代码。这可用于绕过访问控制、获取敏感数据或在可以上传和包含 .php 文件类型的情况下实现代码执行。在安装 PEAR 且启用了 register_argc_argv 的环境中，可以利用此文件包含来编写和执行任意 PHP 代码，从而实现完全远程代码执行。",
+  "ff04f93a773bdaa638f286c356c1d349b02e93bb": "CVE-2026-78175漏洞",
+  "c7ae4c09deb17baa899f616ad84350cc2b70a3f5": "Tutor LMS – WordPress 的电子学习和在线课程解决方案插件在 4.0.7 及之前的所有版本中都容易通过“tutor_save_withdraw_account” AJAX 处理程序的“withdraw_method_field”参数受到 PHP 对象注入攻击。这是因为处理程序缺乏任何功能或角色检查，仅依赖于随机数，同时还通过“esc_sql()”传递攻击者提供的值，在数据通过“update_user_meta()”序列化和存储之前，它会用 66 字节 HMAC 占位符令牌替换每个“%”字符；当稍后检索元时，占位符会折叠回单个“%”，使序列化字符串长度声明比实际内容大 65 个字节，并且由于数组键源自完全未转义的 POST 字段名称，“unserialize()”会过度读取攻击者控制的字节，从而允许注入任意序列化对象流。这使得具有订阅者级别及以上访问权限的经过身份验证的攻击者可以通过触发“GuzzleHttp\\Cookie\\FileCookieJar” POP 链在服务器上实现远程代码执行，该 POP 链可通过“TUTOR\\RestAPI”中的“spl_autoload_register”加载器访问，该加载器加载插件自己的捆绑 PayPal Composer 自动加载器，将攻击者控制的内容写入攻击者指定的文件名。当启用用户注册时，这有一个未经身份验证的途径，这对于学生和教师注册来说很常见，并且需要启用货币化功能。"
 }

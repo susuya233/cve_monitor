@@ -1,0 +1,219 @@
+{
+  "saved_at": "2026-09-12T11:53:43+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-e5ms-dotu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78006",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "WordPress 的事件日历插件在 6.17.4 及之前的所有版本中都容易通过 is_safe_widget_instance 函数受到远程代码执行的攻击。这是由于 is_safe_widget_instance 中的保护不足造成的，可以绕过它，因为 PHP 在预解析期间会触发魔术方法，并在达到 unserialize() 之前结合 enable_rendering_widget_copied() 伪造有效的 wp_hash 完整性属性。这使得未经身份验证的攻击者可以在服务器上执行代码。无需身份验证或批准即可利用此漏洞，因为该插件的 V2 单事件模板在缓冲的评论 HTML 上运行 do_blocks()，并且 WordPress 返回一个审核哈希 URL，允许未经身份验证的评论者立即查看自己的待处理评论，从而在发生任何审核之前将注入的块标记传递到易受攻击的代码路径。这确实需要启用评论并在事件中可见。",
+    "effects": [
+      {
+        "comp_name": "The Events Calendar",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(0,6.17.4]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-09-12",
+    "level": "Critical",
+    "mps_id": "MPS-e5ms-dotu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-e5ms-dotu",
+        "name": "https://www.oscs1024.com/hd/MPS-e5ms-dotu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78006",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78006"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/a0c67346-534a-4b67-a904-fa148703707a?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/Tribe/Views/V2/Template_Bootstrap.php#L213",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/Tribe/Views/V2/Widgets/Service_Provider.php#L295",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/Tribe/Views/V2/Widgets/Service_Provider.php#L255",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/Tribe/Collections/Lazy_Post_Collection.php#L82",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/common/src/Tribe/Utils/Collection_Trait.php#L247",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3690576%40the-events-calendar&new=3690576%40the-events-calendar",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-78006漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78006",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "The The Events Calendar plugin for WordPress is vulnerable to Remote Code Execution in all versions up to, and including, 6.17.4 via the is_safe_widget_instance function. This is due to insufficient protection in is_safe_widget_instance, which can be bypassed because PHP fires magic methods during its pre-parse, combined with enable_rendering_widget_copied() forging a valid wp_hash integrity attribute before unserialize() is reached. This makes it possible for unauthenticated attackers to execute code on the server. This is exploitable without authentication or approval because the plugin's V2 single-event template runs do_blocks() over buffered comment HTML, and WordPress returns a moderation-hash URL that allows an unauthenticated commenter to immediately view their own pending comment, delivering the injected block markup to the vulnerable code path before any moderation occurs. This does require comments to be enabled and visible on events.",
+    "effects": [
+      {
+        "comp_name": "The Events Calendar",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(0,6.17.4]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-09-12",
+    "level": "Critical",
+    "mps_id": "MPS-e5ms-dotu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-e5ms-dotu",
+        "name": "https://www.oscs1024.com/hd/MPS-e5ms-dotu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78006",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78006"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/a0c67346-534a-4b67-a904-fa148703707a?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/Tribe/Views/V2/Template_Bootstrap.php#L213",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/Tribe/Views/V2/Widgets/Service_Provider.php#L295",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/Tribe/Views/V2/Widgets/Service_Provider.php#L255",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/Tribe/Collections/Lazy_Post_Collection.php#L82",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/common/src/Tribe/Utils/Collection_Trait.php#L247",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3690576%40the-events-calendar&new=3690576%40the-events-calendar",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-78006漏洞"
+  },
+  "first_saved_at": "2026-09-12T11:53:43+00:00"
+}

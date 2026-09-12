@@ -1,0 +1,219 @@
+{
+  "saved_at": "2026-09-12T11:53:47+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-rugs-a12c",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78175",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "Tutor LMS – WordPress 的电子学习和在线课程解决方案插件在 4.0.7 及之前的所有版本中都容易通过“tutor_save_withdraw_account” AJAX 处理程序的“withdraw_method_field”参数受到 PHP 对象注入攻击。这是因为处理程序缺乏任何功能或角色检查，仅依赖于随机数，同时还通过“esc_sql()”传递攻击者提供的值，在数据通过“update_user_meta()”序列化和存储之前，它会用 66 字节 HMAC 占位符令牌替换每个“%”字符；当稍后检索元时，占位符会折叠回单个“%”，使序列化字符串长度声明比实际内容大 65 个字节，并且由于数组键源自完全未转义的 POST 字段名称，“unserialize()”会过度读取攻击者控制的字节，从而允许注入任意序列化对象流。这使得具有订阅者级别及以上访问权限的经过身份验证的攻击者可以通过触发“GuzzleHttp\\Cookie\\FileCookieJar” POP 链在服务器上实现远程代码执行，该 POP 链可通过“TUTOR\\RestAPI”中的“spl_autoload_register”加载器访问，该加载器加载插件自己的捆绑 PayPal Composer 自动加载器，将攻击者控制的内容写入攻击者指定的文件名。当启用用户注册时，这有一个未经身份验证的途径，这对于学生和教师注册来说很常见，并且需要启用货币化功能。",
+    "effects": [
+      {
+        "comp_name": "Tutor LMS – eLearning and online course solution",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(0,4.0.7]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-09-12",
+    "level": "High",
+    "mps_id": "MPS-rugs-a12c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-rugs-a12c",
+        "name": "https://www.oscs1024.com/hd/MPS-rugs-a12c"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78175",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78175"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/d0077d56-11e7-4e74-abe0-63e81db67be3?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/tutor/tags/4.0.7/classes/Withdraw.php#L213",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/tutor/tags/4.0.7/classes/Withdraw.php#L217",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/tutor/tags/4.0.7/classes/Withdraw.php#L204",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/tutor/tags/4.0.7/classes/Withdraw.php#L44",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/tutor/tags/4.0.7/classes/RestAPI.php#L190",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3690454%40tutor&new=3690454%40tutor",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-78175漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78175",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "The Tutor LMS – eLearning and online course solution plugin for WordPress is vulnerable to PHP Object Injection in all versions up to, and including, 4.0.7 via the `withdraw_method_field` parameter of the `tutor_save_withdraw_account` AJAX handler. This is due to the handler lacking any capability or role check, relying solely on a nonce, while also passing attacker-supplied values through `esc_sql()`, which replaces every `%` character with a 66-byte HMAC placeholder token before the data is serialized and stored via `update_user_meta()`; when the meta is later retrieved, the placeholder is collapsed back to a single `%`, leaving serialized string length declarations 65 bytes greater than the actual content, and because array keys originate from entirely unescaped POST field names, `unserialize()` over-reads into attacker-controlled bytes, allowing injection of an arbitrary serialized object stream. This makes it possible for authenticated attackers, with subscriber-level access and above, to achieve remote code execution on the server by triggering the `GuzzleHttp\\Cookie\\FileCookieJar` POP chain, reachable via the `spl_autoload_register` loader in `TUTOR\\RestAPI` which loads the plugin's own bundled PayPal Composer autoloader, writing attacker-controlled content to an attacker-specified filename. This has an unauthenticated pathway when user registration is enabled, which is common for students and teachers to register, and it requires the monetization feature to be enabled.",
+    "effects": [
+      {
+        "comp_name": "Tutor LMS – eLearning and online course solution",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(0,4.0.7]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-09-12",
+    "level": "High",
+    "mps_id": "MPS-rugs-a12c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-rugs-a12c",
+        "name": "https://www.oscs1024.com/hd/MPS-rugs-a12c"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78175",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78175"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/d0077d56-11e7-4e74-abe0-63e81db67be3?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/tutor/tags/4.0.7/classes/Withdraw.php#L213",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/tutor/tags/4.0.7/classes/Withdraw.php#L217",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/tutor/tags/4.0.7/classes/Withdraw.php#L204",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/tutor/tags/4.0.7/classes/Withdraw.php#L44",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/tutor/tags/4.0.7/classes/RestAPI.php#L190",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3690454%40tutor&new=3690454%40tutor",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-78175漏洞"
+  },
+  "first_saved_at": "2026-09-12T11:53:47+00:00"
+}

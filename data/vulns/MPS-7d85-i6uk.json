@@ -1,0 +1,219 @@
+{
+  "saved_at": "2026-09-12T11:53:39+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-7d85-i6uk",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78159",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "WordPress 的事件日历插件在 6.17.3 及之前的所有版本中都容易通过 parse_array 函数受到远程代码执行的攻击。这是由于对小部件“类”映射的验证不足，允许普通数组有效负载绕过 is_safe_widget_instance() 对象检查并到达 Element_Classes::parse_array() 中的可调用调用接收器。这使得未经身份验证的攻击者可以在服务器上执行代码。利用该漏洞需要目标网站在tribe_events帖子上启用评论，并且至少提交一条包含精心设计的wp:legacy-widget块的评论，因为当do_blocks()处理包括评论区域的单事件HTML时，会触发攻击链。",
+    "effects": [
+      {
+        "comp_name": "The Events Calendar",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(0,6.17.3]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-09-12",
+    "level": "Critical",
+    "mps_id": "MPS-7d85-i6uk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-7d85-i6uk",
+        "name": "https://www.oscs1024.com/hd/MPS-7d85-i6uk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78159",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78159"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/cc2ccfeb-6df6-4fee-96a5-94f8dd131f7c?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/common/src/Tribe/Utils/Element_Classes.php#L211",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/views/v2/components/messages.php#L30",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/Tribe/Views/V2/Widgets/Service_Provider.php#L279",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/Tribe/Views/V2/Template_Bootstrap.php#L214",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3667866%40the-events-calendar&new=3667866%40the-events-calendar",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3667867%40the-events-calendar&new=3667867%40the-events-calendar",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-78159漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78159",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "The The Events Calendar plugin for WordPress is vulnerable to Remote Code Execution in all versions up to, and including, 6.17.3 via the parse_array function. This is due to insufficient validation of the widget 'classes' map, allowing a plain-array payload to bypass the is_safe_widget_instance() object check and reach the callable-invocation sink in Element_Classes::parse_array(). This makes it possible for unauthenticated attackers to execute code on the server. Exploitation requires that the targeted site has comments enabled on tribe_events posts and that at least one comment containing a crafted wp:legacy-widget block has been submitted, as the attack chain is triggered when do_blocks() processes the single-event HTML including the comment area.",
+    "effects": [
+      {
+        "comp_name": "The Events Calendar",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(0,6.17.3]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-09-12",
+    "level": "Critical",
+    "mps_id": "MPS-7d85-i6uk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-7d85-i6uk",
+        "name": "https://www.oscs1024.com/hd/MPS-7d85-i6uk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78159",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78159"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/cc2ccfeb-6df6-4fee-96a5-94f8dd131f7c?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/common/src/Tribe/Utils/Element_Classes.php#L211",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/views/v2/components/messages.php#L30",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/Tribe/Views/V2/Widgets/Service_Provider.php#L279",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/the-events-calendar/tags/6.17.3/src/Tribe/Views/V2/Template_Bootstrap.php#L214",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3667866%40the-events-calendar&new=3667866%40the-events-calendar",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3667867%40the-events-calendar&new=3667867%40the-events-calendar",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-78159漏洞"
+  },
+  "first_saved_at": "2026-09-12T11:53:39+00:00"
+}
