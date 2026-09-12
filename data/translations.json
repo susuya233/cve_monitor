@@ -1537,5 +1537,13 @@
   "e3b866e71979401a125bb03de1d70a887b913b74": "vLLM before 0.28.0 Denial of Service via Audio Header",
   "4d1b347ce56dd9b8edbf61cfbb974c6a24688a17": "vLLM versions before 0.28.0 fail to validate audio sample rate headers in the transcription endpoint, allowing authenticated clients to bypass duration checks. Attackers can submit forged FLAC headers with inflated sample rates to trigger excessive memory allocation and crash the API server process affecting all tenants.",
   "adaea927250026098ff40be026d8172f28ba4578": "vLLM before 0.28.0 Remote Code Execution via LlavaOnevision2 processor",
-  "9c16b08ea08a17973a5ed0f64c88819341ea4dbd": "vLLM before 0.28.0 contains a remote code execution vulnerability in the LlavaOnevision2 processor loader that ignores the trust_remote_code parameter when loading remote processor classes. Attackers can craft a malicious model with arbitrary code in processing_llava_onevision2.py that executes with vLLM process authority even when trust_remote_code is set to False."
+  "9c16b08ea08a17973a5ed0f64c88819341ea4dbd": "vLLM before 0.28.0 contains a remote code execution vulnerability in the LlavaOnevision2 processor loader that ignores the trust_remote_code parameter when loading remote processor classes. Attackers can craft a malicious model with arbitrary code in processing_llava_onevision2.py that executes with vLLM process authority even when trust_remote_code is set to False.",
+  "2c3d88050f02198a6813f32ce7587ff2087eb26a": "snappy-java 至 1.1.10.8 通过解压缩进行越界写入",
+  "7c49882d1aa8759c8c2111ada290bb3dd645a585": "snappy-java 到 1.1.10.8 在 Snappy.uncompress(ByteBuffer, ByteBuffer) 中包含越界写入漏洞，因为目标缓冲区容量从未根据解压缩大小进行验证。攻击者可以提供有效的压缩数据，这些数据解压缩后的大小大于目标缓冲区，从而导致写入超出缓冲区边界并导致 JVM 终止。",
+  "5a53acabcdfea75735ea76e5fd8888e42567b147": "zstd-jni 1.2.0 到 1.5.7-13 通过 ZstdDictDecompress 越界读取",
+  "f4792193c86139865262e97a49524adbbce05931": "zstd-jni 版本 1.2.0 到 1.5.7-13 在 ZstdDictDecompress 构造函数中包含越界读取漏洞，因为偏移量和长度参数从未针对字典数组边界进行验证。攻击者可以提供任意偏移量或长度值来读取超出所提供数组末尾的内存，从而可能导致 JVM 终止。",
+  "9013f935690c23d5691aa2a81697f23228948a98": "sngrep 至 1.8.4 通过 SIP 标头的堆栈缓冲区溢出",
+  "d6ae40a8e9121cdb2d552444254c89db5fd52df9": "当标头值超过 255 字节缓冲区限制时，sngrep 到 1.8.4 包含 SIP 属性格式化例程中的堆栈缓冲区溢出漏洞。攻击者可以制作带有超大 Call-ID、X-Call-ID 或其他标头字段的恶意 SIP 数据包，以溢出堆栈缓冲区并导致崩溃或在数据包解析和渲染期间执行任意代码。",
+  "9f960e83790b01d5881901f06ce4a6dd96841f46": "Freeciv 3.2.6 之前的 Freeciv 通过 worklist_load 发生堆缓冲区溢出",
+  "23ba1269830179e4db68480ab3bacbc80cbf4abc": "3.2.6 之前的 Freeciv 版本在处理声明的工作列表长度超过 64 个元素的固定数组界限的保存游戏文件时，worklist_load() 中包含堆缓冲区溢出。攻击者可以制作恶意的保存游戏文件，将条目数组写入相邻的堆分配结构字段，当用户或服务器操作员加载文件时，可能会损坏内存。"
 }
