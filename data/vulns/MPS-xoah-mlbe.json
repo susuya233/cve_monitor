@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-09-13T00:32:30+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xoah-mlbe",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90651",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:H/A:L",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:H/A:L",
+    "cwe": "CWE-295",
+    "description": "2.0.0之前的注册表模式下的套接字防火墙（socketdev/socket-registry-firewall）默认不验证上游TLS证书。当socket.yml中省略了api_ssl_verify和upstream_ssl_verify配置键时，生成的配置设置SOCKET_API_SSL_VERIFY='false'和UPSTREAM_SSL_VERIFY='false'，并且用于出站请求的OpenResty/Lua HTTP客户端接受任何证书，包括自签名和其他不受信任的证书，而不验证链。拦截 Socket Firewall 和 Socket API 或上游包注册表之间流量的攻击者可以提供精心设计的证书并修改传输中的响应，包括替换恶意包内容或更改防火墙强制执行的允许/阻止决策。设置 api_ssl_verify: true 和upstream_ssl_verify: true 启用验证；但是，在1.1.334之前的版本中，生成的nginx配置不会发出lua_ssl_trusted_certificate，因此如果不手动修补生成的配置，则无法成功使用验证。版本 2.0.0 将这两个设置的默认值更改为 true。",
+    "effects": [
+      {
+        "comp_name": "Socket Firewall",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(0,2.0.0)",
+            "min_fixed_version": "2.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "证书验证不恰当",
+    "kind_en": "证书验证不当",
+    "last_modified_time": "2026-09-13",
+    "level": "High",
+    "mps_id": "MPS-xoah-mlbe",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xoah-mlbe",
+        "name": "https://www.oscs1024.com/hd/MPS-xoah-mlbe"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90651",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90651"
+      },
+      {
+        "url": "https://github.com/SocketDev/socket-registry-firewall/releases/tag/v2.0.0",
+        "name": ""
+      },
+      {
+        "url": "https://docs.socket.dev/docs/registry-mode-configuration-reference",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-90651 漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90651",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:H/A:L",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:H/A:L",
+    "cwe": "CWE-295",
+    "description": "Socket Firewall (socketdev/socket-registry-firewall) in registry mode before 2.0.0 does not verify upstream TLS certificates by default. When the api_ssl_verify and upstream_ssl_verify configuration keys are omitted from socket.yml, the generated configuration sets SOCKET_API_SSL_VERIFY='false' and UPSTREAM_SSL_VERIFY='false', and the OpenResty/Lua HTTP client used for outbound requests accepts any certificate, including self-signed and otherwise untrusted certificates, without validating the chain. An attacker positioned to intercept traffic between Socket Firewall and the Socket API or an upstream package registry can present a crafted certificate and modify responses in transit, including substituting malicious package content or altering the allow/block decisions the firewall enforces. Setting api_ssl_verify: true and upstream_ssl_verify: true enables verification; however, in versions before 1.1.334, the generated nginx configuration did not emit lua_ssl_trusted_certificate, and thus verification could not be used successfully without manually patching the generated configuration. Version 2.0.0 changes the default for both settings to true.",
+    "effects": [
+      {
+        "comp_name": "Socket Firewall",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(0,2.0.0)",
+            "min_fixed_version": "2.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "证书验证不恰当",
+    "kind_en": "Improper Certificate Validation",
+    "last_modified_time": "2026-09-13",
+    "level": "High",
+    "mps_id": "MPS-xoah-mlbe",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xoah-mlbe",
+        "name": "https://www.oscs1024.com/hd/MPS-xoah-mlbe"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90651",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90651"
+      },
+      {
+        "url": "https://github.com/SocketDev/socket-registry-firewall/releases/tag/v2.0.0",
+        "name": ""
+      },
+      {
+        "url": "https://docs.socket.dev/docs/registry-mode-configuration-reference",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-90651 漏洞"
+  },
+  "first_saved_at": "2026-09-13T00:32:30+00:00"
+}
