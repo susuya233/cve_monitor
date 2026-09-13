@@ -1,0 +1,189 @@
+{
+  "saved_at": "2026-09-13T05:34:06+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-86qp-7i4b",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90678",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:H/A:L",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:H/A:L",
+    "cwe": "CWE-130",
+    "description": "在 HAProxy 3.3.0 到 3.4.4 以及 3.5-dev1 到 3.5-dev5 中发现了一个问题。利用该漏洞需要 HTTP/3 前端：HAProxy 必须使用 QUIC 支持构建并配置 QUIC 绑定侦听器，并且受影响的流量必须在重用连接上使用分块传输编码通过 HTTP/1.1 到达后端。在这些条件下，当 HTTP/3 请求不携带 Content-Length 标头时，HTTP/3 多路复用器会将 DATA 帧标头中声明的长度记入帧标头解码时、接收到有效负载之前的流端点的已知输入有效负载估计，并且该声明的长度将逐字发出作为 HTTP/1.1 块大小。远程未经身份验证的客户端声明的有效负载多于其传递的负载，然后结束流，导致 HAProxy 宣布一个大于其写入字节的块，并将连接返回到处于不同步状态的空闲池。结果是在重用的后端连接上潜在的 HTTP 请求走私：攻击者可以将请求放置在前端规则之外，例如基于路径的 http 请求拒绝，以便 HAProxy 的 HTTP 分析永远不会发现走私的请求，并且可能导致并发客户端的请求（包括其请求行和授权标头）被用作攻击者的请求正文并丢失。剥削不是确定性的；它取决于后端连接池的竞赛，在测试过程中大多数但不是全部试验都成功，并且可以自由重试。该机制在3.3-dev10中引入； 3.2.x 及更早版本不受影响。",
+    "effects": [
+      {
+        "comp_name": "HAProxy",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(3.4.0,3.4.4]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,3.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(3.3.0,3.3.14]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "长度参数不一致性处理不恰当",
+    "kind_en": "长度参数不一致处理不当",
+    "last_modified_time": "2026-09-13",
+    "level": "High",
+    "mps_id": "MPS-86qp-7i4b",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-86qp-7i4b",
+        "name": "https://www.oscs1024.com/hd/MPS-86qp-7i4b"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90678",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90678"
+      },
+      {
+        "url": "https://github.com/haproxy/haproxy/commit/86a4ebc761a278838e8cb06f3a292282ba704c65",
+        "name": "BUG/MAJOR: h3: reject H3 truncated frames"
+      },
+      {
+        "url": "http://git.haproxy.org/?p=haproxy.git;a=commit;h=86a4ebc761a278838e8cb06f3a292282ba704c65",
+        "name": ""
+      },
+      {
+        "url": "https://www.haproxy.org/download/3.5/src/CHANGELOG",
+        "name": "HAProxy 3.5-dev6 ChangeLog"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-90678漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90678",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:H/A:L",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:H/A:L",
+    "cwe": "CWE-130",
+    "description": "An issue was discovered in HAProxy 3.3.0 through 3.4.4 and in 3.5-dev1 through 3.5-dev5. Exploitation requires an HTTP/3 frontend: HAProxy must be built with QUIC support and configured with a QUIC bind listener, and the affected traffic must reach a backend over HTTP/1.1 using chunked transfer coding on a reused connection. Under those conditions, when an HTTP/3 request carries no Content-Length header, the HTTP/3 multiplexer credits the length declared in a DATA frame header to the stream endpoint's known-input-payload estimate at the moment the frame header is decoded, before the payload has been received, and that declared length is emitted verbatim as the HTTP/1.1 chunk size. A remote unauthenticated client that declares more payload than it delivers and then ends the stream causes HAProxy to announce a chunk larger than the bytes it writes and to return the connection to the idle pool in a desynchronized state. The result is potential HTTP request smuggling on reused backend connections: an attacker can place a request past a frontend rule such as a path-based http-request deny, so that the smuggled request is never seen by HAProxy's HTTP analysis, and can cause concurrent clients' requests, including their request lines and Authorization headers, to be consumed as the attacker's request body and lost. Exploitation is not deterministic; it depends on a race with backend connection pooling, succeeding in a majority of but not all trials during testing, and can be retried freely. The mechanism was introduced in 3.3-dev10; releases 3.2.x and earlier are unaffected.",
+    "effects": [
+      {
+        "comp_name": "HAProxy",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(3.4.0,3.4.4]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,3.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(3.3.0,3.3.14]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "长度参数不一致性处理不恰当",
+    "kind_en": "Improper Handling of Length Parameter Inconsistency",
+    "last_modified_time": "2026-09-13",
+    "level": "High",
+    "mps_id": "MPS-86qp-7i4b",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-86qp-7i4b",
+        "name": "https://www.oscs1024.com/hd/MPS-86qp-7i4b"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90678",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90678"
+      },
+      {
+        "url": "https://github.com/haproxy/haproxy/commit/86a4ebc761a278838e8cb06f3a292282ba704c65",
+        "name": "BUG/MAJOR: h3: reject H3 truncated frames"
+      },
+      {
+        "url": "http://git.haproxy.org/?p=haproxy.git;a=commit;h=86a4ebc761a278838e8cb06f3a292282ba704c65",
+        "name": ""
+      },
+      {
+        "url": "https://www.haproxy.org/download/3.5/src/CHANGELOG",
+        "name": "HAProxy 3.5-dev6 ChangeLog"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-90678漏洞"
+  },
+  "first_saved_at": "2026-09-13T05:34:06+00:00"
+}
