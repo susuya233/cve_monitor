@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-09-14T11:29:39+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-39lt-dshx",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90895",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "MISP 是开源威胁情报共享平台，交互式 CLI Shell 通过 CakePHP 命令 app/Console/cake CLI 在终端浏览和管理 MISP 数据。\n受影响版本中，CLIShell 独立实现访问控制，未复用 Web 应用的模型访问器。非宿主组织且非站点管理员用户执行 list feed 时不会附加 lookup_visible 过滤；view feed 未按 FeedsController::view() 校验宿主组织或站点管理员，完整 Feed 记录会被返回，Feed.headers 中的 HTTP 凭据会暴露；view server 会输出同步 authkey；view sharing_group 未调用 SharingGroup::checkIfAuthorised()；use 命令未先确认当前用户有权查看目标记录即写入导航上下文。\n修复版本中通过将 CLI 列表与详情查询改走与 Web 相同的 ACL 路径，新增 __fetchFeedDetail 拒绝未授权 Feed 详情并把 headers、authkey 列入 hiddenFields 隐藏或掩码，同时让 use 命令先经 __fetchDetail 校验可见性，切断 CLI 越权读取与凭据泄露。",
+    "effects": [
+      {
+        "comp_name": "MISP",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.5.46)",
+            "min_fixed_version": "2.5.46",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-09-14",
+    "level": "High",
+    "mps_id": "MPS-39lt-dshx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-39lt-dshx",
+        "name": "https://www.oscs1024.com/hd/MPS-39lt-dshx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90895",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90895"
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/cd9f548ed",
+        "name": "Security patch"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MISP CLI授权绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90895",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "MISP 是开源威胁情报共享平台，交互式 CLI Shell 通过 CakePHP 命令 app/Console/cake CLI 在终端浏览和管理 MISP 数据。\n受影响版本中，CLIShell 独立实现访问控制，未复用 Web 应用的模型访问器。非宿主组织且非站点管理员用户执行 list feed 时不会附加 lookup_visible 过滤；view feed 未按 FeedsController::view() 校验宿主组织或站点管理员，完整 Feed 记录会被返回，Feed.headers 中的 HTTP 凭据会暴露；view server 会输出同步 authkey；view sharing_group 未调用 SharingGroup::checkIfAuthorised()；use 命令未先确认当前用户有权查看目标记录即写入导航上下文。\n修复版本中通过将 CLI 列表与详情查询改走与 Web 相同的 ACL 路径，新增 __fetchFeedDetail 拒绝未授权 Feed 详情并把 headers、authkey 列入 hiddenFields 隐藏或掩码，同时让 use 命令先经 __fetchDetail 校验可见性，切断 CLI 越权读取与凭据泄露。",
+    "effects": [
+      {
+        "comp_name": "MISP",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.5.46)",
+            "min_fixed_version": "2.5.46",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-09-14",
+    "level": "High",
+    "mps_id": "MPS-39lt-dshx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-39lt-dshx",
+        "name": "https://www.oscs1024.com/hd/MPS-39lt-dshx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90895",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90895"
+      },
+      {
+        "url": "https://github.com/MISP/MISP/commit/cd9f548ed",
+        "name": "Security patch"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MISP CLI授权绕过漏洞"
+  },
+  "first_saved_at": "2026-09-14T11:29:39+00:00"
+}
