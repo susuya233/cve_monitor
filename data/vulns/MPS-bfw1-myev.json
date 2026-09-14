@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-14T17:25:51+00:00",
+  "saved_at": "2026-09-14T17:25:50+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-2023-7704",
+  "source_page": "https://www.oscs1024.com/hd/MPS-bfw1-myev",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -20,32 +20,39 @@
         "title": "如何预防XSS"
       }
     ],
-    "attack_vector_type": "Network",
     "cnvd_id": "",
-    "cve_id": "CVE-2023-28148",
+    "cve_id": "CVE-2026-90943",
     "cvss": {
       "cvssv31": [
         {
-          "source": "cve@mitre.org",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 8.7
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-79",
-    "description": "A bodyclass XSS issue was discovered in Paessler PRTG before 23.3.86.1520.",
+    "description": "parallax/filament-comments 是开源 Composer 组件，用于在 Laravel Filament 管理面板中为 Eloquent 模型添加评论能力。\n受影响版本中，已认证面板用户可通过 Livewire CommentsComponent 的 create 方法提交 comment 字段，组件将其原样写入数据库；comments.blade.php 使用 Str::of($comment->comment)->toHtmlString()（markdown 配置下先调用 markdown()）把正文变为 Htmlable，Blade 双花括号输出时不再转义，其他用户（含管理员）查看评论时会执行其中的脚本，进而导致会话令牌被窃取以及未授权操作。\n修复版本中通过在评论渲染前增加 HTML 净化切断脚本执行链。公开研究建议使用 Symfony HTML Sanitizer 白名单过滤事件处理器与危险 URI；截至 2026-09-14，官方 GitHub 仓库与 Packagist 均未发布含该修复的版本，3.0.0 及更早版本仍直接调用 toHtmlString() 输出。",
     "effects": [
       {
-        "comp_name": "prtg_network_monitor",
-        "ecosystem": "linux",
+        "comp_name": "parallax/filament-comments",
+        "ecosystem": "composer",
         "versions": [
           {
-            "affected_version": "(-∞,23.3.86.1520)",
-            "min_fixed_version": "23.3.86.1520",
-            "repository": "unmanaged",
+            "affected_version": "(-∞,3.0.0]",
+            "min_fixed_version": "",
+            "repository": "composer",
             "solutions": [],
             "upstream": true
           }
@@ -55,32 +62,53 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
-    "exploitability": "低",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "XSS",
     "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
-    "last_modified_time": "2026-09-14",
-    "level": "High",
-    "mps_id": "MPS-2023-7704",
+    "last_modified_time": "2026-09-15",
+    "level": "Critical",
+    "mps_id": "MPS-bfw1-myev",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-14",
+    "published_time": "2026-09-15",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-2023-7704",
-        "name": "https://www.oscs1024.com/hd/MPS-2023-7704"
+        "url": "https://www.oscs1024.com/hd/MPS-bfw1-myev",
+        "name": "https://www.oscs1024.com/hd/MPS-bfw1-myev"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-28148",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2023-28148"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90943",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90943"
+      },
+      {
+        "url": "https://hackindex.io/research/stored-xss-filament-comments-unescaped-rendering",
+        "name": "HackIndex: Stored XSS in parallax/filament-comments through unescaped comment rendering"
+      },
+      {
+        "url": "https://github.com/parallax/filament-comments/blob/3.0.0/resources/views/comments.blade.php",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/parallax/filament-comments/blob/3.0.0/src/Policies/FilamentCommentPolicy.php",
+        "name": ""
+      },
+      {
+        "url": "https://packagist.org/packages/parallax/filament-comments",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/parallax-filament-comments-through-3.0.0-stored-xss-via-comment-body",
+        "name": "VulnCheck Advisory: parallax filament-comments through 3.0.0 Stored XSS via Comment Body"
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "php",
+      "开源"
     ],
-    "title": "CVE-2023-28148漏洞",
+    "title": "filament-comments存储型XSS",
     "_translated": true
   },
   "detail_original": {
@@ -99,32 +127,39 @@
         "title": "如何预防XSS"
       }
     ],
-    "attack_vector_type": "Network",
     "cnvd_id": "",
-    "cve_id": "CVE-2023-28148",
+    "cve_id": "CVE-2026-90943",
     "cvss": {
       "cvssv31": [
         {
-          "source": "cve@mitre.org",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 8.7
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-79",
-    "description": "A bodyclass XSS issue was discovered in Paessler PRTG before 23.3.86.1520.",
+    "description": "parallax/filament-comments 是开源 Composer 组件，用于在 Laravel Filament 管理面板中为 Eloquent 模型添加评论能力。\n受影响版本中，已认证面板用户可通过 Livewire CommentsComponent 的 create 方法提交 comment 字段，组件将其原样写入数据库；comments.blade.php 使用 Str::of($comment->comment)->toHtmlString()（markdown 配置下先调用 markdown()）把正文变为 Htmlable，Blade 双花括号输出时不再转义，其他用户（含管理员）查看评论时会执行其中的脚本，进而导致会话令牌被窃取以及未授权操作。\n修复版本中通过在评论渲染前增加 HTML 净化切断脚本执行链。公开研究建议使用 Symfony HTML Sanitizer 白名单过滤事件处理器与危险 URI；截至 2026-09-14，官方 GitHub 仓库与 Packagist 均未发布含该修复的版本，3.0.0 及更早版本仍直接调用 toHtmlString() 输出。",
     "effects": [
       {
-        "comp_name": "prtg_network_monitor",
-        "ecosystem": "linux",
+        "comp_name": "parallax/filament-comments",
+        "ecosystem": "composer",
         "versions": [
           {
-            "affected_version": "(-∞,23.3.86.1520)",
-            "min_fixed_version": "23.3.86.1520",
-            "repository": "unmanaged",
+            "affected_version": "(-∞,3.0.0]",
+            "min_fixed_version": "",
+            "repository": "composer",
             "solutions": [],
             "upstream": true
           }
@@ -134,32 +169,53 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
-    "exploitability": "低",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "XSS",
     "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
-    "last_modified_time": "2026-09-14",
-    "level": "High",
-    "mps_id": "MPS-2023-7704",
+    "last_modified_time": "2026-09-15",
+    "level": "Critical",
+    "mps_id": "MPS-bfw1-myev",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-14",
+    "published_time": "2026-09-15",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-2023-7704",
-        "name": "https://www.oscs1024.com/hd/MPS-2023-7704"
+        "url": "https://www.oscs1024.com/hd/MPS-bfw1-myev",
+        "name": "https://www.oscs1024.com/hd/MPS-bfw1-myev"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-28148",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2023-28148"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90943",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90943"
+      },
+      {
+        "url": "https://hackindex.io/research/stored-xss-filament-comments-unescaped-rendering",
+        "name": "HackIndex: Stored XSS in parallax/filament-comments through unescaped comment rendering"
+      },
+      {
+        "url": "https://github.com/parallax/filament-comments/blob/3.0.0/resources/views/comments.blade.php",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/parallax/filament-comments/blob/3.0.0/src/Policies/FilamentCommentPolicy.php",
+        "name": ""
+      },
+      {
+        "url": "https://packagist.org/packages/parallax/filament-comments",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/parallax-filament-comments-through-3.0.0-stored-xss-via-comment-body",
+        "name": "VulnCheck Advisory: parallax filament-comments through 3.0.0 Stored XSS via Comment Body"
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "php",
+      "开源"
     ],
-    "title": "CVE-2023-28148漏洞"
+    "title": "filament-comments存储型XSS"
   },
-  "first_saved_at": "2026-09-14T05:39:06+00:00"
+  "first_saved_at": "2026-09-14T17:25:50+00:00"
 }
