@@ -1,0 +1,235 @@
+{
+  "saved_at": "2026-09-15T22:38:01+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4znd-8sg1",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-91939",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-502",
+    "description": "Cotonti 1.0.0 Comments 插件将 ci GET 参数传递给 unserialize()，而没有 allowed_classes 限制，允许未经身份验证的攻击者使用攻击者控制的属性实例化任意 PHP 类。攻击者可以通过精心设计的序列化负载来利用 PHP 对象注入来触发 gadget 链并实现数据库操作或代码执行。",
+    "effects": [
+      {
+        "comp_name": "cotonti_siena",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-09-16",
+    "level": "Critical",
+    "mps_id": "MPS-4znd-8sg1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-16",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4znd-8sg1",
+        "name": "https://www.oscs1024.com/hd/MPS-4znd-8sg1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-91939",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-91939"
+      },
+      {
+        "url": "https://github.com/Cotonti/Cotonti/issues/1888",
+        "name": "GitHub Issue #1888"
+      },
+      {
+        "url": "https://github.com/Cotonti/Cotonti/pull/1889",
+        "name": "Proposed fix PR #1889 (unmerged)"
+      },
+      {
+        "url": "https://github.com/Cotonti/Cotonti/blob/1.0.0/plugins/comments/inc/CommentsWidget.php",
+        "name": "CommentsWidget::run() at 1.0.0"
+      },
+      {
+        "url": "https://github.com/Cotonti/Cotonti/blob/1.0.0/plugins/comments/controllers/actions/DisplayAction.php",
+        "name": "AJAX display controller at 1.0.0"
+      },
+      {
+        "url": "https://github.com/Cotonti/Cotonti/blob/1.0.0/plugins/comments/comments.setup.php",
+        "name": "Default comments permissions at 1.0.0"
+      },
+      {
+        "url": "https://github.com/Cotonti/Cotonti",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/cotonti-1.0.0-comments-plugin-php-object-injection-via-ci-parameter",
+        "name": "VulnCheck Advisory: Cotonti 1.0.0 Comments Plugin PHP Object Injection via ci Parameter"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Cotonti 1.0.0 注释插件 通过 ci 参数进行 PHP 对象注入",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-91939",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-502",
+    "description": "Cotonti 1.0.0 Comments plugin passes the ci GET parameter to unserialize() without allowed_classes restriction, allowing unauthenticated attackers to instantiate arbitrary PHP classes with attacker-controlled properties. Attackers can exploit PHP object injection through crafted serialized payloads to trigger gadget chains and achieve database manipulation or code execution.",
+    "effects": [
+      {
+        "comp_name": "cotonti_siena",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-09-16",
+    "level": "Critical",
+    "mps_id": "MPS-4znd-8sg1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-16",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4znd-8sg1",
+        "name": "https://www.oscs1024.com/hd/MPS-4znd-8sg1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-91939",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-91939"
+      },
+      {
+        "url": "https://github.com/Cotonti/Cotonti/issues/1888",
+        "name": "GitHub Issue #1888"
+      },
+      {
+        "url": "https://github.com/Cotonti/Cotonti/pull/1889",
+        "name": "Proposed fix PR #1889 (unmerged)"
+      },
+      {
+        "url": "https://github.com/Cotonti/Cotonti/blob/1.0.0/plugins/comments/inc/CommentsWidget.php",
+        "name": "CommentsWidget::run() at 1.0.0"
+      },
+      {
+        "url": "https://github.com/Cotonti/Cotonti/blob/1.0.0/plugins/comments/controllers/actions/DisplayAction.php",
+        "name": "AJAX display controller at 1.0.0"
+      },
+      {
+        "url": "https://github.com/Cotonti/Cotonti/blob/1.0.0/plugins/comments/comments.setup.php",
+        "name": "Default comments permissions at 1.0.0"
+      },
+      {
+        "url": "https://github.com/Cotonti/Cotonti",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/cotonti-1.0.0-comments-plugin-php-object-injection-via-ci-parameter",
+        "name": "VulnCheck Advisory: Cotonti 1.0.0 Comments Plugin PHP Object Injection via ci Parameter"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Cotonti 1.0.0 Comments Plugin PHP Object Injection via ci Parameter"
+  },
+  "first_saved_at": "2026-09-15T22:38:01+00:00"
+}
