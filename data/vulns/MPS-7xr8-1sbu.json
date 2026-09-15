@@ -1,0 +1,141 @@
+{
+  "saved_at": "2026-09-15T10:51:14+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-7xr8-1sbu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-47424",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-693",
+    "description": "OpenAM是开源身份访问管理解决方案，提供身份认证、授权和联邦服务，其服务端脚本沙箱用于隔离用户脚本与JVM底层资源。\n受影响版本中，GroovySandboxValueFilter的onMethodCall方法缺少对ProcessGroovyMethods.execute()扩展方法的拦截检查。当脚本调用execute()方法时，ProcessGroovyMethods会在任何返回值过滤之前直接启动OS进程，导致沙箱的类allow/deny列表无法拦截该调用，脚本作者可借此在OpenAM JVM上执行任意操作系统命令。\n修复版本中通过在GroovySandboxValueFilter.onMethodCall中新增isProcessLaunchExtension检测逻辑，在方法分发前判断receiver类型是否为CharSequence、List或String[]数组，以及method是否为execute或通过invokeMethod调用的execute，命中条件时抛出SecurityException阻断进程执行。",
+    "effects": [
+      {
+        "comp_name": "org.openidentityplatform.openam:openam-scripting",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,16.1.1)",
+            "min_fixed_version": "16.1.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "保护机制失效",
+    "kind_en": "保护机制失效",
+    "last_modified_time": "2026-09-15",
+    "level": "High",
+    "mps_id": "MPS-7xr8-1sbu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-15",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/OpenIdentityPlatform/OpenAM/security/advisories/GHSA-69j4-qvqr-hpw3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-69j4-qvqr-hpw3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "OpenAM Groovy沙箱逃逸导致远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-47424",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-693",
+    "description": "OpenAM是开源身份访问管理解决方案，提供身份认证、授权和联邦服务，其服务端脚本沙箱用于隔离用户脚本与JVM底层资源。\n受影响版本中，GroovySandboxValueFilter的onMethodCall方法缺少对ProcessGroovyMethods.execute()扩展方法的拦截检查。当脚本调用execute()方法时，ProcessGroovyMethods会在任何返回值过滤之前直接启动OS进程，导致沙箱的类allow/deny列表无法拦截该调用，脚本作者可借此在OpenAM JVM上执行任意操作系统命令。\n修复版本中通过在GroovySandboxValueFilter.onMethodCall中新增isProcessLaunchExtension检测逻辑，在方法分发前判断receiver类型是否为CharSequence、List或String[]数组，以及method是否为execute或通过invokeMethod调用的execute，命中条件时抛出SecurityException阻断进程执行。",
+    "effects": [
+      {
+        "comp_name": "org.openidentityplatform.openam:openam-scripting",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,16.1.1)",
+            "min_fixed_version": "16.1.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "保护机制失效",
+    "kind_en": "Protection Mechanism Failure",
+    "last_modified_time": "2026-09-15",
+    "level": "High",
+    "mps_id": "MPS-7xr8-1sbu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-15",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/OpenIdentityPlatform/OpenAM/security/advisories/GHSA-69j4-qvqr-hpw3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-69j4-qvqr-hpw3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "OpenAM Groovy沙箱逃逸导致远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-09-15T10:51:14+00:00"
+}

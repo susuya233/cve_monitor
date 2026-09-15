@@ -1,0 +1,141 @@
+{
+  "saved_at": "2026-09-15T10:51:22+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-csft-e1n8",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-48717",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-285",
+    "description": "OpenAM 是开源身份管理与 OAuth2/OIDC 实现，其 OAuth2 模块在授权码兑换环节处理 PKCE 验证时存在逻辑缺陷。\n受影响版本中，当 OAuth2 Provider 的 codeVerifierEnforced 配置关闭（默认为 false）时，AuthorizationCodeGrantTypeHandler.handle() 方法仅在请求附带 code_verifier 参数时才校验 PKCE；若攻击者省略该参数，授权码关联的 code_challenge 完全不被验证，形成 PKCE 绕过。攻击者拦截授权码后可跳过 code_verifier 直接兑换令牌，对使用默认配置的公开客户端部署可直接劫持用户会话。\n修复版本中通过在 AuthorizationCodeGrantTypeHandler.handle() 中增加 storedCodeChallenge 非空判断，使所有带 code_challenge 签发的授权码在兑换时必须提供匹配的 code_verifier，彻底消除省略参数即可绕过验证的条件。",
+    "effects": [
+      {
+        "comp_name": "org.openidentityplatform.openam:openam-oauth2",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,16.1.1)",
+            "min_fixed_version": "16.1.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权机制不恰当",
+    "kind_en": "不当授权",
+    "last_modified_time": "2026-07-03",
+    "level": "Critical",
+    "mps_id": "MPS-csft-e1n8",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-15",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/OpenIdentityPlatform/OpenAM/security/advisories/GHSA-4v2w-2wqp-mc85",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-4v2w-2wqp-mc85",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "OpenAM OAuth PKCE 授权绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-48717",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-285",
+    "description": "OpenAM 是开源身份管理与 OAuth2/OIDC 实现，其 OAuth2 模块在授权码兑换环节处理 PKCE 验证时存在逻辑缺陷。\n受影响版本中，当 OAuth2 Provider 的 codeVerifierEnforced 配置关闭（默认为 false）时，AuthorizationCodeGrantTypeHandler.handle() 方法仅在请求附带 code_verifier 参数时才校验 PKCE；若攻击者省略该参数，授权码关联的 code_challenge 完全不被验证，形成 PKCE 绕过。攻击者拦截授权码后可跳过 code_verifier 直接兑换令牌，对使用默认配置的公开客户端部署可直接劫持用户会话。\n修复版本中通过在 AuthorizationCodeGrantTypeHandler.handle() 中增加 storedCodeChallenge 非空判断，使所有带 code_challenge 签发的授权码在兑换时必须提供匹配的 code_verifier，彻底消除省略参数即可绕过验证的条件。",
+    "effects": [
+      {
+        "comp_name": "org.openidentityplatform.openam:openam-oauth2",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,16.1.1)",
+            "min_fixed_version": "16.1.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权机制不恰当",
+    "kind_en": "Improper Authorization",
+    "last_modified_time": "2026-07-03",
+    "level": "Critical",
+    "mps_id": "MPS-csft-e1n8",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-15",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/OpenIdentityPlatform/OpenAM/security/advisories/GHSA-4v2w-2wqp-mc85",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-4v2w-2wqp-mc85",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "OpenAM OAuth PKCE 授权绕过漏洞"
+  },
+  "first_saved_at": "2026-09-15T10:51:22+00:00"
+}

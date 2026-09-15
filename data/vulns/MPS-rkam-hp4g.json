@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-09-15T10:51:13+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-rkam-hp4g",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62379",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-470",
+    "description": "OpenAM 的远程认证端点在默认配置下允许未认证请求控制待加载的 Java 类名，并在缺少类型校验时实例化该类，可导致远程代码执行和服务器完全失陷。\n受影响版本中，org.openidentityplatform.openam:openam-core 16.1.1 及更早版本的 AuthXMLUtils.createCustomCallback 方法从 /authservice 请求的 XML 元素读取 className，直接调用 Class.forName 和 newInstance 加载并实例化攻击者指定的类。\n修复版本中通过 16.1.2 所含提交 edcf968cad91a78b932dba4ad559ef94cbf35f5a 将类加载改为不执行静态初始化，并在实例化前使用 DSAMECallbackInterface.class.isAssignableFrom 校验类型；无法立即升级时可启用 sunRemoteAuthSecurityEnabled 并限制外部访问 /authservice。",
+    "effects": [
+      {
+        "comp_name": "org.openidentityplatform.openam:openam-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,16.1.2)",
+            "min_fixed_version": "16.1.2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用外部可控制的输入来选择类或代码（不安全的反射）",
+    "kind_en": "使用外部控制输入来选择类或代码（“不安全反射”）",
+    "last_modified_time": "2026-09-15",
+    "level": "Critical",
+    "mps_id": "MPS-rkam-hp4g",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-15",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/OpenIdentityPlatform/OpenAM/security/advisories/GHSA-wg5r-wc3x-39vc",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OpenIdentityPlatform/OpenAM/commit/edcf968cad91a78b932dba4ad559ef94cbf35f5a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OpenIdentityPlatform/OpenAM/releases/tag/16.1.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-wg5r-wc3x-39vc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "OpenAM不安全反射远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62379",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-470",
+    "description": "OpenAM 的远程认证端点在默认配置下允许未认证请求控制待加载的 Java 类名，并在缺少类型校验时实例化该类，可导致远程代码执行和服务器完全失陷。\n受影响版本中，org.openidentityplatform.openam:openam-core 16.1.1 及更早版本的 AuthXMLUtils.createCustomCallback 方法从 /authservice 请求的 XML 元素读取 className，直接调用 Class.forName 和 newInstance 加载并实例化攻击者指定的类。\n修复版本中通过 16.1.2 所含提交 edcf968cad91a78b932dba4ad559ef94cbf35f5a 将类加载改为不执行静态初始化，并在实例化前使用 DSAMECallbackInterface.class.isAssignableFrom 校验类型；无法立即升级时可启用 sunRemoteAuthSecurityEnabled 并限制外部访问 /authservice。",
+    "effects": [
+      {
+        "comp_name": "org.openidentityplatform.openam:openam-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,16.1.2)",
+            "min_fixed_version": "16.1.2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用外部可控制的输入来选择类或代码（不安全的反射）",
+    "kind_en": "Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection')",
+    "last_modified_time": "2026-09-15",
+    "level": "Critical",
+    "mps_id": "MPS-rkam-hp4g",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-15",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/OpenIdentityPlatform/OpenAM/security/advisories/GHSA-wg5r-wc3x-39vc",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OpenIdentityPlatform/OpenAM/commit/edcf968cad91a78b932dba4ad559ef94cbf35f5a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OpenIdentityPlatform/OpenAM/releases/tag/16.1.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-wg5r-wc3x-39vc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "OpenAM不安全反射远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-09-15T10:51:13+00:00"
+}
