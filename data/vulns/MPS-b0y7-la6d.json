@@ -3,7 +3,7 @@
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-2023-7704",
+  "source_page": "https://www.oscs1024.com/hd/MPS-b0y7-la6d",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -20,32 +20,31 @@
         "title": "如何预防XSS"
       }
     ],
-    "attack_vector_type": "Network",
     "cnvd_id": "",
-    "cve_id": "CVE-2023-28148",
+    "cve_id": "CVE-2026-81899",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "cve@mitre.org",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "source": "ff5b8ace-8b95-4078-9743-eac1ca5451de",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 7.3
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-79",
-    "description": "A bodyclass XSS issue was discovered in Paessler PRTG before 23.3.86.1520.",
+    "description": "Concrete CMS 是开源内容管理系统，以 MIT 许可证在 GitHub 发布，用于站点内容发布以及用户与用户组管理。\n受影响版本中，组文件夹新增接口 add_group_folder_node 与编辑接口 update_group_folder_node 将请求字段 treeNodeGroupFolderName 未经 HTML 中和即写入树节点名称。Members > Groups 仪表盘的组搜索网格由 Available::getGroupName() 在 group_folder 分支直接返回 getTreeNodeName()，并在 concrete/elements/groups/search.php 中以 Underscore 模板 <%=column.value%> 作为 HTML 输出。持有 Add Group Folder 权限的已认证用户可将脚本载荷存为文件夹名称，管理员打开 Groups 仪表盘时该载荷在其会话中执行，造成会话与令牌失窃以及管理员上下文内的任意操作。\n修复版本中通过在 Available::getGroupName() 的 group_folder 分支对节点名称调用 h() 做输出编码，使搜索网格不再把文件夹名称当作可执行标记渲染，阻断存储型跨站脚本。",
     "effects": [
       {
-        "comp_name": "prtg_network_monitor",
-        "ecosystem": "linux",
+        "comp_name": "concrete5/concrete5",
+        "ecosystem": "composer",
         "versions": [
           {
-            "affected_version": "(-∞,23.3.86.1520)",
-            "min_fixed_version": "23.3.86.1520",
-            "repository": "unmanaged",
+            "affected_version": "[9.0.0,9.5.3)",
+            "min_fixed_version": "9.5.3",
+            "repository": "composer",
             "solutions": [],
             "upstream": true
           }
@@ -55,32 +54,37 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
-    "exploitability": "低",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "XSS",
     "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
-    "last_modified_time": "2026-09-14",
+    "last_modified_time": "2026-09-16",
     "level": "High",
-    "mps_id": "MPS-2023-7704",
+    "mps_id": "MPS-b0y7-la6d",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-14",
+    "published_time": "2026-09-16",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-2023-7704",
-        "name": "https://www.oscs1024.com/hd/MPS-2023-7704"
+        "url": "https://www.oscs1024.com/hd/MPS-b0y7-la6d",
+        "name": "https://www.oscs1024.com/hd/MPS-b0y7-la6d"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-28148",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2023-28148"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81899",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81899"
+      },
+      {
+        "url": "https://documentation.concretecms.org/developers/introduction/version-history/953-release-notes",
+        "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "php",
+      "开源"
     ],
-    "title": "CVE-2023-28148漏洞",
+    "title": "Concrete CMS存储型XSS",
     "_translated": true
   },
   "detail_original": {
@@ -99,32 +103,31 @@
         "title": "如何预防XSS"
       }
     ],
-    "attack_vector_type": "Network",
     "cnvd_id": "",
-    "cve_id": "CVE-2023-28148",
+    "cve_id": "CVE-2026-81899",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "cve@mitre.org",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "source": "ff5b8ace-8b95-4078-9743-eac1ca5451de",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 7.3
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-79",
-    "description": "A bodyclass XSS issue was discovered in Paessler PRTG before 23.3.86.1520.",
+    "description": "Concrete CMS 是开源内容管理系统，以 MIT 许可证在 GitHub 发布，用于站点内容发布以及用户与用户组管理。\n受影响版本中，组文件夹新增接口 add_group_folder_node 与编辑接口 update_group_folder_node 将请求字段 treeNodeGroupFolderName 未经 HTML 中和即写入树节点名称。Members > Groups 仪表盘的组搜索网格由 Available::getGroupName() 在 group_folder 分支直接返回 getTreeNodeName()，并在 concrete/elements/groups/search.php 中以 Underscore 模板 <%=column.value%> 作为 HTML 输出。持有 Add Group Folder 权限的已认证用户可将脚本载荷存为文件夹名称，管理员打开 Groups 仪表盘时该载荷在其会话中执行，造成会话与令牌失窃以及管理员上下文内的任意操作。\n修复版本中通过在 Available::getGroupName() 的 group_folder 分支对节点名称调用 h() 做输出编码，使搜索网格不再把文件夹名称当作可执行标记渲染，阻断存储型跨站脚本。",
     "effects": [
       {
-        "comp_name": "prtg_network_monitor",
-        "ecosystem": "linux",
+        "comp_name": "concrete5/concrete5",
+        "ecosystem": "composer",
         "versions": [
           {
-            "affected_version": "(-∞,23.3.86.1520)",
-            "min_fixed_version": "23.3.86.1520",
-            "repository": "unmanaged",
+            "affected_version": "[9.0.0,9.5.3)",
+            "min_fixed_version": "9.5.3",
+            "repository": "composer",
             "solutions": [],
             "upstream": true
           }
@@ -134,32 +137,37 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
-    "exploitability": "低",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "XSS",
     "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
-    "last_modified_time": "2026-09-14",
+    "last_modified_time": "2026-09-16",
     "level": "High",
-    "mps_id": "MPS-2023-7704",
+    "mps_id": "MPS-b0y7-la6d",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-14",
+    "published_time": "2026-09-16",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-2023-7704",
-        "name": "https://www.oscs1024.com/hd/MPS-2023-7704"
+        "url": "https://www.oscs1024.com/hd/MPS-b0y7-la6d",
+        "name": "https://www.oscs1024.com/hd/MPS-b0y7-la6d"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-28148",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2023-28148"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81899",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81899"
+      },
+      {
+        "url": "https://documentation.concretecms.org/developers/introduction/version-history/953-release-notes",
+        "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "php",
+      "开源"
     ],
-    "title": "CVE-2023-28148漏洞"
+    "title": "Concrete CMS存储型XSS"
   },
-  "first_saved_at": "2026-09-14T05:39:06+00:00"
+  "first_saved_at": "2026-09-15T19:25:57+00:00"
 }

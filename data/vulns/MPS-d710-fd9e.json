@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-09-15T19:25:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d710-fd9e",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86466",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-346",
+    "description": "Apache Airflow FAB provider（apache-airflow-providers-fab）是 Apache Airflow 的开源 Flask-AppBuilder 认证管理扩展，用于 Web 登录及 OAuth 身份源对接，并提供 Authentik 等 OAuth 提供方。\n受影响版本中，FAB 认证管理器在 Authentik OAuth 路径上由 get_oauth_user_info 读取 resp[\"id_token\"]，再经 _get_authentik_token_info 调用 _validate_jwt。_validate_jwt 只用 JWKS 解码令牌并执行 claims.validate()，未设置 claims_options，不校验 issuer 与 audience。攻击者可将同一 Authentik 实例为其他客户端签发的有效 id_token 提交给 Airflow，并以令牌所声明用户身份完成认证。\n修复版本中通过在 _get_authentik_token_info 为 _validate_jwt 传入 claims_options，将 iss 固定为 OpenID 元数据或 client_kwargs 中的 issuer、将 aud 固定为已配置的 client_id，并在无法解析 issuer 时失败关闭，从而拒绝面向其他应用或不可信签发方的 id_token。",
+    "effects": [
+      {
+        "comp_name": "apache-airflow-providers-fab",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.9.0)",
+            "min_fixed_version": "3.9.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "源验证错误",
+    "kind_en": "来源验证错误",
+    "last_modified_time": "2026-09-16",
+    "level": "High",
+    "mps_id": "MPS-d710-fd9e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-16",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11932.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/airflow/pull/72645",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/airflow/commit/d1acf31b44299bf460954437d446e52f43f9eeb3",
+        "name": ""
+      },
+      {
+        "url": "https://airflow.apache.org/docs/apache-airflow-providers-fab/3.9.0/changelog.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-86466",
+        "name": ""
+      },
+      {
+        "url": "https://airflow.apache.org/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源",
+      "终端软件"
+    ],
+    "title": "FAB Authentik认证绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86466",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-346",
+    "description": "Apache Airflow FAB provider（apache-airflow-providers-fab）是 Apache Airflow 的开源 Flask-AppBuilder 认证管理扩展，用于 Web 登录及 OAuth 身份源对接，并提供 Authentik 等 OAuth 提供方。\n受影响版本中，FAB 认证管理器在 Authentik OAuth 路径上由 get_oauth_user_info 读取 resp[\"id_token\"]，再经 _get_authentik_token_info 调用 _validate_jwt。_validate_jwt 只用 JWKS 解码令牌并执行 claims.validate()，未设置 claims_options，不校验 issuer 与 audience。攻击者可将同一 Authentik 实例为其他客户端签发的有效 id_token 提交给 Airflow，并以令牌所声明用户身份完成认证。\n修复版本中通过在 _get_authentik_token_info 为 _validate_jwt 传入 claims_options，将 iss 固定为 OpenID 元数据或 client_kwargs 中的 issuer、将 aud 固定为已配置的 client_id，并在无法解析 issuer 时失败关闭，从而拒绝面向其他应用或不可信签发方的 id_token。",
+    "effects": [
+      {
+        "comp_name": "apache-airflow-providers-fab",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.9.0)",
+            "min_fixed_version": "3.9.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "源验证错误",
+    "kind_en": "Origin Validation Error",
+    "last_modified_time": "2026-09-16",
+    "level": "High",
+    "mps_id": "MPS-d710-fd9e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-16",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11932.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/airflow/pull/72645",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/airflow/commit/d1acf31b44299bf460954437d446e52f43f9eeb3",
+        "name": ""
+      },
+      {
+        "url": "https://airflow.apache.org/docs/apache-airflow-providers-fab/3.9.0/changelog.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-86466",
+        "name": ""
+      },
+      {
+        "url": "https://airflow.apache.org/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源",
+      "终端软件"
+    ],
+    "title": "FAB Authentik认证绕过"
+  },
+  "first_saved_at": "2026-09-15T19:25:52+00:00"
+}
