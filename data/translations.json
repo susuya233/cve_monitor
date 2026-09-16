@@ -1601,5 +1601,15 @@
   "49208cce3d8faa74efb542cb0a30af2278797a5b": "瓦锡兰 FOS - 硬编码密钥的板载使用",
   "9d5584d69d1f35c9b1fdf0b3e1d7179684a38933": "Wärtsilä FOS-Onboard 的机器人测试框架组件中存在硬编码加密客户端身份验证密钥漏洞。",
   "4f4c45ff4556d2c1182003ab209da23736235b0a": "Bookly AI会话IDOR漏洞",
-  "490882d4dbc1429b7b41fecc500b3078928aa133": "Always-Incorrect Control Flow Implementation"
+  "490882d4dbc1429b7b41fecc500b3078928aa133": "Always-Incorrect Control Flow Implementation",
+  "ccd6b13c141bb5abec16698ad54b4235f8cb6728": "microservices-platform 通过 6.0.0 通过 /users/password 进行未经验证的密码更改",
+  "f51ea86eb8519f73163e09f7537e33dbfeafab80": "zlt2000 microservices-platform 到 6.0.0 在 PUT /users/password 端点中包含未经验证的密码更改漏洞，该漏洞允许经过身份验证的用户通过忽略当前密码检查来更改任何帐户密码。攻击者可以在请求正文中提供任意用户 ID 和新密码，以覆盖任何非管理员帐户的凭据，而无需验证。",
+  "b92de235b3f9c1d1436f074f73b30ffde5cd8b6c": "CVE-2026-92466漏洞",
+  "f18dc990be1149f8a61d4e97ccd158641dd2ae28": "zlt2000 microservices-platform 到 6.0.0 包含缺少授权漏洞，其中 zlt.security.auth.urlPermission.enable 标志默认为 false，从而在身份验证后禁用所有权限检查。没有角色的经过身份验证的用户可以绕过禁用的授权强制执行来访问管理 API，包括用户管理、角色分配和 Elasticsearch 索引操作。",
+  "6009ae593d9cc735da5e47bd4649dd4037751cfc": "microservices-platform 通过 6.0.0 任意 Elasticsearch 索引 通过搜索中心读取",
+  "04200f07e96baecffd8b433e713c05565023944a": "zlt2000 microservices-platform 到 6.0.0 的搜索中心服务中包含一个授权绕过漏洞，允许经过身份验证的攻击者通过在 POST /search/{indexName} 和 GET /agg/requestStat/{indexName}/{routing} 路径变量中指定索引名称来读取任何 Elasticsearch 索引。攻击者可以查询包括 sys_user 在内的任意索引，以检索敏感用户记录和密码哈希，而无需适当的访问控制。",
+  "3c50950d6fc6931d59eddc92e550feded4f031ad": "microservices-platform 通过 6.0.0 通过丢失所有权检查任意文件删除",
+  "918086c1998252b9af32163b2a8068cde4a7a7c1": "zlt2000 微服务平台到 6.0.0 的文件中心模块 DELETE /files/{id} 端点中包含授权绕过漏洞，该端点不执行所有权验证。经过身份验证的攻击者可以通过 GET /files 枚举文件标识符，并通过向删除端点提供标识符来删除任意用户的文件和元数据。",
+  "541ba4e6bcf9cce5d6c1ceab8c5f5a470fdcf3af": "安全管理和日志服务器登录过程中的堆栈溢出",
+  "b06d552179bdb46938e66c5208cd65519cb28c35": "未经身份验证的登录过程中的堆栈溢出可能允许攻击者以 root 权限远程运行任意代码。"
 }
