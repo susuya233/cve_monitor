@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-16T05:42:15+00:00",
+  "saved_at": "2026-09-16T05:42:12+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-2023-7704",
+  "source_page": "https://www.oscs1024.com/hd/MPS-a9pg-j34c",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -20,13 +20,12 @@
         "title": "如何预防XSS"
       }
     ],
-    "attack_vector_type": "Network",
     "cnvd_id": "",
-    "cve_id": "CVE-2023-28148",
+    "cve_id": "CVE-2026-18595",
     "cvss": {
       "cvssv31": [
         {
-          "source": "cve@mitre.org",
+          "source": "security@wordfence.com",
           "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
           "severity": "high",
           "base_score": 7.2
@@ -36,15 +35,15 @@
     "cvss_score": 7.2,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
     "cwe": "CWE-79",
-    "description": "A bodyclass XSS issue was discovered in Paessler PRTG before 23.3.86.1520.",
+    "description": "WP-Lister Lite for eBay 是 WP Lab 发布的开源 WordPress 插件，用于将 WooCommerce 商店中的商品同步上架到 eBay。\n受影响版本中，对外 AJAX 定时任务入口 WPL_CronActions::cron_update_auctions 通过 wp_ajax_nopriv_wple_run_scheduled_tasks 对未登录访问者开放。当站点启用 Log to database 时，该函数把 $_REQUEST 写入 ebay_log 表；后台 listings 日志页 LogTable::column_ebay_id 从 request 字段正则提取 ItemID 后未转义输出，查询参数名与参数值均可携带脚本，未授权攻击者注入的内容会在管理员打开日志页时执行。\n修复版本中通过新增 wple_clean_log_payload() 在入库前对请求参数名执行 sanitize_key、对参数值执行 sanitize_text_field，并在日志表回显路径对提取值使用 esc_html，切断未过滤输入进入后台页面的存储型 XSS 链路。",
     "effects": [
       {
-        "comp_name": "prtg_network_monitor",
+        "comp_name": "wp-lister_lite_for_ebay",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,23.3.86.1520)",
-            "min_fixed_version": "23.3.86.1520",
+            "affected_version": "[0,3.8.10)",
+            "min_fixed_version": "3.8.10",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -55,32 +54,40 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
-    "exploitability": "低",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "XSS",
     "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
-    "last_modified_time": "2026-09-14",
+    "last_modified_time": "2026-09-16",
     "level": "High",
-    "mps_id": "MPS-2023-7704",
+    "mps_id": "MPS-a9pg-j34c",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-14",
+    "published_time": "2026-09-16",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-2023-7704",
-        "name": "https://www.oscs1024.com/hd/MPS-2023-7704"
+        "url": "https://www.oscs1024.com/hd/MPS-a9pg-j34c",
+        "name": "https://www.oscs1024.com/hd/MPS-a9pg-j34c"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-28148",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2023-28148"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18595",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18595"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/fe3302c0-4817-459e-a6f6-d5ead9c29fed?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3638342/wp-lister-for-ebay",
+        "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
       "应用软件"
     ],
-    "title": "CVE-2023-28148漏洞",
+    "title": "WP-Lister存储型XSS漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -99,13 +106,12 @@
         "title": "如何预防XSS"
       }
     ],
-    "attack_vector_type": "Network",
     "cnvd_id": "",
-    "cve_id": "CVE-2023-28148",
+    "cve_id": "CVE-2026-18595",
     "cvss": {
       "cvssv31": [
         {
-          "source": "cve@mitre.org",
+          "source": "security@wordfence.com",
           "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
           "severity": "high",
           "base_score": 7.2
@@ -115,15 +121,15 @@
     "cvss_score": 7.2,
     "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
     "cwe": "CWE-79",
-    "description": "A bodyclass XSS issue was discovered in Paessler PRTG before 23.3.86.1520.",
+    "description": "WP-Lister Lite for eBay 是 WP Lab 发布的开源 WordPress 插件，用于将 WooCommerce 商店中的商品同步上架到 eBay。\n受影响版本中，对外 AJAX 定时任务入口 WPL_CronActions::cron_update_auctions 通过 wp_ajax_nopriv_wple_run_scheduled_tasks 对未登录访问者开放。当站点启用 Log to database 时，该函数把 $_REQUEST 写入 ebay_log 表；后台 listings 日志页 LogTable::column_ebay_id 从 request 字段正则提取 ItemID 后未转义输出，查询参数名与参数值均可携带脚本，未授权攻击者注入的内容会在管理员打开日志页时执行。\n修复版本中通过新增 wple_clean_log_payload() 在入库前对请求参数名执行 sanitize_key、对参数值执行 sanitize_text_field，并在日志表回显路径对提取值使用 esc_html，切断未过滤输入进入后台页面的存储型 XSS 链路。",
     "effects": [
       {
-        "comp_name": "prtg_network_monitor",
+        "comp_name": "wp-lister_lite_for_ebay",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,23.3.86.1520)",
-            "min_fixed_version": "23.3.86.1520",
+            "affected_version": "[0,3.8.10)",
+            "min_fixed_version": "3.8.10",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -134,32 +140,40 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "",
-    "exploitability": "低",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "XSS",
     "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
-    "last_modified_time": "2026-09-14",
+    "last_modified_time": "2026-09-16",
     "level": "High",
-    "mps_id": "MPS-2023-7704",
+    "mps_id": "MPS-a9pg-j34c",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-14",
+    "published_time": "2026-09-16",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-2023-7704",
-        "name": "https://www.oscs1024.com/hd/MPS-2023-7704"
+        "url": "https://www.oscs1024.com/hd/MPS-a9pg-j34c",
+        "name": "https://www.oscs1024.com/hd/MPS-a9pg-j34c"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-28148",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2023-28148"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18595",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-18595"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/fe3302c0-4817-459e-a6f6-d5ead9c29fed?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3638342/wp-lister-for-ebay",
+        "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
       "应用软件"
     ],
-    "title": "CVE-2023-28148漏洞"
+    "title": "WP-Lister存储型XSS漏洞"
   },
-  "first_saved_at": "2026-09-14T05:39:06+00:00"
+  "first_saved_at": "2026-09-16T05:42:12+00:00"
 }
