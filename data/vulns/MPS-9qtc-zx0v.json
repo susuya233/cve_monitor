@@ -1,0 +1,147 @@
+{
+  "saved_at": "2026-09-17T01:01:19+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-9qtc-zx0v",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61599",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-470",
+    "description": "djust 为 Django 提供 Phoenix LiveView 风格的反应式服务器端渲染，并具有 Rust 驱动的性能。在版本 1.0.7 之前，调整实时传输通过调用“__import__(module_path, ...)”将 LiveView 解析为从客户端提供的点路径安装。在框架检查解析的对象是否为“LiveView”子类之前以及在任何按视图身份验证之前，导入模块 - 运行其顶级代码（导入副作用）。应包含此内容的“LIVEVIEW_ALLOWED_MODULES”白名单是失败开放的（“if allowed_modules:”——在未设置设置时跳过，框架默认）并使用松散的“startswith”匹配。因此，未经身份验证的 WebSocket 客户端（WS 握手不需要身份验证；每个视图身份验证仅在导入 + 实例化之后运行）可以发送带有 `view = \"<any.importable.module>.AnyName\"` 的 `mount` / `live_redirect_mount` / `url_change` 框架（或 SSE 安装），并导致服务器按名称导入并执行任何可导入 Python 模块的顶级代码。版本 1.0.7 修复了故障关闭解析门的问题（`djust._view_resolution.is_view_import_allowed`）：客户端视图路径仅在以下情况下解析：(a) 其模块已加载（`sys.modules` - 因此解析不会运行新代码；URLconf 在启动时加载的 URL 路由视图继续以零配置工作）或 (b) 它与模块段边界上的 `LIVEVIEW_ALLOWED_MODULES` 匹配（显式选择加入延迟导入的视图）。该门在所有三个接收器的“__import__”之前运行（+“_instantiate_view”内部的纵深防御）。作为解决方法，请将“LIVEVIEW_ALLOWED_MODULES”设置为包含可安装 LiveView 类的模块的狭窄列表。 （注意：预修补允许列表是“startswith”匹配的，并且导入仍然先于子类检查，因此这是缓解措施，而不是完整的修复。）",
+    "effects": [
+      {
+        "comp_name": "djust",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.7)",
+            "min_fixed_version": "1.0.7",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用外部可控制的输入来选择类或代码（不安全的反射）",
+    "kind_en": "使用外部控制输入来选择类或代码（“不安全反射”）",
+    "last_modified_time": "2026-09-17",
+    "level": "High",
+    "mps_id": "MPS-9qtc-zx0v",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-17",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/djust-org/djust/security/advisories/GHSA-7prp-2623-8g45",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/djust-org/djust/releases/tag/v1.0.7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-7prp-2623-8g45",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "djust 通过 WebSocket/SSE 视图安装路径导入未经身份验证的任意模块",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61599",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-470",
+    "description": "djust provides Phoenix LiveView-style reactive server-side rendering for Django with Rust-powered performance. Prior to version 1.0.7, the djust live transport resolves the LiveView to mount from a client-supplied dotted path by calling `__import__(module_path, ...)`. The module is imported — running its top-level code (import side effects) — before the framework checks that the resolved object is a `LiveView` subclass and before any per-view authentication. The `LIVEVIEW_ALLOWED_MODULES` allowlist that should contain this is fail-open (`if allowed_modules:` — skipped when the setting is unset, the framework default) and uses loose `startswith` matching. An unauthenticated WebSocket client (the WS handshake does not require auth; per-view auth runs only after import + instantiate) can therefore send a `mount` / `live_redirect_mount` / `url_change` frame (or an SSE mount) with `view = \"<any.importable.module>.AnyName\"` and cause the server to import — and execute the top-level code of — any importable Python module by name. Version 1.0.7 fixes the issue with a fail-closed resolution gate (`djust._view_resolution.is_view_import_allowed`): a client view path resolves only if (a) its module is already loaded (`sys.modules` — so resolving runs no new code; URL-routed views loaded by URLconf at startup keep working with zero config) or (b) it matches `LIVEVIEW_ALLOWED_MODULES` on a module-segment boundary (explicit opt-in for lazily-imported views). The gate runs before `__import__` at all three sinks (+ defense-in-depth inside `_instantiate_view`). As a workaround, set `LIVEVIEW_ALLOWED_MODULES` to the narrow list of modules that contain your mountable LiveView classes. (Note: pre-patch the allowlist is `startswith`-matched and the import still precedes the subclass check, so this is mitigation, not a complete fix.)",
+    "effects": [
+      {
+        "comp_name": "djust",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.7)",
+            "min_fixed_version": "1.0.7",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用外部可控制的输入来选择类或代码（不安全的反射）",
+    "kind_en": "Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection')",
+    "last_modified_time": "2026-09-17",
+    "level": "High",
+    "mps_id": "MPS-9qtc-zx0v",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-17",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/djust-org/djust/security/advisories/GHSA-7prp-2623-8g45",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/djust-org/djust/releases/tag/v1.0.7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-7prp-2623-8g45",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "djust has an unauthenticated arbitrary module import via the WebSocket/SSE view-mount path"
+  },
+  "first_saved_at": "2026-09-17T01:01:19+00:00"
+}

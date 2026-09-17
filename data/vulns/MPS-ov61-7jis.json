@@ -1,0 +1,177 @@
+{
+  "saved_at": "2026-09-17T01:01:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ov61-7jis",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-92597",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-436",
+    "description": "Nodemailer 版本 >= 6.9.16 和 < 9.1.0 错误解析电子邮件地址中的 RFC 5322 注释：在 lib/addressparser 中，紧接在非中断字符之前关闭的注释会导致分词器连接注释周围的原子，而不是将注释视为终止域的折叠空白。因此，诸如 user@good-corp.com(x)evil.com 之类的收件人地址会被 Nodemailer 读取为单个域 good-corp.comevil.com（可注册域 comevil.com，攻击者可以注册），并用于 SMTP 信封 (RCPT TO) 和发出的 To:/From: 标头，而符合 RFC 5322 解析器会在注释处终止该域并读取 good-corp.com。使用严格的 RFC 5322 解析器（不检查解析缺陷）或简单的前缀/子字符串允许列表验证收件人域，然后将原始地址交给 Nodemailer 的应用程序可以被诱导将邮件传递到攻击者控制的域。已在 9.1.0 中修复。",
+    "effects": [
+      {
+        "comp_name": "nodemailer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.9.16,9.1.0)",
+            "min_fixed_version": "9.1.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "解释冲突",
+    "kind_en": "Interpretation Conflict",
+    "last_modified_time": "2026-09-17",
+    "level": "High",
+    "mps_id": "MPS-ov61-7jis",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-17",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ov61-7jis",
+        "name": "https://www.oscs1024.com/hd/MPS-ov61-7jis"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92597",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-92597"
+      },
+      {
+        "url": "https://github.com/nodemailer/nodemailer/security/advisories/GHSA-cc9r-2j5m-2m83",
+        "name": "GitHub Security Advisory (GHSA-cc9r-2j5m-2m83)"
+      },
+      {
+        "url": "https://github.com/nodemailer/nodemailer/commit/902b63e",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nodemailer-before-9.1.0-email-domain-validation-bypass-via-rfc-5322-comment",
+        "name": "VulnCheck Advisory: Nodemailer before 9.1.0 Email Domain Validation Bypass via RFC 5322 Comment"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "9.1.0 之前的 Nodemailer 通过 RFC 5322 注释绕过电子邮件域验证",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-92597",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-436",
+    "description": "Nodemailer versions >= 6.9.16 and < 9.1.0 mis-parse RFC 5322 comments in email addresses: in lib/addressparser, a comment closed immediately before a non-break character causes the tokenizer to concatenate the atoms surrounding the comment instead of treating the comment as folding whitespace that terminates the domain. A recipient address such as user@good-corp.com(x)evil.com is therefore read by Nodemailer as the single domain good-corp.comevil.com (registrable domain comevil.com, which an attacker can register) and used for both the SMTP envelope (RCPT TO) and the emitted To:/From: headers, while a conformant RFC 5322 parser terminates the domain at the comment and reads good-corp.com. An application that validates the recipient domain with a strict RFC 5322 parser (without inspecting parse defects) or a naive prefix/substring allow-list and then hands the raw address to Nodemailer can be induced to deliver mail to a domain the attacker controls. Fixed in 9.1.0.",
+    "effects": [
+      {
+        "comp_name": "nodemailer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.9.16,9.1.0)",
+            "min_fixed_version": "9.1.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "解释冲突",
+    "kind_en": "Interpretation Conflict",
+    "last_modified_time": "2026-09-17",
+    "level": "High",
+    "mps_id": "MPS-ov61-7jis",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-17",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ov61-7jis",
+        "name": "https://www.oscs1024.com/hd/MPS-ov61-7jis"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92597",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-92597"
+      },
+      {
+        "url": "https://github.com/nodemailer/nodemailer/security/advisories/GHSA-cc9r-2j5m-2m83",
+        "name": "GitHub Security Advisory (GHSA-cc9r-2j5m-2m83)"
+      },
+      {
+        "url": "https://github.com/nodemailer/nodemailer/commit/902b63e",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nodemailer-before-9.1.0-email-domain-validation-bypass-via-rfc-5322-comment",
+        "name": "VulnCheck Advisory: Nodemailer before 9.1.0 Email Domain Validation Bypass via RFC 5322 Comment"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Nodemailer before 9.1.0 Email Domain Validation Bypass via RFC 5322 Comment"
+  },
+  "first_saved_at": "2026-09-17T01:01:33+00:00"
+}

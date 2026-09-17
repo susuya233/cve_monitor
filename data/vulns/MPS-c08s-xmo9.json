@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-09-17T01:01:27+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-c08s-xmo9",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-92593",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-94",
+    "description": "Craft CMS 版本 5.10.0 到 5.10.12 包含对 CVE-2026-55794 的不完整修复：Controller::getPostedRedirectUrl() -> View::renderObjectTemplate() 接收器仍未沙箱化，并且相同的修复提交在 Cp::elementLabelHtml() 中添加了自签名预言。由于 Craft/Yii HMAC 令牌未绑定到参数名称，因此对单个元素类型具有编辑权限的经过身份验证的低权限控制面板用户可以在攻击者控制的 Twig 上为 returnUrl 参数创建令牌，并将其重放为重定向 POST 参数，到达未沙箱接收器并实现执行任意 PHP 代码的服务器端模板注入（完全服务器妥协）。该问题已在 5.10.13 中修复。",
+    "effects": [
+      {
+        "comp_name": "craft_cms",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.10.0,5.10.13)",
+            "min_fixed_version": "5.10.13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-09-17",
+    "level": "High",
+    "mps_id": "MPS-c08s-xmo9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-17",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-c08s-xmo9",
+        "name": "https://www.oscs1024.com/hd/MPS-c08s-xmo9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92593",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-92593"
+      },
+      {
+        "url": "https://github.com/craftcms/cms/security/advisories/GHSA-5jmw-g85v-7jv2",
+        "name": "GitHub Security Advisory (GHSA-5jmw-g85v-7jv2)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/craft-cms-5.10.0-before-5.10.13-authenticated-remote-code-execution",
+        "name": "VulnCheck Advisory: Craft CMS 5.10.0 before 5.10.13 Authenticated Remote Code Execution"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "在 5.10.13 之前的 Craft CMS 5.10.0 经过身份验证的远程代码执行",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-92593",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-94",
+    "description": "Craft CMS versions 5.10.0 through 5.10.12 contain an incomplete fix for CVE-2026-55794: the Controller::getPostedRedirectUrl() -> View::renderObjectTemplate() sink remained unsandboxed, and the same fix commit added a self-signing oracle in Cp::elementLabelHtml(). Because Craft/Yii HMAC tokens are not bound to a parameter name, an authenticated low-privilege control panel user with edit rights on a single element type can mint a token over attacker-controlled Twig for the returnUrl parameter and replay it as the redirect POST parameter, reaching the unsandboxed sink and achieving server-side template injection that executes arbitrary PHP code (full server compromise). The issue is fixed in 5.10.13.",
+    "effects": [
+      {
+        "comp_name": "craft_cms",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.10.0,5.10.13)",
+            "min_fixed_version": "5.10.13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-09-17",
+    "level": "High",
+    "mps_id": "MPS-c08s-xmo9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-17",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-c08s-xmo9",
+        "name": "https://www.oscs1024.com/hd/MPS-c08s-xmo9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92593",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-92593"
+      },
+      {
+        "url": "https://github.com/craftcms/cms/security/advisories/GHSA-5jmw-g85v-7jv2",
+        "name": "GitHub Security Advisory (GHSA-5jmw-g85v-7jv2)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/craft-cms-5.10.0-before-5.10.13-authenticated-remote-code-execution",
+        "name": "VulnCheck Advisory: Craft CMS 5.10.0 before 5.10.13 Authenticated Remote Code Execution"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Craft CMS 5.10.0 before 5.10.13 Authenticated Remote Code Execution"
+  },
+  "first_saved_at": "2026-09-17T01:01:27+00:00"
+}

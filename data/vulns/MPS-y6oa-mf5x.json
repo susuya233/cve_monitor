@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-14T11:29:39+00:00",
+  "saved_at": "2026-09-17T01:01:22+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-39lt-dshx",
+  "source_page": "https://www.oscs1024.com/hd/MPS-y6oa-mf5x",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,30 +21,30 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-90895",
+    "cve_id": "CVE-2026-61596",
     "cvss": {
-      "cvssv4": [
+      "cvssv31": [
         {
-          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
-          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
           "severity": "high",
-          "base_score": 8.4
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 8.4,
-    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
     "cwe": "CWE-862",
-    "description": "MISP 是开源威胁情报共享平台，交互式 CLI Shell 通过 CakePHP 命令 app/Console/cake CLI 在终端浏览和管理 MISP 数据。\n受影响版本中，CLIShell 独立实现访问控制，未复用 Web 应用的模型访问器。非宿主组织且非站点管理员用户执行 list feed 时不会附加 lookup_visible 过滤；view feed 未按 FeedsController::view() 校验宿主组织或站点管理员，完整 Feed 记录会被返回，Feed.headers 中的 HTTP 凭据会暴露；view server 会输出同步 authkey；view sharing_group 未调用 SharingGroup::checkIfAuthorised()；use 命令未先确认当前用户有权查看目标记录即写入导航上下文。\n修复版本中通过将 CLI 列表与详情查询改走与 Web 相同的 ACL 路径，新增 __fetchFeedDetail 拒绝未授权 Feed 详情并把 headers、authkey 列入 hiddenFields 隐藏或掩码，同时让 use 命令先经 __fetchDetail 校验可见性，切断 CLI 越权读取与凭据泄露。",
+    "description": "djust 为 Django 提供 Phoenix LiveView 风格的反应式服务器端渲染，并具有 Rust 驱动的性能。在版本 1.0.7 之前，djust 的每个对象授权（`get_object` + `has_object_permission`，ADR-017）在 WebSocket 挂载和事件路径上强制执行，但不在其他三个渲染入口点上执行：(a) 初始 HTTP GET 渲染、(b) SPA `url_change` 导航和 (c) `{% live_render %}` 嵌入子视图。因此，经过身份验证的用户可以通过直接加载页面、通过 SPA url 更改导航到该页面或将其组合为嵌入式子项（对象范围视图上的经典 IDOR/损坏的对象级访问控制）来查看（并在某些路径上操作）他们未授权的对象。这已在 djust 1.0.7 中修复。现在，所有渲染入口点都通过共享的“enforce_object_permission”阻塞点进行路由：HTTP GET 返回 403，“url_change”发出“permission_denied”帧并跳过渲染，“{% live_render %}”（eager+lazy）拒绝嵌入。没有自定义“get_object”的视图不受影响（无操作）。除了升级之外没有可靠的解决方法。在修补之前，请勿通过 HTTP-GET / url_change / live_render 路径公开对象范围的视图。",
     "effects": [
       {
-        "comp_name": "MISP",
-        "ecosystem": "linux",
+        "comp_name": "djust",
+        "ecosystem": "pip",
         "versions": [
           {
-            "affected_version": "(-∞,2.5.46)",
-            "min_fixed_version": "2.5.46",
-            "repository": "unmanaged",
+            "affected_version": "(-∞,1.0.7)",
+            "min_fixed_version": "1.0.7",
+            "repository": "pip",
             "solutions": [],
             "upstream": true
           }
@@ -54,36 +54,37 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
-    "last_modified_time": "2026-09-14",
+    "last_modified_time": "2026-09-17",
     "level": "High",
-    "mps_id": "MPS-39lt-dshx",
+    "mps_id": "MPS-y6oa-mf5x",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-14",
+    "published_time": "2026-09-17",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-39lt-dshx",
-        "name": "https://www.oscs1024.com/hd/MPS-39lt-dshx"
+        "url": "https://github.com/djust-org/djust/security/advisories/GHSA-c7c5-5j6r-q957",
+        "name": ""
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90895",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90895"
+        "url": "https://github.com/djust-org/djust/releases/tag/v1.0.7",
+        "name": ""
       },
       {
-        "url": "https://github.com/MISP/MISP/commit/cd9f548ed",
-        "name": "Security patch"
+        "url": "https://github.com/advisories/GHSA-c7c5-5j6r-q957",
+        "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "python",
+      "开源"
     ],
-    "title": "MISP CLI授权绕过漏洞",
+    "title": "调整已破坏对象级访问控制 (IDOR)",
     "_translated": true
   },
   "detail_original": {
@@ -103,30 +104,30 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-90895",
+    "cve_id": "CVE-2026-61596",
     "cvss": {
-      "cvssv4": [
+      "cvssv31": [
         {
-          "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8",
-          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
           "severity": "high",
-          "base_score": 8.4
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 8.4,
-    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
     "cwe": "CWE-862",
-    "description": "MISP 是开源威胁情报共享平台，交互式 CLI Shell 通过 CakePHP 命令 app/Console/cake CLI 在终端浏览和管理 MISP 数据。\n受影响版本中，CLIShell 独立实现访问控制，未复用 Web 应用的模型访问器。非宿主组织且非站点管理员用户执行 list feed 时不会附加 lookup_visible 过滤；view feed 未按 FeedsController::view() 校验宿主组织或站点管理员，完整 Feed 记录会被返回，Feed.headers 中的 HTTP 凭据会暴露；view server 会输出同步 authkey；view sharing_group 未调用 SharingGroup::checkIfAuthorised()；use 命令未先确认当前用户有权查看目标记录即写入导航上下文。\n修复版本中通过将 CLI 列表与详情查询改走与 Web 相同的 ACL 路径，新增 __fetchFeedDetail 拒绝未授权 Feed 详情并把 headers、authkey 列入 hiddenFields 隐藏或掩码，同时让 use 命令先经 __fetchDetail 校验可见性，切断 CLI 越权读取与凭据泄露。",
+    "description": "djust provides Phoenix LiveView-style reactive server-side rendering for Django with Rust-powered performance. Prior to version 1.0.7, djust's per-object authorization (`get_object` + `has_object_permission`, ADR-017) was enforced on the WebSocket mount and event paths but not on three other render entry points: (a) the initial HTTP GET render, (b) SPA `url_change` navigation, and (c) `{% live_render %}` embedded child views. An authenticated user could therefore view (and on some paths act on) an object they are not authorized for by loading the page directly, navigating to it via SPA url-change, or composing it as an embedded child — a classic IDOR / broken object-level access control on object-scoped views. This is fixed in djust 1.0.7. All render entry points now route through a shared `enforce_object_permission` chokepoint: HTTP GET returns 403, `url_change` emits a `permission_denied` frame and skips the render, and `{% live_render %}` (eager + lazy) refuses the embed. Views without a custom `get_object` are unaffected (no-op). No reliable workaround short of upgrading. Do not expose object-scoped views through the HTTP-GET / url_change / live_render paths until patched.",
     "effects": [
       {
-        "comp_name": "MISP",
-        "ecosystem": "linux",
+        "comp_name": "djust",
+        "ecosystem": "pip",
         "versions": [
           {
-            "affected_version": "(-∞,2.5.46)",
-            "min_fixed_version": "2.5.46",
-            "repository": "unmanaged",
+            "affected_version": "(-∞,1.0.7)",
+            "min_fixed_version": "1.0.7",
+            "repository": "pip",
             "solutions": [],
             "upstream": true
           }
@@ -136,36 +137,37 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
-    "last_modified_time": "2026-09-14",
+    "last_modified_time": "2026-09-17",
     "level": "High",
-    "mps_id": "MPS-39lt-dshx",
+    "mps_id": "MPS-y6oa-mf5x",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-14",
+    "published_time": "2026-09-17",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-39lt-dshx",
-        "name": "https://www.oscs1024.com/hd/MPS-39lt-dshx"
+        "url": "https://github.com/djust-org/djust/security/advisories/GHSA-c7c5-5j6r-q957",
+        "name": ""
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90895",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90895"
+        "url": "https://github.com/djust-org/djust/releases/tag/v1.0.7",
+        "name": ""
       },
       {
-        "url": "https://github.com/MISP/MISP/commit/cd9f548ed",
-        "name": "Security patch"
+        "url": "https://github.com/advisories/GHSA-c7c5-5j6r-q957",
+        "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "python",
+      "开源"
     ],
-    "title": "MISP CLI授权绕过漏洞"
+    "title": "djust has broken object-level access control (IDOR)"
   },
-  "first_saved_at": "2026-09-14T11:29:39+00:00"
+  "first_saved_at": "2026-09-17T01:01:22+00:00"
 }
