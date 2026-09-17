@@ -1,0 +1,137 @@
+{
+  "saved_at": "2026-09-17T20:51:01+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-bifa-xv4q",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54617",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-522",
+    "description": "GravitLauncher LaunchServer 是 GravitLauncher 项目中开源的 Java Minecraft 启动器服务端应用，提供客户端更新分发、文件下载、JWT 身份认证与 Web 管理接口，默认在 0.0.0.0:9274 端口监听。\n受影响版本中，FileServerHandler.channelRead0 在处理 Netty HttpServerCodec 解码后的 FullHttpRequest 时，先对 path 调用 Paths.get(...).normalize() 再通过 substring(1) 盲目去除首字符，假定请求目标必然以 '/' 开头。Netty 的 HttpServerCodec 会接受 decoderResult().isSuccess() 为 true 且不带前导斜杠的请求目标，导致原始 '..' 段无法被首次 normalize() 折叠；substring(1) 又把首段 '../' 转成 './'，剩余 '..' 通过 base.resolve(path) 被解析到 updatesDir 之外，且未对结果再次归一化校验 startsWith(base)，同时 file.isHidden() 仅校验末级路径名，使得远程未认证攻击者只需构造一条不带前导斜杠的 GET 请求即可读取进程可访问的任意文件，包括用于签署 JWT 的 .keys/ecdsa_id、.keys/legacySalt 与包含数据库凭证的 LaunchServer.json，导出签名密钥后可伪造任意账号（含管理员）的访问令牌。\n修复版本中通过在 channelRead0 中改为先取 basePath = base.toAbsolutePath().normalize()，再计算 resolved = basePath.resolve(path).toAbsolutePath().normalize()，并使用 !resolved.startsWith(basePath) 判断路径是否越界，越界则调用 sendError(ctx, FORBIDDEN) 直接返回，从根本上阻断路径遍历读取 updatesDir 之外的文件。",
+    "effects": [
+      {
+        "comp_name": "GravitLauncher/LaunchServer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.7.11]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "凭证保护不足",
+    "kind_en": "凭证保护不足",
+    "last_modified_time": "2026-09-18",
+    "level": "Critical",
+    "mps_id": "MPS-bifa-xv4q",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-18",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/GravitLauncher/Launcher/security/advisories/GHSA-5g75-477j-2c2f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-5g75-477j-2c2f",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "GravitLauncher LaunchServer 路径遍历漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54617",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-522",
+    "description": "GravitLauncher LaunchServer 是 GravitLauncher 项目中开源的 Java Minecraft 启动器服务端应用，提供客户端更新分发、文件下载、JWT 身份认证与 Web 管理接口，默认在 0.0.0.0:9274 端口监听。\n受影响版本中，FileServerHandler.channelRead0 在处理 Netty HttpServerCodec 解码后的 FullHttpRequest 时，先对 path 调用 Paths.get(...).normalize() 再通过 substring(1) 盲目去除首字符，假定请求目标必然以 '/' 开头。Netty 的 HttpServerCodec 会接受 decoderResult().isSuccess() 为 true 且不带前导斜杠的请求目标，导致原始 '..' 段无法被首次 normalize() 折叠；substring(1) 又把首段 '../' 转成 './'，剩余 '..' 通过 base.resolve(path) 被解析到 updatesDir 之外，且未对结果再次归一化校验 startsWith(base)，同时 file.isHidden() 仅校验末级路径名，使得远程未认证攻击者只需构造一条不带前导斜杠的 GET 请求即可读取进程可访问的任意文件，包括用于签署 JWT 的 .keys/ecdsa_id、.keys/legacySalt 与包含数据库凭证的 LaunchServer.json，导出签名密钥后可伪造任意账号（含管理员）的访问令牌。\n修复版本中通过在 channelRead0 中改为先取 basePath = base.toAbsolutePath().normalize()，再计算 resolved = basePath.resolve(path).toAbsolutePath().normalize()，并使用 !resolved.startsWith(basePath) 判断路径是否越界，越界则调用 sendError(ctx, FORBIDDEN) 直接返回，从根本上阻断路径遍历读取 updatesDir 之外的文件。",
+    "effects": [
+      {
+        "comp_name": "GravitLauncher/LaunchServer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.7.11]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "凭证保护不足",
+    "kind_en": "Insufficiently Protected Credentials",
+    "last_modified_time": "2026-09-18",
+    "level": "Critical",
+    "mps_id": "MPS-bifa-xv4q",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-18",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/GravitLauncher/Launcher/security/advisories/GHSA-5g75-477j-2c2f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-5g75-477j-2c2f",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "GravitLauncher LaunchServer 路径遍历漏洞"
+  },
+  "first_saved_at": "2026-09-17T20:51:01+00:00"
+}
