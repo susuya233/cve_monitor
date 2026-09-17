@@ -1,0 +1,177 @@
+{
+  "saved_at": "2026-09-17T17:29:12+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-27pc-uwza",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-91039",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-290",
+    "description": "team-alembic ash_authentication 中的欺骗绕过身份验证漏洞允许操作动态_oidc 策略的一个身份提供商连接的攻击者以通过不同连接建立的本地用户身份登录。\n\n该策略旨在通过将每个 UserIdentity 行的策略字段写入“<name>/<connection_id>”来将每个连接保留在其自己的身份命名空间中，但该命名空间永远不会生效。 __connection_id__ 仅填充在dynamic_oidc/plug.ex 中按请求构建的临时运行时结构上，DynamicOidc.IdentityChange.change/3 通过 Info.strategy_for_action 从编译时 DSL 重新获取策略，生成持久结构，其 __connection_id__ 为其 defstruct 默认值 nil。因此，OAuth2.identity_strategy_name/1 在 oauth2/user_resolver.ex 和 oauth2/sign_in_preparation.ex 中回退到身份写入和读取的裸策略名称。由于身份资源的唯一键是（uid，策略），因此每个连接中的每个子都存在一行，并且身份匹配分支在任何电子邮件检查之前运行。这两种策略都不处理 iss，因此没有其他任何东西可以区分颁发者：OpenID Connect Core 第 5.7 节使 sub 仅在颁发者内唯一，因此两个编号主题的连接独立共享一个主题空间。\n\n此问题影响 ash_authentication：从 5.0.0-rc.10 到 5.0.0-rc.14 之前。",
+    "effects": [
+      {
+        "comp_name": "ash_authentication",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.0.0-rc.10,5.0.0-rc.14)",
+            "min_fixed_version": "5.0.0-rc.14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用欺骗进行的认证绕过",
+    "kind_en": "通过欺骗绕过身份验证",
+    "last_modified_time": "2026-09-18",
+    "level": "Critical",
+    "mps_id": "MPS-27pc-uwza",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-27pc-uwza",
+        "name": "https://www.oscs1024.com/hd/MPS-27pc-uwza"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-91039",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-91039"
+      },
+      {
+        "url": "https://github.com/team-alembic/ash_authentication/security/advisories/GHSA-73j9-m294-fvv9",
+        "name": "GitHub Advisory"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-91039.html",
+        "name": "EEF CNA record for CVE-2026-91039"
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-91039",
+        "name": "OSV record EEF-CVE-2026-91039"
+      },
+      {
+        "url": "https://github.com/team-alembic/ash_authentication/commit/64530644f9b37ebb76ca14aeb83a77597a0034b7",
+        "name": "Introducing commit 6453064 in team-alembic/ash_authentication"
+      },
+      {
+        "url": "https://github.com/team-alembic/ash_authentication/commit/73ad16e452670bbf843550a13361bd41e72ad964",
+        "name": "Fix commit 73ad16e in team-alembic/ash_authentication"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-91039漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-91039",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-290",
+    "description": "Authentication Bypass by Spoofing vulnerability in team-alembic ash_authentication allows an attacker who operates one identity-provider connection of a dynamic_oidc strategy to be signed in as a local user established through a different connection.\n\nThe strategy is meant to keep each connection in its own identity namespace by writing every UserIdentity row's strategy field as \"<name>/<connection_id>\", but that namespacing never takes effect. __connection_id__ is populated only on the ephemeral runtime struct built per request in dynamic_oidc/plug.ex, and DynamicOidc.IdentityChange.change/3 re-fetches the strategy from the compile-time DSL through Info.strategy_for_action, yielding the persisted struct whose __connection_id__ is its defstruct default of nil. OAuth2.identity_strategy_name/1 therefore falls back to the bare strategy name for both the identity write and the reads in oauth2/user_resolver.ex and oauth2/sign_in_preparation.ex. Since the identity resource's unique key is (uid, strategy), one row exists per sub across every connection, and the identity-match branch runs before any email check. Neither strategy handles iss, so nothing else distinguishes the issuers: OpenID Connect Core section 5.7 makes sub unique only within an issuer, so two connections numbering subjects independently share one subject space.\n\nThis issue affects ash_authentication: from 5.0.0-rc.10 before 5.0.0-rc.14.",
+    "effects": [
+      {
+        "comp_name": "ash_authentication",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.0.0-rc.10,5.0.0-rc.14)",
+            "min_fixed_version": "5.0.0-rc.14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用欺骗进行的认证绕过",
+    "kind_en": "Authentication Bypass by Spoofing",
+    "last_modified_time": "2026-09-18",
+    "level": "Critical",
+    "mps_id": "MPS-27pc-uwza",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-27pc-uwza",
+        "name": "https://www.oscs1024.com/hd/MPS-27pc-uwza"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-91039",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-91039"
+      },
+      {
+        "url": "https://github.com/team-alembic/ash_authentication/security/advisories/GHSA-73j9-m294-fvv9",
+        "name": "GitHub Advisory"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-91039.html",
+        "name": "EEF CNA record for CVE-2026-91039"
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-91039",
+        "name": "OSV record EEF-CVE-2026-91039"
+      },
+      {
+        "url": "https://github.com/team-alembic/ash_authentication/commit/64530644f9b37ebb76ca14aeb83a77597a0034b7",
+        "name": "Introducing commit 6453064 in team-alembic/ash_authentication"
+      },
+      {
+        "url": "https://github.com/team-alembic/ash_authentication/commit/73ad16e452670bbf843550a13361bd41e72ad964",
+        "name": "Fix commit 73ad16e in team-alembic/ash_authentication"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-91039漏洞"
+  },
+  "first_saved_at": "2026-09-17T17:29:12+00:00"
+}

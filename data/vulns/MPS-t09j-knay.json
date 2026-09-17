@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-09-17T17:29:19+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-t09j-knay",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86040",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-770",
+    "description": "libp2p 是 libp2p 网络堆栈的 JavaScript 实现。在11.0.26之前，@libp2p/floodsub通过packages/floodsub/src/peer-streams.ts中的PeerStreams.attachInboundStream接受/floodsub/1.0.0上未经身份验证的RPC帧，没有protobuf元素限制，然后packages/floodsub/src/floodsub.ts中的processRpc和processRpcSubOpt同步处理订阅数组没有每帧上限。单个有界大小的帧可以解码为数以百万计的空订阅条目，这些条目会阻塞事件循环，而数十万个唯一主题 SUBSCRIBE 条目会在 this.topics 中分配 PeerSet 对象，这些对象在对等点删除或停止后不会被删除。空条目会导致 CPU 耗尽，但不会增长 this.topics;持久记忆的增长需要独特的主题。订阅路径绕过消息签名验证和仅消息处理队列，允许远程对等点导致持续的 CPU 拒绝服务、内存耗尽、内存不足终止和节点不可用。该问题已在版本 11.0.26 中修复。",
+    "effects": [
+      {
+        "comp_name": "floodsub",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,11.0.26)",
+            "min_fixed_version": "11.0.26",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "js-libp2p",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,11.0.26)",
+            "min_fixed_version": "11.0.26",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-09-18",
+    "level": "High",
+    "mps_id": "MPS-t09j-knay",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-t09j-knay",
+        "name": "https://www.oscs1024.com/hd/MPS-t09j-knay"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86040",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86040"
+      },
+      {
+        "url": "https://github.com/libp2p/js-libp2p/security/advisories/GHSA-cvfg-hcf3-ggwv",
+        "name": "https://github.com/libp2p/js-libp2p/security/advisories/GHSA-cvfg-hcf3-ggwv"
+      },
+      {
+        "url": "https://github.com/libp2p/js-libp2p/pull/3568",
+        "name": "https://github.com/libp2p/js-libp2p/pull/3568"
+      },
+      {
+        "url": "https://github.com/libp2p/js-libp2p/commit/fb9e8a76e9ac75924928fae4ce11d00f68320a83",
+        "name": "https://github.com/libp2p/js-libp2p/commit/fb9e8a76e9ac75924928fae4ce11d00f68320a83"
+      },
+      {
+        "url": "https://github.com/libp2p/js-libp2p/releases/tag/floodsub-v11.0.26",
+        "name": "https://github.com/libp2p/js-libp2p/releases/tag/floodsub-v11.0.26"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-86040漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86040",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-770",
+    "description": "libp2p is a JavaScript implementation of the libp2p networking stack. Prior to 11.0.26, @libp2p/floodsub accepts unauthenticated RPC frames on /floodsub/1.0.0 through PeerStreams.attachInboundStream in packages/floodsub/src/peer-streams.ts without protobuf element limits, then processRpc and processRpcSubOpt in packages/floodsub/src/floodsub.ts synchronously process the subscriptions array without a per-frame cap. A single bounded-size frame can decode into millions of empty subscription entries that block the event loop, while hundreds of thousands of unique-topic SUBSCRIBE entries allocate PeerSet objects in this.topics that are not removed after peer removal or stop. Empty entries cause CPU exhaustion but do not grow this.topics; persistent memory growth requires unique topics. The subscription path bypasses message signature validation and the message-only processing queue, allowing a remote peer to cause sustained CPU denial of service, memory exhaustion, out-of-memory termination, and node unavailability. The issue is fixed in version 11.0.26.",
+    "effects": [
+      {
+        "comp_name": "floodsub",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,11.0.26)",
+            "min_fixed_version": "11.0.26",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "js-libp2p",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,11.0.26)",
+            "min_fixed_version": "11.0.26",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-09-18",
+    "level": "High",
+    "mps_id": "MPS-t09j-knay",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-t09j-knay",
+        "name": "https://www.oscs1024.com/hd/MPS-t09j-knay"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86040",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86040"
+      },
+      {
+        "url": "https://github.com/libp2p/js-libp2p/security/advisories/GHSA-cvfg-hcf3-ggwv",
+        "name": "https://github.com/libp2p/js-libp2p/security/advisories/GHSA-cvfg-hcf3-ggwv"
+      },
+      {
+        "url": "https://github.com/libp2p/js-libp2p/pull/3568",
+        "name": "https://github.com/libp2p/js-libp2p/pull/3568"
+      },
+      {
+        "url": "https://github.com/libp2p/js-libp2p/commit/fb9e8a76e9ac75924928fae4ce11d00f68320a83",
+        "name": "https://github.com/libp2p/js-libp2p/commit/fb9e8a76e9ac75924928fae4ce11d00f68320a83"
+      },
+      {
+        "url": "https://github.com/libp2p/js-libp2p/releases/tag/floodsub-v11.0.26",
+        "name": "https://github.com/libp2p/js-libp2p/releases/tag/floodsub-v11.0.26"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-86040漏洞"
+  },
+  "first_saved_at": "2026-09-17T17:29:19+00:00"
+}
