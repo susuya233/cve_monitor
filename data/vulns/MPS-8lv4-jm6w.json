@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-09-17T23:19:22+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-8lv4-jm6w",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54671",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-862",
+    "description": "WeGIA 是慈善机构的网络管理器。在 3.8.5 之前，WeGIA 将 InternoControle 映射到 web/controle/control.php 中的空资源数组，而 web/dao/MiddlewareDAO.php 中的 verificarPermissao 将该空数组视为每个经过身份验证的用户的无条件访问。 web/controle/InternoControle.php 中的方法（包括 listarUm、alterar 和 excluir）接受用户控制的 id 或 idInterno 值而不验证所有权，从而允许低权限用户读取、修改或删除他人的记录并暴露个人、身份、地址、医疗和家庭信息。该通报指出，自引用加载错误可能会导致报告版本中的控制器崩溃，但空资源授权模式和受影响的方法仍然是正在审查的漏洞。此问题已在 3.8.5 版本中修复。",
+    "effects": [
+      {
+        "comp_name": "WeGIA",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.8.5)",
+            "min_fixed_version": "3.8.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-09-18",
+    "level": "High",
+    "mps_id": "MPS-8lv4-jm6w",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8lv4-jm6w",
+        "name": "https://www.oscs1024.com/hd/MPS-8lv4-jm6w"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54671",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-54671"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/security/advisories/GHSA-chpq-hc43-6mhw",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/security/advisories/GHSA-chpq-hc43-6mhw"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/issues/1640",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/issues/1640"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/commit/767bc5fcca54b9edcbf3ac8363736e528efdfc19",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/commit/767bc5fcca54b9edcbf3ac8363736e528efdfc19"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/releases/tag/3.8.5",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/releases/tag/3.8.5"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WeGIA：通过 InternoControle 中的空资源数组绕过授权",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54671",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-862",
+    "description": "WeGIA is a web manager for charitable institutions. Prior to 3.8.5, WeGIA maps InternoControle to an empty resource array in web/controle/control.php, and verificarPermissao in web/dao/MiddlewareDAO.php treats that empty array as unconditional access for every authenticated user. The methods in web/controle/InternoControle.php, including listarUm, alterar, and excluir, accept user-controlled id or idInterno values without verifying ownership, allowing a low-privileged user to read, modify, or delete another person's records and expose personal, identity, address, medical, and family information. The advisory notes that a self-referencing load bug can crash this controller in the reported revision, but the empty-resource authorization pattern and affected methods remain the vulnerability under review. This issue is fixed in version 3.8.5.",
+    "effects": [
+      {
+        "comp_name": "WeGIA",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.8.5)",
+            "min_fixed_version": "3.8.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-09-18",
+    "level": "High",
+    "mps_id": "MPS-8lv4-jm6w",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8lv4-jm6w",
+        "name": "https://www.oscs1024.com/hd/MPS-8lv4-jm6w"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54671",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-54671"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/security/advisories/GHSA-chpq-hc43-6mhw",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/security/advisories/GHSA-chpq-hc43-6mhw"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/issues/1640",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/issues/1640"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/commit/767bc5fcca54b9edcbf3ac8363736e528efdfc19",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/commit/767bc5fcca54b9edcbf3ac8363736e528efdfc19"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/releases/tag/3.8.5",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/releases/tag/3.8.5"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WeGIA: Authorization Bypass via Empty Resource Array in InternoControle"
+  },
+  "first_saved_at": "2026-09-17T23:19:22+00:00"
+}

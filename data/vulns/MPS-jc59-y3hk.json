@@ -1,0 +1,177 @@
+{
+  "saved_at": "2026-09-17T23:19:29+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-jc59-y3hk",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54670",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-306",
+    "description": "WeGIA 是慈善机构的网络管理器。在 3.8.5 之前，web/html/contribuicao/controller/control.php 中的贡献请求调度程序接受攻击者控制的 nomeClasse 和 method 值，而无需完整的控制器和方法白名单，免除敏感的 ContribuicaoLogController 操作的身份验证，并构造一个不包含规范目录的控制器包含路径。未经身份验证的远程攻击者可以调用 getContribuicoesLogJSON、sincronizarStatus、registrarFaturas 和其他敏感方法来泄露贡献和捐赠记录或触发财务工作流操作。遍历型 nomeClasse 值还可能导致 require_once 在预期控制器目录之外包含可访问的 PHP 或配置文件，从而暴露源代码、凭据或其他敏感本地数据。此问题已在 3.8.5 版本中修复。",
+    "effects": [
+      {
+        "comp_name": "WeGIA",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.8.5)",
+            "min_fixed_version": "3.8.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-09-18",
+    "level": "Critical",
+    "mps_id": "MPS-jc59-y3hk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jc59-y3hk",
+        "name": "https://www.oscs1024.com/hd/MPS-jc59-y3hk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54670",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-54670"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/security/advisories/GHSA-7p5g-g8xw-x47g",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/security/advisories/GHSA-7p5g-g8xw-x47g"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/issues/1638",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/issues/1638"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/commit/8d451b3f57805e90c4af93decb341531b803a4e9",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/commit/8d451b3f57805e90c4af93decb341531b803a4e9"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/commit/ba22e0ccbf5e499d9d45b7b0d1fcbc153269971d",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/commit/ba22e0ccbf5e499d9d45b7b0d1fcbc153269971d"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/releases/tag/3.8.5",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/releases/tag/3.8.5"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WeGIA：未经身份验证的身份验证绕过 + 本地文件包含",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54670",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-306",
+    "description": "WeGIA is a web manager for charitable institutions. Prior to 3.8.5, the contribution request dispatcher in web/html/contribuicao/controller/control.php accepts attacker-controlled nomeClasse and metodo values without a complete controller and method allowlist, exempts sensitive ContribuicaoLogController operations from authentication, and constructs a controller include path without canonical directory containment. An unauthenticated remote attacker can invoke getContribuicoesLogJSON, sincronizarStatus, registrarFaturas, and other sensitive methods to disclose contribution and donation records or trigger financial workflow operations. A traversal-shaped nomeClasse value can also cause require_once to include an accessible PHP or configuration file outside the intended controller directory, exposing source code, credentials, or other sensitive local data. This issue is fixed in version 3.8.5.",
+    "effects": [
+      {
+        "comp_name": "WeGIA",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.8.5)",
+            "min_fixed_version": "3.8.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-09-18",
+    "level": "Critical",
+    "mps_id": "MPS-jc59-y3hk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jc59-y3hk",
+        "name": "https://www.oscs1024.com/hd/MPS-jc59-y3hk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54670",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-54670"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/security/advisories/GHSA-7p5g-g8xw-x47g",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/security/advisories/GHSA-7p5g-g8xw-x47g"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/issues/1638",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/issues/1638"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/commit/8d451b3f57805e90c4af93decb341531b803a4e9",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/commit/8d451b3f57805e90c4af93decb341531b803a4e9"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/commit/ba22e0ccbf5e499d9d45b7b0d1fcbc153269971d",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/commit/ba22e0ccbf5e499d9d45b7b0d1fcbc153269971d"
+      },
+      {
+        "url": "https://github.com/LabRedesCefetRJ/WeGIA/releases/tag/3.8.5",
+        "name": "https://github.com/LabRedesCefetRJ/WeGIA/releases/tag/3.8.5"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WeGIA: Unauthenticated Auth Bypass + Local File Inclusion"
+  },
+  "first_saved_at": "2026-09-17T23:19:29+00:00"
+}
