@@ -1734,5 +1734,18 @@
   "9a2b5358a07508155063b7b0c6dc370feba34015": "Quarkus HTTP 安全性中发现了一个缺陷。未经身份验证的攻击者可以利用安全匹配器和 HTTP 请求调度程序之间路径规范化方式的差异。这允许攻击者制作一个安全匹配器认为是公开的 URL，但随后将其路由到受保护的端点，从而导致授权绕过和潜在的对敏感信息的未经授权的访问。",
   "43662bc55ecf5776e661ed679370054e78ccc38f": "不正确的行为顺序：先授权后解析和规范化",
   "ed336ca895b543c0000f5da2b7be4efd7d9e43a4": "CVE-2026-87915漏洞",
-  "7062695ab83135270bbc6856dbe2074384213de4": "Popup Maker – 使用适用于 WordPress 的 Ultimate WP Popup Builder 插件提高销售、转化、选择和订阅者在 1.24.0 及之前的所有版本中，由于输入清理和输出转义不足，容易受到通过 value[Name] 参数存储的跨站点脚本攻击。这使得未经身份验证的攻击者可以在页面中注入任意 Web 脚本，每当用户访问注入的页面时就会执行这些脚本。在这种情况下，应用于输出的 wp_kses 清理是不够的，因为允许的属性值内的 HTML 实体在规范化中完好无损，并且稍后在单击上下文帮助选项卡锚点时由 wp-admin/js/common.js 中的 jQuery(link.attr('href')) 接收器进行评估。"
+  "7062695ab83135270bbc6856dbe2074384213de4": "Popup Maker – 使用适用于 WordPress 的 Ultimate WP Popup Builder 插件提高销售、转化、选择和订阅者在 1.24.0 及之前的所有版本中，由于输入清理和输出转义不足，容易受到通过 value[Name] 参数存储的跨站点脚本攻击。这使得未经身份验证的攻击者可以在页面中注入任意 Web 脚本，每当用户访问注入的页面时就会执行这些脚本。在这种情况下，应用于输出的 wp_kses 清理是不够的，因为允许的属性值内的 HTML 实体在规范化中完好无损，并且稍后在单击上下文帮助选项卡锚点时由 wp-admin/js/common.js 中的 jQuery(link.attr('href')) 接收器进行评估。",
+  "f92fee1c5d8e719c969f4a93f42c7e7c5881d49f": "uri-js 通过 4.4.1 通过removeDotSegments 拒绝服务",
+  "7bbd300914687f75939ac4ddb07f42164f1a7be1": "从 uri-js 到 4.4.1，removeDotSegments 函数中包含拒绝服务漏洞，当路径段以 Unicode 行或段落分隔符开头时，该函数会无限循环。攻击者可以通过直接调用removeDotSegments 或通过启用IRI 处理的规范化/解析函数来触发此问题，从而导致Node.js 事件循环无限期阻塞直至堆耗尽。",
+  "4ec35e5e0223f72fc426fdd337fd57c7fd861f0b": "具有无法到达的退出条件的循环（“无限循环”）",
+  "57df49ee90b6771f2ee6d21456670135f7ea207c": "通过 ScheduleServlet 绕过 Azkaban 4.0.0 授权",
+  "0b99703388cf06e26ae76e1f2a24332b3b19f584": "Azkaban 到 4.0.0 省略了 ScheduleServlet fetchSchedule 操作中的项目权限检查，允许经过身份验证的用户读取任何项目的计划配置。攻击者可以提供任意项目和流程标识符来检索敏感的计划详细信息，包括执行时间、cron 表达式、流程参数和通知电子邮件列表，而无需适当授权。",
+  "aded8b360c7e927e5228eb72759e19a56b0e3787": "通过深度嵌套模式支持 3.0.3 Stack Overflow",
+  "a32d004023c098c36ea428cf410f94842d9f2c0a": "3.0.3 之前的大括号在缺乏深度防护的递归 AST 步行器中包含堆栈溢出漏洞。攻击者可以在字符限制下提供深度嵌套的大括号模式，以耗尽调用堆栈并以未捕获的 RangeError 终止 Node.js 进程。",
+  "56a5a30d65a2af7fc3eaf344eb749d5ea0ff5e01": "SGLang 至 0.5.19 通过 bootstrap_room 进行无界内存分配",
+  "30126cc7fea004ab23bf05a012069a3a5854bd1e": "SGLang 到 0.5.19 的预填充/解码分解模式与 Mooncake KV 传输后端无法验证 bootstrap_room 值，从而允许无限制的传输状态分配。未经身份验证的攻击者可以到达解码引擎的 POST /generate 端点，并提交任意 bootstrap_room 值以耗尽预填充进程内存，直到内存不足终止。",
+  "c9a6e370c6f739d7354b061fbfd34b6c229f3682": "Bransys ELD 中敏感信息的明文传输",
+  "e243d4d585a0b290ee252b9df92240fe7ca21998": "Bransys ELD 附带硬编码的 MQTT 凭证，该凭证将为连接到受影响 MQTT 代理的运营商子集中的每个活动设备授予对实时数据的读取访问权限。",
+  "23b262edd03d5c43cb63e73998a3c9f648efc9f9": "CareCam CM2507 缺少关键功能的验证",
+  "1cead3f66a3b6be60b896071b84a544ef7ea0d86": "CareCam CM2507 IP 摄像机无需身份验证即可访问其网络视频流服务。未经身份验证的攻击者可以通过网络访问受影响的设备，从而检索实时摄像头视频。"
 }

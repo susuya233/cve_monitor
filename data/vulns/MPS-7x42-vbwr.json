@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-18T16:52:57+00:00",
+  "saved_at": "2026-09-18T16:52:43+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-p2ib-udfz",
+  "source_page": "https://www.oscs1024.com/hd/MPS-7x42-vbwr",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,28 +21,36 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-89413",
+    "cve_id": "CVE-2026-93737",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.1
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 8.1,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "The Filter Gallery plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 1.1.4. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with subscriber-level access and above, to delete any arbitrary Filter Gallery records — including all associated filters, image mappings, settings, and details options — by supplying attacker-controlled gallery IDs. The nonce bypass requires omitting the nonce POST field entirely rather than submitting an invalid value, as a present-but-invalid nonce is correctly rejected.",
+    "description": "Azkaban 到 4.0.0 省略了 ScheduleServlet fetchSchedule 操作中的项目权限检查，允许经过身份验证的用户读取任何项目的计划配置。攻击者可以提供任意项目和流程标识符来检索敏感的计划详细信息，包括执行时间、cron 表达式、流程参数和通知电子邮件列表，而无需适当授权。",
     "effects": [
       {
-        "comp_name": "Filter Gallery",
+        "comp_name": "azkaban",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(0,1.1.4]",
+            "affected_version": "(-∞,4.0.0]",
             "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
@@ -59,47 +67,49 @@
     "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
-    "last_modified_time": "2026-09-18",
+    "last_modified_time": "2026-09-19",
     "level": "High",
-    "mps_id": "MPS-p2ib-udfz",
+    "mps_id": "MPS-7x42-vbwr",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-18",
+    "published_time": "2026-09-19",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-p2ib-udfz",
-        "name": "https://www.oscs1024.com/hd/MPS-p2ib-udfz"
+        "url": "https://www.oscs1024.com/hd/MPS-7x42-vbwr",
+        "name": "https://www.oscs1024.com/hd/MPS-7x42-vbwr"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89413",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89413"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93737",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-93737"
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/0487c6dd-7453-4473-9a13-6b699623f8a9?source=cve",
+        "url": "https://github.com/azkaban/azkaban/issues/3348",
+        "name": "GitHub Issue #3348"
+      },
+      {
+        "url": "https://github.com/azkaban/azkaban",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/filter-gallery/tags/1.1.4/filter-gallery.php#L1112",
+        "url": "https://github.com/azkaban/azkaban/blob/4.0.0/azkaban-web-server/src/main/java/azkaban/webapp/servlet/ScheduleServlet.java#L237-L262",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/filter-gallery/tags/1.1.4/filter-gallery.php#L1099",
+        "url": "https://github.com/azkaban/azkaban/blob/4.0.0/azkaban-web-server/src/main/java/azkaban/webapp/servlet/ScheduleServlet.java#L403-L412",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/filter-gallery/tags/1.1.4/filter-gallery.php#L1131",
-        "name": ""
+        "url": "https://github.com/azkaban/azkaban/releases/tag/4.0.0",
+        "name": "azkaban 4.0.0 Release Notes"
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3695415%40filter-gallery&new=3695415%40filter-gallery",
-        "name": ""
+        "url": "https://www.vulncheck.com/advisories/azkaban-through-4.0.0-authorization-bypass-via-scheduleservlet",
+        "name": "VulnCheck Advisory: Azkaban through 4.0.0 Authorization Bypass via ScheduleServlet"
       }
     ],
     "scope_influence": "",
-    "tags": [
-      "应用软件"
-    ],
-    "title": "CVE-2026-89413漏洞",
+    "tags": [],
+    "title": "通过 ScheduleServlet 绕过 Azkaban 4.0.0 授权",
     "_translated": true
   },
   "detail_original": {
@@ -119,28 +129,36 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-89413",
+    "cve_id": "CVE-2026-93737",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.1
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 8.1,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-862",
-    "description": "The Filter Gallery plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 1.1.4. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with subscriber-level access and above, to delete any arbitrary Filter Gallery records — including all associated filters, image mappings, settings, and details options — by supplying attacker-controlled gallery IDs. The nonce bypass requires omitting the nonce POST field entirely rather than submitting an invalid value, as a present-but-invalid nonce is correctly rejected.",
+    "description": "Azkaban through 4.0.0 omits project permission checks in the ScheduleServlet fetchSchedule action, allowing authenticated users to read any project's schedule configuration. Attackers can supply arbitrary project and flow identifiers to retrieve sensitive schedule details including execution times, cron expressions, flow parameters, and notification email lists without proper authorization.",
     "effects": [
       {
-        "comp_name": "Filter Gallery",
+        "comp_name": "azkaban",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(0,1.1.4]",
+            "affected_version": "(-∞,4.0.0]",
             "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
@@ -157,47 +175,49 @@
     "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
-    "last_modified_time": "2026-09-18",
+    "last_modified_time": "2026-09-19",
     "level": "High",
-    "mps_id": "MPS-p2ib-udfz",
+    "mps_id": "MPS-7x42-vbwr",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-18",
+    "published_time": "2026-09-19",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-p2ib-udfz",
-        "name": "https://www.oscs1024.com/hd/MPS-p2ib-udfz"
+        "url": "https://www.oscs1024.com/hd/MPS-7x42-vbwr",
+        "name": "https://www.oscs1024.com/hd/MPS-7x42-vbwr"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89413",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89413"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93737",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-93737"
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/0487c6dd-7453-4473-9a13-6b699623f8a9?source=cve",
+        "url": "https://github.com/azkaban/azkaban/issues/3348",
+        "name": "GitHub Issue #3348"
+      },
+      {
+        "url": "https://github.com/azkaban/azkaban",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/filter-gallery/tags/1.1.4/filter-gallery.php#L1112",
+        "url": "https://github.com/azkaban/azkaban/blob/4.0.0/azkaban-web-server/src/main/java/azkaban/webapp/servlet/ScheduleServlet.java#L237-L262",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/filter-gallery/tags/1.1.4/filter-gallery.php#L1099",
+        "url": "https://github.com/azkaban/azkaban/blob/4.0.0/azkaban-web-server/src/main/java/azkaban/webapp/servlet/ScheduleServlet.java#L403-L412",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/filter-gallery/tags/1.1.4/filter-gallery.php#L1131",
-        "name": ""
+        "url": "https://github.com/azkaban/azkaban/releases/tag/4.0.0",
+        "name": "azkaban 4.0.0 Release Notes"
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3695415%40filter-gallery&new=3695415%40filter-gallery",
-        "name": ""
+        "url": "https://www.vulncheck.com/advisories/azkaban-through-4.0.0-authorization-bypass-via-scheduleservlet",
+        "name": "VulnCheck Advisory: Azkaban through 4.0.0 Authorization Bypass via ScheduleServlet"
       }
     ],
     "scope_influence": "",
-    "tags": [
-      "应用软件"
-    ],
-    "title": "CVE-2026-89413漏洞"
+    "tags": [],
+    "title": "Azkaban through 4.0.0 Authorization Bypass via ScheduleServlet"
   },
-  "first_saved_at": "2026-09-18T07:52:08+00:00"
+  "first_saved_at": "2026-09-18T16:52:43+00:00"
 }
