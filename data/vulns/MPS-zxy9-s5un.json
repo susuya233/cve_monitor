@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-14T17:25:51+00:00",
+  "saved_at": "2026-09-18T02:42:56+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-mal0-h1d6",
+  "source_page": "https://www.oscs1024.com/hd/MPS-zxy9-s5un",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -20,31 +20,38 @@
         "title": "如何预防越界写入"
       }
     ],
-    "attack_vector_type": "Local",
     "cnvd_id": "",
-    "cve_id": "CVE-2026-90947",
+    "cve_id": "CVE-2026-93452",
     "cvss": {
       "cvssv31": [
         {
-          "source": "secalert@redhat.com",
-          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
           "severity": "high",
-          "base_score": 7.8
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
         }
       ]
     },
-    "cvss_score": 7.8,
-    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-787",
-    "description": "GIMP 是开源图像处理程序，内置 Lighting Effects 滤镜插件，用于为图像施加光照效果，并支持通过预设文件保存和加载光源配置。\n受影响版本中，Lighting Effects 插件在 load_preset_response 中用 fscanf 从预设文件读取 Number of lights 计数值，未校验返回值，也未将计数值限制在 NUM_LIGHTS（6）以内，随后以该计数值为上界循环写入 mapvals.lightsource 固定数组。超过 6 个光源的预设文件会造成越界写，导致进程崩溃或在当前用户上下文执行任意代码。\n修复版本中通过将 num_lights 初始化为 0，并在写入循环前使用 CLAMP 将其限制到 [0, NUM_LIGHTS]，阻止超界计数值进入光源数组写入路径。",
+    "description": "snappy-java 到 1.1.10.8 的 Snappy.compress(ByteBuffer, ByteBuffer) 中包含一个缓冲区溢出漏洞，该漏洞会写入超过目标缓冲区的末尾。攻击者可以提供超出目标缓冲区剩余容量的不可压缩数据，从而损坏堆外内存并导致 JVM 终止。",
     "effects": [
       {
-        "comp_name": "gimp",
+        "comp_name": "snappy-java",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,3.2.6)",
-            "min_fixed_version": "3.2.6",
+            "affected_version": "(-∞,1.1.10.8]",
+            "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -55,45 +62,48 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "越界写入",
     "kind_en": "越界写入",
-    "last_modified_time": "2026-09-15",
+    "last_modified_time": "2026-09-18",
     "level": "High",
-    "mps_id": "MPS-mal0-h1d6",
+    "mps_id": "MPS-zxy9-s5un",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-15",
+    "published_time": "2026-09-18",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-mal0-h1d6",
-        "name": "https://www.oscs1024.com/hd/MPS-mal0-h1d6"
+        "url": "https://www.oscs1024.com/hd/MPS-zxy9-s5un",
+        "name": "https://www.oscs1024.com/hd/MPS-zxy9-s5un"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90947",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90947"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93452",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-93452"
       },
       {
-        "url": "https://access.redhat.com/security/cve/CVE-2026-90947",
+        "url": "https://github.com/xerial/snappy-java/issues/732",
+        "name": "GitHub Issue #732"
+      },
+      {
+        "url": "https://github.com/xerial/snappy-java/blob/v1.1.10.8/src/main/java/org/xerial/snappy/Snappy.java#L137",
         "name": ""
       },
       {
-        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2533005",
-        "name": "RHBZ#2533005"
+        "url": "https://github.com/xerial/snappy-java",
+        "name": ""
       },
       {
-        "url": "https://gitlab.gnome.org/GNOME/gimp/-/work_items/16682",
-        "name": ""
+        "url": "https://www.vulncheck.com/advisories/snappy-java-through-1.1.10.8-buffer-overflow-in-snappy-compress",
+        "name": "VulnCheck Advisory: snappy-java through 1.1.10.8 Buffer Overflow in Snappy.compress"
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件",
-      "终端软件"
+      "应用软件"
     ],
-    "title": "GIMP光照预设越界写漏洞",
+    "title": "snappy-java 到 1.1.10.8 Snappy.compress 中的缓冲区溢出",
     "_translated": true
   },
   "detail_original": {
@@ -112,31 +122,38 @@
         "title": "如何预防越界写入"
       }
     ],
-    "attack_vector_type": "Local",
     "cnvd_id": "",
-    "cve_id": "CVE-2026-90947",
+    "cve_id": "CVE-2026-93452",
     "cvss": {
       "cvssv31": [
         {
-          "source": "secalert@redhat.com",
-          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
           "severity": "high",
-          "base_score": 7.8
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
         }
       ]
     },
-    "cvss_score": 7.8,
-    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-787",
-    "description": "GIMP 是开源图像处理程序，内置 Lighting Effects 滤镜插件，用于为图像施加光照效果，并支持通过预设文件保存和加载光源配置。\n受影响版本中，Lighting Effects 插件在 load_preset_response 中用 fscanf 从预设文件读取 Number of lights 计数值，未校验返回值，也未将计数值限制在 NUM_LIGHTS（6）以内，随后以该计数值为上界循环写入 mapvals.lightsource 固定数组。超过 6 个光源的预设文件会造成越界写，导致进程崩溃或在当前用户上下文执行任意代码。\n修复版本中通过将 num_lights 初始化为 0，并在写入循环前使用 CLAMP 将其限制到 [0, NUM_LIGHTS]，阻止超界计数值进入光源数组写入路径。",
+    "description": "snappy-java through 1.1.10.8 contains a buffer overflow vulnerability in Snappy.compress(ByteBuffer, ByteBuffer) that writes past the end of the destination buffer. Attackers can supply incompressible data that exceeds the destination buffer's remaining capacity, corrupting off-heap memory and causing JVM termination.",
     "effects": [
       {
-        "comp_name": "gimp",
+        "comp_name": "snappy-java",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,3.2.6)",
-            "min_fixed_version": "3.2.6",
+            "affected_version": "(-∞,1.1.10.8]",
+            "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -147,45 +164,48 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "越界写入",
     "kind_en": "Out-of-bounds Write",
-    "last_modified_time": "2026-09-15",
+    "last_modified_time": "2026-09-18",
     "level": "High",
-    "mps_id": "MPS-mal0-h1d6",
+    "mps_id": "MPS-zxy9-s5un",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-15",
+    "published_time": "2026-09-18",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-mal0-h1d6",
-        "name": "https://www.oscs1024.com/hd/MPS-mal0-h1d6"
+        "url": "https://www.oscs1024.com/hd/MPS-zxy9-s5un",
+        "name": "https://www.oscs1024.com/hd/MPS-zxy9-s5un"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90947",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90947"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93452",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-93452"
       },
       {
-        "url": "https://access.redhat.com/security/cve/CVE-2026-90947",
+        "url": "https://github.com/xerial/snappy-java/issues/732",
+        "name": "GitHub Issue #732"
+      },
+      {
+        "url": "https://github.com/xerial/snappy-java/blob/v1.1.10.8/src/main/java/org/xerial/snappy/Snappy.java#L137",
         "name": ""
       },
       {
-        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2533005",
-        "name": "RHBZ#2533005"
+        "url": "https://github.com/xerial/snappy-java",
+        "name": ""
       },
       {
-        "url": "https://gitlab.gnome.org/GNOME/gimp/-/work_items/16682",
-        "name": ""
+        "url": "https://www.vulncheck.com/advisories/snappy-java-through-1.1.10.8-buffer-overflow-in-snappy-compress",
+        "name": "VulnCheck Advisory: snappy-java through 1.1.10.8 Buffer Overflow in Snappy.compress"
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件",
-      "终端软件"
+      "应用软件"
     ],
-    "title": "GIMP光照预设越界写漏洞"
+    "title": "snappy-java through 1.1.10.8 Buffer Overflow in Snappy.compress"
   },
-  "first_saved_at": "2026-09-14T17:25:51+00:00"
+  "first_saved_at": "2026-09-18T02:42:56+00:00"
 }

@@ -1711,5 +1711,13 @@
   "63d055160852812fbb9ef76a5d303ad73300899c": "WeGIA：未经身份验证的身份验证绕过 + 本地文件包含",
   "84e7b7da440b04681f59378091ebcb55b387187a": "WeGIA 是慈善机构的网络管理器。在 3.8.5 之前，web/html/contribuicao/controller/control.php 中的贡献请求调度程序接受攻击者控制的 nomeClasse 和 method 值，而无需完整的控制器和方法白名单，免除敏感的 ContribuicaoLogController 操作的身份验证，并构造一个不包含规范目录的控制器包含路径。未经身份验证的远程攻击者可以调用 getContribuicoesLogJSON、sincronizarStatus、registrarFaturas 和其他敏感方法来泄露贡献和捐赠记录或触发财务工作流操作。遍历型 nomeClasse 值还可能导致 require_once 在预期控制器目录之外包含可访问的 PHP 或配置文件，从而暴露源代码、凭据或其他敏感本地数据。此问题已在 3.8.5 版本中修复。",
   "9e9a9def040d16fa3d89dff9cfb6a0c03669090d": "CubeCart：通过settings.index.inc.php中的download_expire参数进行SQL注入",
-  "89269fbefde71f0efac4eb1204a5fafa2c3c407b": "CubeCart 是一个电子商务软件解决方案。在 6.7.5 之前，admin/sources/settings.index.inc.php 直接将管理员控制的 download_expire POST 参数连接到 CubeCart_downloads 的原始 UPDATE 语句中，无需进行数字验证。经过身份验证的管理员可以提供一个逗号分隔的值来更改 SET 子句，因为 HTML 清理不会中和 SQL 语法，从而允许在应用程序的数据库权限内操作数据库列和潜在的其他数据。此问题已在版本 6.7.5 中修复。"
+  "89269fbefde71f0efac4eb1204a5fafa2c3c407b": "CubeCart 是一个电子商务软件解决方案。在 6.7.5 之前，admin/sources/settings.index.inc.php 直接将管理员控制的 download_expire POST 参数连接到 CubeCart_downloads 的原始 UPDATE 语句中，无需进行数字验证。经过身份验证的管理员可以提供一个逗号分隔的值来更改 SET 子句，因为 HTML 清理不会中和 SQL 语法，从而允许在应用程序的数据库权限内操作数据库列和潜在的其他数据。此问题已在版本 6.7.5 中修复。",
+  "d64966d1ea375c0498deeeba9cfa34a07b6876fd": "NASA CryptoLib 1.5.0 - TC 接收路径接受来自错误 GVCID 的安全关联",
+  "b723b940a7037f5eccf33d8ef16d8b444358a6aa": "NASA CryptoLib 1.5.0 在远程命令 (TC) 接收路径中包含身份验证降级漏洞。接收器仅从传入帧内的 SPI 字段选择用于 SDLS 处理的安全关联，但它不会验证所选 SA 是否已被帧的 GVCID 授权。",
+  "7bbcc2d18796806b075e989892942f5db240ea40": "SOGo 5.12.11 之前的密码重置令牌通过 Origin 标头拦截",
+  "368e521952014572550126386af20412ac09ebc6": "5.12.11 之前的 SOGo 使用客户端提供的 Origin 标头作为权限构建密码重置链接，允许未经身份验证的攻击者将恢复令牌重定向到攻击者控制的域。攻击者可以提交带有恶意 Origin 标头的密码恢复请求，以便将有效的密码重置令牌邮寄到指向攻击者基础设施的链接内的受害者恢复地址，从而实现帐户接管。",
+  "95af4786558a2e50faf07c4b1b8de27c20fbacbc": "snappy-java 到 1.1.10.8 Snappy.compress 中的缓冲区溢出",
+  "65e32bf11f01853f18272ef31581b109b04dddca": "snappy-java 到 1.1.10.8 的 Snappy.compress(ByteBuffer, ByteBuffer) 中包含一个缓冲区溢出漏洞，该漏洞会写入超过目标缓冲区的末尾。攻击者可以提供超出目标缓冲区剩余容量的不可压缩数据，从而损坏堆外内存并导致 JVM 终止。",
+  "800324d80b7ca58bef5158a2f247b511f461b655": "CVE-2026-93450漏洞",
+  "f7d69d42dd58cdafed32a0839ff1dda323d3d7cd": "0.27.1 之前的 go-openapi/swag jsonutils 由于无深度限制的无界递归，在有序 JSON 解析和序列化中包含堆栈溢出漏洞。未经身份验证的远程攻击者可以向接受 OpenAPI 规范的服务提交深度嵌套的 JSON 文档，从而导致致命的堆栈溢出，从而终止进程和所有正在进行的请求。"
 }
