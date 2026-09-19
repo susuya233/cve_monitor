@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-09-19T05:24:26+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xys3-842w",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89274",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-94",
+    "description": "WordPress 的 WP Recipe Maker 插件在 10.8.1 及之前的所有版本中都容易受到任意短代码执行的攻击。该漏洞的存在是因为“WPRM_Metadata::sanitize_metadata()”在配方结构化元数据数组的每个标量字段上递归调用“do_shortcode()”（包括“reviewBody”字段，该字段是从已批准的“wprm-comment- rating”评论的“comment_content”逐字填充的），而在执行前没有清理或剥离短代码令牌；随后的“wp_strip_all_tags()”和“strip_shortcodes()”调用仅在执行完全发生后对输出字符串进行操作，不提供针对服务器端短代码调用的保护。这使得未经身份验证的攻击者可以在每个菜谱页面渲染上在服务器端执行任意注册的 WordPress 短代码，从而导致短代码输出（例如附件标题、私人帖子字段或安装的短代码公开的其他数据）嵌入到页面的 JSON-LD“reviewBody”元数据中，并向加载菜谱页面的所有访问者公开。成功利用该漏洞需要攻击者的评级评论通过自动批准或审核者操作来通过网站的评论批准阈值，然后注入的短代码开始在页面加载时执行。",
+    "effects": [
+      {
+        "comp_name": "WP Recipe Maker",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(0,10.8.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-09-19",
+    "level": "Critical",
+    "mps_id": "MPS-xys3-842w",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xys3-842w",
+        "name": "https://www.oscs1024.com/hd/MPS-xys3-842w"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89274",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89274"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/d6ad49ff-85eb-4d05-ba23-51d89695add3?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-recipe-maker/tags/10.8.1/includes/public/class-wprm-metadata.php#L553",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-recipe-maker/tags/10.8.1/includes/public/class-wprm-metadata.php#L1028",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-recipe-maker/tags/10.8.1/includes/public/class-wprm-metadata.php#L181",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3699793%40wp-recipe-maker&new=3699793%40wp-recipe-maker",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-89274漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89274",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-94",
+    "description": "The WP Recipe Maker plugin for WordPress is vulnerable to Arbitrary Shortcode Execution in all versions up to, and including, 10.8.1. The vulnerability exists because `WPRM_Metadata::sanitize_metadata()` recursively calls `do_shortcode()` on every scalar field of the recipe's structured metadata array — including the `reviewBody` field, which is populated verbatim from the `comment_content` of approved `wprm-comment-rating` comments — without sanitizing or stripping shortcode tokens before execution; the subsequent `wp_strip_all_tags()` and `strip_shortcodes()` calls operate only on the output string after execution has already fully occurred, providing no protection against server-side shortcode invocation. This makes it possible for unauthenticated attackers to execute arbitrary registered WordPress shortcodes server-side on every recipe page render, causing shortcode output — such as attachment captions, private post fields, or other data exposed by installed shortcodes — to be embedded in the page's JSON-LD `reviewBody` metadata and disclosed to all visitors who load the recipe page. Successful exploitation requires the attacker's rated comment to pass the site's comment approval threshold, either via auto-approval or moderator action, before the injected shortcode begins executing on page loads.",
+    "effects": [
+      {
+        "comp_name": "WP Recipe Maker",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(0,10.8.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-09-19",
+    "level": "Critical",
+    "mps_id": "MPS-xys3-842w",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xys3-842w",
+        "name": "https://www.oscs1024.com/hd/MPS-xys3-842w"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89274",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89274"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/d6ad49ff-85eb-4d05-ba23-51d89695add3?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-recipe-maker/tags/10.8.1/includes/public/class-wprm-metadata.php#L553",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-recipe-maker/tags/10.8.1/includes/public/class-wprm-metadata.php#L1028",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-recipe-maker/tags/10.8.1/includes/public/class-wprm-metadata.php#L181",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3699793%40wp-recipe-maker&new=3699793%40wp-recipe-maker",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-89274漏洞"
+  },
+  "first_saved_at": "2026-09-19T05:24:26+00:00"
+}
