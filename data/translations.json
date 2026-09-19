@@ -1792,5 +1792,9 @@
   "79ae3582dfbc32a89753ce398c21e4c7b4fcc8f0": "WordPress 的 WP Recipe Maker 插件在 10.8.1 及之前的所有版本中都容易受到任意短代码执行的攻击。该漏洞的存在是因为“WPRM_Metadata::sanitize_metadata()”在配方结构化元数据数组的每个标量字段上递归调用“do_shortcode()”（包括“reviewBody”字段，该字段是从已批准的“wprm-comment- rating”评论的“comment_content”逐字填充的），而在执行前没有清理或剥离短代码令牌；随后的“wp_strip_all_tags()”和“strip_shortcodes()”调用仅在执行完全发生后对输出字符串进行操作，不提供针对服务器端短代码调用的保护。这使得未经身份验证的攻击者可以在每个菜谱页面渲染上在服务器端执行任意注册的 WordPress 短代码，从而导致短代码输出（例如附件标题、私人帖子字段或安装的短代码公开的其他数据）嵌入到页面的 JSON-LD“reviewBody”元数据中，并向加载菜谱页面的所有访问者公开。成功利用该漏洞需要攻击者的评级评论通过自动批准或审核者操作来通过网站的评论批准阈值，然后注入的短代码开始在页面加载时执行。",
   "28910b96f8ca181523c0e2de9ffa6519cc91656e": "CVE-2026-87909漏洞",
   "4d7267212bf8c9a9259d55062b3f7ec463cd9396": "WordPress 的 WP Photo Album Plus 插件在所有版本中都容易通过 wppa_image_magick 函数进行远程代码执行。这是由于在连接到通过 exec() 执行的 ImageMagick 命令字符串之前对分段上传文件名的清理不充分，仅将 escapeshellcmd() 应用于整个命令而不是引用各个参数。这使得具有订阅者级别及以上访问权限的经过身份验证的攻击者可以在服务器上执行代码。 escapeshellcmd() 转义 shell 元字符，但不会阻止参数注入，因为空格保留为参数分隔符，并且在数据库层应用的文件名清理永远不会应用于用于 ImageMagick 处理的物理临时文件路径。",
-  "d66078fa8b5698aa37e5131d6a01c7c4dd34e5f6": "下游组件使用的输出中特殊元素的不正确中和（“注入”）"
+  "d66078fa8b5698aa37e5131d6a01c7c4dd34e5f6": "下游组件使用的输出中特殊元素的不正确中和（“注入”）",
+  "9ffef3700708dfecbf528ee73f1fa6c23f2d6f58": "Totolink A3002MU formWsc命令注入",
+  "254d416339bb9b8b10ad98d6bf2570cf4dcced04": "Totolink A3002MU Hh-B20211125.1046 中已发现一个弱点。受此问题影响的是文件/boafrm/formWsc 的函数formWsc。对参数 localPin 的这种操作会导致命令注入。攻击可以远程发起。该漏洞已向公众公开，可用于攻击。",
+  "5f3fa9eaeefaf8a8104d323edc23daedfcdbce8e": "CVE-2026-1255漏洞",
+  "8c5b4ceee033dcdf1405fa6955cc9c3ab91a82b1": "WordPress 的 YS LeadGen 插件在 2.1.4 及之前的所有版本中都容易受到敏感信息泄露的影响，因为未经身份验证的用户可以访问“ysleadgen_get_captured_data”AJAX 操作。这使得未经身份验证的攻击者可以检索所有捕获的表单提交数据，包括个人身份信息 (PII)，例如通过 YS LeadGen 表单提交的姓名、电子邮件地址和消息内容。"
 }
