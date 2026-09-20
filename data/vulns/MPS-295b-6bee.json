@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-09-20T10:26:36+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-295b-6bee",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-91864",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-770",
+    "description": "Apache Neethi 是开源 Java WS-Policy 框架，用于解析、规范化并处理 Web 服务策略文档，主要被 Apache CXF、Axis2 等 SOAP 栈依赖。\n受影响版本中，PolicyBuilder 解析 WS-Policy 时只把 wsp:* 操作符节点计入 maxElements 与 maxAttributes 限额，断言子树由 StaxToDOMConverter.readDocElements 整段物化为 DOM 且不占用预算。攻击者可在策略断言内放入不受限额约束的元素或属性，使堆内存耗尽并造成拒绝服务。\n修复版本中通过在 StaxToDOMConverter 物化断言子树时调用 PolicyBuilder.chargeAmbientElement 与 chargeAmbientAttributes，把每个节点计入同一解析预算，超限立即中止解析；OMToDOMConverter 在存在 ambient budget 时改走同一 StAX 计费路径。",
+    "effects": [
+      {
+        "comp_name": "org.apache.neethi:neethi",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.2.4)",
+            "min_fixed_version": "3.2.4",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-09-20",
+    "level": "High",
+    "mps_id": "MPS-295b-6bee",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-20",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11957.html",
+        "name": ""
+      },
+      {
+        "url": "https://ws.apache.org/neethi/security.html",
+        "name": ""
+      },
+      {
+        "url": "https://ws.apache.org/neethi/",
+        "name": ""
+      },
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/18/11",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-91864",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/commit/754397ee7309c48b3692af931efe349a0f31f11f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/commit/fdaf27e3f093a4d65ce12df271d7922c74213eab",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/pull/72",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Neethi策略解析拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-91864",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-770",
+    "description": "Apache Neethi 是开源 Java WS-Policy 框架，用于解析、规范化并处理 Web 服务策略文档，主要被 Apache CXF、Axis2 等 SOAP 栈依赖。\n受影响版本中，PolicyBuilder 解析 WS-Policy 时只把 wsp:* 操作符节点计入 maxElements 与 maxAttributes 限额，断言子树由 StaxToDOMConverter.readDocElements 整段物化为 DOM 且不占用预算。攻击者可在策略断言内放入不受限额约束的元素或属性，使堆内存耗尽并造成拒绝服务。\n修复版本中通过在 StaxToDOMConverter 物化断言子树时调用 PolicyBuilder.chargeAmbientElement 与 chargeAmbientAttributes，把每个节点计入同一解析预算，超限立即中止解析；OMToDOMConverter 在存在 ambient budget 时改走同一 StAX 计费路径。",
+    "effects": [
+      {
+        "comp_name": "org.apache.neethi:neethi",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.2.4)",
+            "min_fixed_version": "3.2.4",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-09-20",
+    "level": "High",
+    "mps_id": "MPS-295b-6bee",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-20",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11957.html",
+        "name": ""
+      },
+      {
+        "url": "https://ws.apache.org/neethi/security.html",
+        "name": ""
+      },
+      {
+        "url": "https://ws.apache.org/neethi/",
+        "name": ""
+      },
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/18/11",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-91864",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/commit/754397ee7309c48b3692af931efe349a0f31f11f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/commit/fdaf27e3f093a4d65ce12df271d7922c74213eab",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/pull/72",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Neethi策略解析拒绝服务"
+  },
+  "first_saved_at": "2026-09-20T10:26:36+00:00"
+}

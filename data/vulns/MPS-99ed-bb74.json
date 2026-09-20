@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-09-20T10:26:39+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-99ed-bb74",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-91863",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-674",
+    "description": "Apache Neethi 是开源 Java WS-Policy 处理框架，以 Maven 构件 org.apache.neethi:neethi 发布，供 Web 服务栈解析和归一化策略文档。\n受影响版本中，PolicyBuilder.getPolicy 每次调用都会新建 ParseBudgetContext，而 XMLPrimitiveAssertionBuilder.build 在断言仅包含嵌套 wsp:Policy 时会再次调用 getPolicy。攻击者提交 Assertion 与 wsp:Policy 交替深层嵌套的策略文档后，maxDepth 限制被重置，解析线程栈被耗尽，解析器崩溃并形成拒绝服务。\n修复版本中通过 ThreadLocal 保存当前解析预算，使嵌套 getPolicy 继承同一 ParseBudgetContext 与 reentryDepth，超过 maxDepth 时抛出异常并中止解析。",
+    "effects": [
+      {
+        "comp_name": "org.apache.neethi:neethi",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.2.4)",
+            "min_fixed_version": "3.2.4",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-09-20",
+    "level": "High",
+    "mps_id": "MPS-99ed-bb74",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/18/10",
+        "name": ""
+      },
+      {
+        "url": "https://ws.apache.org/neethi/security.html",
+        "name": ""
+      },
+      {
+        "url": "https://ws.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-91863",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/commit/d21f0a79a365b2c965016d7761bd9b5343439b5e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/pull/66",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/releases/tag/neethi-3.2.4",
+        "name": ""
+      },
+      {
+        "url": "https://seclists.org/oss-sec/2026/q3/829",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Neethi不受控递归漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-91863",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-674",
+    "description": "Apache Neethi 是开源 Java WS-Policy 处理框架，以 Maven 构件 org.apache.neethi:neethi 发布，供 Web 服务栈解析和归一化策略文档。\n受影响版本中，PolicyBuilder.getPolicy 每次调用都会新建 ParseBudgetContext，而 XMLPrimitiveAssertionBuilder.build 在断言仅包含嵌套 wsp:Policy 时会再次调用 getPolicy。攻击者提交 Assertion 与 wsp:Policy 交替深层嵌套的策略文档后，maxDepth 限制被重置，解析线程栈被耗尽，解析器崩溃并形成拒绝服务。\n修复版本中通过 ThreadLocal 保存当前解析预算，使嵌套 getPolicy 继承同一 ParseBudgetContext 与 reentryDepth，超过 maxDepth 时抛出异常并中止解析。",
+    "effects": [
+      {
+        "comp_name": "org.apache.neethi:neethi",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.2.4)",
+            "min_fixed_version": "3.2.4",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-09-20",
+    "level": "High",
+    "mps_id": "MPS-99ed-bb74",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/18/10",
+        "name": ""
+      },
+      {
+        "url": "https://ws.apache.org/neethi/security.html",
+        "name": ""
+      },
+      {
+        "url": "https://ws.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-91863",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/commit/d21f0a79a365b2c965016d7761bd9b5343439b5e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/pull/66",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/releases/tag/neethi-3.2.4",
+        "name": ""
+      },
+      {
+        "url": "https://seclists.org/oss-sec/2026/q3/829",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Neethi不受控递归漏洞"
+  },
+  "first_saved_at": "2026-09-20T10:26:39+00:00"
+}

@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-09-20T10:26:40+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-77bd-ec52",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-91866",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-407",
+    "description": "Apache Neethi 是 Apache 基金会开源的 WS-Policy 处理框架，Maven 坐标为 org.apache.neethi:neethi，用于 Web 服务栈解析、规范化并计算策略交集。\n受影响版本中，Policy.intersect 将两侧策略交给 PolicyIntersector.intersect 计算兼容断言。当同名 PolicyContainingAssertion 成对出现时，内部会无上限地递归调用 compatiblePolicies，候选搜索随嵌套层扇出呈指数增长，导致 CPU 长时间占用并形成拒绝服务。\n修复版本中通过为单次 intersect 与 compatiblePolicies 引入 MAX_INTERSECT_STEPS 步数预算（默认 1000000），超出预算即抛出 RuntimeException，阻断无界递归候选搜索。",
+    "effects": [
+      {
+        "comp_name": "org.apache.neethi:neethi",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.2.4)",
+            "min_fixed_version": "3.2.4",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "低效算法复杂性",
+    "kind_en": "低效的算法复杂性",
+    "last_modified_time": "2026-09-20",
+    "level": "High",
+    "mps_id": "MPS-77bd-ec52",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/18/13",
+        "name": ""
+      },
+      {
+        "url": "https://ws.apache.org/neethi/security.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-91866",
+        "name": ""
+      },
+      {
+        "url": "https://ws.apache.org/neethi/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/commit/5f6e31657326e7272933427424b9316f12d26147",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/pull/71",
+        "name": ""
+      },
+      {
+        "url": "https://seclists.org/oss-sec/2026/q3/832",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Neethi策略交集拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-91866",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-407",
+    "description": "Apache Neethi 是 Apache 基金会开源的 WS-Policy 处理框架，Maven 坐标为 org.apache.neethi:neethi，用于 Web 服务栈解析、规范化并计算策略交集。\n受影响版本中，Policy.intersect 将两侧策略交给 PolicyIntersector.intersect 计算兼容断言。当同名 PolicyContainingAssertion 成对出现时，内部会无上限地递归调用 compatiblePolicies，候选搜索随嵌套层扇出呈指数增长，导致 CPU 长时间占用并形成拒绝服务。\n修复版本中通过为单次 intersect 与 compatiblePolicies 引入 MAX_INTERSECT_STEPS 步数预算（默认 1000000），超出预算即抛出 RuntimeException，阻断无界递归候选搜索。",
+    "effects": [
+      {
+        "comp_name": "org.apache.neethi:neethi",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.2.4)",
+            "min_fixed_version": "3.2.4",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "低效算法复杂性",
+    "kind_en": "Inefficient Algorithmic Complexity",
+    "last_modified_time": "2026-09-20",
+    "level": "High",
+    "mps_id": "MPS-77bd-ec52",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/18/13",
+        "name": ""
+      },
+      {
+        "url": "https://ws.apache.org/neethi/security.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-91866",
+        "name": ""
+      },
+      {
+        "url": "https://ws.apache.org/neethi/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/commit/5f6e31657326e7272933427424b9316f12d26147",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/ws-neethi/pull/71",
+        "name": ""
+      },
+      {
+        "url": "https://seclists.org/oss-sec/2026/q3/832",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Neethi策略交集拒绝服务"
+  },
+  "first_saved_at": "2026-09-20T10:26:40+00:00"
+}
