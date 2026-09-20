@@ -1,0 +1,233 @@
+{
+  "saved_at": "2026-09-20T22:52:45+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ucwq-l2p6",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94089",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 10
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H/E:P/RL:X/RC:R",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "D-Link DIR-868L 是商业无线路由器产品，固件闭源，用于家庭与小型办公网络接入，并提供 Web 管理及 mydlink/SharePort 认证接口。\n受影响版本中，多路 CGI 二进制 /htdocs/cgibin 将 webfa_authentication.cgi 等认证入口分发到 sub_14760。该函数在身份校验前使用 strcpy 把查询参数 id、password 拷入栈上固定 0x400 字节缓冲区，查询串解析不对参数值做长度限制。未认证攻击者发送一次超长 id 或 password 的 HTTP GET 即可覆盖保存的返回地址，并在设备上以 root 执行代码。\n修复版本中通过将认证分发入口的 strcpy 替换为有界拷贝并限制查询参数长度来切断溢出链。公开渠道尚未发布包含该修复的官方固件，DIR-868L 已于 2016-11-01 结束服务支持，应停止向不可信网络暴露 Web 管理与 SharePort 远程访问，并更换仍受支持的型号。",
+    "effects": [
+      {
+        "comp_name": "DIR-868L",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.01b05,2.01b05]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "基于堆栈的缓冲区溢出",
+    "last_modified_time": "2026-09-21",
+    "level": "Critical",
+    "mps_id": "MPS-ucwq-l2p6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ucwq-l2p6",
+        "name": "https://www.oscs1024.com/hd/MPS-ucwq-l2p6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94089",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-94089"
+      },
+      {
+        "url": "https://vuldb.com/vuln/408017",
+        "name": "VDB-408017 | D-Link DIR-868L Authentication webfa_authentication.cgi strcpy stack-based overflow"
+      },
+      {
+        "url": "https://vuldb.com/vuln/408017/cti",
+        "name": "VDB-408017 | CTI Indicators (IOB, IOC, IOA)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-94089",
+        "name": "CVE-2026-94089 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/951681",
+        "name": "Submit #951681 | D-Link DIR-868L B1 Stack-based Buffer Overflow"
+      },
+      {
+        "url": "https://github.com/Walnut1337/CVE/blob/main/poc/poc_crash.py",
+        "name": ""
+      },
+      {
+        "url": "https://www.dlink.com/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DIR-868L认证栈溢出",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94089",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 10
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H/E:P/RL:X/RC:R",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "D-Link DIR-868L 是商业无线路由器产品，固件闭源，用于家庭与小型办公网络接入，并提供 Web 管理及 mydlink/SharePort 认证接口。\n受影响版本中，多路 CGI 二进制 /htdocs/cgibin 将 webfa_authentication.cgi 等认证入口分发到 sub_14760。该函数在身份校验前使用 strcpy 把查询参数 id、password 拷入栈上固定 0x400 字节缓冲区，查询串解析不对参数值做长度限制。未认证攻击者发送一次超长 id 或 password 的 HTTP GET 即可覆盖保存的返回地址，并在设备上以 root 执行代码。\n修复版本中通过将认证分发入口的 strcpy 替换为有界拷贝并限制查询参数长度来切断溢出链。公开渠道尚未发布包含该修复的官方固件，DIR-868L 已于 2016-11-01 结束服务支持，应停止向不可信网络暴露 Web 管理与 SharePort 远程访问，并更换仍受支持的型号。",
+    "effects": [
+      {
+        "comp_name": "DIR-868L",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.01b05,2.01b05]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "Stack-based Buffer Overflow",
+    "last_modified_time": "2026-09-21",
+    "level": "Critical",
+    "mps_id": "MPS-ucwq-l2p6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ucwq-l2p6",
+        "name": "https://www.oscs1024.com/hd/MPS-ucwq-l2p6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94089",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-94089"
+      },
+      {
+        "url": "https://vuldb.com/vuln/408017",
+        "name": "VDB-408017 | D-Link DIR-868L Authentication webfa_authentication.cgi strcpy stack-based overflow"
+      },
+      {
+        "url": "https://vuldb.com/vuln/408017/cti",
+        "name": "VDB-408017 | CTI Indicators (IOB, IOC, IOA)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-94089",
+        "name": "CVE-2026-94089 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/951681",
+        "name": "Submit #951681 | D-Link DIR-868L B1 Stack-based Buffer Overflow"
+      },
+      {
+        "url": "https://github.com/Walnut1337/CVE/blob/main/poc/poc_crash.py",
+        "name": ""
+      },
+      {
+        "url": "https://www.dlink.com/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DIR-868L认证栈溢出"
+  },
+  "first_saved_at": "2026-09-20T22:52:45+00:00"
+}
