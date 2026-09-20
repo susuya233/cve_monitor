@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-20T14:25:07+00:00",
+  "saved_at": "2026-09-20T14:25:03+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-yrv3-coja",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6yjg-nz7v",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,29 +21,43 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-92229",
+    "cve_id": "CVE-2026-90817",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "source": "contact@securifera.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
           "severity": "critical",
-          "base_score": 9.1
+          "base_score": 9.8
         }
       ]
     },
-    "cvss_score": 9.1,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-94",
-    "description": "The The Forminator Forms – Contact Form, Payment Form & Custom Form Builder plugin for WordPress is vulnerable to arbitrary shortcode execution in all versions up to, and including, 1.57.2.这是由于该软件允许用户执行在运行 do_shortcode 之前未正确验证值的操作。这使得未经身份验证的攻击者可以执行任意短代码。",
+    "description": "REDCap 是 Vanderbilt University 开发的 PHP 临床科研数据采集（EDC）平台，采用商业授权分发，广泛用于医院与科研机构通过在线调查和数据表单收集研究数据。\n受影响版本中，公开调查（survey）透传路由未将公开调查上下文中的请求严格限制在预期控制器范围内，未认证攻击者在掌握有效公开调查哈希后可构造 HTTP 请求访问非预期的控制器路由，Data Import 处理逻辑随后接受攻击者控制的文件路径/流参数，使不可信输入进入危险执行路径，最终在 REDCap 服务器上远程执行任意代码。\n修复版本中通过官方安全更新阻断公开调查上下文访问非预期控制器路由并收紧 Data Import 对文件路径/流参数的处理，官方 CNA 记录确认 16.0.49、17.3.10 和 17.4.4 版本不再受该漏洞影响，公开资料未披露更细粒度的源码修改。",
     "effects": [
       {
-        "comp_name": "Forminator Forms – Contact Form, Payment Form & Custom Form Builder",
+        "comp_name": "redcap",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(0,1.57.2]",
-            "min_fixed_version": "",
+            "affected_version": "[17.4.0,17.4.4)",
+            "min_fixed_version": "17.4.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.3.0,16.0.49)",
+            "min_fixed_version": "16.0.49",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[17.0.0,17.3.10)",
+            "min_fixed_version": "17.3.10",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -54,48 +68,28 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "代码注入",
     "kind_en": "代码生成控制不当（“代码注入”）",
-    "last_modified_time": "2026-09-19",
+    "last_modified_time": "2026-09-20",
     "level": "Critical",
-    "mps_id": "MPS-yrv3-coja",
+    "mps_id": "MPS-6yjg-nz7v",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-19",
+    "published_time": "2026-09-20",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-yrv3-coja",
-        "name": "https://www.oscs1024.com/hd/MPS-yrv3-coja"
+        "url": "https://www.oscs1024.com/hd/MPS-6yjg-nz7v",
+        "name": "https://www.oscs1024.com/hd/MPS-6yjg-nz7v"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92229",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-92229"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90817",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90817"
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/7c28869c-c880-4322-9f17-09495a08576e?source=cve",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.57.2/library/modules/quizzes/front/front-action.php#L870",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.57.2/library/modules/quizzes/front/front-action.php#L837",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.57.2/library/modules/quizzes/front/front-action.php#L60",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.57.2/library/abstracts/abstract-class-front-action.php#L127",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3700724%40forminator&new=3700724%40forminator",
+        "url": "https://www.securifera.com/advisories/",
         "name": ""
       }
     ],
@@ -103,7 +97,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "CVE-2026-92229漏洞",
+    "title": "REDCap未授权远程代码执行漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -123,29 +117,43 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-92229",
+    "cve_id": "CVE-2026-90817",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "source": "contact@securifera.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
           "severity": "critical",
-          "base_score": 9.1
+          "base_score": 9.8
         }
       ]
     },
-    "cvss_score": 9.1,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-94",
-    "description": "The The Forminator Forms – Contact Form, Payment Form & Custom Form Builder plugin for WordPress is vulnerable to arbitrary shortcode execution in all versions up to, and including, 1.57.2. This is due to the software allowing users to execute an action that does not properly validate a value before running do_shortcode. This makes it possible for unauthenticated attackers to execute arbitrary shortcodes.",
+    "description": "REDCap 是 Vanderbilt University 开发的 PHP 临床科研数据采集（EDC）平台，采用商业授权分发，广泛用于医院与科研机构通过在线调查和数据表单收集研究数据。\n受影响版本中，公开调查（survey）透传路由未将公开调查上下文中的请求严格限制在预期控制器范围内，未认证攻击者在掌握有效公开调查哈希后可构造 HTTP 请求访问非预期的控制器路由，Data Import 处理逻辑随后接受攻击者控制的文件路径/流参数，使不可信输入进入危险执行路径，最终在 REDCap 服务器上远程执行任意代码。\n修复版本中通过官方安全更新阻断公开调查上下文访问非预期控制器路由并收紧 Data Import 对文件路径/流参数的处理，官方 CNA 记录确认 16.0.49、17.3.10 和 17.4.4 版本不再受该漏洞影响，公开资料未披露更细粒度的源码修改。",
     "effects": [
       {
-        "comp_name": "Forminator Forms – Contact Form, Payment Form & Custom Form Builder",
+        "comp_name": "redcap",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(0,1.57.2]",
-            "min_fixed_version": "",
+            "affected_version": "[17.4.0,17.4.4)",
+            "min_fixed_version": "17.4.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.3.0,16.0.49)",
+            "min_fixed_version": "16.0.49",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[17.0.0,17.3.10)",
+            "min_fixed_version": "17.3.10",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -156,48 +164,28 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "代码注入",
     "kind_en": "Improper Control of Generation of Code ('Code Injection')",
-    "last_modified_time": "2026-09-19",
+    "last_modified_time": "2026-09-20",
     "level": "Critical",
-    "mps_id": "MPS-yrv3-coja",
+    "mps_id": "MPS-6yjg-nz7v",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-19",
+    "published_time": "2026-09-20",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-yrv3-coja",
-        "name": "https://www.oscs1024.com/hd/MPS-yrv3-coja"
+        "url": "https://www.oscs1024.com/hd/MPS-6yjg-nz7v",
+        "name": "https://www.oscs1024.com/hd/MPS-6yjg-nz7v"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92229",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-92229"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90817",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90817"
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/7c28869c-c880-4322-9f17-09495a08576e?source=cve",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.57.2/library/modules/quizzes/front/front-action.php#L870",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.57.2/library/modules/quizzes/front/front-action.php#L837",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.57.2/library/modules/quizzes/front/front-action.php#L60",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/forminator/tags/1.57.2/library/abstracts/abstract-class-front-action.php#L127",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3700724%40forminator&new=3700724%40forminator",
+        "url": "https://www.securifera.com/advisories/",
         "name": ""
       }
     ],
@@ -205,7 +193,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "CVE-2026-92229漏洞"
+    "title": "REDCap未授权远程代码执行漏洞"
   },
-  "first_saved_at": "2026-09-19T05:24:19+00:00"
+  "first_saved_at": "2026-09-20T14:25:03+00:00"
 }

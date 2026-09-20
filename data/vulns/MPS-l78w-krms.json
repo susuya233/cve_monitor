@@ -1,0 +1,193 @@
+{
+  "saved_at": "2026-09-20T14:25:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-l78w-krms",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94107",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-338",
+    "description": "NivoCart 是一款基于 PHP 的开源购物车/电商系统（GitHub 开源，GPL-3.0 许可），提供商品、订单与后台管理员管理能力。\n受影响版本中，管理员密码找回入口 upload/admin/controller/common/forgotten.php 的 index() 使用 substr(md5(mt_rand()), 0, 10) 生成 10 位十六进制重置令牌：mt_rand() 为非加密安全随机源，输出可由其 32 位种子状态推算，令牌可预测空间上限仅约 2^32；令牌经 model/user/user.php 的 editCode() 写入数据库后没有过期时间（getUserByCode() 仅要求 code != ''），找回与重置入口 common/forgotten、common/reset 均无速率限制，知道管理员邮箱的攻击者可请求找回并预测或穷举有效令牌，通过 common/reset 直接重置管理员密码并接管后台。\n修复版本中通过，上游 issue #25 给出的修复建议为改用 bin2hex(random_bytes(32)) 生成高熵令牌、记录令牌创建时间并使超时令牌（如 60 分钟）失效、对令牌申请与重置接口增加速率限制；运维上可在后台设置中关闭密码找回功能（config_password 置 0）切断该入口，并等待官方发布包含修复的版本。",
+    "effects": [
+      {
+        "comp_name": "nivocart",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.4.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用具有密码学弱点缺陷的PRNG",
+    "kind_en": "使用弱加密伪随机数生成器 (PRNG)",
+    "last_modified_time": "2026-09-20",
+    "level": "Critical",
+    "mps_id": "MPS-l78w-krms",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-l78w-krms",
+        "name": "https://www.oscs1024.com/hd/MPS-l78w-krms"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94107",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-94107"
+      },
+      {
+        "url": "https://github.com/nivocart/nivocart/issues/25",
+        "name": "GitHub Issue #25"
+      },
+      {
+        "url": "https://github.com/nivocart/nivocart/blob/6ea6600cda1263ae70c0aab0a70d31091a32c46b/upload/admin/controller/common/forgotten.php#L20-L34",
+        "name": "reset token generation at v2.4.0"
+      },
+      {
+        "url": "https://github.com/nivocart/nivocart/blob/6ea6600cda1263ae70c0aab0a70d31091a32c46b/upload/admin/model/user/user.php#L119-L123",
+        "name": "getUserByCode at v2.4.0"
+      },
+      {
+        "url": "https://github.com/nivocart/nivocart",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nivocart-through-2.4.0-predictable-administrator-password-reset-token",
+        "name": "VulnCheck Advisory: NivoCart through 2.4.0 Predictable Administrator Password Reset Token"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "NivoCart重置令牌可预测",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94107",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-338",
+    "description": "NivoCart 是一款基于 PHP 的开源购物车/电商系统（GitHub 开源，GPL-3.0 许可），提供商品、订单与后台管理员管理能力。\n受影响版本中，管理员密码找回入口 upload/admin/controller/common/forgotten.php 的 index() 使用 substr(md5(mt_rand()), 0, 10) 生成 10 位十六进制重置令牌：mt_rand() 为非加密安全随机源，输出可由其 32 位种子状态推算，令牌可预测空间上限仅约 2^32；令牌经 model/user/user.php 的 editCode() 写入数据库后没有过期时间（getUserByCode() 仅要求 code != ''），找回与重置入口 common/forgotten、common/reset 均无速率限制，知道管理员邮箱的攻击者可请求找回并预测或穷举有效令牌，通过 common/reset 直接重置管理员密码并接管后台。\n修复版本中通过，上游 issue #25 给出的修复建议为改用 bin2hex(random_bytes(32)) 生成高熵令牌、记录令牌创建时间并使超时令牌（如 60 分钟）失效、对令牌申请与重置接口增加速率限制；运维上可在后台设置中关闭密码找回功能（config_password 置 0）切断该入口，并等待官方发布包含修复的版本。",
+    "effects": [
+      {
+        "comp_name": "nivocart",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.4.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用具有密码学弱点缺陷的PRNG",
+    "kind_en": "Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)",
+    "last_modified_time": "2026-09-20",
+    "level": "Critical",
+    "mps_id": "MPS-l78w-krms",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-l78w-krms",
+        "name": "https://www.oscs1024.com/hd/MPS-l78w-krms"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94107",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-94107"
+      },
+      {
+        "url": "https://github.com/nivocart/nivocart/issues/25",
+        "name": "GitHub Issue #25"
+      },
+      {
+        "url": "https://github.com/nivocart/nivocart/blob/6ea6600cda1263ae70c0aab0a70d31091a32c46b/upload/admin/controller/common/forgotten.php#L20-L34",
+        "name": "reset token generation at v2.4.0"
+      },
+      {
+        "url": "https://github.com/nivocart/nivocart/blob/6ea6600cda1263ae70c0aab0a70d31091a32c46b/upload/admin/model/user/user.php#L119-L123",
+        "name": "getUserByCode at v2.4.0"
+      },
+      {
+        "url": "https://github.com/nivocart/nivocart",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nivocart-through-2.4.0-predictable-administrator-password-reset-token",
+        "name": "VulnCheck Advisory: NivoCart through 2.4.0 Predictable Administrator Password Reset Token"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "NivoCart重置令牌可预测"
+  },
+  "first_saved_at": "2026-09-20T14:25:07+00:00"
+}
