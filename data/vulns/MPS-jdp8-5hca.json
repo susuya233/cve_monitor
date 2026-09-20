@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-20T05:37:28+00:00",
+  "saved_at": "2026-09-20T05:37:21+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-xh8k-2riq",
+  "source_page": "https://www.oscs1024.com/hd/MPS-jdp8-5hca",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,28 +21,28 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-92619",
+    "cve_id": "CVE-2026-86553",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "source": "psirt@zte.com.cn",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 8.5
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
     "cwe": "CWE-269",
-    "description": "The Booking Calendar plugin for WordPress is vulnerable to Privilege Escalation in all versions up to, and including, 11.8.2 via the `wpbc_ajax_option_save` AJAX action. The vulnerability exists because the `handle_ajax_save()` function applies per-option safeguards only to names explicitly registered via `register_option_policy()`, causing `get_option_policy()` to return an empty policy — bypassing all can_save, force_mode, and allowed_keys checks — for any unregistered option name, including core WordPress options, while an attacker-controlled `data_name` parameter passes through `sanitize_key()` and is written directly to `update_option()` without restriction. This makes it possible for authenticated attackers with Editor-level access and above to escalate their privileges to Administrator by writing core WordPress options such as `default_role=administrator` and `users_can_register=1`, then self-registering a new Administrator account. The nonce check does not meaningfully restrict this attack, as both the nonce value and nonce action are attacker-supplied POST parameters, and a valid nonce is trivially obtainable via `admin-ajax.php?action=rest-nonce`.",
+    "description": "SmartLife 应用程序在其运行时进程内动态生成新的 SmartLife 应用程序身份验证参数。攻击者利用获取的SmartLife应用认证参数，可以直接调用后端接口/account/verify.serv获取注册邮箱对应的真实账户ID。通过欺骗应用程序认证信息和目标帐户ID，攻击者可以重置目标帐户的密码。",
     "effects": [
       {
-        "comp_name": "Booking Calendar",
+        "comp_name": "ZTESW",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(0,11.8.2]",
+            "affected_version": "(-∞,ZTE_SL_V2.8.2_ABROADandpriorversions]",
             "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
@@ -59,43 +59,23 @@
     "fix_suggestion": "建议修复",
     "kind": "权限管理不当",
     "kind_en": "权限管理不当",
-    "last_modified_time": "2026-09-18",
+    "last_modified_time": "2026-09-20",
     "level": "High",
-    "mps_id": "MPS-xh8k-2riq",
+    "mps_id": "MPS-jdp8-5hca",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-18",
+    "published_time": "2026-09-20",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-xh8k-2riq",
-        "name": "https://www.oscs1024.com/hd/MPS-xh8k-2riq"
+        "url": "https://www.oscs1024.com/hd/MPS-jdp8-5hca",
+        "name": "https://www.oscs1024.com/hd/MPS-jdp8-5hca"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92619",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-92619"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86553",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86553"
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/ab68a6b2-e9b0-4efa-bd01-c6e3e11011db?source=cve",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/booking/tags/11.8.2/includes/save-load-option/save-load-option.php#L303",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/booking/tags/11.8.2/includes/save-load-option/save-load-option.php#L197",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/booking/tags/11.8.2/includes/save-load-option/save-load-option.php#L138",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/booking/tags/11.8.2/includes/page-form-builder/ajax/bfb-ajax.php#L82",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3699185%40booking&new=3699185%40booking",
+        "url": "https://support.zte.com.cn/zte-iccp-isupport-webui/bulletin/detail/2171542593031840100",
         "name": ""
       }
     ],
@@ -103,7 +83,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "CVE-2026-92619漏洞",
+    "title": "中兴通讯SmartLife APP存在密码重置漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -123,28 +103,28 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-92619",
+    "cve_id": "CVE-2026-86553",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "source": "psirt@zte.com.cn",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 8.5
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
     "cwe": "CWE-269",
-    "description": "The Booking Calendar plugin for WordPress is vulnerable to Privilege Escalation in all versions up to, and including, 11.8.2 via the `wpbc_ajax_option_save` AJAX action. The vulnerability exists because the `handle_ajax_save()` function applies per-option safeguards only to names explicitly registered via `register_option_policy()`, causing `get_option_policy()` to return an empty policy — bypassing all can_save, force_mode, and allowed_keys checks — for any unregistered option name, including core WordPress options, while an attacker-controlled `data_name` parameter passes through `sanitize_key()` and is written directly to `update_option()` without restriction. This makes it possible for authenticated attackers with Editor-level access and above to escalate their privileges to Administrator by writing core WordPress options such as `default_role=administrator` and `users_can_register=1`, then self-registering a new Administrator account. The nonce check does not meaningfully restrict this attack, as both the nonce value and nonce action are attacker-supplied POST parameters, and a valid nonce is trivially obtainable via `admin-ajax.php?action=rest-nonce`.",
+    "description": "SmartLife app dynamically generates fresh SmartLife application authentication parameters inside its runtime process. Using the acquired SmartLife application authentication parameters, an attacker can directly call the backend interface /account/verify.serv to obtain the real account ID corresponding to a registered email address. By spoofing the application authentication information together with the target account ID, the attacker can reset the password of the target account.",
     "effects": [
       {
-        "comp_name": "Booking Calendar",
+        "comp_name": "ZTESW",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(0,11.8.2]",
+            "affected_version": "(-∞,ZTE_SL_V2.8.2_ABROADandpriorversions]",
             "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
@@ -161,43 +141,23 @@
     "fix_suggestion": "Recommend",
     "kind": "权限管理不当",
     "kind_en": "Improper Privilege Management",
-    "last_modified_time": "2026-09-18",
+    "last_modified_time": "2026-09-20",
     "level": "High",
-    "mps_id": "MPS-xh8k-2riq",
+    "mps_id": "MPS-jdp8-5hca",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-18",
+    "published_time": "2026-09-20",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-xh8k-2riq",
-        "name": "https://www.oscs1024.com/hd/MPS-xh8k-2riq"
+        "url": "https://www.oscs1024.com/hd/MPS-jdp8-5hca",
+        "name": "https://www.oscs1024.com/hd/MPS-jdp8-5hca"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92619",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-92619"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86553",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86553"
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/ab68a6b2-e9b0-4efa-bd01-c6e3e11011db?source=cve",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/booking/tags/11.8.2/includes/save-load-option/save-load-option.php#L303",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/booking/tags/11.8.2/includes/save-load-option/save-load-option.php#L197",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/booking/tags/11.8.2/includes/save-load-option/save-load-option.php#L138",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/browser/booking/tags/11.8.2/includes/page-form-builder/ajax/bfb-ajax.php#L82",
-        "name": ""
-      },
-      {
-        "url": "https://plugins.trac.wordpress.org/changeset?reponame=&old=3699185%40booking&new=3699185%40booking",
+        "url": "https://support.zte.com.cn/zte-iccp-isupport-webui/bulletin/detail/2171542593031840100",
         "name": ""
       }
     ],
@@ -205,7 +165,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "CVE-2026-92619漏洞"
+    "title": "A password reset vulnerability in ZTE SmartLife APP"
   },
-  "first_saved_at": "2026-09-18T07:52:10+00:00"
+  "first_saved_at": "2026-09-20T05:37:21+00:00"
 }
