@@ -1,0 +1,237 @@
+{
+  "saved_at": "2026-09-21T17:39:50+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4lwt-so1b",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77560",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-863",
+    "description": "Tinyauth 是开源认证与授权服务器，部署在反向代理之前，为多个应用提供统一登录和按应用访问控制。\n受影响版本中，proxyHandler 使用未经大小写规范化的转发主机名查找按应用访问控制。5.1.2 之前，lookupStaticACLs 或 Docker GetLabels、Kubernetes 域名索引至少有一条路径仍以大小写敏感的字符串相等比较主机名；比较未命中时得不到该应用的用户、用户组、OAuth、LDAP 和 IP 限制。v5.0.7 的 GetLabels 在未命中时返回空 App 且 error 为 nil，proxyHandler 把空限制当作允许，已登录但未被该应用允许的用户改变主机名大小写即可获得已认证结果。未认证请求仍进入登录，全局登录白名单不被绕过。\n修复版本中通过 getACLs 将静态配置、Docker 与 Kubernetes 标签交给 DomainValidator.Validate，由 formatHostname 把主机名转为小写并去掉末尾点号后再比较，大小写不同的等价主机名会命中原有访问控制，被排除的已登录用户不再因查找落空获得放行。",
+    "effects": [
+      {
+        "comp_name": "github.com/steveiliop56/tinyauth",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.1.0)",
+            "min_fixed_version": "5.1.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "github.com/tinyauthapp/tinyauth",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[5.1.0,5.1.2)",
+            "min_fixed_version": "5.1.2",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查错误",
+    "kind_en": "授权错误",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-4lwt-so1b",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4lwt-so1b",
+        "name": "https://www.oscs1024.com/hd/MPS-4lwt-so1b"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77560",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77560"
+      },
+      {
+        "url": "https://github.com/tinyauthapp/tinyauth/security/advisories/GHSA-328g-jx67-v94g",
+        "name": "https://github.com/tinyauthapp/tinyauth/security/advisories/GHSA-328g-jx67-v94g"
+      },
+      {
+        "url": "https://github.com/tinyauthapp/tinyauth/pull/1000",
+        "name": "https://github.com/tinyauthapp/tinyauth/pull/1000"
+      },
+      {
+        "url": "https://github.com/tinyauthapp/tinyauth/pull/1028",
+        "name": "https://github.com/tinyauthapp/tinyauth/pull/1028"
+      },
+      {
+        "url": "https://github.com/tinyauthapp/tinyauth/commit/80bc87188ec3aabc5104c249eaa7b997973b9275",
+        "name": "https://github.com/tinyauthapp/tinyauth/commit/80bc87188ec3aabc5104c249eaa7b997973b9275"
+      },
+      {
+        "url": "https://github.com/tinyauthapp/tinyauth/commit/e75605b2c534ec83525a33603e16d76baca13399",
+        "name": "https://github.com/tinyauthapp/tinyauth/commit/e75605b2c534ec83525a33603e16d76baca13399"
+      },
+      {
+        "url": "https://github.com/tinyauthapp/tinyauth/releases/tag/v5.1.2",
+        "name": "https://github.com/tinyauthapp/tinyauth/releases/tag/v5.1.2"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Tinyauth主机名绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77560",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-863",
+    "description": "Tinyauth 是开源认证与授权服务器，部署在反向代理之前，为多个应用提供统一登录和按应用访问控制。\n受影响版本中，proxyHandler 使用未经大小写规范化的转发主机名查找按应用访问控制。5.1.2 之前，lookupStaticACLs 或 Docker GetLabels、Kubernetes 域名索引至少有一条路径仍以大小写敏感的字符串相等比较主机名；比较未命中时得不到该应用的用户、用户组、OAuth、LDAP 和 IP 限制。v5.0.7 的 GetLabels 在未命中时返回空 App 且 error 为 nil，proxyHandler 把空限制当作允许，已登录但未被该应用允许的用户改变主机名大小写即可获得已认证结果。未认证请求仍进入登录，全局登录白名单不被绕过。\n修复版本中通过 getACLs 将静态配置、Docker 与 Kubernetes 标签交给 DomainValidator.Validate，由 formatHostname 把主机名转为小写并去掉末尾点号后再比较，大小写不同的等价主机名会命中原有访问控制，被排除的已登录用户不再因查找落空获得放行。",
+    "effects": [
+      {
+        "comp_name": "github.com/steveiliop56/tinyauth",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.1.0)",
+            "min_fixed_version": "5.1.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "github.com/tinyauthapp/tinyauth",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[5.1.0,5.1.2)",
+            "min_fixed_version": "5.1.2",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查错误",
+    "kind_en": "Incorrect Authorization",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-4lwt-so1b",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4lwt-so1b",
+        "name": "https://www.oscs1024.com/hd/MPS-4lwt-so1b"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77560",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77560"
+      },
+      {
+        "url": "https://github.com/tinyauthapp/tinyauth/security/advisories/GHSA-328g-jx67-v94g",
+        "name": "https://github.com/tinyauthapp/tinyauth/security/advisories/GHSA-328g-jx67-v94g"
+      },
+      {
+        "url": "https://github.com/tinyauthapp/tinyauth/pull/1000",
+        "name": "https://github.com/tinyauthapp/tinyauth/pull/1000"
+      },
+      {
+        "url": "https://github.com/tinyauthapp/tinyauth/pull/1028",
+        "name": "https://github.com/tinyauthapp/tinyauth/pull/1028"
+      },
+      {
+        "url": "https://github.com/tinyauthapp/tinyauth/commit/80bc87188ec3aabc5104c249eaa7b997973b9275",
+        "name": "https://github.com/tinyauthapp/tinyauth/commit/80bc87188ec3aabc5104c249eaa7b997973b9275"
+      },
+      {
+        "url": "https://github.com/tinyauthapp/tinyauth/commit/e75605b2c534ec83525a33603e16d76baca13399",
+        "name": "https://github.com/tinyauthapp/tinyauth/commit/e75605b2c534ec83525a33603e16d76baca13399"
+      },
+      {
+        "url": "https://github.com/tinyauthapp/tinyauth/releases/tag/v5.1.2",
+        "name": "https://github.com/tinyauthapp/tinyauth/releases/tag/v5.1.2"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Tinyauth主机名绕过"
+  },
+  "first_saved_at": "2026-09-21T17:39:50+00:00"
+}

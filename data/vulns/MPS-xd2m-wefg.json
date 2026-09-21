@@ -1,0 +1,223 @@
+{
+  "saved_at": "2026-09-21T17:39:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xd2m-wefg",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79920",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-862",
+    "description": "Ajenti 是面向 Linux 与 BSD 的开源模块化服务器管理面板，用于通过 Web 界面管理主机服务与插件。\n受影响版本中，任意已登录用户都可向 /api/core/tasks/start 提交任务。plugins/core/views/tasks.py 的 Handler.handle_api_tasks_start 只校验会话并按允许列表实例化 InstallPlugin、UnInstallPlugin 或 UpgradeAll，plugins/plugins/tasks.py 中的对应 run 方法没有插件管理权限检查。InstallPlugin 与 UnInstallPlugin 把调用方传入的 name、version 直接拼成 pip 包规格，任务进程在 root 身份下执行 pip，低权限账户可借此安装、卸载或升级插件，并在主机上以 root 执行代码。\n修复版本中通过在 InstallPlugin.run、UpgradeAll.run 与 UnInstallPlugin.run 上分别强制 plugins:install、plugins:upgrade、plugins:uninstall 权限，并在拼接包规格前拒绝不符合允许字符集的 name 与 version，同时将 pip install 限定到官方索引且不拉取依赖，使未获授权的账户无法再通过该任务接口以 root 安装软件包。",
+    "effects": [
+      {
+        "comp_name": "ajenti",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.2.16)",
+            "min_fixed_version": "2.2.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "ajenti.plugin.plugins",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.55)",
+            "min_fixed_version": "0.55",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-09-22",
+    "level": "Critical",
+    "mps_id": "MPS-xd2m-wefg",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xd2m-wefg",
+        "name": "https://www.oscs1024.com/hd/MPS-xd2m-wefg"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79920",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79920"
+      },
+      {
+        "url": "https://github.com/ajenti/ajenti/security/advisories/GHSA-j8xf-5fw2-f99q",
+        "name": "https://github.com/ajenti/ajenti/security/advisories/GHSA-j8xf-5fw2-f99q"
+      },
+      {
+        "url": "https://github.com/ajenti/ajenti/commit/3a8cbee32df4c5033796f19af4210011163a6f6e",
+        "name": "https://github.com/ajenti/ajenti/commit/3a8cbee32df4c5033796f19af4210011163a6f6e"
+      },
+      {
+        "url": "https://github.com/ajenti/ajenti/commit/f07f02e0cdeeb3e528c1d5af28e27fd11623c49c",
+        "name": "https://github.com/ajenti/ajenti/commit/f07f02e0cdeeb3e528c1d5af28e27fd11623c49c"
+      },
+      {
+        "url": "https://github.com/ajenti/ajenti/releases/tag/v2.2.16",
+        "name": "https://github.com/ajenti/ajenti/releases/tag/v2.2.16"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "Ajenti插件安装越权",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79920",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-862",
+    "description": "Ajenti 是面向 Linux 与 BSD 的开源模块化服务器管理面板，用于通过 Web 界面管理主机服务与插件。\n受影响版本中，任意已登录用户都可向 /api/core/tasks/start 提交任务。plugins/core/views/tasks.py 的 Handler.handle_api_tasks_start 只校验会话并按允许列表实例化 InstallPlugin、UnInstallPlugin 或 UpgradeAll，plugins/plugins/tasks.py 中的对应 run 方法没有插件管理权限检查。InstallPlugin 与 UnInstallPlugin 把调用方传入的 name、version 直接拼成 pip 包规格，任务进程在 root 身份下执行 pip，低权限账户可借此安装、卸载或升级插件，并在主机上以 root 执行代码。\n修复版本中通过在 InstallPlugin.run、UpgradeAll.run 与 UnInstallPlugin.run 上分别强制 plugins:install、plugins:upgrade、plugins:uninstall 权限，并在拼接包规格前拒绝不符合允许字符集的 name 与 version，同时将 pip install 限定到官方索引且不拉取依赖，使未获授权的账户无法再通过该任务接口以 root 安装软件包。",
+    "effects": [
+      {
+        "comp_name": "ajenti",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.2.16)",
+            "min_fixed_version": "2.2.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "ajenti.plugin.plugins",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.55)",
+            "min_fixed_version": "0.55",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-09-22",
+    "level": "Critical",
+    "mps_id": "MPS-xd2m-wefg",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xd2m-wefg",
+        "name": "https://www.oscs1024.com/hd/MPS-xd2m-wefg"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79920",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79920"
+      },
+      {
+        "url": "https://github.com/ajenti/ajenti/security/advisories/GHSA-j8xf-5fw2-f99q",
+        "name": "https://github.com/ajenti/ajenti/security/advisories/GHSA-j8xf-5fw2-f99q"
+      },
+      {
+        "url": "https://github.com/ajenti/ajenti/commit/3a8cbee32df4c5033796f19af4210011163a6f6e",
+        "name": "https://github.com/ajenti/ajenti/commit/3a8cbee32df4c5033796f19af4210011163a6f6e"
+      },
+      {
+        "url": "https://github.com/ajenti/ajenti/commit/f07f02e0cdeeb3e528c1d5af28e27fd11623c49c",
+        "name": "https://github.com/ajenti/ajenti/commit/f07f02e0cdeeb3e528c1d5af28e27fd11623c49c"
+      },
+      {
+        "url": "https://github.com/ajenti/ajenti/releases/tag/v2.2.16",
+        "name": "https://github.com/ajenti/ajenti/releases/tag/v2.2.16"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "Ajenti插件安装越权"
+  },
+  "first_saved_at": "2026-09-21T17:39:49+00:00"
+}

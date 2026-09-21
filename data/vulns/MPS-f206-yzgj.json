@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-09-21T17:39:46+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-f206-yzgj",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84990",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-862",
+    "description": "ntopng 是 ntop 发布的开源 Web 网络流量监控应用，用于采集、分析并展示网络流量与主机行为。\n受影响版本中，REST 脚本 download_backup.lua 与 list_available_backups.lua 未调用 isAdministratorOrPrintErr()。已登录的非管理员用户可请求这两个接口；download_backup.lua 读取 _GET[\"epoch\"] 与 _GET[\"download\"] 后调用 backup_config.export_backup 返回已保存的系统配置备份。备份由 backup_config.exec_backup 经 all_import_export:export 生成，export 调用 prefs_dump_utils.build_prefs_dump_table，按 ntopng.prefs.* 与 ntopng.user.* 导出 Redis 键，因此备份包含本地用户密码哈希，并在相关凭据已配置时包含 API token、TOTP 密钥和 WebAuthn 凭据，使可直接使用或可还原的凭据暴露给非管理员账户。\n修复版本中通过在 download_backup.lua 与 list_available_backups.lua 入口调用 isAdministratorOrPrintErr() 切断未授权访问。非管理员请求返回 rest_utils.consts.err.not_granted 后结束处理，不能再列举备份，也不能再经 backup_config.export_backup 下载包含 ntopng.user.* 的配置备份。",
+    "effects": [
+      {
+        "comp_name": "ntopng",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.7.260718)",
+            "min_fixed_version": "6.7.260718",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-f206-yzgj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-f206-yzgj",
+        "name": "https://www.oscs1024.com/hd/MPS-f206-yzgj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84990",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84990"
+      },
+      {
+        "url": "https://github.com/ntop/ntopng/security/advisories/GHSA-7gqc-vjwr-6rh5",
+        "name": "https://github.com/ntop/ntopng/security/advisories/GHSA-7gqc-vjwr-6rh5"
+      },
+      {
+        "url": "https://github.com/ntop/ntopng/commit/f912ee93bc143330b6ff3bb946ee7211e5ee9e1a",
+        "name": "https://github.com/ntop/ntopng/commit/f912ee93bc143330b6ff3bb946ee7211e5ee9e1a"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "ntopng配置备份越权读取",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84990",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-862",
+    "description": "ntopng 是 ntop 发布的开源 Web 网络流量监控应用，用于采集、分析并展示网络流量与主机行为。\n受影响版本中，REST 脚本 download_backup.lua 与 list_available_backups.lua 未调用 isAdministratorOrPrintErr()。已登录的非管理员用户可请求这两个接口；download_backup.lua 读取 _GET[\"epoch\"] 与 _GET[\"download\"] 后调用 backup_config.export_backup 返回已保存的系统配置备份。备份由 backup_config.exec_backup 经 all_import_export:export 生成，export 调用 prefs_dump_utils.build_prefs_dump_table，按 ntopng.prefs.* 与 ntopng.user.* 导出 Redis 键，因此备份包含本地用户密码哈希，并在相关凭据已配置时包含 API token、TOTP 密钥和 WebAuthn 凭据，使可直接使用或可还原的凭据暴露给非管理员账户。\n修复版本中通过在 download_backup.lua 与 list_available_backups.lua 入口调用 isAdministratorOrPrintErr() 切断未授权访问。非管理员请求返回 rest_utils.consts.err.not_granted 后结束处理，不能再列举备份，也不能再经 backup_config.export_backup 下载包含 ntopng.user.* 的配置备份。",
+    "effects": [
+      {
+        "comp_name": "ntopng",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.7.260718)",
+            "min_fixed_version": "6.7.260718",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-f206-yzgj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-f206-yzgj",
+        "name": "https://www.oscs1024.com/hd/MPS-f206-yzgj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84990",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84990"
+      },
+      {
+        "url": "https://github.com/ntop/ntopng/security/advisories/GHSA-7gqc-vjwr-6rh5",
+        "name": "https://github.com/ntop/ntopng/security/advisories/GHSA-7gqc-vjwr-6rh5"
+      },
+      {
+        "url": "https://github.com/ntop/ntopng/commit/f912ee93bc143330b6ff3bb946ee7211e5ee9e1a",
+        "name": "https://github.com/ntop/ntopng/commit/f912ee93bc143330b6ff3bb946ee7211e5ee9e1a"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "ntopng配置备份越权读取"
+  },
+  "first_saved_at": "2026-09-21T17:39:46+00:00"
+}
