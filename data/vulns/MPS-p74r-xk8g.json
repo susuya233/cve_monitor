@@ -1,0 +1,251 @@
+{
+  "saved_at": "2026-09-21T21:33:59+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-p74r-xk8g",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73552",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-20",
+    "description": "Envoy 是开源云原生边缘与服务代理，HTTP RBAC 过滤器按策略对下游请求做访问控制。\n受影响版本中，HTTP 头校验允许 RFC 9110 定义的 obs-text 字节进入请求，但 safe_regex 由 CompiledGoogleReMatcher 以 RE2 默认 UTF-8 模式执行 FullMatch。下游客户端可在保留被禁止标记的同一头值中附加无关 obs-text 字节，使 RE2::FullMatch 返回 false；负向 RBAC 策略把该结果当成普通不匹配，请求继续到达本应拒绝的路由。\n修复版本中通过将 safe_regex 的 RE2 编码切换为 Latin1，使非 UTF-8 头字节仍参与完整匹配，负向策略可以命中被保留的标记并拒绝请求。该编码由运行时特性 envoy.reloadable_features.re2_use_latin1_mode 默认启用。",
+    "effects": [
+      {
+        "comp_name": "envoy",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.36.10)",
+            "min_fixed_version": "1.36.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.38.0,1.38.4)",
+            "min_fixed_version": "1.38.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.39.0,1.39.1)",
+            "min_fixed_version": "1.39.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.37.0,1.37.6)",
+            "min_fixed_version": "1.37.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "输入验证不恰当",
+    "kind_en": "输入验证不当",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-p74r-xk8g",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-p74r-xk8g",
+        "name": "https://www.oscs1024.com/hd/MPS-p74r-xk8g"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73552",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73552"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/security/advisories/GHSA-23xh-2qxr-3xv8",
+        "name": "https://github.com/envoyproxy/envoy/security/advisories/GHSA-23xh-2qxr-3xv8"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/5650cb9770d4420ec2bcbed8b90be06f564ecc07",
+        "name": "https://github.com/envoyproxy/envoy/commit/5650cb9770d4420ec2bcbed8b90be06f564ecc07"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/7d1dee5dda66434d84437cc5c85153aa03955e26",
+        "name": "https://github.com/envoyproxy/envoy/commit/7d1dee5dda66434d84437cc5c85153aa03955e26"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/c2b9a19dc081f03be6a9b4ca932673e5e7a33d18",
+        "name": "https://github.com/envoyproxy/envoy/commit/c2b9a19dc081f03be6a9b4ca932673e5e7a33d18"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/f3726765f3a12ddc76dcb52c0b79bec3d95ced1c",
+        "name": "https://github.com/envoyproxy/envoy/commit/f3726765f3a12ddc76dcb52c0b79bec3d95ced1c"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.36.10",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.36.10"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.37.6",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.37.6"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.38.4",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.38.4"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.39.1",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.39.1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Envoy RBAC正则绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73552",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-20",
+    "description": "Envoy 是开源云原生边缘与服务代理，HTTP RBAC 过滤器按策略对下游请求做访问控制。\n受影响版本中，HTTP 头校验允许 RFC 9110 定义的 obs-text 字节进入请求，但 safe_regex 由 CompiledGoogleReMatcher 以 RE2 默认 UTF-8 模式执行 FullMatch。下游客户端可在保留被禁止标记的同一头值中附加无关 obs-text 字节，使 RE2::FullMatch 返回 false；负向 RBAC 策略把该结果当成普通不匹配，请求继续到达本应拒绝的路由。\n修复版本中通过将 safe_regex 的 RE2 编码切换为 Latin1，使非 UTF-8 头字节仍参与完整匹配，负向策略可以命中被保留的标记并拒绝请求。该编码由运行时特性 envoy.reloadable_features.re2_use_latin1_mode 默认启用。",
+    "effects": [
+      {
+        "comp_name": "envoy",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.36.10)",
+            "min_fixed_version": "1.36.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.38.0,1.38.4)",
+            "min_fixed_version": "1.38.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.39.0,1.39.1)",
+            "min_fixed_version": "1.39.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.37.0,1.37.6)",
+            "min_fixed_version": "1.37.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "输入验证不恰当",
+    "kind_en": "Improper Input Validation",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-p74r-xk8g",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-p74r-xk8g",
+        "name": "https://www.oscs1024.com/hd/MPS-p74r-xk8g"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73552",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73552"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/security/advisories/GHSA-23xh-2qxr-3xv8",
+        "name": "https://github.com/envoyproxy/envoy/security/advisories/GHSA-23xh-2qxr-3xv8"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/5650cb9770d4420ec2bcbed8b90be06f564ecc07",
+        "name": "https://github.com/envoyproxy/envoy/commit/5650cb9770d4420ec2bcbed8b90be06f564ecc07"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/7d1dee5dda66434d84437cc5c85153aa03955e26",
+        "name": "https://github.com/envoyproxy/envoy/commit/7d1dee5dda66434d84437cc5c85153aa03955e26"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/c2b9a19dc081f03be6a9b4ca932673e5e7a33d18",
+        "name": "https://github.com/envoyproxy/envoy/commit/c2b9a19dc081f03be6a9b4ca932673e5e7a33d18"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/f3726765f3a12ddc76dcb52c0b79bec3d95ced1c",
+        "name": "https://github.com/envoyproxy/envoy/commit/f3726765f3a12ddc76dcb52c0b79bec3d95ced1c"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.36.10",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.36.10"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.37.6",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.37.6"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.38.4",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.38.4"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.39.1",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.39.1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Envoy RBAC正则绕过"
+  },
+  "first_saved_at": "2026-09-21T21:33:59+00:00"
+}

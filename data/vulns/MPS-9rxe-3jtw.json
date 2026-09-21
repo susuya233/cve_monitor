@@ -1,0 +1,251 @@
+{
+  "saved_at": "2026-09-21T21:34:00+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-9rxe-3jtw",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73548",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-444",
+    "description": "Envoy 是开源边缘与服务代理，用于云原生应用的流量转发与协议转换。\n受影响版本中，配置了非 WebSocket 的 upgrade_configs 时，UpstreamRequest::acceptHeadersFromRouter 只对 CONNECT 和 WebSocket 暂停请求体，通用 HTTP upgrade 的隧道数据会在上游接受升级前去掉分块编码并写入 keep-alive 的 HTTP/1.1 上游连接。未认证的 HTTP/2 客户端可把完整 HTTP/1.1 请求放进 extended CONNECT 的 DATA，Envoy 降级该请求后将这些字节交给上游解析为管线请求，再把仍排队着走私响应的套接字归还共享连接池，其他下游客户端复用该套接字时会读到不属于自己的响应。\n修复版本中通过在 acceptHeadersFromRouter 为通用 HTTP upgrade 设置 paused_for_generic_upgrade_，并由 UpstreamCodecFilter::decodeHeaders 在上游接受升级前停止转发请求体，使升级完成前的载荷不再进入上游连接，共享连接池也不会继续持有被污染的套接字。",
+    "effects": [
+      {
+        "comp_name": "envoy",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.37.0,1.37.6)",
+            "min_fixed_version": "1.37.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.38.0,1.38.4)",
+            "min_fixed_version": "1.38.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.36.10)",
+            "min_fixed_version": "1.36.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.39.0,1.39.1)",
+            "min_fixed_version": "1.39.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "HTTP请求走私",
+    "kind_en": "HTTP 请求的解释不一致（“HTTP 请求/响应走私”）",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-9rxe-3jtw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-9rxe-3jtw",
+        "name": "https://www.oscs1024.com/hd/MPS-9rxe-3jtw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73548",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73548"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/security/advisories/GHSA-3vhp-c83q-jqc2",
+        "name": "https://github.com/envoyproxy/envoy/security/advisories/GHSA-3vhp-c83q-jqc2"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/309855626966cff176155c821043ed3b44671361",
+        "name": "https://github.com/envoyproxy/envoy/commit/309855626966cff176155c821043ed3b44671361"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/3c7998545a9c9fb3933a4bc1907d92f0e752bc2b",
+        "name": "https://github.com/envoyproxy/envoy/commit/3c7998545a9c9fb3933a4bc1907d92f0e752bc2b"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/4633b8cce3d15b8734eefe232e30c12b0140b91c",
+        "name": "https://github.com/envoyproxy/envoy/commit/4633b8cce3d15b8734eefe232e30c12b0140b91c"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/bd6711f2617658e28dfa3df3dace6bfe3cfc0766",
+        "name": "https://github.com/envoyproxy/envoy/commit/bd6711f2617658e28dfa3df3dace6bfe3cfc0766"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.36.10",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.36.10"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.37.6",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.37.6"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.38.4",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.38.4"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.39.1",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.39.1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Envoy通用升级请求走私",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73548",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-444",
+    "description": "Envoy 是开源边缘与服务代理，用于云原生应用的流量转发与协议转换。\n受影响版本中，配置了非 WebSocket 的 upgrade_configs 时，UpstreamRequest::acceptHeadersFromRouter 只对 CONNECT 和 WebSocket 暂停请求体，通用 HTTP upgrade 的隧道数据会在上游接受升级前去掉分块编码并写入 keep-alive 的 HTTP/1.1 上游连接。未认证的 HTTP/2 客户端可把完整 HTTP/1.1 请求放进 extended CONNECT 的 DATA，Envoy 降级该请求后将这些字节交给上游解析为管线请求，再把仍排队着走私响应的套接字归还共享连接池，其他下游客户端复用该套接字时会读到不属于自己的响应。\n修复版本中通过在 acceptHeadersFromRouter 为通用 HTTP upgrade 设置 paused_for_generic_upgrade_，并由 UpstreamCodecFilter::decodeHeaders 在上游接受升级前停止转发请求体，使升级完成前的载荷不再进入上游连接，共享连接池也不会继续持有被污染的套接字。",
+    "effects": [
+      {
+        "comp_name": "envoy",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.37.0,1.37.6)",
+            "min_fixed_version": "1.37.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.38.0,1.38.4)",
+            "min_fixed_version": "1.38.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,1.36.10)",
+            "min_fixed_version": "1.36.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.39.0,1.39.1)",
+            "min_fixed_version": "1.39.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "HTTP请求走私",
+    "kind_en": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling')",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-9rxe-3jtw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-9rxe-3jtw",
+        "name": "https://www.oscs1024.com/hd/MPS-9rxe-3jtw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73548",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-73548"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/security/advisories/GHSA-3vhp-c83q-jqc2",
+        "name": "https://github.com/envoyproxy/envoy/security/advisories/GHSA-3vhp-c83q-jqc2"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/309855626966cff176155c821043ed3b44671361",
+        "name": "https://github.com/envoyproxy/envoy/commit/309855626966cff176155c821043ed3b44671361"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/3c7998545a9c9fb3933a4bc1907d92f0e752bc2b",
+        "name": "https://github.com/envoyproxy/envoy/commit/3c7998545a9c9fb3933a4bc1907d92f0e752bc2b"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/4633b8cce3d15b8734eefe232e30c12b0140b91c",
+        "name": "https://github.com/envoyproxy/envoy/commit/4633b8cce3d15b8734eefe232e30c12b0140b91c"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/commit/bd6711f2617658e28dfa3df3dace6bfe3cfc0766",
+        "name": "https://github.com/envoyproxy/envoy/commit/bd6711f2617658e28dfa3df3dace6bfe3cfc0766"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.36.10",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.36.10"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.37.6",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.37.6"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.38.4",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.38.4"
+      },
+      {
+        "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.39.1",
+        "name": "https://github.com/envoyproxy/envoy/releases/tag/v1.39.1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Envoy通用升级请求走私"
+  },
+  "first_saved_at": "2026-09-21T21:34:00+00:00"
+}
