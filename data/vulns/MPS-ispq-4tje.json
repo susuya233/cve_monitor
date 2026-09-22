@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-09-22T10:46:45+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ispq-4tje",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90882",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "emo@eclipse.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-942",
+    "description": "open-vsx.org 是 Eclipse Foundation 运营的 Open VSX 扩展注册表公开站点，用于向 VS Code 兼容编辑器分发扩展。Open VSX 服务端是开源 Java 应用，本问题位于该站点的 CDN/边缘层，而不是应用软件本身。\n受影响版本中，CDN/边缘层对已认证的 /user/ 接口同时返回反射请求 Origin 的 Access-Control-Allow-Origin 与 Access-Control-Allow-Credentials: true。任意来源页面可在已登录用户的浏览器中发起带凭证请求并读取响应，从而获取登录名、头像、主页和令牌地址，以及 /user/tokens、/user/namespaces、/user/extensions、/user/search/{name}、/user/namespace/{name}/members 的数据。/user/csrf 同样可读，写接口的 CSRF 防护被绕过，攻击者页面可调用 /user/token/create，取得对受害者命名空间具备发布和删除权限的个人访问令牌。应用侧 WebConfig.addCorsMappings 只对由 ovsx.webui.url 推导出的单一精确来源调用 allowCredentials(true)，软件配置不会产生带凭证的任意 Origin 反射。\n修复版本中通过停止 CDN/边缘层把请求 Origin 反射进 Access-Control-Allow-Origin 并同时返回 Access-Control-Allow-Credentials: true，使其他来源页面不能再读取已登录用户的 /user/ 响应，也不能再调用 /user/token/create 窃取个人访问令牌。CNA 将受影响部署日期标为 2026-04-29 至 2026-09-07（含），该区间之外默认不受影响。",
+    "effects": [
+      {
+        "comp_name": "open-vsx.org",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2026-04-29,2026-09-07]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "过度许可的跨域白名单",
+    "kind_en": "不受信任域的宽松跨域策略",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-ispq-4tje",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ispq-4tje",
+        "name": "https://www.oscs1024.com/hd/MPS-ispq-4tje"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90882",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90882"
+      },
+      {
+        "url": "https://gitlab.eclipse.org/security/cve-assignment/-/work_items/289",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Open VSX跨域凭证读取",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90882",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "emo@eclipse.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-942",
+    "description": "open-vsx.org 是 Eclipse Foundation 运营的 Open VSX 扩展注册表公开站点，用于向 VS Code 兼容编辑器分发扩展。Open VSX 服务端是开源 Java 应用，本问题位于该站点的 CDN/边缘层，而不是应用软件本身。\n受影响版本中，CDN/边缘层对已认证的 /user/ 接口同时返回反射请求 Origin 的 Access-Control-Allow-Origin 与 Access-Control-Allow-Credentials: true。任意来源页面可在已登录用户的浏览器中发起带凭证请求并读取响应，从而获取登录名、头像、主页和令牌地址，以及 /user/tokens、/user/namespaces、/user/extensions、/user/search/{name}、/user/namespace/{name}/members 的数据。/user/csrf 同样可读，写接口的 CSRF 防护被绕过，攻击者页面可调用 /user/token/create，取得对受害者命名空间具备发布和删除权限的个人访问令牌。应用侧 WebConfig.addCorsMappings 只对由 ovsx.webui.url 推导出的单一精确来源调用 allowCredentials(true)，软件配置不会产生带凭证的任意 Origin 反射。\n修复版本中通过停止 CDN/边缘层把请求 Origin 反射进 Access-Control-Allow-Origin 并同时返回 Access-Control-Allow-Credentials: true，使其他来源页面不能再读取已登录用户的 /user/ 响应，也不能再调用 /user/token/create 窃取个人访问令牌。CNA 将受影响部署日期标为 2026-04-29 至 2026-09-07（含），该区间之外默认不受影响。",
+    "effects": [
+      {
+        "comp_name": "open-vsx.org",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2026-04-29,2026-09-07]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "过度许可的跨域白名单",
+    "kind_en": "Permissive Cross-domain Policy with Untrusted Domains",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-ispq-4tje",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ispq-4tje",
+        "name": "https://www.oscs1024.com/hd/MPS-ispq-4tje"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90882",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90882"
+      },
+      {
+        "url": "https://gitlab.eclipse.org/security/cve-assignment/-/work_items/289",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Open VSX跨域凭证读取"
+  },
+  "first_saved_at": "2026-09-22T10:46:45+00:00"
+}

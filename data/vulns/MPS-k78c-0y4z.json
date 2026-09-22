@@ -1,0 +1,201 @@
+{
+  "saved_at": "2026-09-22T10:46:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-k78c-0y4z",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-9231",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-98",
+    "description": "WP Travel Engine（wordpress.org 插件标识 wp-travel-engine）是采用 GPLv3 发布的开源 WordPress 旅行与旅游预订插件，用于搭建旅游产品展示、预订与结账流程。\n受影响版本中，已登录且具备贡献者及以上角色的用户可通过短代码 WPTRAVELENGINE 的 template 属性传入模板名。ShortcodeRegistry 将该短代码注册到 WPTravelEngine\\Core\\Shortcodes\\General 实例的 render 方法，render 解析属性后调用 output。output 将 $atts['template'] 原样传给 wte_get_template，后者经 wte_locate_template 把名称拼接到主题目录或插件 includes/templates 目录，再 include 得到的路径。模板名中的目录穿越可使包含路径离开模板目录，从而包含并执行服务器上已有的 .php 文件，用于绕过访问控制或获取敏感数据；在允许上传 .php 文件时，还可执行上传文件中的 PHP 代码。\n修复版本中通过在 General::output 调用 wte_get_template 之前，对 template 属性执行 basename 与 sanitize_file_name，只保留文件名并丢弃目录穿越成分，空文件名不再加载模板，使不可信路径无法进入 include。",
+    "effects": [
+      {
+        "comp_name": "wp-travel-engine",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.8.1)",
+            "min_fixed_version": "6.8.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "php远程文件包含",
+    "kind_en": "PHP 程序中 Include/Require 语句的文件名控制不当（“PHP 远程文件包含”）",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-k78c-0y4z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k78c-0y4z",
+        "name": "https://www.oscs1024.com/hd/MPS-k78c-0y4z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-9231",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-9231"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/708b70c7-e4e6-4422-9682-c7d05063a188?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-travel-engine/tags/6.7.12/includes/helpers/helpers.php#L955",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-travel-engine/tags/6.7.12/includes/classes/Core/Shortcodes/General.php#L52",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-travel-engine/tags/6.7.12/includes/helpers/helpers.php#L882",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-travel-engine/tags/6.7.7/includes/helpers/helpers.php#L955",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-travel-engine/tags/6.7.7/includes/classes/Core/Shortcodes/General.php#L52",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-travel-engine/tags/6.7.7/includes/helpers/helpers.php#L882",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3572382/wp-travel-engine/tags/6.8.1/includes/classes/Core/Shortcodes/General.php",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WP旅行引擎文件包含",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-9231",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-98",
+    "description": "WP Travel Engine（wordpress.org 插件标识 wp-travel-engine）是采用 GPLv3 发布的开源 WordPress 旅行与旅游预订插件，用于搭建旅游产品展示、预订与结账流程。\n受影响版本中，已登录且具备贡献者及以上角色的用户可通过短代码 WPTRAVELENGINE 的 template 属性传入模板名。ShortcodeRegistry 将该短代码注册到 WPTravelEngine\\Core\\Shortcodes\\General 实例的 render 方法，render 解析属性后调用 output。output 将 $atts['template'] 原样传给 wte_get_template，后者经 wte_locate_template 把名称拼接到主题目录或插件 includes/templates 目录，再 include 得到的路径。模板名中的目录穿越可使包含路径离开模板目录，从而包含并执行服务器上已有的 .php 文件，用于绕过访问控制或获取敏感数据；在允许上传 .php 文件时，还可执行上传文件中的 PHP 代码。\n修复版本中通过在 General::output 调用 wte_get_template 之前，对 template 属性执行 basename 与 sanitize_file_name，只保留文件名并丢弃目录穿越成分，空文件名不再加载模板，使不可信路径无法进入 include。",
+    "effects": [
+      {
+        "comp_name": "wp-travel-engine",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.8.1)",
+            "min_fixed_version": "6.8.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "php远程文件包含",
+    "kind_en": "Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion')",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-k78c-0y4z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k78c-0y4z",
+        "name": "https://www.oscs1024.com/hd/MPS-k78c-0y4z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-9231",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-9231"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/708b70c7-e4e6-4422-9682-c7d05063a188?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-travel-engine/tags/6.7.12/includes/helpers/helpers.php#L955",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-travel-engine/tags/6.7.12/includes/classes/Core/Shortcodes/General.php#L52",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-travel-engine/tags/6.7.12/includes/helpers/helpers.php#L882",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-travel-engine/tags/6.7.7/includes/helpers/helpers.php#L955",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-travel-engine/tags/6.7.7/includes/classes/Core/Shortcodes/General.php#L52",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/wp-travel-engine/tags/6.7.7/includes/helpers/helpers.php#L882",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3572382/wp-travel-engine/tags/6.8.1/includes/classes/Core/Shortcodes/General.php",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WP旅行引擎文件包含"
+  },
+  "first_saved_at": "2026-09-22T10:46:54+00:00"
+}
