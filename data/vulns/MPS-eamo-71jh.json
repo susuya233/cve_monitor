@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-09-22T19:29:09+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-eamo-71jh",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-93345",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1284",
+    "description": "MikroTik RouterOS 是 MikroTik 公司的闭源网络操作系统，广泛用于其路由器与无线设备，提供 BGP/MPLS、VPN、路由与防火墙等网络能力。\n受影响版本中，路由服务处理 labelled-VPN NLRI 的迭代逻辑存在输入校验缺陷：BGP UPDATE 报文 MP_REACH_NLRI 字段中低于 labelled-VPN 地址族最小有效值的前缀长度仍可通过校验，并被解析为地址部分为负长度的路由。攻击者以 BGP 对等体或会话路径上的位置，向启用了承载 VPNv4/VPNv6 labelled-VPN NLRI 的 BGP 会话的设备发送单个畸形 UPDATE 报文，可使 BGP 服务崩溃，会话在未发送 NOTIFICATION 的情况下中断，重复发送可无限期压制设备上的 BGP 平面。\n修复版本中通过 7.25beta4 的 BGP 稳定性修复加强 labelled-VPN NLRI 前缀长度的下限校验，低于最小有效值的前缀长度不再通过校验进入负长度地址解析，畸形 UPDATE 报文不再导致 BGP 服务崩溃。",
+    "effects": [
+      {
+        "comp_name": "routeros",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.21.5,7.25beta4)",
+            "min_fixed_version": "7.25beta4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "输入中指定数量的验证不当",
+    "kind_en": "输入中指定数量的验证不正确",
+    "last_modified_time": "2026-09-23",
+    "level": "High",
+    "mps_id": "MPS-eamo-71jh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-eamo-71jh",
+        "name": "https://www.oscs1024.com/hd/MPS-eamo-71jh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93345",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-93345"
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-25beta-development-is-released/272788",
+        "name": "7.25beta Release Notes"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/mikrotik-routeros-improper-input-validation-dos-via-bgp-labelled-vpn-nlri",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MikroTik RouterOS BGP拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-93345",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1284",
+    "description": "MikroTik RouterOS 是 MikroTik 公司的闭源网络操作系统，广泛用于其路由器与无线设备，提供 BGP/MPLS、VPN、路由与防火墙等网络能力。\n受影响版本中，路由服务处理 labelled-VPN NLRI 的迭代逻辑存在输入校验缺陷：BGP UPDATE 报文 MP_REACH_NLRI 字段中低于 labelled-VPN 地址族最小有效值的前缀长度仍可通过校验，并被解析为地址部分为负长度的路由。攻击者以 BGP 对等体或会话路径上的位置，向启用了承载 VPNv4/VPNv6 labelled-VPN NLRI 的 BGP 会话的设备发送单个畸形 UPDATE 报文，可使 BGP 服务崩溃，会话在未发送 NOTIFICATION 的情况下中断，重复发送可无限期压制设备上的 BGP 平面。\n修复版本中通过 7.25beta4 的 BGP 稳定性修复加强 labelled-VPN NLRI 前缀长度的下限校验，低于最小有效值的前缀长度不再通过校验进入负长度地址解析，畸形 UPDATE 报文不再导致 BGP 服务崩溃。",
+    "effects": [
+      {
+        "comp_name": "routeros",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.21.5,7.25beta4)",
+            "min_fixed_version": "7.25beta4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "输入中指定数量的验证不当",
+    "kind_en": "Improper Validation of Specified Quantity in Input",
+    "last_modified_time": "2026-09-23",
+    "level": "High",
+    "mps_id": "MPS-eamo-71jh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-eamo-71jh",
+        "name": "https://www.oscs1024.com/hd/MPS-eamo-71jh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93345",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-93345"
+      },
+      {
+        "url": "https://forum.mikrotik.com/t/7-25beta-development-is-released/272788",
+        "name": "7.25beta Release Notes"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/mikrotik-routeros-improper-input-validation-dos-via-bgp-labelled-vpn-nlri",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MikroTik RouterOS BGP拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-09-22T19:29:09+00:00"
+}
