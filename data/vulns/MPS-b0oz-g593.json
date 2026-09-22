@@ -1,0 +1,193 @@
+{
+  "saved_at": "2026-09-22T22:37:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-b0oz-g593",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-95815",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.3
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-532",
+    "description": "OpenClaw 是开源 AI 个人助理，iOS 应用通过 openclaw 自定义 URL scheme 接收 agent 深链，并在连接 Gateway 后提交 agent 请求。\n受影响版本中，NodeAppModel.handleAgentDeepLink 在消息非空时把 originalURL.absoluteString 以 privacy: .public 写入统一日志。该 URL 可包含持久 bearer key 以及消息和投递参数。取得诊断归档或统一日志副本的攻击者可恢复未轮换密钥，并在已连接设备上重放伪造深链，在没有本地确认提示的情况下提交 agent 请求。\n修复版本中通过从 handleAgentDeepLink 的信息日志移除完整 URL、仅记录消息字符数，阻止持久密钥进入公开诊断数据。",
+    "effects": [
+      {
+        "comp_name": "OpenClaw iOS",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.8.11)",
+            "min_fixed_version": "2026.8.11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "日志敏感信息泄露",
+    "kind_en": "将敏感信息插入日志文件",
+    "last_modified_time": "2026-09-23",
+    "level": "High",
+    "mps_id": "MPS-b0oz-g593",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-b0oz-g593",
+        "name": "https://www.oscs1024.com/hd/MPS-b0oz-g593"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-95815",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-95815"
+      },
+      {
+        "url": "https://github.com/openclaw/openclaw/security/advisories/GHSA-5j57-84cx-r295",
+        "name": "GitHub Security Advisory (GHSA-5j57-84cx-r295)"
+      },
+      {
+        "url": "https://github.com/openclaw/openclaw/commit/8361f3704dd5e151ff1325e62ff5de658b6c62e6",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/openclaw/openclaw/blob/935c16b5e22fae3c7ff5fdee0b834d5e0077d1f6/apps/ios/Sources/Model/NodeAppModel.swift#L10037-L10038",
+        "name": "handleAgentDeepLink log line before the fix"
+      },
+      {
+        "url": "https://github.com/openclaw/openclaw",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/openclaw-ios-before-2026.8.11-credential-exposure-via-deep-link-url-logging",
+        "name": "VulnCheck Advisory: OpenClaw iOS before 2026.8.11 Credential Exposure via Deep-Link URL Logging"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI"
+    ],
+    "title": "OpenClaw iOS深链日志泄密",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-95815",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.3
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-532",
+    "description": "OpenClaw 是开源 AI 个人助理，iOS 应用通过 openclaw 自定义 URL scheme 接收 agent 深链，并在连接 Gateway 后提交 agent 请求。\n受影响版本中，NodeAppModel.handleAgentDeepLink 在消息非空时把 originalURL.absoluteString 以 privacy: .public 写入统一日志。该 URL 可包含持久 bearer key 以及消息和投递参数。取得诊断归档或统一日志副本的攻击者可恢复未轮换密钥，并在已连接设备上重放伪造深链，在没有本地确认提示的情况下提交 agent 请求。\n修复版本中通过从 handleAgentDeepLink 的信息日志移除完整 URL、仅记录消息字符数，阻止持久密钥进入公开诊断数据。",
+    "effects": [
+      {
+        "comp_name": "OpenClaw iOS",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.8.11)",
+            "min_fixed_version": "2026.8.11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "日志敏感信息泄露",
+    "kind_en": "Insertion of Sensitive Information into Log File",
+    "last_modified_time": "2026-09-23",
+    "level": "High",
+    "mps_id": "MPS-b0oz-g593",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-b0oz-g593",
+        "name": "https://www.oscs1024.com/hd/MPS-b0oz-g593"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-95815",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-95815"
+      },
+      {
+        "url": "https://github.com/openclaw/openclaw/security/advisories/GHSA-5j57-84cx-r295",
+        "name": "GitHub Security Advisory (GHSA-5j57-84cx-r295)"
+      },
+      {
+        "url": "https://github.com/openclaw/openclaw/commit/8361f3704dd5e151ff1325e62ff5de658b6c62e6",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/openclaw/openclaw/blob/935c16b5e22fae3c7ff5fdee0b834d5e0077d1f6/apps/ios/Sources/Model/NodeAppModel.swift#L10037-L10038",
+        "name": "handleAgentDeepLink log line before the fix"
+      },
+      {
+        "url": "https://github.com/openclaw/openclaw",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/openclaw-ios-before-2026.8.11-credential-exposure-via-deep-link-url-logging",
+        "name": "VulnCheck Advisory: OpenClaw iOS before 2026.8.11 Credential Exposure via Deep-Link URL Logging"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI"
+    ],
+    "title": "OpenClaw iOS深链日志泄密"
+  },
+  "first_saved_at": "2026-09-22T22:37:54+00:00"
+}
