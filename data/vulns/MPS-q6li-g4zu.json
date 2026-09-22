@@ -1,0 +1,189 @@
+{
+  "saved_at": "2026-09-22T00:29:51+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-q6li-g4zu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94623",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-617",
+    "description": "vLLM 是开源的大语言模型高吞吐推理与服务引擎，支持通过 NIXL connector 在 prefill/decode 分离部署中传输 KV 缓存。\n受影响版本中，NIXL connector 的前缀缓存未校验多提示词 completion 请求在 decode 侧与 prefill 侧的块数量。攻击者向 /v1/completions 提交长度不同的多个 prompt 后，请求进入 NixlBaseConnectorWorker._apply_prefix_caching。当 num_decode_blocks 大于对应 prefill 块组长度时，v0.29.0 该文件第 2645 行的裸断言抛出 AssertionError，decode worker 进程退出并在重启前不可用。\n修复版本中通过拒绝携带 kv_transfer_params 的多提示词 completion 请求，并将 _apply_prefix_caching 的裸断言改为可捕获的 ValueError，使块数量不匹配只失败当前请求而不终止 worker。截至 2026-09-22，该改动仍位于未合并的上游拉取请求，PyPI 已发布的 0.29.0 尚未包含该修复。",
+    "effects": [
+      {
+        "comp_name": "vllm",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.29.0]",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "可达断言",
+    "kind_en": "Reachable Assertion",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-q6li-g4zu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-q6li-g4zu",
+        "name": "https://www.oscs1024.com/hd/MPS-q6li-g4zu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94623",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-94623"
+      },
+      {
+        "url": "https://github.com/vllm-project/vllm/pull/51505",
+        "name": "Pull Request #51505"
+      },
+      {
+        "url": "https://github.com/vllm-project/vllm/blob/v0.29.0/vllm/distributed/kv_transfer/kv_connector/v1/nixl/base_worker.py#L2642-L2646",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vllm-project/vllm",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/vllm-through-0.29.0-denial-of-service-via-nixl-multi-prompt-assertion-failure",
+        "name": "VulnCheck Advisory: vLLM through 0.29.0 Denial of Service via NIXL Multi-Prompt Assertion Failure"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "vLLM NIXL拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94623",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-617",
+    "description": "vLLM 是开源的大语言模型高吞吐推理与服务引擎，支持通过 NIXL connector 在 prefill/decode 分离部署中传输 KV 缓存。\n受影响版本中，NIXL connector 的前缀缓存未校验多提示词 completion 请求在 decode 侧与 prefill 侧的块数量。攻击者向 /v1/completions 提交长度不同的多个 prompt 后，请求进入 NixlBaseConnectorWorker._apply_prefix_caching。当 num_decode_blocks 大于对应 prefill 块组长度时，v0.29.0 该文件第 2645 行的裸断言抛出 AssertionError，decode worker 进程退出并在重启前不可用。\n修复版本中通过拒绝携带 kv_transfer_params 的多提示词 completion 请求，并将 _apply_prefix_caching 的裸断言改为可捕获的 ValueError，使块数量不匹配只失败当前请求而不终止 worker。截至 2026-09-22，该改动仍位于未合并的上游拉取请求，PyPI 已发布的 0.29.0 尚未包含该修复。",
+    "effects": [
+      {
+        "comp_name": "vllm",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.29.0]",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "可达断言",
+    "kind_en": "Reachable Assertion",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-q6li-g4zu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-q6li-g4zu",
+        "name": "https://www.oscs1024.com/hd/MPS-q6li-g4zu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94623",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-94623"
+      },
+      {
+        "url": "https://github.com/vllm-project/vllm/pull/51505",
+        "name": "Pull Request #51505"
+      },
+      {
+        "url": "https://github.com/vllm-project/vllm/blob/v0.29.0/vllm/distributed/kv_transfer/kv_connector/v1/nixl/base_worker.py#L2642-L2646",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vllm-project/vllm",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/vllm-through-0.29.0-denial-of-service-via-nixl-multi-prompt-assertion-failure",
+        "name": "VulnCheck Advisory: vLLM through 0.29.0 Denial of Service via NIXL Multi-Prompt Assertion Failure"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "vLLM NIXL拒绝服务"
+  },
+  "first_saved_at": "2026-09-22T00:29:51+00:00"
+}

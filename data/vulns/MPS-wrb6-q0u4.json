@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-09-22T00:29:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-wrb6-q0u4",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94540",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "DesktopSMS Lite（包名 net.mrpear.apps.desktopsmslite）是 MrPear 发布的闭源 Android 应用，用于在手机与 Windows 端 DesktopSMS 客户端之间本地同步并转发短信。\n受影响版本中，该应用在本机回环地址 127.0.0.1:8000 提供缺少认证的本地服务。同设备上仅声明普通 INTERNET 权限的应用无需配对确认，即可提交 net.mrpear.libs.intercomlib.COM_PAIR_REQUEST_RESULT 且 result 为 true，使攻击者选定的 DeviceGuid 被持久接受为已配对身份，随后调用 sendsms.dsms.cmd.icl 与 search-conversations-request.dsms.cmd.icl，由受害应用自身短信权限发送短信并返回短信衍生内容。\n修复版本中通过的具体变更尚未公开。截至 2026-09-22，CNA 仅将小于等于 1.11.0 的版本标为受影响，未提供修复版本或已验证修复提交；在官方修复发布前，应停止或隔离该本地服务，并拒绝把外部提交的配对结果直接当作授权依据。",
+    "effects": [
+      {
+        "comp_name": "net.mrpear.apps.desktopsmslite",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.11.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-wrb6-q0u4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wrb6-q0u4",
+        "name": "https://www.oscs1024.com/hd/MPS-wrb6-q0u4"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94540",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-94540"
+      },
+      {
+        "url": "https://github.com/actuator/net.mrpear.apps.desktopsmslite",
+        "name": "Reporter Public Reference"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/desktopsms-unauthorized-access-via-local-service",
+        "name": "VulnCheck Advisory"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DesktopSMS未授权访问",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94540",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "DesktopSMS Lite（包名 net.mrpear.apps.desktopsmslite）是 MrPear 发布的闭源 Android 应用，用于在手机与 Windows 端 DesktopSMS 客户端之间本地同步并转发短信。\n受影响版本中，该应用在本机回环地址 127.0.0.1:8000 提供缺少认证的本地服务。同设备上仅声明普通 INTERNET 权限的应用无需配对确认，即可提交 net.mrpear.libs.intercomlib.COM_PAIR_REQUEST_RESULT 且 result 为 true，使攻击者选定的 DeviceGuid 被持久接受为已配对身份，随后调用 sendsms.dsms.cmd.icl 与 search-conversations-request.dsms.cmd.icl，由受害应用自身短信权限发送短信并返回短信衍生内容。\n修复版本中通过的具体变更尚未公开。截至 2026-09-22，CNA 仅将小于等于 1.11.0 的版本标为受影响，未提供修复版本或已验证修复提交；在官方修复发布前，应停止或隔离该本地服务，并拒绝把外部提交的配对结果直接当作授权依据。",
+    "effects": [
+      {
+        "comp_name": "net.mrpear.apps.desktopsmslite",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.11.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-09-22",
+    "level": "High",
+    "mps_id": "MPS-wrb6-q0u4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wrb6-q0u4",
+        "name": "https://www.oscs1024.com/hd/MPS-wrb6-q0u4"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94540",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-94540"
+      },
+      {
+        "url": "https://github.com/actuator/net.mrpear.apps.desktopsmslite",
+        "name": "Reporter Public Reference"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/desktopsms-unauthorized-access-via-local-service",
+        "name": "VulnCheck Advisory"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DesktopSMS未授权访问"
+  },
+  "first_saved_at": "2026-09-22T00:29:52+00:00"
+}
