@@ -1,0 +1,165 @@
+{
+  "saved_at": "2026-09-23T13:14:11+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-e7d4-367c",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86247",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-366",
+    "description": "Apache Tomcat Native（tcnative）是 Apache 软件基金会维护的开源本地组件，以 JNI 方式为 Tomcat 提供基于 APR/OpenSSL 的 TLS 加速与客户端证书认证能力，Tomcat 通过 OpenSSLImplementation 调用其公开 Java 接口完成连接级配置。\n受影响版本中，SSL.setVerify 的本地实现将连接级证书校验级别与深度写入同一 SSLContext 下所有连接共享的 tcn_ssl_ctxt_t 结构，而非连接私有数据；握手校验回调 SSL_callback_SSL_verify 同样读取共享上下文中的 verify_mode。攻击者在启用客户端证书认证的服务上并发建立连接，利用连接间校验设置相互覆盖的竞争窗口，可使其他连接的客户端证书校验要求被降级，在无有效证书的情况下通过客户端认证。\n修复版本中通过在连接私有结构 tcn_ssl_conn_t 中引入独立的 verify_mode 与 verify_depth 字段隔离上下文级与连接级校验设置，SSL.setVerify 改为写入连接私有状态并对单个 SSL 对象调用 SSL_set_verify，校验回调在连接级配置存在时优先采用连接级设置，切断了跨连接覆盖证书校验要求的因果链。",
+    "effects": [
+      {
+        "comp_name": "tomcat_native",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.3.0,1.3.9)",
+            "min_fixed_version": "1.3.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0,2.0.16)",
+            "min_fixed_version": "2.0.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "单线程内的竞争条件",
+    "kind_en": "线程内的竞争条件",
+    "last_modified_time": "2026-09-23",
+    "level": "High",
+    "mps_id": "MPS-e7d4-367c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-23",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11987.html",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-native.html",
+        "name": ""
+      },
+      {
+        "url": "https://lists.apache.org/thread/obsson6zhvfg0wsp2bx602l61ltj87r1",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-86247",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat-native/commit/fb688de41e837d98e76961e44584b37989e4f7d0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat-native/commit/3dc73c118d2202c8dfc6053787cc6d61416ddce6",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Tomcat Native客户端证书校验降级漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86247",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-366",
+    "description": "Apache Tomcat Native（tcnative）是 Apache 软件基金会维护的开源本地组件，以 JNI 方式为 Tomcat 提供基于 APR/OpenSSL 的 TLS 加速与客户端证书认证能力，Tomcat 通过 OpenSSLImplementation 调用其公开 Java 接口完成连接级配置。\n受影响版本中，SSL.setVerify 的本地实现将连接级证书校验级别与深度写入同一 SSLContext 下所有连接共享的 tcn_ssl_ctxt_t 结构，而非连接私有数据；握手校验回调 SSL_callback_SSL_verify 同样读取共享上下文中的 verify_mode。攻击者在启用客户端证书认证的服务上并发建立连接，利用连接间校验设置相互覆盖的竞争窗口，可使其他连接的客户端证书校验要求被降级，在无有效证书的情况下通过客户端认证。\n修复版本中通过在连接私有结构 tcn_ssl_conn_t 中引入独立的 verify_mode 与 verify_depth 字段隔离上下文级与连接级校验设置，SSL.setVerify 改为写入连接私有状态并对单个 SSL 对象调用 SSL_set_verify，校验回调在连接级配置存在时优先采用连接级设置，切断了跨连接覆盖证书校验要求的因果链。",
+    "effects": [
+      {
+        "comp_name": "tomcat_native",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.3.0,1.3.9)",
+            "min_fixed_version": "1.3.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0,2.0.16)",
+            "min_fixed_version": "2.0.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "单线程内的竞争条件",
+    "kind_en": "Race Condition within a Thread",
+    "last_modified_time": "2026-09-23",
+    "level": "High",
+    "mps_id": "MPS-e7d4-367c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-23",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg11987.html",
+        "name": ""
+      },
+      {
+        "url": "https://tomcat.apache.org/security-native.html",
+        "name": ""
+      },
+      {
+        "url": "https://lists.apache.org/thread/obsson6zhvfg0wsp2bx602l61ltj87r1",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-86247",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat-native/commit/fb688de41e837d98e76961e44584b37989e4f7d0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomcat-native/commit/3dc73c118d2202c8dfc6053787cc6d61416ddce6",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Tomcat Native客户端证书校验降级漏洞"
+  },
+  "first_saved_at": "2026-09-23T13:14:11+00:00"
+}
