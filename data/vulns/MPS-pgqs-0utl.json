@@ -1,0 +1,141 @@
+{
+  "saved_at": "2026-09-23T18:09:14+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-pgqs-0utl",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96808",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-61",
+    "description": "Flatpak 是一个开源的 Linux 应用沙箱与分发框架，用于以沙箱方式打包、分发和运行桌面应用，系统级安装由具备 root 权限的 flatpak-system-helper D-Bus 服务协助完成。\n受影响版本中，flatpak-system-helper 通过 GetRevokefsFd D-Bus 方法向非特权调用方发放 revokefs writer 会话与套接字，revokefs/writer.c 的 do_writer 循环接收攻击者构造的文件操作请求后，各处理函数先用 get_valid_path()/validate_path() 校验请求路径，该校验仅拒绝绝对路径与字面量 \"..\" 路径段，随后仍将字符串路径直接交给 openat(basefd, path, ...)、mkdirat、linkat、renameat、symlinkat、fchmodat 等 *at 系统调用，内核解析中间路径分量时会跟随符号链接；攻击者取得两个会话后，在一个会话内创建指向另一个会话目录的符号链接并持有经该符号链接保留的文件描述符，进而能够在文件已通过系统助手校验并导入后改写其他会话的文件，篡改系统仓库中已通过签名验证的 ostree commit 对象，实现攻击者选定路径的 root 文件写入与本地提权。\n修复版本中通过新增 chase_parent()/chase_request_path() 等辅助函数并以 glnx_chaseat(basefd, parent, GLNX_CHASE_RESOLVE_BENEATH | GLNX_CHASE_MUST_BE_DIRECTORY) 将攻击者可控路径的父目录解析为不越出 basefd 的文件描述符，再对最后一级名称执行 *at 操作，同时将 symlink()、link()、rename()、chmod() 的路径处理迁移到同一套受限解析并移除原有的字符串路径校验，切断符号链接穿越链，阻止跨会话改写与签名验证后的仓库对象篡改。",
+    "effects": [
+      {
+        "comp_name": "flatpak",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.18.1)",
+            "min_fixed_version": "1.18.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "UNIX符号链接跟随",
+    "kind_en": "UNIX 符号链接 (Symlink) 以下",
+    "last_modified_time": "2026-09-24",
+    "level": "High",
+    "mps_id": "MPS-pgqs-0utl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pgqs-0utl",
+        "name": "https://www.oscs1024.com/hd/MPS-pgqs-0utl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96808",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96808"
+      },
+      {
+        "url": "https://github.com/flatpak/flatpak/security/advisories/GHSA-qrwq-7qwx-q9rp",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Flatpak 本地提权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96808",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-61",
+    "description": "Flatpak 是一个开源的 Linux 应用沙箱与分发框架，用于以沙箱方式打包、分发和运行桌面应用，系统级安装由具备 root 权限的 flatpak-system-helper D-Bus 服务协助完成。\n受影响版本中，flatpak-system-helper 通过 GetRevokefsFd D-Bus 方法向非特权调用方发放 revokefs writer 会话与套接字，revokefs/writer.c 的 do_writer 循环接收攻击者构造的文件操作请求后，各处理函数先用 get_valid_path()/validate_path() 校验请求路径，该校验仅拒绝绝对路径与字面量 \"..\" 路径段，随后仍将字符串路径直接交给 openat(basefd, path, ...)、mkdirat、linkat、renameat、symlinkat、fchmodat 等 *at 系统调用，内核解析中间路径分量时会跟随符号链接；攻击者取得两个会话后，在一个会话内创建指向另一个会话目录的符号链接并持有经该符号链接保留的文件描述符，进而能够在文件已通过系统助手校验并导入后改写其他会话的文件，篡改系统仓库中已通过签名验证的 ostree commit 对象，实现攻击者选定路径的 root 文件写入与本地提权。\n修复版本中通过新增 chase_parent()/chase_request_path() 等辅助函数并以 glnx_chaseat(basefd, parent, GLNX_CHASE_RESOLVE_BENEATH | GLNX_CHASE_MUST_BE_DIRECTORY) 将攻击者可控路径的父目录解析为不越出 basefd 的文件描述符，再对最后一级名称执行 *at 操作，同时将 symlink()、link()、rename()、chmod() 的路径处理迁移到同一套受限解析并移除原有的字符串路径校验，切断符号链接穿越链，阻止跨会话改写与签名验证后的仓库对象篡改。",
+    "effects": [
+      {
+        "comp_name": "flatpak",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.18.1)",
+            "min_fixed_version": "1.18.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "UNIX符号链接跟随",
+    "kind_en": "UNIX Symbolic Link (Symlink) Following",
+    "last_modified_time": "2026-09-24",
+    "level": "High",
+    "mps_id": "MPS-pgqs-0utl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pgqs-0utl",
+        "name": "https://www.oscs1024.com/hd/MPS-pgqs-0utl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96808",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96808"
+      },
+      {
+        "url": "https://github.com/flatpak/flatpak/security/advisories/GHSA-qrwq-7qwx-q9rp",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Flatpak 本地提权漏洞"
+  },
+  "first_saved_at": "2026-09-23T18:09:14+00:00"
+}

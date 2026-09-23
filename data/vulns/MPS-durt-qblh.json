@@ -1,0 +1,229 @@
+{
+  "saved_at": "2026-09-23T18:09:16+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-durt-qblh",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96759",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-94",
+    "description": "orval 是一个开源（MIT 协议，仓库 orval-labs/orval）的 npm 代码生成工具，用于依据 OpenAPI 规范自动生成 TypeScript 客户端，其中 @orval/query 模块负责生成 TanStack Query 的查询与变更 hooks。\n受影响版本中，query 与 mutation 生成器在为 queryOptions/mutationOptions mutator 生成第三个参数时，把 OpenAPI 规范中的 operationId 未经转义地拼入单引号字符串字面量（packages/query/src/query-generator.ts 与 packages/query/src/mutation-generator.ts 共三处形如 operationId: '${operationId}' 的拼接），同位置的 operationName 有转义而 operationId 没有；getOperationId 从规范中原样返回 operation.operationId，含单引号的 operationId 会闭合该字面量并向生成的 mutator 参数对象注入任意键或表达式，生成的 hook 在运行期构造该对象时执行注入的代码。\n修复版本中通过在 packages/query/src/utils.ts 新增 getOperationMetaLiteral 辅助函数，对 operationId 与 operationName 统一执行 jsStringLiteralEscape 转义后再拼入字面量，query-generator.ts 与 mutation-generator.ts 的三处生成点全部改用该函数，使规范中的值保持为普通字符串内容，注入的表达式不再被执行。",
+    "effects": [
+      {
+        "comp_name": "orval",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,8.29.0)",
+            "min_fixed_version": "8.29.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-09-24",
+    "level": "Critical",
+    "mps_id": "MPS-durt-qblh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-durt-qblh",
+        "name": "https://www.oscs1024.com/hd/MPS-durt-qblh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96759",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96759"
+      },
+      {
+        "url": "https://github.com/orval-labs/orval/security/advisories/GHSA-vv88-cm6j-665j",
+        "name": "GitHub Security Advisory (GHSA-vv88-cm6j-665j)"
+      },
+      {
+        "url": "https://github.com/orval-labs/orval/pull/4008",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/orval-labs/orval/commit/b28c53f3e0c06190e0f6ea136737e6316432448f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/orval-labs/orval/blob/v8.28.1/packages/query/src/query-generator.ts#L784",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/orval-labs/orval",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/orval-before-8.29.0-code-injection-via-operationid",
+        "name": "VulnCheck Advisory: orval before 8.29.0 Code Injection via operationId"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "orval 代码注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96759",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-94",
+    "description": "orval 是一个开源（MIT 协议，仓库 orval-labs/orval）的 npm 代码生成工具，用于依据 OpenAPI 规范自动生成 TypeScript 客户端，其中 @orval/query 模块负责生成 TanStack Query 的查询与变更 hooks。\n受影响版本中，query 与 mutation 生成器在为 queryOptions/mutationOptions mutator 生成第三个参数时，把 OpenAPI 规范中的 operationId 未经转义地拼入单引号字符串字面量（packages/query/src/query-generator.ts 与 packages/query/src/mutation-generator.ts 共三处形如 operationId: '${operationId}' 的拼接），同位置的 operationName 有转义而 operationId 没有；getOperationId 从规范中原样返回 operation.operationId，含单引号的 operationId 会闭合该字面量并向生成的 mutator 参数对象注入任意键或表达式，生成的 hook 在运行期构造该对象时执行注入的代码。\n修复版本中通过在 packages/query/src/utils.ts 新增 getOperationMetaLiteral 辅助函数，对 operationId 与 operationName 统一执行 jsStringLiteralEscape 转义后再拼入字面量，query-generator.ts 与 mutation-generator.ts 的三处生成点全部改用该函数，使规范中的值保持为普通字符串内容，注入的表达式不再被执行。",
+    "effects": [
+      {
+        "comp_name": "orval",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,8.29.0)",
+            "min_fixed_version": "8.29.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-09-24",
+    "level": "Critical",
+    "mps_id": "MPS-durt-qblh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-durt-qblh",
+        "name": "https://www.oscs1024.com/hd/MPS-durt-qblh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96759",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96759"
+      },
+      {
+        "url": "https://github.com/orval-labs/orval/security/advisories/GHSA-vv88-cm6j-665j",
+        "name": "GitHub Security Advisory (GHSA-vv88-cm6j-665j)"
+      },
+      {
+        "url": "https://github.com/orval-labs/orval/pull/4008",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/orval-labs/orval/commit/b28c53f3e0c06190e0f6ea136737e6316432448f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/orval-labs/orval/blob/v8.28.1/packages/query/src/query-generator.ts#L784",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/orval-labs/orval",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/orval-before-8.29.0-code-injection-via-operationid",
+        "name": "VulnCheck Advisory: orval before 8.29.0 Code Injection via operationId"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "orval 代码注入漏洞"
+  },
+  "first_saved_at": "2026-09-23T18:09:16+00:00"
+}
