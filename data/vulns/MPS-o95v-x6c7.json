@@ -1,0 +1,213 @@
+{
+  "saved_at": "2026-09-24T00:15:21+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-o95v-x6c7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-93352",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-434",
+    "description": "Laravel-Mediable 是 Plank 开源的 Laravel 媒体管理组件（composer 包 plank/laravel-mediable），用于将上传文件附加到 Eloquent 模型并管理存储目录。\n受影响版本中，为修复 CVE-2026-49972 引入的 config/mediable.php forbidden_extensions 扩展名黑名单包含 phpt 但缺少 pht，MediaUploader::verifyExtension() 在默认 allowed_extensions 为空时仅拒绝黑名单内扩展名，File::sanitizeFileName() 依据同一黑名单改写嵌套扩展名，攻击者上传的 .pht 文件可通过两处校验并写入磁盘，在 Debian/Ubuntu 默认 Apache FilesMatch 配置下被作为 PHP 执行，最终获得 Web 服务器进程权限的远程代码执行。\n修复版本中通过在 forbidden_extensions 黑名单中补充 pht 切断该链路，MediaUploader::verifyExtension() 与 File::sanitizeFileName() 依赖的默认黑名单重新覆盖 .pht，直接上传 .pht 会抛出 FileNotSupportedException，嵌套 .pht 扩展名会被改写，7.0.2 起默认配置生效。",
+    "effects": [
+      {
+        "comp_name": "plank/laravel-mediable",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[7.0.0,7.0.2)",
+            "min_fixed_version": "7.0.2",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "任意文件上传",
+    "kind_en": "危险类型文件无限制上传",
+    "last_modified_time": "2026-09-24",
+    "level": "Critical",
+    "mps_id": "MPS-o95v-x6c7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-o95v-x6c7",
+        "name": "https://www.oscs1024.com/hd/MPS-o95v-x6c7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93352",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-93352"
+      },
+      {
+        "url": "https://github.com/plank/laravel-mediable/releases/tag/7.0.2",
+        "name": "Release Notes"
+      },
+      {
+        "url": "https://github.com/plank/laravel-mediable/pull/396",
+        "name": "Pull Request"
+      },
+      {
+        "url": "https://github.com/plank/laravel-mediable/commit/8ddb0e5b300084e91ad2cb18a6e7bc768bb7b008",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/laravel-mediable-rce-via-pht-file-upload",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Laravel-Mediable pht文件上传RCE漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-93352",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-434",
+    "description": "Laravel-Mediable 是 Plank 开源的 Laravel 媒体管理组件（composer 包 plank/laravel-mediable），用于将上传文件附加到 Eloquent 模型并管理存储目录。\n受影响版本中，为修复 CVE-2026-49972 引入的 config/mediable.php forbidden_extensions 扩展名黑名单包含 phpt 但缺少 pht，MediaUploader::verifyExtension() 在默认 allowed_extensions 为空时仅拒绝黑名单内扩展名，File::sanitizeFileName() 依据同一黑名单改写嵌套扩展名，攻击者上传的 .pht 文件可通过两处校验并写入磁盘，在 Debian/Ubuntu 默认 Apache FilesMatch 配置下被作为 PHP 执行，最终获得 Web 服务器进程权限的远程代码执行。\n修复版本中通过在 forbidden_extensions 黑名单中补充 pht 切断该链路，MediaUploader::verifyExtension() 与 File::sanitizeFileName() 依赖的默认黑名单重新覆盖 .pht，直接上传 .pht 会抛出 FileNotSupportedException，嵌套 .pht 扩展名会被改写，7.0.2 起默认配置生效。",
+    "effects": [
+      {
+        "comp_name": "plank/laravel-mediable",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[7.0.0,7.0.2)",
+            "min_fixed_version": "7.0.2",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "任意文件上传",
+    "kind_en": "Unrestricted Upload of File with Dangerous Type",
+    "last_modified_time": "2026-09-24",
+    "level": "Critical",
+    "mps_id": "MPS-o95v-x6c7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-o95v-x6c7",
+        "name": "https://www.oscs1024.com/hd/MPS-o95v-x6c7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93352",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-93352"
+      },
+      {
+        "url": "https://github.com/plank/laravel-mediable/releases/tag/7.0.2",
+        "name": "Release Notes"
+      },
+      {
+        "url": "https://github.com/plank/laravel-mediable/pull/396",
+        "name": "Pull Request"
+      },
+      {
+        "url": "https://github.com/plank/laravel-mediable/commit/8ddb0e5b300084e91ad2cb18a6e7bc768bb7b008",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/laravel-mediable-rce-via-pht-file-upload",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Laravel-Mediable pht文件上传RCE漏洞"
+  },
+  "first_saved_at": "2026-09-24T00:15:21+00:00"
+}
