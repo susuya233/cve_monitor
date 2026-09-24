@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-09-24T10:56:51+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-v921-80gu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-12227",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-98",
+    "description": "Visual Composer Website Builder（插件标识 visualcomposer）是一款用于 WordPress 的开源拖拽式页面构建插件，提供页面编辑、模板布局与主题构建等前端渲染能力。\n受影响版本中，前端 template_include 流程的 PageTemplatesController::getCurrentTemplateLayout 通过 Request::input 直接读取请求参数 vcv-template 与 vcv-template-type，该读取无登录态或 nonce 校验，参数值作为模板布局的 value 传入 viewPageTemplate 的模板路径解析，解析结果被 WordPress 作为模板文件包含执行；未认证攻击者可借此包含并执行服务器上的任意文件，绕过访问控制、获取敏感数据或在允许上传图片等看似安全文件类型的服务器上执行代码。\n修复版本中通过 45.16.1（changeset 3619572）恢复 45.16.0 发布包中缺失的 vendor/composer 自动加载文件与 cache/autoload.php 组件缓存，插件引导与前端模板解析回到受控流程，模板选择重新经过 validate_file 校验与 locate_template 主题目录限定，切断未认证任意文件包含链路；用户升级至 45.16.1 及以上版本完成修复。",
+    "effects": [
+      {
+        "comp_name": "visualcomposer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,45.16.1)",
+            "min_fixed_version": "45.16.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "php远程文件包含",
+    "kind_en": "PHP 程序中 Include/Require 语句的文件名控制不当（“PHP 远程文件包含”）",
+    "last_modified_time": "2026-09-24",
+    "level": "Critical",
+    "mps_id": "MPS-v921-80gu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-v921-80gu",
+        "name": "https://www.oscs1024.com/hd/MPS-v921-80gu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-12227",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-12227"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/486c1c7c-5a66-42d3-85b0-13ce52a16ed1?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3619572/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Visual Composer 本地文件包含漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-12227",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-98",
+    "description": "Visual Composer Website Builder（插件标识 visualcomposer）是一款用于 WordPress 的开源拖拽式页面构建插件，提供页面编辑、模板布局与主题构建等前端渲染能力。\n受影响版本中，前端 template_include 流程的 PageTemplatesController::getCurrentTemplateLayout 通过 Request::input 直接读取请求参数 vcv-template 与 vcv-template-type，该读取无登录态或 nonce 校验，参数值作为模板布局的 value 传入 viewPageTemplate 的模板路径解析，解析结果被 WordPress 作为模板文件包含执行；未认证攻击者可借此包含并执行服务器上的任意文件，绕过访问控制、获取敏感数据或在允许上传图片等看似安全文件类型的服务器上执行代码。\n修复版本中通过 45.16.1（changeset 3619572）恢复 45.16.0 发布包中缺失的 vendor/composer 自动加载文件与 cache/autoload.php 组件缓存，插件引导与前端模板解析回到受控流程，模板选择重新经过 validate_file 校验与 locate_template 主题目录限定，切断未认证任意文件包含链路；用户升级至 45.16.1 及以上版本完成修复。",
+    "effects": [
+      {
+        "comp_name": "visualcomposer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,45.16.1)",
+            "min_fixed_version": "45.16.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "php远程文件包含",
+    "kind_en": "Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion')",
+    "last_modified_time": "2026-09-24",
+    "level": "Critical",
+    "mps_id": "MPS-v921-80gu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-v921-80gu",
+        "name": "https://www.oscs1024.com/hd/MPS-v921-80gu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-12227",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-12227"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/486c1c7c-5a66-42d3-85b0-13ce52a16ed1?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3619572/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Visual Composer 本地文件包含漏洞"
+  },
+  "first_saved_at": "2026-09-24T10:56:51+00:00"
+}

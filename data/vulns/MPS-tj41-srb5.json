@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-09-24T10:56:55+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-tj41-srb5",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85682",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-346",
+    "description": "YOP Poll 是一款在 wordpress.org 插件目录分发的开源 WordPress 投票插件（标识为 yop-poll），用于在站点前台创建、展示和管理投票。\n受影响版本中，'Sign in with WordPress' 投票流程的登录桥接页（REST 路由 yop-poll/v1/auth/wp-login-redirect 与 admin-ajax 动作 yop_poll_wp_login_redirect）在弹窗访客已登录时调用 wp_create_nonce('wp_rest') 生成绑定当前用户（如管理员）的账户级 REST nonce，并通过 window.opener.postMessage(..., '*') 以通配 targetOrigin 发送给打开弹窗的任意页面；未认证攻击者诱导已登录管理员访问攻击者页面后，攻击者页面通过 window.open 打开该公开端点成为 opener，跨源接收该 nonce，随后借助 WordPress REST API 回显任意 Origin 且允许携带凭据的机制，以管理员身份调用 REST 接口修改管理员邮箱与密码，最终导致管理员账户被完全接管。\n修复版本中通过新增 REST_Auth::render_login_bridge() 统一两个桥接入口的输出，postMessage 载荷不再包含任何 nonce 且 targetOrigin 固定为站点自身 origin，同时移除 /auth/status REST 路由，将登录状态与已登录投票迁移到 admin-ajax 并改用限定于单个投票的 authNonce，使前端不再持有账户级 wp_rest nonce，切断跨源窃取与管理员账户接管的路径。",
+    "effects": [
+      {
+        "comp_name": "yop-poll",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.0.11)",
+            "min_fixed_version": "7.0.11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "源验证错误",
+    "kind_en": "来源验证错误",
+    "last_modified_time": "2026-09-24",
+    "level": "High",
+    "mps_id": "MPS-tj41-srb5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tj41-srb5",
+        "name": "https://www.oscs1024.com/hd/MPS-tj41-srb5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85682",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85682"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/b3574182-1bda-49b2-aac7-60f862891b46?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3690945/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "YOP Poll 账户接管漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85682",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-346",
+    "description": "YOP Poll 是一款在 wordpress.org 插件目录分发的开源 WordPress 投票插件（标识为 yop-poll），用于在站点前台创建、展示和管理投票。\n受影响版本中，'Sign in with WordPress' 投票流程的登录桥接页（REST 路由 yop-poll/v1/auth/wp-login-redirect 与 admin-ajax 动作 yop_poll_wp_login_redirect）在弹窗访客已登录时调用 wp_create_nonce('wp_rest') 生成绑定当前用户（如管理员）的账户级 REST nonce，并通过 window.opener.postMessage(..., '*') 以通配 targetOrigin 发送给打开弹窗的任意页面；未认证攻击者诱导已登录管理员访问攻击者页面后，攻击者页面通过 window.open 打开该公开端点成为 opener，跨源接收该 nonce，随后借助 WordPress REST API 回显任意 Origin 且允许携带凭据的机制，以管理员身份调用 REST 接口修改管理员邮箱与密码，最终导致管理员账户被完全接管。\n修复版本中通过新增 REST_Auth::render_login_bridge() 统一两个桥接入口的输出，postMessage 载荷不再包含任何 nonce 且 targetOrigin 固定为站点自身 origin，同时移除 /auth/status REST 路由，将登录状态与已登录投票迁移到 admin-ajax 并改用限定于单个投票的 authNonce，使前端不再持有账户级 wp_rest nonce，切断跨源窃取与管理员账户接管的路径。",
+    "effects": [
+      {
+        "comp_name": "yop-poll",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.0.11)",
+            "min_fixed_version": "7.0.11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "源验证错误",
+    "kind_en": "Origin Validation Error",
+    "last_modified_time": "2026-09-24",
+    "level": "High",
+    "mps_id": "MPS-tj41-srb5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tj41-srb5",
+        "name": "https://www.oscs1024.com/hd/MPS-tj41-srb5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85682",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85682"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/b3574182-1bda-49b2-aac7-60f862891b46?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3690945/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "YOP Poll 账户接管漏洞"
+  },
+  "first_saved_at": "2026-09-24T10:56:55+00:00"
+}
