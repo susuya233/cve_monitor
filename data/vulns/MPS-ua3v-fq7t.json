@@ -1,0 +1,213 @@
+{
+  "saved_at": "2026-09-24T05:45:29+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ua3v-fq7t",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97055",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1188",
+    "description": "SigNoz 是开源的可观测性与应用监控平台，提供链路追踪、指标与日志统一分析，自托管部署内置基于令牌的用户会话认证体系。\n受影响版本中，tokenizer 配置默认 provider 为 jwt 且 jwt::secret 默认为空字符串，Config.Validate() 未拒绝空值，未设置 SIGNOZ_TOKENIZER_JWT_SECRET 的部署以空 HMAC 密钥签发并校验会话令牌；未认证攻击者可经 /api/v2/sessions/context 按邮箱获取组织 ID 并确认邮箱已注册，再以空密钥 HS256 签发携带目标用户 id、orgId、email 声明的伪造令牌，该令牌通过 jwttokenizer 的空密钥签名校验后被构造为对应真实用户身份（包括管理员），伪造的刷新令牌还可经 /api/v2/sessions/rotate 持续换取新令牌对，且 JWT 令牌无法吊销，默认有效期 30 天。\n修复版本中通过 Config.Validate() 在 provider 为 jwt 且密钥为空时返回错误阻止启动，切断空密钥签发与校验路径，同时将默认 tokenizer provider 由 jwt 改为 opaque，使新部署默认使用可吊销的服务端不透明令牌。",
+    "effects": [
+      {
+        "comp_name": "github.com/SigNoz/signoz",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[0.8.0,0.143.0)",
+            "min_fixed_version": "0.143.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "signoz",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.8.0,0.143.0)",
+            "min_fixed_version": "0.143.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "资源默认不安全",
+    "kind_en": "使用不安全默认值初始化资源",
+    "last_modified_time": "2026-09-24",
+    "level": "Critical",
+    "mps_id": "MPS-ua3v-fq7t",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ua3v-fq7t",
+        "name": "https://www.oscs1024.com/hd/MPS-ua3v-fq7t"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97055",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97055"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/security/advisories/GHSA-c26w-g4j8-39m2",
+        "name": "GitHub Security Advisory (GHSA-c26w-g4j8-39m2)"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/commit/67895d366d",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/commit/b02aae2db3",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/signoz-before-0.143.0-authentication-bypass-via-empty-jwt-secret",
+        "name": "VulnCheck Advisory: SigNoz before 0.143.0 Authentication Bypass via Empty JWT Secret"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go",
+      "应用软件"
+    ],
+    "title": "SigNoz JWT认证绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97055",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1188",
+    "description": "SigNoz 是开源的可观测性与应用监控平台，提供链路追踪、指标与日志统一分析，自托管部署内置基于令牌的用户会话认证体系。\n受影响版本中，tokenizer 配置默认 provider 为 jwt 且 jwt::secret 默认为空字符串，Config.Validate() 未拒绝空值，未设置 SIGNOZ_TOKENIZER_JWT_SECRET 的部署以空 HMAC 密钥签发并校验会话令牌；未认证攻击者可经 /api/v2/sessions/context 按邮箱获取组织 ID 并确认邮箱已注册，再以空密钥 HS256 签发携带目标用户 id、orgId、email 声明的伪造令牌，该令牌通过 jwttokenizer 的空密钥签名校验后被构造为对应真实用户身份（包括管理员），伪造的刷新令牌还可经 /api/v2/sessions/rotate 持续换取新令牌对，且 JWT 令牌无法吊销，默认有效期 30 天。\n修复版本中通过 Config.Validate() 在 provider 为 jwt 且密钥为空时返回错误阻止启动，切断空密钥签发与校验路径，同时将默认 tokenizer provider 由 jwt 改为 opaque，使新部署默认使用可吊销的服务端不透明令牌。",
+    "effects": [
+      {
+        "comp_name": "github.com/SigNoz/signoz",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[0.8.0,0.143.0)",
+            "min_fixed_version": "0.143.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "signoz",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.8.0,0.143.0)",
+            "min_fixed_version": "0.143.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "资源默认不安全",
+    "kind_en": "Initialization of a Resource with an Insecure Default",
+    "last_modified_time": "2026-09-24",
+    "level": "Critical",
+    "mps_id": "MPS-ua3v-fq7t",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ua3v-fq7t",
+        "name": "https://www.oscs1024.com/hd/MPS-ua3v-fq7t"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97055",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97055"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/security/advisories/GHSA-c26w-g4j8-39m2",
+        "name": "GitHub Security Advisory (GHSA-c26w-g4j8-39m2)"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/commit/67895d366d",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/commit/b02aae2db3",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/signoz-before-0.143.0-authentication-bypass-via-empty-jwt-secret",
+        "name": "VulnCheck Advisory: SigNoz before 0.143.0 Authentication Bypass via Empty JWT Secret"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go",
+      "应用软件"
+    ],
+    "title": "SigNoz JWT认证绕过漏洞"
+  },
+  "first_saved_at": "2026-09-24T05:45:29+00:00"
+}

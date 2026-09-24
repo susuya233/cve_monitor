@@ -1,0 +1,229 @@
+{
+  "saved_at": "2026-09-24T05:45:28+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-k5yw-pc78",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97056",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-613",
+    "description": "SigNoz 是 SigNoz 公司开源的可观测性平台，使用 Go 语言开发，用于集中采集与展示日志、指标和链路追踪数据，内置基于访问令牌的登录会话认证。\n受影响版本中，当部署启用 opaque 会话 tokenizer（v0.143.0 之前非默认，需显式配置）时，登录会话令牌与用户身份会缓存在 signoz cache 中，只能通过 tokenizer 的 DeleteTokensByUserID 撤销。密码重置路径 UpdatePasswordByResetPasswordToken（经 POST /api/v2/factor_password/reset 进入）写入新密码后未调用该方法，用户删除路径 DeleteUser（经 DELETE /api/v2/users/{id} 进入）仅用原生 SQL 删除 auth_token 表记录，同样未通知 tokenizer，缓存中的旧令牌与身份保持有效；攻击者在事件发生前已持有的会话令牌可继续认证，密码重置后最长在令牌最大生命周期（默认 30 天）内保留原账号全部权限，最高可到管理员，用户删除后最长在一个轮换周期（默认 30 分钟）内仍可访问。\n修复版本中通过补齐两条路径的会话撤销解决该问题：UpdatePasswordByResetPasswordToken 在密码写入事务成功后调用 tokenizer.DeleteTokensByUserID，撤销该用户全部会话；DeleteUser 在软删除前的同一事务内依次调用 DeleteTokensByUserID 与 DeleteIdentity，被删除用户持有的令牌在下一次请求时返回 401，其中密码重置路径的撤销随 v0.137.1 发布，v0.143.0 同时将 opaque tokenizer 设为默认值。",
+    "effects": [
+      {
+        "comp_name": "github.com/SigNoz/signoz",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[v0.98.0,v0.143.0)",
+            "min_fixed_version": "v0.143.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "signoz",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[v0.98.0,v0.143.0)",
+            "min_fixed_version": "v0.143.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不充分的会话过期机制",
+    "kind_en": "会话过期时间不足",
+    "last_modified_time": "2026-09-24",
+    "level": "High",
+    "mps_id": "MPS-k5yw-pc78",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k5yw-pc78",
+        "name": "https://www.oscs1024.com/hd/MPS-k5yw-pc78"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97056",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97056"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/security/advisories/GHSA-xrgp-3fq4-xg83",
+        "name": "GitHub Security Advisory (GHSA-xrgp-3fq4-xg83)"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/commit/faaed20dbd",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/commit/e2e9173986",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/commit/b02aae2db3",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/commit/c122bc09b4",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/signoz-before-0.143.0-insufficient-session-expiration-authentication-bypass",
+        "name": "VulnCheck Advisory: SigNoz before 0.143.0 Insufficient Session Expiration Authentication Bypass"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go",
+      "应用软件"
+    ],
+    "title": "SigNoz 会话撤销缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97056",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-613",
+    "description": "SigNoz 是 SigNoz 公司开源的可观测性平台，使用 Go 语言开发，用于集中采集与展示日志、指标和链路追踪数据，内置基于访问令牌的登录会话认证。\n受影响版本中，当部署启用 opaque 会话 tokenizer（v0.143.0 之前非默认，需显式配置）时，登录会话令牌与用户身份会缓存在 signoz cache 中，只能通过 tokenizer 的 DeleteTokensByUserID 撤销。密码重置路径 UpdatePasswordByResetPasswordToken（经 POST /api/v2/factor_password/reset 进入）写入新密码后未调用该方法，用户删除路径 DeleteUser（经 DELETE /api/v2/users/{id} 进入）仅用原生 SQL 删除 auth_token 表记录，同样未通知 tokenizer，缓存中的旧令牌与身份保持有效；攻击者在事件发生前已持有的会话令牌可继续认证，密码重置后最长在令牌最大生命周期（默认 30 天）内保留原账号全部权限，最高可到管理员，用户删除后最长在一个轮换周期（默认 30 分钟）内仍可访问。\n修复版本中通过补齐两条路径的会话撤销解决该问题：UpdatePasswordByResetPasswordToken 在密码写入事务成功后调用 tokenizer.DeleteTokensByUserID，撤销该用户全部会话；DeleteUser 在软删除前的同一事务内依次调用 DeleteTokensByUserID 与 DeleteIdentity，被删除用户持有的令牌在下一次请求时返回 401，其中密码重置路径的撤销随 v0.137.1 发布，v0.143.0 同时将 opaque tokenizer 设为默认值。",
+    "effects": [
+      {
+        "comp_name": "github.com/SigNoz/signoz",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[v0.98.0,v0.143.0)",
+            "min_fixed_version": "v0.143.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "signoz",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[v0.98.0,v0.143.0)",
+            "min_fixed_version": "v0.143.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不充分的会话过期机制",
+    "kind_en": "Insufficient Session Expiration",
+    "last_modified_time": "2026-09-24",
+    "level": "High",
+    "mps_id": "MPS-k5yw-pc78",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k5yw-pc78",
+        "name": "https://www.oscs1024.com/hd/MPS-k5yw-pc78"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97056",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97056"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/security/advisories/GHSA-xrgp-3fq4-xg83",
+        "name": "GitHub Security Advisory (GHSA-xrgp-3fq4-xg83)"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/commit/faaed20dbd",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/commit/e2e9173986",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/commit/b02aae2db3",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/SigNoz/signoz/commit/c122bc09b4",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/signoz-before-0.143.0-insufficient-session-expiration-authentication-bypass",
+        "name": "VulnCheck Advisory: SigNoz before 0.143.0 Insufficient Session Expiration Authentication Bypass"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go",
+      "应用软件"
+    ],
+    "title": "SigNoz 会话撤销缺失漏洞"
+  },
+  "first_saved_at": "2026-09-24T05:45:28+00:00"
+}
