@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-09-24T15:41:59+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-48v1-tqys",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97362",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-835",
+    "description": "Rejetto HTTP File Server（HFS）2.x 是一款运行于 Windows 的开源（GPL-3.0）单文件 HTTP 文件服务器，用于在 Web 页面上提供文件共享、下载与上传服务，上游仓库已停止维护。\n受影响版本中，上传文件名未经转义即作为 %item-resource% 符号进入上传结果模板求值，文件名携带的 {.get ini|.} 宏到达宏分发器并调用 utillib.pas 的 getKeyFromString() 在全局配置串中查找键值；该函数把空键补尾为 \"=\"，而配置项均以 name=value 形式存放，首个 \"=\" 必然不在行首，ipos() 又按包含偏移返回同一匹配位置，行首判定失败时游标不推进，repeat 循环在同一匹配上无限重复，唯一服务线程被空转占满，一个未认证的 POST multipart 请求即可令端口保持监听但服务对所有客户端停止响应，且不自恢复，需人工重启。\n修复版本中通过在行首判定失败时执行 inc(i) 推进搜索游标并继续查找，使循环每次迭代必然前进，不再停留在原匹配上；该修复由 wgetnz/hfs2 提交 3c2a691 引入，官方上游已停止维护，未发布包含此修复的正式版本，存量部署需按缓解措施防护。",
+    "effects": [
+      {
+        "comp_name": "hfs2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.4.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不可达退出条件的循环（无限循环）",
+    "kind_en": "具有无法到达的退出条件的循环（“无限循环”）",
+    "last_modified_time": "2026-09-24",
+    "level": "High",
+    "mps_id": "MPS-48v1-tqys",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-48v1-tqys",
+        "name": "https://www.oscs1024.com/hd/MPS-48v1-tqys"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97362",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97362"
+      },
+      {
+        "url": "https://github.com/wgetnz/hfs2/blob/master/advisories/hfs2-getini-infinite-loop-dos/README.md",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/hfs2-unauthenticated-denial-of-service-via-hung-serving-thread",
+        "name": "VulnCheck Advisory"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "HFS2未授权死循环拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97362",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-835",
+    "description": "Rejetto HTTP File Server（HFS）2.x 是一款运行于 Windows 的开源（GPL-3.0）单文件 HTTP 文件服务器，用于在 Web 页面上提供文件共享、下载与上传服务，上游仓库已停止维护。\n受影响版本中，上传文件名未经转义即作为 %item-resource% 符号进入上传结果模板求值，文件名携带的 {.get ini|.} 宏到达宏分发器并调用 utillib.pas 的 getKeyFromString() 在全局配置串中查找键值；该函数把空键补尾为 \"=\"，而配置项均以 name=value 形式存放，首个 \"=\" 必然不在行首，ipos() 又按包含偏移返回同一匹配位置，行首判定失败时游标不推进，repeat 循环在同一匹配上无限重复，唯一服务线程被空转占满，一个未认证的 POST multipart 请求即可令端口保持监听但服务对所有客户端停止响应，且不自恢复，需人工重启。\n修复版本中通过在行首判定失败时执行 inc(i) 推进搜索游标并继续查找，使循环每次迭代必然前进，不再停留在原匹配上；该修复由 wgetnz/hfs2 提交 3c2a691 引入，官方上游已停止维护，未发布包含此修复的正式版本，存量部署需按缓解措施防护。",
+    "effects": [
+      {
+        "comp_name": "hfs2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.4.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不可达退出条件的循环（无限循环）",
+    "kind_en": "Loop with Unreachable Exit Condition ('Infinite Loop')",
+    "last_modified_time": "2026-09-24",
+    "level": "High",
+    "mps_id": "MPS-48v1-tqys",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-48v1-tqys",
+        "name": "https://www.oscs1024.com/hd/MPS-48v1-tqys"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97362",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97362"
+      },
+      {
+        "url": "https://github.com/wgetnz/hfs2/blob/master/advisories/hfs2-getini-infinite-loop-dos/README.md",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/hfs2-unauthenticated-denial-of-service-via-hung-serving-thread",
+        "name": "VulnCheck Advisory"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "HFS2未授权死循环拒绝服务"
+  },
+  "first_saved_at": "2026-09-24T15:41:59+00:00"
+}

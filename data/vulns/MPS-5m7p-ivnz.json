@@ -1,0 +1,181 @@
+{
+  "saved_at": "2026-09-24T15:42:04+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5m7p-ivnz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90959",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-22",
+    "description": "pulpcore 是 Pulp 平台的开源核心框架，用于管理、同步和分发软件仓库内容，通过 REST API 提供内容上传、远程同步与发布能力，被 Red Hat Satellite、Ansible Automation Platform 和 Red Hat Update Infrastructure 等产品采用。\n受影响版本中，内容上传 API 的 file_url 参数允许具有仓库内容上传权限的用户提交一个由服务器自行下载的地址；RemoteSerializer.validate_url 仅以字符串前缀 startswith(\"file://\") 判定是否为本地文件地址，未命中该前缀的输入被直接放行，而下载链路按 urlparse 解析出的协议分发下载器，urlparse 将不带双斜杠的 file: 前缀同样识别为文件协议，两者判定标准不一致，攻击者可提交 file:../ 形式的相对穿越地址绕过 ALLOWED_IMPORT_PATHS 白名单，FileDownloader 按解析结果拼接绝对路径读取文件，最终以 Pulp 进程权限读取服务器上任意文件；在部署 Pulp Container 的环境中，攻击者可进一步读取容器注册表令牌签名私钥并伪造 bearer token，访问注册表中全部私有容器仓库。\n修复版本中通过将校验基准从字符串前缀比较改为 urlparse 解析后的协议字段，协议为 file 的输入一律要求绝对路径、拒绝未归一化路径并强制 realpath 落在 ALLOWED_IMPORT_PATHS 内，同时在 FileDownloader 入口增加协议必须为 file 的防御性校验，切断了绕过白名单校验进入本地文件下载器的路径。",
+    "effects": [
+      {
+        "comp_name": "pulpcore",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[3.57.0,3.119.1)",
+            "min_fixed_version": "3.119.1",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "路径遍历",
+    "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
+    "last_modified_time": "2026-09-24",
+    "level": "High",
+    "mps_id": "MPS-5m7p-ivnz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5m7p-ivnz",
+        "name": "https://www.oscs1024.com/hd/MPS-5m7p-ivnz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90959",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90959"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-90959",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2533037",
+        "name": "RHBZ#2533037"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "pulpcore 路径穿越漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90959",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-22",
+    "description": "pulpcore 是 Pulp 平台的开源核心框架，用于管理、同步和分发软件仓库内容，通过 REST API 提供内容上传、远程同步与发布能力，被 Red Hat Satellite、Ansible Automation Platform 和 Red Hat Update Infrastructure 等产品采用。\n受影响版本中，内容上传 API 的 file_url 参数允许具有仓库内容上传权限的用户提交一个由服务器自行下载的地址；RemoteSerializer.validate_url 仅以字符串前缀 startswith(\"file://\") 判定是否为本地文件地址，未命中该前缀的输入被直接放行，而下载链路按 urlparse 解析出的协议分发下载器，urlparse 将不带双斜杠的 file: 前缀同样识别为文件协议，两者判定标准不一致，攻击者可提交 file:../ 形式的相对穿越地址绕过 ALLOWED_IMPORT_PATHS 白名单，FileDownloader 按解析结果拼接绝对路径读取文件，最终以 Pulp 进程权限读取服务器上任意文件；在部署 Pulp Container 的环境中，攻击者可进一步读取容器注册表令牌签名私钥并伪造 bearer token，访问注册表中全部私有容器仓库。\n修复版本中通过将校验基准从字符串前缀比较改为 urlparse 解析后的协议字段，协议为 file 的输入一律要求绝对路径、拒绝未归一化路径并强制 realpath 落在 ALLOWED_IMPORT_PATHS 内，同时在 FileDownloader 入口增加协议必须为 file 的防御性校验，切断了绕过白名单校验进入本地文件下载器的路径。",
+    "effects": [
+      {
+        "comp_name": "pulpcore",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[3.57.0,3.119.1)",
+            "min_fixed_version": "3.119.1",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "路径遍历",
+    "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "last_modified_time": "2026-09-24",
+    "level": "High",
+    "mps_id": "MPS-5m7p-ivnz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5m7p-ivnz",
+        "name": "https://www.oscs1024.com/hd/MPS-5m7p-ivnz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90959",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90959"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-90959",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2533037",
+        "name": "RHBZ#2533037"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "pulpcore 路径穿越漏洞"
+  },
+  "first_saved_at": "2026-09-24T15:42:04+00:00"
+}

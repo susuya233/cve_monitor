@@ -1,0 +1,197 @@
+{
+  "saved_at": "2026-09-24T15:42:11+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-sa79-tgmn",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82093",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@us.ibm.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "DataStage on Cloud Pak for Data 是 IBM 推出的商业数据集成 ETL 服务，作为 IBM Cloud Pak for Data（IBM Software Hub）平台的组件提供，用于企业级数据的抽取、转换与加载，源码不公开。\n受影响版本中，组件在处理不可信数据时执行不安全的反序列化（CWE-502），持有普通用户权限的远程攻击者通过提交恶意序列化数据可触发该反序列化流程，在服务器端执行任意代码，获取系统控制权限，导致机密性、完整性与可用性全部受损。\n修复版本中通过官方补丁完成修复，IBM 安全公告要求将 DataStage on Cloud Pak for Data 5.4.0.0 升级至 5.4 patch 7 及以上版本，同时公告说明无临时缓解措施，升级后远程认证攻击者无法再利用该漏洞执行任意代码。",
+    "effects": [
+      {
+        "comp_name": "DataStage on Cloud Pak for Data",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.4.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "datastage_on_cloud_pak_for_data",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.4.0.0,5.4 patch 7)",
+            "min_fixed_version": "5.4 patch 7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-09-24",
+    "level": "High",
+    "mps_id": "MPS-sa79-tgmn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-sa79-tgmn",
+        "name": "https://www.oscs1024.com/hd/MPS-sa79-tgmn"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82093",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82093"
+      },
+      {
+        "url": "https://www.ibm.com/support/pages/node/7288649",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DataStage 反序列化代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82093",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@us.ibm.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "DataStage on Cloud Pak for Data 是 IBM 推出的商业数据集成 ETL 服务，作为 IBM Cloud Pak for Data（IBM Software Hub）平台的组件提供，用于企业级数据的抽取、转换与加载，源码不公开。\n受影响版本中，组件在处理不可信数据时执行不安全的反序列化（CWE-502），持有普通用户权限的远程攻击者通过提交恶意序列化数据可触发该反序列化流程，在服务器端执行任意代码，获取系统控制权限，导致机密性、完整性与可用性全部受损。\n修复版本中通过官方补丁完成修复，IBM 安全公告要求将 DataStage on Cloud Pak for Data 5.4.0.0 升级至 5.4 patch 7 及以上版本，同时公告说明无临时缓解措施，升级后远程认证攻击者无法再利用该漏洞执行任意代码。",
+    "effects": [
+      {
+        "comp_name": "DataStage on Cloud Pak for Data",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,5.4.0.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "datastage_on_cloud_pak_for_data",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[5.4.0.0,5.4 patch 7)",
+            "min_fixed_version": "5.4 patch 7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-09-24",
+    "level": "High",
+    "mps_id": "MPS-sa79-tgmn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-sa79-tgmn",
+        "name": "https://www.oscs1024.com/hd/MPS-sa79-tgmn"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82093",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82093"
+      },
+      {
+        "url": "https://www.ibm.com/support/pages/node/7288649",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DataStage 反序列化代码执行漏洞"
+  },
+  "first_saved_at": "2026-09-24T15:42:11+00:00"
+}
