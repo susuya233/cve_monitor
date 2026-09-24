@@ -1854,5 +1854,11 @@
   "628f7e39cbf6b5072feecf64fe76cb2dadeaea53": "在 22.0.2 之前的 OpenStack Zaqar 中，WSGI 传输错误地处理 URL-Signature 标头。通过发送带有空 URL-Signature 标头的请求，知道目标项目 UUID 的未经身份验证的远程攻击者可能会绕过 Keystone 身份验证和预签名 URL 验证，从而能够读取、枚举、创建和删除该项目的队列、消息、声明和订阅。通过额外声明管理角色，攻击者还可以执行管理操作，例如管理 admin_mode 部署中的池和类型。只有使用 WSGI 传输并配置了身份验证策略的部署才会受到影响； Websocket 传输不受影响。",
   "49eeb30e801a34ff294162e8af697dfc3bdb412d": "使用不太可信的来源",
   "ea30f3b06f01ee9bdef1a2c4eef95484d08061e0": "CVE-2026-82094漏洞",
-  "781bff596fbb87e2ce9f77a3f6fba030935ff2ee": "由于受限目录的路径名限制不当，IBM DataStage on Cloud Pak for Data 5.4.0.0 可能允许经过身份验证的远程攻击者遍历系统上的目录。"
+  "781bff596fbb87e2ce9f77a3f6fba030935ff2ee": "由于受限目录的路径名限制不当，IBM DataStage on Cloud Pak for Data 5.4.0.0 可能允许经过身份验证的远程攻击者遍历系统上的目录。",
+  "a3e62f32c67dfa0a1694b8cef84d8a5bc9491392": "CVE-2026-95985漏洞",
+  "31ac5a2e5236c8a5695ec77ebda9743a1ea5130c": "1.0.242 之前的 Amazon Kiro IDE 版本中的文件写入工具可能允许未经身份验证的远程参与者将精心设计的指令注入代理的上下文中。当用户在精心设计的存储库中将代理作为不受信任的工作区运行时，发送任何消息都可能导致代理对自动加载的全局配置路径进行修改。\n\n\n\n我们建议您升级到 Kiro IDE 版本 1.0.242 或更高版本。在早期版本的不受信任工作区中运行代理的用户还应该检查全局 Kiro 配置目录 (~/.kiro) 中是否有他们未创建的条目。",
+  "1c02385bc9a94e6f49c9753c4ff21efe7d30fdc4": "ZITADEL：通过 Login V2 中的会话重用绕过 MFA",
+  "4bc4cec3990f6129d568c5a57e149db9969cf183": "ZITADEL 是一个开源身份管理平台。从 4.0.0 到 4.16.1，ZITADEL Login V2 在密码验证后创建浏览器会话，并且可以在以后的身份验证请求中重用该会话，而无需验证用户注册的 TOTP、OTP 或 U2F 第二因素。当放弃 MFA 步骤并再次开始登录时，仅当组织启用强制 MFA 或仅对本地用户强制 MFA 时，会话有效性检查才需要 MFA，因此在为客户应用程序完成 OIDC 或 SAML 回调时可以跳过自愿注册因素。登录 V1、ZITADEL 控制台、管理和管理 API 以及用户自我管理不受影响。此问题已在版本 4.16.1 中修复。",
+  "87fdaacfb7a56b3798f638926fa3196b3b43a979": "ZITADEL：Actions V1 沙箱逃逸：通过 require() 读取主机文件",
+  "500138b055dac400147378e9fa75f8e34f6fbeac": "ZITADEL 是一个开源身份管理平台。从 3.0.0 到 3.4.13 和 4.16.1，ZITADEL Actions V1 启用 goja Node 兼容的 require() 注册表，而不限制其文件系统源加载器。具有 ORG_OWNER、org.action.write 和 org.flow.write 权限的组织操作作者可以在 OIDC、SAML 和登录流触发点运行 JavaScript，并加载 ZITADEL 服务器进程可读的文件。这可能会泄露已安装的配置和机密，包括通过 ZITADEL_FIRSTINSTANCE_LOGINCLIENTPATPATH 或 ZITADEL_FIRSTINSTANCE_MACHINEKEYPATH 存储的凭据，并且恢复的引导凭据可以实现从组织管理员升级到实例管理员。该问题影响 Actions V1，并且无法建立主机命令执行。此问题已在版本 3.4.13 和 4.16.1 中修复。"
 }
