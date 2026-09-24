@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-09-24T22:55:35+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-yeto-rp3l",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87721",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cve-coordination@google.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-834",
+    "description": "Gerrit Code Review 版本 2.0.19 到 3.12.9、3.13.0 到 3.13.8、3.14.0 到 3.14.2 中的 ANTLR 3 搜索查询解析器 (QueryParser / Query.g) 中的不受控制的资源消耗 (CWE-400 / CWE-407) 允许未经身份验证的远程攻击者（或者如果匿名读取访问是经过身份验证的用户）已禁用），通过精心设计的包含发送到查询评估端点（/changes/?q=、/accounts/?q=、/groups/?query=、/projects/?query=、/Documentation/?q=、/changes/{id}/query?expression= 或 SSH gerrit 查询）的深层嵌套括号的搜索查询，导致持久拒绝服务（CPU 耗尽和 HTTP 工作线程池饥饿，需要重新启动服务器）。由于conditionOr 和conditionAnd 中的语法谓词通过conditionBase 进行递归，而无需在功能或可见性检查之前记忆，并且工作线程在客户端断开连接时不会中止，因此少量请求（例如与默认httpd.maxThreads 匹配的25 个请求）可以永久固定所有HTTP 工作线程。此问题已在 Gerrit Code Review 版本 3.12.10、3.13.9 和 3.14.3 中修复。",
+    "effects": [
+      {
+        "comp_name": "Gerrit",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(2.0.19,3.12.10)",
+            "min_fixed_version": "3.12.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(3.13.0,3.13.9)",
+            "min_fixed_version": "3.13.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(3.14.0,3.14.3)",
+            "min_fixed_version": "3.14.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "过度迭代",
+    "kind_en": "过度迭代",
+    "last_modified_time": "2026-09-25",
+    "level": "High",
+    "mps_id": "MPS-yeto-rp3l",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-yeto-rp3l",
+        "name": "https://www.oscs1024.com/hd/MPS-yeto-rp3l"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87721",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87721"
+      },
+      {
+        "url": "https://issues.gerritcodereview.com/issues/541287630",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-87721漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87721",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cve-coordination@google.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-834",
+    "description": "Uncontrolled Resource Consumption (CWE-400 / CWE-407) in the ANTLR 3 search query parser (QueryParser / Query.g) in Gerrit Code Review versions 2.0.19 through 3.12.9, 3.13.0 through 3.13.8, and 3.14.0 through 3.14.2 allows an unauthenticated remote attacker (or an authenticated user if anonymous read access is disabled) to cause a persistent denial of service (CPU exhaustion and HTTP worker thread pool starvation requiring a server restart) via crafted search queries containing deeply nested parentheses sent to query evaluation endpoints (/changes/?q=, /accounts/?q=, /groups/?query=, /projects/?query=, /Documentation/?q=, /changes/{id}/query?expression=, or SSH gerrit query). Because syntactic predicates in conditionOr and conditionAnd recurse via conditionBase without memoization prior to capability or visibility checks and worker threads do not abort when the client disconnects, a small number of requests (such as 25 requests matching default httpd.maxThreads) can permanently pin all HTTP worker threads. This issue is fixed in Gerrit Code Review versions 3.12.10, 3.13.9, and 3.14.3.",
+    "effects": [
+      {
+        "comp_name": "Gerrit",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(2.0.19,3.12.10)",
+            "min_fixed_version": "3.12.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(3.13.0,3.13.9)",
+            "min_fixed_version": "3.13.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(3.14.0,3.14.3)",
+            "min_fixed_version": "3.14.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "过度迭代",
+    "kind_en": "Excessive Iteration",
+    "last_modified_time": "2026-09-25",
+    "level": "High",
+    "mps_id": "MPS-yeto-rp3l",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-yeto-rp3l",
+        "name": "https://www.oscs1024.com/hd/MPS-yeto-rp3l"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87721",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87721"
+      },
+      {
+        "url": "https://issues.gerritcodereview.com/issues/541287630",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-87721漏洞"
+  },
+  "first_saved_at": "2026-09-24T22:55:35+00:00"
+}

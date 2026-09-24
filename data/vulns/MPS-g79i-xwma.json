@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-09-24T22:55:30+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-g79i-xwma",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87722",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cve-coordination@google.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1333",
+    "description": "Gerrit Code Review 版本 2.1.6 到 正则表达式搜索查询谓词（例如 RegexProjectPredicate、RegexRefPredicate、RegexPathPredicate 和同级谓词）和 REST 正则表达式过滤器端点（RegexListSearcher /projects/?r= 和 RefFilter /projects/{project}/branches/?r=）中存在不受控制的资源消耗 (CWE-400 / CWE-1333) 3.12.9、3.13.0 到 3.13.8 以及 3.14.0 到 3.14.2 允许未经身份验证的远程攻击者（如果禁用匿名读取访问，则为经过身份验证的用户）通过精心设计的搜索查询或包含具有大量重复次数或指数 DFA 确定模式的正则表达式的 REST API 请求，导致拒绝服务（CPU 饥饿和 JVM 堆耗尽/OutOfMemoryError）。由于在索引评估或访问控制可见性过滤之前，用户提供的正则表达式会在请求线程上编译为无界 dk.brics.automaton 实例（new RegExp(re).toAutomaton()），因此无论堆大小如何，普通查询都可能耗尽 JVM 堆或 pin 请求线程。此问题已在 Gerrit Code Review 版本 3.12.10、3.13.9 和 3.14.3 中修复。",
+    "effects": [
+      {
+        "comp_name": "Gerrit",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(2.1.6,3.12.10)",
+            "min_fixed_version": "3.12.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(3.13.0,3.13.9)",
+            "min_fixed_version": "3.13.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(3.14.0,3.14.3)",
+            "min_fixed_version": "3.14.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "ReDoS",
+    "kind_en": "正则表达式复杂性低效",
+    "last_modified_time": "2026-09-25",
+    "level": "High",
+    "mps_id": "MPS-g79i-xwma",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-g79i-xwma",
+        "name": "https://www.oscs1024.com/hd/MPS-g79i-xwma"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87722",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87722"
+      },
+      {
+        "url": "https://issues.gerritcodereview.com/issues/540877705",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-87722漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87722",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cve-coordination@google.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1333",
+    "description": "Uncontrolled Resource Consumption (CWE-400 / CWE-1333) in regex search query predicates (such as RegexProjectPredicate, RegexRefPredicate, RegexPathPredicate, and sibling predicates) and REST regex filter endpoints (RegexListSearcher /projects/?r= and RefFilter /projects/{project}/branches/?r=) in Gerrit Code Review versions 2.1.6 through 3.12.9, 3.13.0 through 3.13.8, and 3.14.0 through 3.14.2 allows an unauthenticated remote attacker (or an authenticated user if anonymous read access is disabled) to cause a denial of service (CPU starvation and JVM heap exhaustion / OutOfMemoryError) via crafted search queries or REST API requests containing regular expressions with large counted repetitions or exponential DFA determinization patterns. Because the user-supplied regular expression is compiled into an unbounded dk.brics.automaton instance (new RegExp(re).toAutomaton()) on the request thread prior to index evaluation or access control visibility filtering, trivial queries can exhaust JVM heap or pin request threads regardless of heap size. This issue is fixed in Gerrit Code Review versions 3.12.10, 3.13.9, and 3.14.3.",
+    "effects": [
+      {
+        "comp_name": "Gerrit",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(2.1.6,3.12.10)",
+            "min_fixed_version": "3.12.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(3.13.0,3.13.9)",
+            "min_fixed_version": "3.13.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(3.14.0,3.14.3)",
+            "min_fixed_version": "3.14.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "ReDoS",
+    "kind_en": "Inefficient Regular Expression Complexity",
+    "last_modified_time": "2026-09-25",
+    "level": "High",
+    "mps_id": "MPS-g79i-xwma",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-g79i-xwma",
+        "name": "https://www.oscs1024.com/hd/MPS-g79i-xwma"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87722",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87722"
+      },
+      {
+        "url": "https://issues.gerritcodereview.com/issues/540877705",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-87722漏洞"
+  },
+  "first_saved_at": "2026-09-24T22:55:30+00:00"
+}
