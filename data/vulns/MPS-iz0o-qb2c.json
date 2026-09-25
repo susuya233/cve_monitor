@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-09-25T23:54:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-iz0o-qb2c",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96795",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "Horilla 是一款 HR 和 CRM 软件。在 2.0.0 之前，horilla_views/generic/cbv/views.py 中的 HorillaListView.export_data 接受经过身份验证的用户的列 POST 参数，采用 field_tuple[1]，将其插入到dynamic_fn_str 作为 Python 源，并将生成的函数定义传递给 exec()。在 ast.literal_eval 下保持有效的精心设计的字符串可以将 Python 语法注入到函数定义期间评估的默认参数中，从而允许使用应用程序进程权限执行任意操作系统命令，包括附带的 Docker 映像中的 root 权限。此问题已在 2.0.0 版本中修复。",
+    "effects": [
+      {
+        "comp_name": "horilla-hr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.0)",
+            "min_fixed_version": "2.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-09-26",
+    "level": "High",
+    "mps_id": "MPS-iz0o-qb2c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-iz0o-qb2c",
+        "name": "https://www.oscs1024.com/hd/MPS-iz0o-qb2c"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96795",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96795"
+      },
+      {
+        "url": "https://github.com/horilla/horilla-hr/security/advisories/GHSA-5g4v-4rv4-r26f",
+        "name": "https://github.com/horilla/horilla-hr/security/advisories/GHSA-5g4v-4rv4-r26f"
+      },
+      {
+        "url": "https://github.com/horilla/horilla-hr/releases/tag/2.0.0",
+        "name": "https://github.com/horilla/horilla-hr/releases/tag/2.0.0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Horilla：Horilla 列表视图导出中经过身份验证的 RCE",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96795",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "Horilla is an HR and CRM software. Prior to 2.0.0, HorillaListView.export_data in horilla_views/generic/cbv/views.py accepts an authenticated user's columns POST parameter, takes field_tuple[1], interpolates it into dynamic_fn_str as Python source, and passes the generated function definition to exec(). A crafted string that remains valid under ast.literal_eval can inject Python syntax into a default argument evaluated during function definition, allowing arbitrary operating-system commands to execute with the application process privileges, including root privileges in the shipped Docker image. This issue is fixed in version 2.0.0.",
+    "effects": [
+      {
+        "comp_name": "horilla-hr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.0)",
+            "min_fixed_version": "2.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-09-26",
+    "level": "High",
+    "mps_id": "MPS-iz0o-qb2c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-iz0o-qb2c",
+        "name": "https://www.oscs1024.com/hd/MPS-iz0o-qb2c"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96795",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96795"
+      },
+      {
+        "url": "https://github.com/horilla/horilla-hr/security/advisories/GHSA-5g4v-4rv4-r26f",
+        "name": "https://github.com/horilla/horilla-hr/security/advisories/GHSA-5g4v-4rv4-r26f"
+      },
+      {
+        "url": "https://github.com/horilla/horilla-hr/releases/tag/2.0.0",
+        "name": "https://github.com/horilla/horilla-hr/releases/tag/2.0.0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Horilla: Authenticated RCE in Horilla List-View Export"
+  },
+  "first_saved_at": "2026-09-25T23:54:07+00:00"
+}

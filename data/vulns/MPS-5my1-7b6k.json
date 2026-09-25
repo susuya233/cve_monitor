@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-25T23:54:12+00:00",
+  "saved_at": "2026-09-25T23:54:10+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-v2i0-n4el",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5my1-7b6k",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,29 +21,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-97818",
+    "cve_id": "CVE-2026-88003",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "cve@mitre.org",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.6
+          "base_score": 7.5
         }
       ]
     },
-    "cvss_score": 8.6,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "phpIPAM 到 1.8.3 对 api/controllers/User.php 中的 id==\"admins\" 和 id==\"all\" 的授权不正确。",
+    "description": "InvoicePlane 是一个自托管开源应用程序，用于管理发票、客户和付款。在 1.7.2 之前，InvoicePlane 在角色降级后无法撤销管理权限，因为 Admin_Controller 信任现有会话中存储的 user_type 快照，而不是重新验证 ip_users.user_type。当一名管理员降级另一帐户时，目标的活动会话将继续授权管理请求。降级的用户可以使用Users::form()将user_type设置回1，恢复数据库角色并使权限提升持续存在。此漏洞已在 1.7.2 中修复。",
     "effects": [
       {
-        "comp_name": "phpipam",
+        "comp_name": "InvoicePlane",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,1.8.3]",
-            "min_fixed_version": "",
+            "affected_version": "(-∞,1.7.2)",
+            "min_fixed_version": "1.7.2",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -59,27 +59,35 @@
     "fix_suggestion": "建议修复",
     "kind": "授权检查错误",
     "kind_en": "授权错误",
-    "last_modified_time": "2026-09-25",
+    "last_modified_time": "2026-09-26",
     "level": "High",
-    "mps_id": "MPS-v2i0-n4el",
+    "mps_id": "MPS-5my1-7b6k",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-25",
+    "published_time": "2026-09-26",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-v2i0-n4el",
-        "name": "https://www.oscs1024.com/hd/MPS-v2i0-n4el"
+        "url": "https://www.oscs1024.com/hd/MPS-5my1-7b6k",
+        "name": "https://www.oscs1024.com/hd/MPS-5my1-7b6k"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97818",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97818"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88003",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88003"
       },
       {
-        "url": "https://github.com/phpipam/phpipam/releases/tag/v1.8.3",
+        "url": "https://github.com/InvoicePlane/InvoicePlane/commit/904847f4e87b66fd6743cf9cc6f88b66c7fc3b81",
         "name": ""
       },
       {
-        "url": "https://github.com/phpipam/phpipam/blob/e8010751d491e485acefa5787fb0e518eb948771/api/controllers/User.php#L143-L146",
+        "url": "https://github.com/InvoicePlane/InvoicePlane/commit/daa49ce3a50e0c93e01459b69c0d61bfc23d23eb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/InvoicePlane/InvoicePlane/releases/tag/v1.7.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/InvoicePlane/InvoicePlane/security/advisories/GHSA-25xj-pj36-wpp8",
         "name": ""
       }
     ],
@@ -87,7 +95,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "CVE-2026-97818漏洞",
+    "title": "CVE-2026-88003 漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -107,29 +115,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-97818",
+    "cve_id": "CVE-2026-88003",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "cve@mitre.org",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.6
+          "base_score": 7.5
         }
       ]
     },
-    "cvss_score": 8.6,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "phpIPAM through 1.8.3 has incorrect authorization for id==\"admins\" and id==\"all\" in api/controllers/User.php.",
+    "description": "InvoicePlane is a self-hosted open source application for managing invoices, clients, and payments. Prior to 1.7.2, InvoicePlane fails to revoke administrative privileges after a role downgrade because Admin_Controller trusts the user_type snapshot stored in an existing session instead of revalidating ip_users.user_type. When one administrator downgrades another account, the target's active session continues to authorize administrative requests. The downgraded user can use Users::form() to set user_type back to 1, restoring the database role and making the privilege escalation persistent. This vulnerability is fixed in 1.7.2.",
     "effects": [
       {
-        "comp_name": "phpipam",
+        "comp_name": "InvoicePlane",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,1.8.3]",
-            "min_fixed_version": "",
+            "affected_version": "(-∞,1.7.2)",
+            "min_fixed_version": "1.7.2",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -145,27 +153,35 @@
     "fix_suggestion": "Recommend",
     "kind": "授权检查错误",
     "kind_en": "Incorrect Authorization",
-    "last_modified_time": "2026-09-25",
+    "last_modified_time": "2026-09-26",
     "level": "High",
-    "mps_id": "MPS-v2i0-n4el",
+    "mps_id": "MPS-5my1-7b6k",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-25",
+    "published_time": "2026-09-26",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-v2i0-n4el",
-        "name": "https://www.oscs1024.com/hd/MPS-v2i0-n4el"
+        "url": "https://www.oscs1024.com/hd/MPS-5my1-7b6k",
+        "name": "https://www.oscs1024.com/hd/MPS-5my1-7b6k"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97818",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97818"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88003",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88003"
       },
       {
-        "url": "https://github.com/phpipam/phpipam/releases/tag/v1.8.3",
+        "url": "https://github.com/InvoicePlane/InvoicePlane/commit/904847f4e87b66fd6743cf9cc6f88b66c7fc3b81",
         "name": ""
       },
       {
-        "url": "https://github.com/phpipam/phpipam/blob/e8010751d491e485acefa5787fb0e518eb948771/api/controllers/User.php#L143-L146",
+        "url": "https://github.com/InvoicePlane/InvoicePlane/commit/daa49ce3a50e0c93e01459b69c0d61bfc23d23eb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/InvoicePlane/InvoicePlane/releases/tag/v1.7.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/InvoicePlane/InvoicePlane/security/advisories/GHSA-25xj-pj36-wpp8",
         "name": ""
       }
     ],
@@ -173,7 +189,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "CVE-2026-97818漏洞"
+    "title": "CVE-2026-88003 漏洞"
   },
-  "first_saved_at": "2026-09-25T06:59:29+00:00"
+  "first_saved_at": "2026-09-25T23:54:10+00:00"
 }

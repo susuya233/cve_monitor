@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-25T23:54:12+00:00",
+  "saved_at": "2026-09-25T23:54:09+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-v2i0-n4el",
+  "source_page": "https://www.oscs1024.com/hd/MPS-253w-0boy",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,29 +21,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-97818",
+    "cve_id": "CVE-2026-57449",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "cve@mitre.org",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.6
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 8.6,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "phpIPAM 到 1.8.3 对 api/controllers/User.php 中的 id==\"admins\" 和 id==\"all\" 的授权不正确。",
+    "description": "Actual是本地首创的个人理财工具。在 26.7.0 之前，Actual Sync Server 的 CORS 代理旨在让经过身份验证的用户仅从官方插件白名单中列出的存储库获取资源。配置“ACTUAL_GITHUB_TOKEN”后，代理会自动将服务器的 GitHub 令牌附加到 GitHub 请求。 GitHub API 白名单检查对“/repos/{owner}/{repo}”使用原始“startsWith()”前缀测试，无需在存储库名称后添加路径边界。如果列入白名单的公共插件存储库是“https://github.com/acme/plugin”，则代理还接受 GitHub API URL。这些 URL 位于允许列表存储库之外，但仍然通过，因为它们的 API 路径以“/repos/acme/plugin”开头。然后，代理使用服务器的“ACTUAL_GITHUB_TOKEN”转发请求，允许任何经过身份验证的实际用户读取可通过该令牌访问的私有 GitHub 资源。版本 26.7.0 修复了该问题。",
     "effects": [
       {
-        "comp_name": "phpipam",
+        "comp_name": "actual",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,1.8.3]",
-            "min_fixed_version": "",
+            "affected_version": "(-∞,26.7.0)",
+            "min_fixed_version": "26.7.0",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -59,35 +59,31 @@
     "fix_suggestion": "建议修复",
     "kind": "授权检查错误",
     "kind_en": "授权错误",
-    "last_modified_time": "2026-09-25",
+    "last_modified_time": "2026-09-26",
     "level": "High",
-    "mps_id": "MPS-v2i0-n4el",
+    "mps_id": "MPS-253w-0boy",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-25",
+    "published_time": "2026-09-26",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-v2i0-n4el",
-        "name": "https://www.oscs1024.com/hd/MPS-v2i0-n4el"
+        "url": "https://www.oscs1024.com/hd/MPS-253w-0boy",
+        "name": "https://www.oscs1024.com/hd/MPS-253w-0boy"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97818",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97818"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-57449",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-57449"
       },
       {
-        "url": "https://github.com/phpipam/phpipam/releases/tag/v1.8.3",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/phpipam/phpipam/blob/e8010751d491e485acefa5787fb0e518eb948771/api/controllers/User.php#L143-L146",
-        "name": ""
+        "url": "https://github.com/actualbudget/actual/security/advisories/GHSA-m62c-5q34-f3cf",
+        "name": "https://github.com/actualbudget/actual/security/advisories/GHSA-m62c-5q34-f3cf"
       }
     ],
     "scope_influence": "",
     "tags": [
       "应用软件"
     ],
-    "title": "CVE-2026-97818漏洞",
+    "title": "CVE-2026-57449漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -107,29 +103,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-97818",
+    "cve_id": "CVE-2026-57449",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "cve@mitre.org",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.6
+          "base_score": 7.1
         }
       ]
     },
-    "cvss_score": 8.6,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-863",
-    "description": "phpIPAM through 1.8.3 has incorrect authorization for id==\"admins\" and id==\"all\" in api/controllers/User.php.",
+    "description": "Actual is a local-first personal finance tool. Prior to 26.7.0, Actual Sync Server's CORS proxy is intended to let authenticated users fetch resources only from repositories listed in the official plugin allowlist. When `ACTUAL_GITHUB_TOKEN` is configured, the proxy automatically attaches the server's GitHub token to GitHub requests. The GitHub API allowlist check uses a raw `startsWith()` prefix test for `/repos/{owner}/{repo}` without requiring a path boundary after the repository name. If an allowlisted public plugin repository is `https://github.com/acme/plugin`, the proxy also accepts GitHub API URLs. Those URLs are outside the allowlisted repository but still pass because their API path starts with `/repos/acme/plugin`. The proxy then forwards the request with the server's `ACTUAL_GITHUB_TOKEN`, allowing any authenticated Actual user to read private GitHub resources reachable by that token. Version 26.7.0 fixes the issue.",
     "effects": [
       {
-        "comp_name": "phpipam",
+        "comp_name": "actual",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,1.8.3]",
-            "min_fixed_version": "",
+            "affected_version": "(-∞,26.7.0)",
+            "min_fixed_version": "26.7.0",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -145,35 +141,31 @@
     "fix_suggestion": "Recommend",
     "kind": "授权检查错误",
     "kind_en": "Incorrect Authorization",
-    "last_modified_time": "2026-09-25",
+    "last_modified_time": "2026-09-26",
     "level": "High",
-    "mps_id": "MPS-v2i0-n4el",
+    "mps_id": "MPS-253w-0boy",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-25",
+    "published_time": "2026-09-26",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-v2i0-n4el",
-        "name": "https://www.oscs1024.com/hd/MPS-v2i0-n4el"
+        "url": "https://www.oscs1024.com/hd/MPS-253w-0boy",
+        "name": "https://www.oscs1024.com/hd/MPS-253w-0boy"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97818",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97818"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-57449",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-57449"
       },
       {
-        "url": "https://github.com/phpipam/phpipam/releases/tag/v1.8.3",
-        "name": ""
-      },
-      {
-        "url": "https://github.com/phpipam/phpipam/blob/e8010751d491e485acefa5787fb0e518eb948771/api/controllers/User.php#L143-L146",
-        "name": ""
+        "url": "https://github.com/actualbudget/actual/security/advisories/GHSA-m62c-5q34-f3cf",
+        "name": "https://github.com/actualbudget/actual/security/advisories/GHSA-m62c-5q34-f3cf"
       }
     ],
     "scope_influence": "",
     "tags": [
       "应用软件"
     ],
-    "title": "CVE-2026-97818漏洞"
+    "title": "CVE-2026-57449漏洞"
   },
-  "first_saved_at": "2026-09-25T06:59:29+00:00"
+  "first_saved_at": "2026-09-25T23:54:09+00:00"
 }
