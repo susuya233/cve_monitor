@@ -1,0 +1,241 @@
+{
+  "saved_at": "2026-09-25T20:59:18+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-s7er-u4xo",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能正确验证和过滤用户输入，将用户提供的数据直接用作操作系统命令的一部分。攻击者可以利用这个漏洞，通过注入恶意的操作系统命令来执行任意系统命令、获取敏感信息或者对系统进行未授权的操作。",
+        "title": "什么是OS命令注入"
+      },
+      {
+        "content": "- 命令拼接：应用程序将用户输入直接拼接到操作系统命令中，而不进行合适的过滤和验证。攻击者可以通过在输入中注入特殊字符、命令分隔符等，来执行额外的命令或修改原始命令的行为。\r\n- 命令注释：攻击者通过在输入中注入特殊字符或命令注释符号，如\"#\"或\"//\"，来注释掉原始命令中的一部分，然后执行自己的恶意命令。\r\n- 命令管道：攻击者通过在输入中注入管道符号\"|\"，将多个命令连接起来执行。这使得攻击者可以在单个注入点上执行多个命令，进一步扩大攻击的范围。",
+        "title": "OS命令注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对用户输入进行严格的验证和过滤，确保只接受预期的有效输入。可以使用白名单验证，限制用户输入的字符集和格式，防止特殊字符和命令注释符的注入。\r\n- 使用参数化命令或预编译语句：应该使用参数化命令或预编译语句，而不是将用户输入直接拼接到命令中。这样可以将输入数据视为参数，而不是命令的一部分，从而避免命令注入漏洞。\r\n- 最小特权原则：应用程序在执行操作系统命令时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。这样即使发生命令注入漏洞，攻击者的权限也会受到限制。\r\n- 安全编码实践：开发人员应避免使用不受信任的用户输入来拼接命令，并使用安全的编码实践，如输入验证、输出编码和参数化查询等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止命令注入攻击。",
+        "title": "如何预防OS命令注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100368",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-78",
+    "description": "CliInvoke 是一个用于调用命令行程序的 .NET 库，其“CliInvoke.Specializations”包为 PowerShell 和 Windows 命令提示符等 shell 提供了专门的包装器。 `CliInvoke.Specializations` 版本 2.2.0 到 2.8.4、2.9.0 到 2.9.3、2.10.0 到 2.10.4、3.0.0-alpha.1 到 3.0.0-alpha.4、3.0.0-alpha.8 到 3.0.0-alpha.10，以及“AlastairLundy.CliInvoke.Specializations”版本 1.0.0-rc.1 至 1.6.1.1 在其 PowerShell 和 Cmd 包装器中包含操作系统命令注入漏洞。包装器使用单个“ProcessStartInfo.Arguments”字符串将调用者控制的目标和参数传递给“pwsh -Command”或“cmd /c”，允许不受信任的输入中的双引号破坏操作系统级引用，并导致 shell 使用主机进程的权限执行附加命令。该漏洞已在“CliInvoke.Specializations”版本 2.8.5、2.9.4、2.10.5 和 3.0.0-beta.1 以及“AlastairLundy.CliInvoke.Specializations”版本 2.0.2 中修补。 No complete workaround is available;无法升级的用户应拒绝或删除目标路径和参数中的双引号，另外拒绝版本 2.2.0 到 2.9.2 以及 3.0.0-alpha.1 到 3.0.0-alpha.4 中的 shell 元字符，或者在处理不受信任的输入时绕过 PowerShell 和 Cmd 包装器并直接调用目标进程。",
+    "effects": [
+      {
+        "comp_name": "CliInvoke.Specializations",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.9.0,2.9.3]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0-alpha.8,3.0.0-alpha.10]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.2.0,2.8.4]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0-alpha.1,3.0.0-alpha.4]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.0.0-rc.1,1.6.1.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.10.0,2.10.4]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "OS命令注入",
+    "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
+    "last_modified_time": "2026-09-26",
+    "level": "High",
+    "mps_id": "MPS-s7er-u4xo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-s7er-u4xo",
+        "name": "https://www.oscs1024.com/hd/MPS-s7er-u4xo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100368",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100368"
+      },
+      {
+        "url": "https://github.com/alastairlundy/CliInvoke/security/advisories/GHSA-wrvw-254r-wpmv",
+        "name": "https://github.com/alastairlundy/CliInvoke/security/advisories/GHSA-wrvw-254r-wpmv"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CliInvoke.Specializations：PowerShell 和 Cmd shell 包装器中的命令注入",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能正确验证和过滤用户输入，将用户提供的数据直接用作操作系统命令的一部分。攻击者可以利用这个漏洞，通过注入恶意的操作系统命令来执行任意系统命令、获取敏感信息或者对系统进行未授权的操作。",
+        "title": "什么是OS命令注入"
+      },
+      {
+        "content": "- 命令拼接：应用程序将用户输入直接拼接到操作系统命令中，而不进行合适的过滤和验证。攻击者可以通过在输入中注入特殊字符、命令分隔符等，来执行额外的命令或修改原始命令的行为。\r\n- 命令注释：攻击者通过在输入中注入特殊字符或命令注释符号，如\"#\"或\"//\"，来注释掉原始命令中的一部分，然后执行自己的恶意命令。\r\n- 命令管道：攻击者通过在输入中注入管道符号\"|\"，将多个命令连接起来执行。这使得攻击者可以在单个注入点上执行多个命令，进一步扩大攻击的范围。",
+        "title": "OS命令注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对用户输入进行严格的验证和过滤，确保只接受预期的有效输入。可以使用白名单验证，限制用户输入的字符集和格式，防止特殊字符和命令注释符的注入。\r\n- 使用参数化命令或预编译语句：应该使用参数化命令或预编译语句，而不是将用户输入直接拼接到命令中。这样可以将输入数据视为参数，而不是命令的一部分，从而避免命令注入漏洞。\r\n- 最小特权原则：应用程序在执行操作系统命令时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。这样即使发生命令注入漏洞，攻击者的权限也会受到限制。\r\n- 安全编码实践：开发人员应避免使用不受信任的用户输入来拼接命令，并使用安全的编码实践，如输入验证、输出编码和参数化查询等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止命令注入攻击。",
+        "title": "如何预防OS命令注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100368",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-78",
+    "description": "CliInvoke is a .NET library for invoking command-line programs, and its `CliInvoke.Specializations` packages provide specialized wrappers for shells such as PowerShell and Windows Command Prompt. `CliInvoke.Specializations` versions 2.2.0 through 2.8.4, 2.9.0 through 2.9.3, 2.10.0 through 2.10.4, 3.0.0-alpha.1 through 3.0.0-alpha.4, and 3.0.0-alpha.8 through 3.0.0-alpha.10, as well as `AlastairLundy.CliInvoke.Specializations` versions 1.0.0-rc.1 through 1.6.1.1, contain an OS command injection vulnerability in their PowerShell and Cmd wrappers. The wrappers pass a caller-controlled target and arguments to `pwsh -Command` or `cmd /c` using a single `ProcessStartInfo.Arguments` string, allowing a double quote in untrusted input to break operating-system-level quoting and cause the shell to execute an additional command with the host process's privileges. The vulnerability is patched in `CliInvoke.Specializations` versions 2.8.5, 2.9.4, 2.10.5, and 3.0.0-beta.1, and in `AlastairLundy.CliInvoke.Specializations` version 2.0.2. No complete workaround is available; users unable to upgrade should reject or remove double quotes from target paths and arguments, additionally reject shell metacharacters in versions 2.2.0 through 2.9.2 and 3.0.0-alpha.1 through 3.0.0-alpha.4, or bypass the PowerShell and Cmd wrappers and invoke target processes directly when handling untrusted input.",
+    "effects": [
+      {
+        "comp_name": "CliInvoke.Specializations",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.9.0,2.9.3]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0-alpha.8,3.0.0-alpha.10]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.2.0,2.8.4]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0-alpha.1,3.0.0-alpha.4]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.0.0-rc.1,1.6.1.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.10.0,2.10.4]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "OS命令注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "last_modified_time": "2026-09-26",
+    "level": "High",
+    "mps_id": "MPS-s7er-u4xo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-s7er-u4xo",
+        "name": "https://www.oscs1024.com/hd/MPS-s7er-u4xo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100368",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100368"
+      },
+      {
+        "url": "https://github.com/alastairlundy/CliInvoke/security/advisories/GHSA-wrvw-254r-wpmv",
+        "name": "https://github.com/alastairlundy/CliInvoke/security/advisories/GHSA-wrvw-254r-wpmv"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CliInvoke.Specializations: Command injection in PowerShell and Cmd shell wrappers"
+  },
+  "first_saved_at": "2026-09-25T20:59:18+00:00"
+}
