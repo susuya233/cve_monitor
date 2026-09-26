@@ -1,0 +1,191 @@
+{
+  "saved_at": "2026-09-26T13:41:17+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2a7n-9ujd",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100709",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "VulnCheck",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "VulnCheck",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "",
+    "cwe": "CWE-287",
+    "description": "Froxlor 到 2.3.10 仅在记忆 2FA 令牌 (panel_2fa_tokens) 中存储数字用户 ID，而不记录帐户命名空间，并且登录期间记忆令牌查找不受客户或管理员帐户类型的限制。由于客户和管理员 ID 是从不同的命名空间分配的，因此合法颁发给具有给定 ID 的客户的记忆 2FA 令牌也会匹配具有相同 ID 的管理员。使用冲突 ID 控制客户帐户、为其持有有效的记住 2FA cookie 并且已经知道目标管理员密码的攻击者可以绕过管理员的 TOTP 第二因素并获得经过身份验证的管理员会话。这只是第二因素旁路；它不会破坏密码验证。已于 2.3.12 中修复。",
+    "effects": [
+      {
+        "comp_name": "froxlor",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.3.12)",
+            "min_fixed_version": "2.3.12",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "身份验证不当",
+    "kind_en": "认证不当",
+    "last_modified_time": "2026-09-26",
+    "level": "High",
+    "mps_id": "MPS-2a7n-9ujd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2a7n-9ujd",
+        "name": "https://www.oscs1024.com/hd/MPS-2a7n-9ujd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100709",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100709"
+      },
+      {
+        "url": "https://github.com/froxlor/froxlor/security/advisories/GHSA-9fq7-9w8p-c3qh",
+        "name": "GitHub Security Advisory (GHSA-9fq7-9w8p-c3qh)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/froxlor-before-2.3.12-2fa-bypass-via-namespace-confusion",
+        "name": "VulnCheck Advisory: Froxlor before 2.3.12 2FA Bypass via Namespace Confusion"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "2.3.12 之前的 Froxlor 通过命名空间混乱绕过 2FA",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100709",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "VulnCheck",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "VulnCheck",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "",
+    "cwe": "CWE-287",
+    "description": "Froxlor through 2.3.10 stores only a numeric user ID in remembered-2FA tokens (panel_2fa_tokens) without recording the account namespace, and the remembered-token lookup during login is not constrained to the customer or administrator account type. Because customer and administrator IDs are allocated from separate namespaces, a remembered-2FA token legitimately issued to a customer with a given ID also matches an administrator with the same ID. An attacker who controls a customer account with a colliding ID, holds a valid remembered-2FA cookie for it, and already knows the target administrator's password can bypass the administrator's TOTP second factor and obtain an authenticated administrator session. This is a second-factor bypass only; it does not defeat password authentication. Fixed in 2.3.12.",
+    "effects": [
+      {
+        "comp_name": "froxlor",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.3.12)",
+            "min_fixed_version": "2.3.12",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "身份验证不当",
+    "kind_en": "Improper Authentication",
+    "last_modified_time": "2026-09-26",
+    "level": "High",
+    "mps_id": "MPS-2a7n-9ujd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2a7n-9ujd",
+        "name": "https://www.oscs1024.com/hd/MPS-2a7n-9ujd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100709",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100709"
+      },
+      {
+        "url": "https://github.com/froxlor/froxlor/security/advisories/GHSA-9fq7-9w8p-c3qh",
+        "name": "GitHub Security Advisory (GHSA-9fq7-9w8p-c3qh)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/froxlor-before-2.3.12-2fa-bypass-via-namespace-confusion",
+        "name": "VulnCheck Advisory: Froxlor before 2.3.12 2FA Bypass via Namespace Confusion"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Froxlor before 2.3.12 2FA Bypass via Namespace Confusion"
+  },
+  "first_saved_at": "2026-09-26T13:41:17+00:00"
+}
