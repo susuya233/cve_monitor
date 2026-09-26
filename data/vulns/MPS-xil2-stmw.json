@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-09-26T17:34:39+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xil2-stmw",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100717",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:H/SC:L/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:H/SC:L/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-93",
+    "description": "froxlor 是一个服务器管理面板。在版本 2.3.10 及更早版本中，Validate::validateUrl 仅拒绝 parse_url 返回的路径、查询和片段组件中的回车符和换行符，并且从不检查 userinfo (user:pass@) 组件。这是 GHSA-c3p2 的不完整修复。具有子域创建权限（无需 admin 或 change_serversettings 权限）的经过身份验证的低权限客户可以提供在 userinfo 部分中携带 CR/LF 负载的子域重定向 URL（例如 http://user%0areturn 200 \"pwned\";%0a@evil.com/）。该值通过验证，在 IDNA 编码中幸存下来，并逐字写入生成的 nginx 或 Apache 虚拟主机配置中，从而允许攻击者突破发出的指令并注入任意 Web 服务器配置行。 froxlor 以 root 身份重新生成并重新加载 Web 服务器配置，因此注入的指令在服务器范围内生效，并且可以劫持响应或读取本地文件。该问题已在 2.3.12 版本中修复。",
+    "effects": [
+      {
+        "comp_name": "froxlor",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.3.12)",
+            "min_fixed_version": "2.3.12",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "CRLF注入",
+    "kind_en": "Improper Neutralization of CRLF Sequences ('CRLF Injection')",
+    "last_modified_time": "2026-09-26",
+    "level": "High",
+    "mps_id": "MPS-xil2-stmw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xil2-stmw",
+        "name": "https://www.oscs1024.com/hd/MPS-xil2-stmw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100717",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100717"
+      },
+      {
+        "url": "https://github.com/froxlor/froxlor/security/advisories/GHSA-gxx3-hwjc-h2gp",
+        "name": "GitHub Security Advisory (GHSA-gxx3-hwjc-h2gp)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/froxlor-before-2.3.12-crlf-injection-via-validateurl-userinfo",
+        "name": "VulnCheck Advisory: froxlor before 2.3.12 CRLF Injection via validateUrl userinfo"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "2.3.12 之前的 froxlor 通过 validateUrl userinfo 进行 CRLF 注入",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100717",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:H/SC:L/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:H/SC:L/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-93",
+    "description": "froxlor is a server administration panel. In versions 2.3.10 and earlier, Validate::validateUrl rejects carriage return and line feed characters only in the path, query and fragment components returned by parse_url, and never inspects the userinfo (user:pass@) components. This is an incomplete fix for GHSA-c3p2. An authenticated low-privilege customer with subdomain-create rights (no admin or change_serversettings privilege required) can supply a subdomain redirect URL that carries a CR/LF payload in the userinfo portion (e.g. http://user%0areturn 200 \"pwned\";%0a@evil.com/). The value passes validation, survives IDNA encoding, and is written verbatim into the generated nginx or Apache vhost configuration, allowing the attacker to break out of the emitted directive and inject arbitrary web-server configuration lines. froxlor regenerates and reloads the web-server configuration as root, so the injected directives take effect server-wide and can hijack responses or read local files. The issue is fixed in version 2.3.12.",
+    "effects": [
+      {
+        "comp_name": "froxlor",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.3.12)",
+            "min_fixed_version": "2.3.12",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "CRLF注入",
+    "kind_en": "Improper Neutralization of CRLF Sequences ('CRLF Injection')",
+    "last_modified_time": "2026-09-26",
+    "level": "High",
+    "mps_id": "MPS-xil2-stmw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xil2-stmw",
+        "name": "https://www.oscs1024.com/hd/MPS-xil2-stmw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100717",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100717"
+      },
+      {
+        "url": "https://github.com/froxlor/froxlor/security/advisories/GHSA-gxx3-hwjc-h2gp",
+        "name": "GitHub Security Advisory (GHSA-gxx3-hwjc-h2gp)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/froxlor-before-2.3.12-crlf-injection-via-validateurl-userinfo",
+        "name": "VulnCheck Advisory: froxlor before 2.3.12 CRLF Injection via validateUrl userinfo"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "froxlor before 2.3.12 CRLF Injection via validateUrl userinfo"
+  },
+  "first_saved_at": "2026-09-26T17:34:39+00:00"
+}
