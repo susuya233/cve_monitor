@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-09-27T09:43:48+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-x2rn-hmc9",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100741",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@gitlab.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-95",
+    "description": "hMailServer 是 Progressive Robot Ltd 开发的开源 Windows 邮件服务器，提供 SMTP、POP3 与 IMAP 邮件服务，支持以 VBScript 或 JScript 事件脚本扩展登录校验、投递与外部账户下载等服务器行为。\n受影响版本中，Events::FireOnClientValidatePassword 在 JScript 分支只把密码中的单引号替换为反斜杠加单引号，未处理作为 JScript 转义符的反斜杠，随后把密码以字符串字面量拼入事件调用文本 OnClientValidatePassword(HMAILSERVER_ACCOUNT, '%s') 交给脚本引擎解析。未认证的远程客户端对任一已存在且活跃的账号发起 SMTP AUTH、POP3 或 IMAP 登录，密码中成对出现的反斜杠先把自身转义、紧随的单引号闭合字面量，剩余部分作为语句在 hMailServer.exe 进程内以服务账号权限执行；默认 ScriptAllowedObjects 取值为 * 时可创建任意 COM 对象，WScript.Shell 等对象带来命令执行。\n修复版本中通过新增 ScriptServer::EscapeForJScriptLiteral 单趟转义解决该问题，先转义反斜杠再统一处理单引号、双引号、回车、换行、U+2028、U+2029 与 NUL，FireOnClientValidatePassword、FireOnDeliveryFailed 与 FireOnExternalAccountDownload 的 JScript 分支统一改用该转义，FireEvent 同步拒绝非合法标识符的规则函数名，事件值无法再闭合字符串字面量或注入语句。",
+    "effects": [
+      {
+        "comp_name": "hmailserver",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.0.0,6.3.4)",
+            "min_fixed_version": "6.3.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "eval注入",
+    "kind_en": "动态评估代码中指令的不当中和（“评估注入”）",
+    "last_modified_time": "2026-09-27",
+    "level": "Critical",
+    "mps_id": "MPS-x2rn-hmc9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-x2rn-hmc9",
+        "name": "https://www.oscs1024.com/hd/MPS-x2rn-hmc9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100741",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100741"
+      },
+      {
+        "url": "https://gitlab.com/Progressiverobot/hmailserver/-/commit/5a3de9001d6c5e833662ada8e44ce10d42d76b1a",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.com/Progressiverobot/hmailserver/-/releases/v6.3.4",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "hMailServer脚本注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100741",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@gitlab.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-95",
+    "description": "hMailServer 是 Progressive Robot Ltd 开发的开源 Windows 邮件服务器，提供 SMTP、POP3 与 IMAP 邮件服务，支持以 VBScript 或 JScript 事件脚本扩展登录校验、投递与外部账户下载等服务器行为。\n受影响版本中，Events::FireOnClientValidatePassword 在 JScript 分支只把密码中的单引号替换为反斜杠加单引号，未处理作为 JScript 转义符的反斜杠，随后把密码以字符串字面量拼入事件调用文本 OnClientValidatePassword(HMAILSERVER_ACCOUNT, '%s') 交给脚本引擎解析。未认证的远程客户端对任一已存在且活跃的账号发起 SMTP AUTH、POP3 或 IMAP 登录，密码中成对出现的反斜杠先把自身转义、紧随的单引号闭合字面量，剩余部分作为语句在 hMailServer.exe 进程内以服务账号权限执行；默认 ScriptAllowedObjects 取值为 * 时可创建任意 COM 对象，WScript.Shell 等对象带来命令执行。\n修复版本中通过新增 ScriptServer::EscapeForJScriptLiteral 单趟转义解决该问题，先转义反斜杠再统一处理单引号、双引号、回车、换行、U+2028、U+2029 与 NUL，FireOnClientValidatePassword、FireOnDeliveryFailed 与 FireOnExternalAccountDownload 的 JScript 分支统一改用该转义，FireEvent 同步拒绝非合法标识符的规则函数名，事件值无法再闭合字符串字面量或注入语句。",
+    "effects": [
+      {
+        "comp_name": "hmailserver",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.0.0,6.3.4)",
+            "min_fixed_version": "6.3.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "eval注入",
+    "kind_en": "Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection')",
+    "last_modified_time": "2026-09-27",
+    "level": "Critical",
+    "mps_id": "MPS-x2rn-hmc9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-x2rn-hmc9",
+        "name": "https://www.oscs1024.com/hd/MPS-x2rn-hmc9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100741",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100741"
+      },
+      {
+        "url": "https://gitlab.com/Progressiverobot/hmailserver/-/commit/5a3de9001d6c5e833662ada8e44ce10d42d76b1a",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.com/Progressiverobot/hmailserver/-/releases/v6.3.4",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "hMailServer脚本注入漏洞"
+  },
+  "first_saved_at": "2026-09-27T09:43:48+00:00"
+}
