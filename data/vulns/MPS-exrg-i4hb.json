@@ -1,0 +1,257 @@
+{
+  "saved_at": "2026-09-27T14:56:43+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-exrg-i4hb",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100872",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-345",
+    "description": "Sylius 是一个基于 Symfony 的开源 PHP 电商框架，以 MIT 许可证发布，通过 composer 包 sylius/sylius 分发，提供购物车、结账、订单与支付网关集成等核心电商能力。\n受影响版本中，OrderPaymentProcessor::process() 在每次购物车重算时取出目标状态的最近一笔支付，并无条件用订单当前总额与币种覆盖其金额，期间不检查该支付是否已被网关领取，即是否关联处于 capture/authorize 动作且非 new、failed、cancelled 状态的 PaymentRequest；未登录访客先对小额订单发起支付，在网关交易启动后通过购物车接口扩大订单总额，被网关领取的支付金额被改写为放大后的订单总额，网关实际仅按原始小额扣款，支付成功结果上报后系统按放大总额将订单标记为已支付。\n修复版本中通过新增 ClaimedByGatewayCheckerTrait 识别已被网关领取的支付：process() 对这类支付不再改写金额与币种，金额与币种和订单一致时直接跳过，不一致时改为提供一笔全新支付；OrderPaymentsRemover::removePayments() 同步排除被网关领取的 cart 状态支付，防止其被误删，切断了订单扩大后金额覆盖的利用链。",
+    "effects": [
+      {
+        "comp_name": "sylius",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.2.0,2.2.9)",
+            "min_fixed_version": "2.2.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0,2.1.16)",
+            "min_fixed_version": "2.1.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "sylius/sylius",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.1.16)",
+            "min_fixed_version": "2.1.16",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.2.0,2.2.9)",
+            "min_fixed_version": "2.2.9",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对数据真实性的验证不充分",
+    "kind_en": "数据真实性验证不足",
+    "last_modified_time": "2026-09-27",
+    "level": "High",
+    "mps_id": "MPS-exrg-i4hb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-exrg-i4hb",
+        "name": "https://www.oscs1024.com/hd/MPS-exrg-i4hb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100872",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100872"
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/commit/9e9aeaacbc97b1fc01d573e44d6679194527905d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/pull/19216",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/releases/tag/v2.2.9",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/security/advisories/GHSA-vv4h-q2x8-74g4",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/sylius-2-x-before-2.1.16-and-2.2.9-payment-amount-overwrite",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Sylius 支付金额篡改漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100872",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-345",
+    "description": "Sylius 是一个基于 Symfony 的开源 PHP 电商框架，以 MIT 许可证发布，通过 composer 包 sylius/sylius 分发，提供购物车、结账、订单与支付网关集成等核心电商能力。\n受影响版本中，OrderPaymentProcessor::process() 在每次购物车重算时取出目标状态的最近一笔支付，并无条件用订单当前总额与币种覆盖其金额，期间不检查该支付是否已被网关领取，即是否关联处于 capture/authorize 动作且非 new、failed、cancelled 状态的 PaymentRequest；未登录访客先对小额订单发起支付，在网关交易启动后通过购物车接口扩大订单总额，被网关领取的支付金额被改写为放大后的订单总额，网关实际仅按原始小额扣款，支付成功结果上报后系统按放大总额将订单标记为已支付。\n修复版本中通过新增 ClaimedByGatewayCheckerTrait 识别已被网关领取的支付：process() 对这类支付不再改写金额与币种，金额与币种和订单一致时直接跳过，不一致时改为提供一笔全新支付；OrderPaymentsRemover::removePayments() 同步排除被网关领取的 cart 状态支付，防止其被误删，切断了订单扩大后金额覆盖的利用链。",
+    "effects": [
+      {
+        "comp_name": "sylius",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.2.0,2.2.9)",
+            "min_fixed_version": "2.2.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0,2.1.16)",
+            "min_fixed_version": "2.1.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "sylius/sylius",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.1.16)",
+            "min_fixed_version": "2.1.16",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.2.0,2.2.9)",
+            "min_fixed_version": "2.2.9",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对数据真实性的验证不充分",
+    "kind_en": "Insufficient Verification of Data Authenticity",
+    "last_modified_time": "2026-09-27",
+    "level": "High",
+    "mps_id": "MPS-exrg-i4hb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-exrg-i4hb",
+        "name": "https://www.oscs1024.com/hd/MPS-exrg-i4hb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100872",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100872"
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/commit/9e9aeaacbc97b1fc01d573e44d6679194527905d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/pull/19216",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/releases/tag/v2.2.9",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/security/advisories/GHSA-vv4h-q2x8-74g4",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/sylius-2-x-before-2.1.16-and-2.2.9-payment-amount-overwrite",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Sylius 支付金额篡改漏洞"
+  },
+  "first_saved_at": "2026-09-27T14:56:43+00:00"
+}

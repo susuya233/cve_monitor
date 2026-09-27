@@ -1,0 +1,143 @@
+{
+  "saved_at": "2026-09-27T14:56:47+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-09f4-8cf8",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82379",
+    "cvss": {},
+    "cvss_score": 7.7,
+    "cvss_vector": "",
+    "cwe": "CWE-294",
+    "description": "Apache Roller 是 Apache 软件基金会开源的 Java 博客服务器，用于搭建多用户博客站点，支持通过 AtomPub 协议远程发布和管理内容。\n受影响版本中，管理员将 webservices.atomPubAuth 配置为 wsse 且密码以明文兼容方式存储时，AtomPub 请求由 RollerAtomHandler 构造函数分发给 authenticateWSSE 处理，该方法解析请求头 X-WSSE 中的 UsernameToken、Nonce、Created 与 PasswordDigest，按 SHA-1(Nonce + Created + 用户密码) 计算摘要并做字符串比对，全程不记录已用 Nonce、不校验 Created 时间新鲜度，攻击者重放一次捕获的有效 WSSE 认证头即可反复通过认证，获得受害者的 AtomPub 操作权限。\n修复版本中通过移除 WSSE 认证模式解决该问题：认证分发仅接受 basic 与 oauth，删除 authenticateWSSE 方法及 WSSEUtilities 工具类，残留的 webservices.atomPubAuth=wsse 等不支持的取值按认证失败处理且不再回退到 Basic 认证，重放利用链随 WSSE 入口的删除被切断。",
+    "effects": [
+      {
+        "comp_name": "roller",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.1.6)",
+            "min_fixed_version": "6.1.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用捕获-重放进行的认证绕过",
+    "kind_en": "通过捕获重放绕过身份验证",
+    "last_modified_time": "2026-09-27",
+    "level": "High",
+    "mps_id": "MPS-09f4-8cf8",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-27",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12027.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/roller/pull/166",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/roller/commit/2bffdea23b08b31265eaf3d43c382ea6907049e9",
+        "name": ""
+      },
+      {
+        "url": "https://roller.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-82379",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Apache Roller WSSE认证重放漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82379",
+    "cvss": {},
+    "cvss_score": 7.7,
+    "cvss_vector": "",
+    "cwe": "CWE-294",
+    "description": "Apache Roller 是 Apache 软件基金会开源的 Java 博客服务器，用于搭建多用户博客站点，支持通过 AtomPub 协议远程发布和管理内容。\n受影响版本中，管理员将 webservices.atomPubAuth 配置为 wsse 且密码以明文兼容方式存储时，AtomPub 请求由 RollerAtomHandler 构造函数分发给 authenticateWSSE 处理，该方法解析请求头 X-WSSE 中的 UsernameToken、Nonce、Created 与 PasswordDigest，按 SHA-1(Nonce + Created + 用户密码) 计算摘要并做字符串比对，全程不记录已用 Nonce、不校验 Created 时间新鲜度，攻击者重放一次捕获的有效 WSSE 认证头即可反复通过认证，获得受害者的 AtomPub 操作权限。\n修复版本中通过移除 WSSE 认证模式解决该问题：认证分发仅接受 basic 与 oauth，删除 authenticateWSSE 方法及 WSSEUtilities 工具类，残留的 webservices.atomPubAuth=wsse 等不支持的取值按认证失败处理且不再回退到 Basic 认证，重放利用链随 WSSE 入口的删除被切断。",
+    "effects": [
+      {
+        "comp_name": "roller",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.1.6)",
+            "min_fixed_version": "6.1.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用捕获-重放进行的认证绕过",
+    "kind_en": "Authentication Bypass by Capture-replay",
+    "last_modified_time": "2026-09-27",
+    "level": "High",
+    "mps_id": "MPS-09f4-8cf8",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-27",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12027.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/roller/pull/166",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/roller/commit/2bffdea23b08b31265eaf3d43c382ea6907049e9",
+        "name": ""
+      },
+      {
+        "url": "https://roller.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-82379",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Apache Roller WSSE认证重放漏洞"
+  },
+  "first_saved_at": "2026-09-27T14:56:47+00:00"
+}

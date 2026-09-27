@@ -1,0 +1,259 @@
+{
+  "saved_at": "2026-09-27T14:56:42+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-h6iz-u4dm",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100870",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-640",
+    "description": "Sylius 是一个基于 Symfony 框架的开源 PHP 电商平台，提供商城前台、管理后台与 API，用于构建电商站点。\n受影响版本中，管理员密码重置邮件内的链接由 Twig 模板中的 url() 函数基于当前请求生成，Symfony 从请求的 Host 头（可信代理场景下为 X-Forwarded-Host）推导链接的协议与域名，应用默认未通过 framework.trusted_hosts 限制可接受的 Host。攻击者在获知管理员邮箱后，向管理端 /admin/forgotten-password 表单或 POST /api/v2/admin/administrators/reset-password 接口发送携带伪造 Host 头的未认证请求，重置邮件中的链接即指向攻击者控制的域名；管理员点击该链接后，有效的重置 token 被传送到攻击者服务器，攻击者可在真实站点上设置新密码并接管管理员账户。\n修复版本中通过在 ResetPasswordEmailManager 中新增 generateAdminResetPasswordUrl() 方法，改用数据库中当前渠道配置的 hostname 在 PHP 侧拼接协议前缀，并以 ABSOLUTE_PATH 模式仅用路由生成器生成路径部分；渠道解析失败、渠道未配置 hostname 或管理端路由不存在时返回 null，邮件模板回退为展示裸重置 token，链接生成不再依赖请求 Host 头，从而阻断密码重置链接投毒。",
+    "effects": [
+      {
+        "comp_name": "sylius/sylius",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[1.12.0,1.12.25)",
+            "min_fixed_version": "1.12.25",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.2.0,2.2.9)",
+            "min_fixed_version": "2.2.9",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0,2.1.16)",
+            "min_fixed_version": "2.1.16",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.13.0,1.13.17)",
+            "min_fixed_version": "1.13.17",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.14.0,1.14.20)",
+            "min_fixed_version": "1.14.20",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "忘记口令恢复机制弱",
+    "kind_en": "忘记密码的弱密码恢复机制",
+    "last_modified_time": "2026-09-27",
+    "level": "High",
+    "mps_id": "MPS-h6iz-u4dm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-h6iz-u4dm",
+        "name": "https://www.oscs1024.com/hd/MPS-h6iz-u4dm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100870",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100870"
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/commit/1255d75b20d3d88a5e5c8d46791504134c838480",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/pull/19215",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/releases/tag/v2.2.9",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/security/advisories/GHSA-77w3-2367-7xvq",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/sylius-before-1.12.25-1.13.17-1.14.20-2.1.16-and-2.2.9-admin-password-reset-poisoning-via-host-header",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Sylius 密码重置链接投毒漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100870",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-640",
+    "description": "Sylius 是一个基于 Symfony 框架的开源 PHP 电商平台，提供商城前台、管理后台与 API，用于构建电商站点。\n受影响版本中，管理员密码重置邮件内的链接由 Twig 模板中的 url() 函数基于当前请求生成，Symfony 从请求的 Host 头（可信代理场景下为 X-Forwarded-Host）推导链接的协议与域名，应用默认未通过 framework.trusted_hosts 限制可接受的 Host。攻击者在获知管理员邮箱后，向管理端 /admin/forgotten-password 表单或 POST /api/v2/admin/administrators/reset-password 接口发送携带伪造 Host 头的未认证请求，重置邮件中的链接即指向攻击者控制的域名；管理员点击该链接后，有效的重置 token 被传送到攻击者服务器，攻击者可在真实站点上设置新密码并接管管理员账户。\n修复版本中通过在 ResetPasswordEmailManager 中新增 generateAdminResetPasswordUrl() 方法，改用数据库中当前渠道配置的 hostname 在 PHP 侧拼接协议前缀，并以 ABSOLUTE_PATH 模式仅用路由生成器生成路径部分；渠道解析失败、渠道未配置 hostname 或管理端路由不存在时返回 null，邮件模板回退为展示裸重置 token，链接生成不再依赖请求 Host 头，从而阻断密码重置链接投毒。",
+    "effects": [
+      {
+        "comp_name": "sylius/sylius",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[1.12.0,1.12.25)",
+            "min_fixed_version": "1.12.25",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.2.0,2.2.9)",
+            "min_fixed_version": "2.2.9",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.0.0,2.1.16)",
+            "min_fixed_version": "2.1.16",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.13.0,1.13.17)",
+            "min_fixed_version": "1.13.17",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.14.0,1.14.20)",
+            "min_fixed_version": "1.14.20",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "忘记口令恢复机制弱",
+    "kind_en": "Weak Password Recovery Mechanism for Forgotten Password",
+    "last_modified_time": "2026-09-27",
+    "level": "High",
+    "mps_id": "MPS-h6iz-u4dm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-h6iz-u4dm",
+        "name": "https://www.oscs1024.com/hd/MPS-h6iz-u4dm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100870",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100870"
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/commit/1255d75b20d3d88a5e5c8d46791504134c838480",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/pull/19215",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/releases/tag/v2.2.9",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Sylius/Sylius/security/advisories/GHSA-77w3-2367-7xvq",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/sylius-before-1.12.25-1.13.17-1.14.20-2.1.16-and-2.2.9-admin-password-reset-poisoning-via-host-header",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Sylius 密码重置链接投毒漏洞"
+  },
+  "first_saved_at": "2026-09-27T14:56:42+00:00"
+}
