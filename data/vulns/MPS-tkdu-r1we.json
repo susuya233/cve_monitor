@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-09-27T18:53:37+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-tkdu-r1we",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-101058",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:L/A:N",
+          "severity": "medium",
+          "base_score": 6.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "utcp-http 是 universal-tool-calling-protocol/python-utcp 项目的开源 Python 插件（PyPI 包名 utcp-http），实现 Universal Tool Calling Protocol 的 HTTP、SSE 和 Streamable HTTP 工具发现与调用传输，属于 AI 代理工具调用基础设施组件。\n受影响版本中，HttpCommunicationProtocol、SseCommunicationProtocol 和 StreamableHttpCommunicationProtocol 的 register_manual 方法在从远程非环回源发现手写 UTCP manual 时，仅通过 ensure_secure_url 校验发现 URL，该函数为支持本地开发默认放行明文 HTTP 环回地址，而原生 manual 不经过 OpenAPI 转换器的环回检查，manual 内各工具 call_template 的 URL 未与发现源比对。攻击者诱导受害者注册指向其所控 HTTPS 源的 manual 后，可在 manual 中声明指向 127.0.0.1 的工具 URL，客户端后续调用该工具时 ensure_secure_url 同样放行环回地址，请求发往受害者主机仅监听环回接口的服务并将响应体返回调用方，形成服务器端请求伪造。\n修复版本中通过新增 reject_remote_loopback_tool_urls 校验解决该问题，http、sse 和 streamable_http 三种协议的 register_manual 在解析出 manual 后调用该函数，发现源为非环回地址而 manual 中存在环回工具 URL 时抛出 ValueError 拒绝注册，环回源发现的 manual 保留本地开发豁免，utcp-http 1.1.12 起生效。",
+    "effects": [
+      {
+        "comp_name": "utcp-http",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.1.12)",
+            "min_fixed_version": "1.1.12",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-09-28",
+    "level": "High",
+    "mps_id": "MPS-tkdu-r1we",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tkdu-r1we",
+        "name": "https://www.oscs1024.com/hd/MPS-tkdu-r1we"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-101058",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-101058"
+      },
+      {
+        "url": "https://github.com/universal-tool-calling-protocol/python-utcp/security/advisories/GHSA-8vxx-v7r9-948g",
+        "name": "GitHub Security Advisory (GHSA-8vxx-v7r9-948g)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/python-utcp-before-1.1.12-ssrf-via-remote-http-manual",
+        "name": "VulnCheck Advisory: python-utcp before 1.1.12 SSRF via Remote HTTP Manual"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "utcp-http SSRF漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-101058",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:L/A:N",
+          "severity": "medium",
+          "base_score": 6.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "utcp-http 是 universal-tool-calling-protocol/python-utcp 项目的开源 Python 插件（PyPI 包名 utcp-http），实现 Universal Tool Calling Protocol 的 HTTP、SSE 和 Streamable HTTP 工具发现与调用传输，属于 AI 代理工具调用基础设施组件。\n受影响版本中，HttpCommunicationProtocol、SseCommunicationProtocol 和 StreamableHttpCommunicationProtocol 的 register_manual 方法在从远程非环回源发现手写 UTCP manual 时，仅通过 ensure_secure_url 校验发现 URL，该函数为支持本地开发默认放行明文 HTTP 环回地址，而原生 manual 不经过 OpenAPI 转换器的环回检查，manual 内各工具 call_template 的 URL 未与发现源比对。攻击者诱导受害者注册指向其所控 HTTPS 源的 manual 后，可在 manual 中声明指向 127.0.0.1 的工具 URL，客户端后续调用该工具时 ensure_secure_url 同样放行环回地址，请求发往受害者主机仅监听环回接口的服务并将响应体返回调用方，形成服务器端请求伪造。\n修复版本中通过新增 reject_remote_loopback_tool_urls 校验解决该问题，http、sse 和 streamable_http 三种协议的 register_manual 在解析出 manual 后调用该函数，发现源为非环回地址而 manual 中存在环回工具 URL 时抛出 ValueError 拒绝注册，环回源发现的 manual 保留本地开发豁免，utcp-http 1.1.12 起生效。",
+    "effects": [
+      {
+        "comp_name": "utcp-http",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.1.12)",
+            "min_fixed_version": "1.1.12",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-09-28",
+    "level": "High",
+    "mps_id": "MPS-tkdu-r1we",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tkdu-r1we",
+        "name": "https://www.oscs1024.com/hd/MPS-tkdu-r1we"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-101058",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-101058"
+      },
+      {
+        "url": "https://github.com/universal-tool-calling-protocol/python-utcp/security/advisories/GHSA-8vxx-v7r9-948g",
+        "name": "GitHub Security Advisory (GHSA-8vxx-v7r9-948g)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/python-utcp-before-1.1.12-ssrf-via-remote-http-manual",
+        "name": "VulnCheck Advisory: python-utcp before 1.1.12 SSRF via Remote HTTP Manual"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "utcp-http SSRF漏洞"
+  },
+  "first_saved_at": "2026-09-27T18:53:37+00:00"
+}

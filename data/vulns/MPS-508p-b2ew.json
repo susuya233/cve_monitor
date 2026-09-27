@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-09-27T18:53:35+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-508p-b2ew",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-101060",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "utcp-http 是开源 Python 包，属于 Universal Tool Calling Protocol（UTCP）的 HTTP 通信插件，用于按调用模板访问 HTTP、SSE 和可流式 HTTP 工具端点，服务于智能体工具调用。\n受影响版本中，HttpCommunicationProtocol.call_tool 仅对路径参数替换后的初始工具 URL 执行 ensure_secure_url，随后使用 aiohttp 默认跟随重定向发出请求，不再校验 Location 指向的地址。攻击者控制的工具端点可返回 302，把客户端请求引向云元数据接口或内网 HTTP 服务，并使响应体返回给调用方。\n修复版本中通过 safe_request_with_redirects 关闭自动重定向，在每一跳 Location 上重新执行 ensure_secure_url，并将跳转上限限制为 5 次；call_tool 改为经该函数发请求，未通过校验的重定向目标不再被访问。",
+    "effects": [
+      {
+        "comp_name": "utcp-http",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.1.4)",
+            "min_fixed_version": "1.1.4",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-09-28",
+    "level": "High",
+    "mps_id": "MPS-508p-b2ew",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-508p-b2ew",
+        "name": "https://www.oscs1024.com/hd/MPS-508p-b2ew"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-101060",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-101060"
+      },
+      {
+        "url": "https://github.com/universal-tool-calling-protocol/python-utcp/security/advisories/GHSA-9qhg-99ww-9mqc",
+        "name": "GitHub Security Advisory (GHSA-9qhg-99ww-9mqc)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/python-utcp-before-1.1.4-ssrf-via-unvalidated-http-redirects",
+        "name": "VulnCheck Advisory: python-utcp before 1.1.4 SSRF via unvalidated HTTP redirects"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "utcp-http重定向SSRF",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-101060",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "utcp-http 是开源 Python 包，属于 Universal Tool Calling Protocol（UTCP）的 HTTP 通信插件，用于按调用模板访问 HTTP、SSE 和可流式 HTTP 工具端点，服务于智能体工具调用。\n受影响版本中，HttpCommunicationProtocol.call_tool 仅对路径参数替换后的初始工具 URL 执行 ensure_secure_url，随后使用 aiohttp 默认跟随重定向发出请求，不再校验 Location 指向的地址。攻击者控制的工具端点可返回 302，把客户端请求引向云元数据接口或内网 HTTP 服务，并使响应体返回给调用方。\n修复版本中通过 safe_request_with_redirects 关闭自动重定向，在每一跳 Location 上重新执行 ensure_secure_url，并将跳转上限限制为 5 次；call_tool 改为经该函数发请求，未通过校验的重定向目标不再被访问。",
+    "effects": [
+      {
+        "comp_name": "utcp-http",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.1.4)",
+            "min_fixed_version": "1.1.4",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-09-28",
+    "level": "High",
+    "mps_id": "MPS-508p-b2ew",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-508p-b2ew",
+        "name": "https://www.oscs1024.com/hd/MPS-508p-b2ew"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-101060",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-101060"
+      },
+      {
+        "url": "https://github.com/universal-tool-calling-protocol/python-utcp/security/advisories/GHSA-9qhg-99ww-9mqc",
+        "name": "GitHub Security Advisory (GHSA-9qhg-99ww-9mqc)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/python-utcp-before-1.1.4-ssrf-via-unvalidated-http-redirects",
+        "name": "VulnCheck Advisory: python-utcp before 1.1.4 SSRF via unvalidated HTTP redirects"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "utcp-http重定向SSRF"
+  },
+  "first_saved_at": "2026-09-27T18:53:35+00:00"
+}
