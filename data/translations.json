@@ -1953,5 +1953,17 @@
   "7594f2c81b7c62d64f83ecfef25f1cb6f17559e8": "CVE-2026-77203漏洞",
   "de1026df1c733159731ea6aaf18d69f95ed83ebe": "WordPress 的群组 - 会员资格和访问控制插件在 4.6.0 及之前的所有版本中都容易受到权限升级的影响。这是因为 groups_join() 函数通过全局 $post->post_author 从环境帖子的作者能力中派生出组加入资格，而不是从当前经过身份验证的用户自己的能力中得出组加入资格，同时在同一响应中为调用者创建并返回有效的组加入数据哈希和 WordPress 随机数 - 消除了自我注册的所有授权障碍。这使得具有订阅者级别及以上访问权限的经过身份验证的攻击者可以将自己注册到任何组中，包括具有 groups_admin_groups 功能的特权组，并随后创建并加入包含每个已注册 WordPress 功能的组，从而有效地将其权限升级为管理员。利用该漏洞需要攻击者通过经过身份验证的 wp_ajax_parse_media_shortcode 处理程序的 post_ID 参数提供管理员编写的帖子 ID，以便建立有缺陷的授权检查所使用的特权环境帖子上下文。",
   "1e54a38444840dcaae14a930e612cd2af9d92768": "CVE-2026-72668漏洞",
-  "5430f563912ad03a4c8c1d01020592e76a0a3ccc": "Kibana Agent Builder 中的意外代理或中介（“混乱代理”）(CWE-441) 可能会导致权限升级。能够编辑共享代理的非管理用户可能会导致以随后与该代理交互的更高特权用户的身份执行特权操作。同一用户还可以编写工作流程，这可以扩展到对 Kibana 和 Elasticsearch 集群的完全管理控制。"
+  "5430f563912ad03a4c8c1d01020592e76a0a3ccc": "Kibana Agent Builder 中的意外代理或中介（“混乱代理”）(CWE-441) 可能会导致权限升级。能够编辑共享代理的非管理用户可能会导致以随后与该代理交互的更高特权用户的身份执行特权操作。同一用户还可以编写工作流程，这可以扩展到对 Kibana 和 Elasticsearch 集群的完全管理控制。",
+  "8f0cb49452804946f1114de8e646b189c70aa76f": "0.0.91 之前的 heym 通过表达式引擎远程执行代码",
+  "786f815220f14da3890d4314f28f0ba26934767c": "0.0.91 之前的 heym 在表达式引擎的 DotList 映射/过滤器和回退解析器中包含沙箱逃逸漏洞，允许经过身份验证的用户执行任意 Python 代码。攻击者可以通过项目表达式或回退解析器使用 dunder 属性访问来制作工作流表达式，以访问 os.system 并作为后端进程执行命令。",
+  "6517cc0da808d8e758e3d6e639e657d7e37a13fd": "Heym 0.0.53 之前的多个 RCE 和身份验证绕过漏洞",
+  "c4b2e8b8c5325e5469657185e02dbc91b980f7f5": "Heym 0.0.53 之前版本包含多个独立漏洞。 (1)工作流条件评估器使用Python eval()，没有有效的沙箱，允许任何可以编辑工作流分支/条件节点的用户——或者可以导入包含恶意条件节点的工作流模板的用户——在工作流运行时作为后端进程用户执行任意Python代码。当触发节点没有 credentialId 或空签名密钥时，(2) Slack Webhook 签名验证和 (3) Telegram Webhook 秘密令牌验证失败，允许任何知道公共 Webhook URL 的人无需身份验证即可使用所有者的凭据触发工作流。 (4) OAuth授权端点不会验证redirect_uri方案，因此使用javascript:或data:redirect_uri注册公共OAuth客户端并将受害者引诱到同意屏幕的攻击者会收到授权代码并在Heym源中执行攻击者控制的JavaScript，包括访问受害者的HttpOnly auth cookie。 (5) WorkflowExecutionToken、PortalSession、HITLRequest.public_token 和 OAuthAuthorizationCode 值以明文形式存储，因此任何数据库读取暴露都会产生有效范围的承载令牌，包括具有 168 小时 TTL 的门户和 HITL 令牌，允许代表所有者执行工作流。",
+  "2dc4062d6e79b4a5d68a9e7058fd12deee314564": "Heym 0.0.106 之前通过 URL 覆盖进行凭据泄露",
+  "bfd54673cf867c2ef2439432c1d85a0f396433da": "Heym before 0.0.106 contains a credential exfiltration vulnerability in the POST /api/credentials/test endpoint that allows collaborators with shared credential access to exfiltrate the credential owner's secret. Attackers can override the destination URL in the config parameter to cause the server to send decrypted authentication secrets to attacker-controlled endpoints.",
+  "ba1af7bc5313d53fbcb2c1306895bc913e250415": "0.0.109 之前的 heym 通过工作流节点进行服务器端请求伪造",
+  "097cb301a7b5106eeaafff07e630bbd5926ff1d8": "0.0.109 之前的 heym 在 Slack、Discord 和 Crawler 工作流节点中包含服务器端请求伪造漏洞。这些节点使用不受保护的 HTTP 客户端向从用户创建的凭据 (webhook_url /flaresolverr_url) 获取的 URL 发出 HTTP 请求，绕过已经保护 HTTP、WebSocket 和 MCP 节点的 SSRF 出口防护；凭证 API 仅验证 URL 非空。任何注册用户都可以创建指向内部地址的凭证并执行工作流，从而使后端到达环回、私有、链接本地或云元数据端点，并在节点输出中返回完整的响应正文（非盲 SSRF）。",
+  "4110de8c8f6f10232e3421b427a2da02b194dd3e": "0.23.4 之前的 AzuraCast 通过 Liquidsoap 字符串插值远程执行代码",
+  "bb4f6c6b2221fce43b4f39f4d031d917df542398": "0.23.4 之前的 AzuraCast 在 ConfigWriter::cleanUpString() 方法中包含一个代码注入漏洞，该漏洞无法清理 Liquidsoap 字符串插值序列，允许具有媒体或配置文件权限的经过身份验证的用户将任意 Liquidsoap 代码注入站配置中。攻击者可以将 #{process.run()} 表达式注入到播放列表 URL 或电台元数据字段中，以便在电台重新启动时以 azuracast 用户身份执行 shell 命令。",
+  "38f40577d0447c8ffba7ee47868f09b2f004412c": "0.23.6 之前的 AzuraCast 通过远程中继密码注入代码",
+  "55d6cb3ff09a068a26596e810bebe14a04aa8418": "0.23.6 之前的 AzuraCast 在远程中继密码字段中包含代码注入漏洞，原因是从易受攻击的 cleanUpString 方法到 toRawString 的迁移不完整。拥有 RemoteRelays 站权限的攻击者可以注入嵌套的 Liquidsoap 插值语法，以在 Liquidsoap 进程中执行任意代码、泄露内部 API 密钥或破坏站操作。"
 }
