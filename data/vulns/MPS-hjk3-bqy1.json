@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-09-27T21:48:22+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-hjk3-bqy1",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96280",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-197",
+    "description": "Flatpak 是 freedesktop.org 维护的开源 Linux 应用沙箱与分发工具，用于从 OSTree 或 OCI registry 安装、更新和运行桌面应用。\n受影响版本中，OCI delta 流解析把长度按 guint64 读出，再传入只接受 gsize 的 GLib 分配与读取接口。在 32 位系统上 gsize 为 32 位，长度被截断后分配的堆缓冲区小于后续仍按原始长度执行的写入；delta_read_data 在计算 size+1 时还可能回绕为 0，随后 g_input_stream_read_all 向过小缓冲区写入。该逻辑由 flatpak_oci_registry_apply_delta_stream 在处理 DELTA_OP_OPEN 路径名时进入，攻击者控制的 OCI registry 可在 flatpak install 或 flatpak update 期间造成客户端堆缓冲区溢出，并可能执行代码。64 位系统上 gsize 与 guint64 等宽，该截断不会发生，默认 OSTree 传输不受影响。\n修复版本中通过将 delta 长度改为 gsize 并拒绝超过 G_MAXSIZE 的变长整数，在 delta_read_data 中拒绝会使 size+1 回绕的长度，同时把 DELTA_OP_OPEN 路径长度限制在 PATH_MAX 以内，阻断超长 delta 长度进入过小堆分配与读取。",
+    "effects": [
+      {
+        "comp_name": "flatpak",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.18.1)",
+            "min_fixed_version": "1.18.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "数值截断错误",
+    "kind_en": "数字截断错误",
+    "last_modified_time": "2026-09-28",
+    "level": "High",
+    "mps_id": "MPS-hjk3-bqy1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hjk3-bqy1",
+        "name": "https://www.oscs1024.com/hd/MPS-hjk3-bqy1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96280",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96280"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-96280",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2539419",
+        "name": "RHBZ#2539419"
+      },
+      {
+        "url": "https://github.com/flatpak/flatpak/security/advisories/GHSA-jr92-2v97-wgvc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Flatpak OCI堆溢出",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96280",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-197",
+    "description": "Flatpak 是 freedesktop.org 维护的开源 Linux 应用沙箱与分发工具，用于从 OSTree 或 OCI registry 安装、更新和运行桌面应用。\n受影响版本中，OCI delta 流解析把长度按 guint64 读出，再传入只接受 gsize 的 GLib 分配与读取接口。在 32 位系统上 gsize 为 32 位，长度被截断后分配的堆缓冲区小于后续仍按原始长度执行的写入；delta_read_data 在计算 size+1 时还可能回绕为 0，随后 g_input_stream_read_all 向过小缓冲区写入。该逻辑由 flatpak_oci_registry_apply_delta_stream 在处理 DELTA_OP_OPEN 路径名时进入，攻击者控制的 OCI registry 可在 flatpak install 或 flatpak update 期间造成客户端堆缓冲区溢出，并可能执行代码。64 位系统上 gsize 与 guint64 等宽，该截断不会发生，默认 OSTree 传输不受影响。\n修复版本中通过将 delta 长度改为 gsize 并拒绝超过 G_MAXSIZE 的变长整数，在 delta_read_data 中拒绝会使 size+1 回绕的长度，同时把 DELTA_OP_OPEN 路径长度限制在 PATH_MAX 以内，阻断超长 delta 长度进入过小堆分配与读取。",
+    "effects": [
+      {
+        "comp_name": "flatpak",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.18.1)",
+            "min_fixed_version": "1.18.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "数值截断错误",
+    "kind_en": "Numeric Truncation Error",
+    "last_modified_time": "2026-09-28",
+    "level": "High",
+    "mps_id": "MPS-hjk3-bqy1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hjk3-bqy1",
+        "name": "https://www.oscs1024.com/hd/MPS-hjk3-bqy1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96280",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96280"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-96280",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2539419",
+        "name": "RHBZ#2539419"
+      },
+      {
+        "url": "https://github.com/flatpak/flatpak/security/advisories/GHSA-jr92-2v97-wgvc",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Flatpak OCI堆溢出"
+  },
+  "first_saved_at": "2026-09-27T21:48:22+00:00"
+}

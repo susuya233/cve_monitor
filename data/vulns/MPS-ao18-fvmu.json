@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-09-27T21:48:24+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ao18-fvmu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-101090",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-601",
+    "description": "Nezha（哪吒监控）是 GitHub 开源的轻量级服务器监控与运维面板（Apache-2.0 许可），支持通过 OAuth2 完成面板登录与账号绑定。\n受影响版本中，cmd/dashboard/controller/oauth2.go 的 getRedirectURL 在新增可选项 dashboard_host 留空时不再回退到 install_host，直接采用请求的 Host 头拼接 OAuth2 回调地址；攻击者诱导受害者经伪造 Host 头的请求访问 /api/v1/oauth2/{provider} 后，oauth2redirect 生成的授权链接将攻击者控制的回调地址作为 redirect_uri 发送给身份提供方，身份提供方接受该回调地址时受害者授权码会落入攻击者站点，攻击者可继续完成登录或绑定流程接管面板账号。该问题回归了 GHSA-9rc6-8cjv-rcvx 的修复效果。\n修复版本中通过，可按公告建议缓解：为面板固定配置 dashboard_host，或在可信反向代理上严格校验 Host 头，并在 OAuth2 提供商侧仅注册精确回调 URI；上游提交 38824dbc 目前将该行为记录为配置边界，公告发布时无包含行为修复的版本。",
+    "effects": [
+      {
+        "comp_name": "github.com/nezhahq/nezha",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.2.3]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "跨站重定向",
+    "kind_en": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "last_modified_time": "2026-09-28",
+    "level": "Critical",
+    "mps_id": "MPS-ao18-fvmu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ao18-fvmu",
+        "name": "https://www.oscs1024.com/hd/MPS-ao18-fvmu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-101090",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-101090"
+      },
+      {
+        "url": "https://github.com/nezhahq/nezha/security/advisories/GHSA-rf68-8gjr-36q7",
+        "name": "GitHub Security Advisory (GHSA-rf68-8gjr-36q7)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nezha-through-2.2.3-host-header-injection-via-oauth2-redirect-uri",
+        "name": "VulnCheck Advisory: Nezha through 2.2.3 Host Header Injection via OAuth2 redirect_uri"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Nezha OAuth2 Host头注入",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-101090",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-601",
+    "description": "Nezha（哪吒监控）是 GitHub 开源的轻量级服务器监控与运维面板（Apache-2.0 许可），支持通过 OAuth2 完成面板登录与账号绑定。\n受影响版本中，cmd/dashboard/controller/oauth2.go 的 getRedirectURL 在新增可选项 dashboard_host 留空时不再回退到 install_host，直接采用请求的 Host 头拼接 OAuth2 回调地址；攻击者诱导受害者经伪造 Host 头的请求访问 /api/v1/oauth2/{provider} 后，oauth2redirect 生成的授权链接将攻击者控制的回调地址作为 redirect_uri 发送给身份提供方，身份提供方接受该回调地址时受害者授权码会落入攻击者站点，攻击者可继续完成登录或绑定流程接管面板账号。该问题回归了 GHSA-9rc6-8cjv-rcvx 的修复效果。\n修复版本中通过，可按公告建议缓解：为面板固定配置 dashboard_host，或在可信反向代理上严格校验 Host 头，并在 OAuth2 提供商侧仅注册精确回调 URI；上游提交 38824dbc 目前将该行为记录为配置边界，公告发布时无包含行为修复的版本。",
+    "effects": [
+      {
+        "comp_name": "github.com/nezhahq/nezha",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.2.3]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "跨站重定向",
+    "kind_en": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "last_modified_time": "2026-09-28",
+    "level": "Critical",
+    "mps_id": "MPS-ao18-fvmu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ao18-fvmu",
+        "name": "https://www.oscs1024.com/hd/MPS-ao18-fvmu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-101090",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-101090"
+      },
+      {
+        "url": "https://github.com/nezhahq/nezha/security/advisories/GHSA-rf68-8gjr-36q7",
+        "name": "GitHub Security Advisory (GHSA-rf68-8gjr-36q7)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/nezha-through-2.2.3-host-header-injection-via-oauth2-redirect-uri",
+        "name": "VulnCheck Advisory: Nezha through 2.2.3 Host Header Injection via OAuth2 redirect_uri"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Nezha OAuth2 Host头注入"
+  },
+  "first_saved_at": "2026-09-27T21:48:24+00:00"
+}
