@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-09-28T21:00:16+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-s4gc-w0km",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-93355",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1390",
+    "description": "LiteLLM 是 BerriAI 维护的开源大模型网关，用于以统一接口代理多家模型 API，并管理虚拟密钥、用户角色和访问控制。\n受影响版本中，在启用 JWT 认证并配置邮箱声明映射后，签名有效的身份提供方令牌进入 user_api_key_auth，再由 JWTAuthManager.get_objects 按令牌中的用户标识查询用户表。标识未命中时，_get_fuzzy_user_object 使用 email 声明做不区分大小写的回退匹配，且不检查 email_verified。命中既有用户后，该函数把该用户保存的 sso_user_id 改写为令牌对应的用户标识，认证结果继续使用该用户记录上的角色，包括 proxy_admin，调用方因而可以持续访问会暴露 API 密钥和用户管理数据的管理接口。\n修复版本中通过公开渠道尚未确认修复提交或修复版本。CVE.org 将不超过 1.102.1 以及提交 f4308bc124eebc783dfc51790ce8db27ed21ae00 标为受影响，源码核对显示 v1.103.0 与 v1.104.0-rc.1 的同一函数仍按 email 回退并改写 sso_user_id。在官方修复发布前，应关闭非必要的 enable_jwt_auth，或只允许身份提供方为已验证邮箱签发令牌，避免未校验的 email 声明继续绑定既有用户。",
+    "effects": [
+      {
+        "comp_name": "litellm",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.104.0rc1]",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "",
+    "kind_en": "",
+    "last_modified_time": "2026-09-29",
+    "level": "High",
+    "mps_id": "MPS-s4gc-w0km",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-s4gc-w0km",
+        "name": "https://www.oscs1024.com/hd/MPS-s4gc-w0km"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93355",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-93355"
+      },
+      {
+        "url": "https://www.ox.security/blog/litellm-an-ordinary-login-token-can-become-someone-elses-admin-account/",
+        "name": "OXsecurity Blog"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/litellm-weak-jwt-authentication-via-email-based-user-lookup",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "LiteLLM JWT认证绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-93355",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1390",
+    "description": "LiteLLM 是 BerriAI 维护的开源大模型网关，用于以统一接口代理多家模型 API，并管理虚拟密钥、用户角色和访问控制。\n受影响版本中，在启用 JWT 认证并配置邮箱声明映射后，签名有效的身份提供方令牌进入 user_api_key_auth，再由 JWTAuthManager.get_objects 按令牌中的用户标识查询用户表。标识未命中时，_get_fuzzy_user_object 使用 email 声明做不区分大小写的回退匹配，且不检查 email_verified。命中既有用户后，该函数把该用户保存的 sso_user_id 改写为令牌对应的用户标识，认证结果继续使用该用户记录上的角色，包括 proxy_admin，调用方因而可以持续访问会暴露 API 密钥和用户管理数据的管理接口。\n修复版本中通过公开渠道尚未确认修复提交或修复版本。CVE.org 将不超过 1.102.1 以及提交 f4308bc124eebc783dfc51790ce8db27ed21ae00 标为受影响，源码核对显示 v1.103.0 与 v1.104.0-rc.1 的同一函数仍按 email 回退并改写 sso_user_id。在官方修复发布前，应关闭非必要的 enable_jwt_auth，或只允许身份提供方为已验证邮箱签发令牌，避免未校验的 email 声明继续绑定既有用户。",
+    "effects": [
+      {
+        "comp_name": "litellm",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.104.0rc1]",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "",
+    "kind_en": "",
+    "last_modified_time": "2026-09-29",
+    "level": "High",
+    "mps_id": "MPS-s4gc-w0km",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-s4gc-w0km",
+        "name": "https://www.oscs1024.com/hd/MPS-s4gc-w0km"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93355",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-93355"
+      },
+      {
+        "url": "https://www.ox.security/blog/litellm-an-ordinary-login-token-can-become-someone-elses-admin-account/",
+        "name": "OXsecurity Blog"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/litellm-weak-jwt-authentication-via-email-based-user-lookup",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "LiteLLM JWT认证绕过"
+  },
+  "first_saved_at": "2026-09-28T21:00:16+00:00"
+}
