@@ -1,0 +1,187 @@
+{
+  "saved_at": "2026-09-28T14:51:35+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3esw-z4o5",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87799",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@ubuntu.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-59",
+    "description": "Canonical LXD 是 Canonical 开源的系统容器与虚拟机管理器，使用 Go 语言编写，用于在单机与集群环境中创建和管理容器、虚拟机与自定义存储卷，并支持实例与存储卷在服务器之间通过迁移协议复制、移动与刷新。\n受影响版本中，迁移接收端把来源端控制的数据流交给 rsync 或优化的 btrfs receive 在宿主机上重放，lxd/rsync/rsync.go 的 Recv 函数经 assertSafePath 校验目标根路径为绝对路径且不含 .. 段后，以 root 身份运行 rsync --server 将流内条目按普通路径系统调用写入卷目录，父目录未被传输时 rsync 按接收端已存在的路径解析写入目标，同一流中先前植入的符号链接（如指向 / 的 rootfs，或虚拟机的 root.img）会在后续条目以及后续快照与主卷流写入时被解析；具备在项目中创建实例或自定义存储卷权限的已认证客户端，或被目标指定为迁移来源的服务器，可借此在宿主机任意路径以 root 身份写入任意文件，导致完整主机失陷。\n修复版本中通过在接收期间将接收路径以 nosymfollow 属性绑定挂载使传输写入不再解析符号链接，为 btrfs receive 增加 --chroot 把优化的 btrfs 传输限制在目标子卷内，并在写入块卷文件前校验其为普通文件以拒绝被符号链接替换的 root.img，切断了流内植入符号链接后写入宿主任意路径的利用链；LXD 官方修复版本为 4.0.14、5.0.10、5.21.8 与 6.10，canonical/lxd 公开仓库未包含对应修复 commit，上述修复方式来自同源上游 Incus 已验证修复 commit b46c2b45f（随 Incus 7.5.0 发布）。",
+    "effects": [
+      {
+        "comp_name": "lxd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.0,4.0.14)",
+            "min_fixed_version": "4.0.14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.21,5.21.8)",
+            "min_fixed_version": "5.21.8",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0,6.10)",
+            "min_fixed_version": "6.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.0,5.0.10)",
+            "min_fixed_version": "5.0.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "在文件访问前对链接解析不恰当（链接跟随）",
+    "kind_en": "文件访问前的链接解析不正确（“链接跟踪”）",
+    "last_modified_time": "2026-09-28",
+    "level": "Critical",
+    "mps_id": "MPS-3esw-z4o5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3esw-z4o5",
+        "name": "https://www.oscs1024.com/hd/MPS-3esw-z4o5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87799",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87799"
+      },
+      {
+        "url": "https://github.com/canonical/lxd/security/advisories/GHSA-fmc3-3cpq-6whr",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Canonical LXD迁移接收路径任意文件写入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87799",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@ubuntu.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-59",
+    "description": "Canonical LXD 是 Canonical 开源的系统容器与虚拟机管理器，使用 Go 语言编写，用于在单机与集群环境中创建和管理容器、虚拟机与自定义存储卷，并支持实例与存储卷在服务器之间通过迁移协议复制、移动与刷新。\n受影响版本中，迁移接收端把来源端控制的数据流交给 rsync 或优化的 btrfs receive 在宿主机上重放，lxd/rsync/rsync.go 的 Recv 函数经 assertSafePath 校验目标根路径为绝对路径且不含 .. 段后，以 root 身份运行 rsync --server 将流内条目按普通路径系统调用写入卷目录，父目录未被传输时 rsync 按接收端已存在的路径解析写入目标，同一流中先前植入的符号链接（如指向 / 的 rootfs，或虚拟机的 root.img）会在后续条目以及后续快照与主卷流写入时被解析；具备在项目中创建实例或自定义存储卷权限的已认证客户端，或被目标指定为迁移来源的服务器，可借此在宿主机任意路径以 root 身份写入任意文件，导致完整主机失陷。\n修复版本中通过在接收期间将接收路径以 nosymfollow 属性绑定挂载使传输写入不再解析符号链接，为 btrfs receive 增加 --chroot 把优化的 btrfs 传输限制在目标子卷内，并在写入块卷文件前校验其为普通文件以拒绝被符号链接替换的 root.img，切断了流内植入符号链接后写入宿主任意路径的利用链；LXD 官方修复版本为 4.0.14、5.0.10、5.21.8 与 6.10，canonical/lxd 公开仓库未包含对应修复 commit，上述修复方式来自同源上游 Incus 已验证修复 commit b46c2b45f（随 Incus 7.5.0 发布）。",
+    "effects": [
+      {
+        "comp_name": "lxd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.0,4.0.14)",
+            "min_fixed_version": "4.0.14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.21,5.21.8)",
+            "min_fixed_version": "5.21.8",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0,6.10)",
+            "min_fixed_version": "6.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.0,5.0.10)",
+            "min_fixed_version": "5.0.10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "在文件访问前对链接解析不恰当（链接跟随）",
+    "kind_en": "Improper Link Resolution Before File Access ('Link Following')",
+    "last_modified_time": "2026-09-28",
+    "level": "Critical",
+    "mps_id": "MPS-3esw-z4o5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3esw-z4o5",
+        "name": "https://www.oscs1024.com/hd/MPS-3esw-z4o5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87799",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87799"
+      },
+      {
+        "url": "https://github.com/canonical/lxd/security/advisories/GHSA-fmc3-3cpq-6whr",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Canonical LXD迁移接收路径任意文件写入漏洞"
+  },
+  "first_saved_at": "2026-09-28T14:51:35+00:00"
+}

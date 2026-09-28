@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-09-28T14:51:28+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-qal5-rm9j",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90926",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "iletisim@usom.gov.tr",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "Logsign SIEM 是 Innotim Software, Telecommunications and Consultancy Trade Ltd. Co. 提供的商业安全信息与事件管理软件，用于集中采集、存储和分析安全日志并辅助威胁检测，源码未公开。\n受影响版本中，产品存在代码注入（CWE-94）。已具备低权限的远程攻击者在没有用户交互时注入代码，造成机密性、完整性与可用性高影响。CNA 未披露具体入口函数、参数或代码生成位置。\n修复版本中通过发布 6.4.117 消除该代码注入问题。TR-CERT 公告 TR-26-1202 要求升级到 6.4.117 及以上版本，公开材料未提供补丁代码。",
+    "effects": [
+      {
+        "comp_name": "logsign_siem",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.4.101,6.4.117)",
+            "min_fixed_version": "6.4.117",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-09-28",
+    "level": "High",
+    "mps_id": "MPS-qal5-rm9j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qal5-rm9j",
+        "name": "https://www.oscs1024.com/hd/MPS-qal5-rm9j"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90926",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90926"
+      },
+      {
+        "url": "https://siberguvenlik.gov.tr/guvenlik-bildirimleri/detay/tr-26-1202",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Logsign SIEM代码注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90926",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "iletisim@usom.gov.tr",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "Logsign SIEM 是 Innotim Software, Telecommunications and Consultancy Trade Ltd. Co. 提供的商业安全信息与事件管理软件，用于集中采集、存储和分析安全日志并辅助威胁检测，源码未公开。\n受影响版本中，产品存在代码注入（CWE-94）。已具备低权限的远程攻击者在没有用户交互时注入代码，造成机密性、完整性与可用性高影响。CNA 未披露具体入口函数、参数或代码生成位置。\n修复版本中通过发布 6.4.117 消除该代码注入问题。TR-CERT 公告 TR-26-1202 要求升级到 6.4.117 及以上版本，公开材料未提供补丁代码。",
+    "effects": [
+      {
+        "comp_name": "logsign_siem",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.4.101,6.4.117)",
+            "min_fixed_version": "6.4.117",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-09-28",
+    "level": "High",
+    "mps_id": "MPS-qal5-rm9j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qal5-rm9j",
+        "name": "https://www.oscs1024.com/hd/MPS-qal5-rm9j"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90926",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90926"
+      },
+      {
+        "url": "https://siberguvenlik.gov.tr/guvenlik-bildirimleri/detay/tr-26-1202",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Logsign SIEM代码注入漏洞"
+  },
+  "first_saved_at": "2026-09-28T14:51:28+00:00"
+}
