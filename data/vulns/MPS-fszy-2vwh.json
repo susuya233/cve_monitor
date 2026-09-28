@@ -1,0 +1,329 @@
+{
+  "saved_at": "2026-09-28T00:14:38+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-fszy-2vwh",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100886",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 10
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H/E:P/RL:W/RC:R",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-287",
+    "description": "Seetong（Shenzhen Topsee Technology）T8108、T8108P、T8116 与 T8232 是闭源网络硬盘录像机，共用 iDVR/ts81xxd3x 平台固件，Debug Service 用于设备调试。该固件构建也会随 Fullward 与 Topsee 品牌设备出货。\n受影响版本中，固件 libLOG.so 在 TLog_Init 启动 RLog 调试服务后不校验调用方身份。远程输入进入命令分发后，Cmd 对应处理交给 TLog_CMD，并继续进入固件命令执行后端，设备因此执行系统命令。\n修复版本中通过官方安全更新消除 Debug Service 的未认证访问；截至 2026-09-28，NVD、CVE.org 与公开分析均未公布修复版本号或已验证修复提交，厂商在披露前已获联系但未回应。",
+    "effects": [
+      {
+        "comp_name": "t8108",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.6.1.4-build202604241011,4.6.1.4-build202604241011]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "t8108p",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.6.1.4-build202604241011,4.6.1.4-build202604241011]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "t8116",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.6.1.4-build202604241011,4.6.1.4-build202604241011]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "t8232",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.6.1.4-build202604241011,4.6.1.4-build202604241011]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "身份验证不当",
+    "kind_en": "认证不当",
+    "last_modified_time": "2026-09-28",
+    "level": "Critical",
+    "mps_id": "MPS-fszy-2vwh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fszy-2vwh",
+        "name": "https://www.oscs1024.com/hd/MPS-fszy-2vwh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100886",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100886"
+      },
+      {
+        "url": "https://vuldb.com/vuln/410835",
+        "name": "VDB-410835 | Seetong T8108/T8108P/T8116/T8232 Debug Service improper authentication"
+      },
+      {
+        "url": "https://vuldb.com/vuln/410835/cti",
+        "name": "VDB-410835 | CTI Indicators (IOB, IOC)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-100886",
+        "name": "CVE-2026-100886 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/916434",
+        "name": "Submit #916434 | Seetong (Shenzhen Topsee Technology) iDVR/NVR platform (ts81xxd3x); shipped in Fullward T8108/T8108P/T8116/T8232 and Topsee-branded NVRs v4.6.1.4-build202604241011 Missing Authentication for Critical Function"
+      },
+      {
+        "url": "https://github.com/heapframe/seetong-ts81xxd3x-rce",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Seetong调试服务认证缺陷",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100886",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 10
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H/E:P/RL:W/RC:R",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-287",
+    "description": "Seetong（Shenzhen Topsee Technology）T8108、T8108P、T8116 与 T8232 是闭源网络硬盘录像机，共用 iDVR/ts81xxd3x 平台固件，Debug Service 用于设备调试。该固件构建也会随 Fullward 与 Topsee 品牌设备出货。\n受影响版本中，固件 libLOG.so 在 TLog_Init 启动 RLog 调试服务后不校验调用方身份。远程输入进入命令分发后，Cmd 对应处理交给 TLog_CMD，并继续进入固件命令执行后端，设备因此执行系统命令。\n修复版本中通过官方安全更新消除 Debug Service 的未认证访问；截至 2026-09-28，NVD、CVE.org 与公开分析均未公布修复版本号或已验证修复提交，厂商在披露前已获联系但未回应。",
+    "effects": [
+      {
+        "comp_name": "t8108",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.6.1.4-build202604241011,4.6.1.4-build202604241011]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "t8108p",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.6.1.4-build202604241011,4.6.1.4-build202604241011]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "t8116",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.6.1.4-build202604241011,4.6.1.4-build202604241011]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "t8232",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.6.1.4-build202604241011,4.6.1.4-build202604241011]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "身份验证不当",
+    "kind_en": "Improper Authentication",
+    "last_modified_time": "2026-09-28",
+    "level": "Critical",
+    "mps_id": "MPS-fszy-2vwh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fszy-2vwh",
+        "name": "https://www.oscs1024.com/hd/MPS-fszy-2vwh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100886",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-100886"
+      },
+      {
+        "url": "https://vuldb.com/vuln/410835",
+        "name": "VDB-410835 | Seetong T8108/T8108P/T8116/T8232 Debug Service improper authentication"
+      },
+      {
+        "url": "https://vuldb.com/vuln/410835/cti",
+        "name": "VDB-410835 | CTI Indicators (IOB, IOC)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-100886",
+        "name": "CVE-2026-100886 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/916434",
+        "name": "Submit #916434 | Seetong (Shenzhen Topsee Technology) iDVR/NVR platform (ts81xxd3x); shipped in Fullward T8108/T8108P/T8116/T8232 and Topsee-branded NVRs v4.6.1.4-build202604241011 Missing Authentication for Critical Function"
+      },
+      {
+        "url": "https://github.com/heapframe/seetong-ts81xxd3x-rce",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Seetong调试服务认证缺陷"
+  },
+  "first_saved_at": "2026-09-28T00:14:38+00:00"
+}
