@@ -1,0 +1,167 @@
+{
+  "saved_at": "2026-09-29T19:44:11+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2912-2916",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94053",
+    "cvss": {},
+    "cvss_score": 9.1,
+    "cvss_vector": "",
+    "cwe": "CWE-90",
+    "description": "Apache MINA SSHD 是开源 Java 库，用于实现 SSH 客户端与服务端；可选组件 sshd-ldap 用于把服务端密码认证和公钥认证对接 LDAP 目录。\n受影响版本中，LdapNetworkConnector 的 resolveSearchFilter 方法把 SSH 用户名和密码直接填入 LDAP 搜索过滤器，未按 RFC 4515 转义过滤器元字符。默认密码认证过滤器为 (&(uid={0})(userPassword={1}))，攻击者使用用户名 * 与密码 * 即可把查询改写成通配匹配；LdapPasswordAuthenticator 在 LDAP 查询成功后默认直接判定认证通过，造成认证绕过。\n修复版本中通过在 resolveSearchFilter 中按 RFC 4515 编码过滤器参数、在绑定 DN 中按 RFC 4514 编码，并将密码认证改为要求 LDAP 返回非空属性，阻止通配符注入再导致认证绕过。",
+    "effects": [
+      {
+        "comp_name": "org.apache.sshd:sshd-ldap",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[1.2.0,2.20.0)",
+            "min_fixed_version": "2.20.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0-M1,3.0.0-M6)",
+            "min_fixed_version": "3.0.0-M6",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "LDAP注入",
+    "kind_en": "LDAP 查询中使用的特殊元素的不正确中和（“LDAP 注入”）",
+    "last_modified_time": "2026-09-30",
+    "level": "Critical",
+    "mps_id": "MPS-2912-2916",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/29/39",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-94053",
+        "name": ""
+      },
+      {
+        "url": "https://mina.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/mina-sshd/commit/acc0f1ed436529c24f6677da83e7ec4e3537c4c9",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/mina-sshd/releases/tag/sshd-2.20.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/mina-sshd/releases/tag/sshd-3.0.0-M6",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "MINA SSHD LDAP 注入",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94053",
+    "cvss": {},
+    "cvss_score": 9.1,
+    "cvss_vector": "",
+    "cwe": "CWE-90",
+    "description": "Apache MINA SSHD 是开源 Java 库，用于实现 SSH 客户端与服务端；可选组件 sshd-ldap 用于把服务端密码认证和公钥认证对接 LDAP 目录。\n受影响版本中，LdapNetworkConnector 的 resolveSearchFilter 方法把 SSH 用户名和密码直接填入 LDAP 搜索过滤器，未按 RFC 4515 转义过滤器元字符。默认密码认证过滤器为 (&(uid={0})(userPassword={1}))，攻击者使用用户名 * 与密码 * 即可把查询改写成通配匹配；LdapPasswordAuthenticator 在 LDAP 查询成功后默认直接判定认证通过，造成认证绕过。\n修复版本中通过在 resolveSearchFilter 中按 RFC 4515 编码过滤器参数、在绑定 DN 中按 RFC 4514 编码，并将密码认证改为要求 LDAP 返回非空属性，阻止通配符注入再导致认证绕过。",
+    "effects": [
+      {
+        "comp_name": "org.apache.sshd:sshd-ldap",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[1.2.0,2.20.0)",
+            "min_fixed_version": "2.20.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0-M1,3.0.0-M6)",
+            "min_fixed_version": "3.0.0-M6",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "LDAP注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an LDAP Query ('LDAP Injection')",
+    "last_modified_time": "2026-09-30",
+    "level": "Critical",
+    "mps_id": "MPS-2912-2916",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/09/29/39",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-94053",
+        "name": ""
+      },
+      {
+        "url": "https://mina.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/mina-sshd/commit/acc0f1ed436529c24f6677da83e7ec4e3537c4c9",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/mina-sshd/releases/tag/sshd-2.20.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/mina-sshd/releases/tag/sshd-3.0.0-M6",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "MINA SSHD LDAP注入"
+  },
+  "first_saved_at": "2026-09-29T19:44:11+00:00"
+}
