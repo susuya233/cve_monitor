@@ -1,0 +1,147 @@
+{
+  "saved_at": "2026-09-29T14:31:40+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4r5c-esgv",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82973",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@gitlab.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+    "cwe": "CWE-93",
+    "description": "docker-mailbox（psyb0t/docker-mailbox）是一个 WTFPL 许可的开源 Python 项目，定位为多邮箱 IMAP/SMTP 控制面，基于 FastAPI 对外提供 HTTP API，同时通过 Streamable HTTP 暴露 MCP 服务器，供用户与大模型代理统一检索、读取、标记和删除多个邮箱中的邮件，官方以 Docker 镜像分发。\n受影响版本中，src/mailboxd/imap_client.py 将 HTTP 请求传入的 folder、uid、search 值以字符串插值方式拼入 IMAP 命令并交给 imaplib 发送，imaplib 不净化参数；在未配置 bearer-token 认证的实例上，远程攻击者请求 GET /mailboxes/{name}/messages/{uid} 等只读路由并在 folder 参数中携带 %0D%0A，可在已认证的上游 IMAP 连接上终止当前命令并注入任意 IMAP 命令，注入的 STORE +FLAGS (\\Deleted) 与 EXPUNGE 可经只读路由删除整个文件夹。\n修复版本中通过在 imap_client 边界增加输入校验切断该链路：folder、search 与结构化检索词（含 since/before）拒绝 CR、LF、NUL 字符，uid 仅接受数字与 ,:* 序列集标点，文件夹名中的引号与反斜杠转义为合法 IMAP 引号字符串，注入值在到达 imaplib 前被拒绝，HTTP API 与 MCP 服务器共用该客户端并继承同等防护。",
+    "effects": [
+      {
+        "comp_name": "docker-mailbox",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.4.13)",
+            "min_fixed_version": "0.4.13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "CRLF注入",
+    "kind_en": "Improper Neutralization of CRLF Sequences ('CRLF Injection')",
+    "last_modified_time": "2026-09-29",
+    "level": "Critical",
+    "mps_id": "MPS-4r5c-esgv",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4r5c-esgv",
+        "name": "https://www.oscs1024.com/hd/MPS-4r5c-esgv"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82973",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82973"
+      },
+      {
+        "url": "https://gitlab.com/psyb0t/docker-mailbox/-/commit/90e6b492d42e011d0ba2c825795b33d054ee6636",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "docker-mailbox IMAP命令注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82973",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@gitlab.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+    "cwe": "CWE-93",
+    "description": "docker-mailbox（psyb0t/docker-mailbox）是一个 WTFPL 许可的开源 Python 项目，定位为多邮箱 IMAP/SMTP 控制面，基于 FastAPI 对外提供 HTTP API，同时通过 Streamable HTTP 暴露 MCP 服务器，供用户与大模型代理统一检索、读取、标记和删除多个邮箱中的邮件，官方以 Docker 镜像分发。\n受影响版本中，src/mailboxd/imap_client.py 将 HTTP 请求传入的 folder、uid、search 值以字符串插值方式拼入 IMAP 命令并交给 imaplib 发送，imaplib 不净化参数；在未配置 bearer-token 认证的实例上，远程攻击者请求 GET /mailboxes/{name}/messages/{uid} 等只读路由并在 folder 参数中携带 %0D%0A，可在已认证的上游 IMAP 连接上终止当前命令并注入任意 IMAP 命令，注入的 STORE +FLAGS (\\Deleted) 与 EXPUNGE 可经只读路由删除整个文件夹。\n修复版本中通过在 imap_client 边界增加输入校验切断该链路：folder、search 与结构化检索词（含 since/before）拒绝 CR、LF、NUL 字符，uid 仅接受数字与 ,:* 序列集标点，文件夹名中的引号与反斜杠转义为合法 IMAP 引号字符串，注入值在到达 imaplib 前被拒绝，HTTP API 与 MCP 服务器共用该客户端并继承同等防护。",
+    "effects": [
+      {
+        "comp_name": "docker-mailbox",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.4.13)",
+            "min_fixed_version": "0.4.13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "CRLF注入",
+    "kind_en": "Improper Neutralization of CRLF Sequences ('CRLF Injection')",
+    "last_modified_time": "2026-09-29",
+    "level": "Critical",
+    "mps_id": "MPS-4r5c-esgv",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4r5c-esgv",
+        "name": "https://www.oscs1024.com/hd/MPS-4r5c-esgv"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82973",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82973"
+      },
+      {
+        "url": "https://gitlab.com/psyb0t/docker-mailbox/-/commit/90e6b492d42e011d0ba2c825795b33d054ee6636",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "docker-mailbox IMAP命令注入漏洞"
+  },
+  "first_saved_at": "2026-09-29T14:31:40+00:00"
+}
