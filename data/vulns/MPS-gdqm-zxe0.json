@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-09-29T23:21:23+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-gdqm-zxe0",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74220",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-195",
+    "description": "U-Boot 是开源引导加载程序，广泛用于嵌入式设备启动，并支持通过 NFS 从网络加载内核或镜像。\n受影响版本中，nfs_read_reply() 把 NFS READ 应答里的数据长度读入有符号整数 rlen，再用应答头相对 rpc_pkt 的指针差加上 rlen 与报文长度比较。在 LP64 目标上指针减法得到 64 位 ptrdiff_t，长度最高位置位会使 rlen 为负并让校验通过；随后 store_block() 将该值按无符号整数交给 memcpy，可从约 1152 字节的 rpc_pkt 栈缓冲向 image_load_addr 复制约 2GB 数据，造成引导程序崩溃或内存损坏。\n修复版本中通过将 rlen 改为无符号 u32、拒绝超过 NFS_READ_SIZE 的长度，并从数据起始位置相对已收报文做边界检查，切断恶意长度进入 memcpy 的路径。",
+    "effects": [
+      {
+        "comp_name": "u-boot",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.10-rc5)",
+            "min_fixed_version": "2026.10-rc5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "有符号至无符号转换错误",
+    "kind_en": "有符号到无符号转换错误",
+    "last_modified_time": "2026-09-30",
+    "level": "High",
+    "mps_id": "MPS-gdqm-zxe0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gdqm-zxe0",
+        "name": "https://www.oscs1024.com/hd/MPS-gdqm-zxe0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74220",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74220"
+      },
+      {
+        "url": "https://github.com/u-boot/u-boot/commit/0bbf09859658b8cc9ac13be41af23b516b8ef69a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/u-boot/u-boot/blob/v2026.07/net/nfs-common.c#L695",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/u-boot/u-boot",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/u-boot-before-2026.10-rc5-buffer-overflow-via-nfs-read-reply",
+        "name": "VulnCheck Advisory: U-Boot before 2026.10-rc5 Buffer Overflow via NFS READ Reply"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "U-Boot NFS缓冲溢出",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74220",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-195",
+    "description": "U-Boot 是开源引导加载程序，广泛用于嵌入式设备启动，并支持通过 NFS 从网络加载内核或镜像。\n受影响版本中，nfs_read_reply() 把 NFS READ 应答里的数据长度读入有符号整数 rlen，再用应答头相对 rpc_pkt 的指针差加上 rlen 与报文长度比较。在 LP64 目标上指针减法得到 64 位 ptrdiff_t，长度最高位置位会使 rlen 为负并让校验通过；随后 store_block() 将该值按无符号整数交给 memcpy，可从约 1152 字节的 rpc_pkt 栈缓冲向 image_load_addr 复制约 2GB 数据，造成引导程序崩溃或内存损坏。\n修复版本中通过将 rlen 改为无符号 u32、拒绝超过 NFS_READ_SIZE 的长度，并从数据起始位置相对已收报文做边界检查，切断恶意长度进入 memcpy 的路径。",
+    "effects": [
+      {
+        "comp_name": "u-boot",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.10-rc5)",
+            "min_fixed_version": "2026.10-rc5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "有符号至无符号转换错误",
+    "kind_en": "Signed to Unsigned Conversion Error",
+    "last_modified_time": "2026-09-30",
+    "level": "High",
+    "mps_id": "MPS-gdqm-zxe0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gdqm-zxe0",
+        "name": "https://www.oscs1024.com/hd/MPS-gdqm-zxe0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74220",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74220"
+      },
+      {
+        "url": "https://github.com/u-boot/u-boot/commit/0bbf09859658b8cc9ac13be41af23b516b8ef69a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/u-boot/u-boot/blob/v2026.07/net/nfs-common.c#L695",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/u-boot/u-boot",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/u-boot-before-2026.10-rc5-buffer-overflow-via-nfs-read-reply",
+        "name": "VulnCheck Advisory: U-Boot before 2026.10-rc5 Buffer Overflow via NFS READ Reply"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "U-Boot NFS缓冲溢出"
+  },
+  "first_saved_at": "2026-09-29T23:21:23+00:00"
+}
