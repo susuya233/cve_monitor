@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-09-29T01:23:34+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2ij0-f64y",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-102361",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "mall4j 是广州市蓝海创新科技有限公司开源的 Java 电商商城系统，用于提供小程序、PC、H5 和 APP 商城的用户注册、登录与订单服务。\n受影响版本中，前台控制器 UserRegisterController 的 updatePwd 方法映射 PUT /user/updatePwd，而 yami-shop-api 仅把 AuthFilter 注册到 /p/*，该接口不在登录校验范围内。方法按请求体 nickName 查询用户，经 PasswordManager.decryptPassword 解密 passWord 后直接编码写入 loginPassword，不核对调用者身份或原密码，未认证攻击者可重置任意前台账号密码并访问订单与个人数据。\n修复版本中通过公开仓库未能确认已合并的修复提交或高于 4.0 的发布版本，v4.0 标签 ffc672fc1aa4320ce02d0b93853bb456ae0a4dae 与 master 分支 7cbb64287642d2a8800c3cd6611356bc779f52c9 仍保留上述未认证改密实现。",
+    "effects": [
+      {
+        "comp_name": "mall4j",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-09-29",
+    "level": "Critical",
+    "mps_id": "MPS-2ij0-f64y",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2ij0-f64y",
+        "name": "https://www.oscs1024.com/hd/MPS-2ij0-f64y"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102361",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-102361"
+      },
+      {
+        "url": "https://github.com/LinYuanyi1/cve-request-poc/blob/114b3f0d149e50a7678f591bf8043399fc9ac96c/mall4j/A01_updatepwd_account_takeover.py",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gz-yami/mall4j",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gz-yami/mall4j/blob/ffc672fc1aa4320ce02d0b93853bb456ae0a4dae/yami-shop-api/src/main/java/com/yami/shop/api/controller/UserRegisterController.java#L78-L100",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/mall4j-through-4.0-missing-authentication-in-password-update-endpoint",
+        "name": "VulnCheck Advisory: mall4j through 4.0 Missing Authentication in Password Update Endpoint"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "mall4j未认证改密漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-102361",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "mall4j 是广州市蓝海创新科技有限公司开源的 Java 电商商城系统，用于提供小程序、PC、H5 和 APP 商城的用户注册、登录与订单服务。\n受影响版本中，前台控制器 UserRegisterController 的 updatePwd 方法映射 PUT /user/updatePwd，而 yami-shop-api 仅把 AuthFilter 注册到 /p/*，该接口不在登录校验范围内。方法按请求体 nickName 查询用户，经 PasswordManager.decryptPassword 解密 passWord 后直接编码写入 loginPassword，不核对调用者身份或原密码，未认证攻击者可重置任意前台账号密码并访问订单与个人数据。\n修复版本中通过公开仓库未能确认已合并的修复提交或高于 4.0 的发布版本，v4.0 标签 ffc672fc1aa4320ce02d0b93853bb456ae0a4dae 与 master 分支 7cbb64287642d2a8800c3cd6611356bc779f52c9 仍保留上述未认证改密实现。",
+    "effects": [
+      {
+        "comp_name": "mall4j",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-09-29",
+    "level": "Critical",
+    "mps_id": "MPS-2ij0-f64y",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2ij0-f64y",
+        "name": "https://www.oscs1024.com/hd/MPS-2ij0-f64y"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102361",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-102361"
+      },
+      {
+        "url": "https://github.com/LinYuanyi1/cve-request-poc/blob/114b3f0d149e50a7678f591bf8043399fc9ac96c/mall4j/A01_updatepwd_account_takeover.py",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gz-yami/mall4j",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gz-yami/mall4j/blob/ffc672fc1aa4320ce02d0b93853bb456ae0a4dae/yami-shop-api/src/main/java/com/yami/shop/api/controller/UserRegisterController.java#L78-L100",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/mall4j-through-4.0-missing-authentication-in-password-update-endpoint",
+        "name": "VulnCheck Advisory: mall4j through 4.0 Missing Authentication in Password Update Endpoint"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "mall4j未认证改密漏洞"
+  },
+  "first_saved_at": "2026-09-29T01:23:34+00:00"
+}
