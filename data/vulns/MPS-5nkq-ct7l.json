@@ -1,0 +1,209 @@
+{
+  "saved_at": "2026-09-30T21:09:46+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5nkq-ct7l",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103547",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-863",
+    "description": "在勘误表 057 之前的 OpenBSD 7.8 和勘误表 021 之前的 7.9 中的 ldapd 中，委派的 BSD 身份验证结果仅通过 LDAP 子进程客户端文件描述符和 LDAP 消息 ID 进行关联。连接关闭后，重用相同文件描述符和消息 ID 的后续连接可以接收较早的身份验证结果。能够访问 ldapd 的远程攻击者可以以另一个身份完成绑定。丢失连接也可能导致 NULL 指针取消引用。 （默认情况下不启用 ldapd。）",
+    "effects": [
+      {
+        "comp_name": "openbsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.8,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.9,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查错误",
+    "kind_en": "授权错误",
+    "last_modified_time": "2026-10-01",
+    "level": "Critical",
+    "mps_id": "MPS-5nkq-ct7l",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-01",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5nkq-ct7l",
+        "name": "https://www.oscs1024.com/hd/MPS-5nkq-ct7l"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103547",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-103547"
+      },
+      {
+        "url": "https://www.openbsd.org/errata79.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/openbsd/src/commit/4f3f58e83c2a6d239c544236a9d4d76c74bbf960",
+        "name": ""
+      },
+      {
+        "url": "https://ftp.openbsd.org/pub/OpenBSD/patches/7.9/common/021_ldapd.patch.sig",
+        "name": ""
+      },
+      {
+        "url": "https://www.openbsd.org/errata78.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-103547漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103547",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-863",
+    "description": "In ldapd in OpenBSD 7.8 before errata 057 and 7.9 before errata 021, delegated BSD authentication results are correlated only by the LDAP child process client file descriptor and LDAP message ID. After a connection closes, a later connection that reuses the same file descriptor and message ID can receive the earlier authentication result. A remote attacker who can reach ldapd can complete a Bind as another identity. A missing connection can also cause a NULL pointer dereference. (ldapd is not enabled by default.)",
+    "effects": [
+      {
+        "comp_name": "openbsd",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.8,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.9,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查错误",
+    "kind_en": "Incorrect Authorization",
+    "last_modified_time": "2026-10-01",
+    "level": "Critical",
+    "mps_id": "MPS-5nkq-ct7l",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-01",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5nkq-ct7l",
+        "name": "https://www.oscs1024.com/hd/MPS-5nkq-ct7l"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103547",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-103547"
+      },
+      {
+        "url": "https://www.openbsd.org/errata79.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/openbsd/src/commit/4f3f58e83c2a6d239c544236a9d4d76c74bbf960",
+        "name": ""
+      },
+      {
+        "url": "https://ftp.openbsd.org/pub/OpenBSD/patches/7.9/common/021_ldapd.patch.sig",
+        "name": ""
+      },
+      {
+        "url": "https://www.openbsd.org/errata78.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-103547漏洞"
+  },
+  "first_saved_at": "2026-09-30T21:09:46+00:00"
+}
