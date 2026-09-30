@@ -1,0 +1,149 @@
+{
+  "saved_at": "2026-09-30T03:32:08+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-qztw-pjcf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103087",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-674",
+    "description": "Gosub 浏览器引擎（gosub-engine）是以 MIT 许可开源的 Rust 浏览器引擎，用于解析并渲染 HTML、CSS 与 SVG 等网页内容。\n受影响版本中，SVG 解析路径不对元素嵌套深度设限，底层 roxmltree 分词器会按嵌套层级递归。攻击者将深度嵌套的 SVG 通过 IMG 元素的 SRC 属性嵌入页面后，受害者访问该页面会在 media-fetch 线程上触发栈溢出并导致进程终止。\n修复版本中通过在解析前拒绝超过 128 层的 SVG 嵌套并拒绝含标记的实体声明，同时使用 stacker::maybe_grow 扩展解析栈，将过深文档转为解析失败而非进程崩溃。",
+    "effects": [
+      {
+        "comp_name": "gosub-engine",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.0]",
+            "min_fixed_version": "",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-09-30",
+    "level": "High",
+    "mps_id": "MPS-qztw-pjcf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qztw-pjcf",
+        "name": "https://www.oscs1024.com/hd/MPS-qztw-pjcf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103087",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-103087"
+      },
+      {
+        "url": "https://github.com/gosub-io/gosub-engine/security/advisories/GHSA-c762-mxfh-vwvp",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gosub-io/gosub-engine/pull/1229",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Gosub SVG嵌套拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103087",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-674",
+    "description": "Gosub 浏览器引擎（gosub-engine）是以 MIT 许可开源的 Rust 浏览器引擎，用于解析并渲染 HTML、CSS 与 SVG 等网页内容。\n受影响版本中，SVG 解析路径不对元素嵌套深度设限，底层 roxmltree 分词器会按嵌套层级递归。攻击者将深度嵌套的 SVG 通过 IMG 元素的 SRC 属性嵌入页面后，受害者访问该页面会在 media-fetch 线程上触发栈溢出并导致进程终止。\n修复版本中通过在解析前拒绝超过 128 层的 SVG 嵌套并拒绝含标记的实体声明，同时使用 stacker::maybe_grow 扩展解析栈，将过深文档转为解析失败而非进程崩溃。",
+    "effects": [
+      {
+        "comp_name": "gosub-engine",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.0]",
+            "min_fixed_version": "",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-09-30",
+    "level": "High",
+    "mps_id": "MPS-qztw-pjcf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-09-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qztw-pjcf",
+        "name": "https://www.oscs1024.com/hd/MPS-qztw-pjcf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103087",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-103087"
+      },
+      {
+        "url": "https://github.com/gosub-io/gosub-engine/security/advisories/GHSA-c762-mxfh-vwvp",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gosub-io/gosub-engine/pull/1229",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Gosub SVG嵌套拒绝服务"
+  },
+  "first_saved_at": "2026-09-30T03:32:08+00:00"
+}
