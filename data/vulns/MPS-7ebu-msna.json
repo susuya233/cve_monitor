@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-10-01T20:44:04+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-7ebu-msna",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-56661",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:L/A:L",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:L/A:L",
+    "cwe": "CWE-918",
+    "description": "GetSimple CMS CE 是 GetSimple CMS 的社区维护版本，一个基于 PHP 的开源内容管理系统，其内置的 UpdateCE 插件用于在线检测并更新站点程序。\n受影响版本中，UpdateCE 插件对更新表单提交的 url 参数仅执行 FILTER_VALIDATE_URL 格式校验，随后使用 file_get_contents() 直接请求该地址，不校验请求目标；响应体被写入 Web 根目录下的 Tmpfile.zip，且仅在内容解析为有效 ZIP 时才会被删除，非 ZIP 响应会长期保留在可公开访问的路径上。具备管理员权限的攻击者可提交 http://127.0.0.1:端口/ 或 http://169.254.169.254/ 等内网地址，使服务器发起任意内网请求并回读完整响应，形成可读取内网服务与云元数据端点数据的全回读 SSRF。\n修复版本中通过 parse_url() 强制校验目标必须为 https 协议、github.com 主机且路径以 /GetSimpleCMS-CE/ 开头，为请求增加 15 秒超时，并将 ZIP 魔数（PK\\x03\\x04）校验前移到写盘之前，非 ZIP 响应不再持久化到 Tmpfile.zip，切断了内网请求与响应回读的利用链。",
+    "effects": [
+      {
+        "comp_name": "UpdateCE",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5)",
+            "min_fixed_version": "1.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "getsimple_cms_ce",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.3.20,3.3.22]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-10-02",
+    "level": "High",
+    "mps_id": "MPS-7ebu-msna",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-7ebu-msna",
+        "name": "https://www.oscs1024.com/hd/MPS-7ebu-msna"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-56661",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-56661"
+      },
+      {
+        "url": "https://github.com/GetSimpleCMS-CE/GetSimpleCMS-CE/security/advisories/GHSA-r7v8-mx29-5q8h",
+        "name": "https://github.com/GetSimpleCMS-CE/GetSimpleCMS-CE/security/advisories/GHSA-r7v8-mx29-5q8h"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "GetSimple CMS CE 更新插件 SSRF 漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-56661",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:L/A:L",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:L/A:L",
+    "cwe": "CWE-918",
+    "description": "GetSimple CMS CE 是 GetSimple CMS 的社区维护版本，一个基于 PHP 的开源内容管理系统，其内置的 UpdateCE 插件用于在线检测并更新站点程序。\n受影响版本中，UpdateCE 插件对更新表单提交的 url 参数仅执行 FILTER_VALIDATE_URL 格式校验，随后使用 file_get_contents() 直接请求该地址，不校验请求目标；响应体被写入 Web 根目录下的 Tmpfile.zip，且仅在内容解析为有效 ZIP 时才会被删除，非 ZIP 响应会长期保留在可公开访问的路径上。具备管理员权限的攻击者可提交 http://127.0.0.1:端口/ 或 http://169.254.169.254/ 等内网地址，使服务器发起任意内网请求并回读完整响应，形成可读取内网服务与云元数据端点数据的全回读 SSRF。\n修复版本中通过 parse_url() 强制校验目标必须为 https 协议、github.com 主机且路径以 /GetSimpleCMS-CE/ 开头，为请求增加 15 秒超时，并将 ZIP 魔数（PK\\x03\\x04）校验前移到写盘之前，非 ZIP 响应不再持久化到 Tmpfile.zip，切断了内网请求与响应回读的利用链。",
+    "effects": [
+      {
+        "comp_name": "UpdateCE",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5)",
+            "min_fixed_version": "1.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "getsimple_cms_ce",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.3.20,3.3.22]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-10-02",
+    "level": "High",
+    "mps_id": "MPS-7ebu-msna",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-7ebu-msna",
+        "name": "https://www.oscs1024.com/hd/MPS-7ebu-msna"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-56661",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-56661"
+      },
+      {
+        "url": "https://github.com/GetSimpleCMS-CE/GetSimpleCMS-CE/security/advisories/GHSA-r7v8-mx29-5q8h",
+        "name": "https://github.com/GetSimpleCMS-CE/GetSimpleCMS-CE/security/advisories/GHSA-r7v8-mx29-5q8h"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "GetSimple CMS CE 更新插件 SSRF 漏洞"
+  },
+  "first_saved_at": "2026-10-01T20:44:04+00:00"
+}

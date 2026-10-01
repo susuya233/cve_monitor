@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-10-01T20:43:56+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ueds-jvax",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用了空指针，并在不进行有效检查的情况下对其进行取消引用操作。当程序试图取消引用空指针时，由于空指针不指向任何有效的内存地址，会导致程序崩溃或产生未定义的行为。这种错误通常发生在开发者未对指针进行正确的初始化或验证时。",
+        "title": "什么是空指针取消引用"
+      },
+      {
+        "content": "- 拒绝服务：攻击者可以通过构造恶意输入或请求，触发程序中的空指针取消引用错误，导致程序崩溃或无法正常运行。这可能导致拒绝服务攻击，使系统无法提供正常的服务。\r\n- 内存信息泄露：攻击者可以通过利用空指针取消引用错误，访问程序中的敏感内存信息。这可能包括栈上的变量、函数指针或其他敏感数据，从而暴露系统的机密信息。\r\n- 代码执行：在某些情况下，空指针取消引用错误可能导致执行恶意代码或注入恶意代码的机会。攻击者可以通过精心构造的输入，利用空指针取消引用错误来执行任意的代码，进而获取系统控制权或执行未经授权的操作。",
+        "title": "空指针取消引用常见的攻击方式"
+      },
+      {
+        "content": "- 指针初始化和验证：开发者应该正确地初始化指针，并在使用指针之前进行有效的验证，确保指针不为空。在取消引用指针之前，应始终检查其是否为空。\r\n- 异常处理和错误恢复：程序应该具备健壮的异常处理和错误恢复机制，以便在发生空指针取消引用错误时能够适当地处理异常，而不是导致程序崩溃或暴露敏感信息。\r\n- 防御性编程：采用防御性编程的原则，如避免在未经验证的指针上进行操作，避免使用未初始化的指针等，以防止空指针取消引用错误的发生。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的空指针取消引用错误。这些工具可以帮助发现代码中可能存在的空指针问题，并及时修复。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括良好的指针使用和管理规范，以帮助开发者编写更可靠、安全的代码。",
+        "title": "如何预防空指针取消引用"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82357",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "9119a7d8-5eab-497f-8521-727c672e3725",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "9119a7d8-5eab-497f-8521-727c672e3725",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-476",
+    "description": "RT-Labs C-Open 是瑞典 RT-Labs AB 开源的嵌入式 CANopen 协议栈，采用 C 语言实现并以 GPLv3 与商业许可双授权，用于在微控制器上构建 CANopen 节点，涵盖 NMT、SDO、PDO、EMCY 与 LSS 等协议模块。\n受影响版本中，LSS 模块处理身份查询报文时，co_lss_inquire_identity 函数将 co_entry_find 在身份对象 0x1018 中查找子索引的结果直接传入 co_od_get_value，未检查该结果是否为空；当用户应用程序定义的对象字典缺少身份对象 0x1018 的必需子索引（子索引 1 至 4）时，能够访问 CAN 总线的攻击者先发送 LSS 全局切换命令使设备进入配置状态，再发送查询厂商 ID、产品码、修订号或序列号的报文，随后触发空指针解引用，导致设备崩溃。\n修复版本中通过新增 co_lss_identity_get 对子索引查找结果判空，缺失子索引时以 UINT32_MAX 作为返回值，同时 co_lss_inquire_identity 拒绝超出合法范围的查询命令，co_lss_init 在初始化阶段校验身份对象 0x1018 及其子索引 1 至 4 完整存在，切断了空指针解引用路径。",
+    "effects": [
+      {
+        "comp_name": "c-open",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.1.1)",
+            "min_fixed_version": "1.1.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "空指针取消引用",
+    "kind_en": "空指针取消引用",
+    "last_modified_time": "2026-10-02",
+    "level": "High",
+    "mps_id": "MPS-ueds-jvax",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ueds-jvax",
+        "name": "https://www.oscs1024.com/hd/MPS-ueds-jvax"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82357",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82357"
+      },
+      {
+        "url": "https://rt-labs.com/wp-content/uploads/2026/09/RRTL-260929-01.pdf",
+        "name": "url"
+      },
+      {
+        "url": "https://github.com/rtlabs-com/c-open/releases/tag/public%2Fv1.1.1",
+        "name": "url"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/cisagov/CSAF/develop/csaf_files/IT/white/2025/va-26-275-02.json",
+        "name": "url"
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-82357",
+        "name": "url"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "C-Open LSS 空指针解引用漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用了空指针，并在不进行有效检查的情况下对其进行取消引用操作。当程序试图取消引用空指针时，由于空指针不指向任何有效的内存地址，会导致程序崩溃或产生未定义的行为。这种错误通常发生在开发者未对指针进行正确的初始化或验证时。",
+        "title": "什么是空指针取消引用"
+      },
+      {
+        "content": "- 拒绝服务：攻击者可以通过构造恶意输入或请求，触发程序中的空指针取消引用错误，导致程序崩溃或无法正常运行。这可能导致拒绝服务攻击，使系统无法提供正常的服务。\r\n- 内存信息泄露：攻击者可以通过利用空指针取消引用错误，访问程序中的敏感内存信息。这可能包括栈上的变量、函数指针或其他敏感数据，从而暴露系统的机密信息。\r\n- 代码执行：在某些情况下，空指针取消引用错误可能导致执行恶意代码或注入恶意代码的机会。攻击者可以通过精心构造的输入，利用空指针取消引用错误来执行任意的代码，进而获取系统控制权或执行未经授权的操作。",
+        "title": "空指针取消引用常见的攻击方式"
+      },
+      {
+        "content": "- 指针初始化和验证：开发者应该正确地初始化指针，并在使用指针之前进行有效的验证，确保指针不为空。在取消引用指针之前，应始终检查其是否为空。\r\n- 异常处理和错误恢复：程序应该具备健壮的异常处理和错误恢复机制，以便在发生空指针取消引用错误时能够适当地处理异常，而不是导致程序崩溃或暴露敏感信息。\r\n- 防御性编程：采用防御性编程的原则，如避免在未经验证的指针上进行操作，避免使用未初始化的指针等，以防止空指针取消引用错误的发生。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的空指针取消引用错误。这些工具可以帮助发现代码中可能存在的空指针问题，并及时修复。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括良好的指针使用和管理规范，以帮助开发者编写更可靠、安全的代码。",
+        "title": "如何预防空指针取消引用"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82357",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "9119a7d8-5eab-497f-8521-727c672e3725",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "9119a7d8-5eab-497f-8521-727c672e3725",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-476",
+    "description": "RT-Labs C-Open 是瑞典 RT-Labs AB 开源的嵌入式 CANopen 协议栈，采用 C 语言实现并以 GPLv3 与商业许可双授权，用于在微控制器上构建 CANopen 节点，涵盖 NMT、SDO、PDO、EMCY 与 LSS 等协议模块。\n受影响版本中，LSS 模块处理身份查询报文时，co_lss_inquire_identity 函数将 co_entry_find 在身份对象 0x1018 中查找子索引的结果直接传入 co_od_get_value，未检查该结果是否为空；当用户应用程序定义的对象字典缺少身份对象 0x1018 的必需子索引（子索引 1 至 4）时，能够访问 CAN 总线的攻击者先发送 LSS 全局切换命令使设备进入配置状态，再发送查询厂商 ID、产品码、修订号或序列号的报文，随后触发空指针解引用，导致设备崩溃。\n修复版本中通过新增 co_lss_identity_get 对子索引查找结果判空，缺失子索引时以 UINT32_MAX 作为返回值，同时 co_lss_inquire_identity 拒绝超出合法范围的查询命令，co_lss_init 在初始化阶段校验身份对象 0x1018 及其子索引 1 至 4 完整存在，切断了空指针解引用路径。",
+    "effects": [
+      {
+        "comp_name": "c-open",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.1.1)",
+            "min_fixed_version": "1.1.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "空指针取消引用",
+    "kind_en": "NULL Pointer Dereference",
+    "last_modified_time": "2026-10-02",
+    "level": "High",
+    "mps_id": "MPS-ueds-jvax",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ueds-jvax",
+        "name": "https://www.oscs1024.com/hd/MPS-ueds-jvax"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82357",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82357"
+      },
+      {
+        "url": "https://rt-labs.com/wp-content/uploads/2026/09/RRTL-260929-01.pdf",
+        "name": "url"
+      },
+      {
+        "url": "https://github.com/rtlabs-com/c-open/releases/tag/public%2Fv1.1.1",
+        "name": "url"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/cisagov/CSAF/develop/csaf_files/IT/white/2025/va-26-275-02.json",
+        "name": "url"
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-82357",
+        "name": "url"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "C-Open LSS 空指针解引用漏洞"
+  },
+  "first_saved_at": "2026-10-01T20:43:56+00:00"
+}
