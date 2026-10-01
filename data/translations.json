@@ -1993,5 +1993,9 @@
   "826c43c5e73baae3f24e126130d9321fed8d1f73": "0.8.5 之前的 ZeroClaw 通过插件清单 wasm_path 进行路径遍历",
   "218ebeffc9ece8ad4523887ddad43394b3bf1031": "使用plugins-wasm功能构建的ZeroClaw 0.8.5之前的版本在插件安装中包含路径遍历漏洞，无法验证wasm_path清单字段。攻击者可以说服用户安装精心设计的插件，将任意文件写入插件目录之外的路径（例如 shell 启动文件），从而启用代码执行。",
   "103be9ecacba3700804e735507696bd54b2b3336": "2026.7.1 之前的 OpenClaw Windows 节点通过环境覆盖远程执行代码",
-  "4f84164a0ffbd1d072874b2a7d50b87db11eae44": "2026.7.1 之前的 OpenClaw Windows Node 在 system.run 中包含不完整的环境变量清理程序，无法阻止 GIT_CONFIG_*、DOTNET_STARTUP_HOOKS 和 JAVA_TOOL_OPTIONS 变量。具有网关或代理访问权限的攻击者可以将这些变量提供给 git、dotnet 或 java 等白名单工具，以加载攻击者控制的代码并实现任意代码执行。"
+  "4f84164a0ffbd1d072874b2a7d50b87db11eae44": "2026.7.1 之前的 OpenClaw Windows Node 在 system.run 中包含不完整的环境变量清理程序，无法阻止 GIT_CONFIG_*、DOTNET_STARTUP_HOOKS 和 JAVA_TOOL_OPTIONS 变量。具有网关或代理访问权限的攻击者可以将这些变量提供给 git、dotnet 或 java 等白名单工具，以加载攻击者控制的代码并实现任意代码执行。",
+  "85d1c407c113a80dcad2bbd3a1312a4cd00dfcbe": "DeepWiki-通过提交 d92819a 打开未经身份验证的任意文件通过 /codemap/file 读取",
+  "75f21f2b4bc98f36367760471a0008ba080cac75": "DeepWiki-Open 通过提交 d92819a 在 GET /codemap/file 端点中通过 repo_url 参数包含未经身份验证的任意文件读取漏洞。攻击者可以提供非 URL repo_url 值来绕过路径包含检查，并通过指定绝对文件路径读取 API 进程可访问的任何文件。",
+  "bde1f15c03701625f22bd1d6b92eec48796a28d8": "CVE-2026-101283漏洞",
+  "d6f0d612b5088e6887673d52e20ff1cb07b708dd": "iperf3 3.20–3.21 (esnet/iperf) 在decrypt_rsa_message() 中存在预身份验证堆缓冲区溢出：256 字节的 RSA 缓冲区是 BIO_read，其密文长度由攻击者控制（仅防护警告），因此未经身份验证的客户端会通过过大的身份验证令牌溢出堆； 3.22 中修复"
 }
