@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-10-02T18:53:18+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-pzja-fh18",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-104848",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.5
+        }
+      ]
+    },
+    "cvss_score": 9.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1321",
+    "description": "Tinypool 是开源的 Node.js 最小化 worker 线程池库（npm 包 tinypool），基于 worker_threads 为宿主应用提供并行任务执行能力，被 Vitest 等测试框架用作底层 worker 池。\n受影响版本中，ThreadPool 构造函数通过对象展开 { ...kDefaultOptions, ...options, filename, maxQueue: 0 } 构建 this.options，该写法会把从 Object.prototype 继承的 execArgv、env 属性复制为自有属性；_addNewWorker() 随后将 this.options.execArgv 与 this.options.env 显式传给 worker_threads.Worker，Node.js 本身会忽略 Worker 选项中原型继承的值，tinypool 的显式读取绕过了该保护，攻击者事先在宿主进程中污染 Object.prototype.execArgv 或 Object.prototype.env（后者可携带 NODE_OPTIONS），即可让每个新建 worker 通过命令行预加载参数或 NODE_OPTIONS 加载攻击者指定的 JavaScript，以宿主进程权限执行任意代码，进而窃取 CI 密钥、签名材料或构建产物。\n修复版本中通过以 null 原型对象聚合选项切断该链路，ThreadPool 构造函数改为 Object.assign(Object.create(null), kDefaultOptions, options, { filename, maxQueue: 0 })，继承自 Object.prototype 的 execArgv、env 不再被复制为自有属性，Worker 无法再收到被污染的预加载参数与环境变量，并新增回归测试覆盖原型污染场景。",
+    "effects": [
+      {
+        "comp_name": "tinypool",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.1.1)",
+            "min_fixed_version": "2.1.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "原型污染",
+    "kind_en": "对象原型属性的控制不当的修改（“原型污染”）",
+    "last_modified_time": "2026-10-03",
+    "level": "Critical",
+    "mps_id": "MPS-pzja-fh18",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pzja-fh18",
+        "name": "https://www.oscs1024.com/hd/MPS-pzja-fh18"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-104848",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-104848"
+      },
+      {
+        "url": "https://github.com/tinylibs/tinypool/security/advisories/GHSA-5gmw-xhrv-c9v3",
+        "name": "https://github.com/tinylibs/tinypool/security/advisories/GHSA-5gmw-xhrv-c9v3"
+      },
+      {
+        "url": "https://github.com/tinylibs/tinypool/pull/134",
+        "name": "https://github.com/tinylibs/tinypool/pull/134"
+      },
+      {
+        "url": "https://github.com/tinylibs/tinypool/commit/24df4e730e7d0857a6d226c9b58f8924227404fd",
+        "name": "https://github.com/tinylibs/tinypool/commit/24df4e730e7d0857a6d226c9b58f8924227404fd"
+      },
+      {
+        "url": "https://github.com/tinylibs/tinypool/releases/tag/v2.1.1",
+        "name": "https://github.com/tinylibs/tinypool/releases/tag/v2.1.1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "Tinypool原型污染致代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-104848",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.5
+        }
+      ]
+    },
+    "cvss_score": 9.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1321",
+    "description": "Tinypool 是开源的 Node.js 最小化 worker 线程池库（npm 包 tinypool），基于 worker_threads 为宿主应用提供并行任务执行能力，被 Vitest 等测试框架用作底层 worker 池。\n受影响版本中，ThreadPool 构造函数通过对象展开 { ...kDefaultOptions, ...options, filename, maxQueue: 0 } 构建 this.options，该写法会把从 Object.prototype 继承的 execArgv、env 属性复制为自有属性；_addNewWorker() 随后将 this.options.execArgv 与 this.options.env 显式传给 worker_threads.Worker，Node.js 本身会忽略 Worker 选项中原型继承的值，tinypool 的显式读取绕过了该保护，攻击者事先在宿主进程中污染 Object.prototype.execArgv 或 Object.prototype.env（后者可携带 NODE_OPTIONS），即可让每个新建 worker 通过命令行预加载参数或 NODE_OPTIONS 加载攻击者指定的 JavaScript，以宿主进程权限执行任意代码，进而窃取 CI 密钥、签名材料或构建产物。\n修复版本中通过以 null 原型对象聚合选项切断该链路，ThreadPool 构造函数改为 Object.assign(Object.create(null), kDefaultOptions, options, { filename, maxQueue: 0 })，继承自 Object.prototype 的 execArgv、env 不再被复制为自有属性，Worker 无法再收到被污染的预加载参数与环境变量，并新增回归测试覆盖原型污染场景。",
+    "effects": [
+      {
+        "comp_name": "tinypool",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.1.1)",
+            "min_fixed_version": "2.1.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "原型污染",
+    "kind_en": "Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')",
+    "last_modified_time": "2026-10-03",
+    "level": "Critical",
+    "mps_id": "MPS-pzja-fh18",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pzja-fh18",
+        "name": "https://www.oscs1024.com/hd/MPS-pzja-fh18"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-104848",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-104848"
+      },
+      {
+        "url": "https://github.com/tinylibs/tinypool/security/advisories/GHSA-5gmw-xhrv-c9v3",
+        "name": "https://github.com/tinylibs/tinypool/security/advisories/GHSA-5gmw-xhrv-c9v3"
+      },
+      {
+        "url": "https://github.com/tinylibs/tinypool/pull/134",
+        "name": "https://github.com/tinylibs/tinypool/pull/134"
+      },
+      {
+        "url": "https://github.com/tinylibs/tinypool/commit/24df4e730e7d0857a6d226c9b58f8924227404fd",
+        "name": "https://github.com/tinylibs/tinypool/commit/24df4e730e7d0857a6d226c9b58f8924227404fd"
+      },
+      {
+        "url": "https://github.com/tinylibs/tinypool/releases/tag/v2.1.1",
+        "name": "https://github.com/tinylibs/tinypool/releases/tag/v2.1.1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "Tinypool原型污染致代码执行漏洞"
+  },
+  "first_saved_at": "2026-10-02T18:53:18+00:00"
+}
