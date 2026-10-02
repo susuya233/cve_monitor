@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-10-02T22:45:13+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-8485-4dac",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97363",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ics-cert@hq.dhs.gov",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ics-cert@hq.dhs.gov",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-307",
+    "description": "Monta monta.app 是荷兰 Monta 公司的商业电动汽车充电云平台，用于集中管理全球范围内的充电桩与充电网络，充电桩通过 WebSocket API 接入平台，该平台未公开源码。\n受影响版本中，WebSocket API 未对认证请求次数设置限制，缺少限流机制，攻击者无需认证便可持续向 WebSocket 端点发起大量认证请求，CISA 公告说明该缺失可能被用于发起拒绝服务攻击或暴力破解攻击，进而获取未授权访问并威胁充电服务可用性。\n修复版本中通过，Monta 已在 WebSocket 层部署限流与自动连接节流，对快速重连、标识爆破行为与超量指令等异常连接模式自动识别并阻断，并推动运营商启用 OCPP 1.6 Security Profile 2（HTTP Basic Auth over TLS）认证接入，逐步停用未认证访问以收敛攻击面。",
+    "effects": [
+      {
+        "comp_name": "monta.app",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "过多认证尝试的限制不恰当",
+    "kind_en": "对过多身份验证尝试的不当限制",
+    "last_modified_time": "2026-10-03",
+    "level": "High",
+    "mps_id": "MPS-8485-4dac",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-03",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/monta-ev-charging-vulnerabilities/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-274-02",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/cisagov/csaf/blob/develop/csaf_files/OT/white/2026/icsa-26-274-02.json",
+        "name": ""
+      },
+      {
+        "url": "https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Monta认证限流缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97363",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ics-cert@hq.dhs.gov",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ics-cert@hq.dhs.gov",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-307",
+    "description": "Monta monta.app 是荷兰 Monta 公司的商业电动汽车充电云平台，用于集中管理全球范围内的充电桩与充电网络，充电桩通过 WebSocket API 接入平台，该平台未公开源码。\n受影响版本中，WebSocket API 未对认证请求次数设置限制，缺少限流机制，攻击者无需认证便可持续向 WebSocket 端点发起大量认证请求，CISA 公告说明该缺失可能被用于发起拒绝服务攻击或暴力破解攻击，进而获取未授权访问并威胁充电服务可用性。\n修复版本中通过，Monta 已在 WebSocket 层部署限流与自动连接节流，对快速重连、标识爆破行为与超量指令等异常连接模式自动识别并阻断，并推动运营商启用 OCPP 1.6 Security Profile 2（HTTP Basic Auth over TLS）认证接入，逐步停用未认证访问以收敛攻击面。",
+    "effects": [
+      {
+        "comp_name": "monta.app",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "过多认证尝试的限制不恰当",
+    "kind_en": "Improper Restriction of Excessive Authentication Attempts",
+    "last_modified_time": "2026-10-03",
+    "level": "High",
+    "mps_id": "MPS-8485-4dac",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-03",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/monta-ev-charging-vulnerabilities/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-274-02",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/cisagov/csaf/blob/develop/csaf_files/OT/white/2026/icsa-26-274-02.json",
+        "name": ""
+      },
+      {
+        "url": "https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Monta认证限流缺失漏洞"
+  },
+  "first_saved_at": "2026-10-02T22:45:13+00:00"
+}

@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-10-02T22:45:16+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-58d0-6a22",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-95102",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ics-cert@hq.dhs.gov",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ics-cert@hq.dhs.gov",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "Monta monta.app 是 Monta 公司（总部位于荷兰）面向电动车充电运营商的云端充电运营管理平台，为商业充电桩提供接入、会话与充电运营管理能力，属闭源商业 SaaS 服务，部署于全球交通与能源行业的关键基础设施场景。\n受影响版本中，平台 WebSocket 端点缺乏身份认证机制，攻击者无需任何凭证，可使用公开充电地图上可获取的充电站标识建立未授权 WebSocket 连接并冒充充电站，进而访问敏感数据、执行未授权操作，并可能导致权限提升与整个充电系统失陷。\n修复版本中通过平台侧持续更新缓解：Monta 已在 WebSocket 层实施速率限制与自动连接节流，按 OCPP 规范以新的认证连接取代同一站标识的既有会话，并推动运营商启用 OCPP 1.6 Security Profile 2（HTTP Basic Auth over TLS）恢复连接级认证。",
+    "effects": [
+      {
+        "comp_name": "monta_app",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,latest]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-10-03",
+    "level": "Critical",
+    "mps_id": "MPS-58d0-6a22",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-03",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/monta-ev-charging-vulnerabilities/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-274-02",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Monta 充电平台认证缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-95102",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ics-cert@hq.dhs.gov",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ics-cert@hq.dhs.gov",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "Monta monta.app 是 Monta 公司（总部位于荷兰）面向电动车充电运营商的云端充电运营管理平台，为商业充电桩提供接入、会话与充电运营管理能力，属闭源商业 SaaS 服务，部署于全球交通与能源行业的关键基础设施场景。\n受影响版本中，平台 WebSocket 端点缺乏身份认证机制，攻击者无需任何凭证，可使用公开充电地图上可获取的充电站标识建立未授权 WebSocket 连接并冒充充电站，进而访问敏感数据、执行未授权操作，并可能导致权限提升与整个充电系统失陷。\n修复版本中通过平台侧持续更新缓解：Monta 已在 WebSocket 层实施速率限制与自动连接节流，按 OCPP 规范以新的认证连接取代同一站标识的既有会话，并推动运营商启用 OCPP 1.6 Security Profile 2（HTTP Basic Auth over TLS）恢复连接级认证。",
+    "effects": [
+      {
+        "comp_name": "monta_app",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,latest]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-10-03",
+    "level": "Critical",
+    "mps_id": "MPS-58d0-6a22",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-03",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/monta-ev-charging-vulnerabilities/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-274-02",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Monta 充电平台认证缺失漏洞"
+  },
+  "first_saved_at": "2026-10-02T22:45:16+00:00"
+}
