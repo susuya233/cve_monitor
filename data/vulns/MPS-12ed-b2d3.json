@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-10-02T00:25:47+00:00",
-  "first_seen": true,
+  "saved_at": "2026-10-02T13:27:45+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-12ed-b2d3",
@@ -9,10 +9,19 @@
     "articles": [],
     "cnvd_id": "",
     "cve_id": "CVE-2026-96294",
-    "cvss": {},
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
     "cvss_score": 8.7,
-    "cvss_vector": "",
-    "cwe": "CWE-248",
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-755",
     "description": "Apache Thrift 是开源的跨语言 RPC 框架，其 NodeJS 绑定以 npm 包 thrift 发布，内建的 web server 可把 HTTP 服务升级为 WebSocket 通道来承载 Thrift 消息。\n受影响版本中，web_server.js 的 createWebServer 在处理 HTTP upgrade 事件完成 WebSocket 握手后，未为升级后的 socket 注册 error 监听器，仅用内层 try/catch 处理帧解码异常；当该 socket 触发 error 事件（如远端异常断开连接）时，异常按 Node.js 事件约定以未捕获异常抛出，Node 进程随之退出，远程攻击者无需认证即可令整个 Thrift NodeJS 服务崩溃。\n修复版本中通过在 upgrade 处理器入口为升级后的 socket 注册 error 监听器解决该问题，错误被记录为 TWebSocketTransport Exception 日志并调用 socket.destroy() 关闭当前连接，单个 WebSocket 连接上的错误不再终结服务器进程。",
     "effects": [
       {
@@ -34,9 +43,9 @@
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
-    "kind": "未捕获的异常",
-    "kind_en": "未捕获的异常",
+    "fix_suggestion": "建议修复",
+    "kind": "对异常条件的处理不恰当",
+    "kind_en": "Improper Handling of Exceptional Conditions",
     "last_modified_time": "2026-10-02",
     "level": "High",
     "mps_id": "MPS-12ed-b2d3",
@@ -82,10 +91,19 @@
     "articles": [],
     "cnvd_id": "",
     "cve_id": "CVE-2026-96294",
-    "cvss": {},
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
     "cvss_score": 8.7,
-    "cvss_vector": "",
-    "cwe": "CWE-248",
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-755",
     "description": "Apache Thrift 是开源的跨语言 RPC 框架，其 NodeJS 绑定以 npm 包 thrift 发布，内建的 web server 可把 HTTP 服务升级为 WebSocket 通道来承载 Thrift 消息。\n受影响版本中，web_server.js 的 createWebServer 在处理 HTTP upgrade 事件完成 WebSocket 握手后，未为升级后的 socket 注册 error 监听器，仅用内层 try/catch 处理帧解码异常；当该 socket 触发 error 事件（如远端异常断开连接）时，异常按 Node.js 事件约定以未捕获异常抛出，Node 进程随之退出，远程攻击者无需认证即可令整个 Thrift NodeJS 服务崩溃。\n修复版本中通过在 upgrade 处理器入口为升级后的 socket 注册 error 监听器解决该问题，错误被记录为 TWebSocketTransport Exception 日志并调用 socket.destroy() 关闭当前连接，单个 WebSocket 连接上的错误不再终结服务器进程。",
     "effects": [
       {
@@ -107,9 +125,9 @@
     "exploit_requirement": "",
     "exploit_requirement_cost": "低",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
-    "kind": "未捕获的异常",
-    "kind_en": "Uncaught Exception",
+    "fix_suggestion": "Recommend",
+    "kind": "对异常条件的处理不恰当",
+    "kind_en": "Improper Handling of Exceptional Conditions",
     "last_modified_time": "2026-10-02",
     "level": "High",
     "mps_id": "MPS-12ed-b2d3",

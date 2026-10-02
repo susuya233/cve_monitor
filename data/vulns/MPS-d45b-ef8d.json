@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-10-02T13:27:50+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d45b-ef8d",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94646",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1321",
+    "description": "Apache Thrift 是开源的跨语言 RPC 框架，其 Node.js 绑定以 npm 包 thrift 发布，用于在 Node.js 服务端承载 Thrift RPC、HTTP 与 WebSocket 服务。\n受影响版本中，lib/nodejs/lib/thrift/server.js 的 serverImpl() 在连接出错的三条路径上调用 self.emit(\"error\", err)，Server 未注册 error 监听器时 Node.js 会以未捕获异常结束整个进程；远程攻击者发送畸形报文可稳定制造这类连接错误：TJSONProtocol 的 readListBegin()/readMapBegin() 不校验报文声明的容器数量，THeader 的 readHeaders() 以有符号整数读取 header size 且缺少帧长度检查，json_parse.js 的 object() 以 object[key] = value() 写入 __proto__ 键导致对象原型被替换，readFieldBegin() 的 for...in 遍历到该继承属性后查找与删除使用解析出的整数 id，字段永远无法消费，使生成的 read() 循环无法到达 STOP 并阻塞事件循环。\n修复版本中通过 reportError() 统一处理连接错误，仅在 listenerCount(\"error\") 大于 0 时触发事件，否则写入日志并结束当前连接，单条连接的异常不再终止进程；同时以 checkFrameLength() 和无符号读取校验 THeader 帧长度，新增 checkContainerSize() 拒绝非整数、负数或超出实际元素数量的容器声明，object() 对 __proto__ 键改用 Object.defineProperty() 生成自有属性，readFieldBegin() 只遍历自有键并删除已消费字段，消除原型污染与事件循环阻塞。",
+    "effects": [
+      {
+        "comp_name": "thrift",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.25.0)",
+            "min_fixed_version": "0.25.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "原型污染",
+    "kind_en": "对象原型属性的控制不当的修改（“原型污染”）",
+    "last_modified_time": "2026-10-02",
+    "level": "High",
+    "mps_id": "MPS-d45b-ef8d",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-02",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12148.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-94646",
+        "name": ""
+      },
+      {
+        "url": "https://thrift.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/releases/tag/v0.25.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/61c1d55b5e938fcf6a0c0c91ddbe2cff83755b8a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/8fd0f93835dd156a867cc72797d84e9ecf6ef4e5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/95582f0c093e2497006a28969933a85b5c6578d0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/ef3ac768341b1f1d376ba953dbad6d962e7de1cc",
+        "name": ""
+      },
+      {
+        "url": "https://www.npmjs.com/package/thrift",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "Apache Thrift Node.js拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94646",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1321",
+    "description": "Apache Thrift 是开源的跨语言 RPC 框架，其 Node.js 绑定以 npm 包 thrift 发布，用于在 Node.js 服务端承载 Thrift RPC、HTTP 与 WebSocket 服务。\n受影响版本中，lib/nodejs/lib/thrift/server.js 的 serverImpl() 在连接出错的三条路径上调用 self.emit(\"error\", err)，Server 未注册 error 监听器时 Node.js 会以未捕获异常结束整个进程；远程攻击者发送畸形报文可稳定制造这类连接错误：TJSONProtocol 的 readListBegin()/readMapBegin() 不校验报文声明的容器数量，THeader 的 readHeaders() 以有符号整数读取 header size 且缺少帧长度检查，json_parse.js 的 object() 以 object[key] = value() 写入 __proto__ 键导致对象原型被替换，readFieldBegin() 的 for...in 遍历到该继承属性后查找与删除使用解析出的整数 id，字段永远无法消费，使生成的 read() 循环无法到达 STOP 并阻塞事件循环。\n修复版本中通过 reportError() 统一处理连接错误，仅在 listenerCount(\"error\") 大于 0 时触发事件，否则写入日志并结束当前连接，单条连接的异常不再终止进程；同时以 checkFrameLength() 和无符号读取校验 THeader 帧长度，新增 checkContainerSize() 拒绝非整数、负数或超出实际元素数量的容器声明，object() 对 __proto__ 键改用 Object.defineProperty() 生成自有属性，readFieldBegin() 只遍历自有键并删除已消费字段，消除原型污染与事件循环阻塞。",
+    "effects": [
+      {
+        "comp_name": "thrift",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.25.0)",
+            "min_fixed_version": "0.25.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "原型污染",
+    "kind_en": "Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')",
+    "last_modified_time": "2026-10-02",
+    "level": "High",
+    "mps_id": "MPS-d45b-ef8d",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-02",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12148.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-94646",
+        "name": ""
+      },
+      {
+        "url": "https://thrift.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/releases/tag/v0.25.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/61c1d55b5e938fcf6a0c0c91ddbe2cff83755b8a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/8fd0f93835dd156a867cc72797d84e9ecf6ef4e5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/95582f0c093e2497006a28969933a85b5c6578d0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/ef3ac768341b1f1d376ba953dbad6d962e7de1cc",
+        "name": ""
+      },
+      {
+        "url": "https://www.npmjs.com/package/thrift",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "Apache Thrift Node.js拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-10-02T13:27:50+00:00"
+}
