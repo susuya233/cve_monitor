@@ -1,0 +1,189 @@
+{
+  "saved_at": "2026-10-02T00:25:51+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-rot4-lqy7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103761",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "Mooncake Transfer Engine 是 kvcache-ai 开源的高性能 KVCache 传输引擎（Apache-2.0），为 vLLM、SGLang 等大模型推理框架提供跨节点缓存传输与 P2P 握手协调能力。\n受影响版本中，握手守护进程把每个 notify 帧（握手消息类型 2）交给 TransferMetadata::receivePeerNotify 处理，该函数在 notify_lock_ 写锁保护下执行 notifys.push_back(peer_notify)，notifys 向量没有容量上限、过期淘汰与逐对端配额，仅当应用调用 getNotifies() 时才清空，而帧体默认最大 1 MB（MC_HANDSHAKE_MAX_LENGTH 可调至 128 MB）。握手 RPC 端口不要求认证，任意可达该端口的攻击者可反复发送 notify 帧使向量无限增长，每帧均会收到 success 应答，进程内存持续增长直至 OOM killer 终止引擎。\n修复版本中通过，可通过网络访问控制收敛握手 RPC 端口（默认 15000-17000 区间）的可达范围，并为引擎进程配置内存上限与监控；上游预期的修复方向是为 notifys 队列引入容量上限、逐对端配额与满员拒绝策略，截至 2026-10-01 尚无包含修复的发布版本，主分支代码中该无上限入队逻辑仍存在。",
+    "effects": [
+      {
+        "comp_name": "mooncake-transfer-engine",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.3.13.post1]",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-10-02",
+    "level": "High",
+    "mps_id": "MPS-rot4-lqy7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-rot4-lqy7",
+        "name": "https://www.oscs1024.com/hd/MPS-rot4-lqy7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103761",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-103761"
+      },
+      {
+        "url": "https://github.com/kvcache-ai/Mooncake/issues/4445",
+        "name": "GitHub Issue #4445"
+      },
+      {
+        "url": "https://github.com/kvcache-ai/Mooncake/blob/719735896c86b56fabec6cf3e825fb2ea640597a/mooncake-transfer-engine/src/transfer_metadata.cpp#L285-L296",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kvcache-ai/Mooncake",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/mooncake-transfer-engine-through-0.3.13-post1-memory-exhaustion-via-unbounded-notify-queue",
+        "name": "VulnCheck Advisory: Mooncake transfer engine through 0.3.13.post1 Memory Exhaustion via Unbounded Notify Queue"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "Mooncake传输引擎内存耗尽漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103761",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "Mooncake Transfer Engine 是 kvcache-ai 开源的高性能 KVCache 传输引擎（Apache-2.0），为 vLLM、SGLang 等大模型推理框架提供跨节点缓存传输与 P2P 握手协调能力。\n受影响版本中，握手守护进程把每个 notify 帧（握手消息类型 2）交给 TransferMetadata::receivePeerNotify 处理，该函数在 notify_lock_ 写锁保护下执行 notifys.push_back(peer_notify)，notifys 向量没有容量上限、过期淘汰与逐对端配额，仅当应用调用 getNotifies() 时才清空，而帧体默认最大 1 MB（MC_HANDSHAKE_MAX_LENGTH 可调至 128 MB）。握手 RPC 端口不要求认证，任意可达该端口的攻击者可反复发送 notify 帧使向量无限增长，每帧均会收到 success 应答，进程内存持续增长直至 OOM killer 终止引擎。\n修复版本中通过，可通过网络访问控制收敛握手 RPC 端口（默认 15000-17000 区间）的可达范围，并为引擎进程配置内存上限与监控；上游预期的修复方向是为 notifys 队列引入容量上限、逐对端配额与满员拒绝策略，截至 2026-10-01 尚无包含修复的发布版本，主分支代码中该无上限入队逻辑仍存在。",
+    "effects": [
+      {
+        "comp_name": "mooncake-transfer-engine",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.3.13.post1]",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-10-02",
+    "level": "High",
+    "mps_id": "MPS-rot4-lqy7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-rot4-lqy7",
+        "name": "https://www.oscs1024.com/hd/MPS-rot4-lqy7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103761",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-103761"
+      },
+      {
+        "url": "https://github.com/kvcache-ai/Mooncake/issues/4445",
+        "name": "GitHub Issue #4445"
+      },
+      {
+        "url": "https://github.com/kvcache-ai/Mooncake/blob/719735896c86b56fabec6cf3e825fb2ea640597a/mooncake-transfer-engine/src/transfer_metadata.cpp#L285-L296",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/kvcache-ai/Mooncake",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/mooncake-transfer-engine-through-0.3.13-post1-memory-exhaustion-via-unbounded-notify-queue",
+        "name": "VulnCheck Advisory: Mooncake transfer engine through 0.3.13.post1 Memory Exhaustion via Unbounded Notify Queue"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "Mooncake传输引擎内存耗尽漏洞"
+  },
+  "first_saved_at": "2026-10-02T00:25:51+00:00"
+}

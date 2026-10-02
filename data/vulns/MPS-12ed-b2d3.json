@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-10-02T00:25:47+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-12ed-b2d3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96294",
+    "cvss": {},
+    "cvss_score": 8.7,
+    "cvss_vector": "",
+    "cwe": "CWE-248",
+    "description": "Apache Thrift 是开源的跨语言 RPC 框架，其 NodeJS 绑定以 npm 包 thrift 发布，内建的 web server 可把 HTTP 服务升级为 WebSocket 通道来承载 Thrift 消息。\n受影响版本中，web_server.js 的 createWebServer 在处理 HTTP upgrade 事件完成 WebSocket 握手后，未为升级后的 socket 注册 error 监听器，仅用内层 try/catch 处理帧解码异常；当该 socket 触发 error 事件（如远端异常断开连接）时，异常按 Node.js 事件约定以未捕获异常抛出，Node 进程随之退出，远程攻击者无需认证即可令整个 Thrift NodeJS 服务崩溃。\n修复版本中通过在 upgrade 处理器入口为升级后的 socket 注册 error 监听器解决该问题，错误被记录为 TWebSocketTransport Exception 日志并调用 socket.destroy() 关闭当前连接，单个 WebSocket 连接上的错误不再终结服务器进程。",
+    "effects": [
+      {
+        "comp_name": "thrift",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.25.0)",
+            "min_fixed_version": "0.25.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "未捕获的异常",
+    "kind_en": "未捕获的异常",
+    "last_modified_time": "2026-10-02",
+    "level": "High",
+    "mps_id": "MPS-12ed-b2d3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-02",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12129.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/40486d71c40464f3c69bd7eed7187f13c33ad1ee",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/releases/tag/v0.25.0",
+        "name": ""
+      },
+      {
+        "url": "https://www.npmjs.com/package/thrift",
+        "name": ""
+      },
+      {
+        "url": "https://thrift.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-96294",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "Thrift NodeJS WebSocket 拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96294",
+    "cvss": {},
+    "cvss_score": 8.7,
+    "cvss_vector": "",
+    "cwe": "CWE-248",
+    "description": "Apache Thrift 是开源的跨语言 RPC 框架，其 NodeJS 绑定以 npm 包 thrift 发布，内建的 web server 可把 HTTP 服务升级为 WebSocket 通道来承载 Thrift 消息。\n受影响版本中，web_server.js 的 createWebServer 在处理 HTTP upgrade 事件完成 WebSocket 握手后，未为升级后的 socket 注册 error 监听器，仅用内层 try/catch 处理帧解码异常；当该 socket 触发 error 事件（如远端异常断开连接）时，异常按 Node.js 事件约定以未捕获异常抛出，Node 进程随之退出，远程攻击者无需认证即可令整个 Thrift NodeJS 服务崩溃。\n修复版本中通过在 upgrade 处理器入口为升级后的 socket 注册 error 监听器解决该问题，错误被记录为 TWebSocketTransport Exception 日志并调用 socket.destroy() 关闭当前连接，单个 WebSocket 连接上的错误不再终结服务器进程。",
+    "effects": [
+      {
+        "comp_name": "thrift",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.25.0)",
+            "min_fixed_version": "0.25.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "未捕获的异常",
+    "kind_en": "Uncaught Exception",
+    "last_modified_time": "2026-10-02",
+    "level": "High",
+    "mps_id": "MPS-12ed-b2d3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-02",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12129.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/40486d71c40464f3c69bd7eed7187f13c33ad1ee",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/releases/tag/v0.25.0",
+        "name": ""
+      },
+      {
+        "url": "https://www.npmjs.com/package/thrift",
+        "name": ""
+      },
+      {
+        "url": "https://thrift.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-96294",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "Thrift NodeJS WebSocket 拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-10-02T00:25:47+00:00"
+}

@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-09-28T21:00:15+00:00",
+  "saved_at": "2026-10-02T00:25:54+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-5rlv-qbdu",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3m6z-kdb2",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,29 +21,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-87741",
+    "cve_id": "CVE-2026-71452",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "source": "productsecurity@jci.com",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.8
+          "base_score": 7.2
         }
       ]
     },
-    "cvss_score": 8.8,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "ConvertPlus（插件目录名 convertplug）是 Brainstorm Force 发布的 WordPress 弹窗插件，以 GPL 许可分发，用于创建模态弹窗、通知栏和滑入表单，官方没有公开的 Git 仓库。\n受影响版本中，Subscriber 及以上已登录用户可访问仅挂在 wp_ajax_cp_display_preview_modal 的预览回调。Convert_Plug::cp_display_preview_modal 会引入 modules/modal/style-preview-ajax.php；该文件把 nonce 校验放在 isset($_REQUEST['cp_admin_page_nonce']) 条件内，请求不携带 cp_admin_page_nonce 时继续执行，且没有能力检查。$_GET['style'] 经 sanitize_text_field 后被拼进 [smile_modal] 短代码并传入 do_shortcode，该过滤不会去掉短代码分隔符，调用方可以插入第二个受控的 [smile_modal]，使 smile_modal_popup 对 base64 解码后的 settings_encoded 调用不带 allowed_classes 的 maybe_unserialize，注入 PHP 对象。插件自身没有已知 POP 链，仅当其他插件或主题提供 POP 链时，才可能删除任意文件、读取敏感数据或执行代码。\n修复版本中通过发布 3.6.4 修复该漏洞。Wordfence 将该版本标为补丁版本，公开材料未披露具体源码差异。",
+    "description": "Johnson Controls EasyIO FS32（FS-32）是商业闭源的可编程楼宇自动化网络控制器，用于商业与工业设施中暖通空调、照明与能源管理等楼宇功能的自动化管理，并可直接接入传感器与执行器。\n受影响版本中，该控制器固件存在操作系统命令注入漏洞（CWE-78），外部输入可进入操作系统命令执行流程并在控制器上执行任意命令；官方 CVSS v4.0 评级（AV:A/PR:H/UI:N）表明利用需接入与控制器相邻的网络并持有设备高权限账户，无需用户交互，成功利用后会进一步危及所接入楼宇自动化系统的机密性、完整性与可用性。\n修复版本中通过 3.0b63 固件消除该命令注入风险，官方记录将受影响范围限定为 3.0b63 之前版本，3.0b63 及以上版本不受影响；固件闭源，公开资料未披露具体修复代码。",
     "effects": [
       {
-        "comp_name": "convertplug",
+        "comp_name": "easyio_fs32",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,3.6.4)",
-            "min_fixed_version": "3.6.4",
+            "affected_version": "(-∞,3.0b63)",
+            "min_fixed_version": "3.0b63",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -54,32 +54,28 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "OS命令注入",
     "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
-    "last_modified_time": "2026-09-29",
+    "last_modified_time": "2026-10-02",
     "level": "High",
-    "mps_id": "MPS-5rlv-qbdu",
+    "mps_id": "MPS-3m6z-kdb2",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-29",
+    "published_time": "2026-10-02",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-5rlv-qbdu",
-        "name": "https://www.oscs1024.com/hd/MPS-5rlv-qbdu"
+        "url": "https://www.oscs1024.com/hd/MPS-3m6z-kdb2",
+        "name": "https://www.oscs1024.com/hd/MPS-3m6z-kdb2"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87741",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87741"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71452",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71452"
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/286b4dde-974d-4bb5-8a7e-57c849beaab1?source=cve",
-        "name": ""
-      },
-      {
-        "url": "https://convertpro.net",
+        "url": "https://www.johnsoncontrols.com/trust-center/cybersecurity/security-advisories",
         "name": ""
       }
     ],
@@ -87,7 +83,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "ConvertPlus对象注入",
+    "title": "EasyIO FS32命令注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -107,29 +103,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-87741",
+    "cve_id": "CVE-2026-71452",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "source": "productsecurity@jci.com",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.8
+          "base_score": 7.2
         }
       ]
     },
-    "cvss_score": 8.8,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "ConvertPlus（插件目录名 convertplug）是 Brainstorm Force 发布的 WordPress 弹窗插件，以 GPL 许可分发，用于创建模态弹窗、通知栏和滑入表单，官方没有公开的 Git 仓库。\n受影响版本中，Subscriber 及以上已登录用户可访问仅挂在 wp_ajax_cp_display_preview_modal 的预览回调。Convert_Plug::cp_display_preview_modal 会引入 modules/modal/style-preview-ajax.php；该文件把 nonce 校验放在 isset($_REQUEST['cp_admin_page_nonce']) 条件内，请求不携带 cp_admin_page_nonce 时继续执行，且没有能力检查。$_GET['style'] 经 sanitize_text_field 后被拼进 [smile_modal] 短代码并传入 do_shortcode，该过滤不会去掉短代码分隔符，调用方可以插入第二个受控的 [smile_modal]，使 smile_modal_popup 对 base64 解码后的 settings_encoded 调用不带 allowed_classes 的 maybe_unserialize，注入 PHP 对象。插件自身没有已知 POP 链，仅当其他插件或主题提供 POP 链时，才可能删除任意文件、读取敏感数据或执行代码。\n修复版本中通过发布 3.6.4 修复该漏洞。Wordfence 将该版本标为补丁版本，公开材料未披露具体源码差异。",
+    "description": "Johnson Controls EasyIO FS32（FS-32）是商业闭源的可编程楼宇自动化网络控制器，用于商业与工业设施中暖通空调、照明与能源管理等楼宇功能的自动化管理，并可直接接入传感器与执行器。\n受影响版本中，该控制器固件存在操作系统命令注入漏洞（CWE-78），外部输入可进入操作系统命令执行流程并在控制器上执行任意命令；官方 CVSS v4.0 评级（AV:A/PR:H/UI:N）表明利用需接入与控制器相邻的网络并持有设备高权限账户，无需用户交互，成功利用后会进一步危及所接入楼宇自动化系统的机密性、完整性与可用性。\n修复版本中通过 3.0b63 固件消除该命令注入风险，官方记录将受影响范围限定为 3.0b63 之前版本，3.0b63 及以上版本不受影响；固件闭源，公开资料未披露具体修复代码。",
     "effects": [
       {
-        "comp_name": "convertplug",
+        "comp_name": "easyio_fs32",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,3.6.4)",
-            "min_fixed_version": "3.6.4",
+            "affected_version": "(-∞,3.0b63)",
+            "min_fixed_version": "3.0b63",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -140,32 +136,28 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "OS命令注入",
     "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
-    "last_modified_time": "2026-09-29",
+    "last_modified_time": "2026-10-02",
     "level": "High",
-    "mps_id": "MPS-5rlv-qbdu",
+    "mps_id": "MPS-3m6z-kdb2",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-09-29",
+    "published_time": "2026-10-02",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-5rlv-qbdu",
-        "name": "https://www.oscs1024.com/hd/MPS-5rlv-qbdu"
+        "url": "https://www.oscs1024.com/hd/MPS-3m6z-kdb2",
+        "name": "https://www.oscs1024.com/hd/MPS-3m6z-kdb2"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87741",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87741"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71452",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71452"
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/286b4dde-974d-4bb5-8a7e-57c849beaab1?source=cve",
-        "name": ""
-      },
-      {
-        "url": "https://convertpro.net",
+        "url": "https://www.johnsoncontrols.com/trust-center/cybersecurity/security-advisories",
         "name": ""
       }
     ],
@@ -173,7 +165,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "ConvertPlus对象注入"
+    "title": "EasyIO FS32命令注入漏洞"
   },
-  "first_saved_at": "2026-09-28T21:00:15+00:00"
+  "first_saved_at": "2026-10-02T00:25:54+00:00"
 }

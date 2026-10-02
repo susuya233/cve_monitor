@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-10-02T00:25:48+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-56eb-6be2",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94642",
+    "cvss": {},
+    "cvss_score": 8.7,
+    "cvss_vector": "",
+    "cwe": "CWE-248",
+    "description": "Apache Thrift 是 Apache 软件基金会的开源跨语言 RPC 框架，其 PHP 绑定以 composer 包 apache/thrift 发布，提供传输层、协议层与 TSimpleServer、TForkingServer 等服务端实现，用于在 PHP 进程中承载 Thrift RPC 服务。\n受影响版本中，TSimpleServer 的 serve() 主循环把 accept()、传输与协议工厂调用以及 processor 处理循环放在同一个 try 块内，且只捕获 TTransportException；协议层解析畸形报文时抛出的 TProtocolException 继承自 TException，并非传输异常，畸形 JSON 报文引发的 TypeError 等 \\Error 类型异常同样不受该 catch 约束，未捕获异常逸出 serve() 后整个 PHP 服务进程以致命错误退出。远程攻击者无需认证，向服务端口发送畸形请求数据（如二进制协议下 4 字节的 0xFFFFFFFF 版本头）即可触发该流程，造成拒绝服务。\n修复版本中通过重构 serve() 循环，将 accept() 的传输异常处理与单个连接的服务逻辑分离，后者移入内层 try 并在 finally 中关闭连接、以 catch (\\Throwable) 兜底，任何异常只结束当前连接，服务端继续接受后续客户端；TForkingServer 子进程的 handleChild 捕获范围同步扩大到 \\Throwable，处理结束后退出而不返回主循环。该修复包含在 0.25.0 版本中。",
+    "effects": [
+      {
+        "comp_name": "apache/thrift",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.25.0)",
+            "min_fixed_version": "0.25.0",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "未捕获的异常",
+    "kind_en": "未捕获的异常",
+    "last_modified_time": "2026-10-02",
+    "level": "High",
+    "mps_id": "MPS-56eb-6be2",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-02",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12127.html",
+        "name": ""
+      },
+      {
+        "url": "https://thrift.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-94642",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/24a0d02577612214dd607c4128e2864c5fe555ff",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/releases/tag/v0.25.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Apache Thrift PHP未捕获异常漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94642",
+    "cvss": {},
+    "cvss_score": 8.7,
+    "cvss_vector": "",
+    "cwe": "CWE-248",
+    "description": "Apache Thrift 是 Apache 软件基金会的开源跨语言 RPC 框架，其 PHP 绑定以 composer 包 apache/thrift 发布，提供传输层、协议层与 TSimpleServer、TForkingServer 等服务端实现，用于在 PHP 进程中承载 Thrift RPC 服务。\n受影响版本中，TSimpleServer 的 serve() 主循环把 accept()、传输与协议工厂调用以及 processor 处理循环放在同一个 try 块内，且只捕获 TTransportException；协议层解析畸形报文时抛出的 TProtocolException 继承自 TException，并非传输异常，畸形 JSON 报文引发的 TypeError 等 \\Error 类型异常同样不受该 catch 约束，未捕获异常逸出 serve() 后整个 PHP 服务进程以致命错误退出。远程攻击者无需认证，向服务端口发送畸形请求数据（如二进制协议下 4 字节的 0xFFFFFFFF 版本头）即可触发该流程，造成拒绝服务。\n修复版本中通过重构 serve() 循环，将 accept() 的传输异常处理与单个连接的服务逻辑分离，后者移入内层 try 并在 finally 中关闭连接、以 catch (\\Throwable) 兜底，任何异常只结束当前连接，服务端继续接受后续客户端；TForkingServer 子进程的 handleChild 捕获范围同步扩大到 \\Throwable，处理结束后退出而不返回主循环。该修复包含在 0.25.0 版本中。",
+    "effects": [
+      {
+        "comp_name": "apache/thrift",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.25.0)",
+            "min_fixed_version": "0.25.0",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "未捕获的异常",
+    "kind_en": "Uncaught Exception",
+    "last_modified_time": "2026-10-02",
+    "level": "High",
+    "mps_id": "MPS-56eb-6be2",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-02",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12127.html",
+        "name": ""
+      },
+      {
+        "url": "https://thrift.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-94642",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/24a0d02577612214dd607c4128e2864c5fe555ff",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/releases/tag/v0.25.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Apache Thrift PHP未捕获异常漏洞"
+  },
+  "first_saved_at": "2026-10-02T00:25:48+00:00"
+}
