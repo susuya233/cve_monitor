@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-10-03T01:38:26+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-b3sy-noix",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-105050",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-180",
+    "description": "PeaZip 是一款开源（LGPL-3.0）的跨平台文件压缩与归档管理工具，基于 Free Pascal/Lazarus 开发，支持多种归档格式的压缩、解压、浏览与加密操作。\n受影响版本中，构造后端命令行时 stringdelim 以系统对应的定界引号包裹文件名，未检查文件名本身已包含该定界符的情况；归档内文件名携带定界符引号时引号配对被破坏，攻击者内容可逃逸出引号上下文，而命令行校验函数 validatecl 的单双引号检查处于注释状态，无法拦截此类命令行；在控制台模式等非默认配置下，组装后的命令行经 cmd /c 或 bash -c 交由真实 shell 解析执行，最终形成操作系统命令注入。\n修复版本中通过在 stringdelim 检测定界符冲突并返回 #rejected_string# 拒绝串，validatecl 在入口识别拒绝串并丢弃整条命令行，新增 validatecl_console 在命令行传递给真实控制台前拒绝双引号与回车、换行等字符，并补充过滤 &、;、反引号、$ 等元字符，切断由归档内文件名到 shell 执行的注入链条。",
+    "effects": [
+      {
+        "comp_name": "peazip",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,11.3.0)",
+            "min_fixed_version": "11.3.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不正确的行为次序：规范化之前验证",
+    "kind_en": "不正确的行为顺序：先验证再规范化",
+    "last_modified_time": "2026-10-03",
+    "level": "High",
+    "mps_id": "MPS-b3sy-noix",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-b3sy-noix",
+        "name": "https://www.oscs1024.com/hd/MPS-b3sy-noix"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105050",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-105050"
+      },
+      {
+        "url": "https://github.com/peazip/PeaZip/releases/tag/11.3.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/peazip/PeaZip/tree/sources/peazip-sources",
+        "name": ""
+      },
+      {
+        "url": "https://app.secur0.com/certificate/ys3yqg-avrwaq-5ybnwl",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/peazip/PeaZip/commit/009fc35530e26729863969eddf4c18f1b48331cf",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "PeaZip 命令注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-105050",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-180",
+    "description": "PeaZip 是一款开源（LGPL-3.0）的跨平台文件压缩与归档管理工具，基于 Free Pascal/Lazarus 开发，支持多种归档格式的压缩、解压、浏览与加密操作。\n受影响版本中，构造后端命令行时 stringdelim 以系统对应的定界引号包裹文件名，未检查文件名本身已包含该定界符的情况；归档内文件名携带定界符引号时引号配对被破坏，攻击者内容可逃逸出引号上下文，而命令行校验函数 validatecl 的单双引号检查处于注释状态，无法拦截此类命令行；在控制台模式等非默认配置下，组装后的命令行经 cmd /c 或 bash -c 交由真实 shell 解析执行，最终形成操作系统命令注入。\n修复版本中通过在 stringdelim 检测定界符冲突并返回 #rejected_string# 拒绝串，validatecl 在入口识别拒绝串并丢弃整条命令行，新增 validatecl_console 在命令行传递给真实控制台前拒绝双引号与回车、换行等字符，并补充过滤 &、;、反引号、$ 等元字符，切断由归档内文件名到 shell 执行的注入链条。",
+    "effects": [
+      {
+        "comp_name": "peazip",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,11.3.0)",
+            "min_fixed_version": "11.3.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不正确的行为次序：规范化之前验证",
+    "kind_en": "Incorrect Behavior Order: Validate Before Canonicalize",
+    "last_modified_time": "2026-10-03",
+    "level": "High",
+    "mps_id": "MPS-b3sy-noix",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-b3sy-noix",
+        "name": "https://www.oscs1024.com/hd/MPS-b3sy-noix"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105050",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-105050"
+      },
+      {
+        "url": "https://github.com/peazip/PeaZip/releases/tag/11.3.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/peazip/PeaZip/tree/sources/peazip-sources",
+        "name": ""
+      },
+      {
+        "url": "https://app.secur0.com/certificate/ys3yqg-avrwaq-5ybnwl",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/peazip/PeaZip/commit/009fc35530e26729863969eddf4c18f1b48331cf",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "PeaZip 命令注入漏洞"
+  },
+  "first_saved_at": "2026-10-03T01:38:26+00:00"
+}
