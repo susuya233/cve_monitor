@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-10-03T16:59:11+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-j7ew-6pxs",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96451",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-639",
+    "description": "Ultimate Member 是一款 WordPress 开源会员管理插件，提供用户注册、登录、个人资料、会员目录与账户页面等功能。\n受影响版本中，um-download 下载路由根据用户可控的 um_user 参数调用 um_fetch_user() 将任意用户载入插件全局用户上下文，失败分支未调用 um_reset_user() 还原；账户提交流程的 um_submitting_account_page() 只检查 $_POST['_um_account'] 与登录状态，未校验请求是否来自预定义 Account 页面，um_update_account_{tab} nonce 未绑定用户，um_submit_account_details() 使用 um_user( 'ID' ) 作为账户更新目标。具备普通权限的攻击者可在同一请求中让全局用户指向受害者并提交账户变更，把受害者邮箱改为攻击者控制的邮箱，再通过密码重置接管包括管理员在内的账户，实现权限提升。\n修复版本中通过将 um_submit_account_details() 的更新目标改为 get_current_user_id() 限定账户仅能提交到当前用户，在 um_submit_account_errors_hook() 中增加 Account 页面与登录状态校验并把 nonce 绑定为 um_update_account_{tab}-{user_id}，同时下载路由在各失败分支调用 um_reset_user() 清理全局用户，切断了借用户可控键位伪造更新目标的提权链路。",
+    "effects": [
+      {
+        "comp_name": "ultimate-member",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.14.0)",
+            "min_fixed_version": "2.14.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-10-04",
+    "level": "High",
+    "mps_id": "MPS-j7ew-6pxs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-j7ew-6pxs",
+        "name": "https://www.oscs1024.com/hd/MPS-j7ew-6pxs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96451",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96451"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/ultimate-member/vulnerability/wordpress-ultimate-member-plugin-2-13-1-privilege-escalation-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Ultimate Member权限提升漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96451",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-639",
+    "description": "Ultimate Member 是一款 WordPress 开源会员管理插件，提供用户注册、登录、个人资料、会员目录与账户页面等功能。\n受影响版本中，um-download 下载路由根据用户可控的 um_user 参数调用 um_fetch_user() 将任意用户载入插件全局用户上下文，失败分支未调用 um_reset_user() 还原；账户提交流程的 um_submitting_account_page() 只检查 $_POST['_um_account'] 与登录状态，未校验请求是否来自预定义 Account 页面，um_update_account_{tab} nonce 未绑定用户，um_submit_account_details() 使用 um_user( 'ID' ) 作为账户更新目标。具备普通权限的攻击者可在同一请求中让全局用户指向受害者并提交账户变更，把受害者邮箱改为攻击者控制的邮箱，再通过密码重置接管包括管理员在内的账户，实现权限提升。\n修复版本中通过将 um_submit_account_details() 的更新目标改为 get_current_user_id() 限定账户仅能提交到当前用户，在 um_submit_account_errors_hook() 中增加 Account 页面与登录状态校验并把 nonce 绑定为 um_update_account_{tab}-{user_id}，同时下载路由在各失败分支调用 um_reset_user() 清理全局用户，切断了借用户可控键位伪造更新目标的提权链路。",
+    "effects": [
+      {
+        "comp_name": "ultimate-member",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.14.0)",
+            "min_fixed_version": "2.14.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-10-04",
+    "level": "High",
+    "mps_id": "MPS-j7ew-6pxs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-j7ew-6pxs",
+        "name": "https://www.oscs1024.com/hd/MPS-j7ew-6pxs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96451",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96451"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/ultimate-member/vulnerability/wordpress-ultimate-member-plugin-2-13-1-privilege-escalation-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Ultimate Member权限提升漏洞"
+  },
+  "first_saved_at": "2026-10-03T16:59:11+00:00"
+}

@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-10-03T16:59:13+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4mrw-c9ny",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103065",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+    "cwe": "CWE-1284",
+    "description": "Kirki 是 Themeum 团队开源的 WordPress 页面构建与自定义器插件，通过 WordPress 官方插件目录分发，提供自由画布编辑器、组件库与前端动态内容渲染能力。\n受影响版本中，组件库注册等未授权 REST 入口与用户元数据保存路径使用 sanitize_text_field、sanitize_textarea_field 存储访客输入，方括号字符被原样保留；前端渲染动态内容时 kirki/includes/Frontend/Preview/Utils.php 的 esc_dynamic_text_value 至多执行 5 轮 HTML 实体解码后仅将方括号成对改写，且纯文本类型列表只包含 comment，user、author 取值（含通过注册路由写入的 KirkiComponentLib_* 用户元数据）未经转义直接拼接进页面；页面渲染链路存在 do_shortcode 调用，攻击者预先存储的短代码语法被解析执行，未授权攻击者可触发站点内已注册的任意短代码，实现任意代码执行并窃取敏感数据。\n修复版本中通过新增 Utils::sanitize_plain_text_input 在存储阶段循环解码 HTML 实体至稳定态并删除全部方括号，组件库注册入口统一接入该清洗逻辑；esc_dynamic_text_value 改为解码至稳定态后直接移除所有方括号，纯文本类型扩展为 comment、user、author，ShowUserMetadata 与 post_meta 短代码输出同步剥离方括号并拒绝受保护元数据，切断了存储型短代码到 do_shortcode 执行的利用链。",
+    "effects": [
+      {
+        "comp_name": "kirki",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,6.3.2)",
+            "min_fixed_version": "6.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "输入中指定数量的验证不当",
+    "kind_en": "输入中指定数量的验证不正确",
+    "last_modified_time": "2026-10-03",
+    "level": "High",
+    "mps_id": "MPS-4mrw-c9ny",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4mrw-c9ny",
+        "name": "https://www.oscs1024.com/hd/MPS-4mrw-c9ny"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103065",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-103065"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/kirki/vulnerability/wordpress-kirki-plugin-6-3-1-arbitrary-code-execution-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Kirki 未授权代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103065",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+    "cwe": "CWE-1284",
+    "description": "Kirki 是 Themeum 团队开源的 WordPress 页面构建与自定义器插件，通过 WordPress 官方插件目录分发，提供自由画布编辑器、组件库与前端动态内容渲染能力。\n受影响版本中，组件库注册等未授权 REST 入口与用户元数据保存路径使用 sanitize_text_field、sanitize_textarea_field 存储访客输入，方括号字符被原样保留；前端渲染动态内容时 kirki/includes/Frontend/Preview/Utils.php 的 esc_dynamic_text_value 至多执行 5 轮 HTML 实体解码后仅将方括号成对改写，且纯文本类型列表只包含 comment，user、author 取值（含通过注册路由写入的 KirkiComponentLib_* 用户元数据）未经转义直接拼接进页面；页面渲染链路存在 do_shortcode 调用，攻击者预先存储的短代码语法被解析执行，未授权攻击者可触发站点内已注册的任意短代码，实现任意代码执行并窃取敏感数据。\n修复版本中通过新增 Utils::sanitize_plain_text_input 在存储阶段循环解码 HTML 实体至稳定态并删除全部方括号，组件库注册入口统一接入该清洗逻辑；esc_dynamic_text_value 改为解码至稳定态后直接移除所有方括号，纯文本类型扩展为 comment、user、author，ShowUserMetadata 与 post_meta 短代码输出同步剥离方括号并拒绝受保护元数据，切断了存储型短代码到 do_shortcode 执行的利用链。",
+    "effects": [
+      {
+        "comp_name": "kirki",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,6.3.2)",
+            "min_fixed_version": "6.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "输入中指定数量的验证不当",
+    "kind_en": "Improper Validation of Specified Quantity in Input",
+    "last_modified_time": "2026-10-03",
+    "level": "High",
+    "mps_id": "MPS-4mrw-c9ny",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4mrw-c9ny",
+        "name": "https://www.oscs1024.com/hd/MPS-4mrw-c9ny"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103065",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-103065"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/kirki/vulnerability/wordpress-kirki-plugin-6-3-1-arbitrary-code-execution-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Kirki 未授权代码执行漏洞"
+  },
+  "first_saved_at": "2026-10-03T16:59:13+00:00"
+}
