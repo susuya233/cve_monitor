@@ -1,0 +1,207 @@
+{
+  "saved_at": "2026-10-03T12:56:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-o37w-al48",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71890",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "91579145-5d7b-4cc5-b925-a0262ff19630",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Amber",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Amber",
+    "cwe": "CWE-863",
+    "description": "Bouncy Castle for Java 是 Legion of the Bouncy Castle 开源发布的 Java 密码学库，其 org.bouncycastle.mls 模块（Maven 坐标 org.bouncycastle:bcmls-jdk18on）实现了 RFC 9420 定义的 MLS 安全群组通信协议，供应用构建端到端加密群组。\n受影响版本中，外部提交（external commit）提案列表校验函数 org.bouncycastle.mls.protocol.Group.validateExternalCachedProposals 只按类型统计提案并用 removedIsInTree 限制被移除叶子索引在树内，未校验被移除叶子与加入者本人的关系；普通提案校验器用于拦截自移除的 not_me 规则在该路径被有意跳过以支持合法的重同步提交，却没有补上等价的归属判定。任何持有群组公开 GroupInfo 的攻击者可构造携带指向任意成员 LeafIndex 的 Remove 提案的外部提交，成员端应用经 Group.handle 处理该消息时校验通过并应用移除，受害成员被逐出群组，攻击者的叶子占据其在 ratchet tree 中腾出的槽位并成为新纪元成员，可读取后续群组消息并伪造成员身份发言，Group.handle 全程不报错。\n修复版本中通过在 validateExternalCachedProposals 中引入 removesOwnPriorAppearance 归属校验切断该链路，取提交 path 字段中的加入者新叶子与被移除叶子，按凭证编码字节比较，仅当二者完全一致时接受携带 Remove 的外部提交；inferCommitType 与 validateCachedProposals 在发送侧与接收侧统一传入加入者叶子强制执行该规则，凭证按编码比较而非使用仅对 basic 类型填充的 Credential.getIdentity()，避免任意两个 x509 凭证被误判为同一参与者。",
+    "effects": [
+      {
+        "comp_name": "bc-java",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.73,1.86)",
+            "min_fixed_version": "1.86",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.bouncycastle:bcmls-jdk18on",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[1.78,1.86)",
+            "min_fixed_version": "1.86",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查错误",
+    "kind_en": "授权错误",
+    "last_modified_time": "2026-10-03",
+    "level": "High",
+    "mps_id": "MPS-o37w-al48",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-o37w-al48",
+        "name": "https://www.oscs1024.com/hd/MPS-o37w-al48"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71890",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71890"
+      },
+      {
+        "url": "https://github.com/bcgit/bc-java/wiki/CVE%E2%80%902026%E2%80%9071890",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/bcgit/bc-java/commit/7e8bb10eb90baddf3f10b8679f627462b9522d24",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Bouncy Castle MLS成员越权移除漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71890",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "91579145-5d7b-4cc5-b925-a0262ff19630",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Amber",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Amber",
+    "cwe": "CWE-863",
+    "description": "Bouncy Castle for Java 是 Legion of the Bouncy Castle 开源发布的 Java 密码学库，其 org.bouncycastle.mls 模块（Maven 坐标 org.bouncycastle:bcmls-jdk18on）实现了 RFC 9420 定义的 MLS 安全群组通信协议，供应用构建端到端加密群组。\n受影响版本中，外部提交（external commit）提案列表校验函数 org.bouncycastle.mls.protocol.Group.validateExternalCachedProposals 只按类型统计提案并用 removedIsInTree 限制被移除叶子索引在树内，未校验被移除叶子与加入者本人的关系；普通提案校验器用于拦截自移除的 not_me 规则在该路径被有意跳过以支持合法的重同步提交，却没有补上等价的归属判定。任何持有群组公开 GroupInfo 的攻击者可构造携带指向任意成员 LeafIndex 的 Remove 提案的外部提交，成员端应用经 Group.handle 处理该消息时校验通过并应用移除，受害成员被逐出群组，攻击者的叶子占据其在 ratchet tree 中腾出的槽位并成为新纪元成员，可读取后续群组消息并伪造成员身份发言，Group.handle 全程不报错。\n修复版本中通过在 validateExternalCachedProposals 中引入 removesOwnPriorAppearance 归属校验切断该链路，取提交 path 字段中的加入者新叶子与被移除叶子，按凭证编码字节比较，仅当二者完全一致时接受携带 Remove 的外部提交；inferCommitType 与 validateCachedProposals 在发送侧与接收侧统一传入加入者叶子强制执行该规则，凭证按编码比较而非使用仅对 basic 类型填充的 Credential.getIdentity()，避免任意两个 x509 凭证被误判为同一参与者。",
+    "effects": [
+      {
+        "comp_name": "bc-java",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.73,1.86)",
+            "min_fixed_version": "1.86",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.bouncycastle:bcmls-jdk18on",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[1.78,1.86)",
+            "min_fixed_version": "1.86",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查错误",
+    "kind_en": "Incorrect Authorization",
+    "last_modified_time": "2026-10-03",
+    "level": "High",
+    "mps_id": "MPS-o37w-al48",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-o37w-al48",
+        "name": "https://www.oscs1024.com/hd/MPS-o37w-al48"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71890",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71890"
+      },
+      {
+        "url": "https://github.com/bcgit/bc-java/wiki/CVE%E2%80%902026%E2%80%9071890",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/bcgit/bc-java/commit/7e8bb10eb90baddf3f10b8679f627462b9522d24",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Bouncy Castle MLS成员越权移除漏洞"
+  },
+  "first_saved_at": "2026-10-03T12:56:52+00:00"
+}
