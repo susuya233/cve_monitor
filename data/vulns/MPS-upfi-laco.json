@@ -1,0 +1,147 @@
+{
+  "saved_at": "2026-10-04T15:05:26+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-upfi-laco",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97307",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-201",
+    "description": "Cost Calculator Builder 是 StylemixThemes 开发的开源 WordPress 报价计算表单插件，经 WordPress.org 官方目录分发，用于搭建价格估算表单并支持 Stripe、PayPal、reCAPTCHA、Webhook 等集成。\n受影响版本中，前端渲染入口将站点级敏感配置嵌入发送给访问者的页面数据：CCBFrontController::render_calculator_handler 通过 wp_localize_script 把仅删除少量支付密钥字段的 general_settings 整体写入 ajax_window，templates/frontend/render.php 将含 secret_key 的 geolocation 配置与 formFields.adminEmailAddress 写入 calc_data_<ID>，而 ccb_strip_frontend_payment_secrets 的清理清单未覆盖 webhooks 签名密钥、reCAPTCHA v2/v3 secretKey 等字段，未认证访问者查看包含计算器的页面便可读取这些服务端机密。\n修复版本中通过移除 ajax_window 中的 general_settings 字段、扩展 ccb_strip_frontend_payment_secrets 清洗路径并新增 ccb_strip_frontend_general_settings_secrets 对全局设置做同等清理解决该问题，webhooks、reCAPTCHA secretKey、管理员通知邮箱、geolocation.secret_key 不再进入前端载荷，PayPal 商家邮箱以占位符替换，地理定位配置仅在页面渲染相关字段时输出 public_key。",
+    "effects": [
+      {
+        "comp_name": "cost_calculator_builder",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.0.18)",
+            "min_fixed_version": "4.0.18",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过发送数据的信息暴露",
+    "kind_en": "将敏感信息插入发送的数据中",
+    "last_modified_time": "2026-10-04",
+    "level": "High",
+    "mps_id": "MPS-upfi-laco",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-upfi-laco",
+        "name": "https://www.oscs1024.com/hd/MPS-upfi-laco"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97307",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97307"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/cost-calculator-builder/vulnerability/wordpress-cost-calculator-builder-plugin-4-0-17-sensitive-data-exposure-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Cost Calculator Builder敏感信息泄露漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97307",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-201",
+    "description": "Cost Calculator Builder 是 StylemixThemes 开发的开源 WordPress 报价计算表单插件，经 WordPress.org 官方目录分发，用于搭建价格估算表单并支持 Stripe、PayPal、reCAPTCHA、Webhook 等集成。\n受影响版本中，前端渲染入口将站点级敏感配置嵌入发送给访问者的页面数据：CCBFrontController::render_calculator_handler 通过 wp_localize_script 把仅删除少量支付密钥字段的 general_settings 整体写入 ajax_window，templates/frontend/render.php 将含 secret_key 的 geolocation 配置与 formFields.adminEmailAddress 写入 calc_data_<ID>，而 ccb_strip_frontend_payment_secrets 的清理清单未覆盖 webhooks 签名密钥、reCAPTCHA v2/v3 secretKey 等字段，未认证访问者查看包含计算器的页面便可读取这些服务端机密。\n修复版本中通过移除 ajax_window 中的 general_settings 字段、扩展 ccb_strip_frontend_payment_secrets 清洗路径并新增 ccb_strip_frontend_general_settings_secrets 对全局设置做同等清理解决该问题，webhooks、reCAPTCHA secretKey、管理员通知邮箱、geolocation.secret_key 不再进入前端载荷，PayPal 商家邮箱以占位符替换，地理定位配置仅在页面渲染相关字段时输出 public_key。",
+    "effects": [
+      {
+        "comp_name": "cost_calculator_builder",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.0.18)",
+            "min_fixed_version": "4.0.18",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过发送数据的信息暴露",
+    "kind_en": "Insertion of Sensitive Information Into Sent Data",
+    "last_modified_time": "2026-10-04",
+    "level": "High",
+    "mps_id": "MPS-upfi-laco",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-upfi-laco",
+        "name": "https://www.oscs1024.com/hd/MPS-upfi-laco"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97307",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97307"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/cost-calculator-builder/vulnerability/wordpress-cost-calculator-builder-plugin-4-0-17-sensitive-data-exposure-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Cost Calculator Builder敏感信息泄露漏洞"
+  },
+  "first_saved_at": "2026-10-04T15:05:26+00:00"
+}
