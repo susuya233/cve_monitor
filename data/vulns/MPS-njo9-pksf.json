@@ -1,0 +1,183 @@
+{
+  "saved_at": "2026-10-04T18:56:40+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-njo9-pksf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-105215",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-290",
+    "description": "ZITADEL 是开源的身份与访问管理（IAM）系统，其托管的 Login V1 登录界面用于完成 OIDC/SAML 认证及外部身份提供商（IdP）登录。\n受影响版本中，Login V1 处理 external account not found 注册的公开接口 handleExternalNotFoundOptionCheck 在 authReq.LinkingUsers 为空、未经真实 IdP 回调验证的情况下，仍使用 POST 表单中的 ExternalIDPConfigID 与 ExternalUserID 构建新账户的外部身份，未认证攻击者可伪造该注册请求，预先创建绑定受害者公开外部身份（如 GitHub 数字用户 ID）的账户，受害者后续首次通过该 IdP 真实登录时会被签入攻击者预创建的账户，形成账户预劫持。\n修复版本中通过在 handleExternalNotFoundOptionCheck 中拒绝 authReq.LinkingUsers 为空的请求，并将 IDPConfigID、ExternalUserID 改为取自真实 IdP 回调写入的 linkingUser，邮箱与手机验证标志仅在表单提交值与 IdP 返回值一致时保留，切断了伪造外部身份完成注册的路径。",
+    "effects": [
+      {
+        "comp_name": "github.com/zitadel/zitadel",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[3.0.0,3.4.14)",
+            "min_fixed_version": "3.4.14",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.16.2)",
+            "min_fixed_version": "4.16.2",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用欺骗进行的认证绕过",
+    "kind_en": "通过欺骗绕过身份验证",
+    "last_modified_time": "2026-10-04",
+    "level": "Critical",
+    "mps_id": "MPS-njo9-pksf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-njo9-pksf",
+        "name": "https://www.oscs1024.com/hd/MPS-njo9-pksf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105215",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-105215"
+      },
+      {
+        "url": "https://github.com/zitadel/zitadel/security/advisories/GHSA-738m-7888-jfv8",
+        "name": "GitHub Security Advisory (GHSA-738m-7888-jfv8)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/zitadel-before-4.16.2-account-pre-hijacking-via-forged-external-idp-callback",
+        "name": "VulnCheck Advisory: ZITADEL before 4.16.2 Account Pre-Hijacking via Forged External IdP Callback"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "ZITADEL账户预劫持漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-105215",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-290",
+    "description": "ZITADEL 是开源的身份与访问管理（IAM）系统，其托管的 Login V1 登录界面用于完成 OIDC/SAML 认证及外部身份提供商（IdP）登录。\n受影响版本中，Login V1 处理 external account not found 注册的公开接口 handleExternalNotFoundOptionCheck 在 authReq.LinkingUsers 为空、未经真实 IdP 回调验证的情况下，仍使用 POST 表单中的 ExternalIDPConfigID 与 ExternalUserID 构建新账户的外部身份，未认证攻击者可伪造该注册请求，预先创建绑定受害者公开外部身份（如 GitHub 数字用户 ID）的账户，受害者后续首次通过该 IdP 真实登录时会被签入攻击者预创建的账户，形成账户预劫持。\n修复版本中通过在 handleExternalNotFoundOptionCheck 中拒绝 authReq.LinkingUsers 为空的请求，并将 IDPConfigID、ExternalUserID 改为取自真实 IdP 回调写入的 linkingUser，邮箱与手机验证标志仅在表单提交值与 IdP 返回值一致时保留，切断了伪造外部身份完成注册的路径。",
+    "effects": [
+      {
+        "comp_name": "github.com/zitadel/zitadel",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[3.0.0,3.4.14)",
+            "min_fixed_version": "3.4.14",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.16.2)",
+            "min_fixed_version": "4.16.2",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用欺骗进行的认证绕过",
+    "kind_en": "Authentication Bypass by Spoofing",
+    "last_modified_time": "2026-10-04",
+    "level": "Critical",
+    "mps_id": "MPS-njo9-pksf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-njo9-pksf",
+        "name": "https://www.oscs1024.com/hd/MPS-njo9-pksf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105215",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-105215"
+      },
+      {
+        "url": "https://github.com/zitadel/zitadel/security/advisories/GHSA-738m-7888-jfv8",
+        "name": "GitHub Security Advisory (GHSA-738m-7888-jfv8)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/zitadel-before-4.16.2-account-pre-hijacking-via-forged-external-idp-callback",
+        "name": "VulnCheck Advisory: ZITADEL before 4.16.2 Account Pre-Hijacking via Forged External IdP Callback"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "ZITADEL账户预劫持漏洞"
+  },
+  "first_saved_at": "2026-10-04T18:56:40+00:00"
+}
