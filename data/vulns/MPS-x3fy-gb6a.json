@@ -1,0 +1,253 @@
+{
+  "saved_at": "2026-10-04T09:14:15+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-x3fy-gb6a",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-105135",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 10
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H/E:P/RL:X/RC:C",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-94",
+    "description": "MindSearch 是上海人工智能实验室 InternLM 团队开源的基于大语言模型的多智能体网络搜索框架，通过规划智能体把用户问题分解为 Web 搜索图，并以 Python 解释器动作驱动子问题查询与结果汇总。\n受影响版本中，API 服务默认绑定 0.0.0.0:8002 并暴露未鉴权的 POST /solve 接口，请求体中的 inputs 参数直接作为规划器大模型的用户输入；模型按系统提示在 <|action_start|><|interpreter|> 块中生成 Python 代码，mindsearch/agent/graph.py 的 ExecutionAction.run 经 extract_code 提取消息中的代码围栏后直接执行 exec(command, global_dict, local_dict)，而 mindsearch/agent/mindsearch_agent.py 传入的 global_dict 为 globals()，该过程无沙箱、无语法白名单且保留完整 __builtins__，攻击者通过提示词引导模型把任意系统命令写入解释器块，最终以服务进程权限（官方 Docker 镜像中为 root）执行任意代码。\n修复版本中通过，上游仓库最后一次代码推送为 2025-07-04，漏洞披露后厂商未响应；在官方修复发布前，可通过为 /solve 增加身份认证并将服务绑定地址收紧为 127.0.0.1、停止对模型输出执行 exec、仅分发结构化的 WebSearchGraph 操作，或将解释器隔离至无特权且无网络出口的沙箱容器中运行。",
+    "effects": [
+      {
+        "comp_name": "InternLM:MindSearch",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7952c5f]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-10-04",
+    "level": "Critical",
+    "mps_id": "MPS-x3fy-gb6a",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-x3fy-gb6a",
+        "name": "https://www.oscs1024.com/hd/MPS-x3fy-gb6a"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105135",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-105135"
+      },
+      {
+        "url": "https://vuldb.com/vuln/413352",
+        "name": "VDB-413352 | InternLM MindSearch Planner Agent graph.py ExecutionAction.run code injection"
+      },
+      {
+        "url": "https://vuldb.com/vuln/413352/cti",
+        "name": "VDB-413352 | CTI Indicators (IOB, IOC, TTP, IOA)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-105135",
+        "name": "CVE-2026-105135 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/943315",
+        "name": "Submit #943315 | InternLM MindSearch 0.1.0 Code Injection"
+      },
+      {
+        "url": "https://gist.github.com/DReazer/7ad46df9da73d0cf414276e4195b2183",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "MindSearch 远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-105135",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 10
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H/E:P/RL:X/RC:C",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-94",
+    "description": "MindSearch 是上海人工智能实验室 InternLM 团队开源的基于大语言模型的多智能体网络搜索框架，通过规划智能体把用户问题分解为 Web 搜索图，并以 Python 解释器动作驱动子问题查询与结果汇总。\n受影响版本中，API 服务默认绑定 0.0.0.0:8002 并暴露未鉴权的 POST /solve 接口，请求体中的 inputs 参数直接作为规划器大模型的用户输入；模型按系统提示在 <|action_start|><|interpreter|> 块中生成 Python 代码，mindsearch/agent/graph.py 的 ExecutionAction.run 经 extract_code 提取消息中的代码围栏后直接执行 exec(command, global_dict, local_dict)，而 mindsearch/agent/mindsearch_agent.py 传入的 global_dict 为 globals()，该过程无沙箱、无语法白名单且保留完整 __builtins__，攻击者通过提示词引导模型把任意系统命令写入解释器块，最终以服务进程权限（官方 Docker 镜像中为 root）执行任意代码。\n修复版本中通过，上游仓库最后一次代码推送为 2025-07-04，漏洞披露后厂商未响应；在官方修复发布前，可通过为 /solve 增加身份认证并将服务绑定地址收紧为 127.0.0.1、停止对模型输出执行 exec、仅分发结构化的 WebSearchGraph 操作，或将解释器隔离至无特权且无网络出口的沙箱容器中运行。",
+    "effects": [
+      {
+        "comp_name": "InternLM:MindSearch",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7952c5f]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-10-04",
+    "level": "Critical",
+    "mps_id": "MPS-x3fy-gb6a",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-x3fy-gb6a",
+        "name": "https://www.oscs1024.com/hd/MPS-x3fy-gb6a"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105135",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-105135"
+      },
+      {
+        "url": "https://vuldb.com/vuln/413352",
+        "name": "VDB-413352 | InternLM MindSearch Planner Agent graph.py ExecutionAction.run code injection"
+      },
+      {
+        "url": "https://vuldb.com/vuln/413352/cti",
+        "name": "VDB-413352 | CTI Indicators (IOB, IOC, TTP, IOA)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-105135",
+        "name": "CVE-2026-105135 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/943315",
+        "name": "Submit #943315 | InternLM MindSearch 0.1.0 Code Injection"
+      },
+      {
+        "url": "https://gist.github.com/DReazer/7ad46df9da73d0cf414276e4195b2183",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "MindSearch 远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-10-04T09:14:15+00:00"
+}

@@ -1,0 +1,267 @@
+{
+  "saved_at": "2026-10-04T09:14:18+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ufs2-5t6e",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序试图读取、写入或复制内存缓冲区时，未对边界进行适当的检查和限制。缓冲区是用于存储数据的一块内存区域，当程序试图在缓冲区之外的位置进行操作时，就可能导致缓冲区溢出或下溢。攻击者可以利用这个漏洞来修改程序的执行流、执行任意代码或导致拒绝服务等安全问题。",
+        "title": "什么是缓冲区溢出"
+      },
+      {
+        "content": "- 缓冲区溢出攻击：攻击者向输入缓冲区中注入超过其容量的数据，导致数据溢出到相邻的内存区域，可能覆盖关键数据、修改变量值或执行恶意代码。\n- 缓冲区下溢攻击：攻击者向输入缓冲区中注入少于其容量的数据，导致数据被读取时越过缓冲区边界，可能泄露敏感信息或破坏程序的正常执行流程。\n- 字符串格式化攻击：攻击者通过控制格式化字符串的输入，可以读取或写入任意内存位置，从而执行恶意操作。",
+        "title": "缓冲区溢出常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和边界检查：对于所有接受用户输入的缓冲区操作，确保验证输入数据的长度和内容，以避免缓冲区溢出或下溢。\n- 使用安全的字符串操作函数：使用安全的字符串操作函数（如strncpy、strncat）替代不安全的函数（如strcpy、strcat），这些函数会在操作时自动限制操作的边界。\n- 使用内存安全工具：使用内存安全工具（如内存分析器、静态分析工具）来检测和修复潜在的缓冲区溢出问题。\n- 采用安全编码实践：遵循安全编码实践，如最小特权原则、避免使用不受信任的输入等。\n- 定期更新和修补程序：及时应用程序厂商提供的安全更新和补丁，以修复已知的缓冲区溢出漏洞。\n- 使用编程语言和框架提供的安全功能：利用编程语言和框架提供的安全特性，如内存安全函数、边界检查等。",
+        "title": "如何预防缓冲区溢出"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-88779",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-119",
+    "description": "Citrix NetScaler ADC（原 Citrix ADC）与 Citrix NetScaler Gateway（原 Citrix Gateway）是 Cloud Software Group 旗下闭源的应用交付控制器与统一接入网关，广泛用于企业应用负载均衡、身份认证和远程访问接入。\n受影响版本中，设备在配置为 SAML SP（add authentication samlAction）或 SAML IdP（add authentication samlIdPProfile）并配合 Gateway 或 AAA 认证功能使用时，处理 SAML 认证流量的内存边界校验存在缺陷，未经身份验证的远程攻击者可发送恶意请求触发内存越界访问（CWE-119），造成内存溢出并导致设备拒绝服务；Citrix 已在未修复的部署上观察到定向攻击，该条件被反复触发时服务可能持续不可用。\n修复版本中通过修复 SAML 认证处理中的内存越界缺陷消除拒绝服务风险，Citrix 已发布 14.1-73.41、13.1-64.28、14.1-73.41 FIPS 和 13.1-37.282 及以上修复版本，升级完成前可通过 Global Deny List 特征签名缓解攻击。",
+    "effects": [
+      {
+        "comp_name": "netscaler_application_delivery_controller",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[14.1-FIPS,14.1-73.41-FIPS)",
+            "min_fixed_version": "14.1-73.41-FIPS",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.1-NDcPP,13.1-37.282)",
+            "min_fixed_version": "13.1-37.282",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.1,13.1-64.28)",
+            "min_fixed_version": "13.1-64.28",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.1,14.1-73.41)",
+            "min_fixed_version": "14.1-73.41",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.1-FIPS,13.1-37.282)",
+            "min_fixed_version": "13.1-37.282",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "netscaler_gateway",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[14.1,14.1-73.41)",
+            "min_fixed_version": "14.1-73.41",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.1,13.1-64.28)",
+            "min_fixed_version": "13.1-64.28",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "缓冲区溢出",
+    "kind_en": "内存缓冲区范围内的操作限制不当",
+    "last_modified_time": "2026-10-04",
+    "level": "High",
+    "mps_id": "MPS-ufs2-5t6e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ufs2-5t6e",
+        "name": "https://www.oscs1024.com/hd/MPS-ufs2-5t6e"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88779",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88779"
+      },
+      {
+        "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697174",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "NetScaler SAML拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序试图读取、写入或复制内存缓冲区时，未对边界进行适当的检查和限制。缓冲区是用于存储数据的一块内存区域，当程序试图在缓冲区之外的位置进行操作时，就可能导致缓冲区溢出或下溢。攻击者可以利用这个漏洞来修改程序的执行流、执行任意代码或导致拒绝服务等安全问题。",
+        "title": "什么是缓冲区溢出"
+      },
+      {
+        "content": "- 缓冲区溢出攻击：攻击者向输入缓冲区中注入超过其容量的数据，导致数据溢出到相邻的内存区域，可能覆盖关键数据、修改变量值或执行恶意代码。\n- 缓冲区下溢攻击：攻击者向输入缓冲区中注入少于其容量的数据，导致数据被读取时越过缓冲区边界，可能泄露敏感信息或破坏程序的正常执行流程。\n- 字符串格式化攻击：攻击者通过控制格式化字符串的输入，可以读取或写入任意内存位置，从而执行恶意操作。",
+        "title": "缓冲区溢出常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和边界检查：对于所有接受用户输入的缓冲区操作，确保验证输入数据的长度和内容，以避免缓冲区溢出或下溢。\n- 使用安全的字符串操作函数：使用安全的字符串操作函数（如strncpy、strncat）替代不安全的函数（如strcpy、strcat），这些函数会在操作时自动限制操作的边界。\n- 使用内存安全工具：使用内存安全工具（如内存分析器、静态分析工具）来检测和修复潜在的缓冲区溢出问题。\n- 采用安全编码实践：遵循安全编码实践，如最小特权原则、避免使用不受信任的输入等。\n- 定期更新和修补程序：及时应用程序厂商提供的安全更新和补丁，以修复已知的缓冲区溢出漏洞。\n- 使用编程语言和框架提供的安全功能：利用编程语言和框架提供的安全特性，如内存安全函数、边界检查等。",
+        "title": "如何预防缓冲区溢出"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-88779",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-119",
+    "description": "Citrix NetScaler ADC（原 Citrix ADC）与 Citrix NetScaler Gateway（原 Citrix Gateway）是 Cloud Software Group 旗下闭源的应用交付控制器与统一接入网关，广泛用于企业应用负载均衡、身份认证和远程访问接入。\n受影响版本中，设备在配置为 SAML SP（add authentication samlAction）或 SAML IdP（add authentication samlIdPProfile）并配合 Gateway 或 AAA 认证功能使用时，处理 SAML 认证流量的内存边界校验存在缺陷，未经身份验证的远程攻击者可发送恶意请求触发内存越界访问（CWE-119），造成内存溢出并导致设备拒绝服务；Citrix 已在未修复的部署上观察到定向攻击，该条件被反复触发时服务可能持续不可用。\n修复版本中通过修复 SAML 认证处理中的内存越界缺陷消除拒绝服务风险，Citrix 已发布 14.1-73.41、13.1-64.28、14.1-73.41 FIPS 和 13.1-37.282 及以上修复版本，升级完成前可通过 Global Deny List 特征签名缓解攻击。",
+    "effects": [
+      {
+        "comp_name": "netscaler_application_delivery_controller",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[14.1-FIPS,14.1-73.41-FIPS)",
+            "min_fixed_version": "14.1-73.41-FIPS",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.1-NDcPP,13.1-37.282)",
+            "min_fixed_version": "13.1-37.282",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.1,13.1-64.28)",
+            "min_fixed_version": "13.1-64.28",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.1,14.1-73.41)",
+            "min_fixed_version": "14.1-73.41",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.1-FIPS,13.1-37.282)",
+            "min_fixed_version": "13.1-37.282",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "netscaler_gateway",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[14.1,14.1-73.41)",
+            "min_fixed_version": "14.1-73.41",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.1,13.1-64.28)",
+            "min_fixed_version": "13.1-64.28",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "缓冲区溢出",
+    "kind_en": "Improper Restriction of Operations within the Bounds of a Memory Buffer",
+    "last_modified_time": "2026-10-04",
+    "level": "High",
+    "mps_id": "MPS-ufs2-5t6e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ufs2-5t6e",
+        "name": "https://www.oscs1024.com/hd/MPS-ufs2-5t6e"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88779",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88779"
+      },
+      {
+        "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697174",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "NetScaler SAML拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-10-04T09:14:18+00:00"
+}
