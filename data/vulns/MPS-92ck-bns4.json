@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-10-05T01:29:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-92ck-bns4",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-105223",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-295",
+    "description": "maclof/kubernetes-client 是开源 PHP 组件，用于访问和控制 Kubernetes 集群。\n受影响版本中，Client 在解析缺少 certificate-authority-data 的 HTTPS kubeconfig 时忽略 insecure-skip-tls-verify，把 verify 设为 false。该结果进入 sendUpgradeRequest() 后关闭 WebSocket TLS 的 verify_peer 与 verify_peer_name；0.17.0 至 0.21.0 还会经 createGuzzleClient() 把 verify 传给 Guzzle，REST 请求同样不校验证书。路径上的攻击者可伪装 Kubernetes API 服务器，截获客户端已配置的 Bearer token 或 Basic 凭据，并篡改 WebSocket 或相应 REST 流量。\n修复版本中通过改写 parseKubeconfig()，仅当 cluster 的 insecure-skip-tls-verify 为 true 时才把 verify 设为 false，其他 https kubeconfig 把 verify 设为 true，从而恢复证书校验。",
+    "effects": [
+      {
+        "comp_name": "maclof/kubernetes-client",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[0.17.0,0.32.0)",
+            "min_fixed_version": "0.32.0",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "证书验证不恰当",
+    "kind_en": "证书验证不当",
+    "last_modified_time": "2026-10-05",
+    "level": "Critical",
+    "mps_id": "MPS-92ck-bns4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-92ck-bns4",
+        "name": "https://www.oscs1024.com/hd/MPS-92ck-bns4"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105223",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-105223"
+      },
+      {
+        "url": "https://github.com/maclof/kubernetes-client/issues/135",
+        "name": "GitHub Issue #135"
+      },
+      {
+        "url": "https://github.com/maclof/kubernetes-client",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/maclof/kubernetes-client/commit/924c0b935fa538ed6b4b0948127609e99d0e6f34",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/maclof/kubernetes-client/releases/tag/0.32.0",
+        "name": "kubernetes-client 0.32.0 Release Notes"
+      },
+      {
+        "url": "https://github.com/maclof/kubernetes-client/blob/0.31.0/src/Client.php#L309-L312",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/maclof-kubernetes-client-0.17.0-before-0.32.0-disabled-tls-certificate-verification",
+        "name": "VulnCheck Advisory: maclof kubernetes-client 0.17.0 before 0.32.0 Disabled TLS Certificate Verification"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "kubernetes-client证书校验绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-105223",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-295",
+    "description": "maclof/kubernetes-client 是开源 PHP 组件，用于访问和控制 Kubernetes 集群。\n受影响版本中，Client 在解析缺少 certificate-authority-data 的 HTTPS kubeconfig 时忽略 insecure-skip-tls-verify，把 verify 设为 false。该结果进入 sendUpgradeRequest() 后关闭 WebSocket TLS 的 verify_peer 与 verify_peer_name；0.17.0 至 0.21.0 还会经 createGuzzleClient() 把 verify 传给 Guzzle，REST 请求同样不校验证书。路径上的攻击者可伪装 Kubernetes API 服务器，截获客户端已配置的 Bearer token 或 Basic 凭据，并篡改 WebSocket 或相应 REST 流量。\n修复版本中通过改写 parseKubeconfig()，仅当 cluster 的 insecure-skip-tls-verify 为 true 时才把 verify 设为 false，其他 https kubeconfig 把 verify 设为 true，从而恢复证书校验。",
+    "effects": [
+      {
+        "comp_name": "maclof/kubernetes-client",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[0.17.0,0.32.0)",
+            "min_fixed_version": "0.32.0",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "证书验证不恰当",
+    "kind_en": "Improper Certificate Validation",
+    "last_modified_time": "2026-10-05",
+    "level": "Critical",
+    "mps_id": "MPS-92ck-bns4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-92ck-bns4",
+        "name": "https://www.oscs1024.com/hd/MPS-92ck-bns4"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105223",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-105223"
+      },
+      {
+        "url": "https://github.com/maclof/kubernetes-client/issues/135",
+        "name": "GitHub Issue #135"
+      },
+      {
+        "url": "https://github.com/maclof/kubernetes-client",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/maclof/kubernetes-client/commit/924c0b935fa538ed6b4b0948127609e99d0e6f34",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/maclof/kubernetes-client/releases/tag/0.32.0",
+        "name": "kubernetes-client 0.32.0 Release Notes"
+      },
+      {
+        "url": "https://github.com/maclof/kubernetes-client/blob/0.31.0/src/Client.php#L309-L312",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/maclof-kubernetes-client-0.17.0-before-0.32.0-disabled-tls-certificate-verification",
+        "name": "VulnCheck Advisory: maclof kubernetes-client 0.17.0 before 0.32.0 Disabled TLS Certificate Verification"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "kubernetes-client证书校验绕过"
+  },
+  "first_saved_at": "2026-10-05T01:29:07+00:00"
+}
