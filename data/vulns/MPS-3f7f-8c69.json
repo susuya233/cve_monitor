@@ -1,0 +1,235 @@
+{
+  "saved_at": "2026-10-05T08:06:28+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3f7f-8c69",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-104713",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-770",
+    "description": "Apache Struts 是开源 Java Web 框架，其 REST 插件 struts2-rest-plugin 把 HTTP 请求映射为 REST 风格 Action，并按内容类型读取请求体。\n受影响版本中，ContentTypeInterceptor.intercept 在请求的 Content-Length 大于 0 时调用 openBodyReader，用 request.getInputStream() 构造没有长度上限的读取器，再经 applyRequestBody 交给 ContentTypeHandler.toObject 一直读到结束。远程调用方提交的请求体越大，服务端按该体积在 Java 堆上分配的内存越多，堆耗尽后其他用户无法继续获得服务。未使用 REST 插件的应用不进入该路径，插件启用后不需要再打开额外开关。\n修复版本中通过新增框架常量 struts.rest.content.maxLength（默认 2097152），在 intercept 把请求体交给处理器之前用 BoundedReader 累计已读字符，超过上限即抛出 RequestBodyTooLargeException 并停止继续读取，使单次请求不能再按任意体积占满堆内存。",
+    "effects": [
+      {
+        "comp_name": "org.apache.struts:struts2-rest-plugin",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.5.0,2.5.33]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0.0,6.12.0)",
+            "min_fixed_version": "6.12.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.1.8,2.3.37]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.0.0,7.4.0)",
+            "min_fixed_version": "7.4.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-10-05",
+    "level": "High",
+    "mps_id": "MPS-3f7f-8c69",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-05",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12202.html",
+        "name": ""
+      },
+      {
+        "url": "https://cwiki.apache.org/confluence/display/WW/S2-077",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-104713",
+        "name": ""
+      },
+      {
+        "url": "https://struts.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://issues.apache.org/jira/browse/WW-5723",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/commit/c9183d67b1bf13f3110068f19b8711de8ff3c00b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/commit/45b31ab6f5cc011a3629084d9855e089215e61c7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/pull/1912",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/pull/1913",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/releases/tag/STRUTS_6_12_0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/releases/tag/STRUTS_7_4_0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Struts REST拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-104713",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-770",
+    "description": "Apache Struts 是开源 Java Web 框架，其 REST 插件 struts2-rest-plugin 把 HTTP 请求映射为 REST 风格 Action，并按内容类型读取请求体。\n受影响版本中，ContentTypeInterceptor.intercept 在请求的 Content-Length 大于 0 时调用 openBodyReader，用 request.getInputStream() 构造没有长度上限的读取器，再经 applyRequestBody 交给 ContentTypeHandler.toObject 一直读到结束。远程调用方提交的请求体越大，服务端按该体积在 Java 堆上分配的内存越多，堆耗尽后其他用户无法继续获得服务。未使用 REST 插件的应用不进入该路径，插件启用后不需要再打开额外开关。\n修复版本中通过新增框架常量 struts.rest.content.maxLength（默认 2097152），在 intercept 把请求体交给处理器之前用 BoundedReader 累计已读字符，超过上限即抛出 RequestBodyTooLargeException 并停止继续读取，使单次请求不能再按任意体积占满堆内存。",
+    "effects": [
+      {
+        "comp_name": "org.apache.struts:struts2-rest-plugin",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.5.0,2.5.33]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0.0,6.12.0)",
+            "min_fixed_version": "6.12.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.1.8,2.3.37]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.0.0,7.4.0)",
+            "min_fixed_version": "7.4.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-10-05",
+    "level": "High",
+    "mps_id": "MPS-3f7f-8c69",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-05",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12202.html",
+        "name": ""
+      },
+      {
+        "url": "https://cwiki.apache.org/confluence/display/WW/S2-077",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-104713",
+        "name": ""
+      },
+      {
+        "url": "https://struts.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://issues.apache.org/jira/browse/WW-5723",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/commit/c9183d67b1bf13f3110068f19b8711de8ff3c00b",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/commit/45b31ab6f5cc011a3629084d9855e089215e61c7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/pull/1912",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/pull/1913",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/releases/tag/STRUTS_6_12_0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/releases/tag/STRUTS_7_4_0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Struts REST拒绝服务"
+  },
+  "first_saved_at": "2026-10-05T08:06:28+00:00"
+}
