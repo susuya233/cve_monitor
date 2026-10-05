@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-10-05T23:35:29+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4n9x-mt0j",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-91107",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "help@fluidattacks.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "openSIS Classic 是 OS4ED 发布的开源 PHP 学生信息系统，用于管理教职工、学生与校务数据。\n受影响版本中，教师角色请求 modules/users/Staff.php 时，若会话尚未选定教职工且 staff_id 不是 new，文件顶层会把 $_REQUEST['staff_id'] 直接写入 $_SESSION['staff_id']，服务端只按教师角色放行，不校验该记录是否属于当前登录用户。随后 modules/users/includes/SchoolsInfoInc.php 通过 UserStaffID() 读取该会话值，并在处理 staff_school[PASSWORD] 时把新密码哈希写入对应 login_authentication 记录，教师可重置其他教职工或管理员账号的密码。\n修复版本中通过在 SchoolsInfoInc.php 为非管理员增加身份归属校验，仅当 UserStaffID() 与当前登录用户在 login_authentication 中的 USER_ID 一致时才允许更新密码，否则返回 403 并终止请求。",
+    "effects": [
+      {
+        "comp_name": "openSIS-Classic",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[9.3,9.3]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-10-06",
+    "level": "Critical",
+    "mps_id": "MPS-4n9x-mt0j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4n9x-mt0j",
+        "name": "https://www.oscs1024.com/hd/MPS-4n9x-mt0j"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-91107",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-91107"
+      },
+      {
+        "url": "https://fluidattacks.com/advisories/hearts",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OS4ED/openSIS-Classic",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OS4ED/openSIS-Classic/commit/24bb530391a67c114cd4fe3dff65da7e070f5ed1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "openSIS越权改密漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-91107",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "help@fluidattacks.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "openSIS Classic 是 OS4ED 发布的开源 PHP 学生信息系统，用于管理教职工、学生与校务数据。\n受影响版本中，教师角色请求 modules/users/Staff.php 时，若会话尚未选定教职工且 staff_id 不是 new，文件顶层会把 $_REQUEST['staff_id'] 直接写入 $_SESSION['staff_id']，服务端只按教师角色放行，不校验该记录是否属于当前登录用户。随后 modules/users/includes/SchoolsInfoInc.php 通过 UserStaffID() 读取该会话值，并在处理 staff_school[PASSWORD] 时把新密码哈希写入对应 login_authentication 记录，教师可重置其他教职工或管理员账号的密码。\n修复版本中通过在 SchoolsInfoInc.php 为非管理员增加身份归属校验，仅当 UserStaffID() 与当前登录用户在 login_authentication 中的 USER_ID 一致时才允许更新密码，否则返回 403 并终止请求。",
+    "effects": [
+      {
+        "comp_name": "openSIS-Classic",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[9.3,9.3]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-10-06",
+    "level": "Critical",
+    "mps_id": "MPS-4n9x-mt0j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4n9x-mt0j",
+        "name": "https://www.oscs1024.com/hd/MPS-4n9x-mt0j"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-91107",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-91107"
+      },
+      {
+        "url": "https://fluidattacks.com/advisories/hearts",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OS4ED/openSIS-Classic",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OS4ED/openSIS-Classic/commit/24bb530391a67c114cd4fe3dff65da7e070f5ed1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "openSIS越权改密漏洞"
+  },
+  "first_saved_at": "2026-10-05T23:35:29+00:00"
+}
