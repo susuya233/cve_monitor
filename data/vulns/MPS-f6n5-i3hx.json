@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-10-06T17:45:15+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-f6n5-i3hx",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-70411",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security_alert@emc.com",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:N",
+    "cwe": "CWE-306",
+    "description": "Dell Container Storage Modules（CSM）Authorization 是 Dell 面向 Kubernetes 的存储授权组件，以代理方式部署在 Dell CSI 驱动与后端存储系统之间，为多租户环境提供基于角色的访问控制与配额管理，其中的 csm-authorization-tenant gRPC 服务（TenantService）负责租户实体与租户级角色、存储访问控制配置的管理，该组件为 Dell 闭源组件。\n受影响版本中，csm-authorization-tenant gRPC 服务（TenantService）的关键管理接口缺少认证校验（CWE-306），相邻网络中的攻击者无需任何凭证即可直接调用该 gRPC 服务，创建未授权的租户实体、向其他租户注入角色并修改存储访问控制标志，造成跨租户越权与存储访问策略被篡改。\n修复版本中通过在 TenantService 关键接口上补充认证校验并拒绝未认证请求，切断了未认证调用与租户管理操作之间的因果链，Dell 已在 CSM 1.18.0 中发布该修复，受影响用户需升级至 1.18.0 及以上版本。",
+    "effects": [
+      {
+        "comp_name": "container_storage_modules",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.18.0)",
+            "min_fixed_version": "1.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "csm-authorization",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.4.0,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-10-06",
+    "level": "High",
+    "mps_id": "MPS-f6n5-i3hx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-f6n5-i3hx",
+        "name": "https://www.oscs1024.com/hd/MPS-f6n5-i3hx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-70411",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-70411"
+      },
+      {
+        "url": "https://www.dell.com/support/kbdoc/en-us/000515771/dsa-2026-448-security-update-for-dell-container-storage-modules-multiple-vulnerabilities?msockid=3021cac2195069ed3194ddad186a68f9",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dell CSM Authorization 认证缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-70411",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security_alert@emc.com",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:N",
+    "cwe": "CWE-306",
+    "description": "Dell Container Storage Modules（CSM）Authorization 是 Dell 面向 Kubernetes 的存储授权组件，以代理方式部署在 Dell CSI 驱动与后端存储系统之间，为多租户环境提供基于角色的访问控制与配额管理，其中的 csm-authorization-tenant gRPC 服务（TenantService）负责租户实体与租户级角色、存储访问控制配置的管理，该组件为 Dell 闭源组件。\n受影响版本中，csm-authorization-tenant gRPC 服务（TenantService）的关键管理接口缺少认证校验（CWE-306），相邻网络中的攻击者无需任何凭证即可直接调用该 gRPC 服务，创建未授权的租户实体、向其他租户注入角色并修改存储访问控制标志，造成跨租户越权与存储访问策略被篡改。\n修复版本中通过在 TenantService 关键接口上补充认证校验并拒绝未认证请求，切断了未认证调用与租户管理操作之间的因果链，Dell 已在 CSM 1.18.0 中发布该修复，受影响用户需升级至 1.18.0 及以上版本。",
+    "effects": [
+      {
+        "comp_name": "container_storage_modules",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.18.0)",
+            "min_fixed_version": "1.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "csm-authorization",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.4.0,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-10-06",
+    "level": "High",
+    "mps_id": "MPS-f6n5-i3hx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-f6n5-i3hx",
+        "name": "https://www.oscs1024.com/hd/MPS-f6n5-i3hx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-70411",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-70411"
+      },
+      {
+        "url": "https://www.dell.com/support/kbdoc/en-us/000515771/dsa-2026-448-security-update-for-dell-container-storage-modules-multiple-vulnerabilities?msockid=3021cac2195069ed3194ddad186a68f9",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dell CSM Authorization 认证缺失漏洞"
+  },
+  "first_saved_at": "2026-10-06T17:45:15+00:00"
+}

@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-10-06T17:45:14+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d0ed-b230",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-67273",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security_alert@emc.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.6
+        }
+      ]
+    },
+    "cvss_score": 9.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+    "cwe": "CWE-1336",
+    "description": "Dell Container Storage Modules（CSM）是 Dell 面向 Kubernetes 的容器存储管理套件，用于为 PowerStore、PowerScale、PowerFlex、PowerMax 等存储平台提供 CSI 驱动与功能模块，其中 csm-operator 为 Apache-2.0 开源组件，负责按 ContainerStorageModule 自定义资源部署并管理各存储模块。\n受影响版本中，operator 渲染 observability 模块清单时，将来自自定义资源的 cr.Name、cr.Namespace、组件 env 取值与镜像地址等字符串，通过 strings.ReplaceAll 直接填入 operatorconfig/moduleconfig 下的 YAML 清单模板占位符（如 <NAME>、<CSM_NAMESPACE>、<TOPOLOGY_LOG_LEVEL>、<OTEL_COLLECTOR_IMAGE>），替换前缺少中和处理；具备创建或修改该自定义资源权限的低权限用户可在字段值中注入换行与 --- 文档分隔符，注入内容经 SplitYaml 拆分为独立 Kubernetes 对象，并由 operator 以自身高权限服务账号创建，攻击者由此获得集群级 Kubernetes Secrets 读取能力并能创建 cluster-scoped RBAC 资源，绕过预期的 Kubernetes 访问控制。\n修复版本中通过新增 ValidateYAMLSubstitutionValue 等校验函数，在模板替换前校验 CR 名称、命名空间、日志级别与镜像字符串，拒绝包含换行、回车、YAML 文档分隔符及控制字符的取值，阻断注入的清单文档进入对象创建流程。",
+    "effects": [
+      {
+        "comp_name": "container_storage_modules",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.17.0)",
+            "min_fixed_version": "1.17.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "csm-operator",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.13.0)",
+            "min_fixed_version": "1.13.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "模板注入",
+    "kind_en": "模板引擎中使用的特殊元素的不正确中和",
+    "last_modified_time": "2026-10-03",
+    "level": "Critical",
+    "mps_id": "MPS-d0ed-b230",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-07",
+    "reference_url_list": [
+      {
+        "url": "https://cybersecuritynews.com/critical-dell-container-storage-flaws/",
+        "name": ""
+      },
+      {
+        "url": "https://www.dell.com/support/kbdoc/en-us/000515771/dsa-2026-448-security-update-for-dell-container-storage-modules-multiple-vulnerabilities",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dell/csm-operator/commit/3a16c396d2d2eee6be1365afb36a14eb2ae5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dell/csm-operator/releases/tag/v1.13.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dell CSM模板注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-67273",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security_alert@emc.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.6
+        }
+      ]
+    },
+    "cvss_score": 9.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+    "cwe": "CWE-1336",
+    "description": "Dell Container Storage Modules（CSM）是 Dell 面向 Kubernetes 的容器存储管理套件，用于为 PowerStore、PowerScale、PowerFlex、PowerMax 等存储平台提供 CSI 驱动与功能模块，其中 csm-operator 为 Apache-2.0 开源组件，负责按 ContainerStorageModule 自定义资源部署并管理各存储模块。\n受影响版本中，operator 渲染 observability 模块清单时，将来自自定义资源的 cr.Name、cr.Namespace、组件 env 取值与镜像地址等字符串，通过 strings.ReplaceAll 直接填入 operatorconfig/moduleconfig 下的 YAML 清单模板占位符（如 <NAME>、<CSM_NAMESPACE>、<TOPOLOGY_LOG_LEVEL>、<OTEL_COLLECTOR_IMAGE>），替换前缺少中和处理；具备创建或修改该自定义资源权限的低权限用户可在字段值中注入换行与 --- 文档分隔符，注入内容经 SplitYaml 拆分为独立 Kubernetes 对象，并由 operator 以自身高权限服务账号创建，攻击者由此获得集群级 Kubernetes Secrets 读取能力并能创建 cluster-scoped RBAC 资源，绕过预期的 Kubernetes 访问控制。\n修复版本中通过新增 ValidateYAMLSubstitutionValue 等校验函数，在模板替换前校验 CR 名称、命名空间、日志级别与镜像字符串，拒绝包含换行、回车、YAML 文档分隔符及控制字符的取值，阻断注入的清单文档进入对象创建流程。",
+    "effects": [
+      {
+        "comp_name": "container_storage_modules",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.17.0)",
+            "min_fixed_version": "1.17.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "csm-operator",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.13.0)",
+            "min_fixed_version": "1.13.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "模板注入",
+    "kind_en": "Improper Neutralization of Special Elements Used in a Template Engine",
+    "last_modified_time": "2026-10-03",
+    "level": "Critical",
+    "mps_id": "MPS-d0ed-b230",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-07",
+    "reference_url_list": [
+      {
+        "url": "https://cybersecuritynews.com/critical-dell-container-storage-flaws/",
+        "name": ""
+      },
+      {
+        "url": "https://www.dell.com/support/kbdoc/en-us/000515771/dsa-2026-448-security-update-for-dell-container-storage-modules-multiple-vulnerabilities",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dell/csm-operator/commit/3a16c396d2d2eee6be1365afb36a14eb2ae5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dell/csm-operator/releases/tag/v1.13.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dell CSM模板注入漏洞"
+  },
+  "first_saved_at": "2026-10-06T17:45:14+00:00"
+}
