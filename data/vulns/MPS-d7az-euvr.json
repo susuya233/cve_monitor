@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-10-07T21:10:47+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d7az-euvr",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107215",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-789",
+    "description": "Excelize 是开源的 Go 语言库，用于读写 Microsoft Excel 电子表格文档，常被服务端程序用于处理用户上传的表格文件。\n受影响版本中，crypt.go 的 extractPart 函数在解析 OLE 复合文档（CFB）时直接以目录项中攻击者可控的 streamSize 执行 make([]byte, entry.Size) 分配缓冲区，该分配发生在扇区链与大小合法性校验之前；攻击者向调用 OpenFile、OpenReader 等打开入口的服务提交声明负值或超大流大小的 CFB 文件，可触发 make 负长度 panic 逃逸出 Decrypt 终止进程，或强制单次高达 4 GiB 的内存分配（约 12 KB 的文件可放大约 35 万倍），造成远程拒绝服务。\n修复版本中通过在 Decrypt 中按 CFB 主版本号取文件实际大小与 MaxCFBStreamSizeV3、MaxCFBStreamSizeV4 常量的较小值得到 maxStreamSize，extractPart 在分配前拒绝负值或超过 maxStreamSize 的 entry.Size 并返回 ErrWorkbookFileFormat，使畸形 CFB 文件以格式错误安全返回，不再触发 panic 或超大内存分配；该修复已合入上游主分支（PR #2396），包含修复的正式版本尚未发布。",
+    "effects": [
+      {
+        "comp_name": "github.com/xuri/excelize/v2",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[2.3.1,2.11.0]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的内存分配",
+    "kind_en": "大小值过大的内存分配",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-d7az-euvr",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-d7az-euvr",
+        "name": "https://www.oscs1024.com/hd/MPS-d7az-euvr"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107215",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107215"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/security/advisories/GHSA-x2q3-8cjh-766f",
+        "name": "https://github.com/qax-os/excelize/security/advisories/GHSA-x2q3-8cjh-766f"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/pull/2396",
+        "name": "https://github.com/qax-os/excelize/pull/2396"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/commit/5f636f9dcde55911f14290060b017f0cc88cd694",
+        "name": "https://github.com/qax-os/excelize/commit/5f636f9dcde55911f14290060b017f0cc88cd694"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Excelize 拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107215",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-789",
+    "description": "Excelize 是开源的 Go 语言库，用于读写 Microsoft Excel 电子表格文档，常被服务端程序用于处理用户上传的表格文件。\n受影响版本中，crypt.go 的 extractPart 函数在解析 OLE 复合文档（CFB）时直接以目录项中攻击者可控的 streamSize 执行 make([]byte, entry.Size) 分配缓冲区，该分配发生在扇区链与大小合法性校验之前；攻击者向调用 OpenFile、OpenReader 等打开入口的服务提交声明负值或超大流大小的 CFB 文件，可触发 make 负长度 panic 逃逸出 Decrypt 终止进程，或强制单次高达 4 GiB 的内存分配（约 12 KB 的文件可放大约 35 万倍），造成远程拒绝服务。\n修复版本中通过在 Decrypt 中按 CFB 主版本号取文件实际大小与 MaxCFBStreamSizeV3、MaxCFBStreamSizeV4 常量的较小值得到 maxStreamSize，extractPart 在分配前拒绝负值或超过 maxStreamSize 的 entry.Size 并返回 ErrWorkbookFileFormat，使畸形 CFB 文件以格式错误安全返回，不再触发 panic 或超大内存分配；该修复已合入上游主分支（PR #2396），包含修复的正式版本尚未发布。",
+    "effects": [
+      {
+        "comp_name": "github.com/xuri/excelize/v2",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[2.3.1,2.11.0]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的内存分配",
+    "kind_en": "Memory Allocation with Excessive Size Value",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-d7az-euvr",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-d7az-euvr",
+        "name": "https://www.oscs1024.com/hd/MPS-d7az-euvr"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107215",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107215"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/security/advisories/GHSA-x2q3-8cjh-766f",
+        "name": "https://github.com/qax-os/excelize/security/advisories/GHSA-x2q3-8cjh-766f"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/pull/2396",
+        "name": "https://github.com/qax-os/excelize/pull/2396"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/commit/5f636f9dcde55911f14290060b017f0cc88cd694",
+        "name": "https://github.com/qax-os/excelize/commit/5f636f9dcde55911f14290060b017f0cc88cd694"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Excelize 拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-10-07T21:10:47+00:00"
+}

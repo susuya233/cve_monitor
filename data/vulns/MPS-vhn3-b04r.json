@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-10-07T21:10:48+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-vhn3-b04r",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107214",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-248",
+    "description": "Excelize 是开源 Go 语言电子表格库（Go 模块 github.com/xuri/excelize/v2，BSD-3-Clause 许可），用于读取和写入 Microsoft Excel 工作簿，常被文档处理、文件上传校验、表格转换等 Go 服务嵌入使用。\n受影响版本中，openReaderAt 检测到文件头为 OLE 复合文档签名后调用 Decrypt，解密分发仅在 encryptionMechanism 中校验 EncryptionInfo 长度不小于 4，随后把攻击者可控的 EncryptionInfo 与 EncryptedPackage 数据直接传入 standardDecrypt 或 agileDecrypt，九处缺少结构校验的切片、索引、分配与整除操作在解析畸形但版本号合法的加密工作簿时触发未恢复的运行时 panic，异常绕过 openReaderAt 将错误映射为 ErrWorkbookFileFormat 的路径，直接终止调用进程；整个过程无需密码，约百字节到 3KB 的文件即可远程造成拒绝服务。\n修复版本中通过向 crypt.go 中的 standardDecrypt、standardConvertPasswdToKey、agileDecrypt、convertPasswdToKey、decrypt、decryptPackage 与 createIV 补充显式结构与参数校验修复该问题，畸形输入统一返回 ErrWorkbookFileFormat 或 ErrUnsupportedHashAlgorithm，不再触发 panic；该修复经 PR #2395 以 commit 22f76f9 合入 master 分支，截至公告发布尚无包含修复的正式发布版本。",
+    "effects": [
+      {
+        "comp_name": "github.com/xuri/excelize/v2",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[2.3.1,2.11.0]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未捕获的异常",
+    "kind_en": "未捕获的异常",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-vhn3-b04r",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-vhn3-b04r",
+        "name": "https://www.oscs1024.com/hd/MPS-vhn3-b04r"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107214",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107214"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/security/advisories/GHSA-2j4c-ffch-9f23",
+        "name": "https://github.com/qax-os/excelize/security/advisories/GHSA-2j4c-ffch-9f23"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/pull/2395",
+        "name": "https://github.com/qax-os/excelize/pull/2395"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/commit/22f76f9acb94b85b3eb9c4365ab4f750cebbc565",
+        "name": "https://github.com/qax-os/excelize/commit/22f76f9acb94b85b3eb9c4365ab4f750cebbc565"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Excelize 解密拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107214",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-248",
+    "description": "Excelize 是开源 Go 语言电子表格库（Go 模块 github.com/xuri/excelize/v2，BSD-3-Clause 许可），用于读取和写入 Microsoft Excel 工作簿，常被文档处理、文件上传校验、表格转换等 Go 服务嵌入使用。\n受影响版本中，openReaderAt 检测到文件头为 OLE 复合文档签名后调用 Decrypt，解密分发仅在 encryptionMechanism 中校验 EncryptionInfo 长度不小于 4，随后把攻击者可控的 EncryptionInfo 与 EncryptedPackage 数据直接传入 standardDecrypt 或 agileDecrypt，九处缺少结构校验的切片、索引、分配与整除操作在解析畸形但版本号合法的加密工作簿时触发未恢复的运行时 panic，异常绕过 openReaderAt 将错误映射为 ErrWorkbookFileFormat 的路径，直接终止调用进程；整个过程无需密码，约百字节到 3KB 的文件即可远程造成拒绝服务。\n修复版本中通过向 crypt.go 中的 standardDecrypt、standardConvertPasswdToKey、agileDecrypt、convertPasswdToKey、decrypt、decryptPackage 与 createIV 补充显式结构与参数校验修复该问题，畸形输入统一返回 ErrWorkbookFileFormat 或 ErrUnsupportedHashAlgorithm，不再触发 panic；该修复经 PR #2395 以 commit 22f76f9 合入 master 分支，截至公告发布尚无包含修复的正式发布版本。",
+    "effects": [
+      {
+        "comp_name": "github.com/xuri/excelize/v2",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[2.3.1,2.11.0]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未捕获的异常",
+    "kind_en": "Uncaught Exception",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-vhn3-b04r",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-vhn3-b04r",
+        "name": "https://www.oscs1024.com/hd/MPS-vhn3-b04r"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107214",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107214"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/security/advisories/GHSA-2j4c-ffch-9f23",
+        "name": "https://github.com/qax-os/excelize/security/advisories/GHSA-2j4c-ffch-9f23"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/pull/2395",
+        "name": "https://github.com/qax-os/excelize/pull/2395"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/commit/22f76f9acb94b85b3eb9c4365ab4f750cebbc565",
+        "name": "https://github.com/qax-os/excelize/commit/22f76f9acb94b85b3eb9c4365ab4f750cebbc565"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Excelize 解密拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-10-07T21:10:48+00:00"
+}

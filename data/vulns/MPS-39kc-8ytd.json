@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-10-07T21:10:50+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-39kc-8ytd",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107211",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-129",
+    "description": "Excelize 是 qax-os 开源的 Go 语言 Microsoft Excel 电子表格读写库（Go 模块 github.com/xuri/excelize/v2），用于在服务端创建、读取和修改 xlsx 文件。\n受影响版本中，pivotTable.go 的 extractPivotTableFields 以 xl/pivotCache/pivotCacheDefinitionN.xml 解析出的缓存字段名切片 order 为索引基准，而循环下标 fieldIdx 与 xl/pivotTables/pivotTableN.xml 中 dataField 元素 fld 属性解析出的整型 Fld 来自单独解析的部件且均未做边界校验；应用对攻击者提供的 xlsx 文件调用公开 API GetPivotTables 时，若缓存字段数量与透视字段数量不匹配或 fld 越界，将触发 Go 切片越界 panic，excelize 库内无 recover，panic 逃逸导致宿主进程或请求工作协程崩溃。\n修复版本中通过 master 分支提交 6258dceb 修复该问题：在两处索引前分别校验 fieldIdx 与 Fld 落在 order 切片范围内并跳过越界字段，消除切片越界路径；截至 2026-10-08 官方尚未发布包含该修复的正式版本。",
+    "effects": [
+      {
+        "comp_name": "github.com/xuri/excelize/v2",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[2.8.1,2.11.0]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对数组索引的验证不恰当",
+    "kind_en": "数组索引验证不当",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-39kc-8ytd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-39kc-8ytd",
+        "name": "https://www.oscs1024.com/hd/MPS-39kc-8ytd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107211",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107211"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/security/advisories/GHSA-mx22-3794-2vpv",
+        "name": "https://github.com/qax-os/excelize/security/advisories/GHSA-mx22-3794-2vpv"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/pull/2435",
+        "name": "https://github.com/qax-os/excelize/pull/2435"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/commit/6258dcebc4e2a2aed985c38a08098dfd908521d1",
+        "name": "https://github.com/qax-os/excelize/commit/6258dcebc4e2a2aed985c38a08098dfd908521d1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Excelize 透视表索引越界漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107211",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-129",
+    "description": "Excelize 是 qax-os 开源的 Go 语言 Microsoft Excel 电子表格读写库（Go 模块 github.com/xuri/excelize/v2），用于在服务端创建、读取和修改 xlsx 文件。\n受影响版本中，pivotTable.go 的 extractPivotTableFields 以 xl/pivotCache/pivotCacheDefinitionN.xml 解析出的缓存字段名切片 order 为索引基准，而循环下标 fieldIdx 与 xl/pivotTables/pivotTableN.xml 中 dataField 元素 fld 属性解析出的整型 Fld 来自单独解析的部件且均未做边界校验；应用对攻击者提供的 xlsx 文件调用公开 API GetPivotTables 时，若缓存字段数量与透视字段数量不匹配或 fld 越界，将触发 Go 切片越界 panic，excelize 库内无 recover，panic 逃逸导致宿主进程或请求工作协程崩溃。\n修复版本中通过 master 分支提交 6258dceb 修复该问题：在两处索引前分别校验 fieldIdx 与 Fld 落在 order 切片范围内并跳过越界字段，消除切片越界路径；截至 2026-10-08 官方尚未发布包含该修复的正式版本。",
+    "effects": [
+      {
+        "comp_name": "github.com/xuri/excelize/v2",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[2.8.1,2.11.0]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对数组索引的验证不恰当",
+    "kind_en": "Improper Validation of Array Index",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-39kc-8ytd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-39kc-8ytd",
+        "name": "https://www.oscs1024.com/hd/MPS-39kc-8ytd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107211",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107211"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/security/advisories/GHSA-mx22-3794-2vpv",
+        "name": "https://github.com/qax-os/excelize/security/advisories/GHSA-mx22-3794-2vpv"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/pull/2435",
+        "name": "https://github.com/qax-os/excelize/pull/2435"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/commit/6258dcebc4e2a2aed985c38a08098dfd908521d1",
+        "name": "https://github.com/qax-os/excelize/commit/6258dcebc4e2a2aed985c38a08098dfd908521d1"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Excelize 透视表索引越界漏洞"
+  },
+  "first_saved_at": "2026-10-07T21:10:50+00:00"
+}

@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-10-07T21:10:45+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-avbn-com1",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96335",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+    "cwe": "CWE-862",
+    "description": "Forminator 是 WPMU DEV 开发的开源 WordPress 表单构建插件，通过 wordpress.org 官方目录分发，拥有约 60 万活跃安装，用于搭建联系表单、付款表单、测验与投票，并支持用 Post Data 字段把访客提交内容写成站点文章。\n受影响版本中，未登录访客可向公开的表单提交入口（AJAX 动作 forminator_submit_form_custom-forms）提交自构造的 post-custom 数组；该数据经 Forminator_Front_Action::init_properties() 进入提交数据后，Forminator_Field_Postdata::save_post() 把其中的任意 key/value 原样传入 add_post_meta() 写入提交时新建的文章，既未校验键名是否属于表单设置定义的自定义字段，也未排除受保护的 meta 键，导致任意文章元数据写入。\n修复版本中通过在 Forminator_CForm_Front_Action::handle_postdata_field() 中丢弃客户端提交的 post-custom 并改为按字段设置重建自定义字段，同时在 save_post() 中新增 get_allowed_custom_meta_keys() 白名单与 is_protected_meta() 拒绝逻辑，切断未授权元数据写入链路。",
+    "effects": [
+      {
+        "comp_name": "forminator",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.57.2.1)",
+            "min_fixed_version": "1.57.2.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-avbn-com1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-avbn-com1",
+        "name": "https://www.oscs1024.com/hd/MPS-avbn-com1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96335",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96335"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/forminator/vulnerability/wordpress-forminator-plugin-1-57-2-broken-access-control-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Forminator 任意文章元数据写入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96335",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+    "cwe": "CWE-862",
+    "description": "Forminator 是 WPMU DEV 开发的开源 WordPress 表单构建插件，通过 wordpress.org 官方目录分发，拥有约 60 万活跃安装，用于搭建联系表单、付款表单、测验与投票，并支持用 Post Data 字段把访客提交内容写成站点文章。\n受影响版本中，未登录访客可向公开的表单提交入口（AJAX 动作 forminator_submit_form_custom-forms）提交自构造的 post-custom 数组；该数据经 Forminator_Front_Action::init_properties() 进入提交数据后，Forminator_Field_Postdata::save_post() 把其中的任意 key/value 原样传入 add_post_meta() 写入提交时新建的文章，既未校验键名是否属于表单设置定义的自定义字段，也未排除受保护的 meta 键，导致任意文章元数据写入。\n修复版本中通过在 Forminator_CForm_Front_Action::handle_postdata_field() 中丢弃客户端提交的 post-custom 并改为按字段设置重建自定义字段，同时在 save_post() 中新增 get_allowed_custom_meta_keys() 白名单与 is_protected_meta() 拒绝逻辑，切断未授权元数据写入链路。",
+    "effects": [
+      {
+        "comp_name": "forminator",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.57.2.1)",
+            "min_fixed_version": "1.57.2.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-avbn-com1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-avbn-com1",
+        "name": "https://www.oscs1024.com/hd/MPS-avbn-com1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96335",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96335"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/forminator/vulnerability/wordpress-forminator-plugin-1-57-2-broken-access-control-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Forminator 任意文章元数据写入漏洞"
+  },
+  "first_saved_at": "2026-10-07T21:10:45+00:00"
+}

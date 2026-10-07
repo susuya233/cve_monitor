@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-10-07T21:10:46+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ay52-swcf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107216",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-674",
+    "description": "Excelize 是开源 Go 语言库，用于读写 Microsoft Excel 电子表格（Office Open XML 格式），受影响模块为 Go 依赖 github.com/xuri/excelize/v2。\n受影响版本中，动态数组公式函数 ANCHORARRAY 在计算 spill 区域每个单元格时改由导出方法 CalcCellValue 重新求值，该方法每次调用都新建独立计算上下文，而循环引用控制（入口标记、按引用记录的迭代预算、仅在求值完成时写入的缓存）全部依附于单个上下文。当工作簿中两个动态数组公式互相引用（例如 A1 为 _xlfn.ANCHORARRAY($B$1)、B1 为 _xlfn.ANCHORARRAY($A$1)）时，攻击者诱导服务端加载该工作簿并经由 CalcCellValue、AddPivotTable、AddPicture 等入口求值，CalcCellValue→calcCellValue→cellResolver→ANCHORARRAY→CalcCellValue 递归永不收敛，每层递归获得全新迭代预算，Go 栈溢出属于不可恢复的 fatal error，整个进程中止。\n修复版本中通过让 ANCHORARRAY 改用当前计算上下文调用内部 cellResolver 获取 spill 区域单元格，使入口标记与迭代预算在整条递归链路中持续生效，互相引用的公式按循环处理正常终止并返回空结果，同时保留空单元格的原有数值转换行为，消除不可控递归导致的栈溢出。",
+    "effects": [
+      {
+        "comp_name": "github.com/xuri/excelize/v2",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[2.8.1,2.11.0]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-ay52-swcf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ay52-swcf",
+        "name": "https://www.oscs1024.com/hd/MPS-ay52-swcf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107216",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107216"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/security/advisories/GHSA-wp2g-vpjj-g53r",
+        "name": "https://github.com/qax-os/excelize/security/advisories/GHSA-wp2g-vpjj-g53r"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/commit/ea12859e43c64d498ecf839263c5f917391f3316",
+        "name": "https://github.com/qax-os/excelize/commit/ea12859e43c64d498ecf839263c5f917391f3316"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Excelize栈溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107216",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-674",
+    "description": "Excelize 是开源 Go 语言库，用于读写 Microsoft Excel 电子表格（Office Open XML 格式），受影响模块为 Go 依赖 github.com/xuri/excelize/v2。\n受影响版本中，动态数组公式函数 ANCHORARRAY 在计算 spill 区域每个单元格时改由导出方法 CalcCellValue 重新求值，该方法每次调用都新建独立计算上下文，而循环引用控制（入口标记、按引用记录的迭代预算、仅在求值完成时写入的缓存）全部依附于单个上下文。当工作簿中两个动态数组公式互相引用（例如 A1 为 _xlfn.ANCHORARRAY($B$1)、B1 为 _xlfn.ANCHORARRAY($A$1)）时，攻击者诱导服务端加载该工作簿并经由 CalcCellValue、AddPivotTable、AddPicture 等入口求值，CalcCellValue→calcCellValue→cellResolver→ANCHORARRAY→CalcCellValue 递归永不收敛，每层递归获得全新迭代预算，Go 栈溢出属于不可恢复的 fatal error，整个进程中止。\n修复版本中通过让 ANCHORARRAY 改用当前计算上下文调用内部 cellResolver 获取 spill 区域单元格，使入口标记与迭代预算在整条递归链路中持续生效，互相引用的公式按循环处理正常终止并返回空结果，同时保留空单元格的原有数值转换行为，消除不可控递归导致的栈溢出。",
+    "effects": [
+      {
+        "comp_name": "github.com/xuri/excelize/v2",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[2.8.1,2.11.0]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-ay52-swcf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ay52-swcf",
+        "name": "https://www.oscs1024.com/hd/MPS-ay52-swcf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107216",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107216"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/security/advisories/GHSA-wp2g-vpjj-g53r",
+        "name": "https://github.com/qax-os/excelize/security/advisories/GHSA-wp2g-vpjj-g53r"
+      },
+      {
+        "url": "https://github.com/qax-os/excelize/commit/ea12859e43c64d498ecf839263c5f917391f3316",
+        "name": "https://github.com/qax-os/excelize/commit/ea12859e43c64d498ecf839263c5f917391f3316"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Excelize栈溢出漏洞"
+  },
+  "first_saved_at": "2026-10-07T21:10:46+00:00"
+}
