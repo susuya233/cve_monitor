@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-10-07T16:00:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6mvh-jnwy",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107181",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-143",
+    "description": "Telegram Desktop 是 Telegram 官方开源（GPL-3.0）的跨平台桌面客户端，基于 C++/Qt 开发，用于收发消息、文件与频道内容。\n受影响版本中，新启动的实例将系统调起的 tg:// 链接序列化为 OPEN: 记录写入单实例 IPC 本地套接字时未转义 URL 内部的记录分隔符分号（Core::Sandbox::socketConnected），已运行实例在 Sandbox::readClients 中按分号盲目切分记录，攻击者构造含分号的链接可注入任意 OPEN: 记录；注入的 OPEN:interpret: 路径记录会进入内部 interpret: scheme 处理流程，Support::InterpretSendPath 无授权校验与确认弹窗，按指令文件把指定本地文件（含 tdata/key_datas 与 tdata/D877F783D5D3EF8Cs 会话密钥）上传到攻击者指定的频道或超级群组，造成本地任意文件读取与账号接管。\n修复版本中通过 EscapeTo7bit 在写入 OPEN: 记录前对分号、百分号与控制字符做百分号十六进制转义，切分后经 EscapeFrom7bit 还原，使 URL 内部的分号无法终止记录；同时删除内部 interpret: scheme 与 Support::InterpretSendPath，同一连接出现 OPEN: 记录时忽略 CMD:/CTRL: 记录，并在出现非本地 URL 后丢弃本地文件路径，切断注入链路。",
+    "effects": [
+      {
+        "comp_name": "telegram_desktop",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.2.9)",
+            "min_fixed_version": "7.2.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "记录分隔符转义处理不恰当",
+    "kind_en": "记录分隔符的不正确中和",
+    "last_modified_time": "2026-10-07",
+    "level": "High",
+    "mps_id": "MPS-6mvh-jnwy",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6mvh-jnwy",
+        "name": "https://www.oscs1024.com/hd/MPS-6mvh-jnwy"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107181",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107181"
+      },
+      {
+        "url": "https://beaksec.github.io/posts/telegram-desktop-one-click-account-takeover/",
+        "name": "Telegram Desktop one-click account takeover write-up"
+      },
+      {
+        "url": "https://github.com/telegramdesktop/tdesktop/commit/db3405699f8fc3ae28a58d2348b7d13a43c0590a",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/telegramdesktop/tdesktop/releases/tag/v7.2.9",
+        "name": "Telegram Desktop v7.2.9 Release Notes"
+      },
+      {
+        "url": "https://github.com/telegramdesktop/tdesktop/blob/v7.2.8/Telegram/SourceFiles/core/sandbox.cpp#L362-L364",
+        "name": "Unescaped IPC record separator (v7.2.8)"
+      },
+      {
+        "url": "https://github.com/telegramdesktop/tdesktop/blob/v7.2.8/Telegram/SourceFiles/support/support_helper.cpp#L673-L751",
+        "name": "interpret: send-path handler (v7.2.8)"
+      },
+      {
+        "url": "https://github.com/telegramdesktop/tdesktop",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/telegram-desktop-before-7.2.9-ipc-record-injection-file-exfiltration-via-interpret-scheme",
+        "name": "VulnCheck Advisory: Telegram Desktop before 7.2.9 IPC Record Injection File Exfiltration via interpret: Scheme"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Telegram Desktop IPC记录注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107181",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-143",
+    "description": "Telegram Desktop 是 Telegram 官方开源（GPL-3.0）的跨平台桌面客户端，基于 C++/Qt 开发，用于收发消息、文件与频道内容。\n受影响版本中，新启动的实例将系统调起的 tg:// 链接序列化为 OPEN: 记录写入单实例 IPC 本地套接字时未转义 URL 内部的记录分隔符分号（Core::Sandbox::socketConnected），已运行实例在 Sandbox::readClients 中按分号盲目切分记录，攻击者构造含分号的链接可注入任意 OPEN: 记录；注入的 OPEN:interpret: 路径记录会进入内部 interpret: scheme 处理流程，Support::InterpretSendPath 无授权校验与确认弹窗，按指令文件把指定本地文件（含 tdata/key_datas 与 tdata/D877F783D5D3EF8Cs 会话密钥）上传到攻击者指定的频道或超级群组，造成本地任意文件读取与账号接管。\n修复版本中通过 EscapeTo7bit 在写入 OPEN: 记录前对分号、百分号与控制字符做百分号十六进制转义，切分后经 EscapeFrom7bit 还原，使 URL 内部的分号无法终止记录；同时删除内部 interpret: scheme 与 Support::InterpretSendPath，同一连接出现 OPEN: 记录时忽略 CMD:/CTRL: 记录，并在出现非本地 URL 后丢弃本地文件路径，切断注入链路。",
+    "effects": [
+      {
+        "comp_name": "telegram_desktop",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.2.9)",
+            "min_fixed_version": "7.2.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "记录分隔符转义处理不恰当",
+    "kind_en": "Improper Neutralization of Record Delimiters",
+    "last_modified_time": "2026-10-07",
+    "level": "High",
+    "mps_id": "MPS-6mvh-jnwy",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6mvh-jnwy",
+        "name": "https://www.oscs1024.com/hd/MPS-6mvh-jnwy"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107181",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107181"
+      },
+      {
+        "url": "https://beaksec.github.io/posts/telegram-desktop-one-click-account-takeover/",
+        "name": "Telegram Desktop one-click account takeover write-up"
+      },
+      {
+        "url": "https://github.com/telegramdesktop/tdesktop/commit/db3405699f8fc3ae28a58d2348b7d13a43c0590a",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/telegramdesktop/tdesktop/releases/tag/v7.2.9",
+        "name": "Telegram Desktop v7.2.9 Release Notes"
+      },
+      {
+        "url": "https://github.com/telegramdesktop/tdesktop/blob/v7.2.8/Telegram/SourceFiles/core/sandbox.cpp#L362-L364",
+        "name": "Unescaped IPC record separator (v7.2.8)"
+      },
+      {
+        "url": "https://github.com/telegramdesktop/tdesktop/blob/v7.2.8/Telegram/SourceFiles/support/support_helper.cpp#L673-L751",
+        "name": "interpret: send-path handler (v7.2.8)"
+      },
+      {
+        "url": "https://github.com/telegramdesktop/tdesktop",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/telegram-desktop-before-7.2.9-ipc-record-injection-file-exfiltration-via-interpret-scheme",
+        "name": "VulnCheck Advisory: Telegram Desktop before 7.2.9 IPC Record Injection File Exfiltration via interpret: Scheme"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Telegram Desktop IPC记录注入漏洞"
+  },
+  "first_saved_at": "2026-10-07T16:00:07+00:00"
+}
