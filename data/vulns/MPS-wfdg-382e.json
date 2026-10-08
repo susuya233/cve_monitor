@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-10-08T16:02:11+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-wfdg-382e",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨站点请求伪造 (CSRF)通过利用网站对用户请求的信任进行攻击。当用户在网站A登录并在同一浏览器会话中访问网站B时，攻击者可以构造特制的请求并诱使用户执行，以使网站B误以为这些请求是用户合法发起的。\n攻击者通常通过欺骗用户点击恶意链接、在受信任的网站中植入恶意代码或通过钓鱼等手段来实施CSRF攻击，一旦用户执行了恶意请求，攻击者可以以用户的身份执行任意操作，包括更改用户密码、发起资金转账或删除重要数据等。",
+        "title": "什么是CSRF"
+      },
+      {
+        "content": "- 链接欺骗：攻击者通过向用户发送包含恶意链接的电子邮件或社交媒体消息，诱使用户点击并执行恶意请求。\n- 图片引用攻击：攻击者通过在恶意网站上包含指向目标网站的图片引用，以触发用户浏览器自动发送目标网站的请求。\n- XSS利用：如果目标网站存在XSS漏洞，攻击者可以注入恶意脚本，以使用户在浏览器中执行恶意请求。",
+        "title": "CSRF常见的攻击方式"
+      },
+      {
+        "content": "- 随机令牌：网站可以在每个请求中包含一个随机生成的令牌（CSRF Token），并验证该令牌的有效性，以确认请求的来源是合法的。\n- SameSite Cookie：使用SameSite属性来限制跨站点请求，将Cookie的发送限制在同一站点上，减少了跨站请求伪造的风险。\n- 双重验证：对于敏感操作，网站可以要求用户进行额外的验证，例如输入验证码、提供第二个因素的身份验证等。\n- 强化浏览器策略：网站可以设置Content-Security-Policy（CSP）头，限制浏览器执行恶意脚本的能力，减少CSRF攻击的风险。\n- 限制用户操作：网站可以要求用户在执行敏感操作之前进行明确的确认或授权，防止恶意请求被误触发。\n- 安全编码实践：开发人员应遵循安全编码实践，对用户输入进行适当的验证和过滤，防止恶意请求的注入。",
+        "title": "如何预防CSRF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-66479",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+    "cwe": "CWE-352",
+    "description": "WPComplete 是 Liquid Web / StellarWP（原 iThemes）面向 WordPress 课程与会员站点的学习进度跟踪插件，以 wpcomplete 为插件标识在 wordpress.org 以 GPLv2 或更高协议开源分发，用于在课程页面中提供完成按钮并统计学员完成进度。\n受影响版本中，插件无条件注册 admin-post.php?action=user_completion 入口，其处理函数 admin_user_completion 仅校验 edit_users 权限而不验证 nonce，攻击者可构造跨站请求诱骗具备 edit_users 权限的已登录管理员提交携带任意 button 值的请求，该值未净化即写入文章元数据与用户活动元数据，并在后台完成统计模板中未经转义直接回显，最终在管理员浏览器中执行攻击者脚本，形成存储型 XSS。\n修复版本中通过为 admin_user_completion 增加 wp_verify_nonce 一次性随机数校验、对 user_id 强制取整并用 sanitize_text_field 净化 button 参数以切断伪造请求的写入链路，同时在按钮完成、用户完成与 metabox 三个后台模板中补充 esc_html、esc_url、esc_attr、esc_js 输出转义，消除存储载荷的执行条件。",
+    "effects": [
+      {
+        "comp_name": "wpcomplete",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.9.5.7)",
+            "min_fixed_version": "2.9.5.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "CSRF",
+    "kind_en": "跨站请求伪造 (CSRF)",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-wfdg-382e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wfdg-382e",
+        "name": "https://www.oscs1024.com/hd/MPS-wfdg-382e"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-66479",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-66479"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/wpcomplete/vulnerability/wordpress-wpcomplete-plugin-2-9-5-6-csrf-to-stored-xss-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WPComplete CSRF存储型XSS",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨站点请求伪造 (CSRF)通过利用网站对用户请求的信任进行攻击。当用户在网站A登录并在同一浏览器会话中访问网站B时，攻击者可以构造特制的请求并诱使用户执行，以使网站B误以为这些请求是用户合法发起的。\n攻击者通常通过欺骗用户点击恶意链接、在受信任的网站中植入恶意代码或通过钓鱼等手段来实施CSRF攻击，一旦用户执行了恶意请求，攻击者可以以用户的身份执行任意操作，包括更改用户密码、发起资金转账或删除重要数据等。",
+        "title": "什么是CSRF"
+      },
+      {
+        "content": "- 链接欺骗：攻击者通过向用户发送包含恶意链接的电子邮件或社交媒体消息，诱使用户点击并执行恶意请求。\n- 图片引用攻击：攻击者通过在恶意网站上包含指向目标网站的图片引用，以触发用户浏览器自动发送目标网站的请求。\n- XSS利用：如果目标网站存在XSS漏洞，攻击者可以注入恶意脚本，以使用户在浏览器中执行恶意请求。",
+        "title": "CSRF常见的攻击方式"
+      },
+      {
+        "content": "- 随机令牌：网站可以在每个请求中包含一个随机生成的令牌（CSRF Token），并验证该令牌的有效性，以确认请求的来源是合法的。\n- SameSite Cookie：使用SameSite属性来限制跨站点请求，将Cookie的发送限制在同一站点上，减少了跨站请求伪造的风险。\n- 双重验证：对于敏感操作，网站可以要求用户进行额外的验证，例如输入验证码、提供第二个因素的身份验证等。\n- 强化浏览器策略：网站可以设置Content-Security-Policy（CSP）头，限制浏览器执行恶意脚本的能力，减少CSRF攻击的风险。\n- 限制用户操作：网站可以要求用户在执行敏感操作之前进行明确的确认或授权，防止恶意请求被误触发。\n- 安全编码实践：开发人员应遵循安全编码实践，对用户输入进行适当的验证和过滤，防止恶意请求的注入。",
+        "title": "如何预防CSRF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-66479",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+    "cwe": "CWE-352",
+    "description": "WPComplete 是 Liquid Web / StellarWP（原 iThemes）面向 WordPress 课程与会员站点的学习进度跟踪插件，以 wpcomplete 为插件标识在 wordpress.org 以 GPLv2 或更高协议开源分发，用于在课程页面中提供完成按钮并统计学员完成进度。\n受影响版本中，插件无条件注册 admin-post.php?action=user_completion 入口，其处理函数 admin_user_completion 仅校验 edit_users 权限而不验证 nonce，攻击者可构造跨站请求诱骗具备 edit_users 权限的已登录管理员提交携带任意 button 值的请求，该值未净化即写入文章元数据与用户活动元数据，并在后台完成统计模板中未经转义直接回显，最终在管理员浏览器中执行攻击者脚本，形成存储型 XSS。\n修复版本中通过为 admin_user_completion 增加 wp_verify_nonce 一次性随机数校验、对 user_id 强制取整并用 sanitize_text_field 净化 button 参数以切断伪造请求的写入链路，同时在按钮完成、用户完成与 metabox 三个后台模板中补充 esc_html、esc_url、esc_attr、esc_js 输出转义，消除存储载荷的执行条件。",
+    "effects": [
+      {
+        "comp_name": "wpcomplete",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.9.5.7)",
+            "min_fixed_version": "2.9.5.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "CSRF",
+    "kind_en": "Cross-Site Request Forgery (CSRF)",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-wfdg-382e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wfdg-382e",
+        "name": "https://www.oscs1024.com/hd/MPS-wfdg-382e"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-66479",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-66479"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/wpcomplete/vulnerability/wordpress-wpcomplete-plugin-2-9-5-6-csrf-to-stored-xss-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WPComplete CSRF存储型XSS"
+  },
+  "first_saved_at": "2026-10-08T16:02:11+00:00"
+}
