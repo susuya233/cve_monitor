@@ -1,0 +1,193 @@
+{
+  "saved_at": "2026-10-08T01:29:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-fr5k-d1az",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107232",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-522",
+    "description": "AsyncHttpClient 是一个开源 Java 异步 HTTP 客户端库（Maven 坐标 org.asynchttpclient:async-http-client），用于执行 HTTP 请求并异步处理响应，支持经 HTTP 或 SOCKS 代理访问目标服务。\n受影响版本中，NettyRequestSender 的 isConnectAlreadyDone 方法以最近构建的请求是否为 CONNECT 来推断代理隧道已建立，代理拒绝 CONNECT 时该条件同样成立，连接仍是终止于代理的明文通道；Interceptors.exitAfterIntercept 随后把代理拒绝响应分发给面向源站请求的 401 与 30x 处理器，二者以 setReuseChannel(true) 在原连接上重建源站请求并附加源站 Authorization 头，攻击者控制的代理以 401、302 或 401 NTLM 响应 CONNECT 后，可在明文连接上直接读取 Basic 凭据，或驱动 NTLM 握手实施离线破解与中继。\n修复版本中通过在 NettyResponseFuture 中引入 tunnelEstablished 隧道状态，仅允许 ConnectSuccessInterceptor 在 CONNECT 成功后置位，isConnectAlreadyDone 要求该状态为真才跳过隧道建立，exitAfterIntercept 对 CONNECT 响应仅处理 200 与 407、其余状态原样返回调用方，被拒绝的连接随之关闭，源站凭据不再写入明文代理连接。",
+    "effects": [
+      {
+        "comp_name": "org.asynchttpclient:async-http-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.16.1)",
+            "min_fixed_version": "2.16.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.12)",
+            "min_fixed_version": "3.0.12",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "凭证保护不足",
+    "kind_en": "凭证保护不足",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-fr5k-d1az",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fr5k-d1az",
+        "name": "https://www.oscs1024.com/hd/MPS-fr5k-d1az"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107232",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107232"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-v9f2-7rw2-gr2x",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-v9f2-7rw2-gr2x"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/3a625cb892233c0a6653ac68823a25ffbc80f393",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/3a625cb892233c0a6653ac68823a25ffbc80f393"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/a87e7b8c81a6f66a4ce23cd43097fbadd1c788ea",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/a87e7b8c81a6f66a4ce23cd43097fbadd1c788ea"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-2.16.1",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-2.16.1"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.12",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.12"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "AsyncHttpClient代理凭据明文泄露漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107232",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-522",
+    "description": "AsyncHttpClient 是一个开源 Java 异步 HTTP 客户端库（Maven 坐标 org.asynchttpclient:async-http-client），用于执行 HTTP 请求并异步处理响应，支持经 HTTP 或 SOCKS 代理访问目标服务。\n受影响版本中，NettyRequestSender 的 isConnectAlreadyDone 方法以最近构建的请求是否为 CONNECT 来推断代理隧道已建立，代理拒绝 CONNECT 时该条件同样成立，连接仍是终止于代理的明文通道；Interceptors.exitAfterIntercept 随后把代理拒绝响应分发给面向源站请求的 401 与 30x 处理器，二者以 setReuseChannel(true) 在原连接上重建源站请求并附加源站 Authorization 头，攻击者控制的代理以 401、302 或 401 NTLM 响应 CONNECT 后，可在明文连接上直接读取 Basic 凭据，或驱动 NTLM 握手实施离线破解与中继。\n修复版本中通过在 NettyResponseFuture 中引入 tunnelEstablished 隧道状态，仅允许 ConnectSuccessInterceptor 在 CONNECT 成功后置位，isConnectAlreadyDone 要求该状态为真才跳过隧道建立，exitAfterIntercept 对 CONNECT 响应仅处理 200 与 407、其余状态原样返回调用方，被拒绝的连接随之关闭，源站凭据不再写入明文代理连接。",
+    "effects": [
+      {
+        "comp_name": "org.asynchttpclient:async-http-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.16.1)",
+            "min_fixed_version": "2.16.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.12)",
+            "min_fixed_version": "3.0.12",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "凭证保护不足",
+    "kind_en": "Insufficiently Protected Credentials",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-fr5k-d1az",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fr5k-d1az",
+        "name": "https://www.oscs1024.com/hd/MPS-fr5k-d1az"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107232",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107232"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-v9f2-7rw2-gr2x",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-v9f2-7rw2-gr2x"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/3a625cb892233c0a6653ac68823a25ffbc80f393",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/3a625cb892233c0a6653ac68823a25ffbc80f393"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/a87e7b8c81a6f66a4ce23cd43097fbadd1c788ea",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/a87e7b8c81a6f66a4ce23cd43097fbadd1c788ea"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-2.16.1",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-2.16.1"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.12",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.12"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "AsyncHttpClient代理凭据明文泄露漏洞"
+  },
+  "first_saved_at": "2026-10-08T01:29:33+00:00"
+}

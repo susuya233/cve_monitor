@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-10-08T01:29:29+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-1aop-eyc5",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107279",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-757",
+    "description": "AsyncHttpClient（AHC）是开源的 Java 异步 HTTP 客户端库，通过 Maven 坐标 org.asynchttpclient:async-http-client 发布，用于执行 HTTP 请求并异步处理 HTTP 响应。\n受影响版本中，客户端为 Digest 认证实现了基于 rspauth 的服务器相互认证校验，但 Realm.Builder.parseRawQop 在质询仅提供 qop=\"auth-int\" 时仍会选中 auth-int，而 AuthenticatorUtils.computeExpectedRspAuth 因 auth-int 的 rspauth 签名覆盖尚未读取的响应实体、在处理 Authentication-Info 头时无法计算期望值而返回 null，Interceptors.processAuthenticationInfo 将 null 视为无法校验的非致命结果，仅记录告警并照常交付响应，带有非法 rspauth 的响应被接受；处于中间人或伪造服务器位置的攻击者无需知晓共享密钥，通过返回仅含 qop=\"auth-int\" 的质询即可关闭整个交换的相互认证，被客户端当作通过认证的对端。\n修复版本中通过收紧 Realm.Builder.parseRawQop 的 qop 协商逻辑，不再选择 rspauth 无法校验的 auth-int，仅提供 auth-int 的质询回退为无 qop 的 RFC 2069 Digest 或导致认证失败，质询同时提供 auth 与 auth-int 的正常场景不受影响，修复包含在 3.0.13 版本。",
+    "effects": [
+      {
+        "comp_name": "org.asynchttpclient:async-http-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[3.0.12,3.0.13)",
+            "min_fixed_version": "3.0.13",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "在会话协商时选择低安全性的算法（算法降级）",
+    "kind_en": "协商期间选择安全性较低的算法（“算法降级”）",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-1aop-eyc5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1aop-eyc5",
+        "name": "https://www.oscs1024.com/hd/MPS-1aop-eyc5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107279",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107279"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-qhv6-3pmh-95q4",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-qhv6-3pmh-95q4"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/a5422493b638226666a1ecb5f82826c7c7845b99",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/a5422493b638226666a1ecb5f82826c7c7845b99"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.13",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.13"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "AsyncHttpClient Digest 相互认证绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107279",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-757",
+    "description": "AsyncHttpClient（AHC）是开源的 Java 异步 HTTP 客户端库，通过 Maven 坐标 org.asynchttpclient:async-http-client 发布，用于执行 HTTP 请求并异步处理 HTTP 响应。\n受影响版本中，客户端为 Digest 认证实现了基于 rspauth 的服务器相互认证校验，但 Realm.Builder.parseRawQop 在质询仅提供 qop=\"auth-int\" 时仍会选中 auth-int，而 AuthenticatorUtils.computeExpectedRspAuth 因 auth-int 的 rspauth 签名覆盖尚未读取的响应实体、在处理 Authentication-Info 头时无法计算期望值而返回 null，Interceptors.processAuthenticationInfo 将 null 视为无法校验的非致命结果，仅记录告警并照常交付响应，带有非法 rspauth 的响应被接受；处于中间人或伪造服务器位置的攻击者无需知晓共享密钥，通过返回仅含 qop=\"auth-int\" 的质询即可关闭整个交换的相互认证，被客户端当作通过认证的对端。\n修复版本中通过收紧 Realm.Builder.parseRawQop 的 qop 协商逻辑，不再选择 rspauth 无法校验的 auth-int，仅提供 auth-int 的质询回退为无 qop 的 RFC 2069 Digest 或导致认证失败，质询同时提供 auth 与 auth-int 的正常场景不受影响，修复包含在 3.0.13 版本。",
+    "effects": [
+      {
+        "comp_name": "org.asynchttpclient:async-http-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[3.0.12,3.0.13)",
+            "min_fixed_version": "3.0.13",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "在会话协商时选择低安全性的算法（算法降级）",
+    "kind_en": "Selection of Less-Secure Algorithm During Negotiation ('Algorithm Downgrade')",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-1aop-eyc5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1aop-eyc5",
+        "name": "https://www.oscs1024.com/hd/MPS-1aop-eyc5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107279",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107279"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-qhv6-3pmh-95q4",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-qhv6-3pmh-95q4"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/a5422493b638226666a1ecb5f82826c7c7845b99",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/a5422493b638226666a1ecb5f82826c7c7845b99"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.13",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.13"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "AsyncHttpClient Digest 相互认证绕过漏洞"
+  },
+  "first_saved_at": "2026-10-08T01:29:29+00:00"
+}

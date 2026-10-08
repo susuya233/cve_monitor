@@ -1,0 +1,193 @@
+{
+  "saved_at": "2026-10-08T01:29:31+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0oic-zsfw",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107231",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-757",
+    "description": "AsyncHttpClient（AHC）是一个开源的 Java 异步 HTTP 客户端库，以 Apache-2.0 协议发布，用于执行 HTTP 请求并异步处理 HTTP 响应，支持 Basic、Digest 等认证方案。\n受影响版本中，Realm.Builder 解析 WWW-Authenticate 与 Proxy-Authenticate 挑战头时，以是否取得非空 nonce 决定认证方案（isNonEmpty(nonce) ? DIGEST : BASIC），恶意源站或代理发送声明为 Digest 且省略或置空 nonce 的挑战，可使客户端将方案降级为 BASIC，并以 base64 明文重发用户名与口令，origin 与 proxy 两条解析路径均受影响。\n修复版本中通过新增 challengedScheme 判定改写该逻辑：认证方案取自挑战头自身声明，声明为 Digest 的挑战在缺少可用 nonce 时保持 DIGEST，不再生成 Basic Authorization 头，认证交换以失败结束而非明文发送口令。",
+    "effects": [
+      {
+        "comp_name": "org.asynchttpclient:async-http-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.16.1)",
+            "min_fixed_version": "2.16.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0.Beta1,3.0.13)",
+            "min_fixed_version": "3.0.13",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "在会话协商时选择低安全性的算法（算法降级）",
+    "kind_en": "协商期间选择安全性较低的算法（“算法降级”）",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-0oic-zsfw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0oic-zsfw",
+        "name": "https://www.oscs1024.com/hd/MPS-0oic-zsfw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107231",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107231"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-rqf5-2wxv-rjf4",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-rqf5-2wxv-rjf4"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/8376866aa9b5a7653ad19db9d472692f875caa83",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/8376866aa9b5a7653ad19db9d472692f875caa83"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/c8d639bf6ac341d377d610a93570bcd15565f1a6",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/c8d639bf6ac341d377d610a93570bcd15565f1a6"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-2.16.1",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-2.16.1"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.13",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.13"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "AsyncHttpClient认证降级泄露口令漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107231",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-757",
+    "description": "AsyncHttpClient（AHC）是一个开源的 Java 异步 HTTP 客户端库，以 Apache-2.0 协议发布，用于执行 HTTP 请求并异步处理 HTTP 响应，支持 Basic、Digest 等认证方案。\n受影响版本中，Realm.Builder 解析 WWW-Authenticate 与 Proxy-Authenticate 挑战头时，以是否取得非空 nonce 决定认证方案（isNonEmpty(nonce) ? DIGEST : BASIC），恶意源站或代理发送声明为 Digest 且省略或置空 nonce 的挑战，可使客户端将方案降级为 BASIC，并以 base64 明文重发用户名与口令，origin 与 proxy 两条解析路径均受影响。\n修复版本中通过新增 challengedScheme 判定改写该逻辑：认证方案取自挑战头自身声明，声明为 Digest 的挑战在缺少可用 nonce 时保持 DIGEST，不再生成 Basic Authorization 头，认证交换以失败结束而非明文发送口令。",
+    "effects": [
+      {
+        "comp_name": "org.asynchttpclient:async-http-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.16.1)",
+            "min_fixed_version": "2.16.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0.Beta1,3.0.13)",
+            "min_fixed_version": "3.0.13",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "在会话协商时选择低安全性的算法（算法降级）",
+    "kind_en": "Selection of Less-Secure Algorithm During Negotiation ('Algorithm Downgrade')",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-0oic-zsfw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0oic-zsfw",
+        "name": "https://www.oscs1024.com/hd/MPS-0oic-zsfw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107231",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107231"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-rqf5-2wxv-rjf4",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-rqf5-2wxv-rjf4"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/8376866aa9b5a7653ad19db9d472692f875caa83",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/8376866aa9b5a7653ad19db9d472692f875caa83"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/c8d639bf6ac341d377d610a93570bcd15565f1a6",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/c8d639bf6ac341d377d610a93570bcd15565f1a6"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-2.16.1",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-2.16.1"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.13",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.13"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "AsyncHttpClient认证降级泄露口令漏洞"
+  },
+  "first_saved_at": "2026-10-08T01:29:31+00:00"
+}

@@ -1,0 +1,219 @@
+{
+  "saved_at": "2026-10-08T01:29:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2my6-8r9u",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107281",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-863",
+    "description": "AsyncHttpClient 是一个基于 Netty 的开源 Java 异步 HTTP 客户端库（Apache-2.0 许可，Maven 坐标 org.asynchttpclient:async-http-client），用于执行 HTTP 请求并异步处理响应，支持 NTLM、Kerberos/SPNEGO 等认证方案与 HTTP/1.1 连接池复用。\n受影响版本中，NTLM 与 Negotiate（Kerberos/SPNEGO）认证的对象是连接而非请求，握手完成后服务器把该套接字上的后续请求都视为完成认证的首个主体；HTTP/1.1 连接池分区键由 ChannelPoolPartitioning.PerHostChannelPoolPartitioning.getPartitionKey 按目标 URI、虚拟主机与代理 host/port/type 生成，不含已认证主体，另一主体（或未配置主体的请求）发起的同目标请求经 NettyRequestSender.pollPooledChannel 按该键取回空闲连接后，复用先前主体认证的套接字，该请求在网络上不携带任何认证头，服务器以首个主体的身份执行它并把该主体权限下的响应返回给调用方，凭据本身不被泄露，被混淆的是请求的执行身份。\n修复版本中通过把认证主体并入面向连接方案的 HTTP/1.1 连接池分区键：新增 PrincipalScopedPartitionKey.scope 对 NTLM、KERBEROS、SPNEGO 返回包含 principal 的包装键，Basic、Digest 等按请求认证的方案与无主体场景保持原键，全部入池与取池路径（普通取池、round-robin override、重定向与重放、drain 归还）统一应用该键，使不同主体的连接不再互相复用，同一主体的连接复用与 maxConnectionsPerHost 语义保持不变。",
+    "effects": [
+      {
+        "comp_name": "org.asynchttpclient:async-http-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.16.1)",
+            "min_fixed_version": "2.16.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.13)",
+            "min_fixed_version": "3.0.13",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查错误",
+    "kind_en": "授权错误",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-2my6-8r9u",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2my6-8r9u",
+        "name": "https://www.oscs1024.com/hd/MPS-2my6-8r9u"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107281",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107281"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-vvp4-63h8-v5pm",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-vvp4-63h8-v5pm"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/73813babf51231ee79f7da4f07b777f19f48d34d",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/73813babf51231ee79f7da4f07b777f19f48d34d"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/83e552e64cabab2119addb6b47f7c6482997c94e",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/83e552e64cabab2119addb6b47f7c6482997c94e"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-2.16.1",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-2.16.1"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.13",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.13"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "AsyncHttpClient 连接池身份混淆漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107281",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-863",
+    "description": "AsyncHttpClient 是一个基于 Netty 的开源 Java 异步 HTTP 客户端库（Apache-2.0 许可，Maven 坐标 org.asynchttpclient:async-http-client），用于执行 HTTP 请求并异步处理响应，支持 NTLM、Kerberos/SPNEGO 等认证方案与 HTTP/1.1 连接池复用。\n受影响版本中，NTLM 与 Negotiate（Kerberos/SPNEGO）认证的对象是连接而非请求，握手完成后服务器把该套接字上的后续请求都视为完成认证的首个主体；HTTP/1.1 连接池分区键由 ChannelPoolPartitioning.PerHostChannelPoolPartitioning.getPartitionKey 按目标 URI、虚拟主机与代理 host/port/type 生成，不含已认证主体，另一主体（或未配置主体的请求）发起的同目标请求经 NettyRequestSender.pollPooledChannel 按该键取回空闲连接后，复用先前主体认证的套接字，该请求在网络上不携带任何认证头，服务器以首个主体的身份执行它并把该主体权限下的响应返回给调用方，凭据本身不被泄露，被混淆的是请求的执行身份。\n修复版本中通过把认证主体并入面向连接方案的 HTTP/1.1 连接池分区键：新增 PrincipalScopedPartitionKey.scope 对 NTLM、KERBEROS、SPNEGO 返回包含 principal 的包装键，Basic、Digest 等按请求认证的方案与无主体场景保持原键，全部入池与取池路径（普通取池、round-robin override、重定向与重放、drain 归还）统一应用该键，使不同主体的连接不再互相复用，同一主体的连接复用与 maxConnectionsPerHost 语义保持不变。",
+    "effects": [
+      {
+        "comp_name": "org.asynchttpclient:async-http-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.16.1)",
+            "min_fixed_version": "2.16.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.13)",
+            "min_fixed_version": "3.0.13",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查错误",
+    "kind_en": "Incorrect Authorization",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-2my6-8r9u",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2my6-8r9u",
+        "name": "https://www.oscs1024.com/hd/MPS-2my6-8r9u"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107281",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107281"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-vvp4-63h8-v5pm",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-vvp4-63h8-v5pm"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/73813babf51231ee79f7da4f07b777f19f48d34d",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/73813babf51231ee79f7da4f07b777f19f48d34d"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/83e552e64cabab2119addb6b47f7c6482997c94e",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/83e552e64cabab2119addb6b47f7c6482997c94e"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-2.16.1",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-2.16.1"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.13",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.13"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "AsyncHttpClient 连接池身份混淆漏洞"
+  },
+  "first_saved_at": "2026-10-08T01:29:32+00:00"
+}

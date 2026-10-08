@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-10-08T01:29:30+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-x6mc-uebw",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107230",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-863",
+    "description": "AsyncHttpClient 是开源的 Java 异步 HTTP 客户端库，基于 Netty 执行 HTTP 请求并异步处理响应，提供连接池、WebSocket 以及 NTLM、Kerberos、SPNEGO 等认证能力。\n受影响版本中，连接池分区键缺少区分认证身份的完整字段：3.x 的 PrincipalScopedPartitionKey.scope 只把源站 Realm 的 principal 字符串拼入池键，Kerberos、SPNEGO 依据票据缓存或默认 JAAS 登录认证时 principal 为空，池键退化为未隔离的基础键；代理 Realm 与 SOCKS、CONNECT 代理登录不参与键构造，2.x 则完全不按认证身份隔离池键；principal 字符串相同的身份（如 CORP\\alice 与 OTHER\\alice）共用同一分区。不同身份或带凭据与不带凭据的请求经同一个客户端实例访问同一主机时，后续请求会复用前一个身份已完成认证的 socket，服务端把该请求视为第一个身份处理，导致该身份的数据或权限暴露给其他调用方。\n修复版本中通过重写 PrincipalScopedPartitionKey 的池键构造，对源站与代理两个 Realm 分别计算 scheme、principal、password、ntlmDomain、ntlmHost、loginContextName、servicePrincipalName、realmName 与 customLoginConfig 等全部身份字段的 SHA-256 摘要并纳入池键，任一跳认证连接均生成隔离键且不再要求 principal 非空，SOCKS 或 CONNECT 代理登录认证的连接不再进入 HTTP/2 复用；SpnegoEngine 的 Kerberos 登录缓存改用 ConcurrentHashMap 并按除密码外的完整身份字段建键，切断跨身份复用认证连接的链路。",
+    "effects": [
+      {
+        "comp_name": "org.asynchttpclient:async-http-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.16.1]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.14)",
+            "min_fixed_version": "3.0.14",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查错误",
+    "kind_en": "授权错误",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-x6mc-uebw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-x6mc-uebw",
+        "name": "https://www.oscs1024.com/hd/MPS-x6mc-uebw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107230",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107230"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-v2j5-22fr-j62r",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-v2j5-22fr-j62r"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/d3bb4d68b41acf5d3ab7541afa9fdfe7ec3ba054",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/d3bb4d68b41acf5d3ab7541afa9fdfe7ec3ba054"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.14",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.14"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "AsyncHttpClient 连接池跨身份复用漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107230",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-863",
+    "description": "AsyncHttpClient 是开源的 Java 异步 HTTP 客户端库，基于 Netty 执行 HTTP 请求并异步处理响应，提供连接池、WebSocket 以及 NTLM、Kerberos、SPNEGO 等认证能力。\n受影响版本中，连接池分区键缺少区分认证身份的完整字段：3.x 的 PrincipalScopedPartitionKey.scope 只把源站 Realm 的 principal 字符串拼入池键，Kerberos、SPNEGO 依据票据缓存或默认 JAAS 登录认证时 principal 为空，池键退化为未隔离的基础键；代理 Realm 与 SOCKS、CONNECT 代理登录不参与键构造，2.x 则完全不按认证身份隔离池键；principal 字符串相同的身份（如 CORP\\alice 与 OTHER\\alice）共用同一分区。不同身份或带凭据与不带凭据的请求经同一个客户端实例访问同一主机时，后续请求会复用前一个身份已完成认证的 socket，服务端把该请求视为第一个身份处理，导致该身份的数据或权限暴露给其他调用方。\n修复版本中通过重写 PrincipalScopedPartitionKey 的池键构造，对源站与代理两个 Realm 分别计算 scheme、principal、password、ntlmDomain、ntlmHost、loginContextName、servicePrincipalName、realmName 与 customLoginConfig 等全部身份字段的 SHA-256 摘要并纳入池键，任一跳认证连接均生成隔离键且不再要求 principal 非空，SOCKS 或 CONNECT 代理登录认证的连接不再进入 HTTP/2 复用；SpnegoEngine 的 Kerberos 登录缓存改用 ConcurrentHashMap 并按除密码外的完整身份字段建键，切断跨身份复用认证连接的链路。",
+    "effects": [
+      {
+        "comp_name": "org.asynchttpclient:async-http-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.16.1]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.14)",
+            "min_fixed_version": "3.0.14",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查错误",
+    "kind_en": "Incorrect Authorization",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-x6mc-uebw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-x6mc-uebw",
+        "name": "https://www.oscs1024.com/hd/MPS-x6mc-uebw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107230",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107230"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-v2j5-22fr-j62r",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/security/advisories/GHSA-v2j5-22fr-j62r"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/commit/d3bb4d68b41acf5d3ab7541afa9fdfe7ec3ba054",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/commit/d3bb4d68b41acf5d3ab7541afa9fdfe7ec3ba054"
+      },
+      {
+        "url": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.14",
+        "name": "https://github.com/AsyncHttpClient/async-http-client/releases/tag/async-http-client-project-3.0.14"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "AsyncHttpClient 连接池跨身份复用漏洞"
+  },
+  "first_saved_at": "2026-10-08T01:29:30+00:00"
+}
