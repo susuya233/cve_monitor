@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-10-08T21:43:38+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d2zr-kc6j",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-67693",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-295",
+    "description": "GnuTLS 是一个开源的 TLS/SSL 协议与 X.509 证书处理 C 语言库，被主流 Linux 发行版和大量服务端、客户端软件用于 TLS 通信与证书链验证。\n受影响版本中，证书链验证未对终端实体证书实施 Key Usage（KU）约束，lib/x509/verify.c 的 _gnutls_check_key_purpose() 只遍历 Extended Key Usage（EKU）OID，verify_crt() 仅对 CA 证书检查 keyCertSign 等用途位，TLS 层的 _gnutls_check_key_usage_for_sig()、check_key_usage_for_enc() 与 _gnutls_kx_supports_pk_usage() 在 key_usage 为 0 时按无限制处理；攻击者使用已受信任 CA 签发的 critical KU 全 0 且 EKU 含 id-kp-serverAuth 的终端实体证书时，certtool 链验证与 gnutls-cli 对端验证均返回 trusted，依赖 KU 策略的部署会接受语义无效的证书并建立 TLS 连接，造成敏感信息暴露。\n修复版本中通过，可在证书准入策略中拒绝 KU 扩展存在且所有位为 0 的终端实体证书，避免依赖 GnuTLS 对 KU 的强制执行，并在上游发布修复版本后及时升级验证。",
+    "effects": [
+      {
+        "comp_name": "gnutls",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.8.13]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "证书验证不恰当",
+    "kind_en": "证书验证不当",
+    "last_modified_time": "2026-10-09",
+    "level": "High",
+    "mps_id": "MPS-d2zr-kc6j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-d2zr-kc6j",
+        "name": "https://www.oscs1024.com/hd/MPS-d2zr-kc6j"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67693",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-67693"
+      },
+      {
+        "url": "http://gnutls.com",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.com/gnutls/gnutls/-/blob/3.8.13/lib/x509/verify.c#L1119-1178",
+        "name": ""
+      },
+      {
+        "url": "https://gist.github.com/lkloliver/6fbfc191bc6163942c8017551ac3f238",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "GnuTLS证书用途校验缺陷",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-67693",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-295",
+    "description": "GnuTLS 是一个开源的 TLS/SSL 协议与 X.509 证书处理 C 语言库，被主流 Linux 发行版和大量服务端、客户端软件用于 TLS 通信与证书链验证。\n受影响版本中，证书链验证未对终端实体证书实施 Key Usage（KU）约束，lib/x509/verify.c 的 _gnutls_check_key_purpose() 只遍历 Extended Key Usage（EKU）OID，verify_crt() 仅对 CA 证书检查 keyCertSign 等用途位，TLS 层的 _gnutls_check_key_usage_for_sig()、check_key_usage_for_enc() 与 _gnutls_kx_supports_pk_usage() 在 key_usage 为 0 时按无限制处理；攻击者使用已受信任 CA 签发的 critical KU 全 0 且 EKU 含 id-kp-serverAuth 的终端实体证书时，certtool 链验证与 gnutls-cli 对端验证均返回 trusted，依赖 KU 策略的部署会接受语义无效的证书并建立 TLS 连接，造成敏感信息暴露。\n修复版本中通过，可在证书准入策略中拒绝 KU 扩展存在且所有位为 0 的终端实体证书，避免依赖 GnuTLS 对 KU 的强制执行，并在上游发布修复版本后及时升级验证。",
+    "effects": [
+      {
+        "comp_name": "gnutls",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.8.13]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "证书验证不恰当",
+    "kind_en": "Improper Certificate Validation",
+    "last_modified_time": "2026-10-09",
+    "level": "High",
+    "mps_id": "MPS-d2zr-kc6j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-d2zr-kc6j",
+        "name": "https://www.oscs1024.com/hd/MPS-d2zr-kc6j"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67693",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-67693"
+      },
+      {
+        "url": "http://gnutls.com",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.com/gnutls/gnutls/-/blob/3.8.13/lib/x509/verify.c#L1119-1178",
+        "name": ""
+      },
+      {
+        "url": "https://gist.github.com/lkloliver/6fbfc191bc6163942c8017551ac3f238",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "GnuTLS证书用途校验缺陷"
+  },
+  "first_saved_at": "2026-10-08T21:43:38+00:00"
+}

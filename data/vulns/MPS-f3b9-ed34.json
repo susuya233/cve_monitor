@@ -1,0 +1,151 @@
+{
+  "saved_at": "2026-10-08T21:43:35+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-f3b9-ed34",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78659",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-770",
+    "description": "golang.org/x/net 是 Go 官方维护的开源网络扩展库（BSD-3-Clause 许可），其 http2 包提供 HTTP/2 服务端与客户端实现，被大量 Go 服务直接依赖或经标准库 net/http 间接引入。\n受影响版本中，HTTP/2 服务端在 Framer 的 readMetaFrame 方法中使用单一 remainSize 预算按头部字面字节数扣减 maxHeaderListSize 限额；客户端在请求 HEADERS 头部中携带名为 trailer 的头部时，该头部按其少量报文字节计入预算，其以逗号分隔声明的字段数量不消耗预算，服务端随后按声明逐条填充 Request.Trailer 映射，每个映射条目产生固定内存开销，攻击者可绕过 Server.MaxHeaderValueCount 与 Server.MaxHeaderBytes 限制，以极小的请求成本使服务端内存不成比例增长并造成拒绝服务。\n修复版本中通过在 readMetaFrame 中为 trailer 声明引入独立的 trailersRemainSize 预算，并按声明字段数量乘以单个 HPACK 头部字段的固定开销计算内存占用，超限时同步清零头部与 trailer 两份预算，使 trailer 声明同样受头部大小限制约束，切断了以少量报文字节换取大量映射条目的资源消耗路径。",
+    "effects": [
+      {
+        "comp_name": "golang.org/x/net",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.60.0)",
+            "min_fixed_version": "0.60.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-10-09",
+    "level": "High",
+    "mps_id": "MPS-f3b9-ed34",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/10/08/10",
+        "name": ""
+      },
+      {
+        "url": "https://go.dev/issue/81857",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/golang/go/issues/81857",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/golang/net/commit/57f4235f83712a299328015548240512213a3852",
+        "name": ""
+      },
+      {
+        "url": "https://go-review.googlesource.com/c/net/+/847185",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/golang/net/releases/tag/v0.60.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "golang.org/x/net HTTP/2 内存耗尽漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78659",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-770",
+    "description": "golang.org/x/net 是 Go 官方维护的开源网络扩展库（BSD-3-Clause 许可），其 http2 包提供 HTTP/2 服务端与客户端实现，被大量 Go 服务直接依赖或经标准库 net/http 间接引入。\n受影响版本中，HTTP/2 服务端在 Framer 的 readMetaFrame 方法中使用单一 remainSize 预算按头部字面字节数扣减 maxHeaderListSize 限额；客户端在请求 HEADERS 头部中携带名为 trailer 的头部时，该头部按其少量报文字节计入预算，其以逗号分隔声明的字段数量不消耗预算，服务端随后按声明逐条填充 Request.Trailer 映射，每个映射条目产生固定内存开销，攻击者可绕过 Server.MaxHeaderValueCount 与 Server.MaxHeaderBytes 限制，以极小的请求成本使服务端内存不成比例增长并造成拒绝服务。\n修复版本中通过在 readMetaFrame 中为 trailer 声明引入独立的 trailersRemainSize 预算，并按声明字段数量乘以单个 HPACK 头部字段的固定开销计算内存占用，超限时同步清零头部与 trailer 两份预算，使 trailer 声明同样受头部大小限制约束，切断了以少量报文字节换取大量映射条目的资源消耗路径。",
+    "effects": [
+      {
+        "comp_name": "golang.org/x/net",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.60.0)",
+            "min_fixed_version": "0.60.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-10-09",
+    "level": "High",
+    "mps_id": "MPS-f3b9-ed34",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/10/08/10",
+        "name": ""
+      },
+      {
+        "url": "https://go.dev/issue/81857",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/golang/go/issues/81857",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/golang/net/commit/57f4235f83712a299328015548240512213a3852",
+        "name": ""
+      },
+      {
+        "url": "https://go-review.googlesource.com/c/net/+/847185",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/golang/net/releases/tag/v0.60.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "golang.org/x/net HTTP/2 内存耗尽漏洞"
+  },
+  "first_saved_at": "2026-10-08T21:43:35+00:00"
+}

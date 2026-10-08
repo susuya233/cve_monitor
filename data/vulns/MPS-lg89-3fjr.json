@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-10-08T21:43:44+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-lg89-3fjr",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107701",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1321",
+    "description": "dot-access 是 npm 上开源的轻量 JavaScript 点分路径读写工具库，对外导出 get() 与 set() 两个接口，用于按 a.b.c 形式的路径读取或写入对象属性，npm 最新发布版本为 1.0.0。\n受影响版本中，set() 将点分路径按 . 切分后用 reduce 逐段执行 deep[seg] 的动态属性写入，v1.0.0 的 index.js 未对 __proto__、constructor、prototype 等危险键做任何过滤；当应用把攻击者可控的点分路径（如用户提供的字段名）传入 set() 时，__proto__ 分段使遍历对象变为 Object.prototype，最终一段赋值将攻击者提供的 value 注入 Object.prototype，进程内所有对象继承被注入的属性，可篡改授权标志与选项默认值或导致进程崩溃。\n修复版本中通过在路径展开前拒绝 __proto__、constructor、prototype 等危险分段、仅在普通自有属性上执行动态写入，可切断该注入链；截至 2026-10-08，上游 npm 仓库最新版本仍为 1.0.0，官方修复版本尚未发布，建议调用侧过滤危险分段或替换为带原型键防护的实现以缓解。",
+    "effects": [
+      {
+        "comp_name": "dot-access",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.0]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "原型污染",
+    "kind_en": "对象原型属性的控制不当的修改（“原型污染”）",
+    "last_modified_time": "2026-10-09",
+    "level": "High",
+    "mps_id": "MPS-lg89-3fjr",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lg89-3fjr",
+        "name": "https://www.oscs1024.com/hd/MPS-lg89-3fjr"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107701",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107701"
+      },
+      {
+        "url": "https://gist.github.com/R3tro16/e094e4318a040f189fd5d2d33e8c3ec2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ntharim/dot-access/issues/5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ntharim/dot-access/blob/v1.0.0/index.js#L9-L18",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ntharim/dot-access",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dot-access-through-1.0.0-prototype-pollution-via-set-path-argument",
+        "name": "VulnCheck Advisory: dot-access through 1.0.0 Prototype Pollution via set() path argument"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "dot-access原型污染漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107701",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1321",
+    "description": "dot-access 是 npm 上开源的轻量 JavaScript 点分路径读写工具库，对外导出 get() 与 set() 两个接口，用于按 a.b.c 形式的路径读取或写入对象属性，npm 最新发布版本为 1.0.0。\n受影响版本中，set() 将点分路径按 . 切分后用 reduce 逐段执行 deep[seg] 的动态属性写入，v1.0.0 的 index.js 未对 __proto__、constructor、prototype 等危险键做任何过滤；当应用把攻击者可控的点分路径（如用户提供的字段名）传入 set() 时，__proto__ 分段使遍历对象变为 Object.prototype，最终一段赋值将攻击者提供的 value 注入 Object.prototype，进程内所有对象继承被注入的属性，可篡改授权标志与选项默认值或导致进程崩溃。\n修复版本中通过在路径展开前拒绝 __proto__、constructor、prototype 等危险分段、仅在普通自有属性上执行动态写入，可切断该注入链；截至 2026-10-08，上游 npm 仓库最新版本仍为 1.0.0，官方修复版本尚未发布，建议调用侧过滤危险分段或替换为带原型键防护的实现以缓解。",
+    "effects": [
+      {
+        "comp_name": "dot-access",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.0]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "原型污染",
+    "kind_en": "Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution')",
+    "last_modified_time": "2026-10-09",
+    "level": "High",
+    "mps_id": "MPS-lg89-3fjr",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lg89-3fjr",
+        "name": "https://www.oscs1024.com/hd/MPS-lg89-3fjr"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107701",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107701"
+      },
+      {
+        "url": "https://gist.github.com/R3tro16/e094e4318a040f189fd5d2d33e8c3ec2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ntharim/dot-access/issues/5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ntharim/dot-access/blob/v1.0.0/index.js#L9-L18",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ntharim/dot-access",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dot-access-through-1.0.0-prototype-pollution-via-set-path-argument",
+        "name": "VulnCheck Advisory: dot-access through 1.0.0 Prototype Pollution via set() path argument"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "dot-access原型污染漏洞"
+  },
+  "first_saved_at": "2026-10-08T21:43:44+00:00"
+}
