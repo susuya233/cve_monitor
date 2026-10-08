@@ -1,0 +1,159 @@
+{
+  "saved_at": "2026-10-08T08:17:20+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-mh81-ezkp",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87663",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "sirt@brocade.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-290",
+    "description": "Brocade Fabric OS 是博科（Brocade）光纤通道交换机与导向器运行的闭源网络操作系统，负责 SAN fabric 的管理、路由与交换机间通信。\n受影响版本中，交换机间远程执行服务在处理跨 fabric 的远程命令执行 IPC 帧时，接收端交换机以提升的处理级别执行帧内命令，且未对传输参数进行认证与校验。攻击者在控制 fabric 中单台已接入交换机并具备其管理员权限、目标成员启用远程执行功能的条件下，可伪造远程执行请求绕过认证并注入任意命令，以 root 权限在本机或 fabric 内其他受管交换机上执行命令，实现权限提升。\n修复版本中通过官方安全更新加强远程命令执行 IPC 帧的来源认证与参数校验，阻止未经验证的远程请求以提升处理级别执行，切断跨交换机提权与任意命令执行链路，Brocade 已在 Fabric OS 9.2.2d 与 10.0.1 中提供修复。",
+    "effects": [
+      {
+        "comp_name": "fabric_os",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.2.2d)",
+            "min_fixed_version": "9.2.2d",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.0.0,10.0.1)",
+            "min_fixed_version": "10.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用欺骗进行的认证绕过",
+    "kind_en": "通过欺骗绕过身份验证",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-mh81-ezkp",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mh81-ezkp",
+        "name": "https://www.oscs1024.com/hd/MPS-mh81-ezkp"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87663",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87663"
+      },
+      {
+        "url": "https://support.broadcom.com/external/content/SecurityAdvisories/0/39163",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Fabric OS权限绕过与命令注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87663",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "sirt@brocade.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-290",
+    "description": "Brocade Fabric OS 是博科（Brocade）光纤通道交换机与导向器运行的闭源网络操作系统，负责 SAN fabric 的管理、路由与交换机间通信。\n受影响版本中，交换机间远程执行服务在处理跨 fabric 的远程命令执行 IPC 帧时，接收端交换机以提升的处理级别执行帧内命令，且未对传输参数进行认证与校验。攻击者在控制 fabric 中单台已接入交换机并具备其管理员权限、目标成员启用远程执行功能的条件下，可伪造远程执行请求绕过认证并注入任意命令，以 root 权限在本机或 fabric 内其他受管交换机上执行命令，实现权限提升。\n修复版本中通过官方安全更新加强远程命令执行 IPC 帧的来源认证与参数校验，阻止未经验证的远程请求以提升处理级别执行，切断跨交换机提权与任意命令执行链路，Brocade 已在 Fabric OS 9.2.2d 与 10.0.1 中提供修复。",
+    "effects": [
+      {
+        "comp_name": "fabric_os",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.2.2d)",
+            "min_fixed_version": "9.2.2d",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.0.0,10.0.1)",
+            "min_fixed_version": "10.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用欺骗进行的认证绕过",
+    "kind_en": "Authentication Bypass by Spoofing",
+    "last_modified_time": "2026-10-08",
+    "level": "High",
+    "mps_id": "MPS-mh81-ezkp",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mh81-ezkp",
+        "name": "https://www.oscs1024.com/hd/MPS-mh81-ezkp"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87663",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87663"
+      },
+      {
+        "url": "https://support.broadcom.com/external/content/SecurityAdvisories/0/39163",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Fabric OS权限绕过与命令注入漏洞"
+  },
+  "first_saved_at": "2026-10-08T08:17:20+00:00"
+}
