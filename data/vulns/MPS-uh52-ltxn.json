@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-10-06T11:40:37+00:00",
+  "saved_at": "2026-10-09T01:38:39+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-kxrb-ado4",
+  "source_page": "https://www.oscs1024.com/hd/MPS-uh52-ltxn",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,55 +21,55 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-103831",
+    "cve_id": "CVE-2026-88131",
     "cvss": {
-      "cvssv4": [
+      "cvssv31": [
         {
-          "source": "cve-coordination@incibe.es",
-          "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "high",
-          "base_score": 7.5
+          "source": "secure@microsoft.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
         }
       ]
     },
-    "cvss_score": 7.5,
-    "cvss_vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-502",
-    "description": "CVE-2026-103831：TrueLayer Magento 2 插件的 Psr16CacheAdapter 组件中存在不安全反序列化漏洞，原因是使用 PHP 的本机 unserialize() 函数，在检索缓存中存储的数据时没有限制允许的类。已经能够将受操纵的数据写入 Magento 使用的缓存后端（例如 Redis 或 Memcached）的攻击者可以注入特制的 PHP 对象并触发其反序列化，从而可能导致通过应用程序环境中可用的小工具字符串执行任意代码。因此，利用需要一个先决条件，允许通过访问本地文件系统或可从 Magento 环境访问的缓存基础设施来写入缓存基础设施。",
+    "description": "Microsoft Dataverse 是微软托管的闭源云数据平台，作为 Power Platform 与 Dynamics 365 系列产品的统一数据底座，提供数据存储、业务逻辑与安全模型服务。\n受影响版本中，Dataverse 服务对通过网络接收的不可信数据执行反序列化，未经授权的攻击者可以提交恶意数据触发该缺陷，在服务端执行代码，微软将该漏洞评定为严重级别，CVSS 基础评分为 9.8。\n修复版本中通过微软在 Dataverse 云服务端部署的修复消除不可信数据反序列化风险，相关修复已自动生效，客户无需执行任何操作。",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "反序列化",
     "kind_en": "不可信数据的反序列化",
-    "last_modified_time": "2026-10-06",
-    "level": "High",
-    "mps_id": "MPS-kxrb-ado4",
+    "last_modified_time": "2026-10-09",
+    "level": "Critical",
+    "mps_id": "MPS-uh52-ltxn",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-10-06",
+    "published_time": "2026-10-09",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-kxrb-ado4",
-        "name": "https://www.oscs1024.com/hd/MPS-kxrb-ado4"
+        "url": "https://www.oscs1024.com/hd/MPS-uh52-ltxn",
+        "name": "https://www.oscs1024.com/hd/MPS-uh52-ltxn"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103831",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-103831"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88131",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88131"
       },
       {
-        "url": "https://www.incibe.es/en/incibe-cert/notices/aviso/insecure-deserialization-truelayer-magento-2-plugin",
-        "name": ""
+        "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-88131",
+        "name": "Microsoft Dataverse Remote Code Execution Vulnerability"
       }
     ],
     "scope_influence": "",
     "tags": [
       "应用软件"
     ],
-    "title": "TrueLayer Magento 2 插件中的不安全反序列化",
+    "title": "Dataverse 反序列化远程代码执行漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -89,55 +89,55 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-103831",
+    "cve_id": "CVE-2026-88131",
     "cvss": {
-      "cvssv4": [
+      "cvssv31": [
         {
-          "source": "cve-coordination@incibe.es",
-          "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "high",
-          "base_score": 7.5
+          "source": "secure@microsoft.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
         }
       ]
     },
-    "cvss_score": 7.5,
-    "cvss_vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-502",
-    "description": "CVE-2026-103831: Insecure deserialization vulnerability in the Psr16CacheAdapter component of the TrueLayer Magento 2 Plugin, due to the use of PHP's native unserialize() function without restrictions on the classes allowed when retrieving data stored in the cache. An attacker who already has the ability to write manipulated data to the cache backend used by Magento—such as Redis or Memcached—could inject specially crafted PHP objects and trigger their deserialization, potentially leading to arbitrary code execution via gadget strings available in the application environment. Exploitation therefore requires a prerequisite condition that allows writing to the cache infrastructure, either through access to the local file system or to a cache infrastructure accessible from the Magento environment.",
+    "description": "Microsoft Dataverse 是微软托管的闭源云数据平台，作为 Power Platform 与 Dynamics 365 系列产品的统一数据底座，提供数据存储、业务逻辑与安全模型服务。\n受影响版本中，Dataverse 服务对通过网络接收的不可信数据执行反序列化，未经授权的攻击者可以提交恶意数据触发该缺陷，在服务端执行代码，微软将该漏洞评定为严重级别，CVSS 基础评分为 9.8。\n修复版本中通过微软在 Dataverse 云服务端部署的修复消除不可信数据反序列化风险，相关修复已自动生效，客户无需执行任何操作。",
     "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "低",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "反序列化",
     "kind_en": "Deserialization of Untrusted Data",
-    "last_modified_time": "2026-10-06",
-    "level": "High",
-    "mps_id": "MPS-kxrb-ado4",
+    "last_modified_time": "2026-10-09",
+    "level": "Critical",
+    "mps_id": "MPS-uh52-ltxn",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-10-06",
+    "published_time": "2026-10-09",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-kxrb-ado4",
-        "name": "https://www.oscs1024.com/hd/MPS-kxrb-ado4"
+        "url": "https://www.oscs1024.com/hd/MPS-uh52-ltxn",
+        "name": "https://www.oscs1024.com/hd/MPS-uh52-ltxn"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103831",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-103831"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-88131",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-88131"
       },
       {
-        "url": "https://www.incibe.es/en/incibe-cert/notices/aviso/insecure-deserialization-truelayer-magento-2-plugin",
-        "name": ""
+        "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-88131",
+        "name": "Microsoft Dataverse Remote Code Execution Vulnerability"
       }
     ],
     "scope_influence": "",
     "tags": [
       "应用软件"
     ],
-    "title": "Insecure deserialization in the TrueLayer Magento 2 plugin"
+    "title": "Dataverse 反序列化远程代码执行漏洞"
   },
-  "first_saved_at": "2026-10-06T11:40:37+00:00"
+  "first_saved_at": "2026-10-09T01:38:39+00:00"
 }

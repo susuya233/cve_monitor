@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-10-05T17:42:53+00:00",
+  "saved_at": "2026-10-09T01:38:38+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-3560-zuoy",
+  "source_page": "https://www.oscs1024.com/hd/MPS-x4z1-ourj",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,36 +21,22 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-104968",
+    "cve_id": "CVE-2026-83947",
     "cvss": {
-      "cvssv4": [
+      "cvssv31": [
         {
-          "source": "security-advisories@github.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "source": "secure@microsoft.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:N",
           "severity": "high",
-          "base_score": 8.7
+          "base_score": 7.7
         }
       ]
     },
-    "cvss_score": 8.7,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:N",
     "cwe": "CWE-862",
-    "description": "Plane 是开源项目与任务管理平台，用于管理工作区、项目、工作项与成员协作。\n受影响版本中，GET /api/workspaces/{slug}/entity-search/ 由 SearchEndpoint.get 处理。该视图位于 apps/api/plane/app/views/search/base.py，只继承 BaseAPIView 的 IsAuthenticated，没有校验调用者是否属于 URL 中的工作区。任意已认证用户在知道工作区 slug 时，将 query_type 设为 user_mention 后可读取该工作区成员的显示名、UUID 与头像 URL；请求同时携带 project_id 时，接口按同样条件返回 ProjectMember 记录。\n修复版本中通过为 SearchEndpoint 设置 permission_classes 为 WorkspaceUserPermission，在执行成员查询前要求调用者是目标工作区的活跃成员，非成员请求被拒绝，不再返回其他工作区的成员信息。",
-    "effects": [
-      {
-        "comp_name": "plane",
-        "ecosystem": "linux",
-        "versions": [
-          {
-            "affected_version": "(-∞,1.4.0)",
-            "min_fixed_version": "1.4.0",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          }
-        ]
-      }
-    ],
+    "description": "Azure Event Grid 是微软 Azure 提供的全托管事件路由服务，为闭源云服务，用于在应用与 Azure 服务之间以发布/订阅模式集中转发事件，并支持 Webhook 等多种事件处理目标。\n受影响版本中，服务端对特定网络功能缺少授权校验（CWE-862），持有低权限授权账户的攻击者可跨网络冒充合法实体，伪造事件来源或身份；官方 CVSS 评估该问题作用域改变（S:C），仅造成完整性影响（C:N/I:H/A:N），无需用户交互。\n修复版本中通过服务端更新补齐缺失的授权校验，切断攻击者冒充合法实体的路径；微软已在 Azure Event Grid 服务端完成完全缓解，客户无需执行任何操作，该 CVE 的发布目的为透明度说明。",
+    "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -59,44 +45,31 @@
     "fix_suggestion": "建议修复",
     "kind": "授权检查缺失",
     "kind_en": "缺少授权",
-    "last_modified_time": "2026-10-06",
+    "last_modified_time": "2026-10-09",
     "level": "High",
-    "mps_id": "MPS-3560-zuoy",
+    "mps_id": "MPS-x4z1-ourj",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-10-06",
+    "published_time": "2026-10-09",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-3560-zuoy",
-        "name": "https://www.oscs1024.com/hd/MPS-3560-zuoy"
+        "url": "https://www.oscs1024.com/hd/MPS-x4z1-ourj",
+        "name": "https://www.oscs1024.com/hd/MPS-x4z1-ourj"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-104968",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-104968"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83947",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-83947"
       },
       {
-        "url": "https://github.com/makeplane/plane/security/advisories/GHSA-32q3-mqpc-3mhv",
-        "name": "https://github.com/makeplane/plane/security/advisories/GHSA-32q3-mqpc-3mhv"
-      },
-      {
-        "url": "https://github.com/makeplane/plane/pull/9296",
-        "name": "https://github.com/makeplane/plane/pull/9296"
-      },
-      {
-        "url": "https://github.com/makeplane/plane/commit/28ae25b564351abaf8b36d4a3ba6d32f80fbf075",
-        "name": "https://github.com/makeplane/plane/commit/28ae25b564351abaf8b36d4a3ba6d32f80fbf075"
-      },
-      {
-        "url": "https://github.com/makeplane/plane/releases/tag/v1.4.0",
-        "name": "https://github.com/makeplane/plane/releases/tag/v1.4.0"
+        "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-83947",
+        "name": "Azure Event Grid Spoofing Vulnerability"
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件",
-      "终端软件"
+      "应用软件"
     ],
-    "title": "Plane跨工作区成员枚举",
+    "title": "Azure Event Grid 欺骗漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -116,36 +89,22 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-104968",
+    "cve_id": "CVE-2026-83947",
     "cvss": {
-      "cvssv4": [
+      "cvssv31": [
         {
-          "source": "security-advisories@github.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "source": "secure@microsoft.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:N",
           "severity": "high",
-          "base_score": 8.7
+          "base_score": 7.7
         }
       ]
     },
-    "cvss_score": 8.7,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:N",
     "cwe": "CWE-862",
-    "description": "Plane 是开源项目与任务管理平台，用于管理工作区、项目、工作项与成员协作。\n受影响版本中，GET /api/workspaces/{slug}/entity-search/ 由 SearchEndpoint.get 处理。该视图位于 apps/api/plane/app/views/search/base.py，只继承 BaseAPIView 的 IsAuthenticated，没有校验调用者是否属于 URL 中的工作区。任意已认证用户在知道工作区 slug 时，将 query_type 设为 user_mention 后可读取该工作区成员的显示名、UUID 与头像 URL；请求同时携带 project_id 时，接口按同样条件返回 ProjectMember 记录。\n修复版本中通过为 SearchEndpoint 设置 permission_classes 为 WorkspaceUserPermission，在执行成员查询前要求调用者是目标工作区的活跃成员，非成员请求被拒绝，不再返回其他工作区的成员信息。",
-    "effects": [
-      {
-        "comp_name": "plane",
-        "ecosystem": "linux",
-        "versions": [
-          {
-            "affected_version": "(-∞,1.4.0)",
-            "min_fixed_version": "1.4.0",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          }
-        ]
-      }
-    ],
+    "description": "Azure Event Grid 是微软 Azure 提供的全托管事件路由服务，为闭源云服务，用于在应用与 Azure 服务之间以发布/订阅模式集中转发事件，并支持 Webhook 等多种事件处理目标。\n受影响版本中，服务端对特定网络功能缺少授权校验（CWE-862），持有低权限授权账户的攻击者可跨网络冒充合法实体，伪造事件来源或身份；官方 CVSS 评估该问题作用域改变（S:C），仅造成完整性影响（C:N/I:H/A:N），无需用户交互。\n修复版本中通过服务端更新补齐缺失的授权校验，切断攻击者冒充合法实体的路径；微软已在 Azure Event Grid 服务端完成完全缓解，客户无需执行任何操作，该 CVE 的发布目的为透明度说明。",
+    "effects": [],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -154,44 +113,31 @@
     "fix_suggestion": "Recommend",
     "kind": "授权检查缺失",
     "kind_en": "Missing Authorization",
-    "last_modified_time": "2026-10-06",
+    "last_modified_time": "2026-10-09",
     "level": "High",
-    "mps_id": "MPS-3560-zuoy",
+    "mps_id": "MPS-x4z1-ourj",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-10-06",
+    "published_time": "2026-10-09",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-3560-zuoy",
-        "name": "https://www.oscs1024.com/hd/MPS-3560-zuoy"
+        "url": "https://www.oscs1024.com/hd/MPS-x4z1-ourj",
+        "name": "https://www.oscs1024.com/hd/MPS-x4z1-ourj"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-104968",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-104968"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83947",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-83947"
       },
       {
-        "url": "https://github.com/makeplane/plane/security/advisories/GHSA-32q3-mqpc-3mhv",
-        "name": "https://github.com/makeplane/plane/security/advisories/GHSA-32q3-mqpc-3mhv"
-      },
-      {
-        "url": "https://github.com/makeplane/plane/pull/9296",
-        "name": "https://github.com/makeplane/plane/pull/9296"
-      },
-      {
-        "url": "https://github.com/makeplane/plane/commit/28ae25b564351abaf8b36d4a3ba6d32f80fbf075",
-        "name": "https://github.com/makeplane/plane/commit/28ae25b564351abaf8b36d4a3ba6d32f80fbf075"
-      },
-      {
-        "url": "https://github.com/makeplane/plane/releases/tag/v1.4.0",
-        "name": "https://github.com/makeplane/plane/releases/tag/v1.4.0"
+        "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-83947",
+        "name": "Azure Event Grid Spoofing Vulnerability"
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件",
-      "终端软件"
+      "应用软件"
     ],
-    "title": "Plane跨工作区成员枚举"
+    "title": "Azure Event Grid 欺骗漏洞"
   },
-  "first_saved_at": "2026-10-05T17:42:53+00:00"
+  "first_saved_at": "2026-10-09T01:38:38+00:00"
 }

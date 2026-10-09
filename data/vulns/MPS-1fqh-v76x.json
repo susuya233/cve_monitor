@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-10-09T01:38:43+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-1fqh-v76x",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107802",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "SumatraPDF 是 Windows 平台的开源多格式阅读器（GPLv3），支持 PDF、ePub、CHM 等格式，内置划词翻译功能，可调用 Grok Build、Claude Code、OpenAI Codex 等 AI CLI 完成翻译。\n受影响版本中，src/SelectionTranslate.cpp 的 BuildGrokTranslateCmdLineTemp、BuildClaudeTranslateCmdLineTemp、BuildCodexTranslateCmdLineTemp 仅用 str::ReplaceTemp 把翻译文本中的双引号替换为反斜杠引号，再经 fmt 拼入带引号的命令行并由 CreateProcessW 启动对应 CLI。Windows argv 解析要求引号前的连续反斜杠双倍输出，这种仅替换单个字符的转义使以 \\\" 结尾的文本提前闭合带引号参数，后续内容被解析为独立参数；NormalizeTextForPromptTemp 仅过滤 \\r、\\n、\\t，不会中和反斜杠与引号，攻击者因此可通过文档中被选中的文本或粘贴到翻译对话框源文框的文本，向 Grok Build、Claude Code、OpenAI Codex 注入 --model、--cwd 或 --always-approve、--dangerously-skip-permissions、--dangerously-bypass-approvals-and-sandbox 等任意参数。\n修复版本中通过重写 src/base/CmdLineArgsIter.cpp 的 QuoteCmdLineArgTemp 切断该链路：该函数按 CommandLineToArgvW 规则始终用引号包裹整个参数，将引号前的连续反斜杠按 2n+1 倍输出后输出转义引号、结尾反斜杠双倍输出，使含引号与反斜杠的文本无法突破参数边界；src/SelectionTranslate.cpp 三个翻译命令行构建函数与 AI 聊天侧边栏各 Provider 的命令行拼接统一改用该函数，并新增经 CommandLineToArgvW 回环验证的回归测试确认注入载荷保持为单一参数。",
+    "effects": [
+      {
+        "comp_name": "sumatrapdf",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.6.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "参数注入或修改",
+    "kind_en": "命令中参数分隔符的不正确中和（“参数注入”）",
+    "last_modified_time": "2026-10-09",
+    "level": "High",
+    "mps_id": "MPS-1fqh-v76x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1fqh-v76x",
+        "name": "https://www.oscs1024.com/hd/MPS-1fqh-v76x"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107802",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107802"
+      },
+      {
+        "url": "https://github.com/sumatrapdfreader/sumatrapdf/security/advisories/GHSA-xvxg-cwmx-hr7j",
+        "name": "https://github.com/sumatrapdfreader/sumatrapdf/security/advisories/GHSA-xvxg-cwmx-hr7j"
+      },
+      {
+        "url": "https://github.com/sumatrapdfreader/sumatrapdf/commit/6b88a751ab34a28bafca3bdd635aaa2f4c1e06b6",
+        "name": "https://github.com/sumatrapdfreader/sumatrapdf/commit/6b88a751ab34a28bafca3bdd635aaa2f4c1e06b6"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "SumatraPDF 参数注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107802",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-88",
+    "description": "SumatraPDF 是 Windows 平台的开源多格式阅读器（GPLv3），支持 PDF、ePub、CHM 等格式，内置划词翻译功能，可调用 Grok Build、Claude Code、OpenAI Codex 等 AI CLI 完成翻译。\n受影响版本中，src/SelectionTranslate.cpp 的 BuildGrokTranslateCmdLineTemp、BuildClaudeTranslateCmdLineTemp、BuildCodexTranslateCmdLineTemp 仅用 str::ReplaceTemp 把翻译文本中的双引号替换为反斜杠引号，再经 fmt 拼入带引号的命令行并由 CreateProcessW 启动对应 CLI。Windows argv 解析要求引号前的连续反斜杠双倍输出，这种仅替换单个字符的转义使以 \\\" 结尾的文本提前闭合带引号参数，后续内容被解析为独立参数；NormalizeTextForPromptTemp 仅过滤 \\r、\\n、\\t，不会中和反斜杠与引号，攻击者因此可通过文档中被选中的文本或粘贴到翻译对话框源文框的文本，向 Grok Build、Claude Code、OpenAI Codex 注入 --model、--cwd 或 --always-approve、--dangerously-skip-permissions、--dangerously-bypass-approvals-and-sandbox 等任意参数。\n修复版本中通过重写 src/base/CmdLineArgsIter.cpp 的 QuoteCmdLineArgTemp 切断该链路：该函数按 CommandLineToArgvW 规则始终用引号包裹整个参数，将引号前的连续反斜杠按 2n+1 倍输出后输出转义引号、结尾反斜杠双倍输出，使含引号与反斜杠的文本无法突破参数边界；src/SelectionTranslate.cpp 三个翻译命令行构建函数与 AI 聊天侧边栏各 Provider 的命令行拼接统一改用该函数，并新增经 CommandLineToArgvW 回环验证的回归测试确认注入载荷保持为单一参数。",
+    "effects": [
+      {
+        "comp_name": "sumatrapdf",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.6.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "参数注入或修改",
+    "kind_en": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "last_modified_time": "2026-10-09",
+    "level": "High",
+    "mps_id": "MPS-1fqh-v76x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1fqh-v76x",
+        "name": "https://www.oscs1024.com/hd/MPS-1fqh-v76x"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107802",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107802"
+      },
+      {
+        "url": "https://github.com/sumatrapdfreader/sumatrapdf/security/advisories/GHSA-xvxg-cwmx-hr7j",
+        "name": "https://github.com/sumatrapdfreader/sumatrapdf/security/advisories/GHSA-xvxg-cwmx-hr7j"
+      },
+      {
+        "url": "https://github.com/sumatrapdfreader/sumatrapdf/commit/6b88a751ab34a28bafca3bdd635aaa2f4c1e06b6",
+        "name": "https://github.com/sumatrapdfreader/sumatrapdf/commit/6b88a751ab34a28bafca3bdd635aaa2f4c1e06b6"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "SumatraPDF 参数注入漏洞"
+  },
+  "first_saved_at": "2026-10-09T01:38:43+00:00"
+}
