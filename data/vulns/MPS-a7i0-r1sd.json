@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-10-09T15:44:21+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-a7i0-r1sd",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94064",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "Neo | Barber Shop WordPress Theme 是 BuddhaThemes 通过 ThemeForest 销售的商业 WordPress 理发店主题（主题标识 neocut），用于搭建理发店、美发沙龙类网站，无公开源码仓库。\n受影响版本中，主题存在对不可信数据进行反序列化处理的问题，拥有订阅者（Subscriber）及以上权限的登录用户可提交恶意序列化数据，使攻击者可控对象进入 PHP 反序列化流程并形成对象注入，进而操纵站点数据处理逻辑并在服务器上执行有害操作，实际可利用的攻击链取决于站点环境中可被滥用的类与魔术方法。\n修复版本中通过，可通过停用或更换该主题、关闭面向公众的用户注册并限制订阅者账户访问、以及部署 WAF 或虚拟补丁规则拦截针对该主题的反序列化攻击进行缓解。",
+    "effects": [
+      {
+        "comp_name": "neocut",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-10-09",
+    "level": "High",
+    "mps_id": "MPS-a7i0-r1sd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-a7i0-r1sd",
+        "name": "https://www.oscs1024.com/hd/MPS-a7i0-r1sd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94064",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-94064"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/theme/neocut/vulnerability/wordpress-neo-barber-shop-wordpress-theme-theme-3-5-php-object-injection-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Neo Barber Shop主题PHP对象注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94064",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "Neo | Barber Shop WordPress Theme 是 BuddhaThemes 通过 ThemeForest 销售的商业 WordPress 理发店主题（主题标识 neocut），用于搭建理发店、美发沙龙类网站，无公开源码仓库。\n受影响版本中，主题存在对不可信数据进行反序列化处理的问题，拥有订阅者（Subscriber）及以上权限的登录用户可提交恶意序列化数据，使攻击者可控对象进入 PHP 反序列化流程并形成对象注入，进而操纵站点数据处理逻辑并在服务器上执行有害操作，实际可利用的攻击链取决于站点环境中可被滥用的类与魔术方法。\n修复版本中通过，可通过停用或更换该主题、关闭面向公众的用户注册并限制订阅者账户访问、以及部署 WAF 或虚拟补丁规则拦截针对该主题的反序列化攻击进行缓解。",
+    "effects": [
+      {
+        "comp_name": "neocut",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-10-09",
+    "level": "High",
+    "mps_id": "MPS-a7i0-r1sd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-a7i0-r1sd",
+        "name": "https://www.oscs1024.com/hd/MPS-a7i0-r1sd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94064",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-94064"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/theme/neocut/vulnerability/wordpress-neo-barber-shop-wordpress-theme-theme-3-5-php-object-injection-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Neo Barber Shop主题PHP对象注入漏洞"
+  },
+  "first_saved_at": "2026-10-09T15:44:21+00:00"
+}
