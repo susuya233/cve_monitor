@@ -1,0 +1,247 @@
+{
+  "saved_at": "2026-10-09T20:27:46+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-1itp-e7g0",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-108096",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "AWS Amplify API Category（aws-amplify/amplify-category-api）是 AWS 开源的 CDK Construct 库，用于以 GraphQL 数据模型和授权规则定义 AWS AppSync API；@aws-amplify/graphql-index-transformer 是其中处理 @index 二级索引并为 SQL 数据源模型生成查询解析器的转换器包。\n受影响版本中，RDSIndexVTLGenerator.generateIndexQueryRequestTemplate 为 SQL 数据源模型的二级索引查询字段生成请求映射模板时，只把查询参数与索引键写入发往 SQL Lambda 的载荷，未转发授权规则基于 owner 或 group 生成并存放在 $ctx.stash.authFilter 的行级过滤条件，已认证用户调用自动生成的索引查询字段并传入其他租户的索引键可绕过行级授权，读取同一应用中其他用户的记录。\n修复版本中通过在索引查询请求模板中调用 constructAuthFilterStatement 转发 $ctx.stash.authFilter，并补充非标量字段、数组字段与字段映射元数据，使 SQL Lambda 执行索引查询时应用与标准 list 查询一致的行级授权过滤，阻断跨租户数据读取，修复随 @aws-amplify/graphql-index-transformer 3.1.2（含于 @aws-amplify/data-construct 1.17.4 与 @aws-amplify/graphql-api-construct 1.21.4）发布。",
+    "effects": [
+      {
+        "comp_name": "@aws-amplify/data-construct",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.17.4)",
+            "min_fixed_version": "1.17.4",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "@aws-amplify/graphql-api-construct",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[1.4.0,1.21.4)",
+            "min_fixed_version": "1.21.4",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "@aws-amplify/graphql-index-transformer",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[2.2.0,3.1.2)",
+            "min_fixed_version": "3.1.2",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-10-10",
+    "level": "High",
+    "mps_id": "MPS-1itp-e7g0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1itp-e7g0",
+        "name": "https://www.oscs1024.com/hd/MPS-1itp-e7g0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108096",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-108096"
+      },
+      {
+        "url": "https://www.npmjs.com/package/@aws-amplify/graphql-index-transformer/v/3.1.2",
+        "name": ""
+      },
+      {
+        "url": "https://www.npmjs.com/package/@aws-amplify/graphql-api-construct/v/1.21.4",
+        "name": ""
+      },
+      {
+        "url": "https://www.npmjs.com/package/@aws-amplify/data-construct/v/1.17.4",
+        "name": ""
+      },
+      {
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-133-aws/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/aws-amplify/amplify-category-api/security/advisories/GHSA-69c4-mvf5-5xm3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "AWS Amplify GraphQL 索引查询越权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-108096",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "AWS Amplify API Category（aws-amplify/amplify-category-api）是 AWS 开源的 CDK Construct 库，用于以 GraphQL 数据模型和授权规则定义 AWS AppSync API；@aws-amplify/graphql-index-transformer 是其中处理 @index 二级索引并为 SQL 数据源模型生成查询解析器的转换器包。\n受影响版本中，RDSIndexVTLGenerator.generateIndexQueryRequestTemplate 为 SQL 数据源模型的二级索引查询字段生成请求映射模板时，只把查询参数与索引键写入发往 SQL Lambda 的载荷，未转发授权规则基于 owner 或 group 生成并存放在 $ctx.stash.authFilter 的行级过滤条件，已认证用户调用自动生成的索引查询字段并传入其他租户的索引键可绕过行级授权，读取同一应用中其他用户的记录。\n修复版本中通过在索引查询请求模板中调用 constructAuthFilterStatement 转发 $ctx.stash.authFilter，并补充非标量字段、数组字段与字段映射元数据，使 SQL Lambda 执行索引查询时应用与标准 list 查询一致的行级授权过滤，阻断跨租户数据读取，修复随 @aws-amplify/graphql-index-transformer 3.1.2（含于 @aws-amplify/data-construct 1.17.4 与 @aws-amplify/graphql-api-construct 1.21.4）发布。",
+    "effects": [
+      {
+        "comp_name": "@aws-amplify/data-construct",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.17.4)",
+            "min_fixed_version": "1.17.4",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "@aws-amplify/graphql-api-construct",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[1.4.0,1.21.4)",
+            "min_fixed_version": "1.21.4",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "@aws-amplify/graphql-index-transformer",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[2.2.0,3.1.2)",
+            "min_fixed_version": "3.1.2",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-10-10",
+    "level": "High",
+    "mps_id": "MPS-1itp-e7g0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1itp-e7g0",
+        "name": "https://www.oscs1024.com/hd/MPS-1itp-e7g0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108096",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-108096"
+      },
+      {
+        "url": "https://www.npmjs.com/package/@aws-amplify/graphql-index-transformer/v/3.1.2",
+        "name": ""
+      },
+      {
+        "url": "https://www.npmjs.com/package/@aws-amplify/graphql-api-construct/v/1.21.4",
+        "name": ""
+      },
+      {
+        "url": "https://www.npmjs.com/package/@aws-amplify/data-construct/v/1.17.4",
+        "name": ""
+      },
+      {
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-133-aws/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/aws-amplify/amplify-category-api/security/advisories/GHSA-69c4-mvf5-5xm3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "AWS Amplify GraphQL 索引查询越权漏洞"
+  },
+  "first_saved_at": "2026-10-09T20:27:46+00:00"
+}

@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-10-09T20:27:47+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-wye2-mt3j",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107836",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-191",
+    "description": "RIOT 是面向物联网设备与嵌入式系统的开源微控制器操作系统，内置 nanoCoAP 模块提供轻量级 CoAP 协议实现，用于资源受限设备上的网络请求与分块数据传输。\n受影响版本中，sys/net/application_layer/nanocoap/sock.c 的 _block_cb() 校验 Block2 响应时只比对块号与期望值一致，未校验服务器控制的块尺寸 szx 及其派生 offset 是否匹配请求的块几何；恶意 CoAP 服务器返回期望块号但更大的块尺寸时，派生 offset 超过客户端切片偏移，_2buf_slice() 中 ctx->offset - offset 发生 size_t 下溢，后续 memcpy 以回绕后的偏移从 payload 缓冲区之前的内存读取数据，形成越界读，可导致客户端崩溃、拒绝服务，并可能泄露相邻内存。\n修复版本中通过将分块传输状态从按块号追踪改为按资源偏移追踪，在 _block_cb() 中拒绝服务器升大的块尺寸并校验响应偏移与期望偏移一致，同时收紧 _2buf_slice() 的边界判断，阻断偏移下溢路径；截至 2026-10-09 官方尚未发布包含该修复的正式版本，修复代码已合入 master 分支。",
+    "effects": [
+      {
+        "comp_name": "riot",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.07]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "超界折返",
+    "kind_en": "整数下溢（环绕或环绕）",
+    "last_modified_time": "2026-10-10",
+    "level": "High",
+    "mps_id": "MPS-wye2-mt3j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wye2-mt3j",
+        "name": "https://www.oscs1024.com/hd/MPS-wye2-mt3j"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107836",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107836"
+      },
+      {
+        "url": "https://github.com/RIOT-OS/RIOT/security/advisories/GHSA-x924-p5fq-26pc",
+        "name": "https://github.com/RIOT-OS/RIOT/security/advisories/GHSA-x924-p5fq-26pc"
+      },
+      {
+        "url": "https://github.com/RIOT-OS/RIOT/pull/22518",
+        "name": "https://github.com/RIOT-OS/RIOT/pull/22518"
+      },
+      {
+        "url": "https://github.com/RIOT-OS/RIOT/commit/49b894cbe091510093273b98d92c4a17167d6839",
+        "name": "https://github.com/RIOT-OS/RIOT/commit/49b894cbe091510093273b98d92c4a17167d6839"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "RIOT nanoCoAP越界读漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107836",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-191",
+    "description": "RIOT 是面向物联网设备与嵌入式系统的开源微控制器操作系统，内置 nanoCoAP 模块提供轻量级 CoAP 协议实现，用于资源受限设备上的网络请求与分块数据传输。\n受影响版本中，sys/net/application_layer/nanocoap/sock.c 的 _block_cb() 校验 Block2 响应时只比对块号与期望值一致，未校验服务器控制的块尺寸 szx 及其派生 offset 是否匹配请求的块几何；恶意 CoAP 服务器返回期望块号但更大的块尺寸时，派生 offset 超过客户端切片偏移，_2buf_slice() 中 ctx->offset - offset 发生 size_t 下溢，后续 memcpy 以回绕后的偏移从 payload 缓冲区之前的内存读取数据，形成越界读，可导致客户端崩溃、拒绝服务，并可能泄露相邻内存。\n修复版本中通过将分块传输状态从按块号追踪改为按资源偏移追踪，在 _block_cb() 中拒绝服务器升大的块尺寸并校验响应偏移与期望偏移一致，同时收紧 _2buf_slice() 的边界判断，阻断偏移下溢路径；截至 2026-10-09 官方尚未发布包含该修复的正式版本，修复代码已合入 master 分支。",
+    "effects": [
+      {
+        "comp_name": "riot",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.07]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "超界折返",
+    "kind_en": "Integer Underflow (Wrap or Wraparound)",
+    "last_modified_time": "2026-10-10",
+    "level": "High",
+    "mps_id": "MPS-wye2-mt3j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wye2-mt3j",
+        "name": "https://www.oscs1024.com/hd/MPS-wye2-mt3j"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107836",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107836"
+      },
+      {
+        "url": "https://github.com/RIOT-OS/RIOT/security/advisories/GHSA-x924-p5fq-26pc",
+        "name": "https://github.com/RIOT-OS/RIOT/security/advisories/GHSA-x924-p5fq-26pc"
+      },
+      {
+        "url": "https://github.com/RIOT-OS/RIOT/pull/22518",
+        "name": "https://github.com/RIOT-OS/RIOT/pull/22518"
+      },
+      {
+        "url": "https://github.com/RIOT-OS/RIOT/commit/49b894cbe091510093273b98d92c4a17167d6839",
+        "name": "https://github.com/RIOT-OS/RIOT/commit/49b894cbe091510093273b98d92c4a17167d6839"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "RIOT nanoCoAP越界读漏洞"
+  },
+  "first_saved_at": "2026-10-09T20:27:47+00:00"
+}
