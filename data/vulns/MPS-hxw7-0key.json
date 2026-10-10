@@ -1,0 +1,235 @@
+{
+  "saved_at": "2026-10-10T06:36:18+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-hxw7-0key",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89301",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-862",
+    "description": "rtMedia for WordPress, BuddyPress and bbPress 是 rtCamp 开发的开源 WordPress 媒体管理插件，用于在 WordPress、BuddyPress 与 bbPress 站点提供媒体上传、相册与画廊展示能力。\n受影响版本中，上传入口 RTMediaUploadEndpoint::template_redirect 仅依赖前端下发的 rtmedia_upload_nonce 校验请求，缺少针对文件来源的授权检查，该 nonce 经 RTMediaGalleryShortcode 写入渲染媒体画廊或上传短代码页面的前端 JavaScript，未认证访客可预先读取并回传；RTMediaUploadModel::set_post_object 将请求参数 files 原样合并进上传数组，RTMediaUploadFile::set_file 检测到 files 后置位 fake 标志并以攻击者指定内容填充文件数组，process 函数随之为其选择 wp_handle_sideload，按攻击者指定的服务器路径移动文件并移除源文件，未认证攻击者可删除服务器上的受限安全文件。\n修复版本中通过移除 set_file 中基于 files 参数的旁路输入、仅接受标准 multipart $_FILES['rtmedia_file']，并将 process 中的上传方式固定为 wp_handle_upload，切断了攻击者指定服务器路径进入 sideload 处理的链路，消除了未认证任意文件删除风险。",
+    "effects": [
+      {
+        "comp_name": "buddypress-media",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.7.14)",
+            "min_fixed_version": "4.7.14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-10-10",
+    "level": "High",
+    "mps_id": "MPS-hxw7-0key",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hxw7-0key",
+        "name": "https://www.oscs1024.com/hd/MPS-hxw7-0key"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89301",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89301"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/ea679227-5ab3-408b-ae1b-340099880789?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/controllers/upload/processors/RTMediaUploadFile.php#L91",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/controllers/upload/RTMediaUploadEndpoint.php#L85",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/controllers/upload/RTMediaUploadModel.php#L49",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/controllers/upload/processors/RTMediaUploadFile.php#L180",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/controllers/upload/processors/RTMediaUploadFile.php#L253",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/routers/RTMediaRouter.php#L120",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/controllers/shortcodes/RTMediaGalleryShortcode.php#L151",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rtCamp/rtMedia/releases/tag/4.7.14",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "rtMedia 未授权任意文件删除漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-89301",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-862",
+    "description": "rtMedia for WordPress, BuddyPress and bbPress 是 rtCamp 开发的开源 WordPress 媒体管理插件，用于在 WordPress、BuddyPress 与 bbPress 站点提供媒体上传、相册与画廊展示能力。\n受影响版本中，上传入口 RTMediaUploadEndpoint::template_redirect 仅依赖前端下发的 rtmedia_upload_nonce 校验请求，缺少针对文件来源的授权检查，该 nonce 经 RTMediaGalleryShortcode 写入渲染媒体画廊或上传短代码页面的前端 JavaScript，未认证访客可预先读取并回传；RTMediaUploadModel::set_post_object 将请求参数 files 原样合并进上传数组，RTMediaUploadFile::set_file 检测到 files 后置位 fake 标志并以攻击者指定内容填充文件数组，process 函数随之为其选择 wp_handle_sideload，按攻击者指定的服务器路径移动文件并移除源文件，未认证攻击者可删除服务器上的受限安全文件。\n修复版本中通过移除 set_file 中基于 files 参数的旁路输入、仅接受标准 multipart $_FILES['rtmedia_file']，并将 process 中的上传方式固定为 wp_handle_upload，切断了攻击者指定服务器路径进入 sideload 处理的链路，消除了未认证任意文件删除风险。",
+    "effects": [
+      {
+        "comp_name": "buddypress-media",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.7.14)",
+            "min_fixed_version": "4.7.14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-10-10",
+    "level": "High",
+    "mps_id": "MPS-hxw7-0key",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hxw7-0key",
+        "name": "https://www.oscs1024.com/hd/MPS-hxw7-0key"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89301",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-89301"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/ea679227-5ab3-408b-ae1b-340099880789?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/controllers/upload/processors/RTMediaUploadFile.php#L91",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/controllers/upload/RTMediaUploadEndpoint.php#L85",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/controllers/upload/RTMediaUploadModel.php#L49",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/controllers/upload/processors/RTMediaUploadFile.php#L180",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/controllers/upload/processors/RTMediaUploadFile.php#L253",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/routers/RTMediaRouter.php#L120",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/buddypress-media/tags/4.7.13/app/main/controllers/shortcodes/RTMediaGalleryShortcode.php#L151",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/rtCamp/rtMedia/releases/tag/4.7.14",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "rtMedia 未授权任意文件删除漏洞"
+  },
+  "first_saved_at": "2026-10-10T06:36:18+00:00"
+}

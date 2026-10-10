@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-10-10T06:36:19+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-1zd3-q4fb",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97670",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "Avada (Fusion) Builder 是 ThemeFusion 开发的商业 WordPress 网站构建插件（付费闭源分发），提供可视化布局搭建、页头页脚构建与 Avada Forms 表单等能力，在 WordPress 站点中被广泛使用。\n受影响版本中，公开的表单 AJAX 提交端点解析攻击者可控的 $_POST['formData']，通知邮件 email_message 模板中的 [all_fields]/[field] 占位符经动态数据管道解析 {action_hook,...} 令牌，而鉴权门槛 is_content_request_supplied() 只检查 $_POST['args'] 与 $_GET['args']、从不覆盖表单端点实际解析的 $_POST['formData']，导致未认证攻击者可在单次请求中分发任意 WordPress action hook：借助核心 wp_scheduled_delete 已验证可永久删除回收站中的文章、页面与评论，借助 wp_maybe_auto_update 等非拒绝列表 hook 可造成拒绝服务，安装了带脆弱 handler 的第三方插件时可进一步产生特权写入，同一动态数据管道还存在仅对站点所有者可见、攻击者无法回传的盲读式任意用户/文章元数据读取。\n修复版本中通过在 Avada Forms 提交与通知邮件动态数据管道上补齐授权校验、阻断未认证请求分发任意 action hook 来切断上述利用链，官方公告要求升级至 7.16.2 或更高版本。",
+    "effects": [
+      {
+        "comp_name": "fusion-builder",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.16.2)",
+            "min_fixed_version": "7.16.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-10-10",
+    "level": "Critical",
+    "mps_id": "MPS-1zd3-q4fb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1zd3-q4fb",
+        "name": "https://www.oscs1024.com/hd/MPS-1zd3-q4fb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97670",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97670"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/e2c00795-c49b-4b0a-8f0a-4ed18c966c6b?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://avada.com/blog/version-7-16-2-security-update/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Avada Builder 任意操作调用漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97670",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "Avada (Fusion) Builder 是 ThemeFusion 开发的商业 WordPress 网站构建插件（付费闭源分发），提供可视化布局搭建、页头页脚构建与 Avada Forms 表单等能力，在 WordPress 站点中被广泛使用。\n受影响版本中，公开的表单 AJAX 提交端点解析攻击者可控的 $_POST['formData']，通知邮件 email_message 模板中的 [all_fields]/[field] 占位符经动态数据管道解析 {action_hook,...} 令牌，而鉴权门槛 is_content_request_supplied() 只检查 $_POST['args'] 与 $_GET['args']、从不覆盖表单端点实际解析的 $_POST['formData']，导致未认证攻击者可在单次请求中分发任意 WordPress action hook：借助核心 wp_scheduled_delete 已验证可永久删除回收站中的文章、页面与评论，借助 wp_maybe_auto_update 等非拒绝列表 hook 可造成拒绝服务，安装了带脆弱 handler 的第三方插件时可进一步产生特权写入，同一动态数据管道还存在仅对站点所有者可见、攻击者无法回传的盲读式任意用户/文章元数据读取。\n修复版本中通过在 Avada Forms 提交与通知邮件动态数据管道上补齐授权校验、阻断未认证请求分发任意 action hook 来切断上述利用链，官方公告要求升级至 7.16.2 或更高版本。",
+    "effects": [
+      {
+        "comp_name": "fusion-builder",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.16.2)",
+            "min_fixed_version": "7.16.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-10-10",
+    "level": "Critical",
+    "mps_id": "MPS-1zd3-q4fb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1zd3-q4fb",
+        "name": "https://www.oscs1024.com/hd/MPS-1zd3-q4fb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97670",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97670"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/e2c00795-c49b-4b0a-8f0a-4ed18c966c6b?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://avada.com/blog/version-7-16-2-security-update/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Avada Builder 任意操作调用漏洞"
+  },
+  "first_saved_at": "2026-10-10T06:36:19+00:00"
+}
