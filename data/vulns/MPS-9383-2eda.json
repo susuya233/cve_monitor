@@ -1,0 +1,167 @@
+{
+  "saved_at": "2026-10-10T00:26:01+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-9383-2eda",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103501",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-122",
+    "description": "Apache DataSketches C++（datasketches-cpp）是 Apache 软件基金会开源的随机草图（sketching）C++ 库，提供 HLL、Theta、t-digest 等近似统计数据结构，广泛用于大数据流式去重与分位数估计，序列化图像可在进程与编程语言之间交换。\n受影响版本中，CouponList::newList 反序列化 LIST 模式 HLL 草图时直接从图像第 6 字节读取 couponCount（单字节最大 255），长度校验仅要求输入容纳 couponCount×4 字节，攻击者可通过加长输入满足该校验；随后 compact 图像路径以 std::memcpy 将 couponCount 个 4 字节 coupon 复制进固定 8 项（32 字节）的堆数组 coupons_，流路径同样按 couponCount 定长读取，最多写入 1020 字节，超出数组末尾最多 988 字节，形成攻击者可控内容的堆越界写，可破坏堆内存导致崩溃并可能为进一步利用创造条件。\n修复版本中通过在两个 newList 重载的复制/读取动作前新增 couponCount 与固定容量 8（1u<<LG_INIT_LIST_SIZE）的比较实现防护，超限即抛出 std::invalid_argument 拒绝该图像，从源头切断越界写入；该修复随 Apache DataSketches C++ 5.3.0 发布。",
+    "effects": [
+      {
+        "comp_name": "datasketches-cpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0-incubating,5.3.0)",
+            "min_fixed_version": "5.3.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-10-10",
+    "level": "High",
+    "mps_id": "MPS-9383-2eda",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12260.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-103501",
+        "name": ""
+      },
+      {
+        "url": "https://datasketches.apache.org",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/pull/503",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/commit/a07e6f6f81953fa8881b258c1cb3df23a1ad9989",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/commit/805eaf3c5d96bf6263298880be10da30a604faec",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/releases/tag/5.3.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DataSketches HLL 反序列化堆溢出",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103501",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-122",
+    "description": "Apache DataSketches C++（datasketches-cpp）是 Apache 软件基金会开源的随机草图（sketching）C++ 库，提供 HLL、Theta、t-digest 等近似统计数据结构，广泛用于大数据流式去重与分位数估计，序列化图像可在进程与编程语言之间交换。\n受影响版本中，CouponList::newList 反序列化 LIST 模式 HLL 草图时直接从图像第 6 字节读取 couponCount（单字节最大 255），长度校验仅要求输入容纳 couponCount×4 字节，攻击者可通过加长输入满足该校验；随后 compact 图像路径以 std::memcpy 将 couponCount 个 4 字节 coupon 复制进固定 8 项（32 字节）的堆数组 coupons_，流路径同样按 couponCount 定长读取，最多写入 1020 字节，超出数组末尾最多 988 字节，形成攻击者可控内容的堆越界写，可破坏堆内存导致崩溃并可能为进一步利用创造条件。\n修复版本中通过在两个 newList 重载的复制/读取动作前新增 couponCount 与固定容量 8（1u<<LG_INIT_LIST_SIZE）的比较实现防护，超限即抛出 std::invalid_argument 拒绝该图像，从源头切断越界写入；该修复随 Apache DataSketches C++ 5.3.0 发布。",
+    "effects": [
+      {
+        "comp_name": "datasketches-cpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0-incubating,5.3.0)",
+            "min_fixed_version": "5.3.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-10-10",
+    "level": "High",
+    "mps_id": "MPS-9383-2eda",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12260.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-103501",
+        "name": ""
+      },
+      {
+        "url": "https://datasketches.apache.org",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/pull/503",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/commit/a07e6f6f81953fa8881b258c1cb3df23a1ad9989",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/commit/805eaf3c5d96bf6263298880be10da30a604faec",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/releases/tag/5.3.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DataSketches HLL 反序列化堆溢出"
+  },
+  "first_saved_at": "2026-10-10T00:26:01+00:00"
+}

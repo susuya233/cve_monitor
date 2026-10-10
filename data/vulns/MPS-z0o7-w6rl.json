@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-10-10T00:26:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-z0o7-w6rl",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-92705",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-829",
+    "description": "Aegisub 是 TypesettingTools 维护的开源跨平台字幕编辑器，采用 C++ 开发，用于字幕制作、时间轴调整与特效制作，并支持通过 Lua Automation 脚本扩展功能。\n受影响版本中，用户打开字幕文件时 SubsController::Load 发出的文件打开事件会触发 Automation4::LocalScriptManager::Reload，该方法读取 ASS 文件 Aegisub Project Garbage 节中 Automation Scripts 元数据引用的本地脚本路径，不询问用户是否信任脚本作者便直接调用 ScriptFactory::CreateFromFile 加载并执行对应脚本，攻击者分发恶意 ASS 文件及配套 Lua 脚本可在用户打开文件时以 Aegisub 进程权限执行任意代码；3.4.0 至 3.4.2 中 agi::fs::HasExtension 以 std::string 保留 NUL 之后字符校验扩展名，而文件系统操作按 NUL 截断路径，构造同时满足 ASS 与 Lua 语法的单一文件可在元数据中以 .lua 扩展名引用自身并被执行，形成单文件攻击变体。\n修复版本中通过三项修改切断攻击链：加载本地 Automation 脚本前弹出确认对话框并列出待加载脚本，用户确认后才加载执行；agi::fs::HasExtension 改为按 C 字符串截断，与文件系统操作保持一致；解析 Aegisub Project Garbage 与 Extradata 行时将嵌入的 NUL 字符替换为 Unicode 替换符，阻止单文件变体引用自身。",
+    "effects": [
+      {
+        "comp_name": "Aegisub",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.2.0,3.5.0)",
+            "min_fixed_version": "3.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "从非可信控制范围包含功能例程",
+    "kind_en": "包含来自不可信控制领域的功能",
+    "last_modified_time": "2026-10-10",
+    "level": "High",
+    "mps_id": "MPS-z0o7-w6rl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-z0o7-w6rl",
+        "name": "https://www.oscs1024.com/hd/MPS-z0o7-w6rl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92705",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-92705"
+      },
+      {
+        "url": "https://github.com/TypesettingTools/Aegisub/security/advisories/GHSA-67hq-5vgg-6f23",
+        "name": "https://github.com/TypesettingTools/Aegisub/security/advisories/GHSA-67hq-5vgg-6f23"
+      },
+      {
+        "url": "https://github.com/TypesettingTools/Aegisub/commit/0a3073d59f10432eeebea65018b02ef4d0a87fff",
+        "name": "https://github.com/TypesettingTools/Aegisub/commit/0a3073d59f10432eeebea65018b02ef4d0a87fff"
+      },
+      {
+        "url": "https://github.com/TypesettingTools/Aegisub/commit/b5bf23979e7453f7b1cc8ffeb82b3cc2d2ca75e6",
+        "name": "https://github.com/TypesettingTools/Aegisub/commit/b5bf23979e7453f7b1cc8ffeb82b3cc2d2ca75e6"
+      },
+      {
+        "url": "https://github.com/TypesettingTools/Aegisub/commit/e4099055711cce327840870c050ce46e58f4aee0",
+        "name": "https://github.com/TypesettingTools/Aegisub/commit/e4099055711cce327840870c050ce46e58f4aee0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Aegisub任意代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-92705",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-829",
+    "description": "Aegisub 是 TypesettingTools 维护的开源跨平台字幕编辑器，采用 C++ 开发，用于字幕制作、时间轴调整与特效制作，并支持通过 Lua Automation 脚本扩展功能。\n受影响版本中，用户打开字幕文件时 SubsController::Load 发出的文件打开事件会触发 Automation4::LocalScriptManager::Reload，该方法读取 ASS 文件 Aegisub Project Garbage 节中 Automation Scripts 元数据引用的本地脚本路径，不询问用户是否信任脚本作者便直接调用 ScriptFactory::CreateFromFile 加载并执行对应脚本，攻击者分发恶意 ASS 文件及配套 Lua 脚本可在用户打开文件时以 Aegisub 进程权限执行任意代码；3.4.0 至 3.4.2 中 agi::fs::HasExtension 以 std::string 保留 NUL 之后字符校验扩展名，而文件系统操作按 NUL 截断路径，构造同时满足 ASS 与 Lua 语法的单一文件可在元数据中以 .lua 扩展名引用自身并被执行，形成单文件攻击变体。\n修复版本中通过三项修改切断攻击链：加载本地 Automation 脚本前弹出确认对话框并列出待加载脚本，用户确认后才加载执行；agi::fs::HasExtension 改为按 C 字符串截断，与文件系统操作保持一致；解析 Aegisub Project Garbage 与 Extradata 行时将嵌入的 NUL 字符替换为 Unicode 替换符，阻止单文件变体引用自身。",
+    "effects": [
+      {
+        "comp_name": "Aegisub",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.2.0,3.5.0)",
+            "min_fixed_version": "3.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "从非可信控制范围包含功能例程",
+    "kind_en": "Inclusion of Functionality from Untrusted Control Sphere",
+    "last_modified_time": "2026-10-10",
+    "level": "High",
+    "mps_id": "MPS-z0o7-w6rl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-z0o7-w6rl",
+        "name": "https://www.oscs1024.com/hd/MPS-z0o7-w6rl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92705",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-92705"
+      },
+      {
+        "url": "https://github.com/TypesettingTools/Aegisub/security/advisories/GHSA-67hq-5vgg-6f23",
+        "name": "https://github.com/TypesettingTools/Aegisub/security/advisories/GHSA-67hq-5vgg-6f23"
+      },
+      {
+        "url": "https://github.com/TypesettingTools/Aegisub/commit/0a3073d59f10432eeebea65018b02ef4d0a87fff",
+        "name": "https://github.com/TypesettingTools/Aegisub/commit/0a3073d59f10432eeebea65018b02ef4d0a87fff"
+      },
+      {
+        "url": "https://github.com/TypesettingTools/Aegisub/commit/b5bf23979e7453f7b1cc8ffeb82b3cc2d2ca75e6",
+        "name": "https://github.com/TypesettingTools/Aegisub/commit/b5bf23979e7453f7b1cc8ffeb82b3cc2d2ca75e6"
+      },
+      {
+        "url": "https://github.com/TypesettingTools/Aegisub/commit/e4099055711cce327840870c050ce46e58f4aee0",
+        "name": "https://github.com/TypesettingTools/Aegisub/commit/e4099055711cce327840870c050ce46e58f4aee0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Aegisub任意代码执行漏洞"
+  },
+  "first_saved_at": "2026-10-10T00:26:07+00:00"
+}

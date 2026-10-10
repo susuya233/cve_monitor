@@ -1,0 +1,191 @@
+{
+  "saved_at": "2026-10-10T00:26:06+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-nhe1-9pcm",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-108268",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-346",
+    "description": "Enclave OS Virtual 是 Privasys 开源的 Go 机密计算容器运行时（AGPL-3.0），在 Intel TDX 机密虚拟机中运行 OCI 容器工作负载，通过 RA-TLS 把 TDX 远程证明证据嵌入 TLS 证书，供依赖方在单次 TLS 握手中验证整个工作负载栈。\n受影响版本中，caddy/ratls/ra-tls.go 的 RATLSIssuer.GetCertificate 在 challenge-response 路径上以 ReportData = SHA-512(SHA-256(SPKI_DER) || nonce) 生成 quote，绑定材料只有证书公钥哈希与客户端 nonce，缺少任何与当前 TLS 会话绑定的值；持有 enclave TLS 私钥的攻击者可把一份真实的 challenge quote 中继到其与依赖方之间的另一条连接，使依赖方把由攻击者终止的连接误认为经过证明的 enclave 并接受会话。\n修复版本中通过在 ReportData 中折叠 32 字节会话 channel binder（ReportData = SHA-512(SHA-256(SPKI_DER) || nonce || binder)，binder 由 TLS 1.3 client_handshake_traffic_secret 经 HKDF-Expand-Label 派生），使 quote 提交到当前 TLS 会话，challenge 验证方强制校验 binder 并在缺失时拒绝连接，中继 quote 无法再通过验证，修复版本为 tdx-v0.2.43 与 tdx-gpu-v0.6.27。",
+    "effects": [
+      {
+        "comp_name": "github.com/Privasys/enclave-os-virtual",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,tdx-gpu-v0.6.26-dev]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,tdx-v0.2.35]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "源验证错误",
+    "kind_en": "来源验证错误",
+    "last_modified_time": "2026-10-10",
+    "level": "Critical",
+    "mps_id": "MPS-nhe1-9pcm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-nhe1-9pcm",
+        "name": "https://www.oscs1024.com/hd/MPS-nhe1-9pcm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108268",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-108268"
+      },
+      {
+        "url": "https://github.com/Privasys/enclave-os-virtual/security/advisories/GHSA-p5fp-g94g-g9m9",
+        "name": "https://github.com/Privasys/enclave-os-virtual/security/advisories/GHSA-p5fp-g94g-g9m9"
+      },
+      {
+        "url": "https://github.com/Privasys/enclave-os-virtual/commit/9a6be91e29f2b6738d0b77c33cd1ad5cd3d8a347",
+        "name": "https://github.com/Privasys/enclave-os-virtual/commit/9a6be91e29f2b6738d0b77c33cd1ad5cd3d8a347"
+      },
+      {
+        "url": "https://github.com/Privasys/enclave-os-virtual/releases/tag/tdx-gpu-v0.6.27",
+        "name": "https://github.com/Privasys/enclave-os-virtual/releases/tag/tdx-gpu-v0.6.27"
+      },
+      {
+        "url": "https://github.com/Privasys/enclave-os-virtual/releases/tag/tdx-v0.2.43",
+        "name": "https://github.com/Privasys/enclave-os-virtual/releases/tag/tdx-v0.2.43"
+      },
+      {
+        "url": "https://privasys.org/blog/binding-attestation-to-the-tls-session",
+        "name": "https://privasys.org/blog/binding-attestation-to-the-tls-session"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Enclave OS Virtual RA-TLS证明重放漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-108268",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-346",
+    "description": "Enclave OS Virtual 是 Privasys 开源的 Go 机密计算容器运行时（AGPL-3.0），在 Intel TDX 机密虚拟机中运行 OCI 容器工作负载，通过 RA-TLS 把 TDX 远程证明证据嵌入 TLS 证书，供依赖方在单次 TLS 握手中验证整个工作负载栈。\n受影响版本中，caddy/ratls/ra-tls.go 的 RATLSIssuer.GetCertificate 在 challenge-response 路径上以 ReportData = SHA-512(SHA-256(SPKI_DER) || nonce) 生成 quote，绑定材料只有证书公钥哈希与客户端 nonce，缺少任何与当前 TLS 会话绑定的值；持有 enclave TLS 私钥的攻击者可把一份真实的 challenge quote 中继到其与依赖方之间的另一条连接，使依赖方把由攻击者终止的连接误认为经过证明的 enclave 并接受会话。\n修复版本中通过在 ReportData 中折叠 32 字节会话 channel binder（ReportData = SHA-512(SHA-256(SPKI_DER) || nonce || binder)，binder 由 TLS 1.3 client_handshake_traffic_secret 经 HKDF-Expand-Label 派生），使 quote 提交到当前 TLS 会话，challenge 验证方强制校验 binder 并在缺失时拒绝连接，中继 quote 无法再通过验证，修复版本为 tdx-v0.2.43 与 tdx-gpu-v0.6.27。",
+    "effects": [
+      {
+        "comp_name": "github.com/Privasys/enclave-os-virtual",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,tdx-gpu-v0.6.26-dev]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,tdx-v0.2.35]",
+            "min_fixed_version": "",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "源验证错误",
+    "kind_en": "Origin Validation Error",
+    "last_modified_time": "2026-10-10",
+    "level": "Critical",
+    "mps_id": "MPS-nhe1-9pcm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-nhe1-9pcm",
+        "name": "https://www.oscs1024.com/hd/MPS-nhe1-9pcm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108268",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-108268"
+      },
+      {
+        "url": "https://github.com/Privasys/enclave-os-virtual/security/advisories/GHSA-p5fp-g94g-g9m9",
+        "name": "https://github.com/Privasys/enclave-os-virtual/security/advisories/GHSA-p5fp-g94g-g9m9"
+      },
+      {
+        "url": "https://github.com/Privasys/enclave-os-virtual/commit/9a6be91e29f2b6738d0b77c33cd1ad5cd3d8a347",
+        "name": "https://github.com/Privasys/enclave-os-virtual/commit/9a6be91e29f2b6738d0b77c33cd1ad5cd3d8a347"
+      },
+      {
+        "url": "https://github.com/Privasys/enclave-os-virtual/releases/tag/tdx-gpu-v0.6.27",
+        "name": "https://github.com/Privasys/enclave-os-virtual/releases/tag/tdx-gpu-v0.6.27"
+      },
+      {
+        "url": "https://github.com/Privasys/enclave-os-virtual/releases/tag/tdx-v0.2.43",
+        "name": "https://github.com/Privasys/enclave-os-virtual/releases/tag/tdx-v0.2.43"
+      },
+      {
+        "url": "https://privasys.org/blog/binding-attestation-to-the-tls-session",
+        "name": "https://privasys.org/blog/binding-attestation-to-the-tls-session"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Enclave OS Virtual RA-TLS证明重放漏洞"
+  },
+  "first_saved_at": "2026-10-10T00:26:06+00:00"
+}

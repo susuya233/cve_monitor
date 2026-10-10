@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-10-10T00:26:04+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4hrj-2xat",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-108267",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-346",
+    "description": "Privasys Go 是 Privasys 维护的开源 Go 编程语言分支（BSD-3-Clause 许可），在 crypto/tls 中加入 RA-TLS 支持，使 TLS 证书内嵌 TEE 硬件 attestation quote，用于机密计算场景下向通信对端证明连接另一端运行在真实 enclave 中。\n受影响版本中，challenge 模式 RA-TLS 证书的 quote ReportData 按 SHA-512(SHA-256(SPKI_DER) || nonce) 计算，nonce 来自 ClientHello 中 0xFFBB 扩展携带的客户端随机数；服务端证书在握手密钥调度产生之前选定，handshake_server_tls13.go 的 sendServerCertificate 在发送 Certificate 前未将任何会话密钥派生值折入 ReportData，quote 与当前 TLS 会话无密码学关联。持有 enclave TLS 私钥的攻击者可向真实 enclave 转发受害者的 nonce 换取一张全新合法 quote，并将该 quote 中继到自己与受害者之间的连接上，使 relying party 将攻击者终止的握手误判为已认证的 enclave 连接。\n修复版本中通过在 TLS 1.3 密钥调度上派生 32 字节会话 binder，即 HKDF-Expand-Label(client_handshake_traffic_secret, \"privasys-ratls-binder-v1\", Hash(ClientHello..ServerHello), 32)，并在 Certificate 发送前的 emit seam 处重新铸造叶子证书，使 ReportData 变为 SHA-512(SHA-256(SPKI_DER) || nonce || binder)；验证方经 ConnectionState.RATLSChannelBinder 重算 binder 并比对 quote，与当前会话不匹配时失败关闭，中继路径被切断。",
+    "effects": [
+      {
+        "comp_name": "Privasys/go",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,privasys-v0.5.1-go1.26.5)",
+            "min_fixed_version": "privasys-v0.5.1-go1.26.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "源验证错误",
+    "kind_en": "来源验证错误",
+    "last_modified_time": "2026-10-10",
+    "level": "Critical",
+    "mps_id": "MPS-4hrj-2xat",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4hrj-2xat",
+        "name": "https://www.oscs1024.com/hd/MPS-4hrj-2xat"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108267",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-108267"
+      },
+      {
+        "url": "https://github.com/Privasys/go/security/advisories/GHSA-7jfw-53rm-phh2",
+        "name": "https://github.com/Privasys/go/security/advisories/GHSA-7jfw-53rm-phh2"
+      },
+      {
+        "url": "https://github.com/Privasys/go/commit/00a7d21ba53bba0ea09ac7a67eb2c6714e651700",
+        "name": "https://github.com/Privasys/go/commit/00a7d21ba53bba0ea09ac7a67eb2c6714e651700"
+      },
+      {
+        "url": "https://github.com/Privasys/go/releases/tag/privasys-v0.5.1-go1.26.5",
+        "name": "https://github.com/Privasys/go/releases/tag/privasys-v0.5.1-go1.26.5"
+      },
+      {
+        "url": "https://privasys.org/blog/binding-attestation-to-the-tls-session",
+        "name": "https://privasys.org/blog/binding-attestation-to-the-tls-session"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Privasys Go RA-TLS证明中继漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-108267",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-346",
+    "description": "Privasys Go 是 Privasys 维护的开源 Go 编程语言分支（BSD-3-Clause 许可），在 crypto/tls 中加入 RA-TLS 支持，使 TLS 证书内嵌 TEE 硬件 attestation quote，用于机密计算场景下向通信对端证明连接另一端运行在真实 enclave 中。\n受影响版本中，challenge 模式 RA-TLS 证书的 quote ReportData 按 SHA-512(SHA-256(SPKI_DER) || nonce) 计算，nonce 来自 ClientHello 中 0xFFBB 扩展携带的客户端随机数；服务端证书在握手密钥调度产生之前选定，handshake_server_tls13.go 的 sendServerCertificate 在发送 Certificate 前未将任何会话密钥派生值折入 ReportData，quote 与当前 TLS 会话无密码学关联。持有 enclave TLS 私钥的攻击者可向真实 enclave 转发受害者的 nonce 换取一张全新合法 quote，并将该 quote 中继到自己与受害者之间的连接上，使 relying party 将攻击者终止的握手误判为已认证的 enclave 连接。\n修复版本中通过在 TLS 1.3 密钥调度上派生 32 字节会话 binder，即 HKDF-Expand-Label(client_handshake_traffic_secret, \"privasys-ratls-binder-v1\", Hash(ClientHello..ServerHello), 32)，并在 Certificate 发送前的 emit seam 处重新铸造叶子证书，使 ReportData 变为 SHA-512(SHA-256(SPKI_DER) || nonce || binder)；验证方经 ConnectionState.RATLSChannelBinder 重算 binder 并比对 quote，与当前会话不匹配时失败关闭，中继路径被切断。",
+    "effects": [
+      {
+        "comp_name": "Privasys/go",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,privasys-v0.5.1-go1.26.5)",
+            "min_fixed_version": "privasys-v0.5.1-go1.26.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "源验证错误",
+    "kind_en": "Origin Validation Error",
+    "last_modified_time": "2026-10-10",
+    "level": "Critical",
+    "mps_id": "MPS-4hrj-2xat",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4hrj-2xat",
+        "name": "https://www.oscs1024.com/hd/MPS-4hrj-2xat"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108267",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-108267"
+      },
+      {
+        "url": "https://github.com/Privasys/go/security/advisories/GHSA-7jfw-53rm-phh2",
+        "name": "https://github.com/Privasys/go/security/advisories/GHSA-7jfw-53rm-phh2"
+      },
+      {
+        "url": "https://github.com/Privasys/go/commit/00a7d21ba53bba0ea09ac7a67eb2c6714e651700",
+        "name": "https://github.com/Privasys/go/commit/00a7d21ba53bba0ea09ac7a67eb2c6714e651700"
+      },
+      {
+        "url": "https://github.com/Privasys/go/releases/tag/privasys-v0.5.1-go1.26.5",
+        "name": "https://github.com/Privasys/go/releases/tag/privasys-v0.5.1-go1.26.5"
+      },
+      {
+        "url": "https://privasys.org/blog/binding-attestation-to-the-tls-session",
+        "name": "https://privasys.org/blog/binding-attestation-to-the-tls-session"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Privasys Go RA-TLS证明中继漏洞"
+  },
+  "first_saved_at": "2026-10-10T00:26:04+00:00"
+}

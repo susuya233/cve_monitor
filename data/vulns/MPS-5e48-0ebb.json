@@ -1,0 +1,177 @@
+{
+  "saved_at": "2026-10-10T00:26:03+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5e48-0ebb",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103636",
+    "cvss": {},
+    "cvss_score": 7.9,
+    "cvss_vector": "",
+    "cwe": "CWE-125",
+    "description": "Apache DataSketches 是 Apache 软件基金会开源的流式数据草图（sketch）算法库，datasketches-cpp 为其 C++ 实现，提供 VarOpt 抽样等近似统计草图，应用通过库公开的 deserialize 接口还原序列化数据中的草图。\n受影响版本中，var_opt_union::deserialize() 反序列化非空 union 前仅执行 ensure_minimum_memory(size, 8) 的 8 字节长度检查，随后仍按 32 字节前导区读取 items_seen、outer_tau_numer、outer_tau_denom 等字段，长度在 8 至 31 字节之间的截断输入最多可越过输入缓冲区末尾读取 24 字节；同时内嵌 sketch 的长度由 size - (PREAMBLE_LONGS_NON_EMPTY << 3) 以无符号整数计算，size 小于 32 时回绕为极大值，使内嵌 sketch 自身的长度检查无法把读取限制在输入范围内，越界读取的字节可进入反序列化后的 union 状态，造成进程崩溃（拒绝服务）并可能暴露相邻内存内容。\n修复版本中通过在读取非空前导区前增加 ensure_minimum_memory(size, PREAMBLE_LONGS_NON_EMPTY << 3) 校验，要求输入至少包含完整的 32 字节非空前导区，长度不足时在读取前抛出 std::out_of_range 异常，切断越界读取与长度回绕路径，消除崩溃与内存信息泄露风险。",
+    "effects": [
+      {
+        "comp_name": "datasketches-cpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.0.0-incubating,5.3.0)",
+            "min_fixed_version": "5.3.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界读取",
+    "kind_en": "越界读取",
+    "last_modified_time": "2026-10-10",
+    "level": "High",
+    "mps_id": "MPS-5e48-0ebb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12256.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-103636",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/pull/538",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/commit/412c47efa67e3c5e601bb0db1a97778eaca9c724",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/releases/tag/5.3.0",
+        "name": ""
+      },
+      {
+        "url": "https://datasketches.apache.org",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DataSketches C++ VarOpt反序列化越界读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103636",
+    "cvss": {},
+    "cvss_score": 7.9,
+    "cvss_vector": "",
+    "cwe": "CWE-125",
+    "description": "Apache DataSketches 是 Apache 软件基金会开源的流式数据草图（sketch）算法库，datasketches-cpp 为其 C++ 实现，提供 VarOpt 抽样等近似统计草图，应用通过库公开的 deserialize 接口还原序列化数据中的草图。\n受影响版本中，var_opt_union::deserialize() 反序列化非空 union 前仅执行 ensure_minimum_memory(size, 8) 的 8 字节长度检查，随后仍按 32 字节前导区读取 items_seen、outer_tau_numer、outer_tau_denom 等字段，长度在 8 至 31 字节之间的截断输入最多可越过输入缓冲区末尾读取 24 字节；同时内嵌 sketch 的长度由 size - (PREAMBLE_LONGS_NON_EMPTY << 3) 以无符号整数计算，size 小于 32 时回绕为极大值，使内嵌 sketch 自身的长度检查无法把读取限制在输入范围内，越界读取的字节可进入反序列化后的 union 状态，造成进程崩溃（拒绝服务）并可能暴露相邻内存内容。\n修复版本中通过在读取非空前导区前增加 ensure_minimum_memory(size, PREAMBLE_LONGS_NON_EMPTY << 3) 校验，要求输入至少包含完整的 32 字节非空前导区，长度不足时在读取前抛出 std::out_of_range 异常，切断越界读取与长度回绕路径，消除崩溃与内存信息泄露风险。",
+    "effects": [
+      {
+        "comp_name": "datasketches-cpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.0.0-incubating,5.3.0)",
+            "min_fixed_version": "5.3.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界读取",
+    "kind_en": "Out-of-bounds Read",
+    "last_modified_time": "2026-10-10",
+    "level": "High",
+    "mps_id": "MPS-5e48-0ebb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12256.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-103636",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/pull/538",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/commit/412c47efa67e3c5e601bb0db1a97778eaca9c724",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/releases/tag/5.3.0",
+        "name": ""
+      },
+      {
+        "url": "https://datasketches.apache.org",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DataSketches C++ VarOpt反序列化越界读取漏洞"
+  },
+  "first_saved_at": "2026-10-10T00:26:03+00:00"
+}

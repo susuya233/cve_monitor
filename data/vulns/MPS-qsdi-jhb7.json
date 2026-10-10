@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-10-10T00:26:05+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-qsdi-jhb7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-108269",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-346",
+    "description": "ra-tls-clients 是 Privasys 开源（AGPL-3.0）的 RA-TLS 客户端 SDK，提供 Rust、Go 等多语言工具库，用于在机密计算场景中验证来自 TEE enclave 的 RA-TLS 证书与远程证明引证（quote），其 challenge 模式要求 enclave 把客户端 nonce 写入引证 ReportData 以阻止引证重放。\n受影响版本中，Rust verify_report_data 与 Go verifyReportData 在 challenge 模式下构造的期望 ReportData 为 SHA-512(SHA-256(SPKI_DER) || nonce)，只绑定证书公钥与客户端 nonce，未包含任何当前 TLS 会话值；持有 enclave TLS 私钥的攻击者把一条连接上真实 enclave 出具的合法引证中继到另一条由其终止的连接，客户端在放行应用流量前把该连接当作已证明的 enclave 接受，attestation 与 TLS 会话之间的绑定缺失形成中继攻击面。\n修复版本中通过在 challenge 路径强制引入 32 字节 TLS 会话 channel binder（由本端握手密钥计划经 HKDF-Expand-Label 派生），期望 ReportData 变为 SHA-512(SHA-256(SPKI_DER) || nonce || binder)，验证器对缺少 binder 的引证 fail closed，无法承诺当前 TLS 会话的中继引证不再通过验证。",
+    "effects": [
+      {
+        "comp_name": "enclave-os-mini/clients/go",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.5.0)",
+            "min_fixed_version": "0.5.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "ratls-client",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.5.0)",
+            "min_fixed_version": "0.5.0",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "源验证错误",
+    "kind_en": "来源验证错误",
+    "last_modified_time": "2026-10-10",
+    "level": "Critical",
+    "mps_id": "MPS-qsdi-jhb7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qsdi-jhb7",
+        "name": "https://www.oscs1024.com/hd/MPS-qsdi-jhb7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108269",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-108269"
+      },
+      {
+        "url": "https://github.com/Privasys/ra-tls-clients/security/advisories/GHSA-5qrc-v874-mxvx",
+        "name": "https://github.com/Privasys/ra-tls-clients/security/advisories/GHSA-5qrc-v874-mxvx"
+      },
+      {
+        "url": "https://github.com/Privasys/ra-tls-clients/security/advisories/GHSA-5qrc-v874-mxvx",
+        "name": "https://github.com/Privasys/ra-tls-clients/security/advisories/GHSA-5qrc-v874-mxvx"
+      },
+      {
+        "url": "https://github.com/Privasys/ra-tls-clients/commit/b8de9bcadd0f81ca8882d15095fc0d9c50e40148",
+        "name": "https://github.com/Privasys/ra-tls-clients/commit/b8de9bcadd0f81ca8882d15095fc0d9c50e40148"
+      },
+      {
+        "url": "https://github.com/Privasys/ra-tls-clients/releases/tag/v0.5.0",
+        "name": "https://github.com/Privasys/ra-tls-clients/releases/tag/v0.5.0"
+      },
+      {
+        "url": "https://privasys.org/blog/binding-attestation-to-the-tls-session",
+        "name": "https://privasys.org/blog/binding-attestation-to-the-tls-session"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "RA-TLS 客户端证明中继漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-108269",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-346",
+    "description": "ra-tls-clients 是 Privasys 开源（AGPL-3.0）的 RA-TLS 客户端 SDK，提供 Rust、Go 等多语言工具库，用于在机密计算场景中验证来自 TEE enclave 的 RA-TLS 证书与远程证明引证（quote），其 challenge 模式要求 enclave 把客户端 nonce 写入引证 ReportData 以阻止引证重放。\n受影响版本中，Rust verify_report_data 与 Go verifyReportData 在 challenge 模式下构造的期望 ReportData 为 SHA-512(SHA-256(SPKI_DER) || nonce)，只绑定证书公钥与客户端 nonce，未包含任何当前 TLS 会话值；持有 enclave TLS 私钥的攻击者把一条连接上真实 enclave 出具的合法引证中继到另一条由其终止的连接，客户端在放行应用流量前把该连接当作已证明的 enclave 接受，attestation 与 TLS 会话之间的绑定缺失形成中继攻击面。\n修复版本中通过在 challenge 路径强制引入 32 字节 TLS 会话 channel binder（由本端握手密钥计划经 HKDF-Expand-Label 派生），期望 ReportData 变为 SHA-512(SHA-256(SPKI_DER) || nonce || binder)，验证器对缺少 binder 的引证 fail closed，无法承诺当前 TLS 会话的中继引证不再通过验证。",
+    "effects": [
+      {
+        "comp_name": "enclave-os-mini/clients/go",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.5.0)",
+            "min_fixed_version": "0.5.0",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "ratls-client",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.5.0)",
+            "min_fixed_version": "0.5.0",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "源验证错误",
+    "kind_en": "Origin Validation Error",
+    "last_modified_time": "2026-10-10",
+    "level": "Critical",
+    "mps_id": "MPS-qsdi-jhb7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qsdi-jhb7",
+        "name": "https://www.oscs1024.com/hd/MPS-qsdi-jhb7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108269",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-108269"
+      },
+      {
+        "url": "https://github.com/Privasys/ra-tls-clients/security/advisories/GHSA-5qrc-v874-mxvx",
+        "name": "https://github.com/Privasys/ra-tls-clients/security/advisories/GHSA-5qrc-v874-mxvx"
+      },
+      {
+        "url": "https://github.com/Privasys/ra-tls-clients/security/advisories/GHSA-5qrc-v874-mxvx",
+        "name": "https://github.com/Privasys/ra-tls-clients/security/advisories/GHSA-5qrc-v874-mxvx"
+      },
+      {
+        "url": "https://github.com/Privasys/ra-tls-clients/commit/b8de9bcadd0f81ca8882d15095fc0d9c50e40148",
+        "name": "https://github.com/Privasys/ra-tls-clients/commit/b8de9bcadd0f81ca8882d15095fc0d9c50e40148"
+      },
+      {
+        "url": "https://github.com/Privasys/ra-tls-clients/releases/tag/v0.5.0",
+        "name": "https://github.com/Privasys/ra-tls-clients/releases/tag/v0.5.0"
+      },
+      {
+        "url": "https://privasys.org/blog/binding-attestation-to-the-tls-session",
+        "name": "https://privasys.org/blog/binding-attestation-to-the-tls-session"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "RA-TLS 客户端证明中继漏洞"
+  },
+  "first_saved_at": "2026-10-10T00:26:05+00:00"
+}
