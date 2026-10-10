@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-10-10T18:10:20+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-x2lp-e5r7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103071",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-94",
+    "description": "Thank You Page Customizer for WooCommerce（woo-thank-you-page-customizer）是 VillaTheme 开发的 WordPress 开源插件（GPL v2 及以上授权），用于自定义 WooCommerce 下单后的感谢页，支持以 {billing_first_name} 等占位符把订单信息嵌入页面文本并自动发放优惠券。\n受影响版本中，感谢页模板 templates/thankyou.php 读取订单账单姓名、邮箱、地址等字段构建 $shortcodes 数组时未做任何转义，随后把这些字段经 str_replace 原样替换进管理员配置的标题与文本编辑器内容，并执行 echo do_shortcode( $text )；下单客户（含游客结账）在账单字段写入 [shortcode] 语法后，订单感谢页渲染时该 shortcode 会在站点上下文被 do_shortcode 执行，攻击者可在站点已注册 shortcode 的能力范围内实现代码/内容注入。\n修复版本中通过在占位符替换前生成 $safe_value = wp_kses_post( str_replace( array('[',']'), array('&#91;','&#93;'), (string) $value ) )，使订单字段中的中括号被转义、无法再拼出 shortcode 语法，从而在 do_shortcode 之前切断注入链；同一修复还将优惠券邮件 AJAX 处理器的占位符来源由 $_POST['shortcodes'] 改为服务端 build_order_shortcodes() 从已验证订单生成。",
+    "effects": [
+      {
+        "comp_name": "woo-thank-you-page-customizer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.2.4)",
+            "min_fixed_version": "1.2.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-10-11",
+    "level": "High",
+    "mps_id": "MPS-x2lp-e5r7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-x2lp-e5r7",
+        "name": "https://www.oscs1024.com/hd/MPS-x2lp-e5r7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103071",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-103071"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/woo-thank-you-page-customizer/vulnerability/wordpress-thank-you-page-customizer-for-woocommerce-plugin-1-2-3-content-injection-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WordPress感谢页插件代码注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-103071",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-94",
+    "description": "Thank You Page Customizer for WooCommerce（woo-thank-you-page-customizer）是 VillaTheme 开发的 WordPress 开源插件（GPL v2 及以上授权），用于自定义 WooCommerce 下单后的感谢页，支持以 {billing_first_name} 等占位符把订单信息嵌入页面文本并自动发放优惠券。\n受影响版本中，感谢页模板 templates/thankyou.php 读取订单账单姓名、邮箱、地址等字段构建 $shortcodes 数组时未做任何转义，随后把这些字段经 str_replace 原样替换进管理员配置的标题与文本编辑器内容，并执行 echo do_shortcode( $text )；下单客户（含游客结账）在账单字段写入 [shortcode] 语法后，订单感谢页渲染时该 shortcode 会在站点上下文被 do_shortcode 执行，攻击者可在站点已注册 shortcode 的能力范围内实现代码/内容注入。\n修复版本中通过在占位符替换前生成 $safe_value = wp_kses_post( str_replace( array('[',']'), array('&#91;','&#93;'), (string) $value ) )，使订单字段中的中括号被转义、无法再拼出 shortcode 语法，从而在 do_shortcode 之前切断注入链；同一修复还将优惠券邮件 AJAX 处理器的占位符来源由 $_POST['shortcodes'] 改为服务端 build_order_shortcodes() 从已验证订单生成。",
+    "effects": [
+      {
+        "comp_name": "woo-thank-you-page-customizer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.2.4)",
+            "min_fixed_version": "1.2.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-10-11",
+    "level": "High",
+    "mps_id": "MPS-x2lp-e5r7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-x2lp-e5r7",
+        "name": "https://www.oscs1024.com/hd/MPS-x2lp-e5r7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103071",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-103071"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/woo-thank-you-page-customizer/vulnerability/wordpress-thank-you-page-customizer-for-woocommerce-plugin-1-2-3-content-injection-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "WordPress感谢页插件代码注入漏洞"
+  },
+  "first_saved_at": "2026-10-10T18:10:20+00:00"
+}

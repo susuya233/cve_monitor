@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-10-10T18:10:14+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5sxu-lgvf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62044",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "Super Video Player 是 bPlugins 开发的开源 WordPress 视频播放器插件（GPLv2 或更高许可），支持自托管 MP4、HLS 与 DASH 视频播放，可通过 Gutenberg 区块或 [vplayer] 短代码在页面中嵌入播放器并配置播放列表、字幕与画质切换，WordPress.org 显示安装量约 2000。\n受影响版本中，具备编辑（Editor）及以上权限的用户保存播放器配置时，Codestar Framework 的 CSF_Metabox::save_meta_box 会把请求中的 tabStyles 字段仅经 wp_kses_post 清理后写入同名文章元数据，该清理不会中和 PHP 序列化对象语法；页面通过短代码或区块渲染播放器时，inc/block-video-player.php 读取该元数据并调用 maybe_unserialize()，对判定为序列化数据的内容直接执行 unserialize()，编辑级用户预先写入的双重序列化载荷由此触发 PHP 对象注入，可借助站点已安装插件或主题中的魔术方法链导致文件操作、数据库注入乃至任意代码执行等后果。\n修复版本中通过，WordPress.org 官方渠道最新版本仍为 1.8.13，建议收回非必要的编辑权限、审计站点中 svplayer 文章的 tabStyles 元数据是否包含以 O: 开头的序列化对象片段，并部署 WAF 或虚拟补丁规则拦截携带 PHP 序列化对象特征的配置保存请求，待官方补丁发布后及时升级。",
+    "effects": [
+      {
+        "comp_name": "super-video-player",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.8.13]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-10-11",
+    "level": "High",
+    "mps_id": "MPS-5sxu-lgvf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5sxu-lgvf",
+        "name": "https://www.oscs1024.com/hd/MPS-5sxu-lgvf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-62044",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-62044"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/super-video-player/vulnerability/wordpress-super-video-player-plugin-1-8-13-php-object-injection-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Super Video Player对象注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62044",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "Super Video Player 是 bPlugins 开发的开源 WordPress 视频播放器插件（GPLv2 或更高许可），支持自托管 MP4、HLS 与 DASH 视频播放，可通过 Gutenberg 区块或 [vplayer] 短代码在页面中嵌入播放器并配置播放列表、字幕与画质切换，WordPress.org 显示安装量约 2000。\n受影响版本中，具备编辑（Editor）及以上权限的用户保存播放器配置时，Codestar Framework 的 CSF_Metabox::save_meta_box 会把请求中的 tabStyles 字段仅经 wp_kses_post 清理后写入同名文章元数据，该清理不会中和 PHP 序列化对象语法；页面通过短代码或区块渲染播放器时，inc/block-video-player.php 读取该元数据并调用 maybe_unserialize()，对判定为序列化数据的内容直接执行 unserialize()，编辑级用户预先写入的双重序列化载荷由此触发 PHP 对象注入，可借助站点已安装插件或主题中的魔术方法链导致文件操作、数据库注入乃至任意代码执行等后果。\n修复版本中通过，WordPress.org 官方渠道最新版本仍为 1.8.13，建议收回非必要的编辑权限、审计站点中 svplayer 文章的 tabStyles 元数据是否包含以 O: 开头的序列化对象片段，并部署 WAF 或虚拟补丁规则拦截携带 PHP 序列化对象特征的配置保存请求，待官方补丁发布后及时升级。",
+    "effects": [
+      {
+        "comp_name": "super-video-player",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.8.13]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-10-11",
+    "level": "High",
+    "mps_id": "MPS-5sxu-lgvf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5sxu-lgvf",
+        "name": "https://www.oscs1024.com/hd/MPS-5sxu-lgvf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-62044",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-62044"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/super-video-player/vulnerability/wordpress-super-video-player-plugin-1-8-13-php-object-injection-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Super Video Player对象注入漏洞"
+  },
+  "first_saved_at": "2026-10-10T18:10:14+00:00"
+}
