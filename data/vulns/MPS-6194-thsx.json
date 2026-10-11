@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-10-11T19:51:08+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6194-thsx",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-19935",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-416",
+    "description": "Zephyr 是开源实时操作系统，Bluetooth LE Host 提供低功耗蓝牙主机协议栈，并处理 L2CAP 面向连接信道（CoC）。\n受影响版本中，动态 PSM（0x0080-0x00FF）的 L2CAP CoC 在收到数据 K 帧时，l2cap_chan_recv_queue() 将嵌入信道对象的 le_chan->rx_work 通过 k_work_submit() 提交到系统工作队列，回调为 l2cap_rx_process()；l2cap_chan_destroy() 仅取消 rtx_work 并排空 rx_queue，未取消 rx_work。远端未认证对端在已建立的 CoC 上发送数据 K 帧后立即发送 L2CAP Disconnect Request 时，默认 Bluetooth RX 工作队列优先级高于系统工作队列，le_disconn_req() 会先经 l2cap_chan_del() 执行 l2cap_chan_destroy() 并调用 released()。应用按接口约定释放或复用该信道对象后，系统工作队列仍持有它；随后对已释放或已复用内存中的链表节点和 handler 解引用，或在 l2cap_chan_add() 里对仍在队列中的工作项执行 k_work_init()，形成释放后使用并破坏工作队列。\n修复版本中通过把 l2cap_chan_recv_queue() 的提交改为 bt_work_submit()，使 RX 工作项与拆除路径运行在同一 Bluetooth 工作队列，并在 l2cap_chan_destroy() 中执行 k_work_cancel(&le_chan->rx_work)，使 released() 返回后不再残留指向信道对象的待处理工作项。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,4.4.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "UAF",
+    "kind_en": "免费后使用",
+    "last_modified_time": "2026-10-12",
+    "level": "High",
+    "mps_id": "MPS-6194-thsx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6194-thsx",
+        "name": "https://www.oscs1024.com/hd/MPS-6194-thsx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19935",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-19935"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/22896cb8d6f23feffe4b637119fb3e974ac3bed8",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-6gp4-cwf7-2vp8",
+        "name": "GHSA-6gp4-cwf7-2vp8"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "蓝牙L2CAP释放后使用",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-19935",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-416",
+    "description": "Zephyr 是开源实时操作系统，Bluetooth LE Host 提供低功耗蓝牙主机协议栈，并处理 L2CAP 面向连接信道（CoC）。\n受影响版本中，动态 PSM（0x0080-0x00FF）的 L2CAP CoC 在收到数据 K 帧时，l2cap_chan_recv_queue() 将嵌入信道对象的 le_chan->rx_work 通过 k_work_submit() 提交到系统工作队列，回调为 l2cap_rx_process()；l2cap_chan_destroy() 仅取消 rtx_work 并排空 rx_queue，未取消 rx_work。远端未认证对端在已建立的 CoC 上发送数据 K 帧后立即发送 L2CAP Disconnect Request 时，默认 Bluetooth RX 工作队列优先级高于系统工作队列，le_disconn_req() 会先经 l2cap_chan_del() 执行 l2cap_chan_destroy() 并调用 released()。应用按接口约定释放或复用该信道对象后，系统工作队列仍持有它；随后对已释放或已复用内存中的链表节点和 handler 解引用，或在 l2cap_chan_add() 里对仍在队列中的工作项执行 k_work_init()，形成释放后使用并破坏工作队列。\n修复版本中通过把 l2cap_chan_recv_queue() 的提交改为 bt_work_submit()，使 RX 工作项与拆除路径运行在同一 Bluetooth 工作队列，并在 l2cap_chan_destroy() 中执行 k_work_cancel(&le_chan->rx_work)，使 released() 返回后不再残留指向信道对象的待处理工作项。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,4.4.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "UAF",
+    "kind_en": "Use After Free",
+    "last_modified_time": "2026-10-12",
+    "level": "High",
+    "mps_id": "MPS-6194-thsx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6194-thsx",
+        "name": "https://www.oscs1024.com/hd/MPS-6194-thsx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19935",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-19935"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/22896cb8d6f23feffe4b637119fb3e974ac3bed8",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-6gp4-cwf7-2vp8",
+        "name": "GHSA-6gp4-cwf7-2vp8"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "蓝牙L2CAP释放后使用"
+  },
+  "first_saved_at": "2026-10-11T19:51:08+00:00"
+}
