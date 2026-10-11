@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-10-11T23:22:27+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-29ms-4vtf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-108963",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-88",
+    "description": "databasement 是开源自托管数据库备份管理应用，用于 MySQL、MariaDB、PostgreSQL 等数据库的备份与恢复，源码以 MIT 许可公开；其 composer.json 的 name 为 laravel/livewire-starter-kit，并非独立发布的 Composer 组件。\n受影响版本中，已登录用户提交的备份数据库名会进入 MysqlDatabase::dump，并在仅经 escapeshellarg 引用后作为 mariadb-dump 或 mysqldump 的位置参数。shell 引用可以挡住命令分隔符，但客户端仍会把以连字符开头的参数当成选项，因此 --result-file=/app/public/index.php 这类数据库名会让导出客户端把内容写到 index.php，并由此间接造成远程代码执行。\n修复版本中通过 DatabaseOperationResult::escapeDatabaseName 拒绝以连字符开头的数据库名，并在 MysqlDatabase::dump 中把该名称放到 -- 之后传递，PostgreSQL 则改为 --dbname=；保存接口同时用 SafeDatabaseName 拒绝同类输入，使数据库名不再被客户端解释为选项。",
+    "effects": [
+      {
+        "comp_name": "databasement",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.8.2)",
+            "min_fixed_version": "1.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "参数注入或修改",
+    "kind_en": "命令中参数分隔符的不正确中和（“参数注入”）",
+    "last_modified_time": "2026-10-12",
+    "level": "High",
+    "mps_id": "MPS-29ms-4vtf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-29ms-4vtf",
+        "name": "https://www.oscs1024.com/hd/MPS-29ms-4vtf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108963",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-108963"
+      },
+      {
+        "url": "https://github.com/David-Crty/databasement/security/advisories/GHSA-hm57-pvxc-4pcm",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/David-Crty/databasement/blob/bcee6f0e62796337aaac26961c41f7eb9578dd76/app/Services/Backup/Databases/MysqlDatabase.php#L22",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/David-Crty/databasement/commit/2d2761905594a2fa2c3d81d48a7c8b6a1784862c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/David-Crty/databasement/commit/22258e3eac594e653f9d04a69d93e83923d61499",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/David-Crty/databasement/blob/bcee6f0e62796337aaac26961c41f7eb9578dd76/composer.json#L3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "databasement备份参数注入",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-108963",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-88",
+    "description": "databasement 是开源自托管数据库备份管理应用，用于 MySQL、MariaDB、PostgreSQL 等数据库的备份与恢复，源码以 MIT 许可公开；其 composer.json 的 name 为 laravel/livewire-starter-kit，并非独立发布的 Composer 组件。\n受影响版本中，已登录用户提交的备份数据库名会进入 MysqlDatabase::dump，并在仅经 escapeshellarg 引用后作为 mariadb-dump 或 mysqldump 的位置参数。shell 引用可以挡住命令分隔符，但客户端仍会把以连字符开头的参数当成选项，因此 --result-file=/app/public/index.php 这类数据库名会让导出客户端把内容写到 index.php，并由此间接造成远程代码执行。\n修复版本中通过 DatabaseOperationResult::escapeDatabaseName 拒绝以连字符开头的数据库名，并在 MysqlDatabase::dump 中把该名称放到 -- 之后传递，PostgreSQL 则改为 --dbname=；保存接口同时用 SafeDatabaseName 拒绝同类输入，使数据库名不再被客户端解释为选项。",
+    "effects": [
+      {
+        "comp_name": "databasement",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.8.2)",
+            "min_fixed_version": "1.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "参数注入或修改",
+    "kind_en": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "last_modified_time": "2026-10-12",
+    "level": "High",
+    "mps_id": "MPS-29ms-4vtf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-29ms-4vtf",
+        "name": "https://www.oscs1024.com/hd/MPS-29ms-4vtf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108963",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-108963"
+      },
+      {
+        "url": "https://github.com/David-Crty/databasement/security/advisories/GHSA-hm57-pvxc-4pcm",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/David-Crty/databasement/blob/bcee6f0e62796337aaac26961c41f7eb9578dd76/app/Services/Backup/Databases/MysqlDatabase.php#L22",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/David-Crty/databasement/commit/2d2761905594a2fa2c3d81d48a7c8b6a1784862c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/David-Crty/databasement/commit/22258e3eac594e653f9d04a69d93e83923d61499",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/David-Crty/databasement/blob/bcee6f0e62796337aaac26961c41f7eb9578dd76/composer.json#L3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "databasement备份参数注入"
+  },
+  "first_saved_at": "2026-10-11T23:22:27+00:00"
+}
