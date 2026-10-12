@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-10-12T03:49:15+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ivsd-08b7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-108980",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-24",
+    "description": "Blinko 是开源、可自托管的 TypeScript 个人笔记应用，仓库为 blinkospace/blinko，用于管理笔记并安装插件。\n受影响版本中，已登录用户可直接调用 appRouter 上的 plugin.installPlugin。该过程只经过 authProcedure，没有 superAdminAuthMiddleware，并把未校验的 input.name 交给 getPluginDir，用 path.join('.blinko', 'plugins', pluginName) 拼出目录，再下载并解压 release.zip。名称里的 ../ 会在 path.join 中被折叠，下载文件因而写到插件目录之外。官方 dockerfile 的 runner 阶段使用 node:20-alpine 且没有 USER 指令，容器默认以 root 运行，覆盖 root 拥有的启动文件后可获得 root 权限的远程代码执行。\n修复版本中通过发布带路径校验的版本才能消除该问题，但截至 2026-10-12 官方未发布高于 1.8.8 的版本，main 分支的 installPlugin 仍把未校验的 input.name 传入 getPluginDir。",
+    "effects": [
+      {
+        "comp_name": "blinko",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.8.8]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "路径遍历",
+    "kind_en": "路径遍历：'../filedir'",
+    "last_modified_time": "2026-10-12",
+    "level": "High",
+    "mps_id": "MPS-ivsd-08b7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ivsd-08b7",
+        "name": "https://www.oscs1024.com/hd/MPS-ivsd-08b7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108980",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-108980"
+      },
+      {
+        "url": "https://github.com/kashishtopi/blinko-plugin-path-traversal-rce",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/blinkospace/blinko/blob/178e4b3538a21823a50ac2481e653d56cb1ffa86/server/routerTrpc/plugin.ts#L273",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/blinkospace/blinko/blob/178e4b3538a21823a50ac2481e653d56cb1ffa86/app/src/pages/signin.tsx#L238-L243",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Blinko插件路径穿越",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-108980",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-24",
+    "description": "Blinko 是开源、可自托管的 TypeScript 个人笔记应用，仓库为 blinkospace/blinko，用于管理笔记并安装插件。\n受影响版本中，已登录用户可直接调用 appRouter 上的 plugin.installPlugin。该过程只经过 authProcedure，没有 superAdminAuthMiddleware，并把未校验的 input.name 交给 getPluginDir，用 path.join('.blinko', 'plugins', pluginName) 拼出目录，再下载并解压 release.zip。名称里的 ../ 会在 path.join 中被折叠，下载文件因而写到插件目录之外。官方 dockerfile 的 runner 阶段使用 node:20-alpine 且没有 USER 指令，容器默认以 root 运行，覆盖 root 拥有的启动文件后可获得 root 权限的远程代码执行。\n修复版本中通过发布带路径校验的版本才能消除该问题，但截至 2026-10-12 官方未发布高于 1.8.8 的版本，main 分支的 installPlugin 仍把未校验的 input.name 传入 getPluginDir。",
+    "effects": [
+      {
+        "comp_name": "blinko",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.8.8]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "路径遍历",
+    "kind_en": "Path Traversal: '../filedir'",
+    "last_modified_time": "2026-10-12",
+    "level": "High",
+    "mps_id": "MPS-ivsd-08b7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ivsd-08b7",
+        "name": "https://www.oscs1024.com/hd/MPS-ivsd-08b7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108980",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-108980"
+      },
+      {
+        "url": "https://github.com/kashishtopi/blinko-plugin-path-traversal-rce",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/blinkospace/blinko/blob/178e4b3538a21823a50ac2481e653d56cb1ffa86/server/routerTrpc/plugin.ts#L273",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/blinkospace/blinko/blob/178e4b3538a21823a50ac2481e653d56cb1ffa86/app/src/pages/signin.tsx#L238-L243",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Blinko插件路径穿越"
+  },
+  "first_saved_at": "2026-10-12T03:49:15+00:00"
+}
