@@ -1,0 +1,197 @@
+{
+  "saved_at": "2026-10-13T17:26:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-l0id-tpbw",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55695",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "FearlessCMS 是以扁平文件存储为核心的开源内容管理系统，提供后台管理、插件扩展与系统更新能力。\n受影响版本中，已认证管理员可向 admin/updater-handler.php 提交任意 Git 仓库 URL，save_settings 未校验仓库身份即把 $_POST['repo'] 写入 config.json 的 update_repo_url。随后 perform_update 将该 URL 传给 update.sh，download_update 对其执行 git clone，perform_update 再用克隆内容覆盖 plugins/、admin/ 与 includes/。router.php 对 uploads/ 与 admin/ 之外且磁盘上已存在的 PHP 文件返回 false，PHP 内置开发服务器会直接执行 plugins 目录中植入的脚本，使恶意 PHP 以 Web 进程权限持久运行。\n修复版本中通过在 save_settings 增加仅允许 GitHub HTTPS 仓库地址的正则校验，拒绝任意仓库 URL 写入配置，阻止恶意内容进入更新覆盖流程。",
+    "effects": [
+      {
+        "comp_name": "fearlessgeek/fearlesscms",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.3b)",
+            "min_fixed_version": "0.1.3b",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-10-14",
+    "level": "Critical",
+    "mps_id": "MPS-l0id-tpbw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-l0id-tpbw",
+        "name": "https://www.oscs1024.com/hd/MPS-l0id-tpbw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-55695",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-55695"
+      },
+      {
+        "url": "https://github.com/fearlessgeekmedia/FearlessCMS/security/advisories/GHSA-56wm-3q3v-m93m",
+        "name": "https://github.com/fearlessgeekmedia/FearlessCMS/security/advisories/GHSA-56wm-3q3v-m93m"
+      },
+      {
+        "url": "https://github.com/fearlessgeekmedia/FearlessCMS/pull/64",
+        "name": "https://github.com/fearlessgeekmedia/FearlessCMS/pull/64"
+      },
+      {
+        "url": "https://github.com/fearlessgeekmedia/FearlessCMS/commit/6dba91d496463e3940a2c917af3cae97b191de92",
+        "name": "https://github.com/fearlessgeekmedia/FearlessCMS/commit/6dba91d496463e3940a2c917af3cae97b191de92"
+      },
+      {
+        "url": "https://github.com/fearlessgeekmedia/FearlessCMS/releases/tag/0.1.3",
+        "name": "https://github.com/fearlessgeekmedia/FearlessCMS/releases/tag/0.1.3"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "FearlessCMS更新器代码注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55695",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "FearlessCMS 是以扁平文件存储为核心的开源内容管理系统，提供后台管理、插件扩展与系统更新能力。\n受影响版本中，已认证管理员可向 admin/updater-handler.php 提交任意 Git 仓库 URL，save_settings 未校验仓库身份即把 $_POST['repo'] 写入 config.json 的 update_repo_url。随后 perform_update 将该 URL 传给 update.sh，download_update 对其执行 git clone，perform_update 再用克隆内容覆盖 plugins/、admin/ 与 includes/。router.php 对 uploads/ 与 admin/ 之外且磁盘上已存在的 PHP 文件返回 false，PHP 内置开发服务器会直接执行 plugins 目录中植入的脚本，使恶意 PHP 以 Web 进程权限持久运行。\n修复版本中通过在 save_settings 增加仅允许 GitHub HTTPS 仓库地址的正则校验，拒绝任意仓库 URL 写入配置，阻止恶意内容进入更新覆盖流程。",
+    "effects": [
+      {
+        "comp_name": "fearlessgeek/fearlesscms",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.3b)",
+            "min_fixed_version": "0.1.3b",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-10-14",
+    "level": "Critical",
+    "mps_id": "MPS-l0id-tpbw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-l0id-tpbw",
+        "name": "https://www.oscs1024.com/hd/MPS-l0id-tpbw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-55695",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-55695"
+      },
+      {
+        "url": "https://github.com/fearlessgeekmedia/FearlessCMS/security/advisories/GHSA-56wm-3q3v-m93m",
+        "name": "https://github.com/fearlessgeekmedia/FearlessCMS/security/advisories/GHSA-56wm-3q3v-m93m"
+      },
+      {
+        "url": "https://github.com/fearlessgeekmedia/FearlessCMS/pull/64",
+        "name": "https://github.com/fearlessgeekmedia/FearlessCMS/pull/64"
+      },
+      {
+        "url": "https://github.com/fearlessgeekmedia/FearlessCMS/commit/6dba91d496463e3940a2c917af3cae97b191de92",
+        "name": "https://github.com/fearlessgeekmedia/FearlessCMS/commit/6dba91d496463e3940a2c917af3cae97b191de92"
+      },
+      {
+        "url": "https://github.com/fearlessgeekmedia/FearlessCMS/releases/tag/0.1.3",
+        "name": "https://github.com/fearlessgeekmedia/FearlessCMS/releases/tag/0.1.3"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "FearlessCMS更新器代码注入漏洞"
+  },
+  "first_saved_at": "2026-10-13T17:26:07+00:00"
+}

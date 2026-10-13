@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-10-13T17:26:10+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-qc84-d3bi",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55376",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-693",
+    "description": "Heym 是开源自托管智能体编排与业务流程自动化平台，用于在自有基础设施上构建 Agent、工作流和自定义工具。\n受影响版本中，已认证用户可通过 PUT /api/workflows/{workflow_id} 将 Agent 自定义 Python 工具写入工作流节点。python_tool_executor 的 _safe_import() 只按根模块名拦截 os、subprocess 等黑名单，_validate_code_safety() 只禁止以下划线开头的属性；攻击者可 import glob 后调用 glob.os.system 等公开属性绕过检查，runner 再以 exec() 执行该代码，从而以后端应用用户身份执行操作系统命令并读写文件。自注册会影响实例可达性，但仅通过门户触发工作流并不能控制工具代码。\n修复版本中通过把用户工具默认放到加固的一次性 Docker 容器内执行，并将导入策略改为显式白名单，切断经允许标准库公开属性绕过黑名单并在宿主机 exec() 的路径；Docker 不可用时默认失败关闭，不再静默回退到进程内执行。",
+    "effects": [
+      {
+        "comp_name": "heym",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.0.40)",
+            "min_fixed_version": "0.0.40",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "保护机制失效",
+    "kind_en": "保护机制失效",
+    "last_modified_time": "2026-10-14",
+    "level": "High",
+    "mps_id": "MPS-qc84-d3bi",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qc84-d3bi",
+        "name": "https://www.oscs1024.com/hd/MPS-qc84-d3bi"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-55376",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-55376"
+      },
+      {
+        "url": "https://github.com/heymrun/heym/security/advisories/GHSA-wcgw-9hfw-f6f2",
+        "name": "https://github.com/heymrun/heym/security/advisories/GHSA-wcgw-9hfw-f6f2"
+      },
+      {
+        "url": "https://github.com/heymrun/heym/commit/b36d795c6ea841b8f1b511a0952e274487ee4ef3",
+        "name": "https://github.com/heymrun/heym/commit/b36d795c6ea841b8f1b511a0952e274487ee4ef3"
+      },
+      {
+        "url": "https://github.com/heymrun/heym/releases/tag/v0.0.40",
+        "name": "https://github.com/heymrun/heym/releases/tag/v0.0.40"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "Heym沙箱逃逸漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55376",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-693",
+    "description": "Heym 是开源自托管智能体编排与业务流程自动化平台，用于在自有基础设施上构建 Agent、工作流和自定义工具。\n受影响版本中，已认证用户可通过 PUT /api/workflows/{workflow_id} 将 Agent 自定义 Python 工具写入工作流节点。python_tool_executor 的 _safe_import() 只按根模块名拦截 os、subprocess 等黑名单，_validate_code_safety() 只禁止以下划线开头的属性；攻击者可 import glob 后调用 glob.os.system 等公开属性绕过检查，runner 再以 exec() 执行该代码，从而以后端应用用户身份执行操作系统命令并读写文件。自注册会影响实例可达性，但仅通过门户触发工作流并不能控制工具代码。\n修复版本中通过把用户工具默认放到加固的一次性 Docker 容器内执行，并将导入策略改为显式白名单，切断经允许标准库公开属性绕过黑名单并在宿主机 exec() 的路径；Docker 不可用时默认失败关闭，不再静默回退到进程内执行。",
+    "effects": [
+      {
+        "comp_name": "heym",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.0.40)",
+            "min_fixed_version": "0.0.40",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "保护机制失效",
+    "kind_en": "Protection Mechanism Failure",
+    "last_modified_time": "2026-10-14",
+    "level": "High",
+    "mps_id": "MPS-qc84-d3bi",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-qc84-d3bi",
+        "name": "https://www.oscs1024.com/hd/MPS-qc84-d3bi"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-55376",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-55376"
+      },
+      {
+        "url": "https://github.com/heymrun/heym/security/advisories/GHSA-wcgw-9hfw-f6f2",
+        "name": "https://github.com/heymrun/heym/security/advisories/GHSA-wcgw-9hfw-f6f2"
+      },
+      {
+        "url": "https://github.com/heymrun/heym/commit/b36d795c6ea841b8f1b511a0952e274487ee4ef3",
+        "name": "https://github.com/heymrun/heym/commit/b36d795c6ea841b8f1b511a0952e274487ee4ef3"
+      },
+      {
+        "url": "https://github.com/heymrun/heym/releases/tag/v0.0.40",
+        "name": "https://github.com/heymrun/heym/releases/tag/v0.0.40"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "Heym沙箱逃逸漏洞"
+  },
+  "first_saved_at": "2026-10-13T17:26:10+00:00"
+}
