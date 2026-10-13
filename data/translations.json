@@ -2073,5 +2073,19 @@
   "6a9d7a4e32567e70eb9991df0f06414a56153902": "清理不彻底",
   "15329fa33ec4c0fd1297717252adcb03b662d334": "containerd CRI权限绕过",
   "cbd58b3f0691332f19bfdc99b90dac2dfe16773b": "Link Whisper盲注",
-  "4e7d53389ca1e0bdaad2401cdaf818d25762f2bb": "对不值得信赖的组件的依赖"
+  "4e7d53389ca1e0bdaad2401cdaf818d25762f2bb": "对不值得信赖的组件的依赖",
+  "50ff8831de39746bf7ff796ba7ad820e9b34c039": "Adobe 体验经理 |授权不正确 (CWE-863)",
+  "0dfbdd552b7158e5879233b020ef8768a7031618": "Adobe Experience Manager 受到不正确授权漏洞的影响，该漏洞可能导致在当前用户的上下文中执行任意代码，从而可能获得对受害者帐户或会话的更高访问权限或控制权。利用此问题不需要用户交互。范围已更改。",
+  "db3c20ca9309b38a83162d8c073a960c61ab96ef": "CVE-2026-90531漏洞",
+  "f03c593da558052a33d2cea86dec234543e2a388": "Adobe Experience Manager 受到 XML 外部实体引用不当限制 (“XXE”) 漏洞的影响，该漏洞可能导致权限升级。低权限攻击者可以利用此漏洞来获得对内部资源的更高访问权限。利用此问题不需要用户交互。范围已更改。",
+  "71820eb2ae311e7494e7ffc14f6f41061ff6d724": "CVE-2026-86022漏洞",
+  "cbf8f3c6d17ba785aaa4a23a1c2651a88e588b1d": "VNote 是一个笔记平台。在 4.3.0 之前，SessionConfig::ExternalProgram::fetchCommand 将注释路径用双引号括起来，并将其替换为 QProcess::start(const QString&) 通过 ProcessUtils::startDetached 重新解析为参数的命令字符串。 src/controllers/viewareacontroller.cpp 中的自动路径和 src/controllers/notebooknodecontroller.cpp 中的 Open With 路径都到达此接收器。在 Linux 和 macOS 上，POSIX 注释文件名中由攻击者控制的双引号可以终止带引号的路径，并将参数添加到受害者配置的外部程序中。如果配置的程序支持执行命令的参数，例如 vim 或 gvim -c 选项，则注入的参数可以以用户身份执行任意命令。此问题已在 4.3.0 版本中修复。",
+  "565937dd2ca9252d7fa5b49c5b7d01e10906c521": "VNote：通过 YAML Frontmatter 存储的 XSS 导致本地文件读取和远程渗透",
+  "968529d6cf0f17fdbf092830b7b6f2e75c03ea58": "VNote 是一个笔记平台。在 4.3.0 之前，VNote 使用 src/data/extra/web/js/markdownit.js 中的赋值 `preNode.innerHTML = p_metaData` 在 protectedFromXss 清理路径运行之前将 YAML frontmatter 元数据插入到 pre 元素中。因此，打开攻击者提供的 Markdown 注释可以执行 file:// 查看器上下文中存储的 JavaScript。由于 QWebEngineSettings::LocalContentCanAccessRemoteUrls 允许本地内容访问远程 URL，因此该脚本可以读取可访问的本地笔记文件并将其内容传输到远程服务器，而无需在笔记打开后进行进一步交互。此问题已在 4.3.0 版本中修复。",
+  "eda729d1119a89a433b60d5d63d23d7831df1d4f": "Adobe 体验经理 |跨站脚本（反射型 XSS）(CWE-79)",
+  "526781a46e41a1d4581ad8a60756766ceb2b5cb7": "Adobe Experience Manager 受到反映的跨站点脚本 (XSS) 漏洞的影响。攻击者可以利用此漏洞将恶意脚本注入网页，从而可能获得对受害者帐户或会话的更高访问权限或控制权。利用此问题需要用户交互，因为受害者必须访问恶意制作的 URL 或与受感染的网页交互。范围已更改。",
+  "ad72e336813c5c7878a21c3f44c0bea3fd4c709c": "Visual Studio Code 远程代码执行漏洞",
+  "4b6ebe5f958ab209a26105d8a5f76620aebef25a": "Visual Studio Code 中缺少授权会导致未经授权的攻击者通过网络执行代码。",
+  "452439eeaa38f31536505bed517a7bdfe633182a": "Omnispace Agora 项目 < 26.10.0 通过 spaceAffectList 破坏访问控制",
+  "3cd39f78f36a66ec58aa687931021a1b213452d9": "26.10.0 之前的 Omnispace Agora 项目包含一个损坏的访问控制漏洞，该漏洞允许空间管理员将用户分配到其权限之外的空间，因为在执行 spaceAffectList 操作时没有验证调用者对目标空间的权限。攻击者可以利用导入流的连接 INSERT 中缺少的 readRight() 检查来破坏租户隔离并跨未经授权的空间操纵用户空间分配。"
 }
