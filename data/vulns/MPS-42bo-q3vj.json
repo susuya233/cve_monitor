@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-10-14T21:11:57+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-42bo-q3vj",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85714",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "Stirling-PDF 是一个本地托管的 Web 应用程序，可促进对 PDF 文件的各种操作。在 2.13.2 之前，使用默认 H2 数据库和安全模式的经过身份验证的管理员可以将精心设计的 SQL 文件上传到 POST /api/v1/database/import-database。 DatabaseService.validateSqlContent() 以分号分割规范化输入，并在包含任何允许的关键字时接受语句，从而允许危险的 H2 函数（例如 FILE_READ 和 CSVWRITE）以及 CREATE ALIAS 绕过白名单不足并在 RUNSCRIPT 处理文件时执行副作用。这允许任意文件访问。演示的操作系统命令执行链将攻击者控制的启动文件写入用户站点位置，然后触发配置为加载这些启动文件的应用程序 Python 解释器，从而导致作为 JVM 服务帐户执行命令。此问题已在版本 2.13.2 中修复。",
+    "effects": [
+      {
+        "comp_name": "Stirling-PDF",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.13.2)",
+            "min_fixed_version": "2.13.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-10-15",
+    "level": "Critical",
+    "mps_id": "MPS-42bo-q3vj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-42bo-q3vj",
+        "name": "https://www.oscs1024.com/hd/MPS-42bo-q3vj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85714",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85714"
+      },
+      {
+        "url": "https://github.com/Stirling-Tools/Stirling-PDF/security/advisories/GHSA-mrr8-934j-4g8m",
+        "name": "https://github.com/Stirling-Tools/Stirling-PDF/security/advisories/GHSA-mrr8-934j-4g8m"
+      },
+      {
+        "url": "https://github.com/Stirling-Tools/Stirling-PDF/pull/6796",
+        "name": "https://github.com/Stirling-Tools/Stirling-PDF/pull/6796"
+      },
+      {
+        "url": "https://github.com/Stirling-Tools/Stirling-PDF/commit/d06d3cabaf5b8a7dcd0dbfc584828d8e687e5dd5",
+        "name": "https://github.com/Stirling-Tools/Stirling-PDF/commit/d06d3cabaf5b8a7dcd0dbfc584828d8e687e5dd5"
+      },
+      {
+        "url": "https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v2.13.2",
+        "name": "https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v2.13.2"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Stirling-PDF：通过 H2 远程执行代码",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85714",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "Stirling-PDF is a locally hosted web application that facilitates various operations on PDF files. Prior to 2.13.2, an authenticated administrator using the default H2 database and security mode can upload a crafted SQL file to POST /api/v1/database/import-database. DatabaseService.validateSqlContent() splits normalized input on semicolons and accepts a statement when it contains any allowed keyword, allowing dangerous H2 functions such as FILE_READ and CSVWRITE, plus CREATE ALIAS, to bypass the insufficient whitelist and execute side effects when RUNSCRIPT processes the file. This permits arbitrary file access. The demonstrated operating-system command execution chain writes attacker-controlled startup files to a user-site location and then triggers an application Python interpreter configured to load those startup files, resulting in command execution as the JVM service account. This issue is fixed in version 2.13.2.",
+    "effects": [
+      {
+        "comp_name": "Stirling-PDF",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.13.2)",
+            "min_fixed_version": "2.13.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-10-15",
+    "level": "Critical",
+    "mps_id": "MPS-42bo-q3vj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-42bo-q3vj",
+        "name": "https://www.oscs1024.com/hd/MPS-42bo-q3vj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85714",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85714"
+      },
+      {
+        "url": "https://github.com/Stirling-Tools/Stirling-PDF/security/advisories/GHSA-mrr8-934j-4g8m",
+        "name": "https://github.com/Stirling-Tools/Stirling-PDF/security/advisories/GHSA-mrr8-934j-4g8m"
+      },
+      {
+        "url": "https://github.com/Stirling-Tools/Stirling-PDF/pull/6796",
+        "name": "https://github.com/Stirling-Tools/Stirling-PDF/pull/6796"
+      },
+      {
+        "url": "https://github.com/Stirling-Tools/Stirling-PDF/commit/d06d3cabaf5b8a7dcd0dbfc584828d8e687e5dd5",
+        "name": "https://github.com/Stirling-Tools/Stirling-PDF/commit/d06d3cabaf5b8a7dcd0dbfc584828d8e687e5dd5"
+      },
+      {
+        "url": "https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v2.13.2",
+        "name": "https://github.com/Stirling-Tools/Stirling-PDF/releases/tag/v2.13.2"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Stirling-PDF: Remote Code Execution via H2"
+  },
+  "first_saved_at": "2026-10-14T21:11:57+00:00"
+}

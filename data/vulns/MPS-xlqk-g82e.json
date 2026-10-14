@@ -1,0 +1,141 @@
+{
+  "saved_at": "2026-10-14T21:12:09+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xlqk-g82e",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55787",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:L/A:N",
+    "cwe": "CWE-918",
+    "description": "flyto-core 的 src/core/utils.py 中 is_private_ip 仅按字面检查 PRIVATE_IP_RANGES 而不解析 IPv6 转换地址（IPv4-mapped ::ffff:a.b.c.d、IPv4-compatible ::a.b.c.d、6to4 2002::/16、NAT64 64:ff9b::/96 与 64:ff9b:1::/48）内嵌的 IPv4，使 http://[::ffff:127.0.0.1]:8080/、http://[64:ff9b::a9fe:a9fe]/ 等 URL 绕过 validate_url_ssrf 守卫，由 http.get 等模块通过 aiohttp 实际读取 169.254.169.254 元数据与内网服务响应体，构成 CWE-918 读型 SSRF。\n受影响版本中，flyto-core pip 包 artifact 名 flyto-core，默认分支 main（含 v2.16.3、v2.17.6、v2.25.27、v2.26.0 等公开 tag）其 <= 2.26.2 的全部 release 均受影响，requires-python >= 3.9；POST /v1/execute 携带 module_id=\"http.get\"、params.url 指向 IPv6 转换地址经 src/core/modules/atomic/http/get.py 中 http_get 函数的 url = params.get('url') 与 src/core/utils.py 的 validate_url_with_env_config(url) 进入 is_private_ip，由于 PRIVATE_IP_RANGES 未含 64:ff9b::/96、2002::/16、::ffff:0:0/96、::/96 等转换前缀，守卫放行后由 aiohttp session.get 实际发起出站请求并将响应体写入 data.body。\n修复版本中通过升级至 flyto-core 2.26.3 解决，commit 519e040384a74984848c4e84a6600e5f1020a6d2 在 src/core/utils.py 中新增 _extract_embedded_ipv4 辅助函数并改写 is_private_ip：对 ip.version==6 的输入先通过 ip.ipv4_mapped 与 ip.sixtofour 取出 IPv4-mapped 与 6to4（2002::/16）内嵌 IPv4，再以字节级比较识别 NAT64 64:ff9b::/96 与 64:ff9b:1::/48 以及已废弃的 IPv4-compatible ::a.b.c.d（排除 :: 与 ::1），把内嵌 IPv4 加入 candidates 列表逐项对同 version 的 PRIVATE_IP_RANGES 做 in 检查，使 ::ffff:127.0.0.1、64:ff9b::a9fe:a9fe 等命中内嵌 RFC1918/环回范围而被拒绝，公开目的地的转换形式仍允许通过。",
+    "effects": [
+      {
+        "comp_name": "flyto-core",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.26.3)",
+            "min_fixed_version": "2.26.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-07-07",
+    "level": "High",
+    "mps_id": "MPS-xlqk-g82e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-15",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/flytohub/flyto-core/security/advisories/GHSA-794r-5rp2-fpg8",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-794r-5rp2-fpg8",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "flyto-core SSRF 防护绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55787",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:L/A:N",
+    "cwe": "CWE-918",
+    "description": "flyto-core 的 src/core/utils.py 中 is_private_ip 仅按字面检查 PRIVATE_IP_RANGES 而不解析 IPv6 转换地址（IPv4-mapped ::ffff:a.b.c.d、IPv4-compatible ::a.b.c.d、6to4 2002::/16、NAT64 64:ff9b::/96 与 64:ff9b:1::/48）内嵌的 IPv4，使 http://[::ffff:127.0.0.1]:8080/、http://[64:ff9b::a9fe:a9fe]/ 等 URL 绕过 validate_url_ssrf 守卫，由 http.get 等模块通过 aiohttp 实际读取 169.254.169.254 元数据与内网服务响应体，构成 CWE-918 读型 SSRF。\n受影响版本中，flyto-core pip 包 artifact 名 flyto-core，默认分支 main（含 v2.16.3、v2.17.6、v2.25.27、v2.26.0 等公开 tag）其 <= 2.26.2 的全部 release 均受影响，requires-python >= 3.9；POST /v1/execute 携带 module_id=\"http.get\"、params.url 指向 IPv6 转换地址经 src/core/modules/atomic/http/get.py 中 http_get 函数的 url = params.get('url') 与 src/core/utils.py 的 validate_url_with_env_config(url) 进入 is_private_ip，由于 PRIVATE_IP_RANGES 未含 64:ff9b::/96、2002::/16、::ffff:0:0/96、::/96 等转换前缀，守卫放行后由 aiohttp session.get 实际发起出站请求并将响应体写入 data.body。\n修复版本中通过升级至 flyto-core 2.26.3 解决，commit 519e040384a74984848c4e84a6600e5f1020a6d2 在 src/core/utils.py 中新增 _extract_embedded_ipv4 辅助函数并改写 is_private_ip：对 ip.version==6 的输入先通过 ip.ipv4_mapped 与 ip.sixtofour 取出 IPv4-mapped 与 6to4（2002::/16）内嵌 IPv4，再以字节级比较识别 NAT64 64:ff9b::/96 与 64:ff9b:1::/48 以及已废弃的 IPv4-compatible ::a.b.c.d（排除 :: 与 ::1），把内嵌 IPv4 加入 candidates 列表逐项对同 version 的 PRIVATE_IP_RANGES 做 in 检查，使 ::ffff:127.0.0.1、64:ff9b::a9fe:a9fe 等命中内嵌 RFC1918/环回范围而被拒绝，公开目的地的转换形式仍允许通过。",
+    "effects": [
+      {
+        "comp_name": "flyto-core",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.26.3)",
+            "min_fixed_version": "2.26.3",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-07-07",
+    "level": "High",
+    "mps_id": "MPS-xlqk-g82e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-15",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/flytohub/flyto-core/security/advisories/GHSA-794r-5rp2-fpg8",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-794r-5rp2-fpg8",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "flyto-core SSRF 防护绕过漏洞"
+  },
+  "first_saved_at": "2026-10-14T21:12:09+00:00"
+}
