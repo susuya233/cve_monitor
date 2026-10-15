@@ -1,0 +1,231 @@
+{
+  "saved_at": "2026-10-15T05:28:14+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-r2ac-mdze",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97205",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "f5sirt@f5.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "f5sirt@f5.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-416",
+    "description": "NGINX 是一款开源的高性能 Web 服务器与反向代理软件，采用 C 语言编写，NGINX Plus 为 F5 提供的商业版本，二者广泛用于 Web 服务、负载均衡与 API 网关等场景。\n受影响版本中，当配置同时启用 Server Side Includes（ssi on）与异步文件 I/O（aio on 或 aio threads）时，处理含有 include virtual 命令的 SSI 页面会派生多个子请求，每个挂起的异步文件操作会把主请求的 r->main->blocked 计数器加一，而该字段为 8 位位域且递增处缺少上限检查，单个请求并发挂起的异步操作累计达到 256 个时计数器回绕为零，主请求及其内存池可能在异步操作仍持有引用时被提前释放，形成释放后使用，远程攻击者可借此造成内存破坏或 worker 进程崩溃，在 ASLR 被禁用或可被绕过的系统上还可能执行任意代码。\n修复版本中通过引入每请求 250 个（NGX_HTTP_MAX_BLOCKED）的挂起异步操作上限，达到上限时 copy filter 与文件缓存回退为同步读取、拒绝缓存锁等待与上游线程任务投递，使 r->main->blocked 无法溢出，切断了计数器回绕引发请求提前释放的因果链，消除了该释放后使用风险。",
+    "effects": [
+      {
+        "comp_name": "nginx",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.30.0,1.30.6)",
+            "min_fixed_version": "1.30.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.31.0,1.31.7)",
+            "min_fixed_version": "1.31.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "UAF",
+    "kind_en": "免费后使用",
+    "last_modified_time": "2026-10-15",
+    "level": "Critical",
+    "mps_id": "MPS-r2ac-mdze",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-r2ac-mdze",
+        "name": "https://www.oscs1024.com/hd/MPS-r2ac-mdze"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97205",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97205"
+      },
+      {
+        "url": "https://my.f5.com/manage/s/article/K000162608",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nginx/nginx/commit/6adfc05ece48f92446383ec1f145446848694698",
+        "name": "Commit"
+      },
+      {
+        "url": "https://github.com/nginx/nginx/commit/587c47aed19ddec799eee953a38837936e585b39",
+        "name": "Commit"
+      }
+    ],
+    "scope_influence": "一般",
+    "tags": [
+      "专家校准",
+      "应用软件"
+    ],
+    "title": "NGINX 异步文件 I/O 释放后使用漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97205",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "f5sirt@f5.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "f5sirt@f5.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-416",
+    "description": "NGINX 是一款开源的高性能 Web 服务器与反向代理软件，采用 C 语言编写，NGINX Plus 为 F5 提供的商业版本，二者广泛用于 Web 服务、负载均衡与 API 网关等场景。\n受影响版本中，当配置同时启用 Server Side Includes（ssi on）与异步文件 I/O（aio on 或 aio threads）时，处理含有 include virtual 命令的 SSI 页面会派生多个子请求，每个挂起的异步文件操作会把主请求的 r->main->blocked 计数器加一，而该字段为 8 位位域且递增处缺少上限检查，单个请求并发挂起的异步操作累计达到 256 个时计数器回绕为零，主请求及其内存池可能在异步操作仍持有引用时被提前释放，形成释放后使用，远程攻击者可借此造成内存破坏或 worker 进程崩溃，在 ASLR 被禁用或可被绕过的系统上还可能执行任意代码。\n修复版本中通过引入每请求 250 个（NGX_HTTP_MAX_BLOCKED）的挂起异步操作上限，达到上限时 copy filter 与文件缓存回退为同步读取、拒绝缓存锁等待与上游线程任务投递，使 r->main->blocked 无法溢出，切断了计数器回绕引发请求提前释放的因果链，消除了该释放后使用风险。",
+    "effects": [
+      {
+        "comp_name": "nginx",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.30.0,1.30.6)",
+            "min_fixed_version": "1.30.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.31.0,1.31.7)",
+            "min_fixed_version": "1.31.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "UAF",
+    "kind_en": "Use After Free",
+    "last_modified_time": "2026-10-15",
+    "level": "Critical",
+    "mps_id": "MPS-r2ac-mdze",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-r2ac-mdze",
+        "name": "https://www.oscs1024.com/hd/MPS-r2ac-mdze"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97205",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97205"
+      },
+      {
+        "url": "https://my.f5.com/manage/s/article/K000162608",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nginx/nginx/commit/6adfc05ece48f92446383ec1f145446848694698",
+        "name": "Commit"
+      },
+      {
+        "url": "https://github.com/nginx/nginx/commit/587c47aed19ddec799eee953a38837936e585b39",
+        "name": "Commit"
+      }
+    ],
+    "scope_influence": "一般",
+    "tags": [
+      "专家校准",
+      "应用软件"
+    ],
+    "title": "NGINX 异步文件 I/O 释放后使用漏洞"
+  },
+  "first_saved_at": "2026-10-15T05:28:14+00:00"
+}
