@@ -2160,5 +2160,19 @@
   "196535166b3ede52bf3887299960ba9136d35b5f": "44.79.0 之前的 Renovate 包含服务器端请求伪造漏洞，该漏洞允许用户通过扩展预设或自定义数据源使共享 HTTP 客户端请求任意内部 URL。攻击者可以将预设指向实例元数据服务端点，以获取 AWS 凭证或通过 Renovate 日志泄露敏感信息。",
   "73c84190f443f1707517184a1c3304c827df2a58": "在 44.60.1 HTTP 标头白名单之前进行更新 通过共享预设绕过",
   "e82262ef0a4f012a8b90a93095d710191290297f": "44.60.1 之前的 Renovate 包含一个白名单绕过漏洞，该漏洞允许存储库用户通过将 hostRules 标头放置在共享预设中来规避 allowedHeaders 限制。攻击者可以使用未经验证的 hostRules[].headers 提供内部或外部来源的预设，以将自定义 HTTP 标头注入 Renovate 发送到其他主机的请求中。",
-  "cfee274b628031332ad30cba7a7a7735b2d835e4": "备用路径保护不当"
+  "cfee274b628031332ad30cba7a7a7735b2d835e4": "备用路径保护不当",
+  "d0cce36126d9615b868c46506436083c64d404b6": "HPE NonStop TELSERV - 内存损坏漏洞",
+  "5718563dbc94c3f0d6dbc82df9b2231a727f421c": "HPE NonStop TELSERV 中基于堆栈的缓冲区溢出漏洞可能会导致内存损坏，进而导致 DoS。",
+  "e77a72fd6e8ff95d679d58af4d9765a743636687": "CVE-2026-110908漏洞",
+  "de0079c3c7d0e12899e605b23c19b5bcb7788161": "Netgate pfSense FRR 软件包 (pfSense-pkg-frr) 2.0.2_1 和源版本 2.1.2_1 在 FRR 状态过滤器中包含操作系统命令注入漏洞。仅具有 page-status-frr 权限的经过身份验证的 WebGUI 用户可以提供一个过滤器值，该值突破单引号 sed 表达式（escapeshellarg() 输出连接到该表达式）。然后通过 popen() 管道评估 Shell 命令替换，从而允许攻击者选择的命令以 root 身份执行。 pfSense Plus 26.07/26.03.1 和 CE 2.9.0/2.8.1 已更新 FRR 软件包。",
+  "ab041cd512b6fd91f7b97c5d62ae3a88c5c4afd2": "CVE-2026-110907漏洞",
+  "f56d4a82e8bcec3e7e3623b1610b260ea006bd35": "1.35.2 之前的背景 CMS Core 1.35.x 和 1.34.6 之前的 1.34.x 错误处理令牌。令牌是一个小的占位符字符串（如 [node:title] 或 [user:name]），用于自动将动态数据插入到文本中。提供浏览器用于按类型选择令牌。该产品没有充分限制对令牌浏览器中可用令牌类型的访问。各个令牌的名称受到充分保护。",
+  "f0bc2fd282feb9b3c8f7b247c78324ceda7f5995": "MoviePilot 3.1.5 通过 ExecuteCommandTool 命令注入",
+  "b6bf227a0643ebcb61859cee6b95d55011479fc3": "MoviePilot 到 3.1.5 包含一个命令注入漏洞，允许攻击者通过将恶意指令嵌入到通过 browser_webpage、search_web 和 torrent 元数据解析器等工具处理的不受信任的内容中来执行任意操作系统命令，然后通过 asyncio.create_subprocess_shell 将这些指令传递给不受限制的 ExecuteCommandTool。攻击者可以制作内容，指示模型调用execute_command并将confirm_dangerous设置为true，绕过validate_command_safety拒绝列表并利用管理会话的is_admin上下文在主机上实现远程代码执行。",
+  "0c37803a9c8056979899b00828357690c0887800": "HPE NonStop QIOMON - 内存损坏漏洞",
+  "c67973cec0a0167323129ee5e370fcd363bb5041": "HPE NonStop QIOMON 中存在允许越界写入的漏洞，从而可能损坏缓冲区数据。",
+  "ad299f642dc9a03985c4c81b12869056dcfe478a": "HPE NonStop CIPSAM - 内存损坏漏洞",
+  "51c2fd11a50d48941731a64feab287857419bdd5": "HPE NonStop CIPSAM 中存在允许越界的漏洞\n  写入可能会损坏缓冲区数据。",
+  "790f0fe69da45de9f6a508bc5882d1b96d20c756": "IntentKit 2.6.3 通过 ToolNode 绕过执行器工具授权",
+  "f397e9ffe8fe364aea71c874bdc0238c0ed45fb4": "IntentKit 到 2.6.3 包含一个授权绕过漏洞，其中执行程序根据完整的工具注册表验证工具调用，而不是 ToolBindingMiddleware 强制执行的每个请求的缩小工具广告，从而允许仅所有者的状态更改工具（例如钱包传输、发布、内存写入和调用代理）在没有任何人机交互或批准门的情况下执行。 WEB、API、TWITTER 或 TELEGRAM 上下文中未经身份验证的或公共调用者可以通过间接提示注入提供准确的去广告工具名称和参数，或者通过在重用线程上重放检查点和历史数据来利用此漏洞，从而实现所有者限制功能的未经授权的执行。"
 }
