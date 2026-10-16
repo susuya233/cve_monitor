@@ -2218,5 +2218,20 @@
   "3f12639c16cacd30b69447645e469f3caf11201f": "WordPress MapSVG 插件 <= 8.16.1 - SQL 注入漏洞",
   "85821fe05abd1b2591cb0fbe1ca10e8820755ce3": "PT Norther Lights 生产 MapSVG Mapsvg-lite-interactive-vector-maps 中 SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）漏洞允许 SQL 注入。此问题影响 MapSVG：从不适用到 8.16.1。",
   "ed9a132600370561c9d13abd1f2786b1ef248608": "WordPress 高级帖子管理器插件 <= 4.5.6 - 损坏的访问控制漏洞",
-  "88453e15509d593b6f89813b8f8ac687db63e2a1": "Liquid Web / StellarWP 高级帖子管理器 advance-post-manager 中缺少授权漏洞，允许利用错误配置的访问控制安全级别。此问题影响高级帖子管理器：从 n/a 到 4.5.6。"
+  "88453e15509d593b6f89813b8f8ac687db63e2a1": "Liquid Web / StellarWP 高级帖子管理器 advance-post-manager 中缺少授权漏洞，允许利用错误配置的访问控制安全级别。此问题影响高级帖子管理器：从 n/a 到 4.5.6。",
+  "71fd1b7e8a99eadb3b3518a1f948f8691a48df81": "lomiri-download-manager 中关键资源的权限分配不正确",
+  "e81fa0be45e14ae4c8694c81ccee6f0855d2e3c0": "lomiri-upload-manager（lomiri-download-manager 的一部分）的 DBus 策略不正确，允许任意用户以 root 身份通过 DBus 读取任意文件",
+  "b34b5e7dfc4cc35e6d20ae1f8f8533525e24dd6a": "libp2p-rust：Gossipsub GRAFT 主题无限增长",
+  "b9a81ffbb0c038ae82f4a44c6e5e3fdcb74aaf26": "libp2p-rust 是 libp2p 网络堆栈的官方 Rust 语言实现。在 0.49.5 之前，Gossipsub GRAFT 控制消息处理无条件地将攻击者提供的主题哈希添加到connected_peer.topics，而不确认对等方之前订阅了这些主题。可以到达 Gossipsub 侦听器的远程未经身份验证的对等点可以重复发送新颖的 GRAFT 主题，从而导致每个对等点内存的累积增长，而不受订阅过滤器、对等点评分或每条消息大小限制的限制。这可能会耗尽进程内存并导致拒绝服务。此问题已在 0.49.5 版本中修复。",
+  "8d37695b7d86aab3edf4842925b10095c934cd18": "CVE-2026-92263漏洞",
+  "08ae93b0487af549c72a4f2b10739fb0f5b0f23a": "SparkyFitness 是一款面向家庭的自托管、人工智能驱动的健康和健身追踪器。在 1.6.0 之前，api/admin/backup/restore 端点将上传的文件名插入到 shell 命令中。经过身份验证的全局管理员上传带有精心设计的文件名的恢复存档。管理员可以提供包含 shell 元字符的文件名的恢复存档。成功利用该漏洞可以使用服务器进程权限执行任意操作系统命令。此问题已在 1.6.0 版本中修复。",
+  "361b266705e257300ec8e7a3cf4427225d2c5316": "pupnp：通过在 parse_uri()/GENA 回调解析中阻止 DNS 解析来拒绝服务",
+  "a27c2e76b370c189e396e786a76e919e10f9285d": "pupnp 是用于开发 UPnP 设备和控制点应用程序的 SDK。在 22.0.4 之前，upnp/src/genlib/net/uri/uri.c 中的 parse_hostport 同步调用 getaddrinfo，而 parse_uri 正在处理来自 upnp/src/genlib/net/http/httpparser.c 中的入站 HTTP 请求目标的攻击者提供的主机名以及由 create_url_list 处理的 GENA SUBSCRIBE CALLBACK 标头upnp/src/gena/gena_device.c。未经身份验证的远程对等方可以选择缓慢或无响应的主机名，并在解析器超时时阻止有限的小型服务器工作线程，从而允许少量请求耗尽线程池并拒绝 UPnP 服务。此问题已在 22.0.4 中修复。",
+  "798582bad7c7a0e2f7b28ac4265ca71b132ddf0d": "CVE-2026-68907漏洞",
+  "66be2b64741a4bc9ba011cfbca3e9f833be251c4": "libIEC61850 是 IEC 61850 客户端和服务器协议的开源实现，包括 MMS、GOOSE、采样值和 R-Session。在 1.6.2 之前，checkDataSetAccess 在构造 MMS_ASSOCIATION_SPECIFIC 数据集引用时会反转 StringUtils_copyStringToBuffer 的源参数和目标参数。帮助器将未初始化的 dataSetRef[130] 存储视为源字符串，导致 strlen 读取超出堆栈缓冲区的内容，然后将这些字节复制到调用者拥有的 listName 缓冲区中。远程定义命名变量列表请求可能会使启用动态数据集服务并安装数据集访问处理程序的服务器崩溃；该通报还观察到调用者堆栈损坏，但确定拒绝服务是主要影响。此问题已在版本 1.6.2 中修复。",
+  "369f593a6edd3ec7cc972c4d6b294f328e004aab": "带有错误指定参数的函数调用",
+  "1be9988f4865b7f7c93e0b50552e76a14b79ec48": "CVE-2026-68906漏洞",
+  "d3ca82acd01a36f516a7ae9cd98946de74d1c848": "libIEC61850 是 IEC 61850 客户端和服务器协议的开源实现，包括 MMS、GOOSE、采样值和 R-Session。在 1.6.2 之前，src/mms/iso_acse/acse.c 中的 parseUserInformation 在验证 BerDecoder_decodeLength 返回的负 bufPos 是否为截断的长格式长度之前检查 len 是否为零。因此，继续路径会吞掉错误，读取缓冲区[-1]，将解析重置到开头，并重复相同的格式错误状态。未经身份验证的远程对等方可以在关联期间发送格式错误的 AARE PDU，从而在正常分配器下导致无限 CPU 循环，或者在前一个字节不可访问时导致单字节越界读取和处理中止。此问题已在版本 1.6.2 中修复。",
+  "4943d69f65cdadf0a965fb9ec4f6842177ad9dcf": "pupnp：ixmlNode_compare 中的 NULL 指针取消引用在非命名空间属性上崩溃",
+  "b71ed04db8b2cea1a219be3882d8124ce605bade": "pupnp 是用于开发 UPnP 设备和控制点应用程序的 SDK。在 2.0.2 之前，ixml/src/node.c 中的 ixmlNode_compare 将可为 null 的 nodeValue、namespaceURI、prefix 和 localName 字段直接传递给 strcmp。 ixmlDocument_createAttribute 创建的非命名空间属性可以合法地将这些字段保留为 NULL。当 ixmlElement_removeAttributeNode 通过 find_condition_node 比较具有相同 nodeName 的两个不同属性对象时，指针标识快捷方式不适用，并且比较取消引用 NULL，从而在攻击者控制的 XML 的应用程序处理到达此路径时导致进程崩溃。此问题已在 2.0.2 中修复。"
 }
