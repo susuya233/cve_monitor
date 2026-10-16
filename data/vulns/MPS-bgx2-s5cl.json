@@ -1,0 +1,263 @@
+{
+  "saved_at": "2026-10-16T05:28:43+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-bgx2-s5cl",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-92392",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-416",
+    "description": "curl 是开源的网络传输工具，同时提供被其他程序直接调用的 libcurl 库。这个漏洞打的是发起 HTTP/2 上传的那个进程，可以是命令行 curl，也可以是业务系统里用 libcurl 向外发送日志、备份或附件的程序。接收上传的 HTTP/2 服务器负责触发发起上传的客户端的漏洞。\n受影响版本中，上传方把数据传到对方地址时，对方在数据还没传完时主动复位这条流，错误码为要求改用 HTTP/1.1（HTTP_1_1_REQUIRED）或拒绝该流（REFUSED_STREAM），curl 会把这次上传当成可以重试。收尾时它先告诉连接这次传输已经结束，再把还没发出去的内容写进同一条连接。连接已经忘掉原来的传输，把残留内容当成一次新请求，并保存指向原传输对象的指针。重试结束后程序释放该对象，连接上的指针还在，对方之后再发来数据时会用到已经释放的对象，上传进程因此崩溃。对方可以是攻击者搭建的接收端，也可以是原先可信、后来被控制的上传目的地。厂商说明，要把这种错误变成这台上传机器上的代码执行，触发方必须同时掌握 curl 版本与传输对象内存布局、处理器架构、匹配的 libc 分配器和堆布局、nghttp2 与 OpenSSL TLS 1.3 的分配行为（含会话票据）、固定的 CA 证书包，以及两条并行传输的稳定时序，并据此校准偏移和 libc 符号。现有利用大约只能放入 23 字节命令。\n修复版本中通过调整传输结束时的顺序修复该问题。程序先按原来的这次上传处理完残留数据，再通知连接放弃对这次传输的引用，避免残留内容被当成新请求后留下悬空指针。",
+    "effects": [
+      {
+        "comp_name": "curl",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.12.0,8.14.3)",
+            "min_fixed_version": "8.14.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.15.0,8.16.2)",
+            "min_fixed_version": "8.16.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.17.0,8.20.2)",
+            "min_fixed_version": "8.20.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.21.0,8.23.0)",
+            "min_fixed_version": "8.23.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": 0.00226,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "低",
+    "fix_suggestion": "建议修复",
+    "kind": "UAF",
+    "kind_en": "免费后使用",
+    "last_modified_time": "2026-10-16",
+    "level": "High",
+    "mps_id": "MPS-bgx2-s5cl",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-10-16",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-bgx2-s5cl",
+        "name": "https://www.oscs1024.com/hd/MPS-bgx2-s5cl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92392",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-92392"
+      },
+      {
+        "url": "https://curl.se/docs/CVE-2026-92392.json",
+        "name": "json"
+      },
+      {
+        "url": "https://curl.se/docs/CVE-2026-92392.html",
+        "name": "www"
+      },
+      {
+        "url": "https://hackerone.com/reports/4030333",
+        "name": "issue"
+      },
+      {
+        "url": "https://github.com/curl/curl/commit/8b0744af5b1b631da5b938ca31c3f9895ad5a321",
+        "name": "Commit"
+      },
+      {
+        "url": "https://github.com/curl/curl/commit/cd9107e0128191b7b5396b9eb81bbd20c2d36755",
+        "name": "Commit"
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "poc",
+      "专家校准",
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "curl HTTP/2上传释放后使用漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-92392",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-416",
+    "description": "curl 是开源的网络传输工具，同时提供被其他程序直接调用的 libcurl 库。这个漏洞打的是发起 HTTP/2 上传的那个进程，可以是命令行 curl，也可以是业务系统里用 libcurl 向外发送日志、备份或附件的程序。接收上传的 HTTP/2 服务器负责触发发起上传的客户端的漏洞。\n受影响版本中，上传方把数据传到对方地址时，对方在数据还没传完时主动复位这条流，错误码为要求改用 HTTP/1.1（HTTP_1_1_REQUIRED）或拒绝该流（REFUSED_STREAM），curl 会把这次上传当成可以重试。收尾时它先告诉连接这次传输已经结束，再把还没发出去的内容写进同一条连接。连接已经忘掉原来的传输，把残留内容当成一次新请求，并保存指向原传输对象的指针。重试结束后程序释放该对象，连接上的指针还在，对方之后再发来数据时会用到已经释放的对象，上传进程因此崩溃。对方可以是攻击者搭建的接收端，也可以是原先可信、后来被控制的上传目的地。厂商说明，要把这种错误变成这台上传机器上的代码执行，触发方必须同时掌握 curl 版本与传输对象内存布局、处理器架构、匹配的 libc 分配器和堆布局、nghttp2 与 OpenSSL TLS 1.3 的分配行为（含会话票据）、固定的 CA 证书包，以及两条并行传输的稳定时序，并据此校准偏移和 libc 符号。现有利用大约只能放入 23 字节命令。\n修复版本中通过调整传输结束时的顺序修复该问题。程序先按原来的这次上传处理完残留数据，再通知连接放弃对这次传输的引用，避免残留内容被当成新请求后留下悬空指针。",
+    "effects": [
+      {
+        "comp_name": "curl",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.12.0,8.14.3)",
+            "min_fixed_version": "8.14.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.15.0,8.16.2)",
+            "min_fixed_version": "8.16.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.17.0,8.20.2)",
+            "min_fixed_version": "8.20.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.21.0,8.23.0)",
+            "min_fixed_version": "8.23.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": 0.00226,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "低",
+    "fix_suggestion": "Recommend",
+    "kind": "UAF",
+    "kind_en": "Use After Free",
+    "last_modified_time": "2026-10-16",
+    "level": "High",
+    "mps_id": "MPS-bgx2-s5cl",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-10-16",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-bgx2-s5cl",
+        "name": "https://www.oscs1024.com/hd/MPS-bgx2-s5cl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92392",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-92392"
+      },
+      {
+        "url": "https://curl.se/docs/CVE-2026-92392.json",
+        "name": "json"
+      },
+      {
+        "url": "https://curl.se/docs/CVE-2026-92392.html",
+        "name": "www"
+      },
+      {
+        "url": "https://hackerone.com/reports/4030333",
+        "name": "issue"
+      },
+      {
+        "url": "https://github.com/curl/curl/commit/8b0744af5b1b631da5b938ca31c3f9895ad5a321",
+        "name": "Commit"
+      },
+      {
+        "url": "https://github.com/curl/curl/commit/cd9107e0128191b7b5396b9eb81bbd20c2d36755",
+        "name": "Commit"
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "poc",
+      "专家校准",
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "curl HTTP/2上传释放后使用漏洞"
+  },
+  "first_saved_at": "2026-10-16T05:28:43+00:00"
+}
