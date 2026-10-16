@@ -2233,5 +2233,13 @@
   "1be9988f4865b7f7c93e0b50552e76a14b79ec48": "CVE-2026-68906漏洞",
   "d3ca82acd01a36f516a7ae9cd98946de74d1c848": "libIEC61850 是 IEC 61850 客户端和服务器协议的开源实现，包括 MMS、GOOSE、采样值和 R-Session。在 1.6.2 之前，src/mms/iso_acse/acse.c 中的 parseUserInformation 在验证 BerDecoder_decodeLength 返回的负 bufPos 是否为截断的长格式长度之前检查 len 是否为零。因此，继续路径会吞掉错误，读取缓冲区[-1]，将解析重置到开头，并重复相同的格式错误状态。未经身份验证的远程对等方可以在关联期间发送格式错误的 AARE PDU，从而在正常分配器下导致无限 CPU 循环，或者在前一个字节不可访问时导致单字节越界读取和处理中止。此问题已在版本 1.6.2 中修复。",
   "4943d69f65cdadf0a965fb9ec4f6842177ad9dcf": "pupnp：ixmlNode_compare 中的 NULL 指针取消引用在非命名空间属性上崩溃",
-  "b71ed04db8b2cea1a219be3882d8124ce605bade": "pupnp 是用于开发 UPnP 设备和控制点应用程序的 SDK。在 2.0.2 之前，ixml/src/node.c 中的 ixmlNode_compare 将可为 null 的 nodeValue、namespaceURI、prefix 和 localName 字段直接传递给 strcmp。 ixmlDocument_createAttribute 创建的非命名空间属性可以合法地将这些字段保留为 NULL。当 ixmlElement_removeAttributeNode 通过 find_condition_node 比较具有相同 nodeName 的两个不同属性对象时，指针标识快捷方式不适用，并且比较取消引用 NULL，从而在攻击者控制的 XML 的应用程序处理到达此路径时导致进程崩溃。此问题已在 2.0.2 中修复。"
+  "b71ed04db8b2cea1a219be3882d8124ce605bade": "pupnp 是用于开发 UPnP 设备和控制点应用程序的 SDK。在 2.0.2 之前，ixml/src/node.c 中的 ixmlNode_compare 将可为 null 的 nodeValue、namespaceURI、prefix 和 localName 字段直接传递给 strcmp。 ixmlDocument_createAttribute 创建的非命名空间属性可以合法地将这些字段保留为 NULL。当 ixmlElement_removeAttributeNode 通过 find_condition_node 比较具有相同 nodeName 的两个不同属性对象时，指针标识快捷方式不适用，并且比较取消引用 NULL，从而在攻击者控制的 XML 的应用程序处理到达此路径时导致进程崩溃。此问题已在 2.0.2 中修复。",
+  "31405ccfc8414fc7903fd93b03ef7b5c20591416": "LingGuo-Drama 通过提交 8a6924a IDOR 通过 /admin/v1/projects/:id API",
+  "b12d8c3316420dd847985d8ae5b9e427d9484868": "LingGuo-Drama 通过提交 8a6924a 包含一个不安全的直接对象引用漏洞，该漏洞允许注册用户访问其他用户的项目，因为 items.Get 缺乏所有者检查。自注册攻击者可以通过 GET、PUT 和 DELETE /admin/v1/projects/:id 迭代数字 ID，以读取、覆盖、重新分配或删除任何用户的短剧项目。",
+  "94b4c8484a30a1c07ada91dd13dec4eef88e9442": "LingGuo-Drama 通过提交 8a6924a 通过 /admin/v1/admins API 破坏访问控制",
+  "9a5ba8606c82ffb006a88d21e8fb12dc2b122cd8": "LingGuo-Drama 通过提交 8a6924a 包含一个缺失授权漏洞，该漏洞允许任何注册用户通过仅受 AuthAdminJWT 保护的 /admin/v1/admins API 管理所有帐户。攻击者可以自行注册、读取每个帐户的 bcrypt 哈希、通过 PUT 重置引导管理员的密码、提高其authority_id 并删除帐户。",
+  "bd15e81c478e9d321fadb8db6e38642b3732734f": "Roncoo-pay 通过 commit 9428382 通过 /f2fPay/order/query 进行信息披露",
+  "7c46fcf20ade3c0b14f9b8f2a5593233c1a47eb9": "Roncoo-pay 通过提交 9428382 在 F2FPayController.orderQuery 中包含缺少授权漏洞，允许未经身份验证的攻击者通过提供 trxNo 参数来检索支付记录。攻击者可以猜测交易号，即“7”前缀加上雪花ID，以获得任何商户的完整序列化支付记录。",
+  "ea518ff828b0a9b9c585e8af3b0e954ce8fde8ef": "Netcore NR256CN 通过 1.5.140116 通过 Boa user_ok() 进行预验证堆栈溢出",
+  "348050558fcd16d4492c2a750944bffa150c9765": "Netcore NR256CN 至 1.5.140116 在 Boa Web 服务器的 user_ok() 函数中包含预身份验证堆栈溢出漏洞，该函数通过无限制的 strcpy() 调用将基本身份验证用户名复制到 64 字节堆栈缓冲区中。未经身份验证的攻击者可以将长度超过 63 字节的用户名发送到任何受保护的 /router/*.cgi 路由，从而导致主 Boa 进程崩溃或可能执行代码。"
 }
