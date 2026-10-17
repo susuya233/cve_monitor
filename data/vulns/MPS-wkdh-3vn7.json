@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-10-13T17:26:05+00:00",
+  "saved_at": "2026-10-17T00:57:46+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-6e3b-586a",
+  "source_page": "https://www.oscs1024.com/hd/MPS-wkdh-3vn7",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,21 +21,30 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-105445",
-    "cvss": {},
-    "cvss_score": 9.9,
-    "cvss_vector": "",
+    "cve_id": "CVE-2026-96627",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-269",
-    "description": "Docker Hub 是 Docker 提供的容器镜像托管与分发服务，账户、组织与仓库权限由厂商托管运行，不属于公开源码项目，主要用于镜像发布、拉取和团队协作。\n受影响版本中，将个人账户转换为组织时会把原账户的个人访问令牌改挂到被指定的新所有者名下，但不轮换也不吊销令牌密钥，也不征求或通知该所有者。攻击者可自建账户并签发个人访问令牌，再把该账户转成组织并指定受害用户为所有者，使原令牌在容器镜像仓库以受害用户身份通过认证，进而在令牌权限和受害用户仓库权限范围内拉取、推送或删除个人仓库及关联组织中的镜像。该缺陷不能用于访问 Docker Hub 网页、修改密码、邮箱或双因素认证，也不能完整接管账户。\n修复版本中通过从账户转组织流程中彻底移除个人访问令牌转移，使转换后令牌不再改挂到被指定所有者，并停用窗口期内已转移令牌，切断攻击者持有原密钥却以受害用户身份访问仓库的路径。",
+    "description": "Arcane 是一个用于管理 Docker 容器、镜像、网络和卷的界面。在2.6.0之前，backend/api/handlers/users.go中的UpdateUser为任何目标设置PasswordHash，而不比较调用者和目标权限。委派用户：更新权限的持有者可以提交全局管理员的密码更改、替换管理员密码并以该帐户身份进行身份验证，从而实现全局管理员帐户的完全接管。此问题已在 2.6.0 版本中修复。",
     "effects": [
       {
-        "comp_name": "docker_hub",
-        "ecosystem": "linux",
+        "comp_name": "github.com/getarcaneapp/arcane/backend/v2",
+        "ecosystem": "go",
         "versions": [
           {
-            "affected_version": "[2024-08-26,2026-09-30)",
-            "min_fixed_version": "2026-09-30",
-            "repository": "unmanaged",
+            "affected_version": "(-∞,v2.6.0)",
+            "min_fixed_version": "v2.6.0",
+            "repository": "go",
             "solutions": [],
             "upstream": true
           }
@@ -45,44 +54,44 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "",
     "exploitability": "中",
-    "fix_suggestion": "可选修复",
+    "fix_suggestion": "建议修复",
     "kind": "权限管理不当",
     "kind_en": "权限管理不当",
-    "last_modified_time": "2026-10-14",
-    "level": "Critical",
-    "mps_id": "MPS-6e3b-586a",
+    "last_modified_time": "2026-10-17",
+    "level": "High",
+    "mps_id": "MPS-wkdh-3vn7",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-10-14",
+    "published_time": "2026-10-17",
     "reference_url_list": [
       {
-        "url": "https://cybersecuritynews.com/docker-hub-vulnerability/",
+        "url": "https://github.com/getarcaneapp/arcane/security/advisories/GHSA-pw5q-rjx4-7f7p",
         "name": ""
       },
       {
-        "url": "https://www.docker.com/blog/docker-hub-security-advisory-cve-2026-105445/",
+        "url": "https://github.com/getarcaneapp/arcane/pull/3426",
         "name": ""
       },
       {
-        "url": "https://ghostpat.com/",
+        "url": "https://github.com/getarcaneapp/arcane/commit/21ea962f86d967dac8ae02a050f6e5f043d10fa1",
         "name": ""
       },
       {
-        "url": "https://www.bleepingcomputer.com/news/security/docker-hub-flaw-let-attackers-impersonate-users-tamper-with-images/",
+        "url": "https://github.com/getarcaneapp/arcane/releases/tag/backend/v2.6.0",
         "name": ""
       },
       {
-        "url": "https://docs.docker.com/accounts/organization/setup/convert-account/",
+        "url": "https://github.com/advisories/GHSA-pw5q-rjx4-7f7p",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "go"
     ],
-    "title": "Docker Hub令牌冒用漏洞",
+    "title": "CVE-2026-96627漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -102,21 +111,30 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-105445",
-    "cvss": {},
-    "cvss_score": 9.9,
-    "cvss_vector": "",
+    "cve_id": "CVE-2026-96627",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
     "cwe": "CWE-269",
-    "description": "Docker Hub 是 Docker 提供的容器镜像托管与分发服务，账户、组织与仓库权限由厂商托管运行，不属于公开源码项目，主要用于镜像发布、拉取和团队协作。\n受影响版本中，将个人账户转换为组织时会把原账户的个人访问令牌改挂到被指定的新所有者名下，但不轮换也不吊销令牌密钥，也不征求或通知该所有者。攻击者可自建账户并签发个人访问令牌，再把该账户转成组织并指定受害用户为所有者，使原令牌在容器镜像仓库以受害用户身份通过认证，进而在令牌权限和受害用户仓库权限范围内拉取、推送或删除个人仓库及关联组织中的镜像。该缺陷不能用于访问 Docker Hub 网页、修改密码、邮箱或双因素认证，也不能完整接管账户。\n修复版本中通过从账户转组织流程中彻底移除个人访问令牌转移，使转换后令牌不再改挂到被指定所有者，并停用窗口期内已转移令牌，切断攻击者持有原密钥却以受害用户身份访问仓库的路径。",
+    "description": "Arcane is an interface for managing Docker containers, images, networks, and volumes. Prior to 2.6.0, UpdateUser in backend/api/handlers/users.go sets PasswordHash for any target without comparing caller and target privilege. A holder of delegated users:update permission can submit a password change for the global administrator, replace the administrator password, and authenticate as that account, resulting in complete global administrator account takeover. This issue is fixed in version 2.6.0.",
     "effects": [
       {
-        "comp_name": "docker_hub",
-        "ecosystem": "linux",
+        "comp_name": "github.com/getarcaneapp/arcane/backend/v2",
+        "ecosystem": "go",
         "versions": [
           {
-            "affected_version": "[2024-08-26,2026-09-30)",
-            "min_fixed_version": "2026-09-30",
-            "repository": "unmanaged",
+            "affected_version": "(-∞,v2.6.0)",
+            "min_fixed_version": "v2.6.0",
+            "repository": "go",
             "solutions": [],
             "upstream": true
           }
@@ -126,44 +144,44 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "",
     "exploitability": "中",
-    "fix_suggestion": "Optional",
+    "fix_suggestion": "Recommend",
     "kind": "权限管理不当",
     "kind_en": "Improper Privilege Management",
-    "last_modified_time": "2026-10-14",
-    "level": "Critical",
-    "mps_id": "MPS-6e3b-586a",
+    "last_modified_time": "2026-10-17",
+    "level": "High",
+    "mps_id": "MPS-wkdh-3vn7",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-10-14",
+    "published_time": "2026-10-17",
     "reference_url_list": [
       {
-        "url": "https://cybersecuritynews.com/docker-hub-vulnerability/",
+        "url": "https://github.com/getarcaneapp/arcane/security/advisories/GHSA-pw5q-rjx4-7f7p",
         "name": ""
       },
       {
-        "url": "https://www.docker.com/blog/docker-hub-security-advisory-cve-2026-105445/",
+        "url": "https://github.com/getarcaneapp/arcane/pull/3426",
         "name": ""
       },
       {
-        "url": "https://ghostpat.com/",
+        "url": "https://github.com/getarcaneapp/arcane/commit/21ea962f86d967dac8ae02a050f6e5f043d10fa1",
         "name": ""
       },
       {
-        "url": "https://www.bleepingcomputer.com/news/security/docker-hub-flaw-let-attackers-impersonate-users-tamper-with-images/",
+        "url": "https://github.com/getarcaneapp/arcane/releases/tag/backend/v2.6.0",
         "name": ""
       },
       {
-        "url": "https://docs.docker.com/accounts/organization/setup/convert-account/",
+        "url": "https://github.com/advisories/GHSA-pw5q-rjx4-7f7p",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "go"
     ],
-    "title": "Docker Hub令牌冒用漏洞"
+    "title": "CVE-2026-96627漏洞"
   },
-  "first_saved_at": "2026-10-13T17:26:05+00:00"
+  "first_saved_at": "2026-10-17T00:57:46+00:00"
 }

@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-10-13T22:11:00+00:00",
+  "saved_at": "2026-10-17T00:57:56+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-1zfx-3hsv",
+  "source_page": "https://www.oscs1024.com/hd/MPS-nxqi-p7r9",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,22 +21,36 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-75732",
+    "cve_id": "CVE-2026-111044",
     "cvss": {
       "cvssv31": [
         {
-          "source": "psirt@adobe.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-          "severity": "critical",
-          "base_score": 9.9
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L",
+          "severity": "high",
+          "base_score": 7.6
         }
       ]
     },
-    "cvss_score": 9.9,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L",
     "cwe": "CWE-863",
-    "description": "Adobe Experience Manager 受到不正确授权漏洞的影响，该漏洞可能导致在当前用户的上下文中执行任意代码，从而可能获得对受害者帐户或会话的更高访问权限或控制权。利用此问题不需要用户交互。范围已更改。",
-    "effects": [],
+    "description": "Sunshine 是 Moonlight 的自托管游戏直播主机。从 2026.329.165800 到 2026.906.222525，Sunshine 接受链接到存储的配对客户端证书的任何客户端证书，但不要求所提供的证书是确切的启用的配对身份。还对证书文本进行了比较，而没有对等效 PEM 编码进行规范化。保留其私钥的先前配对的客户端可以提供从其配对证书派生的备用证书并绕过禁用控制。等效的 PEM 编码也可能导致客户端身份处理不一致。从未配对过的客户端无法使用此问题，并且删除配对的客户端会删除其信任关系。此问题已在版本 2026.906.222525 中修复。",
+    "effects": [
+      {
+        "comp_name": "Sunshine",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2026.329.165800,2026.906.222525)",
+            "min_fixed_version": "2026.906.222525",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -45,29 +59,39 @@
     "fix_suggestion": "建议修复",
     "kind": "授权检查错误",
     "kind_en": "授权错误",
-    "last_modified_time": "2026-10-14",
-    "level": "Critical",
-    "mps_id": "MPS-1zfx-3hsv",
+    "last_modified_time": "2026-10-17",
+    "level": "High",
+    "mps_id": "MPS-nxqi-p7r9",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-10-14",
+    "published_time": "2026-10-17",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-1zfx-3hsv",
-        "name": "https://www.oscs1024.com/hd/MPS-1zfx-3hsv"
+        "url": "https://www.oscs1024.com/hd/MPS-nxqi-p7r9",
+        "name": "https://www.oscs1024.com/hd/MPS-nxqi-p7r9"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75732",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75732"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111044",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-111044"
       },
       {
-        "url": "https://helpx.adobe.com/security/products/experience-manager/apsb26-152.html",
-        "name": ""
+        "url": "https://github.com/LizardByte/Sunshine/security/advisories/GHSA-6jvv-jqr7-m6m3",
+        "name": "https://github.com/LizardByte/Sunshine/security/advisories/GHSA-6jvv-jqr7-m6m3"
+      },
+      {
+        "url": "https://github.com/LizardByte/Sunshine/commit/4d768847fcd88cc94ac745c4611715c67d7d67e1",
+        "name": "https://github.com/LizardByte/Sunshine/commit/4d768847fcd88cc94ac745c4611715c67d7d67e1"
+      },
+      {
+        "url": "https://github.com/LizardByte/Sunshine/releases/tag/v2026.906.222525",
+        "name": "https://github.com/LizardByte/Sunshine/releases/tag/v2026.906.222525"
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "Adobe 体验经理 |授权不正确 (CWE-863)",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "禁用的 Sunshine 客户端可以使用派生的客户端证书绕过吊销",
     "_translated": true
   },
   "detail_original": {
@@ -87,22 +111,36 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-75732",
+    "cve_id": "CVE-2026-111044",
     "cvss": {
       "cvssv31": [
         {
-          "source": "psirt@adobe.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-          "severity": "critical",
-          "base_score": 9.9
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L",
+          "severity": "high",
+          "base_score": 7.6
         }
       ]
     },
-    "cvss_score": 9.9,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L",
     "cwe": "CWE-863",
-    "description": "Adobe Experience Manager is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.",
-    "effects": [],
+    "description": "Sunshine is a self-hosted game stream host for Moonlight. From 2026.329.165800 until 2026.906.222525, Sunshine accepted any client certificate that chained to a stored paired-client certificate, but it did not require the presented certificate to be the exact enabled paired identity. Certificate text was also compared without canonicalizing equivalent PEM encodings. A previously paired client that retains its private key can present an alternate certificate derived from its paired certificate and bypass the Disable control. Equivalent PEM encodings could also cause inconsistent client identity handling. A client that was never paired cannot use this issue, and removing the paired client removes its trust relationship. This issue is fixed in version 2026.906.222525.",
+    "effects": [
+      {
+        "comp_name": "Sunshine",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2026.329.165800,2026.906.222525)",
+            "min_fixed_version": "2026.906.222525",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
@@ -111,29 +149,39 @@
     "fix_suggestion": "Recommend",
     "kind": "授权检查错误",
     "kind_en": "Incorrect Authorization",
-    "last_modified_time": "2026-10-14",
-    "level": "Critical",
-    "mps_id": "MPS-1zfx-3hsv",
+    "last_modified_time": "2026-10-17",
+    "level": "High",
+    "mps_id": "MPS-nxqi-p7r9",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-10-14",
+    "published_time": "2026-10-17",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-1zfx-3hsv",
-        "name": "https://www.oscs1024.com/hd/MPS-1zfx-3hsv"
+        "url": "https://www.oscs1024.com/hd/MPS-nxqi-p7r9",
+        "name": "https://www.oscs1024.com/hd/MPS-nxqi-p7r9"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75732",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-75732"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111044",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-111044"
       },
       {
-        "url": "https://helpx.adobe.com/security/products/experience-manager/apsb26-152.html",
-        "name": ""
+        "url": "https://github.com/LizardByte/Sunshine/security/advisories/GHSA-6jvv-jqr7-m6m3",
+        "name": "https://github.com/LizardByte/Sunshine/security/advisories/GHSA-6jvv-jqr7-m6m3"
+      },
+      {
+        "url": "https://github.com/LizardByte/Sunshine/commit/4d768847fcd88cc94ac745c4611715c67d7d67e1",
+        "name": "https://github.com/LizardByte/Sunshine/commit/4d768847fcd88cc94ac745c4611715c67d7d67e1"
+      },
+      {
+        "url": "https://github.com/LizardByte/Sunshine/releases/tag/v2026.906.222525",
+        "name": "https://github.com/LizardByte/Sunshine/releases/tag/v2026.906.222525"
       }
     ],
     "scope_influence": "",
-    "tags": [],
-    "title": "Adobe Experience Manager | Incorrect Authorization (CWE-863)"
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Disabled Sunshine clients can bypass revocation with a derived client certificate"
   },
-  "first_saved_at": "2026-10-13T22:11:00+00:00"
+  "first_saved_at": "2026-10-17T00:57:56+00:00"
 }

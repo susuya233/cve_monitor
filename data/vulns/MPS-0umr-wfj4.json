@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-10-17T00:57:53+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0umr-wfj4",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-49410",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-384",
+    "description": "OpenHuman 是一个开源代理工具，可作为桌面应用程序和 Rust 库使用。 0.56.0 之前的版本允许针对未经身份验证的 GET /auth/telegram 环回回调进行跨站点请求伪造，因为 telegram_auth_handler 会消耗攻击者提供的一次性 Telegram 登录令牌，并将返回的 JWT 传递到 credential::ops::store_session，而不验证浏览器获取元数据或请求来源。拥有 OpenHuman 帐户的攻击者可以导致运行本地核心的用户访问恶意页面，该页面请求环回端口 7788 上的 /auth/telegram 端点，将用户的活动本地会话切换到攻击者的后端帐户，并向攻击者公开与该会话相关的后续代理操作、内存写入和 Telegram 消息。此问题已在 0.56.0 版本中修复。",
+    "effects": [
+      {
+        "comp_name": "openhuman",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.56.0)",
+            "min_fixed_version": "0.56.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "会话固定",
+    "kind_en": "会话固定",
+    "last_modified_time": "2026-10-17",
+    "level": "High",
+    "mps_id": "MPS-0umr-wfj4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-17",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0umr-wfj4",
+        "name": "https://www.oscs1024.com/hd/MPS-0umr-wfj4"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-49410",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-49410"
+      },
+      {
+        "url": "https://github.com/tinyhumansai/openhuman/security/advisories/GHSA-c4m9-hw7m-vv3m",
+        "name": "https://github.com/tinyhumansai/openhuman/security/advisories/GHSA-c4m9-hw7m-vv3m"
+      },
+      {
+        "url": "https://github.com/tinyhumansai/openhuman/pull/2331",
+        "name": "https://github.com/tinyhumansai/openhuman/pull/2331"
+      },
+      {
+        "url": "https://github.com/tinyhumansai/openhuman/commit/b1bbc53fceed7d1f0cff90cbb0a42f4ab8e153a1",
+        "name": "https://github.com/tinyhumansai/openhuman/commit/b1bbc53fceed7d1f0cff90cbb0a42f4ab8e153a1"
+      },
+      {
+        "url": "https://github.com/tinyhumansai/openhuman/releases/tag/v0.56.0",
+        "name": "https://github.com/tinyhumansai/openhuman/releases/tag/v0.56.0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "OpenHuman /auth/telegram CSRF 允许攻击者控制的会话植入",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-49410",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-384",
+    "description": "OpenHuman is an open-source agent harness available as a desktop application and Rust library. Versions before 0.56.0 allow cross-site request forgery against the unauthenticated GET /auth/telegram loopback callback because telegram_auth_handler consumes an attacker-supplied one-time Telegram login token and passes the returned JWT to credentials::ops::store_session without validating browser fetch metadata or the request origin. An attacker with an OpenHuman account can cause a user with the local core running to visit a malicious page that requests the /auth/telegram endpoint on loopback port 7788, switching the user's active local session to the attacker's backend account and exposing subsequent agent actions, memory writes, and Telegram messages associated with that session to the attacker. This issue is fixed in version 0.56.0.",
+    "effects": [
+      {
+        "comp_name": "openhuman",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.56.0)",
+            "min_fixed_version": "0.56.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "会话固定",
+    "kind_en": "Session Fixation",
+    "last_modified_time": "2026-10-17",
+    "level": "High",
+    "mps_id": "MPS-0umr-wfj4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-17",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0umr-wfj4",
+        "name": "https://www.oscs1024.com/hd/MPS-0umr-wfj4"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-49410",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-49410"
+      },
+      {
+        "url": "https://github.com/tinyhumansai/openhuman/security/advisories/GHSA-c4m9-hw7m-vv3m",
+        "name": "https://github.com/tinyhumansai/openhuman/security/advisories/GHSA-c4m9-hw7m-vv3m"
+      },
+      {
+        "url": "https://github.com/tinyhumansai/openhuman/pull/2331",
+        "name": "https://github.com/tinyhumansai/openhuman/pull/2331"
+      },
+      {
+        "url": "https://github.com/tinyhumansai/openhuman/commit/b1bbc53fceed7d1f0cff90cbb0a42f4ab8e153a1",
+        "name": "https://github.com/tinyhumansai/openhuman/commit/b1bbc53fceed7d1f0cff90cbb0a42f4ab8e153a1"
+      },
+      {
+        "url": "https://github.com/tinyhumansai/openhuman/releases/tag/v0.56.0",
+        "name": "https://github.com/tinyhumansai/openhuman/releases/tag/v0.56.0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "OpenHuman /auth/telegram CSRF allows attacker-controlled session implantation"
+  },
+  "first_saved_at": "2026-10-17T00:57:53+00:00"
+}
