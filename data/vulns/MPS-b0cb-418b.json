@@ -1,0 +1,265 @@
+{
+  "saved_at": "2026-10-18T16:18:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-b0cb-418b",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "由于应用程序或系统中存在敏感信息未经适当保护而被泄露给攻击者或未经授权的用户，这些敏感信息可能包括用户凭据、个人身份信息、敏感业务数据、系统配置信息等。信息暴露漏洞通常是由于设计、实施或配置错误引起的，例如不正确的访问控制、弱密码策略、缺乏加密、错误的日志处理等。",
+        "title": "什么是未授权敏感信息泄露"
+      },
+      {
+        "content": "- 直接访问敏感信息：攻击者可以通过直接访问不正确配置或不受保护的资源来获取敏感信息，如通过公开可访问的URL、未经授权的文件目录访问等。\n- 越权访问：攻击者可能利用访问控制错误或不正确的权限配置来获取他们没有权限访问的敏感信息。\n- 错误信息披露：应用程序在错误处理过程中可能泄露敏感信息，例如将错误消息中的敏感数据返回给客户端或显示在日志文件中。\n- 信息泄露通过响应：攻击者可能利用应用程序在响应中不正确地包含敏感信息，如通过网页源代码、响应头部或响应消息体中的敏感数据。",
+        "title": "未授权敏感信息泄露常见的攻击方式"
+      },
+      {
+        "content": "- 访问控制：确保只有经过授权的用户能够访问敏感信息，使用强大的身份验证和授权机制。\n- 数据加密：对于敏感信息，使用适当的加密算法对数据进行加密，包括数据传输和存储过程中的加密。\n- 错误处理和日志安全：正确处理错误情况，避免在错误消息中暴露敏感信息。同时，确保日志记录功能的安全性，避免将敏感信息记录在日志文件中。\n- 安全配置和最佳实践：遵循安全最佳实践，对应用程序、服务器和系统进行适当的配置，包括访问控制、权限管理、密码策略等。\n- 审计和监控：实施日志审计和监控机制，及时检测和响应任何异常活动或潜在的信息暴露事件。\n- 安全开发实践：在应用程序开发过程中，进行安全代码审查、漏洞扫描和安全测试，以及敏感信息的正确处理和保护。",
+        "title": "如何预防未授权敏感信息泄露"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85251",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-200",
+    "description": "Apache Camel 是 Apache 软件基金会维护的开源集成框架，camel-http（org.apache.camel:camel-http）用于在路由中发起 HTTP 与 HTTPS 请求。\n受影响版本中，端点开启 followRedirects 后，下一跳主机由远端响应的 Location 决定，已配置的凭证仍会被送到该主机。OAuth2ClientConfigurer.configureHttpClient 通过 addRequestInterceptorFirst 注册的拦截器运行在 HttpClient 的 ProtocolExec 内并位于 RedirectExec 之下，每次跨主机重定向都会重新附加 Authorization: Bearer。未设置 authHost 时，HttpCredentialsHelper.getCredentialsProvider 把 basic 与 digest 凭证登记到匹配任意主机的 AuthScope，重定向目标同样可以收到这些凭证。能够影响该 HTTP 响应的一方可借此取得 bearer 令牌或已配置的口令。\n修复版本中通过仅在请求 authority 与端点配置一致时附加 OAuth2 bearer，并在 authHost 为空时把凭证 AuthScope 限定到端点的协议、主机和端口，使跨主机重定向不再携带这些凭证。",
+    "effects": [
+      {
+        "comp_name": "camel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.18.5)",
+            "min_fixed_version": "4.18.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.19.0,4.22.1)",
+            "min_fixed_version": "4.22.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.apache.camel:camel-http",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.18.5)",
+            "min_fixed_version": "4.18.5",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.19.0,4.22.1)",
+            "min_fixed_version": "4.22.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未授权敏感信息泄露",
+    "kind_en": "向未经授权的行为者泄露敏感信息",
+    "last_modified_time": "2026-10-18",
+    "level": "High",
+    "mps_id": "MPS-b0cb-418b",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-18",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12358.html",
+        "name": ""
+      },
+      {
+        "url": "https://camel.apache.org/security/CVE-2026-85251.html",
+        "name": ""
+      },
+      {
+        "url": "https://issues.apache.org/jira/browse/CAMEL-24452",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/25830",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/3a6c27bfae04e528f5a76494db6d6d97b9234551",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/245038ce4ea77bc7344474c1773a6e407c271541",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/5640febd5cdc114b7d144bf6636f063505bcb4ad",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/25937",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/25938",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Camel HTTP跨主机凭证泄露",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "由于应用程序或系统中存在敏感信息未经适当保护而被泄露给攻击者或未经授权的用户，这些敏感信息可能包括用户凭据、个人身份信息、敏感业务数据、系统配置信息等。信息暴露漏洞通常是由于设计、实施或配置错误引起的，例如不正确的访问控制、弱密码策略、缺乏加密、错误的日志处理等。",
+        "title": "什么是未授权敏感信息泄露"
+      },
+      {
+        "content": "- 直接访问敏感信息：攻击者可以通过直接访问不正确配置或不受保护的资源来获取敏感信息，如通过公开可访问的URL、未经授权的文件目录访问等。\n- 越权访问：攻击者可能利用访问控制错误或不正确的权限配置来获取他们没有权限访问的敏感信息。\n- 错误信息披露：应用程序在错误处理过程中可能泄露敏感信息，例如将错误消息中的敏感数据返回给客户端或显示在日志文件中。\n- 信息泄露通过响应：攻击者可能利用应用程序在响应中不正确地包含敏感信息，如通过网页源代码、响应头部或响应消息体中的敏感数据。",
+        "title": "未授权敏感信息泄露常见的攻击方式"
+      },
+      {
+        "content": "- 访问控制：确保只有经过授权的用户能够访问敏感信息，使用强大的身份验证和授权机制。\n- 数据加密：对于敏感信息，使用适当的加密算法对数据进行加密，包括数据传输和存储过程中的加密。\n- 错误处理和日志安全：正确处理错误情况，避免在错误消息中暴露敏感信息。同时，确保日志记录功能的安全性，避免将敏感信息记录在日志文件中。\n- 安全配置和最佳实践：遵循安全最佳实践，对应用程序、服务器和系统进行适当的配置，包括访问控制、权限管理、密码策略等。\n- 审计和监控：实施日志审计和监控机制，及时检测和响应任何异常活动或潜在的信息暴露事件。\n- 安全开发实践：在应用程序开发过程中，进行安全代码审查、漏洞扫描和安全测试，以及敏感信息的正确处理和保护。",
+        "title": "如何预防未授权敏感信息泄露"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85251",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-200",
+    "description": "Apache Camel 是 Apache 软件基金会维护的开源集成框架，camel-http（org.apache.camel:camel-http）用于在路由中发起 HTTP 与 HTTPS 请求。\n受影响版本中，端点开启 followRedirects 后，下一跳主机由远端响应的 Location 决定，已配置的凭证仍会被送到该主机。OAuth2ClientConfigurer.configureHttpClient 通过 addRequestInterceptorFirst 注册的拦截器运行在 HttpClient 的 ProtocolExec 内并位于 RedirectExec 之下，每次跨主机重定向都会重新附加 Authorization: Bearer。未设置 authHost 时，HttpCredentialsHelper.getCredentialsProvider 把 basic 与 digest 凭证登记到匹配任意主机的 AuthScope，重定向目标同样可以收到这些凭证。能够影响该 HTTP 响应的一方可借此取得 bearer 令牌或已配置的口令。\n修复版本中通过仅在请求 authority 与端点配置一致时附加 OAuth2 bearer，并在 authHost 为空时把凭证 AuthScope 限定到端点的协议、主机和端口，使跨主机重定向不再携带这些凭证。",
+    "effects": [
+      {
+        "comp_name": "camel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.18.5)",
+            "min_fixed_version": "4.18.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.19.0,4.22.1)",
+            "min_fixed_version": "4.22.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.apache.camel:camel-http",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.18.5)",
+            "min_fixed_version": "4.18.5",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.19.0,4.22.1)",
+            "min_fixed_version": "4.22.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未授权敏感信息泄露",
+    "kind_en": "Exposure of Sensitive Information to an Unauthorized Actor",
+    "last_modified_time": "2026-10-18",
+    "level": "High",
+    "mps_id": "MPS-b0cb-418b",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-18",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12358.html",
+        "name": ""
+      },
+      {
+        "url": "https://camel.apache.org/security/CVE-2026-85251.html",
+        "name": ""
+      },
+      {
+        "url": "https://issues.apache.org/jira/browse/CAMEL-24452",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/25830",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/3a6c27bfae04e528f5a76494db6d6d97b9234551",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/245038ce4ea77bc7344474c1773a6e407c271541",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/5640febd5cdc114b7d144bf6636f063505bcb4ad",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/25937",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/25938",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Camel HTTP跨主机凭证泄露"
+  },
+  "first_saved_at": "2026-10-18T16:18:54+00:00"
+}
