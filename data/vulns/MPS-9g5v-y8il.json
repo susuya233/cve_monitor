@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-10-18T12:23:23+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-9g5v-y8il",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-110895",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:L",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:L",
+    "cwe": "CWE-89",
+    "description": "Support Genix（插件标识 support-genix-lite）是 DevItems 发布在 wordpress.org 的开源 WordPress 工单客服插件，采用 GPLv2 及以上协议，提供工单管理、知识库、AI 聊天机器人与客服自动化功能。\n受影响版本中，插件内置查询构建器 core/ApbdWpsQueryBuilder.php 在拼接 SQL 时未转义数据：_escape_str 仅去除不可见字符，_like 将 LIKE 匹配值原样嵌入语句；工单列表 api/v1/ApbdWpsAPI_Ticket.php 的 ticket_list() 使用 sanitize_text_field 处理 priority 筛选值后拼入 IN ('...') 原始条件，notifications() 将 src_by 的 val 原样拼进 like 片段并以原始 WHERE 模式下发，core/ApbdWpsAjaxDataResponse.php 的 setDateRange() 在日期时区转换失败时把含原始输入的错误文本拼入 BETWEEN 子句。持有客服代理或知识库管理角色的登录用户向工单列表与后台列表的 AJAX/REST 入口提交带单引号的筛选或搜索参数，注入内容随 WHERE 子句进入数据库查询，可读取或篡改站点数据库数据。\n修复版本中通过在数据入口与查询构建器两层加固解决该问题：_escape_str 改用 esc_sql 完成真实 SQL 转义并新增 decode_legacy_literal 处理历史斜杠字面量，_like 对匹配值强制转义，limit 将 offset 强制转整型，setDateRange 对转换结果执行日期时间正则校验，notifications 与 ticket_list 对筛选字段名启用白名单、对筛选值做字符集过滤并阻止覆盖工单归属作用域列，从而切断筛选与搜索参数进入 SQL 语句的注入路径。",
+    "effects": [
+      {
+        "comp_name": "support-genix-lite",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.4.55)",
+            "min_fixed_version": "1.4.55",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SQL注入",
+    "kind_en": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
+    "last_modified_time": "2026-10-18",
+    "level": "High",
+    "mps_id": "MPS-9g5v-y8il",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-9g5v-y8il",
+        "name": "https://www.oscs1024.com/hd/MPS-9g5v-y8il"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110895",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-110895"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/support-genix-lite/vulnerability/wordpress-support-genix-plugin-1-4-54-sql-injection-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Support Genix SQL注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-110895",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:L",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:L",
+    "cwe": "CWE-89",
+    "description": "Support Genix（插件标识 support-genix-lite）是 DevItems 发布在 wordpress.org 的开源 WordPress 工单客服插件，采用 GPLv2 及以上协议，提供工单管理、知识库、AI 聊天机器人与客服自动化功能。\n受影响版本中，插件内置查询构建器 core/ApbdWpsQueryBuilder.php 在拼接 SQL 时未转义数据：_escape_str 仅去除不可见字符，_like 将 LIKE 匹配值原样嵌入语句；工单列表 api/v1/ApbdWpsAPI_Ticket.php 的 ticket_list() 使用 sanitize_text_field 处理 priority 筛选值后拼入 IN ('...') 原始条件，notifications() 将 src_by 的 val 原样拼进 like 片段并以原始 WHERE 模式下发，core/ApbdWpsAjaxDataResponse.php 的 setDateRange() 在日期时区转换失败时把含原始输入的错误文本拼入 BETWEEN 子句。持有客服代理或知识库管理角色的登录用户向工单列表与后台列表的 AJAX/REST 入口提交带单引号的筛选或搜索参数，注入内容随 WHERE 子句进入数据库查询，可读取或篡改站点数据库数据。\n修复版本中通过在数据入口与查询构建器两层加固解决该问题：_escape_str 改用 esc_sql 完成真实 SQL 转义并新增 decode_legacy_literal 处理历史斜杠字面量，_like 对匹配值强制转义，limit 将 offset 强制转整型，setDateRange 对转换结果执行日期时间正则校验，notifications 与 ticket_list 对筛选字段名启用白名单、对筛选值做字符集过滤并阻止覆盖工单归属作用域列，从而切断筛选与搜索参数进入 SQL 语句的注入路径。",
+    "effects": [
+      {
+        "comp_name": "support-genix-lite",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.4.55)",
+            "min_fixed_version": "1.4.55",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SQL注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "last_modified_time": "2026-10-18",
+    "level": "High",
+    "mps_id": "MPS-9g5v-y8il",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-9g5v-y8il",
+        "name": "https://www.oscs1024.com/hd/MPS-9g5v-y8il"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110895",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-110895"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/support-genix-lite/vulnerability/wordpress-support-genix-plugin-1-4-54-sql-injection-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Support Genix SQL注入漏洞"
+  },
+  "first_saved_at": "2026-10-18T12:23:23+00:00"
+}
