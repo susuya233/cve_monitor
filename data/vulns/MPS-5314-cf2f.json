@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-10-16T10:29:46+00:00",
+  "saved_at": "2026-10-19T00:41:53+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-js5a-0xkt",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5314-cf2f",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,30 +21,28 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-109221",
-    "cvss": {
-      "cvssv31": [
-        {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
-          "severity": "high",
-          "base_score": 8.1
-        }
-      ]
-    },
-    "cvss_score": 8.1,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+    "cve_id": "CVE-2026-79986",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
     "cwe": "CWE-22",
-    "description": "WordPress 的 Groundhogg — CRM、新闻通讯和营销自动化插件很容易受到任意文件删除的影响，因为在 4.9.3 及之前的所有版本中，copy_file 函数中的文件路径验证不足，这使得具有销售代表级别及以上访问权限的经过身份验证的攻击者可以删除服务器上的任意文件，这很容易导致在删除正确文件（例如 wp-config.php）时远程执行代码。任何拥有插件定义的 import_contacts 功能的用户都可以利用此功能，该功能默认授予插件的自定义销售代表角色。",
+    "description": "Apache Camel 是开源 Java 集成框架。camel-azure-files 提供 azure-files 端点，供路由轮询 Azure 文件共享，并按端点凭据检索、删除或重命名远程文件。\n受影响版本中，FilesConsumer.handleFile 与 asRemoteFile 使用 FilesPath.concat 把配置的轮询目录和共享目录列表返回的文件名直接拼接成远程路径，GenericFileConsumer.isValidFile 在接受该路径前不做词法规范化，也不检查结果是否仍位于被轮询目录内。列表名若包含父目录片段，默认消费者会按该越界路径检索文件；在配置 delete、move、preMove、moveFailed 或 readLock=rename 时，同一路径还会被用于删除或重命名。该名称来自远程列表而非路由参数。Azure Files REST 通常不返回非单一路径段的列表名，官方因此与其他远程文件消费者一并修复，而不是基于针对本方案已证实的利用样本。\n修复版本中通过在 jailStartingDirectory 为 true（默认值）时，让 GenericFileConsumer.isValidFile 调用 RemoteFileConsumer.isWithinStartingDirectory，使用 GenericFileHelper.isWithinDirectory 按正斜杠压缩路径并在路径段边界上确认其仍位于被轮询目录内；越界文件被跳过且只记录警告，后续远程操作不再使用该路径。",
     "effects": [
       {
-        "comp_name": "Groundhogg — CRM, Newsletters, and Marketing Automation",
-        "ecosystem": "linux",
+        "comp_name": "org.apache.camel:camel-azure-files",
+        "ecosystem": "maven",
         "versions": [
           {
-            "affected_version": "(0,4.9.3]",
-            "min_fixed_version": "",
-            "repository": "unmanaged",
+            "affected_version": "[4.0.0,4.18.5)",
+            "min_fixed_version": "4.18.5",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.19.0,4.22.1)",
+            "min_fixed_version": "4.22.1",
+            "repository": "maven",
             "solutions": [],
             "upstream": true
           }
@@ -54,80 +52,74 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
-    "exploitability": "中",
+    "exploit_requirement_cost": "高",
+    "exploitability": "低",
     "fix_suggestion": "建议修复",
     "kind": "路径遍历",
     "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
-    "last_modified_time": "2026-10-16",
+    "last_modified_time": "2026-10-19",
     "level": "High",
-    "mps_id": "MPS-js5a-0xkt",
-    "poc": false,
+    "mps_id": "MPS-5314-cf2f",
+    "poc": true,
     "poc_url": [],
-    "published_time": "2026-10-16",
+    "published_time": "2026-10-19",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-js5a-0xkt",
-        "name": "https://www.oscs1024.com/hd/MPS-js5a-0xkt"
-      },
-      {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109221",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-109221"
-      },
-      {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/fb5100ac-cfe6-4e91-9349-6e8efa850147?source=cve",
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12335.html",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/classes/traits/file-box.php#L94",
+        "url": "https://camel.apache.org/security/CVE-2026-79986.html",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/classes/traits/file-box.php#L85",
+        "url": "https://camel.apache.org/security/CVE-2026-79986.txt.asc",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/utils/files.php#L323",
+        "url": "https://issues.apache.org/jira/browse/CAMEL-24487",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/functions.php#L2872",
+        "url": "https://github.com/apache/camel/pull/25730",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/functions.php#L8045",
+        "url": "https://github.com/apache/camel/pull/25745",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/background/import-contacts.php#L200",
+        "url": "https://github.com/apache/camel/pull/25746",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/admin/tools/tools-page.php#L575",
+        "url": "https://github.com/apache/camel/commit/177fb1fdff90632ebfd27772a625b720c1cab3e7",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/admin/tools/tools-page.php#L602",
+        "url": "https://github.com/apache/camel/commit/b31b1754d26352ea823354c8660074aaba257c45",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/main-roles.php#L583",
+        "url": "https://github.com/apache/camel/commit/c1165e4e663c3c3edc7bd30451ecc213fcf68cfd",
         "name": ""
       },
       {
-        "url": "https://github.com/groundhoggwp/groundhogg/commit/e319e4a849bfbb07cccfbac8558ad6bf07a7fdc0",
+        "url": "https://github.com/apache/camel",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset/3744461/groundhogg/trunk/includes/classes/traits/file-box.php",
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-79986",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "java",
+      "poc",
+      "开源"
     ],
-    "title": "CVE-2026-109221漏洞",
+    "title": "Camel Azure Files路径穿越",
     "_translated": true
   },
   "detail_original": {
@@ -147,30 +139,28 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-109221",
-    "cvss": {
-      "cvssv31": [
-        {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
-          "severity": "high",
-          "base_score": 8.1
-        }
-      ]
-    },
-    "cvss_score": 8.1,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+    "cve_id": "CVE-2026-79986",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
     "cwe": "CWE-22",
-    "description": "The Groundhogg — CRM, Newsletters, and Marketing Automation plugin for WordPress is vulnerable to arbitrary file deletion due to insufficient file path validation in the copy_file function in all versions up to, and including, 4.9.3 This makes it possible for authenticated attackers, with Sales Representative-level access and above, to delete arbitrary files on the server, which can easily lead to remote code execution when the right file is deleted (such as wp-config.php). This is exploitable by any user holding the plugin-defined import_contacts capability, which is granted by default to the plugin's custom Sales Representative role.",
+    "description": "Apache Camel 是开源 Java 集成框架。camel-azure-files 提供 azure-files 端点，供路由轮询 Azure 文件共享，并按端点凭据检索、删除或重命名远程文件。\n受影响版本中，FilesConsumer.handleFile 与 asRemoteFile 使用 FilesPath.concat 把配置的轮询目录和共享目录列表返回的文件名直接拼接成远程路径，GenericFileConsumer.isValidFile 在接受该路径前不做词法规范化，也不检查结果是否仍位于被轮询目录内。列表名若包含父目录片段，默认消费者会按该越界路径检索文件；在配置 delete、move、preMove、moveFailed 或 readLock=rename 时，同一路径还会被用于删除或重命名。该名称来自远程列表而非路由参数。Azure Files REST 通常不返回非单一路径段的列表名，官方因此与其他远程文件消费者一并修复，而不是基于针对本方案已证实的利用样本。\n修复版本中通过在 jailStartingDirectory 为 true（默认值）时，让 GenericFileConsumer.isValidFile 调用 RemoteFileConsumer.isWithinStartingDirectory，使用 GenericFileHelper.isWithinDirectory 按正斜杠压缩路径并在路径段边界上确认其仍位于被轮询目录内；越界文件被跳过且只记录警告，后续远程操作不再使用该路径。",
     "effects": [
       {
-        "comp_name": "Groundhogg — CRM, Newsletters, and Marketing Automation",
-        "ecosystem": "linux",
+        "comp_name": "org.apache.camel:camel-azure-files",
+        "ecosystem": "maven",
         "versions": [
           {
-            "affected_version": "(0,4.9.3]",
-            "min_fixed_version": "",
-            "repository": "unmanaged",
+            "affected_version": "[4.0.0,4.18.5)",
+            "min_fixed_version": "4.18.5",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.19.0,4.22.1)",
+            "min_fixed_version": "4.22.1",
+            "repository": "maven",
             "solutions": [],
             "upstream": true
           }
@@ -180,80 +170,74 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
-    "exploitability": "中",
+    "exploit_requirement_cost": "高",
+    "exploitability": "低",
     "fix_suggestion": "Recommend",
     "kind": "路径遍历",
     "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
-    "last_modified_time": "2026-10-16",
+    "last_modified_time": "2026-10-19",
     "level": "High",
-    "mps_id": "MPS-js5a-0xkt",
-    "poc": false,
+    "mps_id": "MPS-5314-cf2f",
+    "poc": true,
     "poc_url": [],
-    "published_time": "2026-10-16",
+    "published_time": "2026-10-19",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-js5a-0xkt",
-        "name": "https://www.oscs1024.com/hd/MPS-js5a-0xkt"
-      },
-      {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109221",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-109221"
-      },
-      {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/fb5100ac-cfe6-4e91-9349-6e8efa850147?source=cve",
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12335.html",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/classes/traits/file-box.php#L94",
+        "url": "https://camel.apache.org/security/CVE-2026-79986.html",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/classes/traits/file-box.php#L85",
+        "url": "https://camel.apache.org/security/CVE-2026-79986.txt.asc",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/utils/files.php#L323",
+        "url": "https://issues.apache.org/jira/browse/CAMEL-24487",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/functions.php#L2872",
+        "url": "https://github.com/apache/camel/pull/25730",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/functions.php#L8045",
+        "url": "https://github.com/apache/camel/pull/25745",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/background/import-contacts.php#L200",
+        "url": "https://github.com/apache/camel/pull/25746",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/admin/tools/tools-page.php#L575",
+        "url": "https://github.com/apache/camel/commit/177fb1fdff90632ebfd27772a625b720c1cab3e7",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/admin/tools/tools-page.php#L602",
+        "url": "https://github.com/apache/camel/commit/b31b1754d26352ea823354c8660074aaba257c45",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/browser/groundhogg/tags/4.9.3/includes/main-roles.php#L583",
+        "url": "https://github.com/apache/camel/commit/c1165e4e663c3c3edc7bd30451ecc213fcf68cfd",
         "name": ""
       },
       {
-        "url": "https://github.com/groundhoggwp/groundhogg/commit/e319e4a849bfbb07cccfbac8558ad6bf07a7fdc0",
+        "url": "https://github.com/apache/camel",
         "name": ""
       },
       {
-        "url": "https://plugins.trac.wordpress.org/changeset/3744461/groundhogg/trunk/includes/classes/traits/file-box.php",
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-79986",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "java",
+      "poc",
+      "开源"
     ],
-    "title": "CVE-2026-109221漏洞"
+    "title": "Camel Azure Files路径穿越"
   },
-  "first_saved_at": "2026-10-16T10:29:46+00:00"
+  "first_saved_at": "2026-10-19T00:41:53+00:00"
 }
