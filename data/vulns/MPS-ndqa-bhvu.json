@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-10-19T18:10:05+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ndqa-bhvu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-112366",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1333",
+    "description": "picomatch 是 micromatch 组织维护的开源 JavaScript 库，用于将 Bash 风格 glob 与 extglob 编译成正则表达式并执行字符串匹配，运行时不依赖其他第三方包。\n受影响版本中，单分支重复 extglob 进入 lib/parse.js 的 analyzeRepeatedExtglob 时，风险判断 /^[*?]+$/ 只在 branches.length 大于 1 时执行，+(*) 与 +(*a) 被跳过并返回非 risky。extglobClose 因此不会把这些模式转成字面量。4.0.7 将 +(*) 编译为 ^(?:(?=.)(?:[^/]*?)+)$，将 +(*a) 编译为 ^(?:(?=.)(?:[^/]*?a)+)$，随后对短字符串做匹配时出现指数级回溯，Node.js 事件循环被阻塞。\n修复版本中通过已发布版本号仍不可确认。master 分支的 analyzeRepeatedExtglob 与 4.0.7 一致，CNA 引用的 pull request 194 截至 2026-10-19 仍为 open，新增的 hasMixedWildcards 只覆盖顶层同时包含 ? 与 * 的分支，并不处理 +(*) 与 +(*a)。在官方修复发布前，应停止把不可信 glob 送入 picomatch 的默认匹配路径。",
+    "effects": [
+      {
+        "comp_name": "picomatch",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.0.7]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "ReDoS",
+    "kind_en": "正则表达式复杂性低效",
+    "last_modified_time": "2026-10-19",
+    "level": "High",
+    "mps_id": "MPS-ndqa-bhvu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ndqa-bhvu",
+        "name": "https://www.oscs1024.com/hd/MPS-ndqa-bhvu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-112366",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-112366"
+      },
+      {
+        "url": "https://github.com/micromatch/picomatch/pull/194",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/micromatch/picomatch/blob/4.0.7/lib/parse.js#L287-L307",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/picomatch-through-4.0.7-redos-via-single-branch-repeated-extglob-patterns",
+        "name": "VulnCheck Advisory: Picomatch through 4.0.7 ReDoS via single-branch repeated extglob patterns"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "picomatch拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-112366",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1333",
+    "description": "picomatch 是 micromatch 组织维护的开源 JavaScript 库，用于将 Bash 风格 glob 与 extglob 编译成正则表达式并执行字符串匹配，运行时不依赖其他第三方包。\n受影响版本中，单分支重复 extglob 进入 lib/parse.js 的 analyzeRepeatedExtglob 时，风险判断 /^[*?]+$/ 只在 branches.length 大于 1 时执行，+(*) 与 +(*a) 被跳过并返回非 risky。extglobClose 因此不会把这些模式转成字面量。4.0.7 将 +(*) 编译为 ^(?:(?=.)(?:[^/]*?)+)$，将 +(*a) 编译为 ^(?:(?=.)(?:[^/]*?a)+)$，随后对短字符串做匹配时出现指数级回溯，Node.js 事件循环被阻塞。\n修复版本中通过已发布版本号仍不可确认。master 分支的 analyzeRepeatedExtglob 与 4.0.7 一致，CNA 引用的 pull request 194 截至 2026-10-19 仍为 open，新增的 hasMixedWildcards 只覆盖顶层同时包含 ? 与 * 的分支，并不处理 +(*) 与 +(*a)。在官方修复发布前，应停止把不可信 glob 送入 picomatch 的默认匹配路径。",
+    "effects": [
+      {
+        "comp_name": "picomatch",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.0.7]",
+            "min_fixed_version": "",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "ReDoS",
+    "kind_en": "Inefficient Regular Expression Complexity",
+    "last_modified_time": "2026-10-19",
+    "level": "High",
+    "mps_id": "MPS-ndqa-bhvu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ndqa-bhvu",
+        "name": "https://www.oscs1024.com/hd/MPS-ndqa-bhvu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-112366",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-112366"
+      },
+      {
+        "url": "https://github.com/micromatch/picomatch/pull/194",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/micromatch/picomatch/blob/4.0.7/lib/parse.js#L287-L307",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/picomatch-through-4.0.7-redos-via-single-branch-repeated-extglob-patterns",
+        "name": "VulnCheck Advisory: Picomatch through 4.0.7 ReDoS via single-branch repeated extglob patterns"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "picomatch拒绝服务"
+  },
+  "first_saved_at": "2026-10-19T18:10:05+00:00"
+}
