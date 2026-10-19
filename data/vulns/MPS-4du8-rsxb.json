@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-10-19T22:44:56+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4du8-rsxb",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-112777",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-184",
+    "description": "Craft CMS 是开源内容管理系统，以 Composer 包 craftcms/cms 分发，用于站点内容管理与 Twig 模板渲染。\n受影响版本中，Twig create() 由 craft\\web\\twig\\Extension::createFunction 实现，其使用 str_starts_with 对类名做区分大小写的 Spl 前缀拦截，而 PHP 类解析不区分大小写。具备模板执行权限的 Control Panel 管理员传入 splfileobject 可以绕过黑名单，经 Craft::createObject 实例化 SplFileObject，读取 .env 机密或向 webroot 写入 PHP 文件实现远程代码执行。\n修复版本中通过将 Spl 前缀检查改为 StringHelper::startsWith(..., false) 的不区分大小写比较，使 splfileobject 等大小写变体同样被拒绝，切断该黑名单绕过与文件读写利用链。",
+    "effects": [
+      {
+        "comp_name": "craftcms/cms",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.18.8)",
+            "min_fixed_version": "4.18.8",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.0.0,5.11.0)",
+            "min_fixed_version": "5.11.0",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不完整的黑名单",
+    "kind_en": "不允许的输入的不完整列表",
+    "last_modified_time": "2026-10-20",
+    "level": "High",
+    "mps_id": "MPS-4du8-rsxb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4du8-rsxb",
+        "name": "https://www.oscs1024.com/hd/MPS-4du8-rsxb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-112777",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-112777"
+      },
+      {
+        "url": "https://github.com/craftcms/cms/security/advisories/GHSA-w643-x88w-6wcm",
+        "name": "GitHub Security Advisory (GHSA-w643-x88w-6wcm)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/craft-cms-before-4.18.8-and-5.11.0-twig-create-blocklist-bypass-leading-to-rce",
+        "name": "VulnCheck Advisory: Craft CMS before 4.18.8 and 5.11.0 Twig create() Blocklist Bypass Leading to RCE"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Craft CMS黑名单绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-112777",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-184",
+    "description": "Craft CMS 是开源内容管理系统，以 Composer 包 craftcms/cms 分发，用于站点内容管理与 Twig 模板渲染。\n受影响版本中，Twig create() 由 craft\\web\\twig\\Extension::createFunction 实现，其使用 str_starts_with 对类名做区分大小写的 Spl 前缀拦截，而 PHP 类解析不区分大小写。具备模板执行权限的 Control Panel 管理员传入 splfileobject 可以绕过黑名单，经 Craft::createObject 实例化 SplFileObject，读取 .env 机密或向 webroot 写入 PHP 文件实现远程代码执行。\n修复版本中通过将 Spl 前缀检查改为 StringHelper::startsWith(..., false) 的不区分大小写比较，使 splfileobject 等大小写变体同样被拒绝，切断该黑名单绕过与文件读写利用链。",
+    "effects": [
+      {
+        "comp_name": "craftcms/cms",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.18.8)",
+            "min_fixed_version": "4.18.8",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.0.0,5.11.0)",
+            "min_fixed_version": "5.11.0",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不完整的黑名单",
+    "kind_en": "Incomplete List of Disallowed Inputs",
+    "last_modified_time": "2026-10-20",
+    "level": "High",
+    "mps_id": "MPS-4du8-rsxb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4du8-rsxb",
+        "name": "https://www.oscs1024.com/hd/MPS-4du8-rsxb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-112777",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-112777"
+      },
+      {
+        "url": "https://github.com/craftcms/cms/security/advisories/GHSA-w643-x88w-6wcm",
+        "name": "GitHub Security Advisory (GHSA-w643-x88w-6wcm)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/craft-cms-before-4.18.8-and-5.11.0-twig-create-blocklist-bypass-leading-to-rce",
+        "name": "VulnCheck Advisory: Craft CMS before 4.18.8 and 5.11.0 Twig create() Blocklist Bypass Leading to RCE"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Craft CMS黑名单绕过漏洞"
+  },
+  "first_saved_at": "2026-10-19T22:44:56+00:00"
+}
