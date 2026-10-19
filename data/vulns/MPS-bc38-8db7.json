@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-10-19T11:50:14+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-bc38-8db7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96679",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-306",
+    "description": "Bisheng 是 DataElement 开源的大语言模型应用开发运维平台，用于编排 RAG 工作流、智能体和模型接入，并支持以 Pro 模式对接外部单点登录。\n受影响版本中，环境变量 BISHENG_PRO 等于 true 时，src/backend/bisheng/user/api/user.py 的 sso() 处理 POST /user/sso，仅检查 settings.get_system_login_method().bisheng_pro，不校验调用方共享密钥、签名断言或网络来源。请求体中的 user.user_name 被用于查找或自动注册账户；用户名与 admin_username 相同，或平台尚无用户时，账户会被授予超级管理员角色，并由 LoginUser.create_access_token 签发 access_token，从而在认证前接管账户。\n修复版本中通过移除或对遗留 sso() 增加调用方校验才能切断未认证签发令牌的路径，但截至 2026-10-19 官方尚未发布该修复版本，v3.0.0-beta5 与 main 仍保留该端点。",
+    "effects": [
+      {
+        "comp_name": "bisheng",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.3.4.dev1,3.0.0-beta5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-10-19",
+    "level": "Critical",
+    "mps_id": "MPS-bc38-8db7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-19",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/cert-cc-dataelement-bisheng-vulnerabilities-sso/",
+        "name": ""
+      },
+      {
+        "url": "https://kb.cert.org/vuls/id/166125",
+        "name": ""
+      },
+      {
+        "url": "https://kb.cert.org/vuls/api/166125/csaf/",
+        "name": ""
+      },
+      {
+        "url": "https://vokecyber.com/research/cve-2026-96679-bisheng-preauth-admin-takeover",
+        "name": ""
+      },
+      {
+        "url": "https://vokecyber.com/blog/cve-2026-96679-bisheng-preauth-admin-takeover",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-96679",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dataelement/bisheng",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dataelement/bisheng/blob/v3.0.0-beta5/src/backend/bisheng/user/api/user.py",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "Bisheng遗留SSO绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96679",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-306",
+    "description": "Bisheng 是 DataElement 开源的大语言模型应用开发运维平台，用于编排 RAG 工作流、智能体和模型接入，并支持以 Pro 模式对接外部单点登录。\n受影响版本中，环境变量 BISHENG_PRO 等于 true 时，src/backend/bisheng/user/api/user.py 的 sso() 处理 POST /user/sso，仅检查 settings.get_system_login_method().bisheng_pro，不校验调用方共享密钥、签名断言或网络来源。请求体中的 user.user_name 被用于查找或自动注册账户；用户名与 admin_username 相同，或平台尚无用户时，账户会被授予超级管理员角色，并由 LoginUser.create_access_token 签发 access_token，从而在认证前接管账户。\n修复版本中通过移除或对遗留 sso() 增加调用方校验才能切断未认证签发令牌的路径，但截至 2026-10-19 官方尚未发布该修复版本，v3.0.0-beta5 与 main 仍保留该端点。",
+    "effects": [
+      {
+        "comp_name": "bisheng",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.3.4.dev1,3.0.0-beta5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-10-19",
+    "level": "Critical",
+    "mps_id": "MPS-bc38-8db7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-19",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/cert-cc-dataelement-bisheng-vulnerabilities-sso/",
+        "name": ""
+      },
+      {
+        "url": "https://kb.cert.org/vuls/id/166125",
+        "name": ""
+      },
+      {
+        "url": "https://kb.cert.org/vuls/api/166125/csaf/",
+        "name": ""
+      },
+      {
+        "url": "https://vokecyber.com/research/cve-2026-96679-bisheng-preauth-admin-takeover",
+        "name": ""
+      },
+      {
+        "url": "https://vokecyber.com/blog/cve-2026-96679-bisheng-preauth-admin-takeover",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-96679",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dataelement/bisheng",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dataelement/bisheng/blob/v3.0.0-beta5/src/backend/bisheng/user/api/user.py",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "Bisheng遗留SSO绕过"
+  },
+  "first_saved_at": "2026-10-19T11:50:14+00:00"
+}

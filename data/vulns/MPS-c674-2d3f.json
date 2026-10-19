@@ -1,0 +1,275 @@
+{
+  "saved_at": "2026-10-19T11:50:06+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-c674-2d3f",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-88900",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "apache",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "",
+    "cwe": "CWE-502",
+    "description": "Apache Camel 是开源 Java 集成框架。camel-jgroups（Maven 坐标 org.apache.camel:camel-jgroups）把 Camel 路由接到 JGroups 集群，用于在集群成员之间收发消息。\n受影响版本中，jgroups consumer 每收到一条集群消息，CamelJGroupsReceiver.receive 都会调用 JGroupsEndpoint.createExchange，并把 org.jgroups.Message.getObject() 的返回值写入交换体。ObjectMessage 载荷由 JGroups 在自身接收线程上经 ObjectInputStream 反序列化；受影响发行版的 camel-jgroups 未安装 java.io.ObjectInputFilter，随附的 JGroups 也未施加过滤器，classpath 上的可序列化类可被实例化并执行反序列化回调。未配置 channel 或 channelProperties 时，consumer 使用 new JChannel() 的默认 UDP 协议栈，不含 AUTH 与加密，能够到达组播组或绑定端口的相邻网络主机无需凭据即可向 consumer 发送消息；classpath 上存在可用 gadget 链时，可在 Camel 进程中执行任意代码。对象在 Camel 接收器运行前已由 JGroups 物化，组件事后检查无法阻止反序列化期间执行的代码。\n修复版本中通过在交换进入路由前按 deserializationFilter 检查已反序列化对象的类型，未设置该选项时优先遵循 JVM 范围 jdk.serialFilter，否则应用默认允许列表 !java.net.**;java.**;javax.**;org.apache.camel.**;!*，被拒绝的消息不再进入路由。4.18.5 与 4.22.1 的检查发生在载荷被读取之后，部署还必须配置 jdk.serialFilter，或通过 channelProperties 启用 AUTH 以及 SYM_ENCRYPT 或 ASYM_ENCRYPT。4.23.0 在 JGroupsConsumer.doStart 中调用 verifyConsumerDeserializationGuard，未配置上述任一前置控制且未设置 acceptAllObjects=true 时拒绝启动 consumer。",
+    "effects": [
+      {
+        "comp_name": "org.apache.camel:camel-jgroups",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.18.5)",
+            "min_fixed_version": "4.18.5",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.19.0,4.22.1)",
+            "min_fixed_version": "4.22.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-10-19",
+    "level": "High",
+    "mps_id": "MPS-c674-2d3f",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-19",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12365.html",
+        "name": ""
+      },
+      {
+        "url": "https://camel.apache.org/security/CVE-2026-88900.html",
+        "name": ""
+      },
+      {
+        "url": "https://camel.apache.org/security/CVE-2026-88900.txt.asc",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-88900",
+        "name": ""
+      },
+      {
+        "url": "https://issues.apache.org/jira/browse/CAMEL-24676",
+        "name": ""
+      },
+      {
+        "url": "https://issues.apache.org/jira/browse/CAMEL-25223",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/26267",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/26281",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/26283",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/27205",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/0ef94ee8feabf56a5c595c07b2c60f64a73ba14e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/da07367d1b6e2bb00ddb6afa5cfa08a6c0c0bd0f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/f988494d01145473551ca75fc11cda3e5cb49f2d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/d30328a49596a04add88d32ee7ed923811c58866",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Camel JGroups反序列化漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-88900",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "apache",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "",
+    "cwe": "CWE-502",
+    "description": "Apache Camel 是开源 Java 集成框架。camel-jgroups（Maven 坐标 org.apache.camel:camel-jgroups）把 Camel 路由接到 JGroups 集群，用于在集群成员之间收发消息。\n受影响版本中，jgroups consumer 每收到一条集群消息，CamelJGroupsReceiver.receive 都会调用 JGroupsEndpoint.createExchange，并把 org.jgroups.Message.getObject() 的返回值写入交换体。ObjectMessage 载荷由 JGroups 在自身接收线程上经 ObjectInputStream 反序列化；受影响发行版的 camel-jgroups 未安装 java.io.ObjectInputFilter，随附的 JGroups 也未施加过滤器，classpath 上的可序列化类可被实例化并执行反序列化回调。未配置 channel 或 channelProperties 时，consumer 使用 new JChannel() 的默认 UDP 协议栈，不含 AUTH 与加密，能够到达组播组或绑定端口的相邻网络主机无需凭据即可向 consumer 发送消息；classpath 上存在可用 gadget 链时，可在 Camel 进程中执行任意代码。对象在 Camel 接收器运行前已由 JGroups 物化，组件事后检查无法阻止反序列化期间执行的代码。\n修复版本中通过在交换进入路由前按 deserializationFilter 检查已反序列化对象的类型，未设置该选项时优先遵循 JVM 范围 jdk.serialFilter，否则应用默认允许列表 !java.net.**;java.**;javax.**;org.apache.camel.**;!*，被拒绝的消息不再进入路由。4.18.5 与 4.22.1 的检查发生在载荷被读取之后，部署还必须配置 jdk.serialFilter，或通过 channelProperties 启用 AUTH 以及 SYM_ENCRYPT 或 ASYM_ENCRYPT。4.23.0 在 JGroupsConsumer.doStart 中调用 verifyConsumerDeserializationGuard，未配置上述任一前置控制且未设置 acceptAllObjects=true 时拒绝启动 consumer。",
+    "effects": [
+      {
+        "comp_name": "org.apache.camel:camel-jgroups",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.18.5)",
+            "min_fixed_version": "4.18.5",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.19.0,4.22.1)",
+            "min_fixed_version": "4.22.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-10-19",
+    "level": "High",
+    "mps_id": "MPS-c674-2d3f",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-19",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12365.html",
+        "name": ""
+      },
+      {
+        "url": "https://camel.apache.org/security/CVE-2026-88900.html",
+        "name": ""
+      },
+      {
+        "url": "https://camel.apache.org/security/CVE-2026-88900.txt.asc",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-88900",
+        "name": ""
+      },
+      {
+        "url": "https://issues.apache.org/jira/browse/CAMEL-24676",
+        "name": ""
+      },
+      {
+        "url": "https://issues.apache.org/jira/browse/CAMEL-25223",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/26267",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/26281",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/26283",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/pull/27205",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/0ef94ee8feabf56a5c595c07b2c60f64a73ba14e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/da07367d1b6e2bb00ddb6afa5cfa08a6c0c0bd0f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/f988494d01145473551ca75fc11cda3e5cb49f2d",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/camel/commit/d30328a49596a04add88d32ee7ed923811c58866",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Camel JGroups反序列化漏洞"
+  },
+  "first_saved_at": "2026-10-19T11:50:06+00:00"
+}

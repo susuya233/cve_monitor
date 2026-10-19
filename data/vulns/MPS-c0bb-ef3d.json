@@ -1,0 +1,157 @@
+{
+  "saved_at": "2026-10-19T11:50:16+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-c0bb-ef3d",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100364",
+    "cvss": {},
+    "cvss_score": 7.1,
+    "cvss_vector": "",
+    "cwe": "CWE-639",
+    "description": "SuiteCRM 是开源客户关系管理软件，用于管理客户、销售与营销记录，7.x 与 8.x 均内置 JSON:API V8 接口。\n受影响版本中，已认证用户调用更新记录接口时，updateRecord 先按 data.id 加载记录并执行 ACLAccess('save')，再把 attributes 原样传入 processAttributes。processAttributes 对每个属性执行 $bean->$property = $value，请求体中的 id 会在所有者检查之后覆盖 SugarBean 的记录标识，随后 save() 写入被替换的记录，从而绕过 ACL_ALLOW_OWNER 并覆盖其他 CRM 记录。\n修复版本中通过在 updateRecord 调用 processAttributes 之前移除 attributes 中的 id，使授权检查所绑定的记录标识不能再被请求体替换，阻止越权覆盖其他记录。",
+    "effects": [
+      {
+        "comp_name": "suitecrm",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.15.2)",
+            "min_fixed_version": "7.15.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.0.0,8.10.2)",
+            "min_fixed_version": "8.10.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-10-19",
+    "level": "High",
+    "mps_id": "MPS-c0bb-ef3d",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-19",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/suitecrm-vulnerabilities-rce/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SuiteCRM/SuiteCRM/security/advisories/GHSA-8rjm-vpj3-hch8",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SuiteCRM/SuiteCRM/commit/d6bca97a0159ec019a969b86eca32affab3beb7c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SuiteCRM/SuiteCRM/releases/tag/v7.15.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SuiteCRM/SuiteCRM-Core/releases/tag/v8.10.2",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SuiteCRM记录越权覆盖",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-100364",
+    "cvss": {},
+    "cvss_score": 7.1,
+    "cvss_vector": "",
+    "cwe": "CWE-639",
+    "description": "SuiteCRM 是开源客户关系管理软件，用于管理客户、销售与营销记录，7.x 与 8.x 均内置 JSON:API V8 接口。\n受影响版本中，已认证用户调用更新记录接口时，updateRecord 先按 data.id 加载记录并执行 ACLAccess('save')，再把 attributes 原样传入 processAttributes。processAttributes 对每个属性执行 $bean->$property = $value，请求体中的 id 会在所有者检查之后覆盖 SugarBean 的记录标识，随后 save() 写入被替换的记录，从而绕过 ACL_ALLOW_OWNER 并覆盖其他 CRM 记录。\n修复版本中通过在 updateRecord 调用 processAttributes 之前移除 attributes 中的 id，使授权检查所绑定的记录标识不能再被请求体替换，阻止越权覆盖其他记录。",
+    "effects": [
+      {
+        "comp_name": "suitecrm",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.15.2)",
+            "min_fixed_version": "7.15.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.0.0,8.10.2)",
+            "min_fixed_version": "8.10.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-10-19",
+    "level": "High",
+    "mps_id": "MPS-c0bb-ef3d",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-19",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/suitecrm-vulnerabilities-rce/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SuiteCRM/SuiteCRM/security/advisories/GHSA-8rjm-vpj3-hch8",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SuiteCRM/SuiteCRM/commit/d6bca97a0159ec019a969b86eca32affab3beb7c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SuiteCRM/SuiteCRM/releases/tag/v7.15.2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SuiteCRM/SuiteCRM-Core/releases/tag/v8.10.2",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SuiteCRM记录越权覆盖"
+  },
+  "first_saved_at": "2026-10-19T11:50:16+00:00"
+}
