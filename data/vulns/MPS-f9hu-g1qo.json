@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-10-20T01:27:03+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-f9hu-g1qo",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-112390",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-835",
+    "description": "Pillow 是开源 Python 图像处理库，用于打开、转换和保存多种图像格式，MIC（Microsoft Image Composer）格式在安装可选依赖 olefile 后可用。\n受影响版本中，应用通过 Image.open 打开不受信任的 MIC 文件并读取 n_frames，或按 save_all 保存全部帧时，MicImageFile 继承 TiffImageFile.n_frames 的 IFD 遍历，但 tell() 始终返回当前 OLE 流下标，seek() 调用 TiffImageFile._open() 把 _n_frames 重置为 None。嵌入不少于 3 个 IFD 的 TIFF 流使遍历无法前进，工作进程持续满负荷运行。\n修复版本中通过把 TiffImageFile 的 _n_frames 初始化从 _open 移到 __init__，并只在 _n_frames 仍为空时用 IFD 链回填，保留 MicImageFile 写入的 OLE 流帧数，阻断无法前进的循环。",
+    "effects": [
+      {
+        "comp_name": "pillow",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[7.2.0,13.0.0)",
+            "min_fixed_version": "13.0.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不可达退出条件的循环（无限循环）",
+    "kind_en": "具有无法到达的退出条件的循环（“无限循环”）",
+    "last_modified_time": "2026-10-20",
+    "level": "High",
+    "mps_id": "MPS-f9hu-g1qo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-f9hu-g1qo",
+        "name": "https://www.oscs1024.com/hd/MPS-f9hu-g1qo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-112390",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-112390"
+      },
+      {
+        "url": "https://github.com/python-pillow/Pillow/security/advisories/GHSA-22hg-r758-rrw9",
+        "name": "https://github.com/python-pillow/Pillow/security/advisories/GHSA-22hg-r758-rrw9"
+      },
+      {
+        "url": "https://github.com/python-pillow/Pillow/commit/26cb3ed061173b817b9ee4b6f507cb0e1e293218",
+        "name": "https://github.com/python-pillow/Pillow/commit/26cb3ed061173b817b9ee4b6f507cb0e1e293218"
+      },
+      {
+        "url": "https://github.com/python-pillow/Pillow/releases/tag/13.0.0",
+        "name": "https://github.com/python-pillow/Pillow/releases/tag/13.0.0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "Pillow MIC无限循环漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-112390",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-835",
+    "description": "Pillow 是开源 Python 图像处理库，用于打开、转换和保存多种图像格式，MIC（Microsoft Image Composer）格式在安装可选依赖 olefile 后可用。\n受影响版本中，应用通过 Image.open 打开不受信任的 MIC 文件并读取 n_frames，或按 save_all 保存全部帧时，MicImageFile 继承 TiffImageFile.n_frames 的 IFD 遍历，但 tell() 始终返回当前 OLE 流下标，seek() 调用 TiffImageFile._open() 把 _n_frames 重置为 None。嵌入不少于 3 个 IFD 的 TIFF 流使遍历无法前进，工作进程持续满负荷运行。\n修复版本中通过把 TiffImageFile 的 _n_frames 初始化从 _open 移到 __init__，并只在 _n_frames 仍为空时用 IFD 链回填，保留 MicImageFile 写入的 OLE 流帧数，阻断无法前进的循环。",
+    "effects": [
+      {
+        "comp_name": "pillow",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[7.2.0,13.0.0)",
+            "min_fixed_version": "13.0.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不可达退出条件的循环（无限循环）",
+    "kind_en": "Loop with Unreachable Exit Condition ('Infinite Loop')",
+    "last_modified_time": "2026-10-20",
+    "level": "High",
+    "mps_id": "MPS-f9hu-g1qo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-f9hu-g1qo",
+        "name": "https://www.oscs1024.com/hd/MPS-f9hu-g1qo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-112390",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-112390"
+      },
+      {
+        "url": "https://github.com/python-pillow/Pillow/security/advisories/GHSA-22hg-r758-rrw9",
+        "name": "https://github.com/python-pillow/Pillow/security/advisories/GHSA-22hg-r758-rrw9"
+      },
+      {
+        "url": "https://github.com/python-pillow/Pillow/commit/26cb3ed061173b817b9ee4b6f507cb0e1e293218",
+        "name": "https://github.com/python-pillow/Pillow/commit/26cb3ed061173b817b9ee4b6f507cb0e1e293218"
+      },
+      {
+        "url": "https://github.com/python-pillow/Pillow/releases/tag/13.0.0",
+        "name": "https://github.com/python-pillow/Pillow/releases/tag/13.0.0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "Pillow MIC无限循环漏洞"
+  },
+  "first_saved_at": "2026-10-20T01:27:03+00:00"
+}
