@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-10-20T07:00:10+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-m3ao-fxhz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77933",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1392",
+    "description": "DB-GPT 是开源智能体式 AI 数据助手，用于基于大模型构建数据应用并与本地数据交互。\n受影响版本中，项目默认 docker-compose.yml 将捆绑 MySQL 的 MYSQL_ROOT_PASSWORD 固定为 aa123456，并把 3306 端口发布到全部网卡；webserver 以 MYSQL_USER=root 使用同一口令连接。攻击者只要能访问该端口或共享 dbgptnet 网络，即可作为 root@% 登录，获得包含 FILE、SUPER 在内的完整数据库权限。\n修复版本中通过取消硬编码 MYSQL_ROOT_PASSWORD、停止将 3306 发布到主机以及改为非超级用户连接来切断未授权超级用户访问；截至 2026-10-20 官方尚未发布包含上述改动的版本，v0.8.2 与 main 分支的默认 compose 仍保持原配置。",
+    "effects": [
+      {
+        "comp_name": "db-gpt",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.8.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "",
+    "kind_en": "",
+    "last_modified_time": "2026-10-20",
+    "level": "Critical",
+    "mps_id": "MPS-m3ao-fxhz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-m3ao-fxhz",
+        "name": "https://www.oscs1024.com/hd/MPS-m3ao-fxhz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77933",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77933"
+      },
+      {
+        "url": "https://www.lasso.security/vulnerability-database/cve-2026-77933",
+        "name": "Lasso.security Advisory"
+      },
+      {
+        "url": "https://github.com/eosphoros-ai/DB-GPT/blob/83609c471266607490b24e72188311efa23a0d16/docker-compose.yml#L9",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/db-gpt-through-0.8.2-hardcoded-mysql-root-credentials-in-docker-compose-deployment",
+        "name": "VulnCheck Advisory: DB-GPT through 0.8.2 Hardcoded MySQL Root Credentials in docker-compose Deployment"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "DB-GPT硬编码凭证漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77933",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1392",
+    "description": "DB-GPT 是开源智能体式 AI 数据助手，用于基于大模型构建数据应用并与本地数据交互。\n受影响版本中，项目默认 docker-compose.yml 将捆绑 MySQL 的 MYSQL_ROOT_PASSWORD 固定为 aa123456，并把 3306 端口发布到全部网卡；webserver 以 MYSQL_USER=root 使用同一口令连接。攻击者只要能访问该端口或共享 dbgptnet 网络，即可作为 root@% 登录，获得包含 FILE、SUPER 在内的完整数据库权限。\n修复版本中通过取消硬编码 MYSQL_ROOT_PASSWORD、停止将 3306 发布到主机以及改为非超级用户连接来切断未授权超级用户访问；截至 2026-10-20 官方尚未发布包含上述改动的版本，v0.8.2 与 main 分支的默认 compose 仍保持原配置。",
+    "effects": [
+      {
+        "comp_name": "db-gpt",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.8.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "",
+    "kind_en": "",
+    "last_modified_time": "2026-10-20",
+    "level": "Critical",
+    "mps_id": "MPS-m3ao-fxhz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-m3ao-fxhz",
+        "name": "https://www.oscs1024.com/hd/MPS-m3ao-fxhz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77933",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77933"
+      },
+      {
+        "url": "https://www.lasso.security/vulnerability-database/cve-2026-77933",
+        "name": "Lasso.security Advisory"
+      },
+      {
+        "url": "https://github.com/eosphoros-ai/DB-GPT/blob/83609c471266607490b24e72188311efa23a0d16/docker-compose.yml#L9",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/db-gpt-through-0.8.2-hardcoded-mysql-root-credentials-in-docker-compose-deployment",
+        "name": "VulnCheck Advisory: DB-GPT through 0.8.2 Hardcoded MySQL Root Credentials in docker-compose Deployment"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "DB-GPT硬编码凭证漏洞"
+  },
+  "first_saved_at": "2026-10-20T07:00:10+00:00"
+}

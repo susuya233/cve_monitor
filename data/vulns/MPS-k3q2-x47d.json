@@ -1,0 +1,187 @@
+{
+  "saved_at": "2026-10-20T07:00:09+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-k3q2-x47d",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77934",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1188",
+    "description": "Coze Studio 是开源 AI Agent 开发平台，提供可视化工作流与代码节点，用于构建、调试和部署智能体。\n受影响版本中，官方默认将 CODE_RUNNER_TYPE 设为 local，initCodeRunner 在非 sandbox 时选用 direct.NewRunner。工作流代码节点中的用户 Python 仅经 validatePythonImports 对 import/from import 语句做正则校验，随后由 pythonCmdRun 以 python3 -c 在无文件系统与网络隔离的子进程中执行。已注册用户可通过 __import__('subprocess') 绕过过滤并执行任意命令，读取环境变量与模型 API 密钥，并访问同部署网络中的 MySQL、MinIO、Redis 与 etcd。\n修复版本中通过将 docker/.env.example 的 CODE_RUNNER_TYPE 默认值改为 sandbox，使代码节点改走 Deno 与 Pyodide 沙箱执行，切断 local 模式下无隔离 python3 子进程的命令执行路径。",
+    "effects": [
+      {
+        "comp_name": "coze-studio",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.5.0)",
+            "min_fixed_version": "0.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "资源默认不安全",
+    "kind_en": "使用不安全默认值初始化资源",
+    "last_modified_time": "2026-10-20",
+    "level": "High",
+    "mps_id": "MPS-k3q2-x47d",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k3q2-x47d",
+        "name": "https://www.oscs1024.com/hd/MPS-k3q2-x47d"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77934",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77934"
+      },
+      {
+        "url": "https://www.lasso.security/vulnerability-database/cve-2026-77934",
+        "name": "Lasso.security Advisory"
+      },
+      {
+        "url": "https://github.com/coze-dev/coze-studio/commit/fcf40d1008c100108c23be051a49950283f2c2cf",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/coze-dev/coze-studio/blob/ffec252d9e2600f61d49b8228a642335e84d5496/docker/.env.example#L234",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/coze-studio-before-0.5.0-rce-via-unsandboxed-local-python-code-runner",
+        "name": "VulnCheck Advisory: Coze Studio before 0.5.0 RCE via Unsandboxed Local Python Code Runner"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "Coze Studio代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77934",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1188",
+    "description": "Coze Studio 是开源 AI Agent 开发平台，提供可视化工作流与代码节点，用于构建、调试和部署智能体。\n受影响版本中，官方默认将 CODE_RUNNER_TYPE 设为 local，initCodeRunner 在非 sandbox 时选用 direct.NewRunner。工作流代码节点中的用户 Python 仅经 validatePythonImports 对 import/from import 语句做正则校验，随后由 pythonCmdRun 以 python3 -c 在无文件系统与网络隔离的子进程中执行。已注册用户可通过 __import__('subprocess') 绕过过滤并执行任意命令，读取环境变量与模型 API 密钥，并访问同部署网络中的 MySQL、MinIO、Redis 与 etcd。\n修复版本中通过将 docker/.env.example 的 CODE_RUNNER_TYPE 默认值改为 sandbox，使代码节点改走 Deno 与 Pyodide 沙箱执行，切断 local 模式下无隔离 python3 子进程的命令执行路径。",
+    "effects": [
+      {
+        "comp_name": "coze-studio",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.5.0)",
+            "min_fixed_version": "0.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "资源默认不安全",
+    "kind_en": "Initialization of a Resource with an Insecure Default",
+    "last_modified_time": "2026-10-20",
+    "level": "High",
+    "mps_id": "MPS-k3q2-x47d",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k3q2-x47d",
+        "name": "https://www.oscs1024.com/hd/MPS-k3q2-x47d"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77934",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77934"
+      },
+      {
+        "url": "https://www.lasso.security/vulnerability-database/cve-2026-77934",
+        "name": "Lasso.security Advisory"
+      },
+      {
+        "url": "https://github.com/coze-dev/coze-studio/commit/fcf40d1008c100108c23be051a49950283f2c2cf",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/coze-dev/coze-studio/blob/ffec252d9e2600f61d49b8228a642335e84d5496/docker/.env.example#L234",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/coze-studio-before-0.5.0-rce-via-unsandboxed-local-python-code-runner",
+        "name": "VulnCheck Advisory: Coze Studio before 0.5.0 RCE via Unsandboxed Local Python Code Runner"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "Coze Studio代码执行漏洞"
+  },
+  "first_saved_at": "2026-10-20T07:00:09+00:00"
+}

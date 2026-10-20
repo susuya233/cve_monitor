@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-10-20T07:00:07+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ro6u-e0k4",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77935",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "Coze Studio 是开源 AI 智能体开发平台，提供可视化工具用于构建、调试和部署智能体工作流。\n受影响版本中，工作流接口只通过 checkUserSpace 校验调用者是否属于请求里的 spaceID，未核对 workflowID 是否归属于该空间。认证用户可将本空间 spaceID 与其他空间 workflowID 组合提交到 save、update_meta、batch_delete、canvas、test_run 和 nodeDebug 接口，读取、运行、覆盖或删除其他空间工作流。\n修复版本中通过在空间成员校验后读取目标工作流并核对 SpaceID 与授权空间一致，拒绝跨空间 workflowID，切断越权读写、运行和删除链路。",
+    "effects": [
+      {
+        "comp_name": "coze-studio",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.5.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-10-20",
+    "level": "High",
+    "mps_id": "MPS-ro6u-e0k4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ro6u-e0k4",
+        "name": "https://www.oscs1024.com/hd/MPS-ro6u-e0k4"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77935",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77935"
+      },
+      {
+        "url": "https://www.lasso.security/vulnerability-database/cve-2026-77935",
+        "name": "Lasso.security Advisory"
+      },
+      {
+        "url": "https://github.com/coze-dev/coze-studio/blob/72cecff858a5a18662c5d9d1a4764c53ebc98317/backend/application/workflow/workflow.go#L303",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/coze-studio-through-0.5.1-cross-space-workflow-idor-via-workflow-api-handlers",
+        "name": "VulnCheck Advisory: Coze Studio through 0.5.1 Cross-Space Workflow IDOR via Workflow API Handlers"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "Coze工作流越权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77935",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "Coze Studio 是开源 AI 智能体开发平台，提供可视化工具用于构建、调试和部署智能体工作流。\n受影响版本中，工作流接口只通过 checkUserSpace 校验调用者是否属于请求里的 spaceID，未核对 workflowID 是否归属于该空间。认证用户可将本空间 spaceID 与其他空间 workflowID 组合提交到 save、update_meta、batch_delete、canvas、test_run 和 nodeDebug 接口，读取、运行、覆盖或删除其他空间工作流。\n修复版本中通过在空间成员校验后读取目标工作流并核对 SpaceID 与授权空间一致，拒绝跨空间 workflowID，切断越权读写、运行和删除链路。",
+    "effects": [
+      {
+        "comp_name": "coze-studio",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.5.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-10-20",
+    "level": "High",
+    "mps_id": "MPS-ro6u-e0k4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ro6u-e0k4",
+        "name": "https://www.oscs1024.com/hd/MPS-ro6u-e0k4"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77935",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77935"
+      },
+      {
+        "url": "https://www.lasso.security/vulnerability-database/cve-2026-77935",
+        "name": "Lasso.security Advisory"
+      },
+      {
+        "url": "https://github.com/coze-dev/coze-studio/blob/72cecff858a5a18662c5d9d1a4764c53ebc98317/backend/application/workflow/workflow.go#L303",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/coze-studio-through-0.5.1-cross-space-workflow-idor-via-workflow-api-handlers",
+        "name": "VulnCheck Advisory: Coze Studio through 0.5.1 Cross-Space Workflow IDOR via Workflow API Handlers"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "Coze工作流越权漏洞"
+  },
+  "first_saved_at": "2026-10-20T07:00:07+00:00"
+}
