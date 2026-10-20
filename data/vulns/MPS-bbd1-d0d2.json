@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-10-20T12:39:13+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-bbd1-d0d2",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90797",
+    "cvss": {},
+    "cvss_score": 7.7,
+    "cvss_vector": "",
+    "cwe": "CWE-409",
+    "description": "Apache CouchDB 是开源文档数据库，通过 HTTP REST API 提供文档存储、查询与复制能力。\n受影响版本中，chttpd 对 gzip 请求体调用 zlib:gunzip 一次性完全解压，只约束压缩后输入大小。未认证客户端可向 POST /_session 提交高压缩比 gzip 数据，解压后体积突破限制并耗尽 beam.smp 内存，造成拒绝服务。\n修复版本中通过将解压改为分块 inflate，并在每次迭代用请求体上限检查解压输出长度，同时为 /_session 显式施加 1MB 上限，切断解压炸弹导致的内存耗尽路径。",
+    "effects": [
+      {
+        "comp_name": "couchdb",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.5.3)",
+            "min_fixed_version": "3.5.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "对高度压缩数据的处理不恰当（数据放大攻击）",
+    "kind_en": "高度压缩数据的不当处理（数据放大）",
+    "last_modified_time": "2026-10-20",
+    "level": "High",
+    "mps_id": "MPS-bbd1-d0d2",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12377.html",
+        "name": ""
+      },
+      {
+        "url": "https://docs.couchdb.org/en/stable/cve/2026-90797.html",
+        "name": ""
+      },
+      {
+        "url": "https://docs.couchdb.org/en/stable/cve/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-90797",
+        "name": ""
+      },
+      {
+        "url": "https://couchdb.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://docs.couchdb.org/en/stable/whatsnew/3.5.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/couchdb/commit/e3f40d4ead2c5b9624005d4feca18f9e5a31e7aa",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/couchdb/pull/6151",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CouchDB预认证解压炸弹",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90797",
+    "cvss": {},
+    "cvss_score": 7.7,
+    "cvss_vector": "",
+    "cwe": "CWE-409",
+    "description": "Apache CouchDB 是开源文档数据库，通过 HTTP REST API 提供文档存储、查询与复制能力。\n受影响版本中，chttpd 对 gzip 请求体调用 zlib:gunzip 一次性完全解压，只约束压缩后输入大小。未认证客户端可向 POST /_session 提交高压缩比 gzip 数据，解压后体积突破限制并耗尽 beam.smp 内存，造成拒绝服务。\n修复版本中通过将解压改为分块 inflate，并在每次迭代用请求体上限检查解压输出长度，同时为 /_session 显式施加 1MB 上限，切断解压炸弹导致的内存耗尽路径。",
+    "effects": [
+      {
+        "comp_name": "couchdb",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.5.3)",
+            "min_fixed_version": "3.5.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "对高度压缩数据的处理不恰当（数据放大攻击）",
+    "kind_en": "Improper Handling of Highly Compressed Data (Data Amplification)",
+    "last_modified_time": "2026-10-20",
+    "level": "High",
+    "mps_id": "MPS-bbd1-d0d2",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-20",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12377.html",
+        "name": ""
+      },
+      {
+        "url": "https://docs.couchdb.org/en/stable/cve/2026-90797.html",
+        "name": ""
+      },
+      {
+        "url": "https://docs.couchdb.org/en/stable/cve/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-90797",
+        "name": ""
+      },
+      {
+        "url": "https://couchdb.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://docs.couchdb.org/en/stable/whatsnew/3.5.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/couchdb/commit/e3f40d4ead2c5b9624005d4feca18f9e5a31e7aa",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/couchdb/pull/6151",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CouchDB预认证解压炸弹"
+  },
+  "first_saved_at": "2026-10-20T12:39:13+00:00"
+}
