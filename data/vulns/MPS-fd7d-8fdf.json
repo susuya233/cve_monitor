@@ -1,0 +1,191 @@
+{
+  "saved_at": "2026-10-21T00:19:29+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-fd7d-8fdf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-113812",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-295",
+    "description": "Mozilla::CA 是 Perl 生态中的开源模块，以 PEM 文件形式提供 Mozilla CA 证书包，供基于 OpenSSL 的 TLS 客户端作为信任锚使用。\n受影响版本中，随发行包分发的 lib/Mozilla/CA/cacert.pem 包含根证书 emSign ECC Root CA - G3，该根证书为私钥已公开的 eMudhra 中间证书提供信任路径。攻击者在能够拦截或重定向客户端流量时，可利用这些私钥冒充 TLS 服务器并读取或篡改通信内容。模块对外通过 SSL_ca_file() 返回该证书包绝对路径；LWP、HTTP::Tiny 等客户端通常经 IO::Socket::SSL 先查找 OpenSSL 默认 CA 位置，再回退到 Mozilla::CA。\n修复版本中通过新增 CA denylist，在生成 cacert.pem 时删除 emSign ECC Root CA - G3，切断对已泄露中间证书私钥的信任路径。",
+    "effects": [
+      {
+        "comp_name": "Mozilla-CA",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,20261020)",
+            "min_fixed_version": "20261020",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "证书验证不恰当",
+    "kind_en": "证书验证不当",
+    "last_modified_time": "2026-10-21",
+    "level": "High",
+    "mps_id": "MPS-fd7d-8fdf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/10/20/36",
+        "name": ""
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-113812",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-113812",
+        "name": ""
+      },
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/10/20/1",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/LWP/Mozilla-CA-20261020/changes",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/libwww-perl/Mozilla-CA/commit/3c4d166625d82b22fd50b48c272b0bc278fac046",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/libwww-perl/Mozilla-CA/commit/18fc26558b3b9672f5813afd07b4295cfa0dc00a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/libwww-perl/Mozilla-CA/releases/tag/v20261020",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.mozilla.org/show_bug.cgi?id=2083449",
+        "name": ""
+      },
+      {
+        "url": "https://emudhra.we-have-a-problem.com/",
+        "name": ""
+      },
+      {
+        "url": "https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Mozilla::CA根证书漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-113812",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-295",
+    "description": "Mozilla::CA 是 Perl 生态中的开源模块，以 PEM 文件形式提供 Mozilla CA 证书包，供基于 OpenSSL 的 TLS 客户端作为信任锚使用。\n受影响版本中，随发行包分发的 lib/Mozilla/CA/cacert.pem 包含根证书 emSign ECC Root CA - G3，该根证书为私钥已公开的 eMudhra 中间证书提供信任路径。攻击者在能够拦截或重定向客户端流量时，可利用这些私钥冒充 TLS 服务器并读取或篡改通信内容。模块对外通过 SSL_ca_file() 返回该证书包绝对路径；LWP、HTTP::Tiny 等客户端通常经 IO::Socket::SSL 先查找 OpenSSL 默认 CA 位置，再回退到 Mozilla::CA。\n修复版本中通过新增 CA denylist，在生成 cacert.pem 时删除 emSign ECC Root CA - G3，切断对已泄露中间证书私钥的信任路径。",
+    "effects": [
+      {
+        "comp_name": "Mozilla-CA",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,20261020)",
+            "min_fixed_version": "20261020",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "证书验证不恰当",
+    "kind_en": "Improper Certificate Validation",
+    "last_modified_time": "2026-10-21",
+    "level": "High",
+    "mps_id": "MPS-fd7d-8fdf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/10/20/36",
+        "name": ""
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-113812",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-113812",
+        "name": ""
+      },
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/10/20/1",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/LWP/Mozilla-CA-20261020/changes",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/libwww-perl/Mozilla-CA/commit/3c4d166625d82b22fd50b48c272b0bc278fac046",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/libwww-perl/Mozilla-CA/commit/18fc26558b3b9672f5813afd07b4295cfa0dc00a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/libwww-perl/Mozilla-CA/releases/tag/v20261020",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.mozilla.org/show_bug.cgi?id=2083449",
+        "name": ""
+      },
+      {
+        "url": "https://emudhra.we-have-a-problem.com/",
+        "name": ""
+      },
+      {
+        "url": "https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Mozilla::CA根证书漏洞"
+  },
+  "first_saved_at": "2026-10-21T00:19:29+00:00"
+}
