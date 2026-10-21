@@ -1,0 +1,143 @@
+{
+  "saved_at": "2026-10-21T22:58:15+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-b2ba-e008",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94140",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-322",
+    "description": "Rex 是开源 Perl 自动化框架，用于远程主机编排、文件同步与任务执行，可通过 CPAN 安装，源码托管于 GitHub。\n受影响版本中，Rex::Commands::Rsync 导出的 sync 在远程 rsync 传输时把 ssh 命令硬编码为 StrictHostKeyChecking=no，密码认证、私钥认证和回退路径均如此，且调用方经 set_openssh_opt 设置的 SSH 选项无法作用于该命令。攻击者若在真实主机密钥被记录前重定向连接并出示自有密钥，传输仍继续：密码认证会把连接密码发给该服务器，上传会把选定本地文件写入该服务器，下载会把其返回内容写入本地目标。\n修复版本中通过停止在远程 rsync 的 ssh 命令中硬编码 StrictHostKeyChecking=no，使未知主机密钥无法再被自动接受。当前 CPAN 尚未发布修复版本，GitHub master 仍保留该硬编码，在官方修复发布前应避免对远程主机使用 sync。",
+    "effects": [
+      {
+        "comp_name": "Rex",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.16.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未进行实体认证的密钥交换",
+    "kind_en": "Key Exchange without Entity Authentication",
+    "last_modified_time": "2026-10-22",
+    "level": "High",
+    "mps_id": "MPS-b2ba-e008",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/10/21/28",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-94140",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/FERKI/Rex-1.16.1/source/lib/Rex/Commands/Rsync.pm",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/dist/Rex",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/RexOps/Rex",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Rex rsync主机密钥绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94140",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-322",
+    "description": "Rex 是开源 Perl 自动化框架，用于远程主机编排、文件同步与任务执行，可通过 CPAN 安装，源码托管于 GitHub。\n受影响版本中，Rex::Commands::Rsync 导出的 sync 在远程 rsync 传输时把 ssh 命令硬编码为 StrictHostKeyChecking=no，密码认证、私钥认证和回退路径均如此，且调用方经 set_openssh_opt 设置的 SSH 选项无法作用于该命令。攻击者若在真实主机密钥被记录前重定向连接并出示自有密钥，传输仍继续：密码认证会把连接密码发给该服务器，上传会把选定本地文件写入该服务器，下载会把其返回内容写入本地目标。\n修复版本中通过停止在远程 rsync 的 ssh 命令中硬编码 StrictHostKeyChecking=no，使未知主机密钥无法再被自动接受。当前 CPAN 尚未发布修复版本，GitHub master 仍保留该硬编码，在官方修复发布前应避免对远程主机使用 sync。",
+    "effects": [
+      {
+        "comp_name": "Rex",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.16.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未进行实体认证的密钥交换",
+    "kind_en": "Key Exchange without Entity Authentication",
+    "last_modified_time": "2026-10-22",
+    "level": "High",
+    "mps_id": "MPS-b2ba-e008",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/10/21/28",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-94140",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/FERKI/Rex-1.16.1/source/lib/Rex/Commands/Rsync.pm",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/dist/Rex",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/RexOps/Rex",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Rex rsync主机密钥绕过"
+  },
+  "first_saved_at": "2026-10-21T22:58:15+00:00"
+}
