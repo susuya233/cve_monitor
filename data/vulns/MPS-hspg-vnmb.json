@@ -1,0 +1,129 @@
+{
+  "saved_at": "2026-10-21T15:54:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-hspg-vnmb",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80463",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-770",
+    "description": "Apache bRPC 是 Apache 软件基金会发布的开源工业级 C++ RPC 框架，用于高性能系统中的远程过程调用与流式 RPC。\n受影响版本中，内置流式 RPC 协议对单个数据帧按 max_body_size 设上限，但分片消息会把 continuation 帧累积进 Stream::_pending_buf 且不限制累计长度。远程攻击者在服务通过 brpc::StreamAccept 或 brpc::StreamCreate 打开流后，可持续发送 continuation 数据帧，使接收端内存无界增长直至进程耗尽内存并拒绝服务；默认 socket_max_streams_unconsumed_bytes=0 不会节流发送速率。\n修复版本中通过在 Stream::OnReceived 处理 FRAME_TYPE_DATA 时将分片消息累计载荷限制为 max_body_size（默认 64MB），超过限制即释放 pending fragments 并以 EMSGSIZE 关闭流，切断无界内存累积路径。",
+    "effects": [
+      {
+        "comp_name": "brpc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,1.18.0)",
+            "min_fixed_version": "1.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-10-21",
+    "level": "High",
+    "mps_id": "MPS-hspg-vnmb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hspg-vnmb",
+        "name": "https://www.oscs1024.com/hd/MPS-hspg-vnmb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80463",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80463"
+      },
+      {
+        "url": "https://lists.apache.org/thread/2pf15ojj0vr7rtx95677kgtl1mx3gdgb",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "bRPC流重组内存耗尽漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-80463",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-770",
+    "description": "Apache bRPC 是 Apache 软件基金会发布的开源工业级 C++ RPC 框架，用于高性能系统中的远程过程调用与流式 RPC。\n受影响版本中，内置流式 RPC 协议对单个数据帧按 max_body_size 设上限，但分片消息会把 continuation 帧累积进 Stream::_pending_buf 且不限制累计长度。远程攻击者在服务通过 brpc::StreamAccept 或 brpc::StreamCreate 打开流后，可持续发送 continuation 数据帧，使接收端内存无界增长直至进程耗尽内存并拒绝服务；默认 socket_max_streams_unconsumed_bytes=0 不会节流发送速率。\n修复版本中通过在 Stream::OnReceived 处理 FRAME_TYPE_DATA 时将分片消息累计载荷限制为 max_body_size（默认 64MB），超过限制即释放 pending fragments 并以 EMSGSIZE 关闭流，切断无界内存累积路径。",
+    "effects": [
+      {
+        "comp_name": "brpc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,1.18.0)",
+            "min_fixed_version": "1.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-10-21",
+    "level": "High",
+    "mps_id": "MPS-hspg-vnmb",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-hspg-vnmb",
+        "name": "https://www.oscs1024.com/hd/MPS-hspg-vnmb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80463",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-80463"
+      },
+      {
+        "url": "https://lists.apache.org/thread/2pf15ojj0vr7rtx95677kgtl1mx3gdgb",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "bRPC流重组内存耗尽漏洞"
+  },
+  "first_saved_at": "2026-10-21T15:54:49+00:00"
+}

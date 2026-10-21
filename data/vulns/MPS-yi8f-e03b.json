@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-10-21T15:54:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-yi8f-e03b",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用了空指针，并在不进行有效检查的情况下对其进行取消引用操作。当程序试图取消引用空指针时，由于空指针不指向任何有效的内存地址，会导致程序崩溃或产生未定义的行为。这种错误通常发生在开发者未对指针进行正确的初始化或验证时。",
+        "title": "什么是空指针取消引用"
+      },
+      {
+        "content": "- 拒绝服务：攻击者可以通过构造恶意输入或请求，触发程序中的空指针取消引用错误，导致程序崩溃或无法正常运行。这可能导致拒绝服务攻击，使系统无法提供正常的服务。\r\n- 内存信息泄露：攻击者可以通过利用空指针取消引用错误，访问程序中的敏感内存信息。这可能包括栈上的变量、函数指针或其他敏感数据，从而暴露系统的机密信息。\r\n- 代码执行：在某些情况下，空指针取消引用错误可能导致执行恶意代码或注入恶意代码的机会。攻击者可以通过精心构造的输入，利用空指针取消引用错误来执行任意的代码，进而获取系统控制权或执行未经授权的操作。",
+        "title": "空指针取消引用常见的攻击方式"
+      },
+      {
+        "content": "- 指针初始化和验证：开发者应该正确地初始化指针，并在使用指针之前进行有效的验证，确保指针不为空。在取消引用指针之前，应始终检查其是否为空。\r\n- 异常处理和错误恢复：程序应该具备健壮的异常处理和错误恢复机制，以便在发生空指针取消引用错误时能够适当地处理异常，而不是导致程序崩溃或暴露敏感信息。\r\n- 防御性编程：采用防御性编程的原则，如避免在未经验证的指针上进行操作，避免使用未初始化的指针等，以防止空指针取消引用错误的发生。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的空指针取消引用错误。这些工具可以帮助发现代码中可能存在的空指针问题，并及时修复。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括良好的指针使用和管理规范，以帮助开发者编写更可靠、安全的代码。",
+        "title": "如何预防空指针取消引用"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78058",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-476",
+    "description": "Apache bRPC 是开源 C++ 工业级 RPC 框架，默认在每个服务端口启用 HTTP/2 解析，并同时用于 h2/gRPC 客户端。\n受影响版本中，HTTP/2 接收路径向对端广告了 SETTINGS_MAX_CONCURRENT_STREAMS 与 SETTINGS_MAX_HEADER_LIST_SIZE 等限制但未真正执行：对端可挂起无界并发流、用 1 字节 HPACK 索引把小 HEADERS 帧放大成无界解码头表，并用 PING 洪水配合停读撑爆写缓冲；HPACK 动态表大小更新按协议默认值 4096 校验而非广告的 SETTINGS_HEADER_TABLE_SIZE，可导致解码器失步后空指针崩溃。该解析发生在 Authenticator 之前，远程未认证攻击者可造成进程内存无界增长或崩溃。\n修复版本中通过将默认并发流限制为每连接 1024、解码头表限制为 1MiB，并在 H2Context::TryToInsertStream、H2StreamContext::ConsumeHeaders、HPacker::Decode 与 WriteAck 中强制执行这些上限，超出则返回 RST_STREAM(REFUSED_STREAM) 或关闭连接，切断无界资源消耗路径。",
+    "effects": [
+      {
+        "comp_name": "brpc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.18.0)",
+            "min_fixed_version": "1.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "空指针取消引用",
+    "kind_en": "空指针取消引用",
+    "last_modified_time": "2026-10-21",
+    "level": "High",
+    "mps_id": "MPS-yi8f-e03b",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-yi8f-e03b",
+        "name": "https://www.oscs1024.com/hd/MPS-yi8f-e03b"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78058",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78058"
+      },
+      {
+        "url": "https://lists.apache.org/thread/2pf15ojj0vr7rtx95677kgtl1mx3gdgb",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "bRPC HTTP/2资源耗尽漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用了空指针，并在不进行有效检查的情况下对其进行取消引用操作。当程序试图取消引用空指针时，由于空指针不指向任何有效的内存地址，会导致程序崩溃或产生未定义的行为。这种错误通常发生在开发者未对指针进行正确的初始化或验证时。",
+        "title": "什么是空指针取消引用"
+      },
+      {
+        "content": "- 拒绝服务：攻击者可以通过构造恶意输入或请求，触发程序中的空指针取消引用错误，导致程序崩溃或无法正常运行。这可能导致拒绝服务攻击，使系统无法提供正常的服务。\r\n- 内存信息泄露：攻击者可以通过利用空指针取消引用错误，访问程序中的敏感内存信息。这可能包括栈上的变量、函数指针或其他敏感数据，从而暴露系统的机密信息。\r\n- 代码执行：在某些情况下，空指针取消引用错误可能导致执行恶意代码或注入恶意代码的机会。攻击者可以通过精心构造的输入，利用空指针取消引用错误来执行任意的代码，进而获取系统控制权或执行未经授权的操作。",
+        "title": "空指针取消引用常见的攻击方式"
+      },
+      {
+        "content": "- 指针初始化和验证：开发者应该正确地初始化指针，并在使用指针之前进行有效的验证，确保指针不为空。在取消引用指针之前，应始终检查其是否为空。\r\n- 异常处理和错误恢复：程序应该具备健壮的异常处理和错误恢复机制，以便在发生空指针取消引用错误时能够适当地处理异常，而不是导致程序崩溃或暴露敏感信息。\r\n- 防御性编程：采用防御性编程的原则，如避免在未经验证的指针上进行操作，避免使用未初始化的指针等，以防止空指针取消引用错误的发生。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的空指针取消引用错误。这些工具可以帮助发现代码中可能存在的空指针问题，并及时修复。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括良好的指针使用和管理规范，以帮助开发者编写更可靠、安全的代码。",
+        "title": "如何预防空指针取消引用"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-78058",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-476",
+    "description": "Apache bRPC 是开源 C++ 工业级 RPC 框架，默认在每个服务端口启用 HTTP/2 解析，并同时用于 h2/gRPC 客户端。\n受影响版本中，HTTP/2 接收路径向对端广告了 SETTINGS_MAX_CONCURRENT_STREAMS 与 SETTINGS_MAX_HEADER_LIST_SIZE 等限制但未真正执行：对端可挂起无界并发流、用 1 字节 HPACK 索引把小 HEADERS 帧放大成无界解码头表，并用 PING 洪水配合停读撑爆写缓冲；HPACK 动态表大小更新按协议默认值 4096 校验而非广告的 SETTINGS_HEADER_TABLE_SIZE，可导致解码器失步后空指针崩溃。该解析发生在 Authenticator 之前，远程未认证攻击者可造成进程内存无界增长或崩溃。\n修复版本中通过将默认并发流限制为每连接 1024、解码头表限制为 1MiB，并在 H2Context::TryToInsertStream、H2StreamContext::ConsumeHeaders、HPacker::Decode 与 WriteAck 中强制执行这些上限，超出则返回 RST_STREAM(REFUSED_STREAM) 或关闭连接，切断无界资源消耗路径。",
+    "effects": [
+      {
+        "comp_name": "brpc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.18.0)",
+            "min_fixed_version": "1.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "空指针取消引用",
+    "kind_en": "NULL Pointer Dereference",
+    "last_modified_time": "2026-10-21",
+    "level": "High",
+    "mps_id": "MPS-yi8f-e03b",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-yi8f-e03b",
+        "name": "https://www.oscs1024.com/hd/MPS-yi8f-e03b"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-78058",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-78058"
+      },
+      {
+        "url": "https://lists.apache.org/thread/2pf15ojj0vr7rtx95677kgtl1mx3gdgb",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "bRPC HTTP/2资源耗尽漏洞"
+  },
+  "first_saved_at": "2026-10-21T15:54:54+00:00"
+}

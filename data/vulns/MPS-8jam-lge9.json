@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-10-21T15:54:48+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-8jam-lge9",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能有效地控制资源的使用，导致攻击者可以利用这个漏洞耗尽应用程序所依赖的资源。这些资源可以是计算资源（CPU、内存）、网络带宽、数据库连接或其他系统资源。攻击者可以通过发送特制的请求、恶意输入或其他方式，使应用程序消耗大量资源，导致拒绝服务或系统崩溃。",
+        "title": "什么是拒绝服务"
+      },
+      {
+        "content": "- 消耗计算资源：攻击者可以发送计算密集型的请求，例如复杂的计算、无限循环或递归操作，以耗尽应用程序的计算资源，导致应用程序无法响应其他请求。\r\n- 消耗内存资源：攻击者可以发送大量的数据或恶意输入，以导致应用程序消耗过多的内存资源，从而使系统的可用内存耗尽，并导致应用程序崩溃或变得不可用。\r\n- 消耗网络带宽：攻击者可以发送大量的请求或大型数据包，以消耗应用程序所依赖的网络带宽。这会导致其他合法用户无法正常访问应用程序或降低系统的整体网络性能。\r\n- 消耗存储资源：攻击者可以发送大量的请求或上传大文件，以耗尽应用程序的存储资源，导致系统无法处理其他请求或存储新的数据。",
+        "title": "拒绝服务常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对输入数据进行合理的验证和过滤，防止恶意输入导致资源消耗过高。\r\n- 实施资源限制：应用程序应该实施适当的资源限制策略，例如限制计算操作的时间或次数，限制内存使用量，限制并发连接数等，以防止资源被耗尽。\r\n- 异常处理与错误恢复：应用程序应该具备健壮的异常处理和错误恢复机制，以防止因意外错误导致资源泄漏或无法释放的情况。\r\n- 资源监控与警报：应用程序应该实施适当的资源监控和警报机制，及时发现异常的资源消耗情况，并采取相应的措施来应对。\r\n- 压力测试与性能优化：应用程序应该进行压力测试，以评估其在高负载情况下的性能，并进行必要的性能优化，以确保能够有效地处理大量请求而不耗尽资源。",
+        "title": "如何预防拒绝服务"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81755",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-400",
+    "description": "Apache bRPC 是 Apache 软件基金会的开源 C++ RPC 框架，用于提供高性能远程过程调用和流式 RPC。\n受影响版本中，流式 RPC 允许客户端在一次请求的 RPC meta 字段 stream_settings.extra_stream_ids 中声明额外流标识。服务端公开接口 StreamAccept 会按声明数量为每个标识调用 Stream::Create 创建响应流，且不限制单次请求可接受的流数量；请求体仅受 max_body_size（默认 64MB）约束，足以携带大量流标识。每个被接受的流都会分配独立的 bthread 执行队列及相关资源，远程攻击者发送单次请求即可耗尽服务器内存并造成拒绝服务。\n修复版本中通过新增 gflag stream_max_streams_per_request（默认 64），在 StreamAccept 创建任何响应流之前校验声明的流数量，超出上限的请求直接拒绝，从而切断无界创建流导致的内存耗尽路径。",
+    "effects": [
+      {
+        "comp_name": "brpc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.18.0)",
+            "min_fixed_version": "1.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "拒绝服务",
+    "kind_en": "不受控制的资源消耗",
+    "last_modified_time": "2026-10-21",
+    "level": "High",
+    "mps_id": "MPS-8jam-lge9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8jam-lge9",
+        "name": "https://www.oscs1024.com/hd/MPS-8jam-lge9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81755",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81755"
+      },
+      {
+        "url": "https://lists.apache.org/thread/2pf15ojj0vr7rtx95677kgtl1mx3gdgb",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Apache bRPC资源耗尽漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能有效地控制资源的使用，导致攻击者可以利用这个漏洞耗尽应用程序所依赖的资源。这些资源可以是计算资源（CPU、内存）、网络带宽、数据库连接或其他系统资源。攻击者可以通过发送特制的请求、恶意输入或其他方式，使应用程序消耗大量资源，导致拒绝服务或系统崩溃。",
+        "title": "什么是拒绝服务"
+      },
+      {
+        "content": "- 消耗计算资源：攻击者可以发送计算密集型的请求，例如复杂的计算、无限循环或递归操作，以耗尽应用程序的计算资源，导致应用程序无法响应其他请求。\r\n- 消耗内存资源：攻击者可以发送大量的数据或恶意输入，以导致应用程序消耗过多的内存资源，从而使系统的可用内存耗尽，并导致应用程序崩溃或变得不可用。\r\n- 消耗网络带宽：攻击者可以发送大量的请求或大型数据包，以消耗应用程序所依赖的网络带宽。这会导致其他合法用户无法正常访问应用程序或降低系统的整体网络性能。\r\n- 消耗存储资源：攻击者可以发送大量的请求或上传大文件，以耗尽应用程序的存储资源，导致系统无法处理其他请求或存储新的数据。",
+        "title": "拒绝服务常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对输入数据进行合理的验证和过滤，防止恶意输入导致资源消耗过高。\r\n- 实施资源限制：应用程序应该实施适当的资源限制策略，例如限制计算操作的时间或次数，限制内存使用量，限制并发连接数等，以防止资源被耗尽。\r\n- 异常处理与错误恢复：应用程序应该具备健壮的异常处理和错误恢复机制，以防止因意外错误导致资源泄漏或无法释放的情况。\r\n- 资源监控与警报：应用程序应该实施适当的资源监控和警报机制，及时发现异常的资源消耗情况，并采取相应的措施来应对。\r\n- 压力测试与性能优化：应用程序应该进行压力测试，以评估其在高负载情况下的性能，并进行必要的性能优化，以确保能够有效地处理大量请求而不耗尽资源。",
+        "title": "如何预防拒绝服务"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-81755",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-400",
+    "description": "Apache bRPC 是 Apache 软件基金会的开源 C++ RPC 框架，用于提供高性能远程过程调用和流式 RPC。\n受影响版本中，流式 RPC 允许客户端在一次请求的 RPC meta 字段 stream_settings.extra_stream_ids 中声明额外流标识。服务端公开接口 StreamAccept 会按声明数量为每个标识调用 Stream::Create 创建响应流，且不限制单次请求可接受的流数量；请求体仅受 max_body_size（默认 64MB）约束，足以携带大量流标识。每个被接受的流都会分配独立的 bthread 执行队列及相关资源，远程攻击者发送单次请求即可耗尽服务器内存并造成拒绝服务。\n修复版本中通过新增 gflag stream_max_streams_per_request（默认 64），在 StreamAccept 创建任何响应流之前校验声明的流数量，超出上限的请求直接拒绝，从而切断无界创建流导致的内存耗尽路径。",
+    "effects": [
+      {
+        "comp_name": "brpc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.18.0)",
+            "min_fixed_version": "1.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "拒绝服务",
+    "kind_en": "Uncontrolled Resource Consumption",
+    "last_modified_time": "2026-10-21",
+    "level": "High",
+    "mps_id": "MPS-8jam-lge9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8jam-lge9",
+        "name": "https://www.oscs1024.com/hd/MPS-8jam-lge9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81755",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-81755"
+      },
+      {
+        "url": "https://lists.apache.org/thread/2pf15ojj0vr7rtx95677kgtl1mx3gdgb",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Apache bRPC资源耗尽漏洞"
+  },
+  "first_saved_at": "2026-10-21T15:54:48+00:00"
+}

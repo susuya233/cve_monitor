@@ -1,0 +1,193 @@
+{
+  "saved_at": "2026-10-21T15:54:47+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0206-d300",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-48830",
+    "cvss": {},
+    "cvss_score": 9.1,
+    "cvss_vector": "",
+    "cwe": "CWE-287",
+    "description": "Apache bRPC 是 Apache 软件基金会维护的开源 C++ RPC 框架，用于构建高并发服务间通信，并默认提供 HTTP 协议及 /status 等内置管理接口。\n受影响版本中，HTTP 协议在每个连接上最多执行一次认证。VerifyHttpRequest 在 URI 命中内置服务时直接返回 true，跳过 Authenticator::VerifyCredential。InputMessenger 随即将该 Socket 标记为认证成功，同一 HTTP/1.1 keep-alive 连接上后续受保护的非内置 HTTP 请求不再校验 Authorization，远程未认证攻击者可先访问公网监听端口上的内置接口再调用业务接口以绕过 ServerOptions.auth。\n修复版本中通过将内置服务免认证限定为仅 internal_port：公网监听端口上的内置 HTTP 请求同样读取 Authorization 并调用 VerifyCredential，认证失败时连接不会被标记为已认证，后续业务请求也无法复用该路径。",
+    "effects": [
+      {
+        "comp_name": "brpc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,1.18.0)",
+            "min_fixed_version": "1.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "身份验证不当",
+    "kind_en": "认证不当",
+    "last_modified_time": "2026-10-21",
+    "level": "Critical",
+    "mps_id": "MPS-0206-d300",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/10/21/3",
+        "name": ""
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48830",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-48830",
+        "name": ""
+      },
+      {
+        "url": "https://lists.apache.org/thread/2pf15ojj0vr7rtx95677kgtl1mx3gdgb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/brpc",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/brpc/pull/3308",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/brpc/commit/a47e34903fdbb202c8786167bddd5ea519772d84",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/brpc/releases/tag/1.18.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "bRPC HTTP认证绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-48830",
+    "cvss": {},
+    "cvss_score": 9.1,
+    "cvss_vector": "",
+    "cwe": "CWE-287",
+    "description": "Apache bRPC 是 Apache 软件基金会维护的开源 C++ RPC 框架，用于构建高并发服务间通信，并默认提供 HTTP 协议及 /status 等内置管理接口。\n受影响版本中，HTTP 协议在每个连接上最多执行一次认证。VerifyHttpRequest 在 URI 命中内置服务时直接返回 true，跳过 Authenticator::VerifyCredential。InputMessenger 随即将该 Socket 标记为认证成功，同一 HTTP/1.1 keep-alive 连接上后续受保护的非内置 HTTP 请求不再校验 Authorization，远程未认证攻击者可先访问公网监听端口上的内置接口再调用业务接口以绕过 ServerOptions.auth。\n修复版本中通过将内置服务免认证限定为仅 internal_port：公网监听端口上的内置 HTTP 请求同样读取 Authorization 并调用 VerifyCredential，认证失败时连接不会被标记为已认证，后续业务请求也无法复用该路径。",
+    "effects": [
+      {
+        "comp_name": "brpc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,1.18.0)",
+            "min_fixed_version": "1.18.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "身份验证不当",
+    "kind_en": "Improper Authentication",
+    "last_modified_time": "2026-10-21",
+    "level": "Critical",
+    "mps_id": "MPS-0206-d300",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/10/21/3",
+        "name": ""
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48830",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-48830",
+        "name": ""
+      },
+      {
+        "url": "https://lists.apache.org/thread/2pf15ojj0vr7rtx95677kgtl1mx3gdgb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/brpc",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/brpc/pull/3308",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/brpc/commit/a47e34903fdbb202c8786167bddd5ea519772d84",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/brpc/releases/tag/1.18.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "bRPC HTTP认证绕过"
+  },
+  "first_saved_at": "2026-10-21T15:54:47+00:00"
+}
