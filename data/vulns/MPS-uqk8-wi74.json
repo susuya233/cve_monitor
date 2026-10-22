@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-10-22T17:48:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-uqk8-wi74",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94482",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "Next.js 是 Vercel 开源的 React 全栈 Web 框架，npm 包名为 next，用于构建 App Router 与 Server Actions 等服务端应用。\n受影响版本中，已启用 App Router 且至少注册一个 Server Action 的应用会在 handleAction 中把请求体交给内置 React Flight 的 decodeReply 或 decodeAction 解码；攻击者发送构造的 Server Action 请求可使该解码路径消耗过量 CPU，并阻塞同一进程内后续请求。使用 Pages Router 的应用以及未使用 Server Action 的 App Router 应用不受影响。\n修复版本中通过更新内置 react-server-dom 的 Server Component 传输协议与 Server Action 载荷解码逻辑，避免构造请求在解码阶段消耗过量 CPU，恢复进程内后续请求处理能力。",
+    "effects": [
+      {
+        "comp_name": "next",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[16.0.0,16.4.1)",
+            "min_fixed_version": "16.4.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.0.0,15.5.28)",
+            "min_fixed_version": "15.5.28",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-10-23",
+    "level": "High",
+    "mps_id": "MPS-uqk8-wi74",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-23",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/vercel/next.js/security/advisories/GHSA-p3m5-59mp-jv5r",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/releases/tag/v15.5.28",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/releases/tag/v16.4.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-p3m5-59mp-jv5r",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源",
+      "终端软件"
+    ],
+    "title": "Next.js服务端动作拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-94482",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "Next.js 是 Vercel 开源的 React 全栈 Web 框架，npm 包名为 next，用于构建 App Router 与 Server Actions 等服务端应用。\n受影响版本中，已启用 App Router 且至少注册一个 Server Action 的应用会在 handleAction 中把请求体交给内置 React Flight 的 decodeReply 或 decodeAction 解码；攻击者发送构造的 Server Action 请求可使该解码路径消耗过量 CPU，并阻塞同一进程内后续请求。使用 Pages Router 的应用以及未使用 Server Action 的 App Router 应用不受影响。\n修复版本中通过更新内置 react-server-dom 的 Server Component 传输协议与 Server Action 载荷解码逻辑，避免构造请求在解码阶段消耗过量 CPU，恢复进程内后续请求处理能力。",
+    "effects": [
+      {
+        "comp_name": "next",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[16.0.0,16.4.1)",
+            "min_fixed_version": "16.4.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.0.0,15.5.28)",
+            "min_fixed_version": "15.5.28",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-10-23",
+    "level": "High",
+    "mps_id": "MPS-uqk8-wi74",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-23",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/vercel/next.js/security/advisories/GHSA-p3m5-59mp-jv5r",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/releases/tag/v15.5.28",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/vercel/next.js/releases/tag/v16.4.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-p3m5-59mp-jv5r",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源",
+      "终端软件"
+    ],
+    "title": "Next.js服务端动作拒绝服务"
+  },
+  "first_saved_at": "2026-10-22T17:48:54+00:00"
+}

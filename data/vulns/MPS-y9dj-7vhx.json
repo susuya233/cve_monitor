@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-10-22T17:48:58+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-y9dj-7vhx",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-115450",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "4daa8cea-433a-44bd-9456-53b127fc289a",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-472",
+    "description": "MarcosCamara01 Ecommerce Template 是基于 Next.js 的开源电商模板，用于提供购物车与 Stripe Checkout 结账能力。\n受影响版本中，POST /api/user/cart 将请求体里相互独立的 variantId 与 stripeId 直接写入购物车行，未校验 stripeId 是否属于该 variantId。POST /api/stripe/payment 以 { price: item.stripeId, quantity } 从购物车行构造 Stripe Checkout 扣款项，checkout.session.completed webhook 再按同一行的 variantId 生成订单商品。已认证普通用户可将高价商品的 variantId 与目录中公开可读的低价 stripeId 配对，按低价完成支付并获得高价商品。\n修复版本中通过新增 buildLineItems() 只从关联的 variant.stripeId 读取扣款价格，并使 addToCartSchema 不再接受客户端 stripeId、改由 findVariantById() 在服务端解析，令扣款金额与订单商品均由 variantId 决定。",
+    "effects": [
+      {
+        "comp_name": "ecommerce-template",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2aa8ec539b6b441632096ced78e099fb096a57da,e6b364cd668f2ba875cfa7f6d55c63e771715df7)",
+            "min_fixed_version": "e6b364cd668f2ba875cfa7f6d55c63e771715df7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对假设不可变Web参数的外部可控制",
+    "kind_en": "假定不可变 Web 参数的外部控制",
+    "last_modified_time": "2026-10-22",
+    "level": "High",
+    "mps_id": "MPS-y9dj-7vhx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-y9dj-7vhx",
+        "name": "https://www.oscs1024.com/hd/MPS-y9dj-7vhx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115450",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-115450"
+      },
+      {
+        "url": "https://github.com/MarcosCamara01/ecommerce-template/commit/e6b364cd668f2ba875cfa7f6d55c63e771715df7",
+        "name": ""
+      },
+      {
+        "url": "https://secur0.com/en/cna/cve-list/cve-2026-115450-price-manipulation-stripe-checkout",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "电商模板价格篡改漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-115450",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "4daa8cea-433a-44bd-9456-53b127fc289a",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-472",
+    "description": "MarcosCamara01 Ecommerce Template 是基于 Next.js 的开源电商模板，用于提供购物车与 Stripe Checkout 结账能力。\n受影响版本中，POST /api/user/cart 将请求体里相互独立的 variantId 与 stripeId 直接写入购物车行，未校验 stripeId 是否属于该 variantId。POST /api/stripe/payment 以 { price: item.stripeId, quantity } 从购物车行构造 Stripe Checkout 扣款项，checkout.session.completed webhook 再按同一行的 variantId 生成订单商品。已认证普通用户可将高价商品的 variantId 与目录中公开可读的低价 stripeId 配对，按低价完成支付并获得高价商品。\n修复版本中通过新增 buildLineItems() 只从关联的 variant.stripeId 读取扣款价格，并使 addToCartSchema 不再接受客户端 stripeId、改由 findVariantById() 在服务端解析，令扣款金额与订单商品均由 variantId 决定。",
+    "effects": [
+      {
+        "comp_name": "ecommerce-template",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2aa8ec539b6b441632096ced78e099fb096a57da,e6b364cd668f2ba875cfa7f6d55c63e771715df7)",
+            "min_fixed_version": "e6b364cd668f2ba875cfa7f6d55c63e771715df7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对假设不可变Web参数的外部可控制",
+    "kind_en": "External Control of Assumed-Immutable Web Parameter",
+    "last_modified_time": "2026-10-22",
+    "level": "High",
+    "mps_id": "MPS-y9dj-7vhx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-y9dj-7vhx",
+        "name": "https://www.oscs1024.com/hd/MPS-y9dj-7vhx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115450",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-115450"
+      },
+      {
+        "url": "https://github.com/MarcosCamara01/ecommerce-template/commit/e6b364cd668f2ba875cfa7f6d55c63e771715df7",
+        "name": ""
+      },
+      {
+        "url": "https://secur0.com/en/cna/cve-list/cve-2026-115450-price-manipulation-stripe-checkout",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "电商模板价格篡改漏洞"
+  },
+  "first_saved_at": "2026-10-22T17:48:58+00:00"
+}
