@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-10-22T12:50:01+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-oh1b-2glp",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86696",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "esaml 是开源 Erlang SAML Service Provider 库，用于在 Erlang/OTP 节点上实现 SAML 2.0 单点登录与单点登出，源码以 BSD-2-Clause 许可证发布，可通过 Hex 包 esaml 获取。\n受影响版本中，单点登出端点将未签名 LogoutResponse 交给 esaml_sp:validate_logout_response/2，该函数仅在存在 ds:Signature 时验签，未签名报文会进入 esaml:decode_logout_response/1。随后 esaml:status_code_map/1 对无法识别且以 urn: 开头的 StatusCode 调用 list_to_atom/1，把 URN 最后一段永久写入 Erlang 原子表。攻击者反复提交互不相同的状态码可耗尽约一百万条原子表上限并造成节点崩溃。\n修复版本中通过官方尚未发布可用补丁切断该链路，需在单点登出入口拒绝未签名 LogoutResponse，并将未知 StatusCode 限制为已知 SAML 状态码或改用 list_to_existing_atom，阻止攻击者向原子表写入任意新原子。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-10-22",
+    "level": "High",
+    "mps_id": "MPS-oh1b-2glp",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oh1b-2glp",
+        "name": "https://www.oscs1024.com/hd/MPS-oh1b-2glp"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86696",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86696"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-86696.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/arekinath/esaml/commit/be692b56245071899757afa7ef47e43593d3de96",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dropbox/esaml/commit/be692b56245071899757afa7ef47e43593d3de96",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/handnot2/esaml/commit/be692b56245071899757afa7ef47e43593d3de96",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-86696",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "esaml原子表耗尽漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86696",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "esaml 是开源 Erlang SAML Service Provider 库，用于在 Erlang/OTP 节点上实现 SAML 2.0 单点登录与单点登出，源码以 BSD-2-Clause 许可证发布，可通过 Hex 包 esaml 获取。\n受影响版本中，单点登出端点将未签名 LogoutResponse 交给 esaml_sp:validate_logout_response/2，该函数仅在存在 ds:Signature 时验签，未签名报文会进入 esaml:decode_logout_response/1。随后 esaml:status_code_map/1 对无法识别且以 urn: 开头的 StatusCode 调用 list_to_atom/1，把 URN 最后一段永久写入 Erlang 原子表。攻击者反复提交互不相同的状态码可耗尽约一百万条原子表上限并造成节点崩溃。\n修复版本中通过官方尚未发布可用补丁切断该链路，需在单点登出入口拒绝未签名 LogoutResponse，并将未知 StatusCode 限制为已知 SAML 状态码或改用 list_to_existing_atom，阻止攻击者向原子表写入任意新原子。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-10-22",
+    "level": "High",
+    "mps_id": "MPS-oh1b-2glp",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oh1b-2glp",
+        "name": "https://www.oscs1024.com/hd/MPS-oh1b-2glp"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86696",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86696"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-86696.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/arekinath/esaml/commit/be692b56245071899757afa7ef47e43593d3de96",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dropbox/esaml/commit/be692b56245071899757afa7ef47e43593d3de96",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/handnot2/esaml/commit/be692b56245071899757afa7ef47e43593d3de96",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-86696",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "esaml原子表耗尽漏洞"
+  },
+  "first_saved_at": "2026-10-22T12:50:01+00:00"
+}

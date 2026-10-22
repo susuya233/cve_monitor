@@ -1,0 +1,167 @@
+{
+  "saved_at": "2026-10-22T12:50:02+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-86r4-qgju",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 编写代码时没有正确处理输入数据或没有正确验证用户输入而导致的。",
+        "title": "什么是关键资源权限分配不当"
+      },
+      {
+        "content": "- 弱密码或未使用的密码：当管理员或系统管理员在创建帐户时，没有使用强密码或未对帐户进行密码更新时，可能会发生这种情况。弱密码可能会被黑客破解或通过其他方式轻松访问系统。\n- 未正确配置权限：在系统中，不同的资源通常需要不同的权限才能访问。如果管理员未正确配置权限，那么未经授权的用户可能会通过欺骗系统或利用其他漏洞来访问关键资源。\n- 权限重用：在某些情况下，管理员可能会将某些权限分配给某个用户，但这些权限并未被正确地限制或授权给该用户。如果其他用户尝试使用这些权限访问关键资源，那么他们可能会获得未经授权的访问权限。\n- 未正确验证用户输入：当开发人员没有正确验证用户输入时，可能会发生这种情况。例如，如果开发人员未正确过滤用户输入的用户名或密码，那么黑客可能会利用这些信息轻松地访问系统。\n",
+        "title": "关键资源权限分配不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码：管理员应该使用强密码来保护系统，并定期更改密码。强密码应该包括数字、字母和符号，并且应该不同于其他帐户使用的密码。\n- 正确配置权限：管理员应该正确配置系统中不同资源所需的权限。用户可以被授予访问特定资源的权限，但不应该被授予访问其他资源的权限。\n- 权限限制：管理员应该使用权限限制来限制用户对特定资源的访问。例如，用户可以被授予访问特定文件夹的权限，但不能访问其他文件夹。\n- 输入验证：开发人员应该正确验证用户输入。例如，他们可以过滤用户输入的用户名和密码，以确保它们符合预期的格式。\n- 安全培训：管理员和用户应该接受安全培训，以便了解如何识别和避免常见的安全漏洞，例如不正确权限授予漏洞。\n- 定期更新和修补软件：系统软件和应用程序应该定期更新和修补，以确保它们不受最新安全漏洞的影响。",
+        "title": "如何预防关键资源权限分配不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-115253",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-732",
+    "description": "WatchGuard Agent 是 WatchGuard 提供的商业端点代理软件，在 Windows 平台以特权服务形式运行，用于写入并维护代理安全日志。\n受影响版本中，代理日志目录权限分配不正确，本地已认证的非管理员用户可创建、修改、追加或删除该目录中的代理日志文件，并写入其他文件，从而篡改或销毁安全日志，以及向特权服务所属目录投放可执行内容以准备后续本地攻击。\n修复版本中通过官方发布 1.25.14.0000 及以上版本，纠正日志目录的权限配置，阻止非管理员本地用户继续对该目录执行写入、篡改或文件投放。",
+    "effects": [
+      {
+        "comp_name": "watchguard_agent",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,1.25.14.0000)",
+            "min_fixed_version": "1.25.14.0000",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键资源权限分配不当",
+    "kind_en": "关键资源的权限分配不正确",
+    "last_modified_time": "2026-10-22",
+    "level": "High",
+    "mps_id": "MPS-86r4-qgju",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-86r4-qgju",
+        "name": "https://www.oscs1024.com/hd/MPS-86r4-qgju"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115253",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-115253"
+      },
+      {
+        "url": "https://psirt.watchguard.com/CVE-2026-115253",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "WatchGuard Agent日志权限漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 编写代码时没有正确处理输入数据或没有正确验证用户输入而导致的。",
+        "title": "什么是关键资源权限分配不当"
+      },
+      {
+        "content": "- 弱密码或未使用的密码：当管理员或系统管理员在创建帐户时，没有使用强密码或未对帐户进行密码更新时，可能会发生这种情况。弱密码可能会被黑客破解或通过其他方式轻松访问系统。\n- 未正确配置权限：在系统中，不同的资源通常需要不同的权限才能访问。如果管理员未正确配置权限，那么未经授权的用户可能会通过欺骗系统或利用其他漏洞来访问关键资源。\n- 权限重用：在某些情况下，管理员可能会将某些权限分配给某个用户，但这些权限并未被正确地限制或授权给该用户。如果其他用户尝试使用这些权限访问关键资源，那么他们可能会获得未经授权的访问权限。\n- 未正确验证用户输入：当开发人员没有正确验证用户输入时，可能会发生这种情况。例如，如果开发人员未正确过滤用户输入的用户名或密码，那么黑客可能会利用这些信息轻松地访问系统。\n",
+        "title": "关键资源权限分配不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码：管理员应该使用强密码来保护系统，并定期更改密码。强密码应该包括数字、字母和符号，并且应该不同于其他帐户使用的密码。\n- 正确配置权限：管理员应该正确配置系统中不同资源所需的权限。用户可以被授予访问特定资源的权限，但不应该被授予访问其他资源的权限。\n- 权限限制：管理员应该使用权限限制来限制用户对特定资源的访问。例如，用户可以被授予访问特定文件夹的权限，但不能访问其他文件夹。\n- 输入验证：开发人员应该正确验证用户输入。例如，他们可以过滤用户输入的用户名和密码，以确保它们符合预期的格式。\n- 安全培训：管理员和用户应该接受安全培训，以便了解如何识别和避免常见的安全漏洞，例如不正确权限授予漏洞。\n- 定期更新和修补软件：系统软件和应用程序应该定期更新和修补，以确保它们不受最新安全漏洞的影响。",
+        "title": "如何预防关键资源权限分配不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-115253",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-732",
+    "description": "WatchGuard Agent 是 WatchGuard 提供的商业端点代理软件，在 Windows 平台以特权服务形式运行，用于写入并维护代理安全日志。\n受影响版本中，代理日志目录权限分配不正确，本地已认证的非管理员用户可创建、修改、追加或删除该目录中的代理日志文件，并写入其他文件，从而篡改或销毁安全日志，以及向特权服务所属目录投放可执行内容以准备后续本地攻击。\n修复版本中通过官方发布 1.25.14.0000 及以上版本，纠正日志目录的权限配置，阻止非管理员本地用户继续对该目录执行写入、篡改或文件投放。",
+    "effects": [
+      {
+        "comp_name": "watchguard_agent",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,1.25.14.0000)",
+            "min_fixed_version": "1.25.14.0000",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键资源权限分配不当",
+    "kind_en": "Incorrect Permission Assignment for Critical Resource",
+    "last_modified_time": "2026-10-22",
+    "level": "High",
+    "mps_id": "MPS-86r4-qgju",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-86r4-qgju",
+        "name": "https://www.oscs1024.com/hd/MPS-86r4-qgju"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115253",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-115253"
+      },
+      {
+        "url": "https://psirt.watchguard.com/CVE-2026-115253",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "WatchGuard Agent日志权限漏洞"
+  },
+  "first_saved_at": "2026-10-22T12:50:02+00:00"
+}

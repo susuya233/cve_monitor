@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-10-22T12:49:59+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-yqj4-wp9v",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-93471",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-409",
+    "description": "esaml 是开源 Erlang SAML Service Provider 库，以 Hex 包名 esaml 发布，供 Cowboy 应用处理断言消费（ACS）与单点登出。\n受影响版本中，ACS 与单点登出入口将未认证请求中的 SAMLResponse 交给 esaml_binding:decode_response/2。该函数先做 Base64 解码，再以 zlib:unzip/1 无界解压，并经 binary_to_list/1 转为 charlist，且发生在 xmerl_scan 解析与 esaml_sp 签名校验之前。数十 KB 的高压缩 DEFLATE 流可膨胀至数百 MB 二进制及数 GB 列表堆，少量并发请求足以耗尽内存并导致 Erlang VM 崩溃。\n修复版本中通过限制 zlib:unzip/1 的解压输出并避免将无界解压结果整段转为 charlist 来切断内存放大路径；截至 2026-10-22 官方尚未发布修复版本，Hex 最新 4.6.0 仍包含相同无界解压逻辑。",
+    "effects": [
+      {
+        "comp_name": "esaml",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.1.0,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对高度压缩数据的处理不恰当（数据放大攻击）",
+    "kind_en": "高度压缩数据的不当处理（数据放大）",
+    "last_modified_time": "2026-10-22",
+    "level": "High",
+    "mps_id": "MPS-yqj4-wp9v",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-yqj4-wp9v",
+        "name": "https://www.oscs1024.com/hd/MPS-yqj4-wp9v"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93471",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-93471"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-93471.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/arekinath/esaml/commit/deeb84378d5c82153b470e99d24f77c38afca14a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dropbox/esaml/commit/deeb84378d5c82153b470e99d24f77c38afca14a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/handnot2/esaml/commit/deeb84378d5c82153b470e99d24f77c38afca14a",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-93471",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "esaml解压放大漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-93471",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-409",
+    "description": "esaml 是开源 Erlang SAML Service Provider 库，以 Hex 包名 esaml 发布，供 Cowboy 应用处理断言消费（ACS）与单点登出。\n受影响版本中，ACS 与单点登出入口将未认证请求中的 SAMLResponse 交给 esaml_binding:decode_response/2。该函数先做 Base64 解码，再以 zlib:unzip/1 无界解压，并经 binary_to_list/1 转为 charlist，且发生在 xmerl_scan 解析与 esaml_sp 签名校验之前。数十 KB 的高压缩 DEFLATE 流可膨胀至数百 MB 二进制及数 GB 列表堆，少量并发请求足以耗尽内存并导致 Erlang VM 崩溃。\n修复版本中通过限制 zlib:unzip/1 的解压输出并避免将无界解压结果整段转为 charlist 来切断内存放大路径；截至 2026-10-22 官方尚未发布修复版本，Hex 最新 4.6.0 仍包含相同无界解压逻辑。",
+    "effects": [
+      {
+        "comp_name": "esaml",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.1.0,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对高度压缩数据的处理不恰当（数据放大攻击）",
+    "kind_en": "Improper Handling of Highly Compressed Data (Data Amplification)",
+    "last_modified_time": "2026-10-22",
+    "level": "High",
+    "mps_id": "MPS-yqj4-wp9v",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-yqj4-wp9v",
+        "name": "https://www.oscs1024.com/hd/MPS-yqj4-wp9v"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93471",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-93471"
+      },
+      {
+        "url": "https://cna.erlef.org/cves/CVE-2026-93471.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/arekinath/esaml/commit/deeb84378d5c82153b470e99d24f77c38afca14a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dropbox/esaml/commit/deeb84378d5c82153b470e99d24f77c38afca14a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/handnot2/esaml/commit/deeb84378d5c82153b470e99d24f77c38afca14a",
+        "name": ""
+      },
+      {
+        "url": "https://osv.dev/vulnerability/EEF-CVE-2026-93471",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "esaml解压放大漏洞"
+  },
+  "first_saved_at": "2026-10-22T12:49:59+00:00"
+}
