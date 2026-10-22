@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-10-22T06:58:10+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xy49-b0wl",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-114730",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cwe": "CWE-918",
+    "description": "Roundcube Webmail 是开源 PHP Web 邮件套件，用于通过浏览器访问 IMAP 邮箱并渲染 HTML 邮件。\n受影响版本中，rcube_utils::is_local_url() 用于拦截指向回环、链路本地和云元数据地址的请求，但其网络黑名单未包含 RFC 6052 NAT64 前缀 64:ff9b::/96、RFC 8215 本地 NAT64 前缀 64:ff9b:1::/48 以及未指定地址 ::/128。攻击者在 HTML 邮件 stylesheet 链接中使用 http://[64:ff9b::7f00:1]/ 这类地址时，washtml_link_callback 会将其写入 CSS 代理会话，rcmail_action_utils_modcss 随即在服务端发起请求，从而访问回环、链路本地或云元数据地址。\n修复版本中通过在 is_local_url() 黑名单中补充 ::/128、64:ff9b::/96 与 64:ff9b:1::/48，将 NAT64 映射地址识别为本地 URL，阻止其进入 CSS 代理拉取路径。",
+    "effects": [
+      {
+        "comp_name": "roundcube/roundcubemail",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[1.6.14,1.6.20)",
+            "min_fixed_version": "1.6.20",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.7.0,1.7.5)",
+            "min_fixed_version": "1.7.5",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-10-22",
+    "level": "High",
+    "mps_id": "MPS-xy49-b0wl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xy49-b0wl",
+        "name": "https://www.oscs1024.com/hd/MPS-xy49-b0wl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-114730",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-114730"
+      },
+      {
+        "url": "https://bugs.debian.org/1151279",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/roundcube/roundcubemail/commit/3c3a65f66b53b7aaf3d720acd06e0b102eceb090",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/roundcube/roundcubemail/commit/6e1d480e730a45f29829b6a11af608d5d6eb3db6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/roundcube/roundcubemail/releases/tag/1.6.20",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/roundcube/roundcubemail/releases/tag/1.7.5",
+        "name": ""
+      },
+      {
+        "url": "https://roundcube.net/news/2026/10/19/security-updates-1.6.20-and-1.7.5",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Roundcube SSRF过滤绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-114730",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cwe": "CWE-918",
+    "description": "Roundcube Webmail 是开源 PHP Web 邮件套件，用于通过浏览器访问 IMAP 邮箱并渲染 HTML 邮件。\n受影响版本中，rcube_utils::is_local_url() 用于拦截指向回环、链路本地和云元数据地址的请求，但其网络黑名单未包含 RFC 6052 NAT64 前缀 64:ff9b::/96、RFC 8215 本地 NAT64 前缀 64:ff9b:1::/48 以及未指定地址 ::/128。攻击者在 HTML 邮件 stylesheet 链接中使用 http://[64:ff9b::7f00:1]/ 这类地址时，washtml_link_callback 会将其写入 CSS 代理会话，rcmail_action_utils_modcss 随即在服务端发起请求，从而访问回环、链路本地或云元数据地址。\n修复版本中通过在 is_local_url() 黑名单中补充 ::/128、64:ff9b::/96 与 64:ff9b:1::/48，将 NAT64 映射地址识别为本地 URL，阻止其进入 CSS 代理拉取路径。",
+    "effects": [
+      {
+        "comp_name": "roundcube/roundcubemail",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[1.6.14,1.6.20)",
+            "min_fixed_version": "1.6.20",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.7.0,1.7.5)",
+            "min_fixed_version": "1.7.5",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-10-22",
+    "level": "High",
+    "mps_id": "MPS-xy49-b0wl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xy49-b0wl",
+        "name": "https://www.oscs1024.com/hd/MPS-xy49-b0wl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-114730",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-114730"
+      },
+      {
+        "url": "https://bugs.debian.org/1151279",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/roundcube/roundcubemail/commit/3c3a65f66b53b7aaf3d720acd06e0b102eceb090",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/roundcube/roundcubemail/commit/6e1d480e730a45f29829b6a11af608d5d6eb3db6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/roundcube/roundcubemail/releases/tag/1.6.20",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/roundcube/roundcubemail/releases/tag/1.7.5",
+        "name": ""
+      },
+      {
+        "url": "https://roundcube.net/news/2026/10/19/security-updates-1.6.20-and-1.7.5",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Roundcube SSRF过滤绕过"
+  },
+  "first_saved_at": "2026-10-22T06:58:10+00:00"
+}
