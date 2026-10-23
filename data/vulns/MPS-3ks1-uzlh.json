@@ -1,0 +1,129 @@
+{
+  "saved_at": "2026-10-23T19:42:58+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3ks1-uzlh",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-115863",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+    "cwe": "CWE-121",
+    "description": "ConnMan 到 2.0 通过 DHCPv6 回复消息存在基于堆栈的缓冲区溢出。这发生在 gdhcp/client.c 中的 get_domains 中。无论实际选项长度如何，它都会将固定的 NS_MAXDNAME (1025) 字节从 DHCPv6 DOMAIN_LIST（选项 24）值复制到 1026 字节堆栈缓冲区 dns_name 中，然后使用无限制的“c += Jump + 1”循环遍历 DNS 标签。精心设计的 DHCPv6 REPLY 的 DOMAIN_LIST 选项大于等于 1025 个非零字节，使标签离开缓冲区并读/写“.”。攻击者选择的大步跨越了终点。在线攻击者可以通过伪造的路由器通告 (O=1) 和伪造的 DHCPv6 REPLY（与长 DOMAIN_LIST 匹配 xid/CLIENTID）来触发此攻击，而无需进行身份验证。影响是未经身份验证的 connmand 链接崩溃（以 root 身份运行）。这是在 bb06c47 中介绍的。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "基于堆栈的缓冲区溢出",
+    "last_modified_time": "2026-10-24",
+    "level": "High",
+    "mps_id": "MPS-3ks1-uzlh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3ks1-uzlh",
+        "name": "https://www.oscs1024.com/hd/MPS-3ks1-uzlh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115863",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-115863"
+      },
+      {
+        "url": "https://lore.kernel.org/connman/179274561161.81299.4579745057858200074@pm.me/",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/pub/scm/network/connman/connman.git/tree/gdhcp/client.c",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/pub/scm/network/connman/connman.git/commit/?id=bb06c47101ca243fa5c04fb4b03fe2a12420d280",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-115863漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-115863",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+    "cwe": "CWE-121",
+    "description": "ConnMan through 2.0 has a stack-based buffer overflow via a DHCPv6 Reply message. This occurs in get_domains in gdhcp/client.c. It copies a fixed NS_MAXDNAME (1025) bytes from a DHCPv6 DOMAIN_LIST (option 24) value into a 1026-byte stack buffer dns_name regardless of the actual option length, then walks DNS labels with an unbounded \"c += jump + 1\" loop. A crafted DHCPv6 REPLY with a DOMAIN_LIST option of >= 1025 non-zero bytes makes the label walk leave the buffer and read/write '.' past its end in attacker-chosen strides. An on-link attacker can trigger this without authentication via a forged Router Advertisement (O=1) and a forged DHCPv6 REPLY matching xid/CLIENTID with a long DOMAIN_LIST. The impact is unauthenticated on-link crash of connmand (runs as root). This was introduced in bb06c47.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "Stack-based Buffer Overflow",
+    "last_modified_time": "2026-10-24",
+    "level": "High",
+    "mps_id": "MPS-3ks1-uzlh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3ks1-uzlh",
+        "name": "https://www.oscs1024.com/hd/MPS-3ks1-uzlh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115863",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-115863"
+      },
+      {
+        "url": "https://lore.kernel.org/connman/179274561161.81299.4579745057858200074@pm.me/",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/pub/scm/network/connman/connman.git/tree/gdhcp/client.c",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/pub/scm/network/connman/connman.git/commit/?id=bb06c47101ca243fa5c04fb4b03fe2a12420d280",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-115863漏洞"
+  },
+  "first_saved_at": "2026-10-23T19:42:58+00:00"
+}
