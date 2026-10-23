@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-10-23T15:36:08+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-wiyr-7bdk",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55459",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-345",
+    "description": "Goobi 查看器是一个 Web 应用程序，允许在 Web 浏览器中显示数字化材料。从版本 25.01 到版本 26.05 之前，AuthenticationEndpoint.verifyOpenIdToken 将其验证程序构建为 JWT.require(algorithm).withIssuer(issuer).build()，并且在加密验证期间不会强制执行 aud 声明。随后通过单个字符串相等调用手动执行 aud 检查，该调用仅处理单字符串 aud 值。在多 RP IdP 设置中，单字符串 aud 与查看者的客户端 ID 匹配但为不同依赖方颁发的令牌会通过检查，并将攻击者验证为该令牌的子节点。该问题已在26.05版本中修复。",
+    "effects": [
+      {
+        "comp_name": "goobi-viewer-core",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[25.01,26.05)",
+            "min_fixed_version": "26.05",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对数据真实性的验证不充分",
+    "kind_en": "数据真实性验证不足",
+    "last_modified_time": "2026-10-23",
+    "level": "High",
+    "mps_id": "MPS-wiyr-7bdk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wiyr-7bdk",
+        "name": "https://www.oscs1024.com/hd/MPS-wiyr-7bdk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-55459",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-55459"
+      },
+      {
+        "url": "https://github.com/intranda/goobi-viewer-core/security/advisories/GHSA-7vrv-qh6g-gfx7",
+        "name": "https://github.com/intranda/goobi-viewer-core/security/advisories/GHSA-7vrv-qh6g-gfx7"
+      },
+      {
+        "url": "https://github.com/intranda/goobi-viewer-core/commit/73e2ccb63c36392d46f8d21644592efd6cf87933",
+        "name": "https://github.com/intranda/goobi-viewer-core/commit/73e2ccb63c36392d46f8d21644592efd6cf87933"
+      },
+      {
+        "url": "https://github.com/intranda/goobi-viewer-core/releases/tag/v26.05",
+        "name": "https://github.com/intranda/goobi-viewer-core/releases/tag/v26.05"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Goobi 查看器：验证者未强制执行 OpenID JWT 受众",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-55459",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+    "cwe": "CWE-345",
+    "description": "The Goobi viewer is a web application that allows digitised material to be displayed in a web browser. From version 25.01 to before version 26.05, AuthenticationEndpoint.verifyOpenIdToken builds its verifier as JWT.require(algorithm).withIssuer(issuer).build() and does not enforce the aud claim during cryptographic validation. The aud check is performed manually afterwards via a single string-equality call, which only handles single-string aud values. In a multi-RP IdP setup, a token whose single-string aud matches the viewer's client ID but was issued for a different relying party passes the check and authenticates the attacker as the token's sub. This issue has been patched in version 26.05.",
+    "effects": [
+      {
+        "comp_name": "goobi-viewer-core",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[25.01,26.05)",
+            "min_fixed_version": "26.05",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对数据真实性的验证不充分",
+    "kind_en": "Insufficient Verification of Data Authenticity",
+    "last_modified_time": "2026-10-23",
+    "level": "High",
+    "mps_id": "MPS-wiyr-7bdk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-23",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wiyr-7bdk",
+        "name": "https://www.oscs1024.com/hd/MPS-wiyr-7bdk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-55459",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-55459"
+      },
+      {
+        "url": "https://github.com/intranda/goobi-viewer-core/security/advisories/GHSA-7vrv-qh6g-gfx7",
+        "name": "https://github.com/intranda/goobi-viewer-core/security/advisories/GHSA-7vrv-qh6g-gfx7"
+      },
+      {
+        "url": "https://github.com/intranda/goobi-viewer-core/commit/73e2ccb63c36392d46f8d21644592efd6cf87933",
+        "name": "https://github.com/intranda/goobi-viewer-core/commit/73e2ccb63c36392d46f8d21644592efd6cf87933"
+      },
+      {
+        "url": "https://github.com/intranda/goobi-viewer-core/releases/tag/v26.05",
+        "name": "https://github.com/intranda/goobi-viewer-core/releases/tag/v26.05"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Goobi viewer: OpenID JWT audience not enforced by the verifier"
+  },
+  "first_saved_at": "2026-10-23T15:36:08+00:00"
+}

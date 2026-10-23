@@ -2346,5 +2346,15 @@
   "2b49d571ad600dd4c19aa0c2d6a36aebd32b490f": "CVE-2026-115486漏洞",
   "050ba6f57c9a7e712b9a0c53ac2bc1d87329313b": "open-iscsi 的 iscsiuio 组件中发现缺陷。 IPv6 邻居发现处理程序以固定偏移量访问链路层地址选项，而不验证数据包是否包含这些选项。此外，ARP 表会使用数据包标头中攻击者控制的地址进行无条件更新。同一网段上的攻击者可以发送最小的邻居通告来毒害 ARP 表并重定向网络流量。",
   "be41ec85ef0ecabc1909a05e316873cc19604c62": "Kiloview E3 NDI 编码器使用硬编码凭证",
-  "cce56256243aaef51ac03644821a469070f47dcf": "受影响的 Kiloview E3 NDI 编码器固件使用的身份验证框架使用 HMAC-SHA256 密钥对会话 JSON Web 令牌进行签名，该密钥硬编码为固件映像中的静态字符串，在所有已部署的设备中都是相同的。有权访问公开分发的固件的攻击者可以恢复此秘密并伪造任意会话令牌（包括管理令牌），而无需有效凭据，从而能够对特权设备功能进行未经身份验证的访问。"
+  "cce56256243aaef51ac03644821a469070f47dcf": "受影响的 Kiloview E3 NDI 编码器固件使用的身份验证框架使用 HMAC-SHA256 密钥对会话 JSON Web 令牌进行签名，该密钥硬编码为固件映像中的静态字符串，在所有已部署的设备中都是相同的。有权访问公开分发的固件的攻击者可以恢复此秘密并伪造任意会话令牌（包括管理令牌），而无需有效凭据，从而能够对特权设备功能进行未经身份验证的访问。",
+  "a9a5369a619536eb44ea0bc8c070c6fea78b8ca7": "Uni-CLI：传统 HTTP MCP 传输接受浏览器发起的本地主机请求",
+  "ef0393ab8b4fb5cc4303581f2ee0367cb37b7303": "Uni-CLI 为人员和代理提供了一个针对网站、浏览器、桌面应用程序、本地工具和 MCP 的命令界面。在版本 0.225.2 之前，Uni-CLI 在环回上公开旧版 JSON-RPC-over-HTTP MCP 传输，而无需在路由请求之前验证浏览器 Origin 标头。恶意网页可能会向本地 /mcp 端点发送 CORS 简单 POST 请求（例如 text/plain），并将 JSON-RPC 正文传递给调度程序。如果用户已启动本地 MCP HTTP 传输，则该页面可以针对用户的本地 Uni-CLI 服务器驱动工具/调用请求。 Streamable HTTP 传输已经强制执行了浏览器到本地主机的边界。传统的无状态 HTTP 路径没有，因此两种 HTTP 传输发生了漂移。这个问题是关于浏览器到本地主机的边界；它不会改变 Uni-CLI 的本地代码执行信任模型。该问题已在 0.225.2 版本中修复。",
+  "20e36bf591ebbcc773e49fe00d3b860350530054": "CVE-2026-55486漏洞",
+  "6a4dc40f62a0925ad64ecccf150fa92f3d65e0c9": "Goobi 查看器是一个 Web 应用程序，允许在 Web 浏览器中显示数字化材料。从版本 25.08 到版本 26.05 之前，AuthorizationFlowResource 中的 IIIF Auth 2.0 端点 auth/login 和 auth/token 接受原始查询参数而不进行验证，然后 (1) 将其嵌入到 Content-Security-Policy:frame-ancestors 响应标头中，并 (2) 将其作为 JavaScript 单引号 postMessage 参数嵌入到 HTML 响应正文中。由于攻击者控制启动流程的登录和令牌调用，因此未转义的值会产生反射型 XSS。该问题已在26.05版本中修复。",
+  "0fc5a4728feebce223f90d017e1b3ef1208666b5": "CVE-2026-55457漏洞",
+  "249669639c89f006ee77c4bdc8f18b07d92a823f": "Goobi 查看器是一个 Web 应用程序，允许在 Web 浏览器中显示数字化材料。在版本 26.05 之前，当未配置 webapi.authorization.token 时，Configuration.getWebApiToken 返回空字符串。 AuthorizationFilter 将提供的令牌与默认令牌进行比较，而无需首先检查配置的令牌是否非空。因此，接受对任何受 @AuthorizationBinding 保护且具有空 ?token= 值的端点的请求。该问题已在26.05版本中修复。",
+  "5098a0f42c922349ab348d5f48f832a5c3026575": "Goobi 查看器：验证者未强制执行 OpenID JWT 受众",
+  "75c6bbc1263e6a938554e7795ec88bc3beb29950": "Goobi 查看器是一个 Web 应用程序，允许在 Web 浏览器中显示数字化材料。从版本 25.01 到版本 26.05 之前，AuthenticationEndpoint.verifyOpenIdToken 将其验证程序构建为 JWT.require(algorithm).withIssuer(issuer).build()，并且在加密验证期间不会强制执行 aud 声明。随后通过单个字符串相等调用手动执行 aud 检查，该调用仅处理单字符串 aud 值。在多 RP IdP 设置中，单字符串 aud 与查看者的客户端 ID 匹配但为不同依赖方颁发的令牌会通过检查，并将攻击者验证为该令牌的子节点。该问题已在26.05版本中修复。",
+  "86db2ee9db735101b2b1636448288fb853d90821": "CVE-2026-54668漏洞",
+  "751834be97111814e37df9d4c3670c536224938c": "Kitodo.Production 是一种用于大规模数字化的工作流程管理工具，是 Kitodo 数字图书馆套件的一部分。在版本 3.9.2 之前，org.kitodo.production.helper.XMLUtils 公开了几个 XML 解析帮助器，这些解析器使用默认的非安全配置构造 JAXP 解析器。 parseXMLString(String)、getNumberOfEADElements(String, String) 和 checkIfXmlIsWellFormed(String) 方法通过 newInstance() 构建 DocumentBuilderFactory / XMLInputFactory / SAXParserFactory 并解析攻击者提供的字符串，而无需禁用 DOCTYPE 声明或外部实体解析。这些帮助程序直接位于 EAD 导入路径上：通过“创建流程”文件上传对话框上传 EAD/XML 文件的经过身份验证的用户将通过这些方法解析上传的字节。因此，带有外部实体的精心设计的文档会产生 XML 外部实体 (XXE) 注入：本地文件泄露和来自服务器的出站 SSRF 请求。该问题已在 3.9.2 版本中修复。"
 }
