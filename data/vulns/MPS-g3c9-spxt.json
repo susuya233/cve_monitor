@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-10-23T22:49:56+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-g3c9-spxt",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79977",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H",
+    "cwe": "CWE-346",
+    "description": "subsys/net/lib/wireguard/wg.c 中的 WireGuard VPN 服务根据无法验证的消息更新了对等端点。在handle_transport_data()中，当传入传输数据消息的32位接收器索引与任何会话不匹配时，代码既安排了新的握手，又使用memcpy(&peer->endpoint,peer_addr, sizeof(peer->endpoint))将数据报的源地址复制到peer->endpoint中。由于接收者索引未知，因此没有可以验证此类消息的密钥，因此写入peer->endpoint的地址完全是攻击者提供的。实现中的所有其他端点更新仅在身份验证之后发生 - 在handle_handshake_init()中的噪声握手之后，或者在AEAD解密加上wg_process_data_message()中的反重放检查之后。\n\nWireGuard 侦听器通过 net_udp_register() 注册，不使用远程地址或端口过滤器，默认为 UDP 端口 51820 (CONFIG_WIREGUARD_PORT)，并且 wg_ctrl_recv() 通过接口而不是任何加密身份解析对等点。因此，任何能够向该端口发送 UDP 数据报的主机都可以到达缺陷路径，无需观察合法流量：携带传输数据类型、清零保留字节和任意接收器索引的 16 字节数据报就足够了。只要对等方既没有有效的握手也没有当前的密钥对（启动时和会话过期后的状态），易受攻击的分支就会运行。\n\n单个欺骗数据报将对等点->端点重定向到攻击者选择的地址，并且所有后续握手启动、保活和加密数据包都发送到那里。合法对等方永远不会收到启动，因此永远不会重新进行身份验证，并且此后不会重置端点，从而使隧道在对等方本身不发起握手的设备上始终无法使用。攻击者还可以将重定向的启动中继到真实对等方，将自己置于隧道路径中，观察密文和流量元数据并有选择地丢弃数据包。 WireGuard 的端到端加密技术仍然可以防止隧道内容解密或伪造，因此影响是可用性损失和有限的机密性，而不是密钥泄露。\n\n该修复完全删除了从此路径中学习的端点：保留了过时会话恢复，但握手仅发送到从经过身份验证的消息中获知的端点，回退到配置的 cfg_endpoint，并且当两者都不知道时，消息将被丢弃。 CONFIG_WIREGUARD 被标记为实验性的，默认情况下不启用。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(4.4.0,4.4.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "源验证错误",
+    "kind_en": "来源验证错误",
+    "last_modified_time": "2026-10-24",
+    "level": "High",
+    "mps_id": "MPS-g3c9-spxt",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-g3c9-spxt",
+        "name": "https://www.oscs1024.com/hd/MPS-g3c9-spxt"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79977",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79977"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/cbaaf3e9dbe08be21f01bd23142e1ffe91fd4db6",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-w8h4-r8m3-rf5j",
+        "name": "GHSA-w8h4-r8m3-rf5j"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-79977漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79977",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H",
+    "cwe": "CWE-346",
+    "description": "The WireGuard VPN service in subsys/net/lib/wireguard/wg.c updated the peer endpoint from a message it could not authenticate. In handle_transport_data(), when the 32-bit receiver index of an incoming transport-data message matched no session, the code both scheduled a new handshake and copied the datagram's source address into peer->endpoint with memcpy(&peer->endpoint, peer_addr, sizeof(peer->endpoint)). Because the receiver index is unknown, there is no key with which such a message could be verified, so the address written into peer->endpoint is entirely attacker-supplied. Every other endpoint update in the implementation happens only after authentication — after the Noise handshake in handle_handshake_init(), or after AEAD decryption plus the anti-replay check in wg_process_data_message().\n\nThe WireGuard listener is registered with net_udp_register() using no remote address or port filter and defaults to UDP port 51820 (CONFIG_WIREGUARD_PORT), and wg_ctrl_recv() resolves the peer by interface rather than by any cryptographic identity. Any host able to send a UDP datagram to that port can therefore reach the defect off-path, with no need to observe legitimate traffic: a 16-byte datagram carrying the transport-data type, zeroed reserved bytes and an arbitrary receiver index is sufficient. The vulnerable branch runs whenever the peer has neither a valid handshake nor a current keypair — the state at boot and after a session expires.\n\nA single spoofed datagram redirects peer->endpoint to an address of the attacker's choosing, and all subsequent handshake initiations, keepalives and encrypted data packets are sent there. The legitimate peer never receives the initiations and so never re-authenticates, and nothing resets the endpoint afterwards, leaving the tunnel persistently unusable on devices whose peer does not initiate handshakes itself. The attacker can also relay the redirected initiations to the real peer to place itself in the path of the tunnel, observing ciphertext and traffic metadata and selectively dropping packets. WireGuard's end-to-end cryptography still prevents decryption or forgery of tunnel content, so the impact is loss of availability plus limited confidentiality, not key compromise.\n\nThe fix removes the endpoint learning from this path entirely: the stale-session recovery is kept, but the handshake is sent only to an endpoint learnt from an authenticated message, falling back to the configured cfg_endpoint, and the message is dropped when neither is known. CONFIG_WIREGUARD is marked experimental and is not enabled by default.",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(4.4.0,4.4.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "源验证错误",
+    "kind_en": "Origin Validation Error",
+    "last_modified_time": "2026-10-24",
+    "level": "High",
+    "mps_id": "MPS-g3c9-spxt",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-g3c9-spxt",
+        "name": "https://www.oscs1024.com/hd/MPS-g3c9-spxt"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79977",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79977"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/cbaaf3e9dbe08be21f01bd23142e1ffe91fd4db6",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-w8h4-r8m3-rf5j",
+        "name": "GHSA-w8h4-r8m3-rf5j"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-79977漏洞"
+  },
+  "first_saved_at": "2026-10-23T22:49:56+00:00"
+}

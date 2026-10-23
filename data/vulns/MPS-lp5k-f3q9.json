@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-10-23T22:49:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-lp5k-f3q9",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79982",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-787",
+    "description": "新 USB 设备堆栈的蓝牙 HCI USB 传输类 subsys/usb/device_next/class/bt_hci.c 将每个控制器到主机的 HCI 数据包复制到 USB 传输缓冲区中，然后将其在端点上排队。 bt_hci_tx_sync_in() 从 bt_hci_ep_pool 分配该缓冲区，这是一个固定池，其插槽仅为 USBD_MAX_BULK_MPS 字节（仅全速版本为 64），然后执行 net_buf_add_mem(buf, bt_buf->data, bt_buf->len)，不进行长度检查。 HCI 事件和 ACL 缓冲区的大小由 CONFIG_BT_BUF_EVT_RX_SIZE 和 CONFIG_BT_BUF_ACL_RX_SIZE 确定，并且可以大得多，因此副本会越过 64 字节槽的末尾运行到相邻槽以及静态分配池后面的任何位置。\n\n该设备在原始 HCI 模式 (CONFIG_BT_HCI_RAW) 下运行本地蓝牙控制器，因此超大数据包源自空中。使用全功能控制器建议的 HCI 缓冲区大小，蓝牙范围内未经身份验证的攻击者可以提供溢出字节：协商数据长度扩展的连接对等方可以发送高达 CONFIG_BT_CTLR_DATA_LENGTH_MAX 字节的 ACL 片段，而仅广播扩展广告数据的攻击者通过 LE 扩展广告报告事件到达相同路径，控制器仅将其分段为 CONFIG_BT_BUF_EVT_RX_SIZE。在库存配置中，在没有任何无线电流量的情况下就已经达到溢出：强制读取支持的命令命令完成事件为 70 字节，并且在每次主机初始化时超出 64 字节插槽 6 字节。\n\n因为除非启用 CONFIG_NET_BUF_HARDENING，否则 net_buf_add_mem() 仅通过断言来验证 tailroom，因此使用 CONFIG_ASSERT=n（通常的生产设置）进行构建，会使用攻击者选择的内容悄悄损坏与 USB 缓冲池相邻的内存，这在子系统之间没有内存保护的目标上可能会导致任意代码执行。启用断言的构建会导致断言失败并出现恐慌，从而产生可远程触发的拒绝服务。该修复针对控制器到主机方向引入了一个大小为 MAX(BT_BUF_ACL_RX_SIZE, BT_BUF_EVT_RX_SIZE) 的单独 bt_hci_tx_pool，同时将主机到设备池保留为端点数据包大小，该大小在重组期间已进行边界检查。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(3.3.0,4.4.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界写入",
+    "kind_en": "越界写入",
+    "last_modified_time": "2026-10-24",
+    "level": "High",
+    "mps_id": "MPS-lp5k-f3q9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lp5k-f3q9",
+        "name": "https://www.oscs1024.com/hd/MPS-lp5k-f3q9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79982",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79982"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/0419defd2391652edc27689d206fcd9c48439d4a",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-w5px-w97v-c3hj",
+        "name": "GHSA-w5px-w97v-c3hj"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-79982漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79982",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-787",
+    "description": "The Bluetooth HCI USB transport class of the new USB device stack, subsys/usb/device_next/class/bt_hci.c, copies every controller-to-host HCI packet into a USB transfer buffer before enqueuing it on an endpoint. bt_hci_tx_sync_in() allocated that buffer from bt_hci_ep_pool, a fixed pool whose slots are only USBD_MAX_BULK_MPS bytes (64 on full-speed-only builds), and then performed net_buf_add_mem(buf, bt_buf->data, bt_buf->len) with no length check. HCI event and ACL buffers are sized by CONFIG_BT_BUF_EVT_RX_SIZE and CONFIG_BT_BUF_ACL_RX_SIZE and can be far larger, so the copy runs past the end of the 64-byte slot into the adjacent slots and into whatever follows the statically allocated pool.\n\nThe device runs the local Bluetooth controller in raw HCI mode (CONFIG_BT_HCI_RAW), so the oversized packets originate over the air. With the HCI buffer sizes recommended for full-featured controllers, an unauthenticated attacker within Bluetooth range can supply the overflowing bytes: a connected peer that negotiates Data Length Extension can send ACL fragments up to CONFIG_BT_CTLR_DATA_LENGTH_MAX bytes, and an attacker that merely broadcasts extended advertising data reaches the same path through LE Extended Advertising Report events, which the controller fragments only to CONFIG_BT_BUF_EVT_RX_SIZE. In the stock configuration the overflow is already reached without any radio traffic: the mandatory Read Supported Commands command-complete event is 70 bytes and overruns the 64-byte slot by six bytes on every host initialization.\n\nBecause net_buf_add_mem() validates tailroom only through an assertion unless CONFIG_NET_BUF_HARDENING is enabled, builds with CONFIG_ASSERT=n — the usual production setting — silently corrupt memory adjacent to the USB buffer pool with attacker-chosen contents, which on a target without memory protection between subsystems can lead to arbitrary code execution. Builds with assertions enabled fail the assertion instead and panic, giving a remotely triggerable denial of service. The fix introduces a separate bt_hci_tx_pool sized to MAX(BT_BUF_ACL_RX_SIZE, BT_BUF_EVT_RX_SIZE) for the controller-to-host direction while leaving the host-to-device pool at the endpoint packet size, which is already bounds-checked during reassembly.",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(3.3.0,4.4.2]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界写入",
+    "kind_en": "Out-of-bounds Write",
+    "last_modified_time": "2026-10-24",
+    "level": "High",
+    "mps_id": "MPS-lp5k-f3q9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lp5k-f3q9",
+        "name": "https://www.oscs1024.com/hd/MPS-lp5k-f3q9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79982",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79982"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/0419defd2391652edc27689d206fcd9c48439d4a",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-w5px-w97v-c3hj",
+        "name": "GHSA-w5px-w97v-c3hj"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-79982漏洞"
+  },
+  "first_saved_at": "2026-10-23T22:49:54+00:00"
+}

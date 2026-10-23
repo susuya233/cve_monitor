@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-10-23T22:49:58+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-agpz-tcr0",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79979",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-416",
+    "description": "arm64 MMU 后端使用 arch/arm64/core/mmu.c 中的 invalidate_tlb_page() 使来自 TLB 的单个虚拟地址无效，该地址发出操作数为 virt >> 12 的 TLBI VAE1{IS}。该操作数以位 [63:48] 编码 ASID，因此无效仅匹配 ASID 0（内核页表）和全局条目。然而，在 arch_mem_domain_init() 中，内存域被分配从 1 开始的 ASID，并且 private_map() 创建的每个域私有叶子都使用 MT_NG 进行映射，即非全局的。因此，域的缓存翻译在失效后仍然存在。\n\ninvalidate_tlb_page() 的所有调用者都是请求分页路径。当逐出算法回收帧时，kernel/mmu.c 中的 page_frame_prepare_locked() 调用 arch_mem_page_out()，这将内核叶标记为无效，通过sync_domains() 将无效描述符传播到每个域，然后仅刷新 ASID 0。 do_page_fault() 立即通过 arch_mem_page_in() 为传入映射重用完全相同的页帧。已经触及被逐出页面的用户线程（使用 arch_mem_domain_partition_add() 添加的 k_mem_partition，或者由 map_thread_stack() 映射的其自己的堆栈）在其自己的 ASID 下保留对该物理帧的有效 EL0 读/写转换。\n\n在用户线程中运行的非特权代码可以驱动内存压力以强制逐出，然后继续访问过时的地址，获得对内核随后放置在该帧中的任何内容的读写访问权限：管理程序数据、另一个内存域的分区或另一个线程的堆栈。这破坏了 CONFIG_USERSPACE 旨在强制执行的隔离，导致信息泄露和内存损坏，直至系统完全受到损害。\n\n该修复将实现切换为 TLBI VAAE1{IS}，它匹配每个 ASID 以及全局和非全局条目，因此没有域标记的翻译可以在页面输出、脏位更新或访问标记清除后幸存下来。利用该漏洞需要启用 CONFIG_USERSPACE 和 CONFIG_DEMAND_PAGING 的 arm64 构建、一个活动后备存储以及至少一个也私有映射到用户内存域的请求分页页面。同一提交还阻止了 globalize_table() 在分页同步期间从域专用叶子中剥离 EL0 权限和非全局属性，这之前导致用户线程失去对其自己的分区和堆栈的访问权限。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(4.3.0,4.5.0)",
+            "min_fixed_version": "4.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "UAF",
+    "kind_en": "免费后使用",
+    "last_modified_time": "2026-10-24",
+    "level": "High",
+    "mps_id": "MPS-agpz-tcr0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-agpz-tcr0",
+        "name": "https://www.oscs1024.com/hd/MPS-agpz-tcr0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79979",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79979"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/d732e9f808f16911d06769b3f756246f3528669f",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-6pqm-hfxf-48qv",
+        "name": "GHSA-6pqm-hfxf-48qv"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-79979漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-79979",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-416",
+    "description": "The arm64 MMU backend invalidates a single virtual address from the TLB with invalidate_tlb_page() in arch/arm64/core/mmu.c, which issued TLBI VAE1{IS} with an operand of virt >> 12. That operand encodes the ASID in bits [63:48], so the invalidation only ever matched ASID 0 (the kernel page tables) and global entries. Memory domains, however, are allocated ASIDs starting at 1 in arch_mem_domain_init(), and every domain-private leaf created by private_map() is mapped with MT_NG, i.e. non-global. A domain's cached translation therefore survived the invalidation.\n\nAll callers of invalidate_tlb_page() are demand-paging paths. When the eviction algorithm reclaims a frame, page_frame_prepare_locked() in kernel/mmu.c calls arch_mem_page_out(), which marks the kernel leaf invalid, propagates the invalid descriptor into every domain via sync_domains(), and then flushes only ASID 0. do_page_fault() immediately reuses the very same page frame for the incoming mapping through arch_mem_page_in(). A user thread that had already touched the evicted page — a k_mem_partition added with arch_mem_domain_partition_add(), or its own stack mapped by map_thread_stack() — retains a valid EL0 read/write translation to that physical frame under its own ASID.\n\nUnprivileged code running in a user thread can drive memory pressure to force eviction and then keep accessing the stale address, obtaining read and write access to whatever the kernel subsequently placed in that frame: supervisor data, another memory domain's partition, or another thread's stack. This defeats the isolation that CONFIG_USERSPACE is meant to enforce, allowing information disclosure and memory corruption up to full compromise of the system.\n\nThe fix switches the implementation to TLBI VAAE1{IS}, which matches every ASID and both global and non-global entries, so no domain-tagged translation survives a page out, dirty-bit update or access-flag clear. Exploitation requires an arm64 build with both CONFIG_USERSPACE and CONFIG_DEMAND_PAGING enabled, an active backing store, and at least one demand-paged page that is also privately mapped into a user memory domain. The same commit additionally stops globalize_table() from stripping EL0 permission and non-global attributes off domain-private leaves during paging synchronization, which previously caused user threads to lose access to their own partitions and stacks.",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(4.3.0,4.5.0)",
+            "min_fixed_version": "4.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "UAF",
+    "kind_en": "Use After Free",
+    "last_modified_time": "2026-10-24",
+    "level": "High",
+    "mps_id": "MPS-agpz-tcr0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-agpz-tcr0",
+        "name": "https://www.oscs1024.com/hd/MPS-agpz-tcr0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-79979",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-79979"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/d732e9f808f16911d06769b3f756246f3528669f",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-6pqm-hfxf-48qv",
+        "name": "GHSA-6pqm-hfxf-48qv"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "CVE-2026-79979漏洞"
+  },
+  "first_saved_at": "2026-10-23T22:49:58+00:00"
+}
