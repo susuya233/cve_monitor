@@ -1,0 +1,137 @@
+{
+  "saved_at": "2026-10-24T06:46:48+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2436-379a",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-115748",
+    "cvss": {},
+    "cvss_score": 8.8,
+    "cvss_vector": "",
+    "cwe": "CWE-620",
+    "description": "Apache Vysper 是 Apache MINA 旗下的开源 XMPP（Jabber）服务器 Java 组件，用于搭建即时消息服务端并提供各类 XEP 协议扩展模块。\n受影响版本中，XEP-0077 In-Band Registration 模块的 InBandRegistrationHandler 在会话处于 AUTHENTICATED 状态时处理 iq set 注册报文，直接使用报文中攻击者可控的 username 元素解析目标账号并调用 AccountManagement.changePassword 修改口令，未校验该账号与当前会话认证实体 sessionContext.getInitiatingEntity() 是否一致，任何已认证用户可将任意已存在账号的口令改为指定值，实现其他账号的接管。\n修复版本中通过安全公告说明项目退役且不会发布修复版本；在官方修复发布前，可通过移除或禁用 InBandRegistrationModule（XEP-0077 In-Band Registration）模块、迁移至仍在维护的 XMPP 服务器切断该攻击路径。",
+    "effects": [
+      {
+        "comp_name": "org.apache.vysper:vysper-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.7]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经验证的口令修改",
+    "kind_en": "未经验证的密码更改",
+    "last_modified_time": "2026-10-24",
+    "level": "High",
+    "mps_id": "MPS-2436-379a",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://seclists.org/oss-sec/2026/q4/357",
+        "name": ""
+      },
+      {
+        "url": "https://mina.apache.org/vysper-project/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-115748",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/mina-vysper",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Apache Vysper授权绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-115748",
+    "cvss": {},
+    "cvss_score": 8.8,
+    "cvss_vector": "",
+    "cwe": "CWE-620",
+    "description": "Apache Vysper 是 Apache MINA 旗下的开源 XMPP（Jabber）服务器 Java 组件，用于搭建即时消息服务端并提供各类 XEP 协议扩展模块。\n受影响版本中，XEP-0077 In-Band Registration 模块的 InBandRegistrationHandler 在会话处于 AUTHENTICATED 状态时处理 iq set 注册报文，直接使用报文中攻击者可控的 username 元素解析目标账号并调用 AccountManagement.changePassword 修改口令，未校验该账号与当前会话认证实体 sessionContext.getInitiatingEntity() 是否一致，任何已认证用户可将任意已存在账号的口令改为指定值，实现其他账号的接管。\n修复版本中通过安全公告说明项目退役且不会发布修复版本；在官方修复发布前，可通过移除或禁用 InBandRegistrationModule（XEP-0077 In-Band Registration）模块、迁移至仍在维护的 XMPP 服务器切断该攻击路径。",
+    "effects": [
+      {
+        "comp_name": "org.apache.vysper:vysper-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.7]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经验证的口令修改",
+    "kind_en": "Unverified Password Change",
+    "last_modified_time": "2026-10-24",
+    "level": "High",
+    "mps_id": "MPS-2436-379a",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://seclists.org/oss-sec/2026/q4/357",
+        "name": ""
+      },
+      {
+        "url": "https://mina.apache.org/vysper-project/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-115748",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/mina-vysper",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Apache Vysper授权绕过漏洞"
+  },
+  "first_saved_at": "2026-10-24T06:46:48+00:00"
+}
