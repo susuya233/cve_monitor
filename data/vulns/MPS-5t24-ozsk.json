@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-10-24T15:13:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5t24-ozsk",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-115932",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "4cdc9741-f887-419a-a2fd-acbbd2729276",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.6
+        }
+      ]
+    },
+    "cvss_score": 9.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+    "cwe": "CWE-74",
+    "description": "Postiz 是 GitroomHQ 开源的社交媒体内容发布平台，支持将同一篇帖子编排后发布到 Discord、TikTok、YouTube、Telegram 等多个渠道，通常以 Docker 方式自托管部署。\n受影响版本中，发布 worker 把非 web 地址开头的媒体路径直接当作服务器磁盘文件读取，social.abstract.ts 的 readOrFetch、mediaSize 与流式读取分别调用 readFileSync、statSync、createReadStream 打开该路径，且未校验路径位于上传目录内，注册用户在保存帖子时提交携带目录穿越序列的媒体路径可绕过既有检查，使 worker 读取上传目录之外的任意文件并作为附件发送到攻击者控制的 Discord 服务器；validatePosts 校验链路经 provider.checkValidity 调用 mediaSize，可被用于探测文件是否存在，路径指向设备文件时读取会耗尽后端内存。\n修复版本中通过在 social.abstract.ts 新增 localMediaPath 方法，对媒体路径执行 resolve 并强制校验解析结果位于 UPLOAD_DIRECTORY 之内，越界路径抛出异常终止发布，readOrFetch、mediaSize、范围读取与流式读取统一接入该校验，Telegram、TikTok、YouTube 提供商的本地媒体读取同步接入，media.controller 限制上传文件名不得包含路径分隔符，本地存储 removeFile 在删除前校验路径位于上传目录内，切断发布链路读取上传目录之外任意文件的通路。",
+    "effects": [
+      {
+        "comp_name": "postiz-app",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.23.0,2.25.3)",
+            "min_fixed_version": "2.25.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "注入",
+    "kind_en": "下游组件使用的输出中特殊元素的不正确中和（“注入”）",
+    "last_modified_time": "2026-10-24",
+    "level": "Critical",
+    "mps_id": "MPS-5t24-ozsk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5t24-ozsk",
+        "name": "https://www.oscs1024.com/hd/MPS-5t24-ozsk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115932",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-115932"
+      },
+      {
+        "url": "https://github.com/gitroomhq/postiz-app",
+        "name": "Postiz"
+      },
+      {
+        "url": "https://github.com/gitroomhq/postiz-app/releases/tag/v2.25.3",
+        "name": "v2.25.3"
+      },
+      {
+        "url": "https://github.com/gitroomhq/postiz-app/commit/12db9bd2f428b628a62809669c3d76297e07750a",
+        "name": "12db9bd"
+      },
+      {
+        "url": "https://gadvisory.org/advisories/PSA-2026-E9AHFV",
+        "name": "GAdvisory"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Postiz路径穿越任意文件读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-115932",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "4cdc9741-f887-419a-a2fd-acbbd2729276",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+          "severity": "critical",
+          "base_score": 9.6
+        }
+      ]
+    },
+    "cvss_score": 9.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+    "cwe": "CWE-74",
+    "description": "Postiz 是 GitroomHQ 开源的社交媒体内容发布平台，支持将同一篇帖子编排后发布到 Discord、TikTok、YouTube、Telegram 等多个渠道，通常以 Docker 方式自托管部署。\n受影响版本中，发布 worker 把非 web 地址开头的媒体路径直接当作服务器磁盘文件读取，social.abstract.ts 的 readOrFetch、mediaSize 与流式读取分别调用 readFileSync、statSync、createReadStream 打开该路径，且未校验路径位于上传目录内，注册用户在保存帖子时提交携带目录穿越序列的媒体路径可绕过既有检查，使 worker 读取上传目录之外的任意文件并作为附件发送到攻击者控制的 Discord 服务器；validatePosts 校验链路经 provider.checkValidity 调用 mediaSize，可被用于探测文件是否存在，路径指向设备文件时读取会耗尽后端内存。\n修复版本中通过在 social.abstract.ts 新增 localMediaPath 方法，对媒体路径执行 resolve 并强制校验解析结果位于 UPLOAD_DIRECTORY 之内，越界路径抛出异常终止发布，readOrFetch、mediaSize、范围读取与流式读取统一接入该校验，Telegram、TikTok、YouTube 提供商的本地媒体读取同步接入，media.controller 限制上传文件名不得包含路径分隔符，本地存储 removeFile 在删除前校验路径位于上传目录内，切断发布链路读取上传目录之外任意文件的通路。",
+    "effects": [
+      {
+        "comp_name": "postiz-app",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.23.0,2.25.3)",
+            "min_fixed_version": "2.25.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "注入",
+    "kind_en": "Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')",
+    "last_modified_time": "2026-10-24",
+    "level": "Critical",
+    "mps_id": "MPS-5t24-ozsk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5t24-ozsk",
+        "name": "https://www.oscs1024.com/hd/MPS-5t24-ozsk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115932",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-115932"
+      },
+      {
+        "url": "https://github.com/gitroomhq/postiz-app",
+        "name": "Postiz"
+      },
+      {
+        "url": "https://github.com/gitroomhq/postiz-app/releases/tag/v2.25.3",
+        "name": "v2.25.3"
+      },
+      {
+        "url": "https://github.com/gitroomhq/postiz-app/commit/12db9bd2f428b628a62809669c3d76297e07750a",
+        "name": "12db9bd"
+      },
+      {
+        "url": "https://gadvisory.org/advisories/PSA-2026-E9AHFV",
+        "name": "GAdvisory"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Postiz路径穿越任意文件读取漏洞"
+  },
+  "first_saved_at": "2026-10-24T15:13:52+00:00"
+}
