@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-10-24T01:19:23+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-q13r-8sw7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-19741",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-1392",
+    "description": "Zephyr 是 Linux 基金会托管的开源物联网实时操作系统，面向资源受限的微控制器设备，其 OpenThread 集成为设备提供 Thread 网络接入与 commissioning 能力。\n受影响版本中，OpenThread 集成在 modules/openthread/Kconfig.thread 为 OPENTHREAD_JOINER_PSKD 设置了默认值 J01NME，该字符串是 OpenThread 与 Thread commissioning 公开文档通用的示例 Joining Device Credential，并非秘密；固件以 OPENTHREAD_JOINER_AUTOSTART=y 编译且未覆盖该选项时，未存储运营数据集的设备在 ot_configure_instance() 中以该 PSKd 调用 otJoinerStart() 发起 commissioning，与 802.15.4 射频范围内任意注册 J01NME 的 Commissioner 完成 DTLS-PSK 握手后由 ot_joiner_start_handler() 调用 otThreadSetEnabled() 启用 Thread，攻击者可向设备下发受控的运营数据集，使设备加入攻击者控制的 Thread 网络，其全部 IPv6 流量可被查看、丢弃、注入与伪造，设备保持错误配置直至被重置。\n修复版本中通过移除 OPENTHREAD_JOINER_PSKD 的默认值，并在 modules/openthread/openthread.c 中新增仅作用于 OPENTHREAD_JOINER_AUTOSTART 的 BUILD_ASSERT，要求配置 6 至 32 个字符的 PSKd 否则构建失败，从编译期消除公开默认凭证并强制逐设备显式配置。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.14.0,4.5.0)",
+            "min_fixed_version": "4.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "",
+    "kind_en": "",
+    "last_modified_time": "2026-10-24",
+    "level": "High",
+    "mps_id": "MPS-q13r-8sw7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-q13r-8sw7",
+        "name": "https://www.oscs1024.com/hd/MPS-q13r-8sw7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19741",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-19741"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/acb3e514d7fab2bc9672acaba8019d2dc91b187c",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-6j2r-xrm4-3v7f",
+        "name": "GHSA-6j2r-xrm4-3v7f"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Zephyr OpenThread默认凭证漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-19741",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-1392",
+    "description": "Zephyr 是 Linux 基金会托管的开源物联网实时操作系统，面向资源受限的微控制器设备，其 OpenThread 集成为设备提供 Thread 网络接入与 commissioning 能力。\n受影响版本中，OpenThread 集成在 modules/openthread/Kconfig.thread 为 OPENTHREAD_JOINER_PSKD 设置了默认值 J01NME，该字符串是 OpenThread 与 Thread commissioning 公开文档通用的示例 Joining Device Credential，并非秘密；固件以 OPENTHREAD_JOINER_AUTOSTART=y 编译且未覆盖该选项时，未存储运营数据集的设备在 ot_configure_instance() 中以该 PSKd 调用 otJoinerStart() 发起 commissioning，与 802.15.4 射频范围内任意注册 J01NME 的 Commissioner 完成 DTLS-PSK 握手后由 ot_joiner_start_handler() 调用 otThreadSetEnabled() 启用 Thread，攻击者可向设备下发受控的运营数据集，使设备加入攻击者控制的 Thread 网络，其全部 IPv6 流量可被查看、丢弃、注入与伪造，设备保持错误配置直至被重置。\n修复版本中通过移除 OPENTHREAD_JOINER_PSKD 的默认值，并在 modules/openthread/openthread.c 中新增仅作用于 OPENTHREAD_JOINER_AUTOSTART 的 BUILD_ASSERT，要求配置 6 至 32 个字符的 PSKd 否则构建失败，从编译期消除公开默认凭证并强制逐设备显式配置。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.14.0,4.5.0)",
+            "min_fixed_version": "4.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "",
+    "kind_en": "",
+    "last_modified_time": "2026-10-24",
+    "level": "High",
+    "mps_id": "MPS-q13r-8sw7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-q13r-8sw7",
+        "name": "https://www.oscs1024.com/hd/MPS-q13r-8sw7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19741",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-19741"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/acb3e514d7fab2bc9672acaba8019d2dc91b187c",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-6j2r-xrm4-3v7f",
+        "name": "GHSA-6j2r-xrm4-3v7f"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Zephyr OpenThread默认凭证漏洞"
+  },
+  "first_saved_at": "2026-10-24T01:19:23+00:00"
+}

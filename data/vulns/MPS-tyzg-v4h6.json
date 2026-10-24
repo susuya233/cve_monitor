@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-10-23T22:50:05+00:00",
-  "first_seen": true,
+  "saved_at": "2026-10-24T01:19:25+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-tyzg-v4h6",
@@ -35,21 +35,8 @@
     "cvss_score": 7.1,
     "cvss_vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "virtualenv是一个用于创建隔离的虚拟Python环境的工具。从 21.14.9 到 21.14.13，当激活过程中提示变量和 POSIX 模式都被禁用时，bash bin/activate 脚本可以将攻击者控制的 --prompt 值复制到 PS1 中，而无需转义美元符号或反引号。重新启用提示变量、运行 set -o posix 或启动继承导出的 PS1 的交互式子 bash 可以在存储的 VIRTUAL_ENV_PROMPT 值中扩展命令替换，并以激活环境的用户身份执行命令。此问题已在版本 21.14.13 中修复。",
+    "description": "virtualenv 是 pypa 维护的开源命令行工具，用于创建隔离的 Python 虚拟环境，并在环境内生成 bin/activate 等 shell 激活脚本。\n受影响版本中，--prompt 参数值在生成脚本时以 VIRTUAL_ENV_PROMPT 形式原样写入 bin/activate，激活脚本 src/virtualenv/activation/bash/activate.sh 的提示符分支在激活时刻 promptvars 关闭且未启用 POSIX 模式时，把未经 $ 与反引号转义的提示值直接拼入 PS1。promptvars 与 POSIX 模式属于运行期 shell 状态，嵌入命令替换的提示值（如 x$(id)y）在激活后可通过 shopt -s promptvars、set -o posix 或启动继承导出 PS1 的交互式子 bash 进入提示符展开并被执行，攻击者以激活环境的用户身份获得命令执行；该值还持久化在 pyvenv.cfg 与生成的脚本中，可在后续会话首次提示符重绘时再次触发。\n修复版本中通过重写 bash 分支的 PS1 构造逻辑解决该问题：逐字符遍历提示值并对反斜杠、美元符与反引号统一添加反斜杠转义，不再依赖激活时刻的 shell 选项状态，使提示值在任意 promptvars 与 POSIX 模式组合下均保持字面量；zsh 分支改为将提示值存入 psvar[9] 并以 %9v 引用插入提示符，使该值始终作为数据处理，从而切断命令替换进入提示符展开的执行路径。",
     "effects": [
-      {
-        "comp_name": "virtualenv",
-        "ecosystem": "linux",
-        "versions": [
-          {
-            "affected_version": "[21.14.9,21.14.13)",
-            "min_fixed_version": "21.14.13",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          }
-        ]
-      },
       {
         "comp_name": "virtualenv",
         "ecosystem": "pip",
@@ -110,7 +97,7 @@
       "开源",
       "终端软件"
     ],
-    "title": "CVE-2026-115586漏洞",
+    "title": "virtualenv命令执行漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -144,21 +131,8 @@
     "cvss_score": 7.1,
     "cvss_vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "virtualenv is a tool for creating isolated virtual python environments. From 21.14.9 until 21.14.13, the bash bin/activate script can copy an attacker-controlled --prompt value into PS1 without escaping dollar signs or backticks when both promptvars and POSIX mode are disabled during activation. Re-enabling promptvars, running set -o posix, or starting an interactive child bash that inherits the exported PS1 can then expand command substitution in the stored VIRTUAL_ENV_PROMPT value and execute commands as the user who activates the environment. This issue is fixed in version 21.14.13.",
+    "description": "virtualenv 是 pypa 维护的开源命令行工具，用于创建隔离的 Python 虚拟环境，并在环境内生成 bin/activate 等 shell 激活脚本。\n受影响版本中，--prompt 参数值在生成脚本时以 VIRTUAL_ENV_PROMPT 形式原样写入 bin/activate，激活脚本 src/virtualenv/activation/bash/activate.sh 的提示符分支在激活时刻 promptvars 关闭且未启用 POSIX 模式时，把未经 $ 与反引号转义的提示值直接拼入 PS1。promptvars 与 POSIX 模式属于运行期 shell 状态，嵌入命令替换的提示值（如 x$(id)y）在激活后可通过 shopt -s promptvars、set -o posix 或启动继承导出 PS1 的交互式子 bash 进入提示符展开并被执行，攻击者以激活环境的用户身份获得命令执行；该值还持久化在 pyvenv.cfg 与生成的脚本中，可在后续会话首次提示符重绘时再次触发。\n修复版本中通过重写 bash 分支的 PS1 构造逻辑解决该问题：逐字符遍历提示值并对反斜杠、美元符与反引号统一添加反斜杠转义，不再依赖激活时刻的 shell 选项状态，使提示值在任意 promptvars 与 POSIX 模式组合下均保持字面量；zsh 分支改为将提示值存入 psvar[9] 并以 %9v 引用插入提示符，使该值始终作为数据处理，从而切断命令替换进入提示符展开的执行路径。",
     "effects": [
-      {
-        "comp_name": "virtualenv",
-        "ecosystem": "linux",
-        "versions": [
-          {
-            "affected_version": "[21.14.9,21.14.13)",
-            "min_fixed_version": "21.14.13",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          }
-        ]
-      },
       {
         "comp_name": "virtualenv",
         "ecosystem": "pip",
@@ -219,7 +193,7 @@
       "开源",
       "终端软件"
     ],
-    "title": "CVE-2026-115586漏洞"
+    "title": "virtualenv命令执行漏洞"
   },
   "first_saved_at": "2026-10-23T22:50:05+00:00"
 }

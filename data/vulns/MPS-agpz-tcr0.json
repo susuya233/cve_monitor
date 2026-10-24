@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-10-23T22:49:58+00:00",
-  "first_seen": true,
+  "saved_at": "2026-10-24T01:19:22+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-agpz-tcr0",
@@ -35,14 +35,14 @@
     "cvss_score": 7.8,
     "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
     "cwe": "CWE-416",
-    "description": "arm64 MMU 后端使用 arch/arm64/core/mmu.c 中的 invalidate_tlb_page() 使来自 TLB 的单个虚拟地址无效，该地址发出操作数为 virt >> 12 的 TLBI VAE1{IS}。该操作数以位 [63:48] 编码 ASID，因此无效仅匹配 ASID 0（内核页表）和全局条目。然而，在 arch_mem_domain_init() 中，内存域被分配从 1 开始的 ASID，并且 private_map() 创建的每个域私有叶子都使用 MT_NG 进行映射，即非全局的。因此，域的缓存翻译在失效后仍然存在。\n\ninvalidate_tlb_page() 的所有调用者都是请求分页路径。当逐出算法回收帧时，kernel/mmu.c 中的 page_frame_prepare_locked() 调用 arch_mem_page_out()，这将内核叶标记为无效，通过sync_domains() 将无效描述符传播到每个域，然后仅刷新 ASID 0。 do_page_fault() 立即通过 arch_mem_page_in() 为传入映射重用完全相同的页帧。已经触及被逐出页面的用户线程（使用 arch_mem_domain_partition_add() 添加的 k_mem_partition，或者由 map_thread_stack() 映射的其自己的堆栈）在其自己的 ASID 下保留对该物理帧的有效 EL0 读/写转换。\n\n在用户线程中运行的非特权代码可以驱动内存压力以强制逐出，然后继续访问过时的地址，获得对内核随后放置在该帧中的任何内容的读写访问权限：管理程序数据、另一个内存域的分区或另一个线程的堆栈。这破坏了 CONFIG_USERSPACE 旨在强制执行的隔离，导致信息泄露和内存损坏，直至系统完全受到损害。\n\n该修复将实现切换为 TLBI VAAE1{IS}，它匹配每个 ASID 以及全局和非全局条目，因此没有域标记的翻译可以在页面输出、脏位更新或访问标记清除后幸存下来。利用该漏洞需要启用 CONFIG_USERSPACE 和 CONFIG_DEMAND_PAGING 的 arm64 构建、一个活动后备存储以及至少一个也私有映射到用户内存域的请求分页页面。同一提交还阻止了 globalize_table() 在分页同步期间从域专用叶子中剥离 EL0 权限和非全局属性，这之前导致用户线程失去对其自己的分区和堆栈的访问权限。",
+    "description": "Zephyr 是 Zephyr Project 基金会维护的开源物联网实时操作系统（RTOS），面向资源受限的嵌入式设备，其 arm64 架构后端通过 CONFIG_USERSPACE 与需求分页（demand paging）机制提供用户态内存隔离与按需换页能力。\n受影响版本中，arch/arm64/core/mmu.c 的 invalidate_tlb_page() 以 virt >> 12 为操作数执行 TLBI VAE1{IS}，该操作数的 ASID 字段（bits [63:48]）恒为 0，失效仅能匹配内核页表（ASID 0）与全局映射，而内存域自 1 起分配 ASID，域私有叶项由 private_map() 以 MT_NG 非全局属性建立，其缓存的翻译在该次失效中不被覆盖；运行在用户线程中的非特权代码可制造内存压力触发页面回收，回收路径 page_frame_prepare_locked() 调用 arch_mem_page_out() 置无效内核叶项并同步各内存域后仅完成上述 ASID 0 失效，do_page_fault() 随后将同一物理帧复用给新映射，已触碰过被换出页的用户线程在其自身 ASID 下仍持有指向该物理帧的有效 EL0 读写翻译，可继续读写内核后续放入该帧的内容（内核数据、其他内存域分区或其他线程的栈），破坏 CONFIG_USERSPACE 的隔离边界，导致信息泄露与内存破坏。\n修复版本中通过将 invalidate_tlb_page() 的失效指令切换为匹配全部 ASID 与全局、非全局映射的 TLBI VAAE1{IS}，使页出、脏位更新与访问位清理后不再残留任何域标记的翻译，切断对被复用物理帧的越权访问链；同一提交还让 globalize_table() 在换页状态同步时保留域私有叶项的 EL0 权限与非全局属性，消除用户线程在换页后丢失自身分区与栈访问的伴随缺陷。",
     "effects": [
       {
         "comp_name": "zephyr",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(4.3.0,4.5.0)",
+            "affected_version": "[4.3.0,4.5.0)",
             "min_fixed_version": "4.5.0",
             "repository": "unmanaged",
             "solutions": [],
@@ -87,7 +87,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "CVE-2026-79979漏洞",
+    "title": "Zephyr TLB隔离绕过漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -121,14 +121,14 @@
     "cvss_score": 7.8,
     "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
     "cwe": "CWE-416",
-    "description": "The arm64 MMU backend invalidates a single virtual address from the TLB with invalidate_tlb_page() in arch/arm64/core/mmu.c, which issued TLBI VAE1{IS} with an operand of virt >> 12. That operand encodes the ASID in bits [63:48], so the invalidation only ever matched ASID 0 (the kernel page tables) and global entries. Memory domains, however, are allocated ASIDs starting at 1 in arch_mem_domain_init(), and every domain-private leaf created by private_map() is mapped with MT_NG, i.e. non-global. A domain's cached translation therefore survived the invalidation.\n\nAll callers of invalidate_tlb_page() are demand-paging paths. When the eviction algorithm reclaims a frame, page_frame_prepare_locked() in kernel/mmu.c calls arch_mem_page_out(), which marks the kernel leaf invalid, propagates the invalid descriptor into every domain via sync_domains(), and then flushes only ASID 0. do_page_fault() immediately reuses the very same page frame for the incoming mapping through arch_mem_page_in(). A user thread that had already touched the evicted page — a k_mem_partition added with arch_mem_domain_partition_add(), or its own stack mapped by map_thread_stack() — retains a valid EL0 read/write translation to that physical frame under its own ASID.\n\nUnprivileged code running in a user thread can drive memory pressure to force eviction and then keep accessing the stale address, obtaining read and write access to whatever the kernel subsequently placed in that frame: supervisor data, another memory domain's partition, or another thread's stack. This defeats the isolation that CONFIG_USERSPACE is meant to enforce, allowing information disclosure and memory corruption up to full compromise of the system.\n\nThe fix switches the implementation to TLBI VAAE1{IS}, which matches every ASID and both global and non-global entries, so no domain-tagged translation survives a page out, dirty-bit update or access-flag clear. Exploitation requires an arm64 build with both CONFIG_USERSPACE and CONFIG_DEMAND_PAGING enabled, an active backing store, and at least one demand-paged page that is also privately mapped into a user memory domain. The same commit additionally stops globalize_table() from stripping EL0 permission and non-global attributes off domain-private leaves during paging synchronization, which previously caused user threads to lose access to their own partitions and stacks.",
+    "description": "Zephyr 是 Zephyr Project 基金会维护的开源物联网实时操作系统（RTOS），面向资源受限的嵌入式设备，其 arm64 架构后端通过 CONFIG_USERSPACE 与需求分页（demand paging）机制提供用户态内存隔离与按需换页能力。\n受影响版本中，arch/arm64/core/mmu.c 的 invalidate_tlb_page() 以 virt >> 12 为操作数执行 TLBI VAE1{IS}，该操作数的 ASID 字段（bits [63:48]）恒为 0，失效仅能匹配内核页表（ASID 0）与全局映射，而内存域自 1 起分配 ASID，域私有叶项由 private_map() 以 MT_NG 非全局属性建立，其缓存的翻译在该次失效中不被覆盖；运行在用户线程中的非特权代码可制造内存压力触发页面回收，回收路径 page_frame_prepare_locked() 调用 arch_mem_page_out() 置无效内核叶项并同步各内存域后仅完成上述 ASID 0 失效，do_page_fault() 随后将同一物理帧复用给新映射，已触碰过被换出页的用户线程在其自身 ASID 下仍持有指向该物理帧的有效 EL0 读写翻译，可继续读写内核后续放入该帧的内容（内核数据、其他内存域分区或其他线程的栈），破坏 CONFIG_USERSPACE 的隔离边界，导致信息泄露与内存破坏。\n修复版本中通过将 invalidate_tlb_page() 的失效指令切换为匹配全部 ASID 与全局、非全局映射的 TLBI VAAE1{IS}，使页出、脏位更新与访问位清理后不再残留任何域标记的翻译，切断对被复用物理帧的越权访问链；同一提交还让 globalize_table() 在换页状态同步时保留域私有叶项的 EL0 权限与非全局属性，消除用户线程在换页后丢失自身分区与栈访问的伴随缺陷。",
     "effects": [
       {
         "comp_name": "zephyr",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(4.3.0,4.5.0)",
+            "affected_version": "[4.3.0,4.5.0)",
             "min_fixed_version": "4.5.0",
             "repository": "unmanaged",
             "solutions": [],
@@ -173,7 +173,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "CVE-2026-79979漏洞"
+    "title": "Zephyr TLB隔离绕过漏洞"
   },
   "first_saved_at": "2026-10-23T22:49:58+00:00"
 }
