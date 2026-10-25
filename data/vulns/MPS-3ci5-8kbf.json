@@ -1,0 +1,227 @@
+{
+  "saved_at": "2026-10-25T13:30:22+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3ci5-8kbf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-116067",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-22",
+    "description": "Paisa 是一个使用 Go 编写的开源（AGPL-3.0）个人财务管理工具，通过 Web 界面管理 ledger 记账文件与表格，提供资产负债、现金流等报表展示。\n受影响版本中，/api/editor/file、/api/editor/file/delete_backups、/api/sheets/file、/api/sheets/file/delete_backups 接口对应的 GetFile、DeleteBackups、GetSheet、DeleteSheetBackups 处理函数直接使用 filepath.Join(dir, file.Name) 拼接客户端提交的文件名，缺少同文件 SaveFile 已有的 BuildSubPath 路径边界校验，name 参数携带 ../ 序列可越出期刊目录，经 readLedgerFile 执行 os.ReadFile 读取服务器进程可访问的任意文件；DeleteBackups 与 DeleteSheetBackups 还通过 filepath.Glob 匹配并以 os.Remove 删除期刊或表格目录之外的 *.backup.* 备份文件。默认部署未配置 user_accounts 时 TokenAuthMiddleware 不做认证，攻击者无需凭据可远程利用。\n修复版本中通过在四个处理函数中调用 utils.BuildSubPath 校验文件名未越出基准目录，非法名称直接返回 Invalid file name，并新增 utils.Glob 使用 regexp.QuoteMeta 固定字面文件名后基于 os.DirFS 在目录内匹配备份文件，切断了路径穿越读取与任意备份删除链路。",
+    "effects": [
+      {
+        "comp_name": "paisa",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,0.7.8)",
+            "min_fixed_version": "0.7.8",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "路径遍历",
+    "kind_en": "对受限制目录的路径名的不正确限制（“路径遍历”）",
+    "last_modified_time": "2026-10-25",
+    "level": "High",
+    "mps_id": "MPS-3ci5-8kbf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3ci5-8kbf",
+        "name": "https://www.oscs1024.com/hd/MPS-3ci5-8kbf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-116067",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-116067"
+      },
+      {
+        "url": "https://github.com/ananthakumaran/paisa/issues/420",
+        "name": "GitHub Issue #420"
+      },
+      {
+        "url": "https://github.com/ananthakumaran/paisa",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ananthakumaran/paisa/blob/v0.7.7/internal/server/editor.go#L49-L70",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ananthakumaran/paisa/commit/035949351f7c0d0f90ecf767aa1e28b4d5a0ae31",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ananthakumaran/paisa/releases/tag/v0.7.8",
+        "name": "v0.7.8 Release Notes"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/paisa-before-0.7.8-path-traversal-via-editor-and-sheet-api",
+        "name": "VulnCheck Advisory: Paisa before 0.7.8 Path Traversal via Editor and Sheet API"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Paisa 路径穿越漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "攻击者可以通过构造特定的输入来绕过应用程序对文件路径的验证，进而访问应用程序之外的文件或目录。这种漏洞通常出现在应用程序根据用户提供的输入来确定文件路径的场景中，如文件下载、文件读取或包含其他文件的操作。",
+        "title": "什么是路径遍历"
+      },
+      {
+        "content": "- 字符串拼接：攻击者提供包含特殊字符的文件路径，以获取目标文件系统中的敏感文件。例如，攻击者可以使用\"../\"表示向上导航到上层目录，然后获取目标目录中的文件。\n- NULL字节攻击：攻击者通过插入空字节（\\0）来截断文件路径，绕过应用程序的路径检查。这种攻击通常针对使用C/C++编程语言的应用程序，因为C字符串是以NULL字节结尾的。\n- 编码绕过攻击：攻击者可以尝试使用特殊编码（如URL编码、Unicode编码）绕过输入验证，使应用程序无法正确解析文件路径，从而实现路径遍历。",
+        "title": "路径遍历常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：应该对所有从用户输入或不可信来源获取的文件路径进行验证和过滤。确保输入只包含允许的字符，并且没有包含特殊字符或路径导航符号。\n- 白名单验证：使用白名单机制来限制文件路径的选择范围。只允许用户访问应用程序所需的特定目录或文件，拒绝访问其他目录或文件。\n- 完整的路径解析：在构造文件路径时，使用完整的路径解析方法，以确保路径的正确性和合法性。避免使用相对路径或不完整的路径。\n- 限制访问权限：确保应用程序和服务器的文件系统设置正确，限制应用程序只能访问必要的文件和目录。使用操作系统级别的文件系统权限控制来限制访问权限。\n- 安全编码实践：开发人员应遵循安全的编码实践，如使用安全的API和框架、避免拼接用户输入和文件路径、不信任用户输入等。",
+        "title": "如何预防路径遍历"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-116067",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-22",
+    "description": "Paisa 是一个使用 Go 编写的开源（AGPL-3.0）个人财务管理工具，通过 Web 界面管理 ledger 记账文件与表格，提供资产负债、现金流等报表展示。\n受影响版本中，/api/editor/file、/api/editor/file/delete_backups、/api/sheets/file、/api/sheets/file/delete_backups 接口对应的 GetFile、DeleteBackups、GetSheet、DeleteSheetBackups 处理函数直接使用 filepath.Join(dir, file.Name) 拼接客户端提交的文件名，缺少同文件 SaveFile 已有的 BuildSubPath 路径边界校验，name 参数携带 ../ 序列可越出期刊目录，经 readLedgerFile 执行 os.ReadFile 读取服务器进程可访问的任意文件；DeleteBackups 与 DeleteSheetBackups 还通过 filepath.Glob 匹配并以 os.Remove 删除期刊或表格目录之外的 *.backup.* 备份文件。默认部署未配置 user_accounts 时 TokenAuthMiddleware 不做认证，攻击者无需凭据可远程利用。\n修复版本中通过在四个处理函数中调用 utils.BuildSubPath 校验文件名未越出基准目录，非法名称直接返回 Invalid file name，并新增 utils.Glob 使用 regexp.QuoteMeta 固定字面文件名后基于 os.DirFS 在目录内匹配备份文件，切断了路径穿越读取与任意备份删除链路。",
+    "effects": [
+      {
+        "comp_name": "paisa",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,0.7.8)",
+            "min_fixed_version": "0.7.8",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "路径遍历",
+    "kind_en": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "last_modified_time": "2026-10-25",
+    "level": "High",
+    "mps_id": "MPS-3ci5-8kbf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3ci5-8kbf",
+        "name": "https://www.oscs1024.com/hd/MPS-3ci5-8kbf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-116067",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-116067"
+      },
+      {
+        "url": "https://github.com/ananthakumaran/paisa/issues/420",
+        "name": "GitHub Issue #420"
+      },
+      {
+        "url": "https://github.com/ananthakumaran/paisa",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ananthakumaran/paisa/blob/v0.7.7/internal/server/editor.go#L49-L70",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ananthakumaran/paisa/commit/035949351f7c0d0f90ecf767aa1e28b4d5a0ae31",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ananthakumaran/paisa/releases/tag/v0.7.8",
+        "name": "v0.7.8 Release Notes"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/paisa-before-0.7.8-path-traversal-via-editor-and-sheet-api",
+        "name": "VulnCheck Advisory: Paisa before 0.7.8 Path Traversal via Editor and Sheet API"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Paisa 路径穿越漏洞"
+  },
+  "first_saved_at": "2026-10-25T13:30:22+00:00"
+}
