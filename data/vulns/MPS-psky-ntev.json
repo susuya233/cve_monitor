@@ -1,0 +1,167 @@
+{
+  "saved_at": "2026-10-26T20:15:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-psky-ntev",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72758",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "sep@nlnetlabs.nl",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-755",
+    "description": "Routinator 是 NLnet Labs 开源的 RPKI 依赖方软件，用于从 RPKI 仓库同步并验证证书、清单、ROA 等对象，并把验证结果以 ROA、路由器密钥等形式提供给路由器，其 X.509 资源解析能力由 rpki（rpki-rs）库提供。\n受影响版本中，rpki 库解析证书 AS 资源扩展中的 AS 范围时未校验最小值不大于最大值，AsRange::parse_content 接受 min 大于 max 的畸形范围；启用 BGPsec 的 Routinator 处理通过验证的 BGPsec 路由器证书时，SnapshotBuilder::process_key 通过 iter_asns 逐个展开该范围内的 AS 号，AsBlockIter::next 仅在当前值等于 max 时终止，min 大于 max 时循环永远无法到达 max，持续克隆密钥信息并向路由器密钥表插入条目，最终内存耗尽，形成拒绝服务。\n修复版本中通过在 rpki 0.20.0 的 AsRange::parse_content 中增加 min 大于 max 时的拒绝检查并补充反向范围回归测试，畸形范围在证书解码阶段被拒绝；Routinator 0.15.3 将 rpki 依赖从 0.19.3 升级至 0.20.0 后不再进入无界迭代，内存耗尽路径被切断。",
+    "effects": [
+      {
+        "comp_name": "routinator",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.15.3)",
+            "min_fixed_version": "0.15.3",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "rpki",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.20.0)",
+            "min_fixed_version": "0.20.0",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对异常条件的处理不恰当",
+    "kind_en": "Improper Handling of Exceptional Conditions",
+    "last_modified_time": "2026-10-27",
+    "level": "High",
+    "mps_id": "MPS-psky-ntev",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-psky-ntev",
+        "name": "https://www.oscs1024.com/hd/MPS-psky-ntev"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72758",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72758"
+      },
+      {
+        "url": "https://www.nlnetlabs.nl/downloads/routinator/CVE-2026-72756.txt",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Routinator畸形AS范围内存耗尽",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72758",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "sep@nlnetlabs.nl",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-755",
+    "description": "Routinator 是 NLnet Labs 开源的 RPKI 依赖方软件，用于从 RPKI 仓库同步并验证证书、清单、ROA 等对象，并把验证结果以 ROA、路由器密钥等形式提供给路由器，其 X.509 资源解析能力由 rpki（rpki-rs）库提供。\n受影响版本中，rpki 库解析证书 AS 资源扩展中的 AS 范围时未校验最小值不大于最大值，AsRange::parse_content 接受 min 大于 max 的畸形范围；启用 BGPsec 的 Routinator 处理通过验证的 BGPsec 路由器证书时，SnapshotBuilder::process_key 通过 iter_asns 逐个展开该范围内的 AS 号，AsBlockIter::next 仅在当前值等于 max 时终止，min 大于 max 时循环永远无法到达 max，持续克隆密钥信息并向路由器密钥表插入条目，最终内存耗尽，形成拒绝服务。\n修复版本中通过在 rpki 0.20.0 的 AsRange::parse_content 中增加 min 大于 max 时的拒绝检查并补充反向范围回归测试，畸形范围在证书解码阶段被拒绝；Routinator 0.15.3 将 rpki 依赖从 0.19.3 升级至 0.20.0 后不再进入无界迭代，内存耗尽路径被切断。",
+    "effects": [
+      {
+        "comp_name": "routinator",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.15.3)",
+            "min_fixed_version": "0.15.3",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "rpki",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.20.0)",
+            "min_fixed_version": "0.20.0",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对异常条件的处理不恰当",
+    "kind_en": "Improper Handling of Exceptional Conditions",
+    "last_modified_time": "2026-10-27",
+    "level": "High",
+    "mps_id": "MPS-psky-ntev",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-psky-ntev",
+        "name": "https://www.oscs1024.com/hd/MPS-psky-ntev"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72758",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72758"
+      },
+      {
+        "url": "https://www.nlnetlabs.nl/downloads/routinator/CVE-2026-72756.txt",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Routinator畸形AS范围内存耗尽"
+  },
+  "first_saved_at": "2026-10-26T20:15:54+00:00"
+}

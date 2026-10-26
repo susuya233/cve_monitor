@@ -1,0 +1,141 @@
+{
+  "saved_at": "2026-10-26T20:15:57+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-x3rf-8jbn",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72753",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "sep@nlnetlabs.nl",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+    "cwe": "CWE-755",
+    "description": "Routinator 是 NLnet Labs 发布的开源 RPKI 依赖方软件，使用 Rust 编写，通过 RRDP 拉取存储库对象并生成路由源验证数据。\n受影响版本中，Notification::from_response 解析 RRDP notification 后只调用 NotificationFile::sort_deltas 按 serial 排序，不拒绝 serial 不连续的 delta 列表。RepositoryUpdate::calc_deltas 只要求最后一条 delta 的 serial 等于 notification serial，再从本地下一序号起整段应用后续 delta，空洞对应的发布内容不会写入本地仓库，但仓库 serial 仍会推进到 notification 的 serial。delta 条目过多时，解析并保留这些条目可能耗尽内存。\n修复版本中通过把 Notification::from_response 的 sort_deltas 替换为 sort_and_verify_deltas(Some(delta_list_limit))，并将依赖 rpki 升级到 0.20.0。sort_and_verify_deltas 按 serial 升序排列，超过上限时只保留最新条目，并核对相邻 serial 是否连续；NotificationFile::_parse 在 delta 数量达到 delta_limit 时标记 DeltaListError::Oversized，delta_update 据此回退到 snapshot，不再把超限 delta 列表留在增量更新路径中。",
+    "effects": [
+      {
+        "comp_name": "routinator",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.15.3)",
+            "min_fixed_version": "0.15.3",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对异常条件的处理不恰当",
+    "kind_en": "Improper Handling of Exceptional Conditions",
+    "last_modified_time": "2026-10-27",
+    "level": "High",
+    "mps_id": "MPS-x3rf-8jbn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-x3rf-8jbn",
+        "name": "https://www.oscs1024.com/hd/MPS-x3rf-8jbn"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72753",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72753"
+      },
+      {
+        "url": "https://www.nlnetlabs.nl/downloads/routinator/CVE-2026-72753.txt",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Routinator增量漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-72753",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "sep@nlnetlabs.nl",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+    "cwe": "CWE-755",
+    "description": "Routinator 是 NLnet Labs 发布的开源 RPKI 依赖方软件，使用 Rust 编写，通过 RRDP 拉取存储库对象并生成路由源验证数据。\n受影响版本中，Notification::from_response 解析 RRDP notification 后只调用 NotificationFile::sort_deltas 按 serial 排序，不拒绝 serial 不连续的 delta 列表。RepositoryUpdate::calc_deltas 只要求最后一条 delta 的 serial 等于 notification serial，再从本地下一序号起整段应用后续 delta，空洞对应的发布内容不会写入本地仓库，但仓库 serial 仍会推进到 notification 的 serial。delta 条目过多时，解析并保留这些条目可能耗尽内存。\n修复版本中通过把 Notification::from_response 的 sort_deltas 替换为 sort_and_verify_deltas(Some(delta_list_limit))，并将依赖 rpki 升级到 0.20.0。sort_and_verify_deltas 按 serial 升序排列，超过上限时只保留最新条目，并核对相邻 serial 是否连续；NotificationFile::_parse 在 delta 数量达到 delta_limit 时标记 DeltaListError::Oversized，delta_update 据此回退到 snapshot，不再把超限 delta 列表留在增量更新路径中。",
+    "effects": [
+      {
+        "comp_name": "routinator",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.15.3)",
+            "min_fixed_version": "0.15.3",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对异常条件的处理不恰当",
+    "kind_en": "Improper Handling of Exceptional Conditions",
+    "last_modified_time": "2026-10-27",
+    "level": "High",
+    "mps_id": "MPS-x3rf-8jbn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-x3rf-8jbn",
+        "name": "https://www.oscs1024.com/hd/MPS-x3rf-8jbn"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72753",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-72753"
+      },
+      {
+        "url": "https://www.nlnetlabs.nl/downloads/routinator/CVE-2026-72753.txt",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Routinator增量漏洞"
+  },
+  "first_saved_at": "2026-10-26T20:15:57+00:00"
+}
