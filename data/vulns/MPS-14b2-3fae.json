@@ -1,0 +1,375 @@
+{
+  "saved_at": "2026-10-26T14:46:10+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-14b2-3fae",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-114148",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-276",
+    "description": ".NET 与 ASP.NET Core 是微软维护的开源运行时和 Web 框架。Linux 上部分 ASP.NET Core 运行时、targeting-pack 以及 source-build 产物以 tar.gz 归档发布，用于安装共享运行时或作为源码构建输入。\n受影响版本中，这些 Linux 归档带有不正确的文件所有权元数据。在特权解压或容器导入保留归档数值所有权时，能够控制相应文件或可写目录的本地账户可以修改运行时文件，并在更高权限的应用加载这些文件后提升权限。该缺陷不由 NuGet 包还原单独引入，也不影响 .NET Framework；.NET 8 与 .NET 9 仅 ASP.NET Core 运行时和 targeting-pack 归档受影响，其他微软发布的运行时和 SDK 归档不在范围内，.NET 10 与 .NET 11 仅 source-build 归档受影响。\n修复版本中通过重新发布所有权已更正的归档，切断错误所有权进入安装目录的路径。已有安装需要换用已校验的修复归档，在新的空目录中解压且不恢复归档内的用户和组，并停用旧安装树；source-build 流程需要更换修复后的构建输入，重新展开工作区并重建受影响的下游产物。覆盖解压或只更新 NuGet 引用不能修正已经落地的文件所有权。",
+    "effects": [
+      {
+        "comp_name": "ASP.NET Core 8 Linux targeting-pack tarballs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.0.0,8.0.33)",
+            "min_fixed_version": "8.0.33",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "ASP.NET Core 8 regular and composite Linux runtime tarballs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.0.0,8.0.33)",
+            "min_fixed_version": "8.0.33",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "ASP.NET Core 9 Linux targeting-pack tarballs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[9.0.0,9.0.22)",
+            "min_fixed_version": "9.0.22",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "ASP.NET Core 9 regular and composite Linux runtime tarballs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[9.0.0,9.0.22)",
+            "min_fixed_version": "9.0.22",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "Source-built .NET 10.0.1xx Linux distributions",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.100,10.0.114-servicing.26522.126)",
+            "min_fixed_version": "10.0.114-servicing.26522.126",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "Source-built .NET 10.0.4xx Linux distributions",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.400,10.0.403-servicing.26523.112)",
+            "min_fixed_version": "10.0.403-servicing.26523.112",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "Source-built .NET 11 preview Linux distributions",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[11.0.100-preview.1.26104.118,11.0.100-rc.3.26522.148)",
+            "min_fixed_version": "11.0.100-rc.3.26522.148",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "Source-built .NET 8 Linux distributions",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.0.100,8.0.133)",
+            "min_fixed_version": "8.0.133",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "Source-built .NET 9 Linux distributions",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[9.0.100,9.0.123)",
+            "min_fixed_version": "9.0.123",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "缺省权限不正确",
+    "kind_en": "Incorrect Default Permissions",
+    "last_modified_time": "2026-10-26",
+    "level": "High",
+    "mps_id": "MPS-14b2-3fae",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-26",
+    "reference_url_list": [
+      {
+        "url": "https://cybersecuritynews.com/microsoft-security-updates-for-brotli-and-net-tarballs-vulnerability/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dotnet/aspnetcore/security/advisories/GHSA-r6pf-x897-gm86",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dotnet/announcements/issues/495",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dotnet/announcements/issues/496",
+        "name": ""
+      },
+      {
+        "url": "https://devblogs.microsoft.com/dotnet/dotnet-october-2026-oob-security-updates/",
+        "name": ""
+      },
+      {
+        "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-114148",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dotnet/aspnetcore/discussions/70040",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-114148",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": ".NET归档所有权提权",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-114148",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-276",
+    "description": ".NET 与 ASP.NET Core 是微软维护的开源运行时和 Web 框架。Linux 上部分 ASP.NET Core 运行时、targeting-pack 以及 source-build 产物以 tar.gz 归档发布，用于安装共享运行时或作为源码构建输入。\n受影响版本中，这些 Linux 归档带有不正确的文件所有权元数据。在特权解压或容器导入保留归档数值所有权时，能够控制相应文件或可写目录的本地账户可以修改运行时文件，并在更高权限的应用加载这些文件后提升权限。该缺陷不由 NuGet 包还原单独引入，也不影响 .NET Framework；.NET 8 与 .NET 9 仅 ASP.NET Core 运行时和 targeting-pack 归档受影响，其他微软发布的运行时和 SDK 归档不在范围内，.NET 10 与 .NET 11 仅 source-build 归档受影响。\n修复版本中通过重新发布所有权已更正的归档，切断错误所有权进入安装目录的路径。已有安装需要换用已校验的修复归档，在新的空目录中解压且不恢复归档内的用户和组，并停用旧安装树；source-build 流程需要更换修复后的构建输入，重新展开工作区并重建受影响的下游产物。覆盖解压或只更新 NuGet 引用不能修正已经落地的文件所有权。",
+    "effects": [
+      {
+        "comp_name": "ASP.NET Core 8 Linux targeting-pack tarballs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.0.0,8.0.33)",
+            "min_fixed_version": "8.0.33",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "ASP.NET Core 8 regular and composite Linux runtime tarballs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.0.0,8.0.33)",
+            "min_fixed_version": "8.0.33",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "ASP.NET Core 9 Linux targeting-pack tarballs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[9.0.0,9.0.22)",
+            "min_fixed_version": "9.0.22",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "ASP.NET Core 9 regular and composite Linux runtime tarballs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[9.0.0,9.0.22)",
+            "min_fixed_version": "9.0.22",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "Source-built .NET 10.0.1xx Linux distributions",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.100,10.0.114-servicing.26522.126)",
+            "min_fixed_version": "10.0.114-servicing.26522.126",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "Source-built .NET 10.0.4xx Linux distributions",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.400,10.0.403-servicing.26523.112)",
+            "min_fixed_version": "10.0.403-servicing.26523.112",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "Source-built .NET 11 preview Linux distributions",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[11.0.100-preview.1.26104.118,11.0.100-rc.3.26522.148)",
+            "min_fixed_version": "11.0.100-rc.3.26522.148",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "Source-built .NET 8 Linux distributions",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[8.0.100,8.0.133)",
+            "min_fixed_version": "8.0.133",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "Source-built .NET 9 Linux distributions",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[9.0.100,9.0.123)",
+            "min_fixed_version": "9.0.123",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "缺省权限不正确",
+    "kind_en": "Incorrect Default Permissions",
+    "last_modified_time": "2026-10-26",
+    "level": "High",
+    "mps_id": "MPS-14b2-3fae",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-26",
+    "reference_url_list": [
+      {
+        "url": "https://cybersecuritynews.com/microsoft-security-updates-for-brotli-and-net-tarballs-vulnerability/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dotnet/aspnetcore/security/advisories/GHSA-r6pf-x897-gm86",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dotnet/announcements/issues/495",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dotnet/announcements/issues/496",
+        "name": ""
+      },
+      {
+        "url": "https://devblogs.microsoft.com/dotnet/dotnet-october-2026-oob-security-updates/",
+        "name": ""
+      },
+      {
+        "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-114148",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dotnet/aspnetcore/discussions/70040",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-114148",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": ".NET归档所有权提权"
+  },
+  "first_saved_at": "2026-10-26T14:46:10+00:00"
+}
