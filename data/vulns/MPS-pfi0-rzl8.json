@@ -1,0 +1,225 @@
+{
+  "saved_at": "2026-10-26T07:18:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-pfi0-rzl8",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-116116",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:L/AC:L/Au:M/C:C/I:C/A:C",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H/E:P/RL:X/RC:R",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-347",
+    "description": "Yoosee GM8135S Camera 是 Gwell Times 体系下的闭源智能摄像头，基于 Grain Media GM8135S 芯片，用于通过 Yoosee 应用查看和控制视频，其 Secure Boot 组件负责固件密码学签名校验。\n受影响版本中，Secure Boot 对固件密码学签名的校验存在缺陷，官方记录未给出具体函数名。公开分析说明固件存放在 SPI 闪存 XM25QH64 中且设备未正确校验固件，具备本地高权限的攻击者取出镜像并修改后写回时，设备仍会加载该镜像，导致机密性、完整性与可用性受损。\n修复版本中通过官方固件补齐对固件密码学签名的校验并拒绝加载未通过校验的镜像，切断被改动固件进入启动流程的路径；截至 2026-10-26 厂商未发布修复版本且未响应披露，公开来源没有已验证修复代码。",
+    "effects": [
+      {
+        "comp_name": "gm8135s_camera",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[21.00.01.36,21.00.01.36]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "密码签名验证不当",
+    "last_modified_time": "2026-10-26",
+    "level": "High",
+    "mps_id": "MPS-pfi0-rzl8",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pfi0-rzl8",
+        "name": "https://www.oscs1024.com/hd/MPS-pfi0-rzl8"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-116116",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-116116"
+      },
+      {
+        "url": "https://vuldb.com/vuln/426184",
+        "name": "VDB-426184 | Yoosee GM8135S Camera Secure Boot signature verification"
+      },
+      {
+        "url": "https://vuldb.com/vuln/426184/cti",
+        "name": "VDB-426184 | CTI Indicators (IOB, IOC)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-116116",
+        "name": "CVE-2026-116116 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/1004712",
+        "name": "Submit #1004712 | Gwelltimes Technology Yoosee Smart Camera GM8135S 21.00.01.36 Insufficient Verification of Data Authenticity"
+      },
+      {
+        "url": "https://akosibrylle.me/writeups/yoosee-cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Yoosee安全启动签名绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-116116",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:L/AC:L/Au:M/C:C/I:C/A:C",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H/E:P/RL:X/RC:R",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.4
+        }
+      ]
+    },
+    "cvss_score": 8.4,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-347",
+    "description": "Yoosee GM8135S Camera 是 Gwell Times 体系下的闭源智能摄像头，基于 Grain Media GM8135S 芯片，用于通过 Yoosee 应用查看和控制视频，其 Secure Boot 组件负责固件密码学签名校验。\n受影响版本中，Secure Boot 对固件密码学签名的校验存在缺陷，官方记录未给出具体函数名。公开分析说明固件存放在 SPI 闪存 XM25QH64 中且设备未正确校验固件，具备本地高权限的攻击者取出镜像并修改后写回时，设备仍会加载该镜像，导致机密性、完整性与可用性受损。\n修复版本中通过官方固件补齐对固件密码学签名的校验并拒绝加载未通过校验的镜像，切断被改动固件进入启动流程的路径；截至 2026-10-26 厂商未发布修复版本且未响应披露，公开来源没有已验证修复代码。",
+    "effects": [
+      {
+        "comp_name": "gm8135s_camera",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[21.00.01.36,21.00.01.36]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "密码学签名的验证不恰当",
+    "kind_en": "Improper Verification of Cryptographic Signature",
+    "last_modified_time": "2026-10-26",
+    "level": "High",
+    "mps_id": "MPS-pfi0-rzl8",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pfi0-rzl8",
+        "name": "https://www.oscs1024.com/hd/MPS-pfi0-rzl8"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-116116",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-116116"
+      },
+      {
+        "url": "https://vuldb.com/vuln/426184",
+        "name": "VDB-426184 | Yoosee GM8135S Camera Secure Boot signature verification"
+      },
+      {
+        "url": "https://vuldb.com/vuln/426184/cti",
+        "name": "VDB-426184 | CTI Indicators (IOB, IOC)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-116116",
+        "name": "CVE-2026-116116 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/1004712",
+        "name": "Submit #1004712 | Gwelltimes Technology Yoosee Smart Camera GM8135S 21.00.01.36 Insufficient Verification of Data Authenticity"
+      },
+      {
+        "url": "https://akosibrylle.me/writeups/yoosee-cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Yoosee安全启动签名绕过"
+  },
+  "first_saved_at": "2026-10-26T07:18:54+00:00"
+}
