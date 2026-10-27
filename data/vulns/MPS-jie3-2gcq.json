@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-10-27T21:42:27+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-jie3-2gcq",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-112355",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "MembershipWorks（WordPress 插件目录标识 memberfindme）是开源 WordPress 插件，用于将 MembershipWorks 会员管理平台集成到 WordPress 站点，提供会员目录、活动日历、捐赠表单以及基于 [memberonly] 短代码的会员专属内容访问控制。\n受影响版本中，会员专属内容的剥离逻辑由挂在 the_content 与 widget_text 过滤器上的 sf_shortcode 回调完成，该回调在 sf_mfm_init() 函数内注册，而 sf_mfm_init() 通过 add_action('wp','sf_mfm_init') 挂载到 wp 钩子；wp 钩子只在前台常规请求主查询处理完成后触发，REST API 请求在 parse_request 阶段由 rest_api_loaded() 完成响应并终止，wp 钩子不会执行，剥离过滤器未被挂载。WordPress REST API 生成文章与页面的 content.rendered 字段时仍会应用 the_content 过滤器，未鉴权攻击者请求 /wp-json/wp/v2/posts/{id} 或 /wp-json/wp/v2/pages/{id} 即可读取未经剥离的会员专属内容，绕过插件的访问控制。\n修复版本中通过拆分 sf_mfm_init() 解决该问题：新增的 sf_mfm_init() 仅保留 the_content 与 widget_text 保护过滤器注册并改挂到 init 钩子（该钩子对所有请求类型包括 REST 请求均触发），依赖主查询的标题与页面数据处理逻辑移入新增的 sf_mfm_wp() 并继续挂载 wp 钩子，使会员专属内容剥离过滤器在 REST API 请求中同样生效，切断未授权读取链路。",
+    "effects": [
+      {
+        "comp_name": "membershipworks",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.0.17)",
+            "min_fixed_version": "6.0.17",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-10-28",
+    "level": "High",
+    "mps_id": "MPS-jie3-2gcq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jie3-2gcq",
+        "name": "https://www.oscs1024.com/hd/MPS-jie3-2gcq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-112355",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-112355"
+      },
+      {
+        "url": "https://wordpress.org/plugins/memberfindme/#developers",
+        "name": "WordPress Plugin Changelog"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/membershipworks-wordpress-plugin-information-disclosure-via-wordpress-rest-api",
+        "name": "VulnCheck Advisory: MembershipWorks WordPress Plugin < 6.17 Information Disclosure via WordPress REST API"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MembershipWorks插件信息泄露漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-112355",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "MembershipWorks（WordPress 插件目录标识 memberfindme）是开源 WordPress 插件，用于将 MembershipWorks 会员管理平台集成到 WordPress 站点，提供会员目录、活动日历、捐赠表单以及基于 [memberonly] 短代码的会员专属内容访问控制。\n受影响版本中，会员专属内容的剥离逻辑由挂在 the_content 与 widget_text 过滤器上的 sf_shortcode 回调完成，该回调在 sf_mfm_init() 函数内注册，而 sf_mfm_init() 通过 add_action('wp','sf_mfm_init') 挂载到 wp 钩子；wp 钩子只在前台常规请求主查询处理完成后触发，REST API 请求在 parse_request 阶段由 rest_api_loaded() 完成响应并终止，wp 钩子不会执行，剥离过滤器未被挂载。WordPress REST API 生成文章与页面的 content.rendered 字段时仍会应用 the_content 过滤器，未鉴权攻击者请求 /wp-json/wp/v2/posts/{id} 或 /wp-json/wp/v2/pages/{id} 即可读取未经剥离的会员专属内容，绕过插件的访问控制。\n修复版本中通过拆分 sf_mfm_init() 解决该问题：新增的 sf_mfm_init() 仅保留 the_content 与 widget_text 保护过滤器注册并改挂到 init 钩子（该钩子对所有请求类型包括 REST 请求均触发），依赖主查询的标题与页面数据处理逻辑移入新增的 sf_mfm_wp() 并继续挂载 wp 钩子，使会员专属内容剥离过滤器在 REST API 请求中同样生效，切断未授权读取链路。",
+    "effects": [
+      {
+        "comp_name": "membershipworks",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.0.17)",
+            "min_fixed_version": "6.0.17",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-10-28",
+    "level": "High",
+    "mps_id": "MPS-jie3-2gcq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jie3-2gcq",
+        "name": "https://www.oscs1024.com/hd/MPS-jie3-2gcq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-112355",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-112355"
+      },
+      {
+        "url": "https://wordpress.org/plugins/memberfindme/#developers",
+        "name": "WordPress Plugin Changelog"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/membershipworks-wordpress-plugin-information-disclosure-via-wordpress-rest-api",
+        "name": "VulnCheck Advisory: MembershipWorks WordPress Plugin < 6.17 Information Disclosure via WordPress REST API"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "MembershipWorks插件信息泄露漏洞"
+  },
+  "first_saved_at": "2026-10-27T21:42:27+00:00"
+}
