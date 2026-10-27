@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-10-27T00:10:18+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-13ao-5mxd",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-116581",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-1284",
+    "description": "seroval 是一个开源（MIT 协议）的 JavaScript 序列化与反序列化库，用于将复杂 JavaScript 值字符串化，支持超出 JSON.stringify 能力的数据结构，常用于服务端与客户端之间的结构化数据传输。\n受影响版本中，fromJSON 与 fromCrossJSON 在反序列化 Sequence 节点时直接使用节点携带的 throw 索引（s）与 done 索引（l）构造 Sequence 对象，未校验二者为元素列表范围内的整数，攻击者在反序列化载荷中将 done 索引改为超大数值后，由该对象生成的迭代器仅在遍历索引超过 done 索引时终止，应用代码完整消费该迭代器时循环永不结束，事件循环被阻塞、进程内存被耗尽，导致服务不可用。\n修复版本中通过新增 isSequenceIndex 校验，要求 throw 与 done 索引必须为从 -1 到元素列表末尾索引之间的整数，非法取值抛出 SerovalMalformedNodeError 拒绝反序列化，切断了恶意索引进入迭代器终止条件的路径。",
+    "effects": [
+      {
+        "comp_name": "seroval",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.6.8)",
+            "min_fixed_version": "1.6.8",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "输入中指定数量的验证不当",
+    "kind_en": "输入中指定数量的验证不正确",
+    "last_modified_time": "2026-10-27",
+    "level": "High",
+    "mps_id": "MPS-13ao-5mxd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-13ao-5mxd",
+        "name": "https://www.oscs1024.com/hd/MPS-13ao-5mxd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-116581",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-116581"
+      },
+      {
+        "url": "https://github.com/lxsmnsyc/seroval/security/advisories/GHSA-97r2-qh9m-474h",
+        "name": "https://github.com/lxsmnsyc/seroval/security/advisories/GHSA-97r2-qh9m-474h"
+      },
+      {
+        "url": "https://github.com/lxsmnsyc/seroval/commit/e176f9267e59ddd6c9de89cc9fe85c5b37a5b728",
+        "name": "https://github.com/lxsmnsyc/seroval/commit/e176f9267e59ddd6c9de89cc9fe85c5b37a5b728"
+      },
+      {
+        "url": "https://github.com/lxsmnsyc/seroval/releases/tag/seroval@1.6.8",
+        "name": "https://github.com/lxsmnsyc/seroval/releases/tag/seroval@1.6.8"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "seroval 反序列化无限循环拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-116581",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-1284",
+    "description": "seroval 是一个开源（MIT 协议）的 JavaScript 序列化与反序列化库，用于将复杂 JavaScript 值字符串化，支持超出 JSON.stringify 能力的数据结构，常用于服务端与客户端之间的结构化数据传输。\n受影响版本中，fromJSON 与 fromCrossJSON 在反序列化 Sequence 节点时直接使用节点携带的 throw 索引（s）与 done 索引（l）构造 Sequence 对象，未校验二者为元素列表范围内的整数，攻击者在反序列化载荷中将 done 索引改为超大数值后，由该对象生成的迭代器仅在遍历索引超过 done 索引时终止，应用代码完整消费该迭代器时循环永不结束，事件循环被阻塞、进程内存被耗尽，导致服务不可用。\n修复版本中通过新增 isSequenceIndex 校验，要求 throw 与 done 索引必须为从 -1 到元素列表末尾索引之间的整数，非法取值抛出 SerovalMalformedNodeError 拒绝反序列化，切断了恶意索引进入迭代器终止条件的路径。",
+    "effects": [
+      {
+        "comp_name": "seroval",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.6.8)",
+            "min_fixed_version": "1.6.8",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "输入中指定数量的验证不当",
+    "kind_en": "Improper Validation of Specified Quantity in Input",
+    "last_modified_time": "2026-10-27",
+    "level": "High",
+    "mps_id": "MPS-13ao-5mxd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-13ao-5mxd",
+        "name": "https://www.oscs1024.com/hd/MPS-13ao-5mxd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-116581",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-116581"
+      },
+      {
+        "url": "https://github.com/lxsmnsyc/seroval/security/advisories/GHSA-97r2-qh9m-474h",
+        "name": "https://github.com/lxsmnsyc/seroval/security/advisories/GHSA-97r2-qh9m-474h"
+      },
+      {
+        "url": "https://github.com/lxsmnsyc/seroval/commit/e176f9267e59ddd6c9de89cc9fe85c5b37a5b728",
+        "name": "https://github.com/lxsmnsyc/seroval/commit/e176f9267e59ddd6c9de89cc9fe85c5b37a5b728"
+      },
+      {
+        "url": "https://github.com/lxsmnsyc/seroval/releases/tag/seroval@1.6.8",
+        "name": "https://github.com/lxsmnsyc/seroval/releases/tag/seroval@1.6.8"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "seroval 反序列化无限循环拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-10-27T00:10:18+00:00"
+}
