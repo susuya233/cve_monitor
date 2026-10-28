@@ -1,0 +1,193 @@
+{
+  "saved_at": "2026-10-28T06:31:44+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-gm5p-9wer",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-116692",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-470",
+    "description": "MLflow 是开源 AI 工程与机器学习平台，用于智能体、大语言模型和机器学习模型的实验跟踪、评估、注册与部署，属于大模型与机器学习基础设施组件。\n受影响版本中，mlflow/genai/scorers/base.py 的 Scorer.model_validate 对第三方评分器模块路径仅做包前缀匹配(module_path == m 或 module_path.startswith(m + \".\"))，随后以请求可控路径执行 importlib.import_module 并实例化所得类。攻击者可先通过实验创建接口把 artifact_location 指向允许包(如 mlflow.genai.scorers.trulens)下的可写路径，经运行与 artifact 上传接口写入恶意 Python 模块，再向 /ajax-api/3.0/mlflow/scorer/invoke 提交指向该模块的序列化评分器;处理器在解析 trace 之前调用 Scorer.model_validate_json，模块导入与类构造随即在服务端执行。关闭认证的部署无需任何凭据即可利用，启用基础认证的部署需要具备创建实验、运行与上传 artifact 权限的主体，且两种配置均要求服务进程对允许评分器包目录具备写权限(官方镜像默认以 root 运行，满足该条件)。\n修复版本中通过将允许列表匹配改为精确相等，并新增三项校验切断该链路:metric_name 必须为合法标识符、kwargs 中禁止包含 metric_name、导入所得类必须为 Scorer 子类;同时 mlflow/genai/scorers/scorer_utils.py 将 THIRD_PARTY_SCORER_ALLOWED_MODULES 扩展为明确定义评分器类的具体模块集合，使攻击者放置的派生模块在导入前被拒绝。",
+    "effects": [
+      {
+        "comp_name": "mlflow",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[3.12.0rc0,3.17.0)",
+            "min_fixed_version": "3.17.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "极高",
+    "fix_suggestion": "强烈建议修复",
+    "kind": "使用外部可控制的输入来选择类或代码（不安全的反射）",
+    "kind_en": "使用外部控制输入来选择类或代码（“不安全反射”）",
+    "last_modified_time": "2026-10-28",
+    "level": "Critical",
+    "mps_id": "MPS-gm5p-9wer",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-10-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gm5p-9wer",
+        "name": "https://www.oscs1024.com/hd/MPS-gm5p-9wer"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-116692",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-116692"
+      },
+      {
+        "url": "https://github.com/mlflow/mlflow/security/advisories/GHSA-26p8-2jq9-3vq9",
+        "name": "https://github.com/mlflow/mlflow/security/advisories/GHSA-26p8-2jq9-3vq9"
+      },
+      {
+        "url": "https://github.com/mlflow/mlflow/pull/25906",
+        "name": "https://github.com/mlflow/mlflow/pull/25906"
+      },
+      {
+        "url": "https://github.com/mlflow/mlflow/commit/a732443e695c3c677680c54320efc394c81654ab",
+        "name": "https://github.com/mlflow/mlflow/commit/a732443e695c3c677680c54320efc394c81654ab"
+      },
+      {
+        "url": "https://github.com/mlflow/mlflow/releases/tag/v3.17.0",
+        "name": "https://github.com/mlflow/mlflow/releases/tag/v3.17.0"
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "AI",
+      "poc",
+      "python",
+      "专家校准",
+      "开源",
+      "强烈建议修复",
+      "终端软件"
+    ],
+    "title": "MLflow第三方评分器反序列化远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-116692",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-470",
+    "description": "MLflow 是开源 AI 工程与机器学习平台，用于智能体、大语言模型和机器学习模型的实验跟踪、评估、注册与部署，属于大模型与机器学习基础设施组件。\n受影响版本中，mlflow/genai/scorers/base.py 的 Scorer.model_validate 对第三方评分器模块路径仅做包前缀匹配(module_path == m 或 module_path.startswith(m + \".\"))，随后以请求可控路径执行 importlib.import_module 并实例化所得类。攻击者可先通过实验创建接口把 artifact_location 指向允许包(如 mlflow.genai.scorers.trulens)下的可写路径，经运行与 artifact 上传接口写入恶意 Python 模块，再向 /ajax-api/3.0/mlflow/scorer/invoke 提交指向该模块的序列化评分器;处理器在解析 trace 之前调用 Scorer.model_validate_json，模块导入与类构造随即在服务端执行。关闭认证的部署无需任何凭据即可利用，启用基础认证的部署需要具备创建实验、运行与上传 artifact 权限的主体，且两种配置均要求服务进程对允许评分器包目录具备写权限(官方镜像默认以 root 运行，满足该条件)。\n修复版本中通过将允许列表匹配改为精确相等，并新增三项校验切断该链路:metric_name 必须为合法标识符、kwargs 中禁止包含 metric_name、导入所得类必须为 Scorer 子类;同时 mlflow/genai/scorers/scorer_utils.py 将 THIRD_PARTY_SCORER_ALLOWED_MODULES 扩展为明确定义评分器类的具体模块集合，使攻击者放置的派生模块在导入前被拒绝。",
+    "effects": [
+      {
+        "comp_name": "mlflow",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[3.12.0rc0,3.17.0)",
+            "min_fixed_version": "3.17.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "极高",
+    "fix_suggestion": "StrongRecommend",
+    "kind": "使用外部可控制的输入来选择类或代码（不安全的反射）",
+    "kind_en": "Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection')",
+    "last_modified_time": "2026-10-28",
+    "level": "Critical",
+    "mps_id": "MPS-gm5p-9wer",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-10-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gm5p-9wer",
+        "name": "https://www.oscs1024.com/hd/MPS-gm5p-9wer"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-116692",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-116692"
+      },
+      {
+        "url": "https://github.com/mlflow/mlflow/security/advisories/GHSA-26p8-2jq9-3vq9",
+        "name": "https://github.com/mlflow/mlflow/security/advisories/GHSA-26p8-2jq9-3vq9"
+      },
+      {
+        "url": "https://github.com/mlflow/mlflow/pull/25906",
+        "name": "https://github.com/mlflow/mlflow/pull/25906"
+      },
+      {
+        "url": "https://github.com/mlflow/mlflow/commit/a732443e695c3c677680c54320efc394c81654ab",
+        "name": "https://github.com/mlflow/mlflow/commit/a732443e695c3c677680c54320efc394c81654ab"
+      },
+      {
+        "url": "https://github.com/mlflow/mlflow/releases/tag/v3.17.0",
+        "name": "https://github.com/mlflow/mlflow/releases/tag/v3.17.0"
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "AI",
+      "poc",
+      "python",
+      "专家校准",
+      "开源",
+      "强烈建议修复",
+      "终端软件"
+    ],
+    "title": "MLflow第三方评分器反序列化远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-10-28T06:31:44+00:00"
+}
