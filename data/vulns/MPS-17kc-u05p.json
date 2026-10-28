@@ -1,0 +1,141 @@
+{
+  "saved_at": "2026-10-28T00:53:04+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-17kc-u05p",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-59158",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-522",
+    "description": "nuxt-ollama 是一个开源的 Nuxt 模块（npm 包），用于在 Nuxt 应用中集成 Ollama 大模型服务，支持通过 api_key 配置接入 Ollama Cloud。\n受影响版本中，模块初始化时在 src/module.ts 的 setup 函数内将包含 api_key 在内的全部模块选项合并进 Nuxt 公开运行时配置 runtimeConfig.public.ollama，Nuxt 服务端渲染会把 runtimeConfig.public 序列化进每个页面的 window.__NUXT__ 脚本负载，浏览器端组合式函数 src/runtime/composables/useOllama.ts 读取该值并作为 Authorization 请求头发送，任意未认证攻击者向应用任意 SSR 页面发送一个 HTTP GET 请求，便能从响应 HTML 中提取明文 API 密钥，进而冒用运营者的 Ollama 云服务配额。\n修复版本中通过将模块选项改为合并进仅服务端可见的私有运行时配置 runtimeConfig.ollama，并新增服务端代理路由 /api/__ollama/** 统一在服务端注入 Authorization 请求头，浏览器端组合式函数不再读取 api_key，API 密钥不再出现在 SSR HTML 响应中。",
+    "effects": [
+      {
+        "comp_name": "nuxt-ollama",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[1.2.26,1.3.1)",
+            "min_fixed_version": "1.3.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "凭证保护不足",
+    "kind_en": "凭证保护不足",
+    "last_modified_time": "2026-10-15",
+    "level": "High",
+    "mps_id": "MPS-17kc-u05p",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-28",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/thoda-dev/nuxt-ollama/security/advisories/GHSA-fxg7-897c-57mp",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-fxg7-897c-57mp",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "npm",
+      "开源"
+    ],
+    "title": "nuxt-ollama API密钥泄露漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-59158",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-522",
+    "description": "nuxt-ollama 是一个开源的 Nuxt 模块（npm 包），用于在 Nuxt 应用中集成 Ollama 大模型服务，支持通过 api_key 配置接入 Ollama Cloud。\n受影响版本中，模块初始化时在 src/module.ts 的 setup 函数内将包含 api_key 在内的全部模块选项合并进 Nuxt 公开运行时配置 runtimeConfig.public.ollama，Nuxt 服务端渲染会把 runtimeConfig.public 序列化进每个页面的 window.__NUXT__ 脚本负载，浏览器端组合式函数 src/runtime/composables/useOllama.ts 读取该值并作为 Authorization 请求头发送，任意未认证攻击者向应用任意 SSR 页面发送一个 HTTP GET 请求，便能从响应 HTML 中提取明文 API 密钥，进而冒用运营者的 Ollama 云服务配额。\n修复版本中通过将模块选项改为合并进仅服务端可见的私有运行时配置 runtimeConfig.ollama，并新增服务端代理路由 /api/__ollama/** 统一在服务端注入 Authorization 请求头，浏览器端组合式函数不再读取 api_key，API 密钥不再出现在 SSR HTML 响应中。",
+    "effects": [
+      {
+        "comp_name": "nuxt-ollama",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[1.2.26,1.3.1)",
+            "min_fixed_version": "1.3.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "凭证保护不足",
+    "kind_en": "Insufficiently Protected Credentials",
+    "last_modified_time": "2026-10-15",
+    "level": "High",
+    "mps_id": "MPS-17kc-u05p",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-28",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/thoda-dev/nuxt-ollama/security/advisories/GHSA-fxg7-897c-57mp",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-fxg7-897c-57mp",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "npm",
+      "开源"
+    ],
+    "title": "nuxt-ollama API密钥泄露漏洞"
+  },
+  "first_saved_at": "2026-10-28T00:53:04+00:00"
+}

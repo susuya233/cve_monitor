@@ -1,0 +1,157 @@
+{
+  "saved_at": "2026-10-28T00:53:12+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d6r9-yoqs",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序试图读取、写入或复制内存缓冲区时，未对边界进行适当的检查和限制。缓冲区是用于存储数据的一块内存区域，当程序试图在缓冲区之外的位置进行操作时，就可能导致缓冲区溢出或下溢。攻击者可以利用这个漏洞来修改程序的执行流、执行任意代码或导致拒绝服务等安全问题。",
+        "title": "什么是缓冲区溢出"
+      },
+      {
+        "content": "- 缓冲区溢出攻击：攻击者向输入缓冲区中注入超过其容量的数据，导致数据溢出到相邻的内存区域，可能覆盖关键数据、修改变量值或执行恶意代码。\n- 缓冲区下溢攻击：攻击者向输入缓冲区中注入少于其容量的数据，导致数据被读取时越过缓冲区边界，可能泄露敏感信息或破坏程序的正常执行流程。\n- 字符串格式化攻击：攻击者通过控制格式化字符串的输入，可以读取或写入任意内存位置，从而执行恶意操作。",
+        "title": "缓冲区溢出常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和边界检查：对于所有接受用户输入的缓冲区操作，确保验证输入数据的长度和内容，以避免缓冲区溢出或下溢。\n- 使用安全的字符串操作函数：使用安全的字符串操作函数（如strncpy、strncat）替代不安全的函数（如strcpy、strcat），这些函数会在操作时自动限制操作的边界。\n- 使用内存安全工具：使用内存安全工具（如内存分析器、静态分析工具）来检测和修复潜在的缓冲区溢出问题。\n- 采用安全编码实践：遵循安全编码实践，如最小特权原则、避免使用不受信任的输入等。\n- 定期更新和修补程序：及时应用程序厂商提供的安全更新和补丁，以修复已知的缓冲区溢出漏洞。\n- 使用编程语言和框架提供的安全功能：利用编程语言和框架提供的安全特性，如内存安全函数、边界检查等。",
+        "title": "如何预防缓冲区溢出"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-118352",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-119",
+    "description": "Google Chrome 是 Google 开发的开源网页浏览器，基于 Chromium 项目，其网络栈中的 HTTP 缓存（HttpCache）负责存储与复用网页资源，加速重复访问。\n受影响版本中，HTTP 缓存事务等待进入缓存条目时记录 entry_lock_waiting_since_ 时间戳，并通过 AddCacheLockTimeoutHandler 安排最长 20 秒的缓存锁超时回调；当保存条目的重新验证响应不匹配时，HttpCache::DoomEntryValidationNoMatch 会复位排队事务的等待状态，并向任务队列投递携带 ERR_CACHE_RACE 的显式重启任务，但未取消先前安排的超时回调；在线程极度繁忙的场景下，迟到的超时回调先于重启任务执行，同一事务先后进入超时与重启两条处理路径，对已脱离条目等待队列的状态与缓存条目对象产生错误访问，形成内存破坏；攻击者可诱导用户访问其控制的页面触发该竞争，最终可能在沙箱内执行任意代码。\n修复版本中通过在 DoomEntryValidationNoMatch 投递重启任务前调用新增的 CancelEntryLockTimeout，将 entry_lock_waiting_since_ 复位为空值，使迟到的缓存锁超时回调在时间戳一致性检查处直接返回，切断超时处理与显式重启叠加的竞争路径，消除该内存破坏问题。",
+    "effects": [
+      {
+        "comp_name": "chrome",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,156.0.8078.73)",
+            "min_fixed_version": "156.0.8078.73",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "缓冲区溢出",
+    "kind_en": "内存缓冲区范围内的操作限制不当",
+    "last_modified_time": "2026-10-28",
+    "level": "High",
+    "mps_id": "MPS-d6r9-yoqs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-d6r9-yoqs",
+        "name": "https://www.oscs1024.com/hd/MPS-d6r9-yoqs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118352",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-118352"
+      },
+      {
+        "url": "https://chromereleases.googleblog.com/2026/10/stable-channel-update-for-desktop_0562499947.html",
+        "name": ""
+      },
+      {
+        "url": "https://issues.chromium.org/issues/569674221",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Google Chrome HTTP缓存内存破坏漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序试图读取、写入或复制内存缓冲区时，未对边界进行适当的检查和限制。缓冲区是用于存储数据的一块内存区域，当程序试图在缓冲区之外的位置进行操作时，就可能导致缓冲区溢出或下溢。攻击者可以利用这个漏洞来修改程序的执行流、执行任意代码或导致拒绝服务等安全问题。",
+        "title": "什么是缓冲区溢出"
+      },
+      {
+        "content": "- 缓冲区溢出攻击：攻击者向输入缓冲区中注入超过其容量的数据，导致数据溢出到相邻的内存区域，可能覆盖关键数据、修改变量值或执行恶意代码。\n- 缓冲区下溢攻击：攻击者向输入缓冲区中注入少于其容量的数据，导致数据被读取时越过缓冲区边界，可能泄露敏感信息或破坏程序的正常执行流程。\n- 字符串格式化攻击：攻击者通过控制格式化字符串的输入，可以读取或写入任意内存位置，从而执行恶意操作。",
+        "title": "缓冲区溢出常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和边界检查：对于所有接受用户输入的缓冲区操作，确保验证输入数据的长度和内容，以避免缓冲区溢出或下溢。\n- 使用安全的字符串操作函数：使用安全的字符串操作函数（如strncpy、strncat）替代不安全的函数（如strcpy、strcat），这些函数会在操作时自动限制操作的边界。\n- 使用内存安全工具：使用内存安全工具（如内存分析器、静态分析工具）来检测和修复潜在的缓冲区溢出问题。\n- 采用安全编码实践：遵循安全编码实践，如最小特权原则、避免使用不受信任的输入等。\n- 定期更新和修补程序：及时应用程序厂商提供的安全更新和补丁，以修复已知的缓冲区溢出漏洞。\n- 使用编程语言和框架提供的安全功能：利用编程语言和框架提供的安全特性，如内存安全函数、边界检查等。",
+        "title": "如何预防缓冲区溢出"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-118352",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-119",
+    "description": "Google Chrome 是 Google 开发的开源网页浏览器，基于 Chromium 项目，其网络栈中的 HTTP 缓存（HttpCache）负责存储与复用网页资源，加速重复访问。\n受影响版本中，HTTP 缓存事务等待进入缓存条目时记录 entry_lock_waiting_since_ 时间戳，并通过 AddCacheLockTimeoutHandler 安排最长 20 秒的缓存锁超时回调；当保存条目的重新验证响应不匹配时，HttpCache::DoomEntryValidationNoMatch 会复位排队事务的等待状态，并向任务队列投递携带 ERR_CACHE_RACE 的显式重启任务，但未取消先前安排的超时回调；在线程极度繁忙的场景下，迟到的超时回调先于重启任务执行，同一事务先后进入超时与重启两条处理路径，对已脱离条目等待队列的状态与缓存条目对象产生错误访问，形成内存破坏；攻击者可诱导用户访问其控制的页面触发该竞争，最终可能在沙箱内执行任意代码。\n修复版本中通过在 DoomEntryValidationNoMatch 投递重启任务前调用新增的 CancelEntryLockTimeout，将 entry_lock_waiting_since_ 复位为空值，使迟到的缓存锁超时回调在时间戳一致性检查处直接返回，切断超时处理与显式重启叠加的竞争路径，消除该内存破坏问题。",
+    "effects": [
+      {
+        "comp_name": "chrome",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,156.0.8078.73)",
+            "min_fixed_version": "156.0.8078.73",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "缓冲区溢出",
+    "kind_en": "Improper Restriction of Operations within the Bounds of a Memory Buffer",
+    "last_modified_time": "2026-10-28",
+    "level": "High",
+    "mps_id": "MPS-d6r9-yoqs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-d6r9-yoqs",
+        "name": "https://www.oscs1024.com/hd/MPS-d6r9-yoqs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118352",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-118352"
+      },
+      {
+        "url": "https://chromereleases.googleblog.com/2026/10/stable-channel-update-for-desktop_0562499947.html",
+        "name": ""
+      },
+      {
+        "url": "https://issues.chromium.org/issues/569674221",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Google Chrome HTTP缓存内存破坏漏洞"
+  },
+  "first_saved_at": "2026-10-28T00:53:12+00:00"
+}
