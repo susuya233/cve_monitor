@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-10-28T23:48:02+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2xuv-z8ri",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61571",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+    "cwe": "CWE-862",
+    "description": "AVideo是一个视频分享平台。在 8.1.0 之前，编码器缺乏全局身份验证层，并向匿名网络调用者公开控制和状态 PHP 端点。 `view/run.php` 有一个注释掉的保护并调用 `Encoder::run()`。 `view/queue.json.php` 调用 `Encoder::getAll(true)`，通过 `getSiteURL()` 显示流媒体 URL，并使用 `execRun()` 触发处理。 `view/status.php` 返回带通配符的 `Access-Control-Allow-Origin`，读取队列，触发处理，并在设置 `serverStatus` 时通过 `ServerMonitor::getMemory()` 公开主机内存统计信息。 `view/listFiles.json.php` 仅检查 `Login::canBulkEncode()`，只要 `disableBulkEncode` 为空（默认值），它就会允许匿名调用者。它的“path”参数通过“realpath()”解析，并通过“scandir()”列出，没有基目录限制。未经身份验证的攻击者可以驱动特权队列处理器、读取队列和流媒体站点信息、获取内存统计信息并枚举 Web 服务器用户可读的任何目录中的媒体文件名和路径。枚举仅限于配置的媒体扩展，本身并不公开任意文件内容。此问题已在版本 8.1.0 中修复。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-10-29",
+    "level": "High",
+    "mps_id": "MPS-2xuv-z8ri",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2xuv-z8ri",
+        "name": "https://www.oscs1024.com/hd/MPS-2xuv-z8ri"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61571",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61571"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/commit/ac6097cd5fa7a24df82293bff66b136d559c16db",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/releases/tag/v8.1.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/security/advisories/GHSA-297p-4mj8-28wm",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-61571 漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61571",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+    "cwe": "CWE-862",
+    "description": "AVideo is a video-sharing Platform. Prior to 8.1.0, the encoder lacks a global authentication layer and exposes control and status PHP endpoints to anonymous network callers. `view/run.php` has a commented-out guard and invokes `Encoder::run()`. `view/queue.json.php` calls `Encoder::getAll(true)`, reveals streamer URLs through `getSiteURL()`, and triggers processing with `execRun()`. `view/status.php` returns `Access-Control-Allow-Origin` with a wildcard, reads the queue, triggers processing, and exposes host memory statistics through `ServerMonitor::getMemory()` when `serverStatus` is set. `view/listFiles.json.php` checks only `Login::canBulkEncode()`, which admits anonymous callers whenever `disableBulkEncode` is empty, the default. Its `path` parameter is resolved with `realpath()` and listed with `scandir()` without a base-directory restriction. An unauthenticated attacker can drive the privileged queue processor, read queue and streamer-site information, obtain memory statistics and enumerate media file names and paths in any directory readable by the web-server user. Enumeration is limited to configured media extensions and does not itself disclose arbitrary file contents. This issue is fixed in version 8.1.0.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-10-29",
+    "level": "High",
+    "mps_id": "MPS-2xuv-z8ri",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2xuv-z8ri",
+        "name": "https://www.oscs1024.com/hd/MPS-2xuv-z8ri"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61571",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61571"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/commit/ac6097cd5fa7a24df82293bff66b136d559c16db",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/releases/tag/v8.1.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/security/advisories/GHSA-297p-4mj8-28wm",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-61571 漏洞"
+  },
+  "first_saved_at": "2026-10-28T23:48:02+00:00"
+}

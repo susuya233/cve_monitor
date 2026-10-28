@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-10-28T23:48:00+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-abkm-lvts",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61569",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-89",
+    "description": "AVideo是一个视频分享平台。在 8.1.0 之前，“objects/login.json.php”中未经身份验证的 Streamer 登录会将“user”参数传递给“objects/Streamer.php”中的“Streamer::get”，在其中将其插入到单引号的 MariaDB SELECT 中，而无需参数化或转义。尽管“objects/security.php”删除了单引号，但“objects/Login.php”中的“html_entity_decode”会在查询之前恢复实体编码的引号。提供的“siteURL”必须通过流媒体允许列表，默认情况下允许所有站点为空，并且攻击者托管的登录响应必须设置“canUpload”或“isAdmin”才能到达“Streamer::createIfNotExists”。该函数在进行额外的白名单检查之前调用“Streamer::get”。 UNION 结果通过“streamers_id”公开，而失败则返回渲染的查询和 MariaDB 错误。攻击者可以读取任意编码器数据库数据，包括存储的上游流式传输凭据、白名单配置和队列记录，而无需编码器凭据。 mysqli 驱动程序不允许使用堆叠语句，并且测试的数据库帐户缺乏全局 FILE 权限，因此演示的向量仅限于读取而不是服务器端文件写入。被盗的流式传输凭据可以提供持续的上游访问，直到轮换为止。此问题已在版本 8.1.0 中修复。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SQL注入",
+    "kind_en": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
+    "last_modified_time": "2026-10-29",
+    "level": "High",
+    "mps_id": "MPS-abkm-lvts",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-abkm-lvts",
+        "name": "https://www.oscs1024.com/hd/MPS-abkm-lvts"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61569",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61569"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/commit/8a6e2b8aedb87702656636d3fc8d9e26e559a762",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/releases/tag/v8.1.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/security/advisories/GHSA-2rrq-xf8q-3qpf",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-61569 漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61569",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-89",
+    "description": "AVideo is a video-sharing Platform. Prior to 8.1.0, the unauthenticated streamer login at `objects/login.json.php` passes the `user` parameter to `Streamer::get` in `objects/Streamer.php`, where it is interpolated into a single-quoted MariaDB SELECT without parameterization or escaping. Although `objects/security.php` strips literal single quotes, `html_entity_decode` in `objects/Login.php` restores entity-encoded quotes before the query. The supplied `siteURL` must pass the streamer allowlist, which allows all sites when empty by default, and an attacker-hosted login response must set `canUpload` or `isAdmin` to reach `Streamer::createIfNotExists`. That function calls `Streamer::get` before its additional allowlist check. UNION results are exposed through `streamers_id`, while failures return the rendered query and MariaDB error. An attacker can read arbitrary encoder database data, including stored upstream streamer credentials, allowlist configuration, and queue records, without encoder credentials. Stacked statements are not permitted by the mysqli driver and the tested database account lacks global FILE privilege, so the demonstrated vector is bounded to reads rather than server-side file writes. Stolen streamer credentials can provide continued upstream access until rotated. This issue is fixed in version 8.1.0.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SQL注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "last_modified_time": "2026-10-29",
+    "level": "High",
+    "mps_id": "MPS-abkm-lvts",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-abkm-lvts",
+        "name": "https://www.oscs1024.com/hd/MPS-abkm-lvts"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61569",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61569"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/commit/8a6e2b8aedb87702656636d3fc8d9e26e559a762",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/releases/tag/v8.1.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/security/advisories/GHSA-2rrq-xf8q-3qpf",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-61569 漏洞"
+  },
+  "first_saved_at": "2026-10-28T23:48:00+00:00"
+}

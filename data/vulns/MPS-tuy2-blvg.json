@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-10-28T23:48:14+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-tuy2-blvg",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54453",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "OpenCATS 是一个开源申请人跟踪系统和招聘 CRM，适用于人才中介机构和招聘团队。在版本 0.10.0 之前，`SettingsUI` (`manageProfessional`) 中的专业许可证配置功能接受管理员控制的许可证密钥输入，该密钥输入将重构为 `config.php` 中的 PHP `define()` 语句，而无需安全转义。由于应用程序包含“config.php”，精心设计的输入可以更改文件的 PHP 语法，并导致使用 Web 服务器进程权限持续执行任意 PHP。经过身份验证的管理员必须具有设置模块访问权限和更新专业许可证配置的权限，并且“config.php”对于此基于写入的路径必须是可写的。成功利用该漏洞可以读取、修改或删除应用程序数据，暴露候选人、联系人、公司、工作订单和用户帐户信息，更改安装或配置，并为进一步的攻击提供立足点。未经身份验证的利用和没有设置访问权限的利用不会建立。此问题已在 0.10.0 版本中修复。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-10-29",
+    "level": "High",
+    "mps_id": "MPS-tuy2-blvg",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tuy2-blvg",
+        "name": "https://www.oscs1024.com/hd/MPS-tuy2-blvg"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54453",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-54453"
+      },
+      {
+        "url": "https://github.com/opencats/OpenCATS/commit/e422abf3b75d467bdee65277f56e41dfba928fc8",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/opencats/OpenCATS/pull/802",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/opencats/OpenCATS/security/advisories/GHSA-627w-743r-4cg2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/opencats/OpenCATS/tree/v0.10.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-54453 漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-54453",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "OpenCATS is an open-source applicant tracking system and recruitment CRM for staffing agencies and hiring teams. Prior to version 0.10.0, the Professional License configuration feature in `SettingsUI` (`manageProfessional`) accepts administrator-controlled license key input that is reconstructed into a PHP `define()` statement in `config.php` without safe escaping. Because the application includes `config.php`, crafted input can alter the file's PHP syntax and cause persistent arbitrary PHP execution with the web server process privileges. An authenticated administrator must have Settings module access and permission to update Professional License configuration, and `config.php` must be writable for this write-based path. Successful exploitation can read, modify or delete application data, expose candidate, contact, company, job order and user account information, alter the installation or configuration, and provide a foothold for further attacks. Unauthenticated exploitation and exploitation without Settings access are not established. This issue is fixed in version 0.10.0.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-10-29",
+    "level": "High",
+    "mps_id": "MPS-tuy2-blvg",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tuy2-blvg",
+        "name": "https://www.oscs1024.com/hd/MPS-tuy2-blvg"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54453",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-54453"
+      },
+      {
+        "url": "https://github.com/opencats/OpenCATS/commit/e422abf3b75d467bdee65277f56e41dfba928fc8",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/opencats/OpenCATS/pull/802",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/opencats/OpenCATS/security/advisories/GHSA-627w-743r-4cg2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/opencats/OpenCATS/tree/v0.10.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-54453 漏洞"
+  },
+  "first_saved_at": "2026-10-28T23:48:14+00:00"
+}

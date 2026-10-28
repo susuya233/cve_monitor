@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-10-28T23:48:12+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-pi9a-csg5",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能正确验证和过滤用户输入，将用户提供的数据直接用作操作系统命令的一部分。攻击者可以利用这个漏洞，通过注入恶意的操作系统命令来执行任意系统命令、获取敏感信息或者对系统进行未授权的操作。",
+        "title": "什么是OS命令注入"
+      },
+      {
+        "content": "- 命令拼接：应用程序将用户输入直接拼接到操作系统命令中，而不进行合适的过滤和验证。攻击者可以通过在输入中注入特殊字符、命令分隔符等，来执行额外的命令或修改原始命令的行为。\r\n- 命令注释：攻击者通过在输入中注入特殊字符或命令注释符号，如\"#\"或\"//\"，来注释掉原始命令中的一部分，然后执行自己的恶意命令。\r\n- 命令管道：攻击者通过在输入中注入管道符号\"|\"，将多个命令连接起来执行。这使得攻击者可以在单个注入点上执行多个命令，进一步扩大攻击的范围。",
+        "title": "OS命令注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对用户输入进行严格的验证和过滤，确保只接受预期的有效输入。可以使用白名单验证，限制用户输入的字符集和格式，防止特殊字符和命令注释符的注入。\r\n- 使用参数化命令或预编译语句：应该使用参数化命令或预编译语句，而不是将用户输入直接拼接到命令中。这样可以将输入数据视为参数，而不是命令的一部分，从而避免命令注入漏洞。\r\n- 最小特权原则：应用程序在执行操作系统命令时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。这样即使发生命令注入漏洞，攻击者的权限也会受到限制。\r\n- 安全编码实践：开发人员应避免使用不受信任的用户输入来拼接命令，并使用安全的编码实践，如输入验证、输出编码和参数化查询等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止命令注入攻击。",
+        "title": "如何预防OS命令注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61567",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ]
+    },
+    "cvss_score": 10,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-78",
+    "description": "AVideo是一个视频分享平台。在 8.1.0 之前，直播端点“view/videosListToLive.php”接受“webSiteRootURL”中名为攻击者的流媒体，调用“objects/Login.php”中的“Login::run”，并信任返回的 JSON 作为会话状态。未经身份验证的远程攻击者可以托管编码器可访问的 HTTP 服务，可以在没有合法凭据的情况下自行授予“isLogged”和“canStream”。端点仅需要非空的“playlists_id”和“APISecret”值； `APISecret` 被转发，而不是根据存储的秘密进行检查。此路径永远不会调用“Streamer::isURLAllowed”，因此无论运营商的流媒体白名单如何，该路径都可以工作。它获取第二个攻击者控制的视频列表响应，并插入“videos[].path”，而无需将 shell 参数转义为传递给“exec”的“ffprobe”和“ffmpeg”命令； `isAudio` 调用 `isVideo` 来到达 `ffprobe` 命令。包含 shell 分隔符的路径以 Web 服务器用户身份执行任意操作系统命令。请求过滤器不检查视频列表 JSON。这可能会泄露数据库和存储的流式传输凭据、使用这些凭据危害上游平台、修改 Web 服务器用户拥有的文件、建立持久性并拒绝编码器服务。此问题已在版本 8.1.0 中修复。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "OS命令注入",
+    "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
+    "last_modified_time": "2026-10-29",
+    "level": "Critical",
+    "mps_id": "MPS-pi9a-csg5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pi9a-csg5",
+        "name": "https://www.oscs1024.com/hd/MPS-pi9a-csg5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61567",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61567"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/commit/99b8ad9b66fe5726cababbe29dce9d9695131caa",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/releases/tag/v8.1.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/security/advisories/GHSA-rf63-6vwm-wv8p",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-61567 漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能正确验证和过滤用户输入，将用户提供的数据直接用作操作系统命令的一部分。攻击者可以利用这个漏洞，通过注入恶意的操作系统命令来执行任意系统命令、获取敏感信息或者对系统进行未授权的操作。",
+        "title": "什么是OS命令注入"
+      },
+      {
+        "content": "- 命令拼接：应用程序将用户输入直接拼接到操作系统命令中，而不进行合适的过滤和验证。攻击者可以通过在输入中注入特殊字符、命令分隔符等，来执行额外的命令或修改原始命令的行为。\r\n- 命令注释：攻击者通过在输入中注入特殊字符或命令注释符号，如\"#\"或\"//\"，来注释掉原始命令中的一部分，然后执行自己的恶意命令。\r\n- 命令管道：攻击者通过在输入中注入管道符号\"|\"，将多个命令连接起来执行。这使得攻击者可以在单个注入点上执行多个命令，进一步扩大攻击的范围。",
+        "title": "OS命令注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对用户输入进行严格的验证和过滤，确保只接受预期的有效输入。可以使用白名单验证，限制用户输入的字符集和格式，防止特殊字符和命令注释符的注入。\r\n- 使用参数化命令或预编译语句：应该使用参数化命令或预编译语句，而不是将用户输入直接拼接到命令中。这样可以将输入数据视为参数，而不是命令的一部分，从而避免命令注入漏洞。\r\n- 最小特权原则：应用程序在执行操作系统命令时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。这样即使发生命令注入漏洞，攻击者的权限也会受到限制。\r\n- 安全编码实践：开发人员应避免使用不受信任的用户输入来拼接命令，并使用安全的编码实践，如输入验证、输出编码和参数化查询等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止命令注入攻击。",
+        "title": "如何预防OS命令注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61567",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ]
+    },
+    "cvss_score": 10,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-78",
+    "description": "AVideo is a video-sharing Platform. Prior to 8.1.0, the live-streaming endpoint `view/videosListToLive.php` accepts an attacker-named streamer in `webSiteRootURL`, calls `Login::run` in `objects/Login.php`, and trusts the returned JSON as session state. An unauthenticated remote attacker who can host an HTTP service reachable by the encoder can self-grant `isLogged` and `canStream` without legitimate credentials. The endpoint requires only nonempty `playlists_id` and `APISecret` values; `APISecret` is forwarded rather than checked against a stored secret. This path never calls `Streamer::isURLAllowed` and therefore works regardless of the operator's streamer allowlist. It fetches a second attacker-controlled video-list response and interpolates `videos[].path` without shell argument escaping into `ffprobe` and `ffmpeg` commands passed to `exec`; `isAudio` calls `isVideo` to reach the `ffprobe` command. Paths containing shell delimiters execute arbitrary operating-system commands as the web-server user. The request filter does not inspect the video-list JSON. This can disclose database and stored streamer credentials, compromise the upstream platform using those credentials, modify files owned by the web-server user, establish persistence, and deny encoder service. This issue is fixed in version 8.1.0.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "OS命令注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "last_modified_time": "2026-10-29",
+    "level": "Critical",
+    "mps_id": "MPS-pi9a-csg5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pi9a-csg5",
+        "name": "https://www.oscs1024.com/hd/MPS-pi9a-csg5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61567",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61567"
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/commit/99b8ad9b66fe5726cababbe29dce9d9695131caa",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/releases/tag/v8.1.0",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/WWBN/AVideo-Encoder/security/advisories/GHSA-rf63-6vwm-wv8p",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-61567 漏洞"
+  },
+  "first_saved_at": "2026-10-28T23:48:12+00:00"
+}
