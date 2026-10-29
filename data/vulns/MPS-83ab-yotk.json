@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-10-29T17:15:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-83ab-yotk",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-119052",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-248",
+    "description": "llama.cpp 是 ggml-org 维护的开源大语言模型推理框架，提供模型量化、推理与部署能力，其 ggml-rpc 组件通过自定义 RPC 协议把推理计算分发到远程后端执行。\n受影响版本中，ggml-rpc 服务端在 rpc_serve_client 完成 HELLO 握手后按命令分发可变长消息，ggml/src/ggml-rpc/ggml-rpc.cpp 中的 recv_msg 函数从套接字读取攻击者可控的 64 位消息长度并执行 input.resize(size)，try 块仅捕获 std::bad_alloc；当 SET_TENSOR 等命令携带的长度超过 std::vector::max_size() 时，resize 在分配前抛出 std::length_error，该异常未被捕获并沿调用栈传播，经 std::terminate 终止 rpc-server 进程，未认证的远程攻击者发送一条超长消息长度可造成服务对所有客户端拒绝服务。\n修复版本中通过在 recv_msg 的异常处理中新增针对 std::length_error 的捕获分支，超长消息记录错误日志并返回 false，仅断开当前客户端连接，rpc-server 进程保持运行，该修复以 commit 7ecb57f7adbea2928aa468ad2aecf05b10725ad4 合入并随 b11935 发布。",
+    "effects": [
+      {
+        "comp_name": "llama.cpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[b2877,b11935)",
+            "min_fixed_version": "b11935",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未捕获的异常",
+    "kind_en": "未捕获的异常",
+    "last_modified_time": "2026-10-29",
+    "level": "High",
+    "mps_id": "MPS-83ab-yotk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-83ab-yotk",
+        "name": "https://www.oscs1024.com/hd/MPS-83ab-yotk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-119052",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-119052"
+      },
+      {
+        "url": "https://github.com/ggml-org/llama.cpp/pull/31204",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ggml-org/llama.cpp/commit/7ecb57f7adbea2928aa468ad2aecf05b10725ad4",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/ggml-org/llama.cpp",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b11935",
+        "name": "llama.cpp b11935 Release Notes"
+      },
+      {
+        "url": "https://github.com/ggml-org/llama.cpp/blob/8542e94350f0ade01644db6f1d1520da3814dafd/ggml/src/ggml-rpc/ggml-rpc.cpp#L344-L356",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/llama-cpp-b2877-before-b11935-ggml-rpc-server-dos-via-oversized-recv-msg-length",
+        "name": "VulnCheck Advisory: llama.cpp b2877 before b11935 ggml-rpc Server DoS via Oversized recv_msg Length"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "llama.cpp拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-119052",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-248",
+    "description": "llama.cpp 是 ggml-org 维护的开源大语言模型推理框架，提供模型量化、推理与部署能力，其 ggml-rpc 组件通过自定义 RPC 协议把推理计算分发到远程后端执行。\n受影响版本中，ggml-rpc 服务端在 rpc_serve_client 完成 HELLO 握手后按命令分发可变长消息，ggml/src/ggml-rpc/ggml-rpc.cpp 中的 recv_msg 函数从套接字读取攻击者可控的 64 位消息长度并执行 input.resize(size)，try 块仅捕获 std::bad_alloc；当 SET_TENSOR 等命令携带的长度超过 std::vector::max_size() 时，resize 在分配前抛出 std::length_error，该异常未被捕获并沿调用栈传播，经 std::terminate 终止 rpc-server 进程，未认证的远程攻击者发送一条超长消息长度可造成服务对所有客户端拒绝服务。\n修复版本中通过在 recv_msg 的异常处理中新增针对 std::length_error 的捕获分支，超长消息记录错误日志并返回 false，仅断开当前客户端连接，rpc-server 进程保持运行，该修复以 commit 7ecb57f7adbea2928aa468ad2aecf05b10725ad4 合入并随 b11935 发布。",
+    "effects": [
+      {
+        "comp_name": "llama.cpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[b2877,b11935)",
+            "min_fixed_version": "b11935",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未捕获的异常",
+    "kind_en": "Uncaught Exception",
+    "last_modified_time": "2026-10-29",
+    "level": "High",
+    "mps_id": "MPS-83ab-yotk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-83ab-yotk",
+        "name": "https://www.oscs1024.com/hd/MPS-83ab-yotk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-119052",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-119052"
+      },
+      {
+        "url": "https://github.com/ggml-org/llama.cpp/pull/31204",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ggml-org/llama.cpp/commit/7ecb57f7adbea2928aa468ad2aecf05b10725ad4",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/ggml-org/llama.cpp",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b11935",
+        "name": "llama.cpp b11935 Release Notes"
+      },
+      {
+        "url": "https://github.com/ggml-org/llama.cpp/blob/8542e94350f0ade01644db6f1d1520da3814dafd/ggml/src/ggml-rpc/ggml-rpc.cpp#L344-L356",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/llama-cpp-b2877-before-b11935-ggml-rpc-server-dos-via-oversized-recv-msg-length",
+        "name": "VulnCheck Advisory: llama.cpp b2877 before b11935 ggml-rpc Server DoS via Oversized recv_msg Length"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "llama.cpp拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-10-29T17:15:33+00:00"
+}
