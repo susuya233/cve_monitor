@@ -1,0 +1,129 @@
+{
+  "saved_at": "2026-10-29T03:55:10+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-gotm-iaf6",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85749",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+    "cwe": "CWE-639",
+    "description": "MailWatch for MailScanner 是 MailScanner 的基于 Web 的前端。在 1.2.27 之前，任何经过身份验证的 MailWatch 用户（包括 U/用户、D/域管理员和 H/主机角色）都可以通过向“mailscanner/quarantine_action.php”提供任意消息“id”来释放到收件箱或永久删除任何其他用户或域的隔离邮件。操作路径调用“mailscanner/functions.php”中的“quarantine_list_items()”，它通过提供的标识符从“maillog”中进行选择，而无需通过列表和读取视图应用每个角色的“global_filter”。该操作需要有效的会话和 CSRF 令牌，但调用者可以从调用者自己的会话中提交令牌；所请求消息的所有权永远不会被检查。邮件标识符是可枚举的，允许低权限用户为其他用户或域的隔离邮件调用“quarantine_release()”或“quarantine_delete()”，强制传送隔离区保留的邮件或永久删除它。此问题已在 1.2.27 版本中修复。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-10-29",
+    "level": "High",
+    "mps_id": "MPS-gotm-iaf6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gotm-iaf6",
+        "name": "https://www.oscs1024.com/hd/MPS-gotm-iaf6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85749",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85749"
+      },
+      {
+        "url": "https://github.com/mailwatch/MailWatch/commit/bc04f25eb0cec028cbd4ded9c049cfc6f663a15f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mailwatch/MailWatch/releases/tag/v1.2.27",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mailwatch/MailWatch/security/advisories/GHSA-w7v5-7g6w-87r4",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-85749漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85749",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ]
+    },
+    "cvss_score": 8.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+    "cwe": "CWE-639",
+    "description": "MailWatch for MailScanner is a web-based front-end to MailScanner. Prior to 1.2.27, any authenticated MailWatch user, including the U/user, D/domain-admin, and H/host roles, can release to inbox or permanently delete the quarantined mail of any other user or domain by supplying an arbitrary message `id` to `mailscanner/quarantine_action.php`. The action path calls `quarantine_list_items()` in `mailscanner/functions.php`, which selects from `maillog` by the supplied identifier without the per-role `global_filter` applied by listing and read views. The action requires a valid session and CSRF token, but the caller can submit a token from the caller's own session; ownership of the requested message is never checked. Message identifiers are enumerable, allowing a low-privilege user to invoke `quarantine_release()` or `quarantine_delete()` for other users' or domains' quarantined messages, force-delivering mail held by the quarantine or permanently deleting it. This issue is fixed in version 1.2.27.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-10-29",
+    "level": "High",
+    "mps_id": "MPS-gotm-iaf6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-29",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gotm-iaf6",
+        "name": "https://www.oscs1024.com/hd/MPS-gotm-iaf6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85749",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85749"
+      },
+      {
+        "url": "https://github.com/mailwatch/MailWatch/commit/bc04f25eb0cec028cbd4ded9c049cfc6f663a15f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mailwatch/MailWatch/releases/tag/v1.2.27",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/mailwatch/MailWatch/security/advisories/GHSA-w7v5-7g6w-87r4",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-85749漏洞"
+  },
+  "first_saved_at": "2026-10-29T03:55:10+00:00"
+}
