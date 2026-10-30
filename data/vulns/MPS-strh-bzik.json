@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-10-30T16:26:48+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-strh-bzik",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61738",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ]
+    },
+    "cvss_score": 10,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-434",
+    "description": "SOCFortress CoPilot 是一款开源（AGPL-3.0）安全运营平台，为 Wazuh、Velociraptor、Graylog、ScoutSuite 等组件提供统一管理界面，后端为 FastAPI 应用，可通过官方镜像独立部署。\n受影响版本中，POST /api/scoutsuite/generate-gcp-report 路由的 generate_gcp_report 函数只校验上传内容是否符合 GCPScoutSuiteJSON 模型，却把 multipart 头中未经净化的 file.filename 直接传入 save_file_to_directory；该函数使用 os.path.join(directory, filename) 拼接 scoutsuite-report 目录路径，缺少文件名净化与 realpath 包含性校验，携带 ../ 的文件名会把上传 JSON 写入该目录之外的任意位置；官方镜像默认以 root 运行后端，持有 admin 或 analyst 角色令牌的用户可在主机上创建或覆盖 root 属主文件，例如覆盖应用 Python 模块或写入计划任务文件，导致服务中断并可进一步升级为远程代码执行。\n修复版本中通过 0.1.77 版本的两层修改切断该链路：路由层不再把调用方文件名传给写入函数，上传内容改为写入 tempfile.mkdtemp 创建的私有临时目录并以服务端生成的常量文件名保存；save_file_to_directory 内部新增 os.path.basename 与 werkzeug secure_filename 净化，对无法净化为安全名称的输入返回 400，并使用 os.path.realpath 与 os.path.commonpath 校验最终路径仍位于目标目录内，路径越界时拒绝写入。",
+    "effects": [
+      {
+        "comp_name": "socfortress:CoPilot",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.77)",
+            "min_fixed_version": "0.1.77",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "任意文件上传",
+    "kind_en": "危险类型文件无限制上传",
+    "last_modified_time": "2026-10-31",
+    "level": "Critical",
+    "mps_id": "MPS-strh-bzik",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-strh-bzik",
+        "name": "https://www.oscs1024.com/hd/MPS-strh-bzik"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61738",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61738"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/security/advisories/GHSA-q3g8-3cf7-744f",
+        "name": "https://github.com/socfortress/CoPilot/security/advisories/GHSA-q3g8-3cf7-744f"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/pull/940",
+        "name": "https://github.com/socfortress/CoPilot/pull/940"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/pull/941",
+        "name": "https://github.com/socfortress/CoPilot/pull/941"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/commit/1881ef8d28bc7f45ffa88d7ba4fcca7302355508",
+        "name": "https://github.com/socfortress/CoPilot/commit/1881ef8d28bc7f45ffa88d7ba4fcca7302355508"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/commit/bfa630b65d554670c7462a32ce6fd4e3cbd0254c",
+        "name": "https://github.com/socfortress/CoPilot/commit/bfa630b65d554670c7462a32ce6fd4e3cbd0254c"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/tree/v0.1.77",
+        "name": "https://github.com/socfortress/CoPilot/tree/v0.1.77"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SOCFortress CoPilot路径遍历漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61738",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 10
+        }
+      ]
+    },
+    "cvss_score": 10,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-434",
+    "description": "SOCFortress CoPilot 是一款开源（AGPL-3.0）安全运营平台，为 Wazuh、Velociraptor、Graylog、ScoutSuite 等组件提供统一管理界面，后端为 FastAPI 应用，可通过官方镜像独立部署。\n受影响版本中，POST /api/scoutsuite/generate-gcp-report 路由的 generate_gcp_report 函数只校验上传内容是否符合 GCPScoutSuiteJSON 模型，却把 multipart 头中未经净化的 file.filename 直接传入 save_file_to_directory；该函数使用 os.path.join(directory, filename) 拼接 scoutsuite-report 目录路径，缺少文件名净化与 realpath 包含性校验，携带 ../ 的文件名会把上传 JSON 写入该目录之外的任意位置；官方镜像默认以 root 运行后端，持有 admin 或 analyst 角色令牌的用户可在主机上创建或覆盖 root 属主文件，例如覆盖应用 Python 模块或写入计划任务文件，导致服务中断并可进一步升级为远程代码执行。\n修复版本中通过 0.1.77 版本的两层修改切断该链路：路由层不再把调用方文件名传给写入函数，上传内容改为写入 tempfile.mkdtemp 创建的私有临时目录并以服务端生成的常量文件名保存；save_file_to_directory 内部新增 os.path.basename 与 werkzeug secure_filename 净化，对无法净化为安全名称的输入返回 400，并使用 os.path.realpath 与 os.path.commonpath 校验最终路径仍位于目标目录内，路径越界时拒绝写入。",
+    "effects": [
+      {
+        "comp_name": "socfortress:CoPilot",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.77)",
+            "min_fixed_version": "0.1.77",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "任意文件上传",
+    "kind_en": "Unrestricted Upload of File with Dangerous Type",
+    "last_modified_time": "2026-10-31",
+    "level": "Critical",
+    "mps_id": "MPS-strh-bzik",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-strh-bzik",
+        "name": "https://www.oscs1024.com/hd/MPS-strh-bzik"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61738",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61738"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/security/advisories/GHSA-q3g8-3cf7-744f",
+        "name": "https://github.com/socfortress/CoPilot/security/advisories/GHSA-q3g8-3cf7-744f"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/pull/940",
+        "name": "https://github.com/socfortress/CoPilot/pull/940"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/pull/941",
+        "name": "https://github.com/socfortress/CoPilot/pull/941"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/commit/1881ef8d28bc7f45ffa88d7ba4fcca7302355508",
+        "name": "https://github.com/socfortress/CoPilot/commit/1881ef8d28bc7f45ffa88d7ba4fcca7302355508"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/commit/bfa630b65d554670c7462a32ce6fd4e3cbd0254c",
+        "name": "https://github.com/socfortress/CoPilot/commit/bfa630b65d554670c7462a32ce6fd4e3cbd0254c"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/tree/v0.1.77",
+        "name": "https://github.com/socfortress/CoPilot/tree/v0.1.77"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SOCFortress CoPilot路径遍历漏洞"
+  },
+  "first_saved_at": "2026-10-30T16:26:48+00:00"
+}

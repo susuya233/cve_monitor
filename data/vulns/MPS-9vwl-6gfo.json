@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-10-30T16:26:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-9vwl-6gfo",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61728",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-922",
+    "description": "SOCFortress CoPilot 是开源安全运营平台（AGPL-3.0 许可），聚合告警、案例、资产与健康检查信息并提供统一安全运营控制台，由后端 API 与 frontend、customer-portal 两个 Vue 前端组成。\n受影响版本中，customer_user 等门户用户可通过 POST /api/incidents/db_operations/alert/comment 提交评论，后端未做净化直接存储；customer-portal/src/components/alerts/AlertDetails/AlertComment.vue 的 commentHtml 仅把 comment.comment 的换行替换为 <br>，结果经 v-html 渲染且未做 HTML 转义或净化，存储的脚本在查看该告警的用户浏览器会话中执行；frontend 的 SocCaseNote.vue、SocCaseItem.vue、SocCaseAssetsItem.vue、SocAlertAssetsItem.vue 与 customer-portal 的 CaseComment.vue 对案例名称、笔记标题、资产名称与描述等服务端存储字段存在同样未净化的 v-html 渲染；认证状态库 customer-portal/src/stores/auth.ts 将 access_token 与 refresh_token 持久化在 JavaScript 可读存储中，customer-portal/src/api/httpClient.ts 以 Bearer 头携带令牌，注入脚本可窃取两类令牌并通过 /auth/refresh 持续换取新令牌，分析师或管理员查看包含注入内容的告警或案例后账号被接管，攻击者可跨租户访问数据、修改或删除事件并干扰检测与响应。\n修复版本中通过以文本插值取代 v-html 渲染解决该问题，评论正文、资产名称与描述、案例名称与笔记标题改用 {{ }} 输出并配合 white-space: pre-wrap 保留换行，删除仅做换行替换的 commentHtml 等辅助逻辑，健康检查项的同类 v-html 渲染也已改为文本插值，用户提交内容不再进入 HTML 解析路径。",
+    "effects": [
+      {
+        "comp_name": "socfortress:copilot",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.76)",
+            "min_fixed_version": "0.1.76",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "敏感信息的不安全存储",
+    "kind_en": "敏感信息的不安全存储",
+    "last_modified_time": "2026-10-30",
+    "level": "Critical",
+    "mps_id": "MPS-9vwl-6gfo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-9vwl-6gfo",
+        "name": "https://www.oscs1024.com/hd/MPS-9vwl-6gfo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61728",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61728"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/security/advisories/GHSA-8hqj-cqcc-5f6w",
+        "name": "https://github.com/socfortress/CoPilot/security/advisories/GHSA-8hqj-cqcc-5f6w"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/pull/904",
+        "name": "https://github.com/socfortress/CoPilot/pull/904"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/pull/938",
+        "name": "https://github.com/socfortress/CoPilot/pull/938"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/commit/461e8f84794aee8ada588de3bad79430dc9f4f3d",
+        "name": "https://github.com/socfortress/CoPilot/commit/461e8f84794aee8ada588de3bad79430dc9f4f3d"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/commit/ab9078bdee5d1c737f37f481103984665a670bdd",
+        "name": "https://github.com/socfortress/CoPilot/commit/ab9078bdee5d1c737f37f481103984665a670bdd"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/tree/v0.1.76",
+        "name": "https://github.com/socfortress/CoPilot/tree/v0.1.76"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SOCFortress CoPilot存储型XSS漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61728",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ]
+    },
+    "cvss_score": 9.9,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-922",
+    "description": "SOCFortress CoPilot 是开源安全运营平台（AGPL-3.0 许可），聚合告警、案例、资产与健康检查信息并提供统一安全运营控制台，由后端 API 与 frontend、customer-portal 两个 Vue 前端组成。\n受影响版本中，customer_user 等门户用户可通过 POST /api/incidents/db_operations/alert/comment 提交评论，后端未做净化直接存储；customer-portal/src/components/alerts/AlertDetails/AlertComment.vue 的 commentHtml 仅把 comment.comment 的换行替换为 <br>，结果经 v-html 渲染且未做 HTML 转义或净化，存储的脚本在查看该告警的用户浏览器会话中执行；frontend 的 SocCaseNote.vue、SocCaseItem.vue、SocCaseAssetsItem.vue、SocAlertAssetsItem.vue 与 customer-portal 的 CaseComment.vue 对案例名称、笔记标题、资产名称与描述等服务端存储字段存在同样未净化的 v-html 渲染；认证状态库 customer-portal/src/stores/auth.ts 将 access_token 与 refresh_token 持久化在 JavaScript 可读存储中，customer-portal/src/api/httpClient.ts 以 Bearer 头携带令牌，注入脚本可窃取两类令牌并通过 /auth/refresh 持续换取新令牌，分析师或管理员查看包含注入内容的告警或案例后账号被接管，攻击者可跨租户访问数据、修改或删除事件并干扰检测与响应。\n修复版本中通过以文本插值取代 v-html 渲染解决该问题，评论正文、资产名称与描述、案例名称与笔记标题改用 {{ }} 输出并配合 white-space: pre-wrap 保留换行，删除仅做换行替换的 commentHtml 等辅助逻辑，健康检查项的同类 v-html 渲染也已改为文本插值，用户提交内容不再进入 HTML 解析路径。",
+    "effects": [
+      {
+        "comp_name": "socfortress:copilot",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.76)",
+            "min_fixed_version": "0.1.76",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "敏感信息的不安全存储",
+    "kind_en": "Insecure Storage of Sensitive Information",
+    "last_modified_time": "2026-10-30",
+    "level": "Critical",
+    "mps_id": "MPS-9vwl-6gfo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-9vwl-6gfo",
+        "name": "https://www.oscs1024.com/hd/MPS-9vwl-6gfo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61728",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61728"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/security/advisories/GHSA-8hqj-cqcc-5f6w",
+        "name": "https://github.com/socfortress/CoPilot/security/advisories/GHSA-8hqj-cqcc-5f6w"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/pull/904",
+        "name": "https://github.com/socfortress/CoPilot/pull/904"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/pull/938",
+        "name": "https://github.com/socfortress/CoPilot/pull/938"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/commit/461e8f84794aee8ada588de3bad79430dc9f4f3d",
+        "name": "https://github.com/socfortress/CoPilot/commit/461e8f84794aee8ada588de3bad79430dc9f4f3d"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/commit/ab9078bdee5d1c737f37f481103984665a670bdd",
+        "name": "https://github.com/socfortress/CoPilot/commit/ab9078bdee5d1c737f37f481103984665a670bdd"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/tree/v0.1.76",
+        "name": "https://github.com/socfortress/CoPilot/tree/v0.1.76"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SOCFortress CoPilot存储型XSS漏洞"
+  },
+  "first_saved_at": "2026-10-30T16:26:54+00:00"
+}

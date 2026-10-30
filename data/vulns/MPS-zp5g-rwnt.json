@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-10-30T16:26:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-zp5g-rwnt",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61729",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+    "cwe": "CWE-798",
+    "description": "SOCFortress CoPilot 是开源（AGPL-3.0）安全运营中心平台，聚合 Wazuh、Graylog、Velociraptor 与 OpenSearch 等防御组件，提供告警管理、事件响应与主机防护的统一操作界面。\n受影响版本中，Graylog 与 Velociraptor webhook 路由仅通过请求头鉴权，backend/app/active_response/routes/graylog.py 的 verify_graylog_header 与 backend/app/incidents/routes/incident_alert.py 的 verify_velociraptor_header 在读取 GRAYLOG_API_HEADER_VALUE、VELOCIRAPTOR_API_HEADER_VALUE 时回退到公开源码与 .env.example 内置的同一常量 ab73de7a-6f61-4dde-87cd-3af5175a7281，匿名攻击者携带该已知请求头便能绕过其余 API 要求的 JWT 认证；POST /api/graylog/invoke 会把请求体 event.fields 中攻击者可控的 COMMAND、ACTION、VALUE 与 AGENT_ID 直接转发给已配置 Wazuh manager 的 /active-response 接口，缺少认证调用路由具备的命令枚举校验，可在任意代理上触发主动响应脚本并篡改防御控制；POST /api/incidents/alerts/create/threshold 与 /api/incidents/alerts/create/velo-sigma 还接受任意 customer_code 的伪造告警并驱动攻击者可控的 OpenSearch 查询。\n修复版本中通过将两个校验函数改为无默认值读取环境变量并在未配置时返回 403 拒绝请求实现失效关闭，从 .env.example 移除硬编码默认值，并在 backend/app/active_response/schema/graylog.py 为 COMMAND 增加 [A-Za-z0-9_-]{1,64} 脚本名格式校验，切断了匿名调用与伪造告警进入 Wazuh 主动响应投递链路的路径。",
+    "effects": [
+      {
+        "comp_name": "socfortress:CoPilot",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.76)",
+            "min_fixed_version": "0.1.76",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用硬编码的凭证",
+    "kind_en": "使用硬编码凭证",
+    "last_modified_time": "2026-10-31",
+    "level": "Critical",
+    "mps_id": "MPS-zp5g-rwnt",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zp5g-rwnt",
+        "name": "https://www.oscs1024.com/hd/MPS-zp5g-rwnt"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61729",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61729"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/security/advisories/GHSA-x8gc-f8p4-frc2",
+        "name": "https://github.com/socfortress/CoPilot/security/advisories/GHSA-x8gc-f8p4-frc2"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/pull/939",
+        "name": "https://github.com/socfortress/CoPilot/pull/939"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/commit/1b2c3f97243988301285b395ce4239769c66bd9e",
+        "name": "https://github.com/socfortress/CoPilot/commit/1b2c3f97243988301285b395ce4239769c66bd9e"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/tree/v0.1.76",
+        "name": "https://github.com/socfortress/CoPilot/tree/v0.1.76"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SOCFortress CoPilot认证绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-61729",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+    "cwe": "CWE-798",
+    "description": "SOCFortress CoPilot 是开源（AGPL-3.0）安全运营中心平台，聚合 Wazuh、Graylog、Velociraptor 与 OpenSearch 等防御组件，提供告警管理、事件响应与主机防护的统一操作界面。\n受影响版本中，Graylog 与 Velociraptor webhook 路由仅通过请求头鉴权，backend/app/active_response/routes/graylog.py 的 verify_graylog_header 与 backend/app/incidents/routes/incident_alert.py 的 verify_velociraptor_header 在读取 GRAYLOG_API_HEADER_VALUE、VELOCIRAPTOR_API_HEADER_VALUE 时回退到公开源码与 .env.example 内置的同一常量 ab73de7a-6f61-4dde-87cd-3af5175a7281，匿名攻击者携带该已知请求头便能绕过其余 API 要求的 JWT 认证；POST /api/graylog/invoke 会把请求体 event.fields 中攻击者可控的 COMMAND、ACTION、VALUE 与 AGENT_ID 直接转发给已配置 Wazuh manager 的 /active-response 接口，缺少认证调用路由具备的命令枚举校验，可在任意代理上触发主动响应脚本并篡改防御控制；POST /api/incidents/alerts/create/threshold 与 /api/incidents/alerts/create/velo-sigma 还接受任意 customer_code 的伪造告警并驱动攻击者可控的 OpenSearch 查询。\n修复版本中通过将两个校验函数改为无默认值读取环境变量并在未配置时返回 403 拒绝请求实现失效关闭，从 .env.example 移除硬编码默认值，并在 backend/app/active_response/schema/graylog.py 为 COMMAND 增加 [A-Za-z0-9_-]{1,64} 脚本名格式校验，切断了匿名调用与伪造告警进入 Wazuh 主动响应投递链路的路径。",
+    "effects": [
+      {
+        "comp_name": "socfortress:CoPilot",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.1.76)",
+            "min_fixed_version": "0.1.76",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用硬编码的凭证",
+    "kind_en": "Use of Hard-coded Credentials",
+    "last_modified_time": "2026-10-31",
+    "level": "Critical",
+    "mps_id": "MPS-zp5g-rwnt",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zp5g-rwnt",
+        "name": "https://www.oscs1024.com/hd/MPS-zp5g-rwnt"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61729",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-61729"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/security/advisories/GHSA-x8gc-f8p4-frc2",
+        "name": "https://github.com/socfortress/CoPilot/security/advisories/GHSA-x8gc-f8p4-frc2"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/pull/939",
+        "name": "https://github.com/socfortress/CoPilot/pull/939"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/commit/1b2c3f97243988301285b395ce4239769c66bd9e",
+        "name": "https://github.com/socfortress/CoPilot/commit/1b2c3f97243988301285b395ce4239769c66bd9e"
+      },
+      {
+        "url": "https://github.com/socfortress/CoPilot/tree/v0.1.76",
+        "name": "https://github.com/socfortress/CoPilot/tree/v0.1.76"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SOCFortress CoPilot认证绕过漏洞"
+  },
+  "first_saved_at": "2026-10-30T16:26:49+00:00"
+}
