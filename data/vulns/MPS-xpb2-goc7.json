@@ -1,0 +1,197 @@
+{
+  "saved_at": "2026-10-30T09:26:26+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xpb2-goc7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82104",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "001d69cf-3fc9-4203-93fb-9865b54e05b2",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-863",
+    "description": "RutOS 与 TswOS 是 Teltonika Networks 工业路由器、网关与交换机产品线搭载的专有固件，基于 OpenWrt 构建，提供 HTTPS Web 管理界面、API 接口与设备配置能力，广泛部署于工业物联网与关键基础设施联网场景。\n受影响版本中，RutOS 7.22 至 7.24.2 与 TswOS 1.9 至 1.10 的设备允许请求直接调用 Lua 函数，未认证攻击者通过 HTTPS 管理端口发送绕过正常 API 流程的请求，可跳过正常调用链中强制执行的鉴权与校验逻辑（CWE-863：Incorrect Authorization），由于这类请求未遵循正常流程，攻击者最终可在设备操作系统层面执行任意命令，获得设备完整控制能力。\n修复版本中通过限制未认证请求直接调用 Lua 函数、恢复正常 API 请求流程中的校验约束，切断未认证命令执行路径；Teltonika 已在 RutOS 7.24.3 与 TswOS 1.10.1 中解决该问题，建议尽快将受影响设备升级至上述或更高版本。",
+    "effects": [
+      {
+        "comp_name": "rutos",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.22,7.24.3)",
+            "min_fixed_version": "7.24.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "tswos",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.9,1.10.1)",
+            "min_fixed_version": "1.10.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查错误",
+    "kind_en": "授权错误",
+    "last_modified_time": "2026-10-30",
+    "level": "Critical",
+    "mps_id": "MPS-xpb2-goc7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xpb2-goc7",
+        "name": "https://www.oscs1024.com/hd/MPS-xpb2-goc7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82104",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82104"
+      },
+      {
+        "url": "https://www.teltonika-networks.com/support/security-centre?report=CVE-2026-82104",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "RutOS 未授权命令执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，这种缺陷通常会导致未授权的用户或资源可以访问程序中的重要数据或资源，从而导致程序崩溃或出现其他错误。",
+        "title": "什么是授权检查错误"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n- 恶意软件传播：攻击者可以通过利用此缺陷，将恶意软件传播到系统中，从而控制系统或窃取敏感数据。\n",
+        "title": "授权检查错误常见的攻击方式"
+      },
+      {
+        "content": "- 使用访问控制列表 (ACL):使用 ACL 可以限制用户对程序中的不同资源的访问权限。ACL 通常由用户名、权限和资源地址组成，可以确保只有授权用户才能访问程序中的重要数据或资源。\n- 使用访问令牌：使用访问令牌可以确保只有授权用户才能访问程序中的不同资源。令牌通常由用户 ID、权限和资源地址组成，可以确保只有授权用户才能更改令牌的权限。\n- 使用安全审计：在程序中记录安全审计日志，可以确保管理员可以追踪未授权用户的活动。同时，定期审查安全审计日志，可以及时发现未授权的活动并采取相应的措施。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查错误"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82104",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "001d69cf-3fc9-4203-93fb-9865b54e05b2",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-863",
+    "description": "RutOS 与 TswOS 是 Teltonika Networks 工业路由器、网关与交换机产品线搭载的专有固件，基于 OpenWrt 构建，提供 HTTPS Web 管理界面、API 接口与设备配置能力，广泛部署于工业物联网与关键基础设施联网场景。\n受影响版本中，RutOS 7.22 至 7.24.2 与 TswOS 1.9 至 1.10 的设备允许请求直接调用 Lua 函数，未认证攻击者通过 HTTPS 管理端口发送绕过正常 API 流程的请求，可跳过正常调用链中强制执行的鉴权与校验逻辑（CWE-863：Incorrect Authorization），由于这类请求未遵循正常流程，攻击者最终可在设备操作系统层面执行任意命令，获得设备完整控制能力。\n修复版本中通过限制未认证请求直接调用 Lua 函数、恢复正常 API 请求流程中的校验约束，切断未认证命令执行路径；Teltonika 已在 RutOS 7.24.3 与 TswOS 1.10.1 中解决该问题，建议尽快将受影响设备升级至上述或更高版本。",
+    "effects": [
+      {
+        "comp_name": "rutos",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.22,7.24.3)",
+            "min_fixed_version": "7.24.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "tswos",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.9,1.10.1)",
+            "min_fixed_version": "1.10.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查错误",
+    "kind_en": "Incorrect Authorization",
+    "last_modified_time": "2026-10-30",
+    "level": "Critical",
+    "mps_id": "MPS-xpb2-goc7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xpb2-goc7",
+        "name": "https://www.oscs1024.com/hd/MPS-xpb2-goc7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82104",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82104"
+      },
+      {
+        "url": "https://www.teltonika-networks.com/support/security-centre?report=CVE-2026-82104",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "RutOS 未授权命令执行漏洞"
+  },
+  "first_saved_at": "2026-10-30T09:26:26+00:00"
+}
