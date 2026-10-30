@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-10-30T21:18:35+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xzh8-tmq4",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90888",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "LeadSnap 是发布于 WordPress 官方插件目录的开源 WordPress 插件（GPLv2），当前最新版本为 1.25（2023-03-09 发布），用于将 Contact Form 7、Ninja Forms、WP Forms、Gravity Forms、Formidable Forms 等表单插件收集的销售线索同步至 LeadSnap CRM 平台。\n受影响版本中，插件在主文件 leadsnap.php 中通过 add_action('frm_after_create_entry', 'wncrm_fomidable', 30, 2) 注册 Formidable Forms 提交回调，回调缺少登录与 nonce 校验，也未受 wncrm_is_send_to_crm 配置开关保护，访客提交公开表单即触发处理逻辑；Wncrm_formidable_Api 构造函数调用 get_field_data() 按 entry_id 联表查询 frm_item_metas 与 frm_fields，并将字段类型为 address 的行中的 meta_value 直接传入 unserialize()，未使用 allowed_classes 限制可反序列化的类，攻击者借表单提交写入的反序列化数据被原样还原，构成未授权 PHP 对象注入，站点环境中存在可用 POP 链时可能导致任意代码执行、敏感信息泄露或数据库写入。\n修复版本中通过，可通过以下方式缓解：1.25 版本仅在 Thrive Forms 集成中移除了同类 unserialize(base64_decode($submission['tve_labels'])) 调用，未处理 Formidable 处理路径中的 unserialize($val->meta_value)，Patchstack 标注无官方补丁，建议立即停用并移除 LeadSnap 插件，或在 WAF 中启用拦截 PHP 对象注入利用特征的虚拟补丁规则，并避免公开暴露包含 address 类型字段的 Formidable 表单。",
+    "effects": [
+      {
+        "comp_name": "leadsnap",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.25]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-10-31",
+    "level": "Critical",
+    "mps_id": "MPS-xzh8-tmq4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xzh8-tmq4",
+        "name": "https://www.oscs1024.com/hd/MPS-xzh8-tmq4"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90888",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90888"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/leadsnap/vulnerability/wordpress-leadsnap-plugin-1-25-php-object-injection-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "LeadSnap PHP对象注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-90888",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-502",
+    "description": "LeadSnap 是发布于 WordPress 官方插件目录的开源 WordPress 插件（GPLv2），当前最新版本为 1.25（2023-03-09 发布），用于将 Contact Form 7、Ninja Forms、WP Forms、Gravity Forms、Formidable Forms 等表单插件收集的销售线索同步至 LeadSnap CRM 平台。\n受影响版本中，插件在主文件 leadsnap.php 中通过 add_action('frm_after_create_entry', 'wncrm_fomidable', 30, 2) 注册 Formidable Forms 提交回调，回调缺少登录与 nonce 校验，也未受 wncrm_is_send_to_crm 配置开关保护，访客提交公开表单即触发处理逻辑；Wncrm_formidable_Api 构造函数调用 get_field_data() 按 entry_id 联表查询 frm_item_metas 与 frm_fields，并将字段类型为 address 的行中的 meta_value 直接传入 unserialize()，未使用 allowed_classes 限制可反序列化的类，攻击者借表单提交写入的反序列化数据被原样还原，构成未授权 PHP 对象注入，站点环境中存在可用 POP 链时可能导致任意代码执行、敏感信息泄露或数据库写入。\n修复版本中通过，可通过以下方式缓解：1.25 版本仅在 Thrive Forms 集成中移除了同类 unserialize(base64_decode($submission['tve_labels'])) 调用，未处理 Formidable 处理路径中的 unserialize($val->meta_value)，Patchstack 标注无官方补丁，建议立即停用并移除 LeadSnap 插件，或在 WAF 中启用拦截 PHP 对象注入利用特征的虚拟补丁规则，并避免公开暴露包含 address 类型字段的 Formidable 表单。",
+    "effects": [
+      {
+        "comp_name": "leadsnap",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.25]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-10-31",
+    "level": "Critical",
+    "mps_id": "MPS-xzh8-tmq4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xzh8-tmq4",
+        "name": "https://www.oscs1024.com/hd/MPS-xzh8-tmq4"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90888",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-90888"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/leadsnap/vulnerability/wordpress-leadsnap-plugin-1-25-php-object-injection-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "LeadSnap PHP对象注入漏洞"
+  },
+  "first_saved_at": "2026-10-30T21:18:35+00:00"
+}

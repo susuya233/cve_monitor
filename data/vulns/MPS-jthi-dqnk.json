@@ -1,0 +1,187 @@
+{
+  "saved_at": "2026-10-30T21:18:40+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-jthi-dqnk",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62162",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "Hydra 是 Cardano 官方开源的二层（Layer-2）扩容方案（仓库 cardano-scaling/hydra，Apache-2.0 许可证），通过 Head 状态通道把链上资金转移到链下处理，用户可调用 hydra-node 提供的 HTTP 接口 POST /commit 向 Head 发起存款，存款以受链上 Plutus/Aiken 校验器保护的 UTxO 形式存在。\n受影响版本中，hydra-plutus/validators/deposit.ak 的 deposit 校验器在处理 Claim 赎回器时只检查 datum.head_id 与攻击者可控的 redeemer.currencySymbol 一致，并要求交易有效期落在存款截止时间之前，既不要求同一笔交易花费对应 Head 的状态代币 UTxO，也不对交易输出施加任何约束；受害者经 POST /commit 发起的存款确认上链后，任何能够构造并提交 Cardano 交易的第三方可在截止时间前直接观察并花费该待处理存款 UTxO，把其中资产重定向到任意地址，该笔独立花费不会触发 Head 校验器的任何安全检查，默认截止时间为 depositPeriod 的三倍，攻击窗口覆盖该期间内的全部待处理存款。\n修复版本中通过重定义 Claim 赎回器并新增 expect_increment_redeemer 检查切断该利用链：赎回器不再携带攻击者可控的 PolicyId，花费存款的交易必须在同一笔交易中消费对应 Head 状态代币 UTxO，且该 Head 输入的赎回器必须是 Head 校验器的 Increment 变体（构造子索引 1），同时在 hydra-plutus/src/Hydra/Contract/Head.hs 的 checkIncrement 中以 mustPreserveValue 强制 head 输入价值与全部非 head 脚本输入价值之和等于 head 输出价值，确保存款资产只能并入 Head 状态，无法被重定向到任意地址。",
+    "effects": [
+      {
+        "comp_name": "hydra",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.1.0)",
+            "min_fixed_version": "2.1.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-jthi-dqnk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jthi-dqnk",
+        "name": "https://www.oscs1024.com/hd/MPS-jthi-dqnk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-62162",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-62162"
+      },
+      {
+        "url": "https://github.com/cardano-scaling/hydra/security/advisories/GHSA-gfpc-m687-p7h5",
+        "name": "https://github.com/cardano-scaling/hydra/security/advisories/GHSA-gfpc-m687-p7h5"
+      },
+      {
+        "url": "https://github.com/cardano-scaling/hydra/commit/ff60e4af4ecf05545a696a6d9bf1afeffe991de0",
+        "name": "https://github.com/cardano-scaling/hydra/commit/ff60e4af4ecf05545a696a6d9bf1afeffe991de0"
+      },
+      {
+        "url": "https://github.com/cardano-scaling/hydra/releases/tag/2.1.0",
+        "name": "https://github.com/cardano-scaling/hydra/releases/tag/2.1.0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Hydra 存款盗取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62162",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "Hydra 是 Cardano 官方开源的二层（Layer-2）扩容方案（仓库 cardano-scaling/hydra，Apache-2.0 许可证），通过 Head 状态通道把链上资金转移到链下处理，用户可调用 hydra-node 提供的 HTTP 接口 POST /commit 向 Head 发起存款，存款以受链上 Plutus/Aiken 校验器保护的 UTxO 形式存在。\n受影响版本中，hydra-plutus/validators/deposit.ak 的 deposit 校验器在处理 Claim 赎回器时只检查 datum.head_id 与攻击者可控的 redeemer.currencySymbol 一致，并要求交易有效期落在存款截止时间之前，既不要求同一笔交易花费对应 Head 的状态代币 UTxO，也不对交易输出施加任何约束；受害者经 POST /commit 发起的存款确认上链后，任何能够构造并提交 Cardano 交易的第三方可在截止时间前直接观察并花费该待处理存款 UTxO，把其中资产重定向到任意地址，该笔独立花费不会触发 Head 校验器的任何安全检查，默认截止时间为 depositPeriod 的三倍，攻击窗口覆盖该期间内的全部待处理存款。\n修复版本中通过重定义 Claim 赎回器并新增 expect_increment_redeemer 检查切断该利用链：赎回器不再携带攻击者可控的 PolicyId，花费存款的交易必须在同一笔交易中消费对应 Head 状态代币 UTxO，且该 Head 输入的赎回器必须是 Head 校验器的 Increment 变体（构造子索引 1），同时在 hydra-plutus/src/Hydra/Contract/Head.hs 的 checkIncrement 中以 mustPreserveValue 强制 head 输入价值与全部非 head 脚本输入价值之和等于 head 输出价值，确保存款资产只能并入 Head 状态，无法被重定向到任意地址。",
+    "effects": [
+      {
+        "comp_name": "hydra",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.1.0)",
+            "min_fixed_version": "2.1.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-jthi-dqnk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jthi-dqnk",
+        "name": "https://www.oscs1024.com/hd/MPS-jthi-dqnk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-62162",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-62162"
+      },
+      {
+        "url": "https://github.com/cardano-scaling/hydra/security/advisories/GHSA-gfpc-m687-p7h5",
+        "name": "https://github.com/cardano-scaling/hydra/security/advisories/GHSA-gfpc-m687-p7h5"
+      },
+      {
+        "url": "https://github.com/cardano-scaling/hydra/commit/ff60e4af4ecf05545a696a6d9bf1afeffe991de0",
+        "name": "https://github.com/cardano-scaling/hydra/commit/ff60e4af4ecf05545a696a6d9bf1afeffe991de0"
+      },
+      {
+        "url": "https://github.com/cardano-scaling/hydra/releases/tag/2.1.0",
+        "name": "https://github.com/cardano-scaling/hydra/releases/tag/2.1.0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Hydra 存款盗取漏洞"
+  },
+  "first_saved_at": "2026-10-30T21:18:40+00:00"
+}

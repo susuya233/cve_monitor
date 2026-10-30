@@ -1,0 +1,165 @@
+{
+  "saved_at": "2026-10-30T21:18:39+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-58mc-rosi",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62264",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-306",
+    "description": "@sylphx/pdf-reader-mcp 是 SylphxAI/anymd 开源仓库（MIT 许可）发布的 npm 包，提供读取 PDF 并转换为 Markdown 的 MCP 服务器，供 AI 代理与大模型客户端通过 stdio 或 HTTP 传输调用。\n受影响版本中，HTTP 传输读取 MCP_API_KEY 环境变量并输出 API key authentication enabled 启动日志，但 src/index.ts 的 createTransport 未把该值传入传输配置，src/mcp.ts 的 startHttpServer 注册的 /mcp 请求处理逻辑不校验 X-API-Key 请求头，/mcp 端点接受未认证请求；配合默认绑定 0.0.0.0，任何能访问该端口的客户端可调用全部 PDF 工具并读取服务器进程可打开的任意 PDF 内容，URL 形式的文档来源还引入有限的 SSRF 攻击面。\n修复版本中通过在 src/mcp.ts 新增 isApiKeyValid，以 SHA-256 与 timingSafeEqual 对 X-API-Key 做常量时间比较，对配置了 MCP_API_KEY 的 /mcp 请求强制校验并对缺失或不匹配返回 401，同时把 MCP_HTTP_HOST 默认值从 0.0.0.0 改为 127.0.0.1，在非回环绑定且未配置密钥时输出启动告警，切断未认证调用链。",
+    "effects": [
+      {
+        "comp_name": "@sylphx/pdf-reader-mcp",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[2.2.0,3.0.1)",
+            "min_fixed_version": "3.0.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-58mc-rosi",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/SylphxAI/pdf-reader-mcp/security/advisories/GHSA-q344-5v34-gm84",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SylphxAI/anymd/pull/332",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SylphxAI/anymd/commit/4c35f72862d729301e3912ab8c8317d2828cf4c2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SylphxAI/anymd/releases/tag/v3.0.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-q344-5v34-gm84",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "npm",
+      "开源"
+    ],
+    "title": "pdf-reader-mcp未授权访问漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-62264",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-306",
+    "description": "@sylphx/pdf-reader-mcp 是 SylphxAI/anymd 开源仓库（MIT 许可）发布的 npm 包，提供读取 PDF 并转换为 Markdown 的 MCP 服务器，供 AI 代理与大模型客户端通过 stdio 或 HTTP 传输调用。\n受影响版本中，HTTP 传输读取 MCP_API_KEY 环境变量并输出 API key authentication enabled 启动日志，但 src/index.ts 的 createTransport 未把该值传入传输配置，src/mcp.ts 的 startHttpServer 注册的 /mcp 请求处理逻辑不校验 X-API-Key 请求头，/mcp 端点接受未认证请求；配合默认绑定 0.0.0.0，任何能访问该端口的客户端可调用全部 PDF 工具并读取服务器进程可打开的任意 PDF 内容，URL 形式的文档来源还引入有限的 SSRF 攻击面。\n修复版本中通过在 src/mcp.ts 新增 isApiKeyValid，以 SHA-256 与 timingSafeEqual 对 X-API-Key 做常量时间比较，对配置了 MCP_API_KEY 的 /mcp 请求强制校验并对缺失或不匹配返回 401，同时把 MCP_HTTP_HOST 默认值从 0.0.0.0 改为 127.0.0.1，在非回环绑定且未配置密钥时输出启动告警，切断未认证调用链。",
+    "effects": [
+      {
+        "comp_name": "@sylphx/pdf-reader-mcp",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[2.2.0,3.0.1)",
+            "min_fixed_version": "3.0.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-58mc-rosi",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/SylphxAI/pdf-reader-mcp/security/advisories/GHSA-q344-5v34-gm84",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SylphxAI/anymd/pull/332",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SylphxAI/anymd/commit/4c35f72862d729301e3912ab8c8317d2828cf4c2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/SylphxAI/anymd/releases/tag/v3.0.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/advisories/GHSA-q344-5v34-gm84",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "npm",
+      "开源"
+    ],
+    "title": "pdf-reader-mcp未授权访问漏洞"
+  },
+  "first_saved_at": "2026-10-30T21:18:39+00:00"
+}
