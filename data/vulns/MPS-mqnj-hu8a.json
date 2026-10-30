@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-10-27T05:52:15+00:00",
-  "first_seen": false,
+  "saved_at": "2026-10-30T02:19:51+00:00",
+  "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-oiyp-l104",
+  "source_page": "https://www.oscs1024.com/hd/MPS-mqnj-hu8a",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -22,62 +22,34 @@
     ],
     "attack_vector_type": "Local",
     "cnvd_id": "",
-    "cve_id": "CVE-2026-86916",
-    "cvss": {
-      "cvssv31": [
-        {
-          "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-          "severity": "high",
-          "base_score": 7.8
-        }
-      ]
-    },
-    "cvss_score": 7.8,
-    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cve_id": "CVE-2026-15466",
+    "cvss": {},
+    "cvss_score": 7,
+    "cvss_vector": "",
     "cwe": "CWE-416",
-    "description": "Apple iOS、iPadOS 与 macOS 是闭源操作系统，内核负责进程隔离、权限控制与内存管理。\n受影响版本中，内核存在释放后使用缺陷。在默认安装的系统上，本地应用可能触发该缺陷并以内核权限执行任意代码。Apple 将问题描述为内存管理缺陷，未披露具体源码位置。\n修复版本中通过改进内存管理消除该释放后使用条件，本地应用不再能借助该缺陷获得内核权限代码执行能力。",
+    "description": "Imagination Technologies Graphics DDK 是面向 PowerVR/Rogue 系列 GPU 的闭源图形驱动组件（内核态驱动模块），用于在 Linux 与 Android 设备上管理图形、计算与硬件性能计数器等 GPU 资源，广泛集成于搭载 Imagination GPU 的移动、汽车与消费电子平台。\n受影响版本中，本地普通用户通过 GPU 驱动 ioctl 关闭硬件性能计数器客户端流时，PVRSRVRGXCloseHWPerfClientStreamKM() 在流的销毁路径中缺少充分的锁保护，引用计数以非原子方式递减，并发关闭或连接清理与该路径竞争可导致对象被提前释放，其他代码路径继续访问已释放对象，造成对内核堆内存的读取或写入 UAF。\n修复版本中通过在硬件性能计数器客户端流的关闭与销毁路径补充锁保护并保证引用计数原子递减，消除并发销毁与并发使用之间的竞态，阻断内核堆 UAF 读写；官方 CVE 记录显示 26.2 RTM 为不受影响版本。",
     "effects": [
       {
-        "comp_name": "ipados",
+        "comp_name": "Imagination Technologies Graphics DDK",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,26.7)",
-            "min_fixed_version": "26.7",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          }
-        ]
-      },
-      {
-        "comp_name": "iphone_os",
-        "ecosystem": "linux",
-        "versions": [
-          {
-            "affected_version": "(-∞,26.7)",
-            "min_fixed_version": "26.7",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          }
-        ]
-      },
-      {
-        "comp_name": "macos",
-        "ecosystem": "linux",
-        "versions": [
-          {
-            "affected_version": "(-∞,15.8)",
-            "min_fixed_version": "15.8",
+            "affected_version": "[24.2 RTM2,24.2 RTM2]",
+            "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
           },
           {
-            "affected_version": "[26.0,26.7.2)",
-            "min_fixed_version": "26.7.2",
+            "affected_version": "[25.1 RTM2,25.3 RTM]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[26.1 RTM2,26.1 RTM2]",
+            "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -88,52 +60,36 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "UAF",
     "kind_en": "免费后使用",
-    "last_modified_time": "2026-10-27",
+    "last_modified_time": "2026-10-30",
     "level": "High",
-    "mps_id": "MPS-oiyp-l104",
+    "mps_id": "MPS-mqnj-hu8a",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-10-27",
+    "published_time": "2026-10-30",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-oiyp-l104",
-        "name": "https://www.oscs1024.com/hd/MPS-oiyp-l104"
+        "url": "https://www.oscs1024.com/hd/MPS-mqnj-hu8a",
+        "name": "https://www.oscs1024.com/hd/MPS-mqnj-hu8a"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86916",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86916"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15466",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-15466"
       },
       {
-        "url": "https://support.apple.com/en-us/149034",
-        "name": ""
-      },
-      {
-        "url": "https://support.apple.com/en-us/149035",
-        "name": ""
-      },
-      {
-        "url": "https://support.apple.com/en-us/149041",
-        "name": ""
-      },
-      {
-        "url": "https://support.apple.com/en-us/149043",
-        "name": ""
-      },
-      {
-        "url": "https://support.apple.com/en-us/149522",
+        "url": "https://www.imaginationtech.com/gpu-driver-vulnerabilities/",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "操作系统"
+      "应用软件"
     ],
-    "title": "Apple内核UAF漏洞",
+    "title": "Imagination GPU DDK UAF漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -154,62 +110,34 @@
     ],
     "attack_vector_type": "Local",
     "cnvd_id": "",
-    "cve_id": "CVE-2026-86916",
-    "cvss": {
-      "cvssv31": [
-        {
-          "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-          "severity": "high",
-          "base_score": 7.8
-        }
-      ]
-    },
-    "cvss_score": 7.8,
-    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cve_id": "CVE-2026-15466",
+    "cvss": {},
+    "cvss_score": 7,
+    "cvss_vector": "",
     "cwe": "CWE-416",
-    "description": "Apple iOS、iPadOS 与 macOS 是闭源操作系统，内核负责进程隔离、权限控制与内存管理。\n受影响版本中，内核存在释放后使用缺陷。在默认安装的系统上，本地应用可能触发该缺陷并以内核权限执行任意代码。Apple 将问题描述为内存管理缺陷，未披露具体源码位置。\n修复版本中通过改进内存管理消除该释放后使用条件，本地应用不再能借助该缺陷获得内核权限代码执行能力。",
+    "description": "Imagination Technologies Graphics DDK 是面向 PowerVR/Rogue 系列 GPU 的闭源图形驱动组件（内核态驱动模块），用于在 Linux 与 Android 设备上管理图形、计算与硬件性能计数器等 GPU 资源，广泛集成于搭载 Imagination GPU 的移动、汽车与消费电子平台。\n受影响版本中，本地普通用户通过 GPU 驱动 ioctl 关闭硬件性能计数器客户端流时，PVRSRVRGXCloseHWPerfClientStreamKM() 在流的销毁路径中缺少充分的锁保护，引用计数以非原子方式递减，并发关闭或连接清理与该路径竞争可导致对象被提前释放，其他代码路径继续访问已释放对象，造成对内核堆内存的读取或写入 UAF。\n修复版本中通过在硬件性能计数器客户端流的关闭与销毁路径补充锁保护并保证引用计数原子递减，消除并发销毁与并发使用之间的竞态，阻断内核堆 UAF 读写；官方 CVE 记录显示 26.2 RTM 为不受影响版本。",
     "effects": [
       {
-        "comp_name": "ipados",
+        "comp_name": "Imagination Technologies Graphics DDK",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,26.7)",
-            "min_fixed_version": "26.7",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          }
-        ]
-      },
-      {
-        "comp_name": "iphone_os",
-        "ecosystem": "linux",
-        "versions": [
-          {
-            "affected_version": "(-∞,26.7)",
-            "min_fixed_version": "26.7",
-            "repository": "unmanaged",
-            "solutions": [],
-            "upstream": true
-          }
-        ]
-      },
-      {
-        "comp_name": "macos",
-        "ecosystem": "linux",
-        "versions": [
-          {
-            "affected_version": "(-∞,15.8)",
-            "min_fixed_version": "15.8",
+            "affected_version": "[24.2 RTM2,24.2 RTM2]",
+            "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
           },
           {
-            "affected_version": "[26.0,26.7.2)",
-            "min_fixed_version": "26.7.2",
+            "affected_version": "[25.1 RTM2,25.3 RTM]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[26.1 RTM2,26.1 RTM2]",
+            "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -220,52 +148,36 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "UAF",
     "kind_en": "Use After Free",
-    "last_modified_time": "2026-10-27",
+    "last_modified_time": "2026-10-30",
     "level": "High",
-    "mps_id": "MPS-oiyp-l104",
+    "mps_id": "MPS-mqnj-hu8a",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-10-27",
+    "published_time": "2026-10-30",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-oiyp-l104",
-        "name": "https://www.oscs1024.com/hd/MPS-oiyp-l104"
+        "url": "https://www.oscs1024.com/hd/MPS-mqnj-hu8a",
+        "name": "https://www.oscs1024.com/hd/MPS-mqnj-hu8a"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86916",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86916"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15466",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-15466"
       },
       {
-        "url": "https://support.apple.com/en-us/149034",
-        "name": ""
-      },
-      {
-        "url": "https://support.apple.com/en-us/149035",
-        "name": ""
-      },
-      {
-        "url": "https://support.apple.com/en-us/149041",
-        "name": ""
-      },
-      {
-        "url": "https://support.apple.com/en-us/149043",
-        "name": ""
-      },
-      {
-        "url": "https://support.apple.com/en-us/149522",
+        "url": "https://www.imaginationtech.com/gpu-driver-vulnerabilities/",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "操作系统"
+      "应用软件"
     ],
-    "title": "Apple内核UAF漏洞"
+    "title": "Imagination GPU DDK UAF漏洞"
   },
-  "first_saved_at": "2026-10-27T00:10:16+00:00"
+  "first_saved_at": "2026-10-30T02:19:51+00:00"
 }

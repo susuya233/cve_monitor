@@ -1,0 +1,183 @@
+{
+  "saved_at": "2026-10-30T02:19:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-tdq1-9j56",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-65584",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-121",
+    "description": "Imagination Technologies Graphics DDK 是 PowerVR GPU 的闭源内核态驱动组件，随 SoC 与设备厂商的 Linux、Android 系统分发，负责 GPU 命令提交与 CPU、GPU 之间的同步管理。\n受影响版本中，当客户端 CCB 停滞在 FENCE 命令上时，rgxccb.c 的 DumpStalledContextInfo 以命令头 ui32CmdSize 推导的数量遍历全部 UFO，把处于未触发状态的 Linux/Android fence 同步检查点地址逐个写入大小固定为 PVRSRV_MAX_SYNCS 的栈数组 ui32UnsignalledUFOVaddrs，用户提交的普通同步原语不写入该数组；提交入口仅校验单一输入的数量上限，内核侧解析后追加的 fence 同步检查点未被计入总量，单条 FENCE 命令携带的未触发同步检查点数量超过栈数组容量时发生越界写入，造成内核内存破坏并通常导致内核崩溃。\n修复版本中通过修正该 UFO 地址数组容量不足的问题消除对内核栈的越界写入，官方记录标注 Graphics DDK 26.2 RTM 不受影响。",
+    "effects": [
+      {
+        "comp_name": "imagination_graphics_ddk",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.18 RTM2,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[24.2 RTM2,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[26.1 RTM2,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[23.2 RTM2,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[25.1 RTM2,25.3 RTM]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "基于堆栈的缓冲区溢出",
+    "last_modified_time": "2026-10-30",
+    "level": "High",
+    "mps_id": "MPS-tdq1-9j56",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tdq1-9j56",
+        "name": "https://www.oscs1024.com/hd/MPS-tdq1-9j56"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-65584",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-65584"
+      },
+      {
+        "url": "https://www.imaginationtech.com/gpu-driver-vulnerabilities/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Imagination Graphics DDK 栈溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-65584",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-121",
+    "description": "Imagination Technologies Graphics DDK 是 PowerVR GPU 的闭源内核态驱动组件，随 SoC 与设备厂商的 Linux、Android 系统分发，负责 GPU 命令提交与 CPU、GPU 之间的同步管理。\n受影响版本中，当客户端 CCB 停滞在 FENCE 命令上时，rgxccb.c 的 DumpStalledContextInfo 以命令头 ui32CmdSize 推导的数量遍历全部 UFO，把处于未触发状态的 Linux/Android fence 同步检查点地址逐个写入大小固定为 PVRSRV_MAX_SYNCS 的栈数组 ui32UnsignalledUFOVaddrs，用户提交的普通同步原语不写入该数组；提交入口仅校验单一输入的数量上限，内核侧解析后追加的 fence 同步检查点未被计入总量，单条 FENCE 命令携带的未触发同步检查点数量超过栈数组容量时发生越界写入，造成内核内存破坏并通常导致内核崩溃。\n修复版本中通过修正该 UFO 地址数组容量不足的问题消除对内核栈的越界写入，官方记录标注 Graphics DDK 26.2 RTM 不受影响。",
+    "effects": [
+      {
+        "comp_name": "imagination_graphics_ddk",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.18 RTM2,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[24.2 RTM2,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[26.1 RTM2,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[23.2 RTM2,+∞)",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[25.1 RTM2,25.3 RTM]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "Stack-based Buffer Overflow",
+    "last_modified_time": "2026-10-30",
+    "level": "High",
+    "mps_id": "MPS-tdq1-9j56",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-30",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tdq1-9j56",
+        "name": "https://www.oscs1024.com/hd/MPS-tdq1-9j56"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-65584",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-65584"
+      },
+      {
+        "url": "https://www.imaginationtech.com/gpu-driver-vulnerabilities/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Imagination Graphics DDK 栈溢出漏洞"
+  },
+  "first_saved_at": "2026-10-30T02:19:49+00:00"
+}
