@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-10-31T14:11:48+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-os5p-hvqz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120194",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-835",
+    "description": "json-glib 是 GNOME 开发的开源 C 语言 JSON 解析库，为基于 GLib 的应用提供 JSON 解析、生成与 JSONPath 查询能力，随主流 Linux 发行版和 GNOME 桌面环境广泛分发。\n受影响版本中，json-glib/json-path.c 的 JSONPath 切片求值循环写作 for (i = start; i < end; i += node->data.slice.step)，循环退出条件仅在步长为正时成立，而 json_path_compile() 解析切片表达式时允许步长携带负号。应用调用 json_path_query() 执行攻击者可控的形如 $[:5:-1] 的表达式时，求值参数为 start=0、end=5、step=-1，循环变量持续减小并远离退出条件，函数无法返回，期间反复以负数下标访问数组元素并触发断言失败，最终造成进程挂起与 CPU 拒绝服务。\n修复版本中通过，可在应用侧对不可信 JSONPath 表达式做前置校验并拒绝携带负数步长的切片表达式，同时对表达式求值设置超时与资源限制；上游 GNOME GitLab issue #96 与 Red Hat Bugzilla 2564418 截至 2026-10-31 均处于未修复状态，官方修复发布后建议及时升级。",
+    "effects": [
+      {
+        "comp_name": "json-glib",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.10.8]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不可达退出条件的循环（无限循环）",
+    "kind_en": "具有无法到达的退出条件的循环（“无限循环”）",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-os5p-hvqz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-os5p-hvqz",
+        "name": "https://www.oscs1024.com/hd/MPS-os5p-hvqz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120194",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120194"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-120194",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2564418",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.gnome.org/GNOME/json-glib/-/issues/96",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "json-glib JSONPath死循环漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120194",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-835",
+    "description": "json-glib 是 GNOME 开发的开源 C 语言 JSON 解析库，为基于 GLib 的应用提供 JSON 解析、生成与 JSONPath 查询能力，随主流 Linux 发行版和 GNOME 桌面环境广泛分发。\n受影响版本中，json-glib/json-path.c 的 JSONPath 切片求值循环写作 for (i = start; i < end; i += node->data.slice.step)，循环退出条件仅在步长为正时成立，而 json_path_compile() 解析切片表达式时允许步长携带负号。应用调用 json_path_query() 执行攻击者可控的形如 $[:5:-1] 的表达式时，求值参数为 start=0、end=5、step=-1，循环变量持续减小并远离退出条件，函数无法返回，期间反复以负数下标访问数组元素并触发断言失败，最终造成进程挂起与 CPU 拒绝服务。\n修复版本中通过，可在应用侧对不可信 JSONPath 表达式做前置校验并拒绝携带负数步长的切片表达式，同时对表达式求值设置超时与资源限制；上游 GNOME GitLab issue #96 与 Red Hat Bugzilla 2564418 截至 2026-10-31 均处于未修复状态，官方修复发布后建议及时升级。",
+    "effects": [
+      {
+        "comp_name": "json-glib",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.10.8]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不可达退出条件的循环（无限循环）",
+    "kind_en": "Loop with Unreachable Exit Condition ('Infinite Loop')",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-os5p-hvqz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-os5p-hvqz",
+        "name": "https://www.oscs1024.com/hd/MPS-os5p-hvqz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120194",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120194"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-120194",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2564418",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.gnome.org/GNOME/json-glib/-/issues/96",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "json-glib JSONPath死循环漏洞"
+  },
+  "first_saved_at": "2026-10-31T14:11:48+00:00"
+}

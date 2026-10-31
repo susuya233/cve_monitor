@@ -1,0 +1,227 @@
+{
+  "saved_at": "2026-10-31T14:11:45+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-yfj3-c5lo",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76010",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-434",
+    "description": "NextGEN Gallery（插件标识 nextgen-gallery）是 Imagely 维护的开源 WordPress 图库插件，用于创建与管理照片图库、幻灯片、缩略图与相册，WordPress.org 统计活跃安装量约 30 万。\n受影响版本中，XML-RPC 方法 ngg.editImage 对应的 Controller::edit_image() 把调用方提交的 other_properties 数组无限制地批量赋值到图像模型并持久化，攻击者可写入 meta_data 与 filename 等任意键；DataStorage Manager 的 get_computed_image_abspath() 使用 path_join() 把 meta_data 中按尺寸存储的 filename 拼接到图库或缓存目录，缺少 realpath 包含校验，../ 序列可逃出图库目录；公开图片投递路由 /nextgen-image/ 的 Controller::index_action() 在解析出的文件已存在时跳过 wp_hash 签名校验，render_image() 随后 readfile() 输出该路径内容，generate_image_size() 还会向由攻击者数据推出的路径写入生成的图像副本，攻击者借助可控路径与可控扩展名形成危险类型文件写入，最终在服务器上执行任意代码。\n修复版本中通过在 get_computed_image_abspath() 引入 Security::contain_path() realpath 包含校验与 is_safe_generated_image_path() 生成路径扩展名白名单，拒绝任何解析到图库目录之外的存量路径与生成路径；edit_image() 改用 MassAssignment::filter() 仅放行描述类字段并原子拒绝 meta_data、filename 等敏感键；index_action() 对每个请求强制校验 wp_hash 签名，_can_manage_gallery() 重新要求 nextgen_edit_gallery 能力作为前置门槛，切断了批量赋值、路径构造与公开投递之间的完整利用链。",
+    "effects": [
+      {
+        "comp_name": "nextgen-gallery",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.5.0)",
+            "min_fixed_version": "4.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "任意文件上传",
+    "kind_en": "危险类型文件无限制上传",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-yfj3-c5lo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-yfj3-c5lo",
+        "name": "https://www.oscs1024.com/hd/MPS-yfj3-c5lo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76010",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76010"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/36dcde20-0af2-4b8b-8637-9a070dffa8a1?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/nextgen-gallery/tags/4.3.0/src/DataStorage/Manager.php#L2373",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/nextgen-gallery/tags/4.3.0/src/XMLRPC/Controller.php#L289",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/nextgen-gallery/tags/4.3.0/src/DataStorage/Manager.php#L1226",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/nextgen-gallery/tags/4.3.0/src/DynamicThumbnails/Controller.php#L33",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/nextgen-gallery/tags/4.3.0/src/XMLRPC/Controller.php#L69",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/nextgen-gallery/tags/4.3.0/src/DataStorage/Manager.php#L2951",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3699076/nextgen-gallery/trunk/src/DataStorage/Manager.php",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "NextGEN Gallery 远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序未正确处理用户上传的文件，从而导致程序可以读取、处理或存储未经授权的文件\n",
+        "title": "什么是任意文件上传"
+      },
+      {
+        "content": "- 欺骗攻击：攻击者可以通过发送伪造的文件来欺骗程序，从而导致程序读取、处理或存储未经授权的文件。\n- 文件格式攻击：攻击者可以通过选择特定的文件格式，例如压缩文件或 ZIP 文件，从而利用上传的文件来篡改程序的执行结果或窃取程序中的重要数据。\n",
+        "title": "任意文件上传常见的攻击方式"
+      },
+      {
+        "content": "- 使用安全文件传输协议 (FTP):使用安全 FTP 协议可以确保上传的文件格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用文件上传过滤器：使用文件上传过滤器可以过滤上传的文件，以确保文件的格式、大小、权限等符合预期，同时可以防止文件读取、篡改或存储漏洞。\n- 使用白名单机制：使用白名单机制可以只允许特定的文件格式、大小、权限等存在的文件上传，从而防止非法文件的上传和攻击。\n- 定期更新和升级程序：定期更新和升级程序可以修复已知的漏洞，并增强程序的安全性。",
+        "title": "如何预防任意文件上传"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76010",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-434",
+    "description": "NextGEN Gallery（插件标识 nextgen-gallery）是 Imagely 维护的开源 WordPress 图库插件，用于创建与管理照片图库、幻灯片、缩略图与相册，WordPress.org 统计活跃安装量约 30 万。\n受影响版本中，XML-RPC 方法 ngg.editImage 对应的 Controller::edit_image() 把调用方提交的 other_properties 数组无限制地批量赋值到图像模型并持久化，攻击者可写入 meta_data 与 filename 等任意键；DataStorage Manager 的 get_computed_image_abspath() 使用 path_join() 把 meta_data 中按尺寸存储的 filename 拼接到图库或缓存目录，缺少 realpath 包含校验，../ 序列可逃出图库目录；公开图片投递路由 /nextgen-image/ 的 Controller::index_action() 在解析出的文件已存在时跳过 wp_hash 签名校验，render_image() 随后 readfile() 输出该路径内容，generate_image_size() 还会向由攻击者数据推出的路径写入生成的图像副本，攻击者借助可控路径与可控扩展名形成危险类型文件写入，最终在服务器上执行任意代码。\n修复版本中通过在 get_computed_image_abspath() 引入 Security::contain_path() realpath 包含校验与 is_safe_generated_image_path() 生成路径扩展名白名单，拒绝任何解析到图库目录之外的存量路径与生成路径；edit_image() 改用 MassAssignment::filter() 仅放行描述类字段并原子拒绝 meta_data、filename 等敏感键；index_action() 对每个请求强制校验 wp_hash 签名，_can_manage_gallery() 重新要求 nextgen_edit_gallery 能力作为前置门槛，切断了批量赋值、路径构造与公开投递之间的完整利用链。",
+    "effects": [
+      {
+        "comp_name": "nextgen-gallery",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.5.0)",
+            "min_fixed_version": "4.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "任意文件上传",
+    "kind_en": "Unrestricted Upload of File with Dangerous Type",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-yfj3-c5lo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-yfj3-c5lo",
+        "name": "https://www.oscs1024.com/hd/MPS-yfj3-c5lo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76010",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76010"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/36dcde20-0af2-4b8b-8637-9a070dffa8a1?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/nextgen-gallery/tags/4.3.0/src/DataStorage/Manager.php#L2373",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/nextgen-gallery/tags/4.3.0/src/XMLRPC/Controller.php#L289",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/nextgen-gallery/tags/4.3.0/src/DataStorage/Manager.php#L1226",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/nextgen-gallery/tags/4.3.0/src/DynamicThumbnails/Controller.php#L33",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/nextgen-gallery/tags/4.3.0/src/XMLRPC/Controller.php#L69",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/nextgen-gallery/tags/4.3.0/src/DataStorage/Manager.php#L2951",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3699076/nextgen-gallery/trunk/src/DataStorage/Manager.php",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "NextGEN Gallery 远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-10-31T14:11:45+00:00"
+}
