@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-10-31T01:21:06+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-7f9e-8da3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120135",
+    "cvss": {},
+    "cvss_score": 8.2,
+    "cvss_vector": "",
+    "cwe": "CWE-674",
+    "description": "Apache Thrift 是 Apache 基金会开源的跨语言 RPC 与序列化框架，libthrift（Maven 坐标 org.apache.thrift:libthrift）是其 Java 语言绑定库，广泛用于服务间远程调用与结构化数据的序列化解析。\n受影响版本中，org.apache.thrift.protocol.TProtocolUtil 的静态字段 maxSkipDepth 默认取 Integer.MAX_VALUE，skip() 方法在跳过 STRUCT、MAP、SET、LIST 类型字段时按子元素逐层递归调用自身，深度上限实际不可达。攻击者向解析其可控 Thrift 消息的服务发送深度嵌套的序列化数据（例如连续嵌套的结构体）时，skip() 会沿嵌套层持续递归，直至耗尽线程栈抛出 StackOverflowError，使处理该消息的服务线程崩溃，形成远程拒绝服务。\n修复版本中通过将 maxSkipDepth 默认值从 Integer.MAX_VALUE 收敛为 64，并把 skip() 的深度上限接入传输层 TConfiguration 的递归限制（setMaxSkipDepth 废弃为空操作，统一由 TConfiguration.setRecursionLimit 控制），深度超限时抛出带 DEPTH_LIMIT 类型的 TProtocolException，终止递归跳过过程，消除栈溢出导致的拒绝服务风险。0.24.0 版本包含上述修复。",
+    "effects": [
+      {
+        "comp_name": "org.apache.thrift:libthrift",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.24.0)",
+            "min_fixed_version": "0.24.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-7f9e-8da3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12471.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-120135",
+        "name": ""
+      },
+      {
+        "url": "https://thrift.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/735a976aeee3f1abdf20b20cc4352eeedcdbe758",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/deeebfac25c1f0fc6207c845ba05679522e53adf",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/pull/3415",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/releases/tag/v0.24.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Apache Thrift 不受控递归漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120135",
+    "cvss": {},
+    "cvss_score": 8.2,
+    "cvss_vector": "",
+    "cwe": "CWE-674",
+    "description": "Apache Thrift 是 Apache 基金会开源的跨语言 RPC 与序列化框架，libthrift（Maven 坐标 org.apache.thrift:libthrift）是其 Java 语言绑定库，广泛用于服务间远程调用与结构化数据的序列化解析。\n受影响版本中，org.apache.thrift.protocol.TProtocolUtil 的静态字段 maxSkipDepth 默认取 Integer.MAX_VALUE，skip() 方法在跳过 STRUCT、MAP、SET、LIST 类型字段时按子元素逐层递归调用自身，深度上限实际不可达。攻击者向解析其可控 Thrift 消息的服务发送深度嵌套的序列化数据（例如连续嵌套的结构体）时，skip() 会沿嵌套层持续递归，直至耗尽线程栈抛出 StackOverflowError，使处理该消息的服务线程崩溃，形成远程拒绝服务。\n修复版本中通过将 maxSkipDepth 默认值从 Integer.MAX_VALUE 收敛为 64，并把 skip() 的深度上限接入传输层 TConfiguration 的递归限制（setMaxSkipDepth 废弃为空操作，统一由 TConfiguration.setRecursionLimit 控制），深度超限时抛出带 DEPTH_LIMIT 类型的 TProtocolException，终止递归跳过过程，消除栈溢出导致的拒绝服务风险。0.24.0 版本包含上述修复。",
+    "effects": [
+      {
+        "comp_name": "org.apache.thrift:libthrift",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.24.0)",
+            "min_fixed_version": "0.24.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的递归",
+    "kind_en": "Uncontrolled Recursion",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-7f9e-8da3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12471.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-120135",
+        "name": ""
+      },
+      {
+        "url": "https://thrift.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/735a976aeee3f1abdf20b20cc4352eeedcdbe758",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/commit/deeebfac25c1f0fc6207c845ba05679522e53adf",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/pull/3415",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/thrift/releases/tag/v0.24.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Apache Thrift 不受控递归漏洞"
+  },
+  "first_saved_at": "2026-10-31T01:21:06+00:00"
+}

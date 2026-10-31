@@ -1,0 +1,193 @@
+{
+  "saved_at": "2026-10-31T01:21:11+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-cjlp-wh78",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-63346",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-116",
+    "description": "Refitter 是一个开源（MIT 许可）的 C# REST API 客户端代码生成工具，基于 Refit 库把 OpenAPI/Swagger 描述转换为强类型 Refit 接口源码，以 dotnet 全局工具与 NuGet 包形式分发，通常在开发与构建阶段使用。\n受影响版本中，生成器把 OpenAPI 描述里 in: header 参数的名称（parameters[].name）未经转义地拼接进 Refit [Header(\"<name>\")] 特性字符串字面量。攻击者可控或受攻击者影响的 OpenAPI 文档携带的恶意名称可通过默认校验（无需 --skip-validation），闭合该特性字符串并依次结束参数列表、方法、接口与命名空间，注入一个包含 [ModuleInitializer] 方法的顶级 file class，随后重新打开命名空间与接口，使生成文件仍为合法 C#。生成代码被编译进应用后，.NET 运行时在程序集加载阶段自动执行 [ModuleInitializer] 方法，攻击者代码于应用启动时运行，即使生成的客户端从未被调用。\n修复版本中通过 ParameterNaming.EscapeString 对 header 参数名与安全方案名称统一转义双引号、反斜杠与控制字符，使规格值无法闭合特性字符串字面量，并在默认校验阶段新增 AttributeStringValidator 拒绝包含越界字符的值，同时把同一编码器应用到路径与 Accept/Content-Type 等其余特性字符串发射点，从而切断注入链。",
+    "effects": [
+      {
+        "comp_name": "refitter",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.1.2)",
+            "min_fixed_version": "2.1.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对输出编码和转义不恰当",
+    "kind_en": "输出编码或转义不当",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-cjlp-wh78",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-cjlp-wh78",
+        "name": "https://www.oscs1024.com/hd/MPS-cjlp-wh78"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-63346",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-63346"
+      },
+      {
+        "url": "https://github.com/christianhelle/refitter/security/advisories/GHSA-58x9-vjvp-6mx8",
+        "name": "https://github.com/christianhelle/refitter/security/advisories/GHSA-58x9-vjvp-6mx8"
+      },
+      {
+        "url": "https://github.com/christianhelle/refitter/pull/1178",
+        "name": "https://github.com/christianhelle/refitter/pull/1178"
+      },
+      {
+        "url": "https://github.com/christianhelle/refitter/commit/63a19b03699a9c267d6fab5f758ec26484db83a1",
+        "name": "https://github.com/christianhelle/refitter/commit/63a19b03699a9c267d6fab5f758ec26484db83a1"
+      },
+      {
+        "url": "https://github.com/christianhelle/refitter/releases/tag/2.1.2",
+        "name": "https://github.com/christianhelle/refitter/releases/tag/2.1.2"
+      },
+      {
+        "url": "https://github.com/user-attachments/files/29395048/maintainer-report.txt",
+        "name": "https://github.com/user-attachments/files/29395048/maintainer-report.txt"
+      },
+      {
+        "url": "https://github.com/user-attachments/files/29395050/make_spec.py",
+        "name": "https://github.com/user-attachments/files/29395050/make_spec.py"
+      },
+      {
+        "url": "https://github.com/user-attachments/files/29395051/reproduce.sh",
+        "name": "https://github.com/user-attachments/files/29395051/reproduce.sh"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Refitter 代码注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-63346",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-116",
+    "description": "Refitter 是一个开源（MIT 许可）的 C# REST API 客户端代码生成工具，基于 Refit 库把 OpenAPI/Swagger 描述转换为强类型 Refit 接口源码，以 dotnet 全局工具与 NuGet 包形式分发，通常在开发与构建阶段使用。\n受影响版本中，生成器把 OpenAPI 描述里 in: header 参数的名称（parameters[].name）未经转义地拼接进 Refit [Header(\"<name>\")] 特性字符串字面量。攻击者可控或受攻击者影响的 OpenAPI 文档携带的恶意名称可通过默认校验（无需 --skip-validation），闭合该特性字符串并依次结束参数列表、方法、接口与命名空间，注入一个包含 [ModuleInitializer] 方法的顶级 file class，随后重新打开命名空间与接口，使生成文件仍为合法 C#。生成代码被编译进应用后，.NET 运行时在程序集加载阶段自动执行 [ModuleInitializer] 方法，攻击者代码于应用启动时运行，即使生成的客户端从未被调用。\n修复版本中通过 ParameterNaming.EscapeString 对 header 参数名与安全方案名称统一转义双引号、反斜杠与控制字符，使规格值无法闭合特性字符串字面量，并在默认校验阶段新增 AttributeStringValidator 拒绝包含越界字符的值，同时把同一编码器应用到路径与 Accept/Content-Type 等其余特性字符串发射点，从而切断注入链。",
+    "effects": [
+      {
+        "comp_name": "refitter",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.1.2)",
+            "min_fixed_version": "2.1.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对输出编码和转义不恰当",
+    "kind_en": "Improper Encoding or Escaping of Output",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-cjlp-wh78",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-cjlp-wh78",
+        "name": "https://www.oscs1024.com/hd/MPS-cjlp-wh78"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-63346",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-63346"
+      },
+      {
+        "url": "https://github.com/christianhelle/refitter/security/advisories/GHSA-58x9-vjvp-6mx8",
+        "name": "https://github.com/christianhelle/refitter/security/advisories/GHSA-58x9-vjvp-6mx8"
+      },
+      {
+        "url": "https://github.com/christianhelle/refitter/pull/1178",
+        "name": "https://github.com/christianhelle/refitter/pull/1178"
+      },
+      {
+        "url": "https://github.com/christianhelle/refitter/commit/63a19b03699a9c267d6fab5f758ec26484db83a1",
+        "name": "https://github.com/christianhelle/refitter/commit/63a19b03699a9c267d6fab5f758ec26484db83a1"
+      },
+      {
+        "url": "https://github.com/christianhelle/refitter/releases/tag/2.1.2",
+        "name": "https://github.com/christianhelle/refitter/releases/tag/2.1.2"
+      },
+      {
+        "url": "https://github.com/user-attachments/files/29395048/maintainer-report.txt",
+        "name": "https://github.com/user-attachments/files/29395048/maintainer-report.txt"
+      },
+      {
+        "url": "https://github.com/user-attachments/files/29395050/make_spec.py",
+        "name": "https://github.com/user-attachments/files/29395050/make_spec.py"
+      },
+      {
+        "url": "https://github.com/user-attachments/files/29395051/reproduce.sh",
+        "name": "https://github.com/user-attachments/files/29395051/reproduce.sh"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Refitter 代码注入漏洞"
+  },
+  "first_saved_at": "2026-10-31T01:21:11+00:00"
+}

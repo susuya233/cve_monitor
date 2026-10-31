@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-10-31T01:21:10+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-c7uq-3nhr",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-63396",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "Coop 是 ROOST 开源的审核与内容处置（review and moderation）工具，采用 Apache-2.0 许可证开源，面向平台方提供人工审核队列、哈希匹配与儿童安全举报处理等能力，支持自托管部署。\n受影响版本中，server/graphql/modules/org.ts 在 Query 中以 @publicResolver 指令声明 allOrgs 公开查询，该指令使请求跳过全局认证包装，未认证攻击者向 /api/v1/graphql 发送 allOrgs 查询可直接触发 resolver 调用 OrgApi.getAllGraphQLOrgs，经 kyselyOrgFindAll 返回部署内全部组织记录，包括组织 ID、名称、邮箱、网站 URL 与值班告警邮箱；同一文件中 Org 类型的 usersWhoCanReviewEveryQueue 解析器缺少认证与组织归属校验，进一步暴露可审核全部队列用户的 ID、邮箱、姓名、角色、权限与账号创建时间。\n修复版本中通过移除 allOrgs 公开查询及其数据源方法 getAllGraphQLOrgs 切断数据出口，并在 usersWhoCanReviewEveryQueue 中新增认证与组织匹配校验，当 context.getUser() 为空或 user.orgId 与 org.id 不一致时抛出 unauthenticatedError，同时清理 createOrg、requestDemo 等未使用的公开 mutation。",
+    "effects": [
+      {
+        "comp_name": "coop",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.0)",
+            "min_fixed_version": "1.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-c7uq-3nhr",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-c7uq-3nhr",
+        "name": "https://www.oscs1024.com/hd/MPS-c7uq-3nhr"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-63396",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-63396"
+      },
+      {
+        "url": "https://github.com/roostorg/coop/security/advisories/GHSA-gv85-m34f-27g4",
+        "name": "https://github.com/roostorg/coop/security/advisories/GHSA-gv85-m34f-27g4"
+      },
+      {
+        "url": "https://github.com/roostorg/coop/pull/699",
+        "name": "https://github.com/roostorg/coop/pull/699"
+      },
+      {
+        "url": "https://github.com/roostorg/coop/commit/b29242f12f5acca0ac26116c30be9da77c15d93c",
+        "name": "https://github.com/roostorg/coop/commit/b29242f12f5acca0ac26116c30be9da77c15d93c"
+      },
+      {
+        "url": "https://github.com/roostorg/coop/releases/tag/1.0.0",
+        "name": "https://github.com/roostorg/coop/releases/tag/1.0.0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Coop GraphQL未授权信息泄露",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-63396",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "Coop 是 ROOST 开源的审核与内容处置（review and moderation）工具，采用 Apache-2.0 许可证开源，面向平台方提供人工审核队列、哈希匹配与儿童安全举报处理等能力，支持自托管部署。\n受影响版本中，server/graphql/modules/org.ts 在 Query 中以 @publicResolver 指令声明 allOrgs 公开查询，该指令使请求跳过全局认证包装，未认证攻击者向 /api/v1/graphql 发送 allOrgs 查询可直接触发 resolver 调用 OrgApi.getAllGraphQLOrgs，经 kyselyOrgFindAll 返回部署内全部组织记录，包括组织 ID、名称、邮箱、网站 URL 与值班告警邮箱；同一文件中 Org 类型的 usersWhoCanReviewEveryQueue 解析器缺少认证与组织归属校验，进一步暴露可审核全部队列用户的 ID、邮箱、姓名、角色、权限与账号创建时间。\n修复版本中通过移除 allOrgs 公开查询及其数据源方法 getAllGraphQLOrgs 切断数据出口，并在 usersWhoCanReviewEveryQueue 中新增认证与组织匹配校验，当 context.getUser() 为空或 user.orgId 与 org.id 不一致时抛出 unauthenticatedError，同时清理 createOrg、requestDemo 等未使用的公开 mutation。",
+    "effects": [
+      {
+        "comp_name": "coop",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.0.0)",
+            "min_fixed_version": "1.0.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-10-31",
+    "level": "High",
+    "mps_id": "MPS-c7uq-3nhr",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-10-31",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-c7uq-3nhr",
+        "name": "https://www.oscs1024.com/hd/MPS-c7uq-3nhr"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-63396",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-63396"
+      },
+      {
+        "url": "https://github.com/roostorg/coop/security/advisories/GHSA-gv85-m34f-27g4",
+        "name": "https://github.com/roostorg/coop/security/advisories/GHSA-gv85-m34f-27g4"
+      },
+      {
+        "url": "https://github.com/roostorg/coop/pull/699",
+        "name": "https://github.com/roostorg/coop/pull/699"
+      },
+      {
+        "url": "https://github.com/roostorg/coop/commit/b29242f12f5acca0ac26116c30be9da77c15d93c",
+        "name": "https://github.com/roostorg/coop/commit/b29242f12f5acca0ac26116c30be9da77c15d93c"
+      },
+      {
+        "url": "https://github.com/roostorg/coop/releases/tag/1.0.0",
+        "name": "https://github.com/roostorg/coop/releases/tag/1.0.0"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Coop GraphQL未授权信息泄露"
+  },
+  "first_saved_at": "2026-10-31T01:21:10+00:00"
+}
