@@ -1,0 +1,221 @@
+{
+  "saved_at": "2026-10-31T18:59:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-sj0w-kdgm",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120203",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-94",
+    "description": "ShowDoc 是一款开源（Apache-2.0 许可）的在线 API 文档与团队知识库工具，服务端基于 PHP 与 ThinkPHP 框架实现，并附带独立的 Node.js Mock 数据服务（mock/index.js，默认监听 7123 端口），用于按用户保存的模板渲染接口模拟数据。\n受影响版本中，登录用户通过 server/Application/Api/Controller/MockController.class.php 的 add 接口保存 Mock 模板，该接口仅校验 JSON 语法后入库；MockController::infoByKey 在无需登录的情况下读取存量模板并转发至本机 mock 服务，mock/index.js 将模板 JSON.parse 后直接交给 Mock.mock() 渲染；mockjs 对 @name(参数) 形式的占位符会把参数拼接进 eval() 求值，攻击者在模板中以 \\u0028、\\u0029 转义括号绕过占位符正则，经 constructor 属性链取得 Function 构造器并调用 child_process 模块，最终以 mock 进程的权限执行任意系统命令，官方 Docker 镜像中该进程以 root 运行。\n修复版本中通过在调用 Mock.mock 前新增 isSafeMockTemplate 白名单校验切断上述链条：占位符参数仅允许数字、字符串字面量、布尔值、null、裸标识符与字面量数组，整体拒绝反引号、\\u 转义以及占位符名后跟 . 或 [ 的属性链访问，使转义括号构造的调用无法进入 eval；PHP 侧在 add、infoByKey、infoByPath 中同步加入等价的 mockTemplateIsSafe 校验以覆盖历史存量模板，unique_key 改用 random_bytes 随机生成，mock 服务默认仅绑定 127.0.0.1，并在官方容器中改以低权用户 mockmock 运行。",
+    "effects": [
+      {
+        "comp_name": "showdoc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.8.14,3.9.6)",
+            "min_fixed_version": "3.9.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-11-01",
+    "level": "High",
+    "mps_id": "MPS-sj0w-kdgm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-01",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-sj0w-kdgm",
+        "name": "https://www.oscs1024.com/hd/MPS-sj0w-kdgm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120203",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120203"
+      },
+      {
+        "url": "https://github.com/star7th/showdoc/commit/5a2087a3f408f5266f61e9e2fb98845ef4788288",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://gist.github.com/LioTree/028af150fd991cf9924dd2c7d5912e54",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/star7th/showdoc/blob/v3.9.5/mock/index.js#L42",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/star7th/showdoc",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/showdoc-2.8.14-before-3.9.6-code-injection-via-mock-templates",
+        "name": "VulnCheck Advisory: ShowDoc 2.8.14 before 3.9.6 Code Injection via Mock Templates"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "ShowDoc Mock代码注入",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120203",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-94",
+    "description": "ShowDoc 是一款开源（Apache-2.0 许可）的在线 API 文档与团队知识库工具，服务端基于 PHP 与 ThinkPHP 框架实现，并附带独立的 Node.js Mock 数据服务（mock/index.js，默认监听 7123 端口），用于按用户保存的模板渲染接口模拟数据。\n受影响版本中，登录用户通过 server/Application/Api/Controller/MockController.class.php 的 add 接口保存 Mock 模板，该接口仅校验 JSON 语法后入库；MockController::infoByKey 在无需登录的情况下读取存量模板并转发至本机 mock 服务，mock/index.js 将模板 JSON.parse 后直接交给 Mock.mock() 渲染；mockjs 对 @name(参数) 形式的占位符会把参数拼接进 eval() 求值，攻击者在模板中以 \\u0028、\\u0029 转义括号绕过占位符正则，经 constructor 属性链取得 Function 构造器并调用 child_process 模块，最终以 mock 进程的权限执行任意系统命令，官方 Docker 镜像中该进程以 root 运行。\n修复版本中通过在调用 Mock.mock 前新增 isSafeMockTemplate 白名单校验切断上述链条：占位符参数仅允许数字、字符串字面量、布尔值、null、裸标识符与字面量数组，整体拒绝反引号、\\u 转义以及占位符名后跟 . 或 [ 的属性链访问，使转义括号构造的调用无法进入 eval；PHP 侧在 add、infoByKey、infoByPath 中同步加入等价的 mockTemplateIsSafe 校验以覆盖历史存量模板，unique_key 改用 random_bytes 随机生成，mock 服务默认仅绑定 127.0.0.1，并在官方容器中改以低权用户 mockmock 运行。",
+    "effects": [
+      {
+        "comp_name": "showdoc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.8.14,3.9.6)",
+            "min_fixed_version": "3.9.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-11-01",
+    "level": "High",
+    "mps_id": "MPS-sj0w-kdgm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-01",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-sj0w-kdgm",
+        "name": "https://www.oscs1024.com/hd/MPS-sj0w-kdgm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120203",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120203"
+      },
+      {
+        "url": "https://github.com/star7th/showdoc/commit/5a2087a3f408f5266f61e9e2fb98845ef4788288",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://gist.github.com/LioTree/028af150fd991cf9924dd2c7d5912e54",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/star7th/showdoc/blob/v3.9.5/mock/index.js#L42",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/star7th/showdoc",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/showdoc-2.8.14-before-3.9.6-code-injection-via-mock-templates",
+        "name": "VulnCheck Advisory: ShowDoc 2.8.14 before 3.9.6 Code Injection via Mock Templates"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "ShowDoc Mock代码注入"
+  },
+  "first_saved_at": "2026-10-31T18:59:32+00:00"
+}

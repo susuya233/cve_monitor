@@ -1,0 +1,213 @@
+{
+  "saved_at": "2026-10-31T18:59:31+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-gpfo-0xvq",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨站点请求伪造 (CSRF)通过利用网站对用户请求的信任进行攻击。当用户在网站A登录并在同一浏览器会话中访问网站B时，攻击者可以构造特制的请求并诱使用户执行，以使网站B误以为这些请求是用户合法发起的。\n攻击者通常通过欺骗用户点击恶意链接、在受信任的网站中植入恶意代码或通过钓鱼等手段来实施CSRF攻击，一旦用户执行了恶意请求，攻击者可以以用户的身份执行任意操作，包括更改用户密码、发起资金转账或删除重要数据等。",
+        "title": "什么是CSRF"
+      },
+      {
+        "content": "- 链接欺骗：攻击者通过向用户发送包含恶意链接的电子邮件或社交媒体消息，诱使用户点击并执行恶意请求。\n- 图片引用攻击：攻击者通过在恶意网站上包含指向目标网站的图片引用，以触发用户浏览器自动发送目标网站的请求。\n- XSS利用：如果目标网站存在XSS漏洞，攻击者可以注入恶意脚本，以使用户在浏览器中执行恶意请求。",
+        "title": "CSRF常见的攻击方式"
+      },
+      {
+        "content": "- 随机令牌：网站可以在每个请求中包含一个随机生成的令牌（CSRF Token），并验证该令牌的有效性，以确认请求的来源是合法的。\n- SameSite Cookie：使用SameSite属性来限制跨站点请求，将Cookie的发送限制在同一站点上，减少了跨站请求伪造的风险。\n- 双重验证：对于敏感操作，网站可以要求用户进行额外的验证，例如输入验证码、提供第二个因素的身份验证等。\n- 强化浏览器策略：网站可以设置Content-Security-Policy（CSP）头，限制浏览器执行恶意脚本的能力，减少CSRF攻击的风险。\n- 限制用户操作：网站可以要求用户在执行敏感操作之前进行明确的确认或授权，防止恶意请求被误触发。\n- 安全编码实践：开发人员应遵循安全编码实践，对用户输入进行适当的验证和过滤，防止恶意请求的注入。",
+        "title": "如何预防CSRF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120207",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:L",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-352",
+    "description": "Thelia Page 是 Thelia 开源电商 CMS 的官方页面管理模块，以 composer 包 thelia/page-module 形式分发，用于管理店铺静态页面及其标签、文档与图片，图片存储依赖共享媒体库模块 TheliaLibrary。\n受影响版本中，后台 page-tag、page-document、page-image 三类删除路由均未调用令牌校验与模块权限检查，PageTagController::deletePageTagAction 的路由未限制请求方法，PageImageController::deleteImageAction 与 PageDocumentController::deleteDocumentAction 声明为 GET 路由，其中 deleteImageAction 将参数 $pageImageId 同时传入 deleteImageAssociation 与 LibraryImageService::deleteImage，前者读取 library_item_image 表主键、后者按共享媒体库 library_image 表主键解析，$pageId 仅用于拼装重定向地址而不参与任何归属校验，攻击者构造携带顺序 id 的外部链接诱导已登录管理员点击后，浏览器携带会话 Cookie 发起顶层 GET 导航即可逐个删除页面、产品与分类共用的媒体库图片文件、全部渲染变体及数据库记录，并经 ON DELETE CASCADE 级联解除跨条目引用。\n修复版本中通过在删除路由统一引入 ChecksAdminWriteAccess 检查，要求 POST 请求体携带会话 _token 并校验 Page 模块 DELETE、UPDATE 权限，将各删除路由改为 POST-only 并限定 id 为数字，删除前经 LibraryItemImageQuery 校验记录确属给定页面，同时新增 LibraryImageDetacher 仅在该共享库图片不再被其他条目引用时删除图片及其文件，令牌缺失或权限不足时返回 403，切断了跨站请求伪造删除链路。",
+    "effects": [
+      {
+        "comp_name": "thelia/page-module",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.4)",
+            "min_fixed_version": "2.0.4",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "CSRF",
+    "kind_en": "跨站请求伪造 (CSRF)",
+    "last_modified_time": "2026-11-01",
+    "level": "High",
+    "mps_id": "MPS-gpfo-0xvq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-01",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gpfo-0xvq",
+        "name": "https://www.oscs1024.com/hd/MPS-gpfo-0xvq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120207",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120207"
+      },
+      {
+        "url": "https://github.com/thelia/thelia/security/advisories/GHSA-whqr-4v2h-6jhc",
+        "name": "GitHub Security Advisory (GHSA-whqr-4v2h-6jhc)"
+      },
+      {
+        "url": "https://github.com/thelia-modules/Page/commit/e7206a7c35c945cc8fe529fe95a9b30402f0fb60",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/thelia-modules/Page/blob/2.0.3/Controller/Admin/PageImageController.php#L117",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/thelia-page-module-before-2.0.4-csrf-via-page-tag-document-and-image-delete-routes",
+        "name": "VulnCheck Advisory: Thelia Page Module before 2.0.4 CSRF via Page Tag, Document and Image Delete Routes"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Thelia Page模块CSRF漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨站点请求伪造 (CSRF)通过利用网站对用户请求的信任进行攻击。当用户在网站A登录并在同一浏览器会话中访问网站B时，攻击者可以构造特制的请求并诱使用户执行，以使网站B误以为这些请求是用户合法发起的。\n攻击者通常通过欺骗用户点击恶意链接、在受信任的网站中植入恶意代码或通过钓鱼等手段来实施CSRF攻击，一旦用户执行了恶意请求，攻击者可以以用户的身份执行任意操作，包括更改用户密码、发起资金转账或删除重要数据等。",
+        "title": "什么是CSRF"
+      },
+      {
+        "content": "- 链接欺骗：攻击者通过向用户发送包含恶意链接的电子邮件或社交媒体消息，诱使用户点击并执行恶意请求。\n- 图片引用攻击：攻击者通过在恶意网站上包含指向目标网站的图片引用，以触发用户浏览器自动发送目标网站的请求。\n- XSS利用：如果目标网站存在XSS漏洞，攻击者可以注入恶意脚本，以使用户在浏览器中执行恶意请求。",
+        "title": "CSRF常见的攻击方式"
+      },
+      {
+        "content": "- 随机令牌：网站可以在每个请求中包含一个随机生成的令牌（CSRF Token），并验证该令牌的有效性，以确认请求的来源是合法的。\n- SameSite Cookie：使用SameSite属性来限制跨站点请求，将Cookie的发送限制在同一站点上，减少了跨站请求伪造的风险。\n- 双重验证：对于敏感操作，网站可以要求用户进行额外的验证，例如输入验证码、提供第二个因素的身份验证等。\n- 强化浏览器策略：网站可以设置Content-Security-Policy（CSP）头，限制浏览器执行恶意脚本的能力，减少CSRF攻击的风险。\n- 限制用户操作：网站可以要求用户在执行敏感操作之前进行明确的确认或授权，防止恶意请求被误触发。\n- 安全编码实践：开发人员应遵循安全编码实践，对用户输入进行适当的验证和过滤，防止恶意请求的注入。",
+        "title": "如何预防CSRF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120207",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:L",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-352",
+    "description": "Thelia Page 是 Thelia 开源电商 CMS 的官方页面管理模块，以 composer 包 thelia/page-module 形式分发，用于管理店铺静态页面及其标签、文档与图片，图片存储依赖共享媒体库模块 TheliaLibrary。\n受影响版本中，后台 page-tag、page-document、page-image 三类删除路由均未调用令牌校验与模块权限检查，PageTagController::deletePageTagAction 的路由未限制请求方法，PageImageController::deleteImageAction 与 PageDocumentController::deleteDocumentAction 声明为 GET 路由，其中 deleteImageAction 将参数 $pageImageId 同时传入 deleteImageAssociation 与 LibraryImageService::deleteImage，前者读取 library_item_image 表主键、后者按共享媒体库 library_image 表主键解析，$pageId 仅用于拼装重定向地址而不参与任何归属校验，攻击者构造携带顺序 id 的外部链接诱导已登录管理员点击后，浏览器携带会话 Cookie 发起顶层 GET 导航即可逐个删除页面、产品与分类共用的媒体库图片文件、全部渲染变体及数据库记录，并经 ON DELETE CASCADE 级联解除跨条目引用。\n修复版本中通过在删除路由统一引入 ChecksAdminWriteAccess 检查，要求 POST 请求体携带会话 _token 并校验 Page 模块 DELETE、UPDATE 权限，将各删除路由改为 POST-only 并限定 id 为数字，删除前经 LibraryItemImageQuery 校验记录确属给定页面，同时新增 LibraryImageDetacher 仅在该共享库图片不再被其他条目引用时删除图片及其文件，令牌缺失或权限不足时返回 403，切断了跨站请求伪造删除链路。",
+    "effects": [
+      {
+        "comp_name": "thelia/page-module",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.4)",
+            "min_fixed_version": "2.0.4",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "CSRF",
+    "kind_en": "Cross-Site Request Forgery (CSRF)",
+    "last_modified_time": "2026-11-01",
+    "level": "High",
+    "mps_id": "MPS-gpfo-0xvq",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-01",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-gpfo-0xvq",
+        "name": "https://www.oscs1024.com/hd/MPS-gpfo-0xvq"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120207",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120207"
+      },
+      {
+        "url": "https://github.com/thelia/thelia/security/advisories/GHSA-whqr-4v2h-6jhc",
+        "name": "GitHub Security Advisory (GHSA-whqr-4v2h-6jhc)"
+      },
+      {
+        "url": "https://github.com/thelia-modules/Page/commit/e7206a7c35c945cc8fe529fe95a9b30402f0fb60",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/thelia-modules/Page/blob/2.0.3/Controller/Admin/PageImageController.php#L117",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/thelia-page-module-before-2.0.4-csrf-via-page-tag-document-and-image-delete-routes",
+        "name": "VulnCheck Advisory: Thelia Page Module before 2.0.4 CSRF via Page Tag, Document and Image Delete Routes"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Thelia Page模块CSRF漏洞"
+  },
+  "first_saved_at": "2026-10-31T18:59:31+00:00"
+}
