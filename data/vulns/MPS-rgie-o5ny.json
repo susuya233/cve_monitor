@@ -1,0 +1,129 @@
+{
+  "saved_at": "2026-11-01T20:03:48+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-rgie-o5ny",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74760",
+    "cvss": {},
+    "cvss_score": 7.1,
+    "cvss_vector": "",
+    "cwe": "CWE-346",
+    "description": "Google::Auth 是 Google 在 GitHub 开源的 Perl 语言云端认证库（google-auth-library-perl），实现应用默认凭证、用户 OAuth 授权与工作负载身份联邦等能力，随包发布的 gcloud-auth 命令行工具提供 login、application-default login 等登录命令。\n受影响版本中，gcloud-auth 的 login 与 application-default login 命令向授权请求附加随机 state 参数，回环回调处理函数 _wait_for_code 对监听器收到的首个请求只提取查询串中的 code，不读取也不比对 state；本机攻击进程抢在用户浏览器回调之前向 127.0.0.1 监听端口提交其自身 Google 账号的授权码后，命令行使用用户侧客户端凭证完成兑换，该流程未启用 PKCE，攻击者账号的 refresh_token 被写入令牌存储或 application_default_credentials.json，用户后续工具调用改以攻击者账号身份执行。\n修复版本中通过，可通过缓解措施阻断该利用链：仅在受信任的单用户环境中执行 gcloud-auth 登录命令并尽快完成浏览器授权，避免在存在不可信本地进程的主机上登录，登录完成后核对 application_default_credentials.json 与令牌存储中的账号归属，发现凭证被替换时立即执行 gcloud-auth revoke 并重新登录，官方发布包含 state 校验的版本后升级。",
+    "effects": [
+      {
+        "comp_name": "google-auth",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.11,0.12]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "源验证错误",
+    "kind_en": "来源验证错误",
+    "last_modified_time": "2026-11-02",
+    "level": "High",
+    "mps_id": "MPS-rgie-o5ny",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-rgie-o5ny",
+        "name": "https://www.oscs1024.com/hd/MPS-rgie-o5ny"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74760",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74760"
+      },
+      {
+        "url": "https://metacpan.org/release/CJCOLLIER/Google-Auth-0.12/source/bin/gcloud-auth.pl",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Google::Auth 授权码注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-74760",
+    "cvss": {},
+    "cvss_score": 7.1,
+    "cvss_vector": "",
+    "cwe": "CWE-346",
+    "description": "Google::Auth 是 Google 在 GitHub 开源的 Perl 语言云端认证库（google-auth-library-perl），实现应用默认凭证、用户 OAuth 授权与工作负载身份联邦等能力，随包发布的 gcloud-auth 命令行工具提供 login、application-default login 等登录命令。\n受影响版本中，gcloud-auth 的 login 与 application-default login 命令向授权请求附加随机 state 参数，回环回调处理函数 _wait_for_code 对监听器收到的首个请求只提取查询串中的 code，不读取也不比对 state；本机攻击进程抢在用户浏览器回调之前向 127.0.0.1 监听端口提交其自身 Google 账号的授权码后，命令行使用用户侧客户端凭证完成兑换，该流程未启用 PKCE，攻击者账号的 refresh_token 被写入令牌存储或 application_default_credentials.json，用户后续工具调用改以攻击者账号身份执行。\n修复版本中通过，可通过缓解措施阻断该利用链：仅在受信任的单用户环境中执行 gcloud-auth 登录命令并尽快完成浏览器授权，避免在存在不可信本地进程的主机上登录，登录完成后核对 application_default_credentials.json 与令牌存储中的账号归属，发现凭证被替换时立即执行 gcloud-auth revoke 并重新登录，官方发布包含 state 校验的版本后升级。",
+    "effects": [
+      {
+        "comp_name": "google-auth",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.11,0.12]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "源验证错误",
+    "kind_en": "Origin Validation Error",
+    "last_modified_time": "2026-11-02",
+    "level": "High",
+    "mps_id": "MPS-rgie-o5ny",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-rgie-o5ny",
+        "name": "https://www.oscs1024.com/hd/MPS-rgie-o5ny"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-74760",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-74760"
+      },
+      {
+        "url": "https://metacpan.org/release/CJCOLLIER/Google-Auth-0.12/source/bin/gcloud-auth.pl",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Google::Auth 授权码注入漏洞"
+  },
+  "first_saved_at": "2026-11-01T20:03:48+00:00"
+}
