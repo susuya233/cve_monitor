@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-11-02T00:08:34+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-dypi-b4z6",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84170",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "Apache Wicket 是 Apache 软件基金会维护的开源 Java 组件化 Web 框架。wicket-core 中的 FileUploadToResourceField 把不经过 Form 的文件上传提交到单独挂载的 AbstractFileUploadResource。\n受影响版本中，AbstractFileUploadResource 是应用级单例，newResourceResponse 从请求查询参数 maxSize、fileMaxSize 和 fileCountMax 读取总大小、单文件大小和文件数量上限，并直接交给 multipart 解析器，这些数值没有绑定到发起上传的 FileUploadToResourceField。应用通过 setMaxSize、setFileMaxSize 和 setFileCountMax 配置的限制只在客户端省略对应参数时才被读取；客户端提交很大的 maxSize，或省略 fileMaxSize 与 fileCountMax 时，解析没有有效的总大小、单文件或文件数量上限。超过内存阈值的文件部分会写入容器临时目录，再复制到 IUploadsFileManager 目录下由请求命名的子目录，非文件部分会在解析时完整读入堆，单次请求即可消耗磁盘或堆内存。该资源默认没有授权注解，默认授权策略放行全部资源请求。此路径仅在应用使用 FileUploadToResourceField 或自行挂载 FileUploadResourceReference 时存在，8.x 没有该资源，Form 配合 FileUploadField 以及 AjaxFileDropBehavior 不走这条路径。\n修复版本中通过在解析请求前校验会话绑定的 HMAC 上传令牌，切断客户端自行指定上限的路径。FileUploadToResourceField 渲染时使用保存在会话中的随机密钥，对 uploadId 与三项上限计算 HmacSHA256；newResourceResponse 调用 hasValidUploadToken，只接受与请求中的上限一致且密钥属于已渲染会话的 uploadToken，缺失或不匹配的请求在进入 multipart 解析前被拒绝。",
+    "effects": [
+      {
+        "comp_name": "org.apache.wicket:wicket-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[10.0.0,10.9.1]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.14.0,9.25.0)",
+            "min_fixed_version": "9.25.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-11-02",
+    "level": "High",
+    "mps_id": "MPS-dypi-b4z6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dypi-b4z6",
+        "name": "https://www.oscs1024.com/hd/MPS-dypi-b4z6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84170",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84170"
+      },
+      {
+        "url": "https://lists.apache.org/thread.html/bw3hn5cch3q7yrsl05m8mvmgyx4m98y7",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Wicket上传资源限制绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-84170",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "Apache Wicket 是 Apache 软件基金会维护的开源 Java 组件化 Web 框架。wicket-core 中的 FileUploadToResourceField 把不经过 Form 的文件上传提交到单独挂载的 AbstractFileUploadResource。\n受影响版本中，AbstractFileUploadResource 是应用级单例，newResourceResponse 从请求查询参数 maxSize、fileMaxSize 和 fileCountMax 读取总大小、单文件大小和文件数量上限，并直接交给 multipart 解析器，这些数值没有绑定到发起上传的 FileUploadToResourceField。应用通过 setMaxSize、setFileMaxSize 和 setFileCountMax 配置的限制只在客户端省略对应参数时才被读取；客户端提交很大的 maxSize，或省略 fileMaxSize 与 fileCountMax 时，解析没有有效的总大小、单文件或文件数量上限。超过内存阈值的文件部分会写入容器临时目录，再复制到 IUploadsFileManager 目录下由请求命名的子目录，非文件部分会在解析时完整读入堆，单次请求即可消耗磁盘或堆内存。该资源默认没有授权注解，默认授权策略放行全部资源请求。此路径仅在应用使用 FileUploadToResourceField 或自行挂载 FileUploadResourceReference 时存在，8.x 没有该资源，Form 配合 FileUploadField 以及 AjaxFileDropBehavior 不走这条路径。\n修复版本中通过在解析请求前校验会话绑定的 HMAC 上传令牌，切断客户端自行指定上限的路径。FileUploadToResourceField 渲染时使用保存在会话中的随机密钥，对 uploadId 与三项上限计算 HmacSHA256；newResourceResponse 调用 hasValidUploadToken，只接受与请求中的上限一致且密钥属于已渲染会话的 uploadToken，缺失或不匹配的请求在进入 multipart 解析前被拒绝。",
+    "effects": [
+      {
+        "comp_name": "org.apache.wicket:wicket-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[10.0.0,10.9.1]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.14.0,9.25.0)",
+            "min_fixed_version": "9.25.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-11-02",
+    "level": "High",
+    "mps_id": "MPS-dypi-b4z6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dypi-b4z6",
+        "name": "https://www.oscs1024.com/hd/MPS-dypi-b4z6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84170",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-84170"
+      },
+      {
+        "url": "https://lists.apache.org/thread.html/bw3hn5cch3q7yrsl05m8mvmgyx4m98y7",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Wicket上传资源限制绕过"
+  },
+  "first_saved_at": "2026-11-02T00:08:34+00:00"
+}

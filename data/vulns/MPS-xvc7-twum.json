@@ -1,0 +1,175 @@
+{
+  "saved_at": "2026-11-02T00:08:39+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xvc7-twum",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-83559",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-116",
+    "description": "Apache Wicket 是 Apache 软件基金会维护的开源 Java 组件化 Web 框架，wicket-core 提供页面渲染以及把文本放入 JavaScript 字符串字面量前的转义方法。\n受影响版本中，org.apache.wicket.core.util.string.JavaScriptUtils.escapeQuotes 只把单引号替换为反斜杠加单引号、把双引号替换为反斜杠加双引号，没有先转义反斜杠。输入在引号前已经带有反斜杠时，输出会在该引号前留下两个反斜杠，前一个反斜杠抵消后一个反斜杠，引号仍可结束 JavaScript 字符串字面量，其后内容会在查看页面的用户会话中以应用源站脚本执行。应用按该方法的公开文档把返回值放入 JavaScript 字符串字面量，且传入值含攻击者可影响的数据时即会触发；AjaxEditableLabel 会把编辑失败的首条反馈消息写入单引号字面量，仅当该消息含此类数据时经该组件受影响，框架自带消息包并不插入输入值。\n修复版本中通过在 escapeQuotes 内先把反斜杠替换为两个反斜杠，再转义单引号和双引号，使引号前已有的反斜杠不能再抵消引号转义。9.25.0、10.12.0 与 11.0.0 同时把 escapeQuotesAndBackslash 改为直接委托给 escapeQuotes。",
+    "effects": [
+      {
+        "comp_name": "org.apache.wicket:wicket-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[8.0.0,8.20.0)",
+            "min_fixed_version": "8.20.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.0.0,9.25.0)",
+            "min_fixed_version": "9.25.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.0.0,10.12.0)",
+            "min_fixed_version": "10.12.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对输出编码和转义不恰当",
+    "kind_en": "输出编码或转义不当",
+    "last_modified_time": "2026-11-02",
+    "level": "High",
+    "mps_id": "MPS-xvc7-twum",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xvc7-twum",
+        "name": "https://www.oscs1024.com/hd/MPS-xvc7-twum"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83559",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-83559"
+      },
+      {
+        "url": "https://lists.apache.org/thread.html/77kc85ztkxdpp7wg7cv61c4539j9s1g3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Wicket脚本转义漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-83559",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ]
+    },
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-116",
+    "description": "Apache Wicket 是 Apache 软件基金会维护的开源 Java 组件化 Web 框架，wicket-core 提供页面渲染以及把文本放入 JavaScript 字符串字面量前的转义方法。\n受影响版本中，org.apache.wicket.core.util.string.JavaScriptUtils.escapeQuotes 只把单引号替换为反斜杠加单引号、把双引号替换为反斜杠加双引号，没有先转义反斜杠。输入在引号前已经带有反斜杠时，输出会在该引号前留下两个反斜杠，前一个反斜杠抵消后一个反斜杠，引号仍可结束 JavaScript 字符串字面量，其后内容会在查看页面的用户会话中以应用源站脚本执行。应用按该方法的公开文档把返回值放入 JavaScript 字符串字面量，且传入值含攻击者可影响的数据时即会触发；AjaxEditableLabel 会把编辑失败的首条反馈消息写入单引号字面量，仅当该消息含此类数据时经该组件受影响，框架自带消息包并不插入输入值。\n修复版本中通过在 escapeQuotes 内先把反斜杠替换为两个反斜杠，再转义单引号和双引号，使引号前已有的反斜杠不能再抵消引号转义。9.25.0、10.12.0 与 11.0.0 同时把 escapeQuotesAndBackslash 改为直接委托给 escapeQuotes。",
+    "effects": [
+      {
+        "comp_name": "org.apache.wicket:wicket-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[8.0.0,8.20.0)",
+            "min_fixed_version": "8.20.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.0.0,9.25.0)",
+            "min_fixed_version": "9.25.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.0.0,10.12.0)",
+            "min_fixed_version": "10.12.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对输出编码和转义不恰当",
+    "kind_en": "Improper Encoding or Escaping of Output",
+    "last_modified_time": "2026-11-02",
+    "level": "High",
+    "mps_id": "MPS-xvc7-twum",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xvc7-twum",
+        "name": "https://www.oscs1024.com/hd/MPS-xvc7-twum"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83559",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-83559"
+      },
+      {
+        "url": "https://lists.apache.org/thread.html/77kc85ztkxdpp7wg7cv61c4539j9s1g3",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Wicket脚本转义漏洞"
+  },
+  "first_saved_at": "2026-11-02T00:08:39+00:00"
+}

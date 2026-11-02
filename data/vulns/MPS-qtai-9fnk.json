@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-10-30T09:26:27+00:00",
+  "saved_at": "2026-11-02T00:08:38+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-3dgc-pa8i",
+  "source_page": "https://www.oscs1024.com/hd/MPS-qtai-9fnk",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,30 +21,44 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-97645",
+    "cve_id": "CVE-2026-83539",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 7.4
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-79",
-    "description": "Gravity Forms 是 WordPress 商业表单插件（闭源发布），用于构建在线表单、收集与管理提交条目，被大量企业站点用于客户交互与数据采集。\n受影响版本中，List 字段提交值在存储与后台输出时未做充分的输入清理与输出转义，未认证攻击者可通过公开表单提交携带恶意脚本内容的 List 字段值并持久保存；管理员打开条目详情视图时页面包含注入内容，点击其中的链接并确认弹窗后，管理端 JavaScript 包中以事件委托方式绑定 data-dialog-callback 属性的处理器会调用该属性中攻击者指定的函数引用，最终在管理后台会话中执行任意 Web 脚本。\n修复版本中通过 3.1.3 版本引入的安全增强，加强相关字段值的输入清理与输出转义，阻止注入内容再进入管理端回调执行链路，建议用户升级至 3.1.3 及以上版本。",
+    "description": "Apache Wicket 是 Apache 软件基金会维护的开源 Java 组件化 Web 框架，用于构建服务端页面应用。其 wicket-extensions 模块提供 SmartLinkLabel 与 SmartLinkMultiLineLabel，把待展示文本中的邮箱地址和 URL 自动转换为超链接。\n受影响版本中，SmartLinkLabel.onComponentTagBody 与 SmartLinkMultiLineLabel.onComponentTagBody 读取模型文本并交给 DefaultLinkParser。该类的 urlPattern 匹配任意字母组成的 scheme 加 ://，URL_RENDER_STRATEGY.buildLink 把匹配文本原样写入 a 标签的 href。模型中带有可执行脚本的 scheme（CNA 标题明确为 javascript）会变成应用源站上的链接，阅读者点击后在本人会话中执行脚本；只渲染页面不会触发。模型值进入解析器前会经过 Strings.escapeMarkup，但该转义保留 URL 所需字符，且结果进入 URL 上下文而不是元素文本，转义不能消除该问题。未使用这两个组件的应用不受影响。Wicket 9.x 与 10.x 默认 Content-Security-Policy 只放行带一次性 nonce 的脚本，此类 URL 无法携带该 nonce，默认策略可阻止脚本执行；策略被削弱或关闭时影响完整成立。Wicket 8.x 没有 Content-Security-Policy，按默认状态受影响。\n修复版本中通过将 DefaultLinkParser 的 URL 模式收窄为不区分大小写、且前面不能紧邻字母的 http、https 与 ftp，并让 URL_RENDER_STRATEGY.buildLink 对其他 scheme 直接返回原文、不再生成锚点，使可执行脚本的 scheme 不再进入 href。",
     "effects": [
       {
-        "comp_name": "gravityforms",
-        "ecosystem": "linux",
+        "comp_name": "org.apache.wicket:wicket-extensions",
+        "ecosystem": "maven",
         "versions": [
           {
-            "affected_version": "(-∞,3.1.3)",
-            "min_fixed_version": "3.1.3",
-            "repository": "unmanaged",
+            "affected_version": "[8.0.0,8.20.0)",
+            "min_fixed_version": "8.20.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.0.0,9.25.0)",
+            "min_fixed_version": "9.25.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.0.0,10.12.0)",
+            "min_fixed_version": "10.12.0",
+            "repository": "maven",
             "solutions": [],
             "upstream": true
           }
@@ -59,35 +73,32 @@
     "fix_suggestion": "建议修复",
     "kind": "XSS",
     "kind_en": "网页生成期间输入的不正确中和（“跨站点脚本”）",
-    "last_modified_time": "2026-10-30",
+    "last_modified_time": "2026-11-02",
     "level": "High",
-    "mps_id": "MPS-3dgc-pa8i",
+    "mps_id": "MPS-qtai-9fnk",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-10-30",
+    "published_time": "2026-11-02",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-3dgc-pa8i",
-        "name": "https://www.oscs1024.com/hd/MPS-3dgc-pa8i"
+        "url": "https://www.oscs1024.com/hd/MPS-qtai-9fnk",
+        "name": "https://www.oscs1024.com/hd/MPS-qtai-9fnk"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97645",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97645"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83539",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-83539"
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/9889e718-381b-4d11-a234-0278037c61c4?source=cve",
-        "name": ""
-      },
-      {
-        "url": "https://docs.gravityforms.com/",
+        "url": "https://lists.apache.org/thread.html/xqdymd8g178sc112lmqbp53zlss53cwz",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "java",
+      "开源"
     ],
-    "title": "Gravity Forms List字段存储型XSS漏洞",
+    "title": "Wicket智能链接XSS",
     "_translated": true
   },
   "detail_original": {
@@ -107,30 +118,44 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-97645",
+    "cve_id": "CVE-2026-83539",
     "cvss": {
-      "cvssv31": [
+      "cvssv4": [
         {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 7.2
+          "base_score": 7.4
         }
       ]
     },
-    "cvss_score": 7.2,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+    "cvss_score": 7.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-79",
-    "description": "Gravity Forms 是 WordPress 商业表单插件（闭源发布），用于构建在线表单、收集与管理提交条目，被大量企业站点用于客户交互与数据采集。\n受影响版本中，List 字段提交值在存储与后台输出时未做充分的输入清理与输出转义，未认证攻击者可通过公开表单提交携带恶意脚本内容的 List 字段值并持久保存；管理员打开条目详情视图时页面包含注入内容，点击其中的链接并确认弹窗后，管理端 JavaScript 包中以事件委托方式绑定 data-dialog-callback 属性的处理器会调用该属性中攻击者指定的函数引用，最终在管理后台会话中执行任意 Web 脚本。\n修复版本中通过 3.1.3 版本引入的安全增强，加强相关字段值的输入清理与输出转义，阻止注入内容再进入管理端回调执行链路，建议用户升级至 3.1.3 及以上版本。",
+    "description": "Apache Wicket 是 Apache 软件基金会维护的开源 Java 组件化 Web 框架，用于构建服务端页面应用。其 wicket-extensions 模块提供 SmartLinkLabel 与 SmartLinkMultiLineLabel，把待展示文本中的邮箱地址和 URL 自动转换为超链接。\n受影响版本中，SmartLinkLabel.onComponentTagBody 与 SmartLinkMultiLineLabel.onComponentTagBody 读取模型文本并交给 DefaultLinkParser。该类的 urlPattern 匹配任意字母组成的 scheme 加 ://，URL_RENDER_STRATEGY.buildLink 把匹配文本原样写入 a 标签的 href。模型中带有可执行脚本的 scheme（CNA 标题明确为 javascript）会变成应用源站上的链接，阅读者点击后在本人会话中执行脚本；只渲染页面不会触发。模型值进入解析器前会经过 Strings.escapeMarkup，但该转义保留 URL 所需字符，且结果进入 URL 上下文而不是元素文本，转义不能消除该问题。未使用这两个组件的应用不受影响。Wicket 9.x 与 10.x 默认 Content-Security-Policy 只放行带一次性 nonce 的脚本，此类 URL 无法携带该 nonce，默认策略可阻止脚本执行；策略被削弱或关闭时影响完整成立。Wicket 8.x 没有 Content-Security-Policy，按默认状态受影响。\n修复版本中通过将 DefaultLinkParser 的 URL 模式收窄为不区分大小写、且前面不能紧邻字母的 http、https 与 ftp，并让 URL_RENDER_STRATEGY.buildLink 对其他 scheme 直接返回原文、不再生成锚点，使可执行脚本的 scheme 不再进入 href。",
     "effects": [
       {
-        "comp_name": "gravityforms",
-        "ecosystem": "linux",
+        "comp_name": "org.apache.wicket:wicket-extensions",
+        "ecosystem": "maven",
         "versions": [
           {
-            "affected_version": "(-∞,3.1.3)",
-            "min_fixed_version": "3.1.3",
-            "repository": "unmanaged",
+            "affected_version": "[8.0.0,8.20.0)",
+            "min_fixed_version": "8.20.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.0.0,9.25.0)",
+            "min_fixed_version": "9.25.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.0.0,10.12.0)",
+            "min_fixed_version": "10.12.0",
+            "repository": "maven",
             "solutions": [],
             "upstream": true
           }
@@ -145,35 +170,32 @@
     "fix_suggestion": "Recommend",
     "kind": "XSS",
     "kind_en": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
-    "last_modified_time": "2026-10-30",
+    "last_modified_time": "2026-11-02",
     "level": "High",
-    "mps_id": "MPS-3dgc-pa8i",
+    "mps_id": "MPS-qtai-9fnk",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-10-30",
+    "published_time": "2026-11-02",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-3dgc-pa8i",
-        "name": "https://www.oscs1024.com/hd/MPS-3dgc-pa8i"
+        "url": "https://www.oscs1024.com/hd/MPS-qtai-9fnk",
+        "name": "https://www.oscs1024.com/hd/MPS-qtai-9fnk"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97645",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97645"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83539",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-83539"
       },
       {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/9889e718-381b-4d11-a234-0278037c61c4?source=cve",
-        "name": ""
-      },
-      {
-        "url": "https://docs.gravityforms.com/",
+        "url": "https://lists.apache.org/thread.html/xqdymd8g178sc112lmqbp53zlss53cwz",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "java",
+      "开源"
     ],
-    "title": "Gravity Forms List字段存储型XSS漏洞"
+    "title": "Wicket智能链接XSS"
   },
-  "first_saved_at": "2026-10-30T09:26:27+00:00"
+  "first_saved_at": "2026-11-02T00:08:38+00:00"
 }

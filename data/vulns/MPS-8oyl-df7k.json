@@ -1,0 +1,201 @@
+{
+  "saved_at": "2026-11-02T00:08:37+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-8oyl-df7k",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-83594",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-789",
+    "description": "Apache Wicket 是 Apache 软件基金会维护的开源 Java 组件化 Web 框架。wicket-core 中的 FileUploadToResourceField 把文件上传到单独挂载的资源，并在上传结束后由组件自身的 Ajax 回调向应用报告结果。\n受影响版本中，回调方法 respond 在请求参数 error 为 false 时读取 filesInfo，UploadInfo.fromJson 将其中的 size、clientFileName 与 contentType 直接记入 UploadInfo，并不核对资源是否保存过这些文件。应用调用 UploadInfo.get() 时，该方法只判断 File 引用是否为 null，随即执行 new byte[(int) getSize()]，在打开文件之前按客户端给出的长度分配数组。FolderUploadsFileManager.getFile 对尚未存储的目标路径仍返回 File 对象，因此没有真实上传也会进入分配。单次请求可占用接近 2GB 堆内存，重复请求可耗尽同一 Java 虚拟机的堆；长度转为 int 后为负时抛出 NegativeArraySizeException，而 get() 只捕获 IOException，该异常会离开此方法。\n修复版本中通过让 UploadInfo.getSize() 返回已存储文件的长度、让 UploadInfo.get() 仅在文件真实存在时读取磁盘字节，并让 respond 只把已存储结果交给 onUploadSuccess，使请求中的 size 不再决定堆分配。",
+    "effects": [
+      {
+        "comp_name": "org.apache.wicket:wicket-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[9.14.0,9.25.0)",
+            "min_fixed_version": "9.25.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.0.0,10.12.0)",
+            "min_fixed_version": "10.12.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "wicket",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.0,10.12.0)",
+            "min_fixed_version": "10.12.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.14.0,9.25.0)",
+            "min_fixed_version": "9.25.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的内存分配",
+    "kind_en": "大小值过大的内存分配",
+    "last_modified_time": "2026-11-02",
+    "level": "High",
+    "mps_id": "MPS-8oyl-df7k",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8oyl-df7k",
+        "name": "https://www.oscs1024.com/hd/MPS-8oyl-df7k"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83594",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-83594"
+      },
+      {
+        "url": "https://lists.apache.org/thread.html/h5lxspxg746pzjd437n3n7mq5t3sfbcb",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Wicket内存分配漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-83594",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-789",
+    "description": "Apache Wicket 是 Apache 软件基金会维护的开源 Java 组件化 Web 框架。wicket-core 中的 FileUploadToResourceField 把文件上传到单独挂载的资源，并在上传结束后由组件自身的 Ajax 回调向应用报告结果。\n受影响版本中，回调方法 respond 在请求参数 error 为 false 时读取 filesInfo，UploadInfo.fromJson 将其中的 size、clientFileName 与 contentType 直接记入 UploadInfo，并不核对资源是否保存过这些文件。应用调用 UploadInfo.get() 时，该方法只判断 File 引用是否为 null，随即执行 new byte[(int) getSize()]，在打开文件之前按客户端给出的长度分配数组。FolderUploadsFileManager.getFile 对尚未存储的目标路径仍返回 File 对象，因此没有真实上传也会进入分配。单次请求可占用接近 2GB 堆内存，重复请求可耗尽同一 Java 虚拟机的堆；长度转为 int 后为负时抛出 NegativeArraySizeException，而 get() 只捕获 IOException，该异常会离开此方法。\n修复版本中通过让 UploadInfo.getSize() 返回已存储文件的长度、让 UploadInfo.get() 仅在文件真实存在时读取磁盘字节，并让 respond 只把已存储结果交给 onUploadSuccess，使请求中的 size 不再决定堆分配。",
+    "effects": [
+      {
+        "comp_name": "org.apache.wicket:wicket-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[9.14.0,9.25.0)",
+            "min_fixed_version": "9.25.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.0.0,10.12.0)",
+            "min_fixed_version": "10.12.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "wicket",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[10.0.0,10.12.0)",
+            "min_fixed_version": "10.12.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[9.14.0,9.25.0)",
+            "min_fixed_version": "9.25.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的内存分配",
+    "kind_en": "Memory Allocation with Excessive Size Value",
+    "last_modified_time": "2026-11-02",
+    "level": "High",
+    "mps_id": "MPS-8oyl-df7k",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-02",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8oyl-df7k",
+        "name": "https://www.oscs1024.com/hd/MPS-8oyl-df7k"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83594",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-83594"
+      },
+      {
+        "url": "https://lists.apache.org/thread.html/h5lxspxg746pzjd437n3n7mq5t3sfbcb",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Wicket内存分配漏洞"
+  },
+  "first_saved_at": "2026-11-02T00:08:37+00:00"
+}
