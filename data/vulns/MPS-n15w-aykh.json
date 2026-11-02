@@ -1,0 +1,339 @@
+{
+  "saved_at": "2026-11-02T17:40:47+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-n15w-aykh",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-99236",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-125",
+    "description": "Linux 内核是开源的操作系统内核，其 tracing 子系统通过 tracefs 与 perf 接口提供事件过滤能力，用于按表达式匹配并筛选跟踪事件。\n受影响版本中，predicate_parse() 的外层解析循环在输入以 &&、|| 或一元 ! 结尾时会带着未消解的运算符状态直接进入收尾阶段，prog[0].target 保持为 -1，第二轮优化遍历以该值作为下标访问 prog 数组并读取 prog[-1]，构成数组起始位置之前的越界读，相邻 slab 内存中的数据还可能被复制进通过前向跳转检查的分支目标；本地攻击者可通过 PERF_EVENT_IOC_SET_FILTER 或写入 tracefs 事件 filter 文件触达该解析路径。\n修复版本中通过在外层循环结束后增加已解析谓词计数 N 的非零检查，直接返回 -EINVAL 并记录 FILT_ERR_INVALID_FILTER 错误，使非空表达式只有在内部循环消解完全部运算符后才允许进入收尾阶段，从而阻断越界下标访问。",
+    "effects": [
+      {
+        "comp_name": "linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.17,7.4)",
+            "min_fixed_version": "7.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.12,6.12.115)",
+            "min_fixed_version": "6.12.115",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.18,6.18.60)",
+            "min_fixed_version": "6.18.60",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.10,5.10.273)",
+            "min_fixed_version": "5.10.273",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.1,6.1.191)",
+            "min_fixed_version": "6.1.191",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.15,5.15.224)",
+            "min_fixed_version": "5.15.224",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.6,6.6.161)",
+            "min_fixed_version": "6.6.161",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.2,7.2.15)",
+            "min_fixed_version": "7.2.15",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.3,7.3.1)",
+            "min_fixed_version": "7.3.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界读取",
+    "kind_en": "越界读取",
+    "last_modified_time": "2026-11-03",
+    "level": "High",
+    "mps_id": "MPS-n15w-aykh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-n15w-aykh",
+        "name": "https://www.oscs1024.com/hd/MPS-n15w-aykh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-99236",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-99236"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/4a1a6d35359991c5d47f4bf101cfbe1475c94093",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/2a98f5d4913ec081e08e1075512cb7ec313d9f72",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/15ff3cc7f2beecc3f95d66358f20ad7b057466aa",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/b205ff58e02922ac324f931cf9eb238a3acdb048",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/5a999b5a16530898f0dbe5f8c50fd45ea72e110b",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/1008e9e0b8280d47f1ab5e9c113f666a023a9697",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/64993d970dde2a2da353e9e99595a4fa88ec27d9",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/5bcdf3c18c3471122ee9652b0e2f5cdb718d9a46",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "Linux内核过滤器越界读漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-99236",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-125",
+    "description": "Linux 内核是开源的操作系统内核，其 tracing 子系统通过 tracefs 与 perf 接口提供事件过滤能力，用于按表达式匹配并筛选跟踪事件。\n受影响版本中，predicate_parse() 的外层解析循环在输入以 &&、|| 或一元 ! 结尾时会带着未消解的运算符状态直接进入收尾阶段，prog[0].target 保持为 -1，第二轮优化遍历以该值作为下标访问 prog 数组并读取 prog[-1]，构成数组起始位置之前的越界读，相邻 slab 内存中的数据还可能被复制进通过前向跳转检查的分支目标；本地攻击者可通过 PERF_EVENT_IOC_SET_FILTER 或写入 tracefs 事件 filter 文件触达该解析路径。\n修复版本中通过在外层循环结束后增加已解析谓词计数 N 的非零检查，直接返回 -EINVAL 并记录 FILT_ERR_INVALID_FILTER 错误，使非空表达式只有在内部循环消解完全部运算符后才允许进入收尾阶段，从而阻断越界下标访问。",
+    "effects": [
+      {
+        "comp_name": "linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.17,7.4)",
+            "min_fixed_version": "7.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.12,6.12.115)",
+            "min_fixed_version": "6.12.115",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.18,6.18.60)",
+            "min_fixed_version": "6.18.60",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.10,5.10.273)",
+            "min_fixed_version": "5.10.273",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.1,6.1.191)",
+            "min_fixed_version": "6.1.191",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[5.15,5.15.224)",
+            "min_fixed_version": "5.15.224",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.6,6.6.161)",
+            "min_fixed_version": "6.6.161",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.2,7.2.15)",
+            "min_fixed_version": "7.2.15",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.3,7.3.1)",
+            "min_fixed_version": "7.3.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界读取",
+    "kind_en": "Out-of-bounds Read",
+    "last_modified_time": "2026-11-03",
+    "level": "High",
+    "mps_id": "MPS-n15w-aykh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-n15w-aykh",
+        "name": "https://www.oscs1024.com/hd/MPS-n15w-aykh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-99236",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-99236"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/4a1a6d35359991c5d47f4bf101cfbe1475c94093",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/2a98f5d4913ec081e08e1075512cb7ec313d9f72",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/15ff3cc7f2beecc3f95d66358f20ad7b057466aa",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/b205ff58e02922ac324f931cf9eb238a3acdb048",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/5a999b5a16530898f0dbe5f8c50fd45ea72e110b",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/1008e9e0b8280d47f1ab5e9c113f666a023a9697",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/64993d970dde2a2da353e9e99595a4fa88ec27d9",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/5bcdf3c18c3471122ee9652b0e2f5cdb718d9a46",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "Linux内核过滤器越界读漏洞"
+  },
+  "first_saved_at": "2026-11-02T17:40:47+00:00"
+}

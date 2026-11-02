@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-11-02T17:40:50+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-zem2-twk1",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-99237",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-415",
+    "description": "Linux kernel 是开源操作系统内核，其 tracing（ftrace）子系统负责内核级函数与事件跟踪，并通过 tracefs 向用户空间提供跟踪缓冲区的读写接口。\n受影响版本中，内核以上次启动保留的环形缓冲区（last boot buffer）运行时，update_last_data_if_empty() 会在 tracing_open()（以 O_TRUNC 打开）、tracing_read_pipe() 和 tracing_buffers_read() 中被调用且未持有 trace_types_lock；该函数检查 TRACE_ARRAY_FL_LAST_BOOT 标志后调用 update_last_data() 将 tr->module_delta 置空并经 kfree_rcu() 释放，检查与释放过程无锁保护，两个并发读者可同时通过 LAST_BOOT 测试对 module_delta 执行双重释放，模块加载或卸载通知还可能在释放进行时并发更新该结构，本地攻击者可借此触发内存破坏，导致内核崩溃或权限提升。\n修复版本中通过 将 update_last_data_if_empty() 拆分为带 trace_types_lock 的对外入口与 __update_last_data_if_empty() 内部实现，内部实现加入 lockdep_assert_held(&trace_types_lock) 断言，读者路径先获取 trace_types_lock 再执行 LAST_BOOT 检查与 module_delta 释放，已持锁的 tracer_init() 与 tracing_set_clock() 改用免锁变体，使检查、清标志与释放全程在同一把锁下串行执行，消除双重释放与并发更新风险。",
+    "effects": [
+      {
+        "comp_name": "linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.18,6.18.60)",
+            "min_fixed_version": "6.18.60",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.16-rc1,7.4-rc1)",
+            "min_fixed_version": "7.4-rc1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.2,7.2.14)",
+            "min_fixed_version": "7.2.14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.3,7.3.1)",
+            "min_fixed_version": "7.3.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "双重释放",
+    "kind_en": "双重免费",
+    "last_modified_time": "2026-11-03",
+    "level": "High",
+    "mps_id": "MPS-zem2-twk1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zem2-twk1",
+        "name": "https://www.oscs1024.com/hd/MPS-zem2-twk1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-99237",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-99237"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/92b69f6db640dadc0851762ee2e12db99f083cad",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/d6d991afe775ab7fcf89523a2502b7ca3be56ffd",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/1f06cfe0b60a878619d1d8efe1cd0f515b7dc2aa",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "Linux内核tracing双重释放漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-99237",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-415",
+    "description": "Linux kernel 是开源操作系统内核，其 tracing（ftrace）子系统负责内核级函数与事件跟踪，并通过 tracefs 向用户空间提供跟踪缓冲区的读写接口。\n受影响版本中，内核以上次启动保留的环形缓冲区（last boot buffer）运行时，update_last_data_if_empty() 会在 tracing_open()（以 O_TRUNC 打开）、tracing_read_pipe() 和 tracing_buffers_read() 中被调用且未持有 trace_types_lock；该函数检查 TRACE_ARRAY_FL_LAST_BOOT 标志后调用 update_last_data() 将 tr->module_delta 置空并经 kfree_rcu() 释放，检查与释放过程无锁保护，两个并发读者可同时通过 LAST_BOOT 测试对 module_delta 执行双重释放，模块加载或卸载通知还可能在释放进行时并发更新该结构，本地攻击者可借此触发内存破坏，导致内核崩溃或权限提升。\n修复版本中通过 将 update_last_data_if_empty() 拆分为带 trace_types_lock 的对外入口与 __update_last_data_if_empty() 内部实现，内部实现加入 lockdep_assert_held(&trace_types_lock) 断言，读者路径先获取 trace_types_lock 再执行 LAST_BOOT 检查与 module_delta 释放，已持锁的 tracer_init() 与 tracing_set_clock() 改用免锁变体，使检查、清标志与释放全程在同一把锁下串行执行，消除双重释放与并发更新风险。",
+    "effects": [
+      {
+        "comp_name": "linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.18,6.18.60)",
+            "min_fixed_version": "6.18.60",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.16-rc1,7.4-rc1)",
+            "min_fixed_version": "7.4-rc1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.2,7.2.14)",
+            "min_fixed_version": "7.2.14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.3,7.3.1)",
+            "min_fixed_version": "7.3.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "双重释放",
+    "kind_en": "Double Free",
+    "last_modified_time": "2026-11-03",
+    "level": "High",
+    "mps_id": "MPS-zem2-twk1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zem2-twk1",
+        "name": "https://www.oscs1024.com/hd/MPS-zem2-twk1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-99237",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-99237"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/92b69f6db640dadc0851762ee2e12db99f083cad",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/d6d991afe775ab7fcf89523a2502b7ca3be56ffd",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/1f06cfe0b60a878619d1d8efe1cd0f515b7dc2aa",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "Linux内核tracing双重释放漏洞"
+  },
+  "first_saved_at": "2026-11-02T17:40:50+00:00"
+}

@@ -1,0 +1,215 @@
+{
+  "saved_at": "2026-11-02T17:40:53+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ji4s-kbzn",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-99231",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-416",
+    "description": "Linux 内核中的 io_uring 是随 5.1 版本引入的开源异步 I/O 框架，通过 io_uring_setup 与 io_uring_enter 系统调用向用户态提供提交队列和完成队列，其中 IORING_OP_WAITID 操作用于以异步方式等待本进程子进程的状态变化，对应实现位于内核文件 io_uring/waitid.c。\n受影响版本中，子进程退出唤醒时在等待队列锁保护下执行的回调 io_waitid_wait() 先通过 list_del_init 摘除等待项并以 smp_store_release 清空 iw->head，随后才以 atomic_fetch_inc(&iw->refs) 竞争请求所有权；而 io_waitid_remove_wq() 仅在 iw->head 非空时才获取等待队列锁，因此另一 CPU 上持有引用的释放或取消路径（__do_wait() 找到其他子进程后的完成路径，或 __io_waitid_cancel() 取消路径）可在此窗口内完成请求并释放 io_kiocb，回调随后仍对已释放请求执行 atomic_fetch_inc(&iw->refs)，递增的实为复用该请求内存的下一个操作的同名字段，计数恰为零时回调还会在其上调度 io_waitid_cb()，形成 slab-use-after-free，官方 KASAN 记录显示请求被 IORING_OP_RECV 复用后在 __wake_up_common() 触发释放后访问。\n修复版本中通过调整 io_waitid_wait() 的执行顺序消除竞争窗口：先以 atomic_fetch_inc(&iw->refs) 竞争请求所有权，仅在实际取得所有权后才以 smp_store_release 清空 iw->head；未取得所有权时保留 iw->head，使请求拥有者必须先获取回调调用方持有的等待队列锁才能完成并释放请求，重复对已摘除节点执行 list_del_init 无副作用，该修复已回传至 6.12.115、6.18.60 与 7.2.14。",
+    "effects": [
+      {
+        "comp_name": "linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.12.113,6.12.115)",
+            "min_fixed_version": "6.12.115",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.18.52,6.18.60)",
+            "min_fixed_version": "6.18.60",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.19,7.2.14)",
+            "min_fixed_version": "7.2.14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "UAF",
+    "kind_en": "免费后使用",
+    "last_modified_time": "2026-11-03",
+    "level": "High",
+    "mps_id": "MPS-ji4s-kbzn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ji4s-kbzn",
+        "name": "https://www.oscs1024.com/hd/MPS-ji4s-kbzn"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-99231",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-99231"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/bf01da1a9cca4a54e5c30b8344e52c26afb87be7",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/8381a912c65b8de16e8a848225c7c5a56b6ea834",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/c10ad2813e15186fb51b37a4d17fafddc99e89a5",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "Linux内核io_uring waitid释放后使用漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-99231",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-416",
+    "description": "Linux 内核中的 io_uring 是随 5.1 版本引入的开源异步 I/O 框架，通过 io_uring_setup 与 io_uring_enter 系统调用向用户态提供提交队列和完成队列，其中 IORING_OP_WAITID 操作用于以异步方式等待本进程子进程的状态变化，对应实现位于内核文件 io_uring/waitid.c。\n受影响版本中，子进程退出唤醒时在等待队列锁保护下执行的回调 io_waitid_wait() 先通过 list_del_init 摘除等待项并以 smp_store_release 清空 iw->head，随后才以 atomic_fetch_inc(&iw->refs) 竞争请求所有权；而 io_waitid_remove_wq() 仅在 iw->head 非空时才获取等待队列锁，因此另一 CPU 上持有引用的释放或取消路径（__do_wait() 找到其他子进程后的完成路径，或 __io_waitid_cancel() 取消路径）可在此窗口内完成请求并释放 io_kiocb，回调随后仍对已释放请求执行 atomic_fetch_inc(&iw->refs)，递增的实为复用该请求内存的下一个操作的同名字段，计数恰为零时回调还会在其上调度 io_waitid_cb()，形成 slab-use-after-free，官方 KASAN 记录显示请求被 IORING_OP_RECV 复用后在 __wake_up_common() 触发释放后访问。\n修复版本中通过调整 io_waitid_wait() 的执行顺序消除竞争窗口：先以 atomic_fetch_inc(&iw->refs) 竞争请求所有权，仅在实际取得所有权后才以 smp_store_release 清空 iw->head；未取得所有权时保留 iw->head，使请求拥有者必须先获取回调调用方持有的等待队列锁才能完成并释放请求，重复对已摘除节点执行 list_del_init 无副作用，该修复已回传至 6.12.115、6.18.60 与 7.2.14。",
+    "effects": [
+      {
+        "comp_name": "linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[6.12.113,6.12.115)",
+            "min_fixed_version": "6.12.115",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.18.52,6.18.60)",
+            "min_fixed_version": "6.18.60",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.19,7.2.14)",
+            "min_fixed_version": "7.2.14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "UAF",
+    "kind_en": "Use After Free",
+    "last_modified_time": "2026-11-03",
+    "level": "High",
+    "mps_id": "MPS-ji4s-kbzn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ji4s-kbzn",
+        "name": "https://www.oscs1024.com/hd/MPS-ji4s-kbzn"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-99231",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-99231"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/bf01da1a9cca4a54e5c30b8344e52c26afb87be7",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/8381a912c65b8de16e8a848225c7c5a56b6ea834",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/c10ad2813e15186fb51b37a4d17fafddc99e89a5",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "Linux内核io_uring waitid释放后使用漏洞"
+  },
+  "first_saved_at": "2026-11-02T17:40:53+00:00"
+}
