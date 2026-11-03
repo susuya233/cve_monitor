@@ -1,0 +1,235 @@
+{
+  "saved_at": "2026-11-03T00:19:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4wkq-9prc",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86596",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "s2Member 是发布在 WordPress.org 的开源会员插件，插件标识为 s2member，用于会员等级、内容访问限制以及 PayPal 即时付款通知处理。\n受影响版本中，c_ws_plugin__s2member_paypal_notify_in::paypal_notify() 在收到带 s2member_paypal_notify 的请求后读取 IPN 字段。strip_php_tags_deep() 及底层 strip_php_tags() 在 HTML 实体与 URL 解码后只删除字面量 <?。item_name 随后经 esc_refs() 写入包含 %%item_name%% 的邮件、通知或跟踪模板。替换结束后，preg_replace('/%%(.+?)%%/i', '', ...) 会删除插入值内部残留的占位符，把原先被占位符拆开的字符重新连成 <?php。CNA 将该代码注入评定为远程代码执行。\n修复版本中通过 c_ws_plugin__s2member_utils_strings::fill_paypal_template_once() 只按原始模板替换一次占位符，插入后的支付字段不再进入下一轮占位符删除。跟踪代码输出还会把插入值限制为字母、数字和少量分隔符，切断由 item_name 重新形成 PHP 起始标记的路径。",
+    "effects": [
+      {
+        "comp_name": "s2member",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,261017)",
+            "min_fixed_version": "261017",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-11-03",
+    "level": "Critical",
+    "mps_id": "MPS-4wkq-9prc",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4wkq-9prc",
+        "name": "https://www.oscs1024.com/hd/MPS-4wkq-9prc"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86596",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86596"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/bbe64cd3-c5ca-4867-90de-4784510a1126?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/utilities.inc.php#L49",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/paypal-notify-in-web-accept-sp.inc.php#L138",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/paypal-notify-in-web-accept-sp.inc.php#L131",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/paypal-notify-in-web-accept-sp.inc.php#L104",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/utils-strings.inc.php#L201",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/paypal-notify-in.inc.php#L49",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/paypal-notify-in-subscr-or-wa-w-level.inc.php#L514",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3722434/s2member",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "s2Member代码注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86596",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "s2Member 是发布在 WordPress.org 的开源会员插件，插件标识为 s2member，用于会员等级、内容访问限制以及 PayPal 即时付款通知处理。\n受影响版本中，c_ws_plugin__s2member_paypal_notify_in::paypal_notify() 在收到带 s2member_paypal_notify 的请求后读取 IPN 字段。strip_php_tags_deep() 及底层 strip_php_tags() 在 HTML 实体与 URL 解码后只删除字面量 <?。item_name 随后经 esc_refs() 写入包含 %%item_name%% 的邮件、通知或跟踪模板。替换结束后，preg_replace('/%%(.+?)%%/i', '', ...) 会删除插入值内部残留的占位符，把原先被占位符拆开的字符重新连成 <?php。CNA 将该代码注入评定为远程代码执行。\n修复版本中通过 c_ws_plugin__s2member_utils_strings::fill_paypal_template_once() 只按原始模板替换一次占位符，插入后的支付字段不再进入下一轮占位符删除。跟踪代码输出还会把插入值限制为字母、数字和少量分隔符，切断由 item_name 重新形成 PHP 起始标记的路径。",
+    "effects": [
+      {
+        "comp_name": "s2member",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,261017)",
+            "min_fixed_version": "261017",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-11-03",
+    "level": "Critical",
+    "mps_id": "MPS-4wkq-9prc",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4wkq-9prc",
+        "name": "https://www.oscs1024.com/hd/MPS-4wkq-9prc"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86596",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86596"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/bbe64cd3-c5ca-4867-90de-4784510a1126?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/utilities.inc.php#L49",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/paypal-notify-in-web-accept-sp.inc.php#L138",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/paypal-notify-in-web-accept-sp.inc.php#L131",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/paypal-notify-in-web-accept-sp.inc.php#L104",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/utils-strings.inc.php#L201",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/paypal-notify-in.inc.php#L49",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/s2member/tags/260829/src/includes/classes/paypal-notify-in-subscr-or-wa-w-level.inc.php#L514",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/changeset/3722434/s2member",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "s2Member代码注入漏洞"
+  },
+  "first_saved_at": "2026-11-03T00:19:52+00:00"
+}

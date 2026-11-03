@@ -1,0 +1,191 @@
+{
+  "saved_at": "2026-11-03T00:19:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-yziu-4crs",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120091",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@temporal.io",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1188",
+    "description": "Temporal Server 是 Temporal Technologies 开源的工作流服务端，Go 模块为 go.temporal.io/server。官方二进制与容器镜像把 Worker Controller Instance 模块 go.temporal.io/auto-scaled-workers 编入 Worker Service，由名为 k8s 的计算提供者管理 Kubernetes 中的 worker。1.30 发布线不包含该模块，不受影响。\n受影响版本中，k8sComputeProvider.buildRestConfig 把调用方请求中的 kubeconfig 交给 client-go 的 clientcmd.Load 与 NewDefaultClientConfig 构造 REST 客户端，ValidateConfig 在校验配置时调用该客户端读取 Deployment。厂商确认构造并使用该客户端可在 Worker Service 宿主机上、以服务进程账户执行调用方选择的命令。前端 frontend.WorkflowHandler 的 ValidateWorkerDeploymentVersionComputeConfig 注册为命名空间只读操作，持有单个命名空间读角色的已认证调用者即可进入，且不要求 worker deployment 已经存在；CreateWorkerDeploymentVersion 需要命名空间写角色。校验发生在配置提交阶段，不依赖扩缩容决策或任务到达。Worker Service 进程持有集群内每个命名空间的持久化凭据以及集群 TLS 材料，影响范围超出调用方命名空间。1.31.0 至 1.31.2 的 GetComputeProvider 在 workercontroller.compute_providers.enabled 为未设置的 nil 时跳过名单检查，默认放行已注册的 k8s 提供者；1.31.3 至 1.31.4 与 1.32.0 至 1.32.1 改为默认拒绝，仅当名单包含 k8s 时可达。workercontroller.enabled 不拦截该路径。\n修复版本中通过把 wci/workflow/compute_provider/k8s.go 的构建约束从 !release 改为 computeprovider_k8s && !release，使官方构建不再编译并经 init 注册 k8s 提供者，同时在 common/api/metadata.go 中把 ValidateWorkerDeploymentVersionComputeConfig 的 Access 从 AccessReadOnly 改为 AccessWrite，默认部署上的命令执行路径被切断。厂商说明该修复不改变客户端配置仍取自调用方请求；操作者若自行使用 computeprovider_k8s 标签编译并在名单中放行 k8s，请求中的 kubeconfig 仍会被接受。",
+    "effects": [
+      {
+        "comp_name": "go.temporal.io/server",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[1.31.0,1.31.5)",
+            "min_fixed_version": "1.31.5",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.32.0,1.32.2)",
+            "min_fixed_version": "1.32.2",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "资源默认不安全",
+    "kind_en": "使用不安全默认值初始化资源",
+    "last_modified_time": "2026-11-03",
+    "level": "High",
+    "mps_id": "MPS-yziu-4crs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-yziu-4crs",
+        "name": "https://www.oscs1024.com/hd/MPS-yziu-4crs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120091",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120091"
+      },
+      {
+        "url": "https://github.com/temporalio/temporal/releases/tag/v1.32.2",
+        "name": "First fixed 1.32 release"
+      },
+      {
+        "url": "https://github.com/temporalio/temporal/releases/tag/v1.31.5",
+        "name": "First fixed 1.31 release"
+      },
+      {
+        "url": "https://github.com/temporalio/temporal-auto-scaled-workers/pull/165",
+        "name": "Fix pull request, Kubernetes compute provider removed from default builds"
+      },
+      {
+        "url": "https://github.com/temporalio/temporal/pull/12843",
+        "name": "Fix pull request, compute configuration validation requires namespace write access"
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-89139",
+        "name": "CVE-2026-89139, related compute provider vulnerability in the same module"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Temporal Server命令注入",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120091",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@temporal.io",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-1188",
+    "description": "Temporal Server 是 Temporal Technologies 开源的工作流服务端，Go 模块为 go.temporal.io/server。官方二进制与容器镜像把 Worker Controller Instance 模块 go.temporal.io/auto-scaled-workers 编入 Worker Service，由名为 k8s 的计算提供者管理 Kubernetes 中的 worker。1.30 发布线不包含该模块，不受影响。\n受影响版本中，k8sComputeProvider.buildRestConfig 把调用方请求中的 kubeconfig 交给 client-go 的 clientcmd.Load 与 NewDefaultClientConfig 构造 REST 客户端，ValidateConfig 在校验配置时调用该客户端读取 Deployment。厂商确认构造并使用该客户端可在 Worker Service 宿主机上、以服务进程账户执行调用方选择的命令。前端 frontend.WorkflowHandler 的 ValidateWorkerDeploymentVersionComputeConfig 注册为命名空间只读操作，持有单个命名空间读角色的已认证调用者即可进入，且不要求 worker deployment 已经存在；CreateWorkerDeploymentVersion 需要命名空间写角色。校验发生在配置提交阶段，不依赖扩缩容决策或任务到达。Worker Service 进程持有集群内每个命名空间的持久化凭据以及集群 TLS 材料，影响范围超出调用方命名空间。1.31.0 至 1.31.2 的 GetComputeProvider 在 workercontroller.compute_providers.enabled 为未设置的 nil 时跳过名单检查，默认放行已注册的 k8s 提供者；1.31.3 至 1.31.4 与 1.32.0 至 1.32.1 改为默认拒绝，仅当名单包含 k8s 时可达。workercontroller.enabled 不拦截该路径。\n修复版本中通过把 wci/workflow/compute_provider/k8s.go 的构建约束从 !release 改为 computeprovider_k8s && !release，使官方构建不再编译并经 init 注册 k8s 提供者，同时在 common/api/metadata.go 中把 ValidateWorkerDeploymentVersionComputeConfig 的 Access 从 AccessReadOnly 改为 AccessWrite，默认部署上的命令执行路径被切断。厂商说明该修复不改变客户端配置仍取自调用方请求；操作者若自行使用 computeprovider_k8s 标签编译并在名单中放行 k8s，请求中的 kubeconfig 仍会被接受。",
+    "effects": [
+      {
+        "comp_name": "go.temporal.io/server",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[1.31.0,1.31.5)",
+            "min_fixed_version": "1.31.5",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.32.0,1.32.2)",
+            "min_fixed_version": "1.32.2",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "资源默认不安全",
+    "kind_en": "Initialization of a Resource with an Insecure Default",
+    "last_modified_time": "2026-11-03",
+    "level": "High",
+    "mps_id": "MPS-yziu-4crs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-yziu-4crs",
+        "name": "https://www.oscs1024.com/hd/MPS-yziu-4crs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120091",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120091"
+      },
+      {
+        "url": "https://github.com/temporalio/temporal/releases/tag/v1.32.2",
+        "name": "First fixed 1.32 release"
+      },
+      {
+        "url": "https://github.com/temporalio/temporal/releases/tag/v1.31.5",
+        "name": "First fixed 1.31 release"
+      },
+      {
+        "url": "https://github.com/temporalio/temporal-auto-scaled-workers/pull/165",
+        "name": "Fix pull request, Kubernetes compute provider removed from default builds"
+      },
+      {
+        "url": "https://github.com/temporalio/temporal/pull/12843",
+        "name": "Fix pull request, compute configuration validation requires namespace write access"
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-89139",
+        "name": "CVE-2026-89139, related compute provider vulnerability in the same module"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "Temporal Server命令注入"
+  },
+  "first_saved_at": "2026-11-03T00:19:54+00:00"
+}

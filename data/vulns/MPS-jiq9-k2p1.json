@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-11-03T00:19:51+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-jiq9-k2p1",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120752",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "PyMuPDF 是 Artifex 维护的开源 Python PDF 库，用于解析、渲染、创建和修改 PDF，并通过 SWIG 绑定调用 MuPDF。\n受影响版本中，Page.add_freetext_annot 在 callout 非空时把 len(callout) 作为点数，传入 src/extra.i 的 JM_set_annot_callout_line。该函数将每个点写入固定长度为 3 的栈数组 fz_point points[3]，写入前不判断 count 是否超过数组容量。传入不少于 4 个点时会越过数组边界并覆盖栈帧，导致进程崩溃或代码执行。\n修复版本中通过在 JM_set_annot_callout_line 的写入循环前比较 count 与数组元素个数，当 count 大于 3 时抛出 runtime_error 并停止拷贝，使超长 callout 不再覆盖栈帧。",
+    "effects": [
+      {
+        "comp_name": "pymupdf",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[1.25.3,2.0)",
+            "min_fixed_version": "2.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "基于堆栈的缓冲区溢出",
+    "last_modified_time": "2026-11-03",
+    "level": "High",
+    "mps_id": "MPS-jiq9-k2p1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jiq9-k2p1",
+        "name": "https://www.oscs1024.com/hd/MPS-jiq9-k2p1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120752",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120752"
+      },
+      {
+        "url": "https://github.com/pymupdf/PyMuPDF/issues/5112",
+        "name": "GitHub Issue #5112"
+      },
+      {
+        "url": "https://github.com/pymupdf/PyMuPDF/issues/5173",
+        "name": "GitHub Issue #5173"
+      },
+      {
+        "url": "https://github.com/pymupdf/PyMuPDF/commit/d4298ead84ceeae1c9065c81cd9a275a1b092f5e",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/pymupdf/PyMuPDF/blob/1.28.2/src/extra.i#L787-L797",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/pymupdf/PyMuPDF/releases/tag/2.0",
+        "name": "PyMuPDF 2.0 Release Notes"
+      },
+      {
+        "url": "https://github.com/pymupdf/PyMuPDF",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/pymupdf-1.25.3-before-2.0-stack-buffer-overflow-via-add-freetext-annot-callout",
+        "name": "VulnCheck Advisory: PyMuPDF 1.25.3 before 2.0 Stack Buffer Overflow via add_freetext_annot() Callout"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "PyMuPDF栈缓冲区溢出",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120752",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "PyMuPDF 是 Artifex 维护的开源 Python PDF 库，用于解析、渲染、创建和修改 PDF，并通过 SWIG 绑定调用 MuPDF。\n受影响版本中，Page.add_freetext_annot 在 callout 非空时把 len(callout) 作为点数，传入 src/extra.i 的 JM_set_annot_callout_line。该函数将每个点写入固定长度为 3 的栈数组 fz_point points[3]，写入前不判断 count 是否超过数组容量。传入不少于 4 个点时会越过数组边界并覆盖栈帧，导致进程崩溃或代码执行。\n修复版本中通过在 JM_set_annot_callout_line 的写入循环前比较 count 与数组元素个数，当 count 大于 3 时抛出 runtime_error 并停止拷贝，使超长 callout 不再覆盖栈帧。",
+    "effects": [
+      {
+        "comp_name": "pymupdf",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[1.25.3,2.0)",
+            "min_fixed_version": "2.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "Stack-based Buffer Overflow",
+    "last_modified_time": "2026-11-03",
+    "level": "High",
+    "mps_id": "MPS-jiq9-k2p1",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jiq9-k2p1",
+        "name": "https://www.oscs1024.com/hd/MPS-jiq9-k2p1"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120752",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120752"
+      },
+      {
+        "url": "https://github.com/pymupdf/PyMuPDF/issues/5112",
+        "name": "GitHub Issue #5112"
+      },
+      {
+        "url": "https://github.com/pymupdf/PyMuPDF/issues/5173",
+        "name": "GitHub Issue #5173"
+      },
+      {
+        "url": "https://github.com/pymupdf/PyMuPDF/commit/d4298ead84ceeae1c9065c81cd9a275a1b092f5e",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/pymupdf/PyMuPDF/blob/1.28.2/src/extra.i#L787-L797",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/pymupdf/PyMuPDF/releases/tag/2.0",
+        "name": "PyMuPDF 2.0 Release Notes"
+      },
+      {
+        "url": "https://github.com/pymupdf/PyMuPDF",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/pymupdf-1.25.3-before-2.0-stack-buffer-overflow-via-add-freetext-annot-callout",
+        "name": "VulnCheck Advisory: PyMuPDF 1.25.3 before 2.0 Stack Buffer Overflow via add_freetext_annot() Callout"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "PyMuPDF栈缓冲区溢出"
+  },
+  "first_saved_at": "2026-11-03T00:19:51+00:00"
+}
