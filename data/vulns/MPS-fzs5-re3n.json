@@ -1,0 +1,147 @@
+{
+  "saved_at": "2026-11-03T15:42:53+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-fzs5-re3n",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-121512",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@gitlab.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-401",
+    "description": "µD3TN 是 D3TN 开源的延迟容忍网络协议实现，支持 Bundle Protocol v6 与 v7，并通过 MTCP、SMTCP、TCPCLv3 等汇聚层收发 bundle。\n受影响版本中，bundle_block_free 只对扩展块 eid_refs 链表头节点调用 free，不沿 next 释放其余节点，也不对节点上的 EID 调用 eid_free。bundle6_parser_read_byte 在 PARSER_STAGE_BLOCK_EID_REF_SSP 阶段按引用计数为每个引用分配独立 eid_list，字典非空时再经 bundle6_read_eid 复制对应字符串；该计数由 sdnv_read_u32 读入且没有上限，这些分配也不受 BUNDLE_MAX_SIZE 约束。默认编译会监听 tcpclv3、smtcp 和 mtcp。远程未认证对端把含多个 EID 引用的 BPv6 bundle 送入上述汇聚层后，节点在投递、删除、校验失败或连接中断时释放 bundle，已分配内存不会被回收，内存占用随引用数量和字典字符串长度放大，最终造成拒绝服务。\n修复版本中通过让 bundle_block_free 循环调用 eid_list_free，对每个链表节点先执行 eid_free 再 free，补齐 EID 引用释放；并在 PARSER_STAGE_BLOCK_EID_REF_CNT 阶段拒绝超过 BUNDLE6_MAX_EID_REFS 的引用计数，将解析状态置为 PARSER_STATUS_ERROR，切断无界分配。",
+    "effects": [
+      {
+        "comp_name": "ud3tn",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.15.2)",
+            "min_fixed_version": "0.15.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "内存泄漏",
+    "kind_en": "有效生命周期后内存丢失释放",
+    "last_modified_time": "2026-11-03",
+    "level": "High",
+    "mps_id": "MPS-fzs5-re3n",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fzs5-re3n",
+        "name": "https://www.oscs1024.com/hd/MPS-fzs5-re3n"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121512",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-121512"
+      },
+      {
+        "url": "https://gitlab.com/d3tn/ud3tn/-/work_items/292",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "µD3TN内存泄漏漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-121512",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@gitlab.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-401",
+    "description": "µD3TN 是 D3TN 开源的延迟容忍网络协议实现，支持 Bundle Protocol v6 与 v7，并通过 MTCP、SMTCP、TCPCLv3 等汇聚层收发 bundle。\n受影响版本中，bundle_block_free 只对扩展块 eid_refs 链表头节点调用 free，不沿 next 释放其余节点，也不对节点上的 EID 调用 eid_free。bundle6_parser_read_byte 在 PARSER_STAGE_BLOCK_EID_REF_SSP 阶段按引用计数为每个引用分配独立 eid_list，字典非空时再经 bundle6_read_eid 复制对应字符串；该计数由 sdnv_read_u32 读入且没有上限，这些分配也不受 BUNDLE_MAX_SIZE 约束。默认编译会监听 tcpclv3、smtcp 和 mtcp。远程未认证对端把含多个 EID 引用的 BPv6 bundle 送入上述汇聚层后，节点在投递、删除、校验失败或连接中断时释放 bundle，已分配内存不会被回收，内存占用随引用数量和字典字符串长度放大，最终造成拒绝服务。\n修复版本中通过让 bundle_block_free 循环调用 eid_list_free，对每个链表节点先执行 eid_free 再 free，补齐 EID 引用释放；并在 PARSER_STAGE_BLOCK_EID_REF_CNT 阶段拒绝超过 BUNDLE6_MAX_EID_REFS 的引用计数，将解析状态置为 PARSER_STATUS_ERROR，切断无界分配。",
+    "effects": [
+      {
+        "comp_name": "ud3tn",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.15.2)",
+            "min_fixed_version": "0.15.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "内存泄漏",
+    "kind_en": "Missing Release of Memory after Effective Lifetime",
+    "last_modified_time": "2026-11-03",
+    "level": "High",
+    "mps_id": "MPS-fzs5-re3n",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-03",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fzs5-re3n",
+        "name": "https://www.oscs1024.com/hd/MPS-fzs5-re3n"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121512",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-121512"
+      },
+      {
+        "url": "https://gitlab.com/d3tn/ud3tn/-/work_items/292",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "µD3TN内存泄漏漏洞"
+  },
+  "first_saved_at": "2026-11-03T15:42:53+00:00"
+}
