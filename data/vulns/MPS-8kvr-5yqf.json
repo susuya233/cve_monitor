@@ -1,0 +1,167 @@
+{
+  "saved_at": "2026-11-04T08:27:15+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-8kvr-5yqf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87041",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-822",
+    "description": "Zephyr 是 Linux 基金会托管的开源嵌入式实时操作系统，面向资源受限的物联网与嵌入式设备，RTIO 子系统为其提供异步 I/O 提交队列机制，并支持在 CONFIG_USERSPACE 下由用户态线程提交 I/O 请求。\n受影响版本中，RTIO 用户态提交队列校验函数 rtio_vrfy_sqe()（v4.3.0 前位于 subsys/rtio/rtio_handlers.c，其后位于 subsys/rtio/rtio_syscalls.c）使用 &= 将 K_SYSCALL_MEMORY() 的返回值累加进 valid_sqe 标志，而该宏基于 K_SYSCALL_VERIFY_MSG() 实现、校验失败时返回非零值，导致缓冲区权限检查结果被反向采用。用户态线程经 rtio_sqe_copy_in_get_handles() 系统调用提交 SQE 时，指向内核内存的 tx.buf、rx.buf 或 txrx.tx_buf/txrx.rx_buf 指针被判定为合法并原样转发给 I2C、I3C、SPI 等 RTIO 总线驱动以内核特权解引用：RTIO_OP_RX 提交使外设数据写入攻击者指定的内核地址，RTIO_OP_TX 提交使内核内存经总线外泄，指向未映射地址的提交触发内核崩溃，攻击者由此突破 CONFIG_USERSPACE 用户态隔离边界。\n修复版本中通过为 RTIO_OP_TX、RTIO_OP_RX 与 RTIO_OP_TXRX 分支中的每处 K_SYSCALL_MEMORY() 检查结果取反后再累加进 valid_sqe，恢复权限判定的正确极性，使调用线程不可访问的缓冲区提交被拒绝，同时将 TXRX 发送缓冲区改为只读校验以对齐 SPI、I2C 与 I3C 处理器的既有行为，阻断内核内存经发送通道外泄。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.3.0,4.3.2)",
+            "min_fixed_version": "4.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.4.0,4.5.0)",
+            "min_fixed_version": "4.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "非可信指针解引用",
+    "kind_en": "Untrusted Pointer Dereference",
+    "last_modified_time": "2026-11-04",
+    "level": "High",
+    "mps_id": "MPS-8kvr-5yqf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8kvr-5yqf",
+        "name": "https://www.oscs1024.com/hd/MPS-8kvr-5yqf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87041",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87041"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/454a848006595ce2d77fc2c9e458b0c557f5e4af",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-mvxr-jx9h-jxh4",
+        "name": "GHSA-mvxr-jx9h-jxh4"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Zephyr RTIO 内核内存越权读写漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87041",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-822",
+    "description": "Zephyr 是 Linux 基金会托管的开源嵌入式实时操作系统，面向资源受限的物联网与嵌入式设备，RTIO 子系统为其提供异步 I/O 提交队列机制，并支持在 CONFIG_USERSPACE 下由用户态线程提交 I/O 请求。\n受影响版本中，RTIO 用户态提交队列校验函数 rtio_vrfy_sqe()（v4.3.0 前位于 subsys/rtio/rtio_handlers.c，其后位于 subsys/rtio/rtio_syscalls.c）使用 &= 将 K_SYSCALL_MEMORY() 的返回值累加进 valid_sqe 标志，而该宏基于 K_SYSCALL_VERIFY_MSG() 实现、校验失败时返回非零值，导致缓冲区权限检查结果被反向采用。用户态线程经 rtio_sqe_copy_in_get_handles() 系统调用提交 SQE 时，指向内核内存的 tx.buf、rx.buf 或 txrx.tx_buf/txrx.rx_buf 指针被判定为合法并原样转发给 I2C、I3C、SPI 等 RTIO 总线驱动以内核特权解引用：RTIO_OP_RX 提交使外设数据写入攻击者指定的内核地址，RTIO_OP_TX 提交使内核内存经总线外泄，指向未映射地址的提交触发内核崩溃，攻击者由此突破 CONFIG_USERSPACE 用户态隔离边界。\n修复版本中通过为 RTIO_OP_TX、RTIO_OP_RX 与 RTIO_OP_TXRX 分支中的每处 K_SYSCALL_MEMORY() 检查结果取反后再累加进 valid_sqe，恢复权限判定的正确极性，使调用线程不可访问的缓冲区提交被拒绝，同时将 TXRX 发送缓冲区改为只读校验以对齐 SPI、I2C 与 I3C 处理器的既有行为，阻断内核内存经发送通道外泄。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.3.0,4.3.2)",
+            "min_fixed_version": "4.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.4.0,4.5.0)",
+            "min_fixed_version": "4.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "非可信指针解引用",
+    "kind_en": "Untrusted Pointer Dereference",
+    "last_modified_time": "2026-11-04",
+    "level": "High",
+    "mps_id": "MPS-8kvr-5yqf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8kvr-5yqf",
+        "name": "https://www.oscs1024.com/hd/MPS-8kvr-5yqf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87041",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87041"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/454a848006595ce2d77fc2c9e458b0c557f5e4af",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-mvxr-jx9h-jxh4",
+        "name": "GHSA-mvxr-jx9h-jxh4"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Zephyr RTIO 内核内存越权读写漏洞"
+  },
+  "first_saved_at": "2026-11-04T08:27:15+00:00"
+}

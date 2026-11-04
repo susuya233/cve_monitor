@@ -1,0 +1,129 @@
+{
+  "saved_at": "2026-11-04T08:27:10+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-9174-0892",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-112445",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-250",
+    "description": "macOS 是 Apple 开发的闭源桌面操作系统，launchd 作为系统首进程负责系统域后台作业的调度，/System/Library/LaunchDaemons 目录中的作业配置默认以 root 权限运行。\n受影响版本中，系统自带作业 com.apple.xpc.uscwoap 以 BootShell 配置启动 /bin/bash（参数 bash -sh），并将标准输入、输出与错误全部连接到 /dev/console，该作业位于 launchd 系统域且未指定降权账户，bash 进程以 UID 0 运行并从 /dev/console 读取命令；登录活动图形控制台的非管理员账号可以通过 launchctl 作业控制接口 kickstart 该作业，此时 /dev/console 设备由当前控制台用户持有，攻击者通过 TIOCSTI 终端控制接口向其输入队列注入字符，root 权限的 bash 将注入字符当作命令解释并执行，攻击者借此让 root bash 对自身副本执行 chown 0:0 与 chmod 4755，再运行该 setuid 副本获得 root shell，完成本地权限提升。\n修复版本中通过移除 com.apple.xpc.uscwoap 的 LaunchDaemon 配置切断上述利用链，macOS 27.2 删除该作业配置后，系统中不再存在以 root 身份从 /dev/console 读取命令的 bash 作业，TIOCSTI 注入路径随之失效，普通用户无法继续借道该作业获得 root 权限。",
+    "effects": [
+      {
+        "comp_name": "macos",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,27.2)",
+            "min_fixed_version": "27.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "高",
+    "fix_suggestion": "建议修复",
+    "kind": "带着不必要的权限执行",
+    "kind_en": "使用不必要的权限执行",
+    "last_modified_time": "2026-11-04",
+    "level": "High",
+    "mps_id": "MPS-9174-0892",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-11-04",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/macos-privilege-escalation-poc-cve-2026-112445/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Mas0nShi/CVE-2026-112445",
+        "name": ""
+      },
+      {
+        "url": "https://support.apple.com/en-us/149521",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "poc",
+      "操作系统"
+    ],
+    "title": "macOS 本地权限提升漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-112445",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-250",
+    "description": "macOS 是 Apple 开发的闭源桌面操作系统，launchd 作为系统首进程负责系统域后台作业的调度，/System/Library/LaunchDaemons 目录中的作业配置默认以 root 权限运行。\n受影响版本中，系统自带作业 com.apple.xpc.uscwoap 以 BootShell 配置启动 /bin/bash（参数 bash -sh），并将标准输入、输出与错误全部连接到 /dev/console，该作业位于 launchd 系统域且未指定降权账户，bash 进程以 UID 0 运行并从 /dev/console 读取命令；登录活动图形控制台的非管理员账号可以通过 launchctl 作业控制接口 kickstart 该作业，此时 /dev/console 设备由当前控制台用户持有，攻击者通过 TIOCSTI 终端控制接口向其输入队列注入字符，root 权限的 bash 将注入字符当作命令解释并执行，攻击者借此让 root bash 对自身副本执行 chown 0:0 与 chmod 4755，再运行该 setuid 副本获得 root shell，完成本地权限提升。\n修复版本中通过移除 com.apple.xpc.uscwoap 的 LaunchDaemon 配置切断上述利用链，macOS 27.2 删除该作业配置后，系统中不再存在以 root 身份从 /dev/console 读取命令的 bash 作业，TIOCSTI 注入路径随之失效，普通用户无法继续借道该作业获得 root 权限。",
+    "effects": [
+      {
+        "comp_name": "macos",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,27.2)",
+            "min_fixed_version": "27.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "高",
+    "fix_suggestion": "Recommend",
+    "kind": "带着不必要的权限执行",
+    "kind_en": "Execution with Unnecessary Privileges",
+    "last_modified_time": "2026-11-04",
+    "level": "High",
+    "mps_id": "MPS-9174-0892",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-11-04",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/macos-privilege-escalation-poc-cve-2026-112445/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Mas0nShi/CVE-2026-112445",
+        "name": ""
+      },
+      {
+        "url": "https://support.apple.com/en-us/149521",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "poc",
+      "操作系统"
+    ],
+    "title": "macOS 本地权限提升漏洞"
+  },
+  "first_saved_at": "2026-11-04T08:27:10+00:00"
+}

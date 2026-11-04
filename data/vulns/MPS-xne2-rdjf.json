@@ -1,0 +1,167 @@
+{
+  "saved_at": "2026-11-04T08:27:12+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-xne2-rdjf",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87038",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-367",
+    "description": "Zephyr 是开源的物联网实时操作系统（RTOS），面向资源受限嵌入式设备，提供用户态线程与内核态内存隔离的用户空间机制。\n受影响版本中，i3c_transfer() 系统调用的用户态校验函数 z_vrfy_i3c_transfer() 直接在调用方传入的 struct i3c_device_desc 上执行检查，仅以 K_SYSCALL_MEMORY_READ() 确认该内存可读，读取 target->bus 一次并经 K_SYSCALL_OBJ() 校验后继续把调用方的原始指针传递给实现函数；z_impl_i3c_transfer() 会再次从用户内存读取 target->bus，并经 DEVICE_API_GET(i3c, target->bus)->i3c_xfers(...) 完成间接调用，DEVICE_API_GET() 在未启用 CONFIG_DEVICE_API_ASSERT 的构建中仅做指针强转，没有运行时类型校验。已获得 I3C 设备对象授权的用户线程可与同一内存域内的另一线程配合，在线程调用 i3c_transfer() 期间反复改写描述符中的 bus 字段，检查与使用之间的窗口覆盖 num_msgs 校验、消息数组访问检查、栈上 VLA 分配以及最多 32 个 struct i3c_msg 的内存拷贝，竞态可反复重试直至命中；命中后内核以 struct device 解引用攻击者选定指针，从攻击者控制的 api 表加载函数指针并在监管模式下调用，使非特权用户线程获得内核态代码执行，完全逃逸用户空间内存保护沙箱，次级后果为两级内核任意读或内核崩溃。\n修复版本中通过在 z_vrfy_i3c_transfer() 内改用 k_usermode_from_copy() 将调用方描述符整体快照到内核栈本地副本 target_copy，对副本中的 bus 字段执行 K_SYSCALL_OBJ() 校验，并以该副本继续完成消息拷贝与派发，使被校验的总线对象与实际参与派发的总线对象保持一致，切断了检查与使用之间可被竞态改写的二次读取窗口。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.2.0,4.3.2)",
+            "min_fixed_version": "4.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.4.0,4.5.0)",
+            "min_fixed_version": "4.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "检查时间与使用时间(TOCTOU)的竞争条件",
+    "kind_en": "检查时间使用时间 (TOCTOU) 竞争条件",
+    "last_modified_time": "2026-11-04",
+    "level": "High",
+    "mps_id": "MPS-xne2-rdjf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xne2-rdjf",
+        "name": "https://www.oscs1024.com/hd/MPS-xne2-rdjf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87038",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87038"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/550437bc9efd7b733f13b9be73e77fd98858c8a2",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-86xj-2q6x-h82w",
+        "name": "GHSA-86xj-2q6x-h82w"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Zephyr I3C竞态条件漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87038",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-367",
+    "description": "Zephyr 是开源的物联网实时操作系统（RTOS），面向资源受限嵌入式设备，提供用户态线程与内核态内存隔离的用户空间机制。\n受影响版本中，i3c_transfer() 系统调用的用户态校验函数 z_vrfy_i3c_transfer() 直接在调用方传入的 struct i3c_device_desc 上执行检查，仅以 K_SYSCALL_MEMORY_READ() 确认该内存可读，读取 target->bus 一次并经 K_SYSCALL_OBJ() 校验后继续把调用方的原始指针传递给实现函数；z_impl_i3c_transfer() 会再次从用户内存读取 target->bus，并经 DEVICE_API_GET(i3c, target->bus)->i3c_xfers(...) 完成间接调用，DEVICE_API_GET() 在未启用 CONFIG_DEVICE_API_ASSERT 的构建中仅做指针强转，没有运行时类型校验。已获得 I3C 设备对象授权的用户线程可与同一内存域内的另一线程配合，在线程调用 i3c_transfer() 期间反复改写描述符中的 bus 字段，检查与使用之间的窗口覆盖 num_msgs 校验、消息数组访问检查、栈上 VLA 分配以及最多 32 个 struct i3c_msg 的内存拷贝，竞态可反复重试直至命中；命中后内核以 struct device 解引用攻击者选定指针，从攻击者控制的 api 表加载函数指针并在监管模式下调用，使非特权用户线程获得内核态代码执行，完全逃逸用户空间内存保护沙箱，次级后果为两级内核任意读或内核崩溃。\n修复版本中通过在 z_vrfy_i3c_transfer() 内改用 k_usermode_from_copy() 将调用方描述符整体快照到内核栈本地副本 target_copy，对副本中的 bus 字段执行 K_SYSCALL_OBJ() 校验，并以该副本继续完成消息拷贝与派发，使被校验的总线对象与实际参与派发的总线对象保持一致，切断了检查与使用之间可被竞态改写的二次读取窗口。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.2.0,4.3.2)",
+            "min_fixed_version": "4.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.4.0,4.5.0)",
+            "min_fixed_version": "4.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "检查时间与使用时间(TOCTOU)的竞争条件",
+    "kind_en": "Time-of-check Time-of-use (TOCTOU) Race Condition",
+    "last_modified_time": "2026-11-04",
+    "level": "High",
+    "mps_id": "MPS-xne2-rdjf",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-xne2-rdjf",
+        "name": "https://www.oscs1024.com/hd/MPS-xne2-rdjf"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87038",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87038"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/550437bc9efd7b733f13b9be73e77fd98858c8a2",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-86xj-2q6x-h82w",
+        "name": "GHSA-86xj-2q6x-h82w"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Zephyr I3C竞态条件漏洞"
+  },
+  "first_saved_at": "2026-11-04T08:27:12+00:00"
+}

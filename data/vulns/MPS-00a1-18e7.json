@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-11-04T08:27:12+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-00a1-18e7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-917",
+    "description": "Apache Struts2 Core（Maven 坐标 org.apache.struts:struts2-core）是开源 Java Web MVC 框架，使用 OGNL 对值栈表达式和部分文本求值，并由 SecurityMemberAccess 限制可访问的类与成员。\n受影响版本中，SecurityMemberAccess.isAccessible 以及 checkExclusionList、checkAllowlist 只检查 OGNL 引擎当场发起的成员访问，不跟踪被调用方法在 JDK 内部继续执行的反射。java.beans.Expression 与 java.beans.Statement 不在 7.4.0 的 struts.excludedClasses 和 struts.excludedPackageNames 中，也不属于默认必选允许类。这类调用一旦被策略放行，其内部反射可以构造或调用已被排除的类型，例如 java.lang.ProcessBuilder，并执行任意代码。公开说明指出，该路径仅在应用把不可信输入交给 OGNL 解析执行时成立；7.x 默认开启 struts.allowlist.enable，样例还要求上述包装类型已进入允许列表，6.x 默认不强制允许列表。\n在官方修复发布前，可通过停止把不可信输入送入 OGNL 求值，并避免将 java.beans.Expression、java.beans.Statement 以及其他会在方法内部发起反射的类型加入允许列表，缩小可被绕过的调用面。",
+    "effects": [
+      {
+        "comp_name": "org.apache.struts:struts2-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.4.0]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "表达式语言注入",
+    "kind_en": "表达式语言语句中使用的特殊元素的不正确中和（“表达式语言注入”）",
+    "last_modified_time": "2026-11-04",
+    "level": "High",
+    "mps_id": "MPS-00a1-18e7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-04",
+    "reference_url_list": [
+      {
+        "url": "https://seclists.org/fulldisclosure/2026/Nov/7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/blob/STRUTS_7_4_0/core/src/main/java/org/apache/struts2/ognl/SecurityMemberAccess.java",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/blob/STRUTS_7_4_0/core/src/main/resources/struts-excluded-classes.xml",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/blob/STRUTS_7_4_0/core/src/main/resources/org/apache/struts2/default.properties",
+        "name": ""
+      },
+      {
+        "url": "https://struts.apache.org/security/",
+        "name": ""
+      },
+      {
+        "url": "https://central.sonatype.com/artifact/org.apache.struts/struts2-core/7.4.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Struts2 OGNL沙箱绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-917",
+    "description": "Apache Struts2 Core（Maven 坐标 org.apache.struts:struts2-core）是开源 Java Web MVC 框架，使用 OGNL 对值栈表达式和部分文本求值，并由 SecurityMemberAccess 限制可访问的类与成员。\n受影响版本中，SecurityMemberAccess.isAccessible 以及 checkExclusionList、checkAllowlist 只检查 OGNL 引擎当场发起的成员访问，不跟踪被调用方法在 JDK 内部继续执行的反射。java.beans.Expression 与 java.beans.Statement 不在 7.4.0 的 struts.excludedClasses 和 struts.excludedPackageNames 中，也不属于默认必选允许类。这类调用一旦被策略放行，其内部反射可以构造或调用已被排除的类型，例如 java.lang.ProcessBuilder，并执行任意代码。公开说明指出，该路径仅在应用把不可信输入交给 OGNL 解析执行时成立；7.x 默认开启 struts.allowlist.enable，样例还要求上述包装类型已进入允许列表，6.x 默认不强制允许列表。\n在官方修复发布前，可通过停止把不可信输入送入 OGNL 求值，并避免将 java.beans.Expression、java.beans.Statement 以及其他会在方法内部发起反射的类型加入允许列表，缩小可被绕过的调用面。",
+    "effects": [
+      {
+        "comp_name": "org.apache.struts:struts2-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,7.4.0]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "表达式语言注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an Expression Language Statement ('Expression Language Injection')",
+    "last_modified_time": "2026-11-04",
+    "level": "High",
+    "mps_id": "MPS-00a1-18e7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-04",
+    "reference_url_list": [
+      {
+        "url": "https://seclists.org/fulldisclosure/2026/Nov/7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/blob/STRUTS_7_4_0/core/src/main/java/org/apache/struts2/ognl/SecurityMemberAccess.java",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/blob/STRUTS_7_4_0/core/src/main/resources/struts-excluded-classes.xml",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/struts/blob/STRUTS_7_4_0/core/src/main/resources/org/apache/struts2/default.properties",
+        "name": ""
+      },
+      {
+        "url": "https://struts.apache.org/security/",
+        "name": ""
+      },
+      {
+        "url": "https://central.sonatype.com/artifact/org.apache.struts/struts2-core/7.4.0",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Struts2 OGNL沙箱绕过"
+  },
+  "first_saved_at": "2026-11-04T08:27:12+00:00"
+}

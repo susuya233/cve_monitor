@@ -1,0 +1,193 @@
+{
+  "saved_at": "2026-11-04T08:27:16+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6faj-4ic7",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87040",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+    "cwe": "CWE-787",
+    "description": "Zephyr 是 Linux 基金会旗下 Zephyr 项目开源维护的嵌入式实时操作系统，其蓝牙 LE 控制器为 Nordic nRF 系列射频提供链路层实现，广泛用于物联网、医疗与工业嵌入式设备的低功耗蓝牙通信。\n受影响版本中，nRF 链路层接收路径未校验空口 PDU 头部 LENGTH 字段是否超过无线收发器配置的最大接收长度。lll_conn.c 中 isr_rx_pdu() 在序列号与 MIC 校验通过后直接入队任意非空数据 PDU，而 nRF radio 硬件仅按 PCNF1.MAXLEN 截断 payload 并原样保存头部长度字节，攻击者在无线信号范围内发送长度字节最大为 255 的伪造 PDU（控制器默认编程的 lll->dle.eff.max_rx_octets 为 27），形成 len 字段大于缓冲区实际容量的 node_rx；该缓冲区随后进入 hci.c 的 hci_acl_encode()，其 net_buf_add(buf, pdu_data->len) 与 memcpy 按未校验长度越界读取约 228 字节并越界写入 HCI ACL 缓冲池相邻内存，ISO 接收路径经 isoal_rx_append_to_sdu() 同样越界读取并把控制器内存作为 ISO 数据上送主机，导致远程内存破坏、控制器崩溃与内存信息泄露。\n修复版本中通过在接收路径统一增加长度边界校验解决该问题：isr_rx_pdu() 在解密后调用新增的 max_rx_octets_get() 比对 pdu_data_rx->len，超长 PDU 返回 -EINVAL 丢弃，lll_central_iso.c 与 lll_peripheral_iso.c 按 cis_lll->rx.max_pdu、lll_sync_iso.c 按 lll->max_pdu、lll_scan_aux.c 按 LL_EXT_OCTETS_RX_MAX 同样丢弃超长 PDU，超长帧不再进入入队与 HCI 编码流程，越界读写与内存泄露链路被切断。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.4.0,4.5.0)",
+            "min_fixed_version": "4.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.6.0,4.3.2)",
+            "min_fixed_version": "4.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界写入",
+    "kind_en": "越界写入",
+    "last_modified_time": "2026-11-04",
+    "level": "High",
+    "mps_id": "MPS-6faj-4ic7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6faj-4ic7",
+        "name": "https://www.oscs1024.com/hd/MPS-6faj-4ic7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87040",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87040"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/8ca41216e8e47a018e52044992789b5011ac99aa",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-grqr-q9fh-8ff2",
+        "name": "GHSA-grqr-q9fh-8ff2"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Zephyr蓝牙控制器越界读写漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-87040",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnerabilities@zephyrproject.org",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+    "cwe": "CWE-787",
+    "description": "Zephyr 是 Linux 基金会旗下 Zephyr 项目开源维护的嵌入式实时操作系统，其蓝牙 LE 控制器为 Nordic nRF 系列射频提供链路层实现，广泛用于物联网、医疗与工业嵌入式设备的低功耗蓝牙通信。\n受影响版本中，nRF 链路层接收路径未校验空口 PDU 头部 LENGTH 字段是否超过无线收发器配置的最大接收长度。lll_conn.c 中 isr_rx_pdu() 在序列号与 MIC 校验通过后直接入队任意非空数据 PDU，而 nRF radio 硬件仅按 PCNF1.MAXLEN 截断 payload 并原样保存头部长度字节，攻击者在无线信号范围内发送长度字节最大为 255 的伪造 PDU（控制器默认编程的 lll->dle.eff.max_rx_octets 为 27），形成 len 字段大于缓冲区实际容量的 node_rx；该缓冲区随后进入 hci.c 的 hci_acl_encode()，其 net_buf_add(buf, pdu_data->len) 与 memcpy 按未校验长度越界读取约 228 字节并越界写入 HCI ACL 缓冲池相邻内存，ISO 接收路径经 isoal_rx_append_to_sdu() 同样越界读取并把控制器内存作为 ISO 数据上送主机，导致远程内存破坏、控制器崩溃与内存信息泄露。\n修复版本中通过在接收路径统一增加长度边界校验解决该问题：isr_rx_pdu() 在解密后调用新增的 max_rx_octets_get() 比对 pdu_data_rx->len，超长 PDU 返回 -EINVAL 丢弃，lll_central_iso.c 与 lll_peripheral_iso.c 按 cis_lll->rx.max_pdu、lll_sync_iso.c 按 lll->max_pdu、lll_scan_aux.c 按 LL_EXT_OCTETS_RX_MAX 同样丢弃超长 PDU，超长帧不再进入入队与 HCI 编码流程，越界读写与内存泄露链路被切断。",
+    "effects": [
+      {
+        "comp_name": "zephyr",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.4.0,4.5.0)",
+            "min_fixed_version": "4.5.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.6.0,4.3.2)",
+            "min_fixed_version": "4.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界写入",
+    "kind_en": "Out-of-bounds Write",
+    "last_modified_time": "2026-11-04",
+    "level": "High",
+    "mps_id": "MPS-6faj-4ic7",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-04",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6faj-4ic7",
+        "name": "https://www.oscs1024.com/hd/MPS-6faj-4ic7"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87040",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-87040"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/commit/8ca41216e8e47a018e52044992789b5011ac99aa",
+        "name": "Fix commit"
+      },
+      {
+        "url": "https://github.com/zephyrproject-rtos/zephyr/security/advisories/GHSA-grqr-q9fh-8ff2",
+        "name": "GHSA-grqr-q9fh-8ff2"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Zephyr蓝牙控制器越界读写漏洞"
+  },
+  "first_saved_at": "2026-11-04T08:27:16+00:00"
+}
