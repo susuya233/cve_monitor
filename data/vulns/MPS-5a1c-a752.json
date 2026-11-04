@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-11-04T16:44:56+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5a1c-a752",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73116",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-522",
+    "description": "Apache Juneau 是 Apache 软件基金会开源的 Java REST 服务与序列化框架，其中 juneau-rest-client 模块提供基于 RestClient 构建器的 REST 客户端，用于应用与远程服务之间的 HTTP 调用。\n受影响版本中，RestClient.Builder 的 createHttpClient() 方法直接以默认重定向策略构建底层 Apache HttpClient，未注册任何凭据防护拦截器，HttpClient 默认重定向执行器在跟随 3xx 重定向时会把原请求的全部请求头复制到跳转请求，Authorization、Cookie、Proxy-Authorization、X-API-Key 等凭据头随请求被发往 Location 指向的不同主机或不同端口目标，重定向由 HTTPS 降级为 HTTP 时凭据以明文发出，控制该服务端或能诱导其返回跨源重定向的攻击者由此获得这些凭据。\n修复版本中通过在 createHttpClient() 中注册 RedirectCredentialGuard 拦截器修复该问题，拦截器记录一次请求交换中首个请求的源站，后续请求经 RedirectSecurity.shouldStripCredentials() 判定源站变化或 HTTPS 降级 HTTP 后，按 RedactedHeaders 定义的凭据头集合移除 Authorization、Cookie、Set-Cookie、Proxy-Authorization、X-API-Key，阻止凭据转发到其他源站；该保护仅覆盖由 RestClient 构建器创建的 HTTP 客户端。",
+    "effects": [
+      {
+        "comp_name": "org.apache.juneau:juneau-rest-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.2.1)",
+            "min_fixed_version": "9.2.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.apache.juneau:juneau-rest-common",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.2.1)",
+            "min_fixed_version": "9.2.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "凭证保护不足",
+    "kind_en": "凭证保护不足",
+    "last_modified_time": "2026-11-05",
+    "level": "High",
+    "mps_id": "MPS-5a1c-a752",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/11/04/7",
+        "name": ""
+      },
+      {
+        "url": "https://juneau.apache.org/security",
+        "name": ""
+      },
+      {
+        "url": "https://downloads.apache.org/juneau/9.2.1/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/juneau/releases/tag/juneau-9.2.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/juneau/commit/81677c11fb4b35157ea176a97af0ace82126d25e",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Juneau REST客户端重定向凭据泄露漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73116",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-522",
+    "description": "Apache Juneau 是 Apache 软件基金会开源的 Java REST 服务与序列化框架，其中 juneau-rest-client 模块提供基于 RestClient 构建器的 REST 客户端，用于应用与远程服务之间的 HTTP 调用。\n受影响版本中，RestClient.Builder 的 createHttpClient() 方法直接以默认重定向策略构建底层 Apache HttpClient，未注册任何凭据防护拦截器，HttpClient 默认重定向执行器在跟随 3xx 重定向时会把原请求的全部请求头复制到跳转请求，Authorization、Cookie、Proxy-Authorization、X-API-Key 等凭据头随请求被发往 Location 指向的不同主机或不同端口目标，重定向由 HTTPS 降级为 HTTP 时凭据以明文发出，控制该服务端或能诱导其返回跨源重定向的攻击者由此获得这些凭据。\n修复版本中通过在 createHttpClient() 中注册 RedirectCredentialGuard 拦截器修复该问题，拦截器记录一次请求交换中首个请求的源站，后续请求经 RedirectSecurity.shouldStripCredentials() 判定源站变化或 HTTPS 降级 HTTP 后，按 RedactedHeaders 定义的凭据头集合移除 Authorization、Cookie、Set-Cookie、Proxy-Authorization、X-API-Key，阻止凭据转发到其他源站；该保护仅覆盖由 RestClient 构建器创建的 HTTP 客户端。",
+    "effects": [
+      {
+        "comp_name": "org.apache.juneau:juneau-rest-client",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.2.1)",
+            "min_fixed_version": "9.2.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.apache.juneau:juneau-rest-common",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.2.1)",
+            "min_fixed_version": "9.2.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "凭证保护不足",
+    "kind_en": "Insufficiently Protected Credentials",
+    "last_modified_time": "2026-11-05",
+    "level": "High",
+    "mps_id": "MPS-5a1c-a752",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/11/04/7",
+        "name": ""
+      },
+      {
+        "url": "https://juneau.apache.org/security",
+        "name": ""
+      },
+      {
+        "url": "https://downloads.apache.org/juneau/9.2.1/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/juneau/releases/tag/juneau-9.2.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/juneau/commit/81677c11fb4b35157ea176a97af0ace82126d25e",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Juneau REST客户端重定向凭据泄露漏洞"
+  },
+  "first_saved_at": "2026-11-04T16:44:56+00:00"
+}

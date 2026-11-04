@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-11-04T16:44:57+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-9147-2d90",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73100",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-532",
+    "description": "Apache Juneau 是 Apache 软件基金会的开源 Java 工具包，提供 POJO 序列化框架与基于 Servlet 的 REST 服务端组件，通过 Maven org.apache.juneau 坐标分发。\n受影响版本中，REST 服务端默认调用日志器 BasicCallLogger 针对状态码 500 以上的请求按 HEADER 级别记录请求头，CallLogger 的 log(HttpServletRequest, HttpServletResponse) 方法将 req.getHeader(h) 返回的头部值原样拼入日志文本且未做任何脱敏，任意能触发服务端 5xx 响应的客户端会使该请求中的 Authorization、Cookie、Proxy-Authorization、X-API-Key 等凭据请求头以明文形式写入应用日志，可读取日志的人由此获得这些凭据。\n修复版本中通过在 CallLogger 写入日志前将请求头与响应头值统一交由新增的 RedactedHeaders.redact 方法处理实现脱敏，默认命中 Authorization、Cookie、Set-Cookie、Proxy-Authorization、X-API-Key 五类凭据头时以 [REDACTED] 占位符替代真实值，并支持经 redactedHeaders(String...) 与 redactHeader(String) 调整脱敏名单，切断凭据写入日志的路径。",
+    "effects": [
+      {
+        "comp_name": "org.apache.juneau:juneau-rest-common",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.2.1)",
+            "min_fixed_version": "9.2.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.apache.juneau:juneau-rest-server",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.2.1)",
+            "min_fixed_version": "9.2.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "日志敏感信息泄露",
+    "kind_en": "将敏感信息插入日志文件",
+    "last_modified_time": "2026-11-05",
+    "level": "High",
+    "mps_id": "MPS-9147-2d90",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/11/04/7",
+        "name": ""
+      },
+      {
+        "url": "https://juneau.apache.org/security",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/juneau/releases/tag/juneau-9.2.1",
+        "name": ""
+      },
+      {
+        "url": "https://downloads.apache.org/juneau/9.2.1/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/juneau/commit/81677c11fb4b35157ea176a97af0ace82126d25e",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Apache Juneau敏感请求头明文日志漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-73100",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-532",
+    "description": "Apache Juneau 是 Apache 软件基金会的开源 Java 工具包，提供 POJO 序列化框架与基于 Servlet 的 REST 服务端组件，通过 Maven org.apache.juneau 坐标分发。\n受影响版本中，REST 服务端默认调用日志器 BasicCallLogger 针对状态码 500 以上的请求按 HEADER 级别记录请求头，CallLogger 的 log(HttpServletRequest, HttpServletResponse) 方法将 req.getHeader(h) 返回的头部值原样拼入日志文本且未做任何脱敏，任意能触发服务端 5xx 响应的客户端会使该请求中的 Authorization、Cookie、Proxy-Authorization、X-API-Key 等凭据请求头以明文形式写入应用日志，可读取日志的人由此获得这些凭据。\n修复版本中通过在 CallLogger 写入日志前将请求头与响应头值统一交由新增的 RedactedHeaders.redact 方法处理实现脱敏，默认命中 Authorization、Cookie、Set-Cookie、Proxy-Authorization、X-API-Key 五类凭据头时以 [REDACTED] 占位符替代真实值，并支持经 redactedHeaders(String...) 与 redactHeader(String) 调整脱敏名单，切断凭据写入日志的路径。",
+    "effects": [
+      {
+        "comp_name": "org.apache.juneau:juneau-rest-common",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.2.1)",
+            "min_fixed_version": "9.2.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.apache.juneau:juneau-rest-server",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,9.2.1)",
+            "min_fixed_version": "9.2.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "日志敏感信息泄露",
+    "kind_en": "Insertion of Sensitive Information into Log File",
+    "last_modified_time": "2026-11-05",
+    "level": "High",
+    "mps_id": "MPS-9147-2d90",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/11/04/7",
+        "name": ""
+      },
+      {
+        "url": "https://juneau.apache.org/security",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/juneau/releases/tag/juneau-9.2.1",
+        "name": ""
+      },
+      {
+        "url": "https://downloads.apache.org/juneau/9.2.1/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/juneau/commit/81677c11fb4b35157ea176a97af0ace82126d25e",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Apache Juneau敏感请求头明文日志漏洞"
+  },
+  "first_saved_at": "2026-11-04T16:44:57+00:00"
+}
