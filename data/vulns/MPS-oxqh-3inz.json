@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-11-05T19:20:54+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-oxqh-3inz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77439",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-639",
+    "description": "Immich 是一个开源（AGPL-3.0）的自托管照片与视频管理解决方案，支持多用户账户与共享相册协作，相册成员可被授予 Owner、Editor 或 Viewer 角色。\n受影响版本中，server/src/services/album.service.ts 的 updateUser 方法更新相册成员角色时仅校验 AlbumShare 权限（Editor 角色满足该权限），未保护相册 Owner 角色不被修改，请求体中的 role 字段也接受 owner 取值；受数据库每相册仅允许存在一个 Owner 的唯一索引影响，拥有 Editor 角色的认证用户可先将相册原 Owner 降级，再将自身提升为 Owner，从而完全接管共享相册，进一步移除原 Owner 并删除相册。\n修复版本中通过在 updateUser 更新角色前加载相册成员并判断目标用户是否为相册 Owner，若目标为 Owner 则拒绝请求并返回错误，使相册 Owner 角色无法被其他成员降级，Editor 无法再完成先降级原 Owner 再自我提权的接管链。",
+    "effects": [
+      {
+        "comp_name": "immich",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.0.3)",
+            "min_fixed_version": "3.0.3",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-11-06",
+    "level": "High",
+    "mps_id": "MPS-oxqh-3inz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oxqh-3inz",
+        "name": "https://www.oscs1024.com/hd/MPS-oxqh-3inz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77439",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77439"
+      },
+      {
+        "url": "https://github.com/immich-app/immich/security/advisories/GHSA-c9mf-h82r-8p4j",
+        "name": "https://github.com/immich-app/immich/security/advisories/GHSA-c9mf-h82r-8p4j"
+      },
+      {
+        "url": "https://github.com/immich-app/immich/pull/29883",
+        "name": "https://github.com/immich-app/immich/pull/29883"
+      },
+      {
+        "url": "https://github.com/immich-app/immich/commit/84dff19ca9a467752d848ff54763d62c04ebf960",
+        "name": "https://github.com/immich-app/immich/commit/84dff19ca9a467752d848ff54763d62c04ebf960"
+      },
+      {
+        "url": "https://github.com/immich-app/immich/releases/tag/v3.0.3",
+        "name": "https://github.com/immich-app/immich/releases/tag/v3.0.3"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "Immich共享相册权限提升漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-77439",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-639",
+    "description": "Immich 是一个开源（AGPL-3.0）的自托管照片与视频管理解决方案，支持多用户账户与共享相册协作，相册成员可被授予 Owner、Editor 或 Viewer 角色。\n受影响版本中，server/src/services/album.service.ts 的 updateUser 方法更新相册成员角色时仅校验 AlbumShare 权限（Editor 角色满足该权限），未保护相册 Owner 角色不被修改，请求体中的 role 字段也接受 owner 取值；受数据库每相册仅允许存在一个 Owner 的唯一索引影响，拥有 Editor 角色的认证用户可先将相册原 Owner 降级，再将自身提升为 Owner，从而完全接管共享相册，进一步移除原 Owner 并删除相册。\n修复版本中通过在 updateUser 更新角色前加载相册成员并判断目标用户是否为相册 Owner，若目标为 Owner 则拒绝请求并返回错误，使相册 Owner 角色无法被其他成员降级，Editor 无法再完成先降级原 Owner 再自我提权的接管链。",
+    "effects": [
+      {
+        "comp_name": "immich",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.0.3)",
+            "min_fixed_version": "3.0.3",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-11-06",
+    "level": "High",
+    "mps_id": "MPS-oxqh-3inz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-oxqh-3inz",
+        "name": "https://www.oscs1024.com/hd/MPS-oxqh-3inz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77439",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-77439"
+      },
+      {
+        "url": "https://github.com/immich-app/immich/security/advisories/GHSA-c9mf-h82r-8p4j",
+        "name": "https://github.com/immich-app/immich/security/advisories/GHSA-c9mf-h82r-8p4j"
+      },
+      {
+        "url": "https://github.com/immich-app/immich/pull/29883",
+        "name": "https://github.com/immich-app/immich/pull/29883"
+      },
+      {
+        "url": "https://github.com/immich-app/immich/commit/84dff19ca9a467752d848ff54763d62c04ebf960",
+        "name": "https://github.com/immich-app/immich/commit/84dff19ca9a467752d848ff54763d62c04ebf960"
+      },
+      {
+        "url": "https://github.com/immich-app/immich/releases/tag/v3.0.3",
+        "name": "https://github.com/immich-app/immich/releases/tag/v3.0.3"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "Immich共享相册权限提升漏洞"
+  },
+  "first_saved_at": "2026-11-05T19:20:54+00:00"
+}

@@ -1,0 +1,183 @@
+{
+  "saved_at": "2026-11-05T19:20:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-k3hl-icnt",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96453",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8
+        }
+      ]
+    },
+    "cvss_score": 8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+    "cwe": "CWE-295",
+    "description": "Keycloak 是红帽主导开源的身份认证与访问管理系统，用于单点登录与身份联合；kcadm 是随 Keycloak 发行包与 Maven 构件 org.keycloak:keycloak-admin-cli 提供的 Admin CLI 命令行工具，管理员用它从命令行管理 Keycloak 服务器，客户端注册 CLI kcreg 与其共用同一 HTTP 工具类。\n受影响版本中，kcadm 与 kcreg 配置自定义信任库（--truststore 或 config truststore）时，org.keycloak.client.cli.util.HttpUtil 类的 setTruststore 方法调用 Apache HttpClient 的 loadTrustMaterial 加载信任库材料，同时附加 TrustSelfSignedStrategy.INSTANCE 信任策略；该策略使客户端接受任意自签名证书链，主机名匹配即通过 TLS 校验，管理员导入信任库的 CA 信任材料失去实际约束。能够实施中间人攻击或 DNS 重定向的网络攻击者可向执行 kcadm 命令的管理员伪造 Keycloak 服务器，截获管理流量、窃取访问令牌与管理员凭据，并注入伪造响应执行特权管理操作。\n修复版本中通过将 setTruststore 方法中 loadTrustMaterial 调用的 TrustSelfSignedStrategy.INSTANCE 策略参数移除，自定义信任库成为唯一信任来源，未显式导入信任库的自签名证书在 TLS 握手阶段被拒绝；该修复随 Keycloak 26.8.2 发布，中间人伪造服务器窃取管理员凭据的攻击路径被切断。",
+    "effects": [
+      {
+        "comp_name": "keycloak",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,26.8.2)",
+            "min_fixed_version": "26.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.keycloak:keycloak-admin-cli",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,26.8.2)",
+            "min_fixed_version": "26.8.2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "证书验证不恰当",
+    "kind_en": "证书验证不当",
+    "last_modified_time": "2026-11-06",
+    "level": "High",
+    "mps_id": "MPS-k3hl-icnt",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k3hl-icnt",
+        "name": "https://www.oscs1024.com/hd/MPS-k3hl-icnt"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96453",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96453"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-96453",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2539294",
+        "name": "RHBZ#2539294"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Keycloak kcadm 证书校验缺陷",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96453",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8
+        }
+      ]
+    },
+    "cvss_score": 8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+    "cwe": "CWE-295",
+    "description": "Keycloak 是红帽主导开源的身份认证与访问管理系统，用于单点登录与身份联合；kcadm 是随 Keycloak 发行包与 Maven 构件 org.keycloak:keycloak-admin-cli 提供的 Admin CLI 命令行工具，管理员用它从命令行管理 Keycloak 服务器，客户端注册 CLI kcreg 与其共用同一 HTTP 工具类。\n受影响版本中，kcadm 与 kcreg 配置自定义信任库（--truststore 或 config truststore）时，org.keycloak.client.cli.util.HttpUtil 类的 setTruststore 方法调用 Apache HttpClient 的 loadTrustMaterial 加载信任库材料，同时附加 TrustSelfSignedStrategy.INSTANCE 信任策略；该策略使客户端接受任意自签名证书链，主机名匹配即通过 TLS 校验，管理员导入信任库的 CA 信任材料失去实际约束。能够实施中间人攻击或 DNS 重定向的网络攻击者可向执行 kcadm 命令的管理员伪造 Keycloak 服务器，截获管理流量、窃取访问令牌与管理员凭据，并注入伪造响应执行特权管理操作。\n修复版本中通过将 setTruststore 方法中 loadTrustMaterial 调用的 TrustSelfSignedStrategy.INSTANCE 策略参数移除，自定义信任库成为唯一信任来源，未显式导入信任库的自签名证书在 TLS 握手阶段被拒绝；该修复随 Keycloak 26.8.2 发布，中间人伪造服务器窃取管理员凭据的攻击路径被切断。",
+    "effects": [
+      {
+        "comp_name": "keycloak",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,26.8.2)",
+            "min_fixed_version": "26.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.keycloak:keycloak-admin-cli",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,26.8.2)",
+            "min_fixed_version": "26.8.2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "证书验证不恰当",
+    "kind_en": "Improper Certificate Validation",
+    "last_modified_time": "2026-11-06",
+    "level": "High",
+    "mps_id": "MPS-k3hl-icnt",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k3hl-icnt",
+        "name": "https://www.oscs1024.com/hd/MPS-k3hl-icnt"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-96453",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-96453"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-96453",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2539294",
+        "name": "RHBZ#2539294"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Keycloak kcadm 证书校验缺陷"
+  },
+  "first_saved_at": "2026-11-05T19:20:52+00:00"
+}

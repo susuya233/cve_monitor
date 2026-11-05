@@ -1,0 +1,181 @@
+{
+  "saved_at": "2026-11-05T19:20:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-t2mr-wzq0",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97847",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:L",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:L",
+    "cwe": "CWE-287",
+    "description": "Keycloak 是 Red Hat 主导的开源身份认证与访问管理系统，支持 OIDC 与 SAML 单点登录、服务账号客户端凭证以及 Admin REST API，漏洞相关的核心服务实现位于 keycloak-services 模块。\n受影响版本中，持有目标 OIDC 客户端 manage-clients 权限的客户端管理员可通过 Admin REST API 为该客户端添加 hardcoded-claim 协议映射器，覆盖其服务账号令牌中的 sub 与 preferred_username 声明；客户端凭证令牌默认不含 sessionState（无 sid），Admin REST API 认证时经 UserSessionUtil 进入 TokenManager.lookupUserFromStatelessToken，先按 sub 查找用户，失败后回退按 preferred_username 查找任意同名用户且未校验其是否为该客户端的服务账号，令牌持有者随即被替换为真实管理域管理员的 UserModel，绕过 CVE-2026-4629 引入的角色剥离防御，攻击者可凭管理域管理员身份调用 Admin REST API 枚举、创建或删除用户并完全接管管理域。\n修复版本中通过在协议映射器 CRUD 入口（ProtocolMappersResource 与客户端、客户端作用域管理端点）统一新增 requireManageProtocolMappers 校验，仅持有 manage-realm 角色的管理员可不受限管理协议映射器，其余管理员只能操作管理域属性 ALLOWED_PROTOCOL_MAPPER_TYPES_FOR_CLIENT_ADMINISTRATORS 白名单内的映射器类型（默认为空即全部拒绝），并经 Client Registration Policies 默认禁止动态客户端注册创建协议映射器，切断攻击者注入身份声明映射器的路径，主体替换攻击链随之失效。",
+    "effects": [
+      {
+        "comp_name": "keycloak",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,26.8.2)",
+            "min_fixed_version": "26.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "身份验证不当",
+    "kind_en": "认证不当",
+    "last_modified_time": "2026-11-06",
+    "level": "High",
+    "mps_id": "MPS-t2mr-wzq0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-t2mr-wzq0",
+        "name": "https://www.oscs1024.com/hd/MPS-t2mr-wzq0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97847",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97847"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-97847",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2540950",
+        "name": "RHBZ#2540950"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Keycloak 令牌主体替换漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
+        "title": "什么是身份验证不当"
+      },
+      {
+        "content": "- 密码破解：攻击者尝试使用暴力破解或字典攻击等方法，通过尝试各种密码组合来猜测合法用户的密码。如果应用程序没有限制登录次数并使用弱密码或密码哈希算法，攻击者可以成功地破解密码并获取访问权限。\r\n- 会话劫持：攻击者通过获取合法用户的会话标识符（如Cookie）来劫持其会话。这可以通过窃取会话标识符、使用会话固定攻击或通过 XSS 等方式实现。一旦攻击者获得有效的会话，他们可以冒充合法用户执行未经授权的操作。\r\n- CSRF攻击：攻击者通过欺骗受害者利用其身份在已登录的应用程序中执行恶意操作。这种攻击利用了应用程序在处理来自受信任网站的请求时未进行适当验证的漏洞。",
+        "title": "身份验证不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用强密码策略：应用程序应该要求用户使用强密码，并通过密码复杂性要求、密码长度限制等措施来确保密码的强度。\r\n- 密码哈希和盐值：应用程序应该使用适当的密码哈希算法，并为每个用户生成唯一的盐值。这样可以防止攻击者通过哈希碰撞或彩虹表攻击破解密码。\r\n- 多因素身份验证：应用程序可以引入多因素身份验证，结合密码与其他因素（如指纹、短信验证码、硬件令牌等）来提高安全性。\r\n- 安全的会话管理：使用安全的会话管理机制，如随机生成会话标识符、在会话过期时强制重新验证等，以防止会话劫持攻击。\r\n- 输入验证与过滤：在进行身份验证之前，应该对用户输入进行适当的验证和过滤，以防止 XSS 和其他攻击。\r\n- 定期安全审计：进行定期的安全审计和漏洞扫描，及时修复发现的安全问题。",
+        "title": "如何预防身份验证不当"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97847",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:L",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:L",
+    "cwe": "CWE-287",
+    "description": "Keycloak 是 Red Hat 主导的开源身份认证与访问管理系统，支持 OIDC 与 SAML 单点登录、服务账号客户端凭证以及 Admin REST API，漏洞相关的核心服务实现位于 keycloak-services 模块。\n受影响版本中，持有目标 OIDC 客户端 manage-clients 权限的客户端管理员可通过 Admin REST API 为该客户端添加 hardcoded-claim 协议映射器，覆盖其服务账号令牌中的 sub 与 preferred_username 声明；客户端凭证令牌默认不含 sessionState（无 sid），Admin REST API 认证时经 UserSessionUtil 进入 TokenManager.lookupUserFromStatelessToken，先按 sub 查找用户，失败后回退按 preferred_username 查找任意同名用户且未校验其是否为该客户端的服务账号，令牌持有者随即被替换为真实管理域管理员的 UserModel，绕过 CVE-2026-4629 引入的角色剥离防御，攻击者可凭管理域管理员身份调用 Admin REST API 枚举、创建或删除用户并完全接管管理域。\n修复版本中通过在协议映射器 CRUD 入口（ProtocolMappersResource 与客户端、客户端作用域管理端点）统一新增 requireManageProtocolMappers 校验，仅持有 manage-realm 角色的管理员可不受限管理协议映射器，其余管理员只能操作管理域属性 ALLOWED_PROTOCOL_MAPPER_TYPES_FOR_CLIENT_ADMINISTRATORS 白名单内的映射器类型（默认为空即全部拒绝），并经 Client Registration Policies 默认禁止动态客户端注册创建协议映射器，切断攻击者注入身份声明映射器的路径，主体替换攻击链随之失效。",
+    "effects": [
+      {
+        "comp_name": "keycloak",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,26.8.2)",
+            "min_fixed_version": "26.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "身份验证不当",
+    "kind_en": "Improper Authentication",
+    "last_modified_time": "2026-11-06",
+    "level": "High",
+    "mps_id": "MPS-t2mr-wzq0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-t2mr-wzq0",
+        "name": "https://www.oscs1024.com/hd/MPS-t2mr-wzq0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97847",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97847"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-97847",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2540950",
+        "name": "RHBZ#2540950"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Keycloak 令牌主体替换漏洞"
+  },
+  "first_saved_at": "2026-11-05T19:20:49+00:00"
+}
