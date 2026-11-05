@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-11-05T11:46:09+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-b8vt-lfsm",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-123029",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-611",
+    "description": "Wowza Streaming Engine 是 Wowza 公司的商业流媒体服务器软件，基于 Java 实现，可通过 RTMP、RTSP、HLS、MPEG-DASH 与 WebRTC 等协议进行直播和点播流分发。\n受影响版本中，服务端 XML 解析使用捆绑的 Apache Xerces 解析器并允许加载外部 DTD 与实体，RTMP 远程共享对象等入口将客户端可控的共享对象名称用于定位服务器本地的 .rso 文件且未限制在该功能的存储目录内，攻击者可让服务器以 XML 方式解析指向本地任意文件的资源并处理其中的外部实体，以 Wowza Streaming Engine 进程权限读取文件内容，暴露主机上的配置文件与凭据。\n修复版本中通过改用 JDK 内置 XML 解析器并移除捆绑的 Apache Xerces 切断外部实体加载，不再加载外部 DTD 与实体，包含 DOCTYPE 的配置文件、.rso 文件与 REST API XML 请求体均被拒绝，同时共享对象文件限定只能写入和读取应用程序的 SharedObject 存储目录，无法作为该目录内路径的共享对象名称不再加载，消除了远程输入解析本地任意 XML 文件的利用链。",
+    "effects": [
+      {
+        "comp_name": "wowza_streaming_engine",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.12.2)",
+            "min_fixed_version": "4.12.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "XXE",
+    "kind_en": "XML外部实体引用限制不当",
+    "last_modified_time": "2026-11-05",
+    "level": "High",
+    "mps_id": "MPS-b8vt-lfsm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-b8vt-lfsm",
+        "name": "https://www.oscs1024.com/hd/MPS-b8vt-lfsm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123029",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-123029"
+      },
+      {
+        "url": "https://www.wowza.com/docs/xxe-allows-reading-local-files",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Wowza Streaming Engine XXE漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-123029",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "cwe": "CWE-611",
+    "description": "Wowza Streaming Engine 是 Wowza 公司的商业流媒体服务器软件，基于 Java 实现，可通过 RTMP、RTSP、HLS、MPEG-DASH 与 WebRTC 等协议进行直播和点播流分发。\n受影响版本中，服务端 XML 解析使用捆绑的 Apache Xerces 解析器并允许加载外部 DTD 与实体，RTMP 远程共享对象等入口将客户端可控的共享对象名称用于定位服务器本地的 .rso 文件且未限制在该功能的存储目录内，攻击者可让服务器以 XML 方式解析指向本地任意文件的资源并处理其中的外部实体，以 Wowza Streaming Engine 进程权限读取文件内容，暴露主机上的配置文件与凭据。\n修复版本中通过改用 JDK 内置 XML 解析器并移除捆绑的 Apache Xerces 切断外部实体加载，不再加载外部 DTD 与实体，包含 DOCTYPE 的配置文件、.rso 文件与 REST API XML 请求体均被拒绝，同时共享对象文件限定只能写入和读取应用程序的 SharedObject 存储目录，无法作为该目录内路径的共享对象名称不再加载，消除了远程输入解析本地任意 XML 文件的利用链。",
+    "effects": [
+      {
+        "comp_name": "wowza_streaming_engine",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.12.2)",
+            "min_fixed_version": "4.12.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "XXE",
+    "kind_en": "Improper Restriction of XML External Entity Reference",
+    "last_modified_time": "2026-11-05",
+    "level": "High",
+    "mps_id": "MPS-b8vt-lfsm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-05",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-b8vt-lfsm",
+        "name": "https://www.oscs1024.com/hd/MPS-b8vt-lfsm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123029",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-123029"
+      },
+      {
+        "url": "https://www.wowza.com/docs/xxe-allows-reading-local-files",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Wowza Streaming Engine XXE漏洞"
+  },
+  "first_saved_at": "2026-11-05T11:46:09+00:00"
+}
