@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-11-01T20:03:46+00:00",
+  "saved_at": "2026-11-05T03:01:12+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-v9xz-w0qp",
+  "source_page": "https://www.oscs1024.com/hd/MPS-94j1-cftm",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,53 +21,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-120239",
+    "cve_id": "CVE-2026-76826",
     "cvss": {
-      "cvssv2": [
-        {
-          "source": "cna@vuldb.com",
-          "vector": "AV:N/AC:L/Au:S/C:C/I:C/A:C",
-          "severity": "high",
-          "base_score": 9
-        }
-      ],
-      "cvssv3": [
-        {
-          "source": "VulDB",
-          "vector": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H/E:P/RL:X/RC:R",
-          "severity": "critical",
-          "base_score": 9.9
-        }
-      ],
-      "cvssv31": [
-        {
-          "source": "cna@vuldb.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-          "severity": "critical",
-          "base_score": 9.9
-        }
-      ],
       "cvssv4": [
         {
-          "source": "cna@vuldb.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.6
+          "base_score": 7.5
         }
       ]
     },
-    "cvss_score": 8.6,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "WAVLINK WN553X1-B 是闭源无线路由器产品，固件提供 Web 管理接口，并由 /bin/ioos 处理 WireGuard CLI Handler 请求。\n受影响版本中，/bin/ioos 的 sub_419DA8 在处理 action 为 close 的 WireGuard CLI 请求时，将调用方传入的 file_id 拼入 shell 命令并交给 popen 执行，且未校验命令分隔符。持有有效管理会话的远程攻击者可控制 file_id，使额外操作系统命令以 root 权限执行。\n修复版本中通过官方固件更新消除 file_id 进入操作系统命令执行的路径；截至 2026-11-02，NVD 与 CVE.org 均未公布修复版本，也未找到可验证的修复提交。",
+    "description": "tsParticles 是一个开源的 TypeScript 粒子动画库，经 npm 发布，用于在网页中创建可高度定制的粒子动画效果。\n受影响版本中，仓库的稳定版发布工作流在 Prettify changelog 步骤把生成的发布说明正文 steps.release.outputs.body 直接内插进 echo 命令的 shell 源码（echo \"${{ steps.release.outputs.body }}\" > RAW_RELEASE.md），发布说明中的贡献者可控文本（例如被合并 PR 的标题）携带 shell 元字符时，维护者发布稳定版本会触发任意命令执行；发布作业持有 id-token: write 与 contents: write 权限，后续步骤还携带 GITHUB_TOKEN 并 source 工作区脚本，攻击者可篡改发布产物或覆盖后续步骤引用的脚本，影响持有写权限的发布环节。\n修复版本中通过新增环境变量 RELEASE_BODY 承载发布说明正文，并以 printf '%s\\n' \"$RELEASE_BODY\" > RAW_RELEASE.md 写入文件，发布说明文本不再进入 shell 源码，元字符失去求值机会，切断了发布说明到命令执行的注入链路。",
     "effects": [
       {
-        "comp_name": "wn553x1-b",
+        "comp_name": "tsparticles",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "[V260403_2.0.0,V260403_2.0.0]",
-            "min_fixed_version": "",
+            "affected_version": "[4.0.0,4.3.2)",
+            "min_fixed_version": "4.3.2",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -78,52 +54,44 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "OS命令注入",
     "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
-    "last_modified_time": "2026-11-02",
+    "last_modified_time": "2026-11-05",
     "level": "High",
-    "mps_id": "MPS-v9xz-w0qp",
+    "mps_id": "MPS-94j1-cftm",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-11-02",
+    "published_time": "2026-11-05",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-v9xz-w0qp",
-        "name": "https://www.oscs1024.com/hd/MPS-v9xz-w0qp"
+        "url": "https://www.oscs1024.com/hd/MPS-94j1-cftm",
+        "name": "https://www.oscs1024.com/hd/MPS-94j1-cftm"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120239",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120239"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76826",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76826"
       },
       {
-        "url": "https://github.com/senxitoyshuyi-ui/HACKALL/blob/main/WAVLINK%20WN553X1-B%20Router/WAVLINK_WN553X1-B_wireguard_cli_command_injection.md",
-        "name": ""
+        "url": "https://github.com/tsparticles/tsparticles/security/advisories/GHSA-gw8q-3x59-mjjx",
+        "name": "https://github.com/tsparticles/tsparticles/security/advisories/GHSA-gw8q-3x59-mjjx"
       },
       {
-        "url": "https://vuldb.com/cve/CVE-2026-120239",
-        "name": ""
+        "url": "https://github.com/tsparticles/tsparticles/pull/5888",
+        "name": "https://github.com/tsparticles/tsparticles/pull/5888"
       },
       {
-        "url": "https://vuldb.com/submit/919250",
-        "name": ""
-      },
-      {
-        "url": "https://vuldb.com/vuln/429598",
-        "name": ""
-      },
-      {
-        "url": "https://vuldb.com/vuln/429598/cti",
-        "name": ""
+        "url": "https://github.com/tsparticles/tsparticles/commit/d3b5672bd61bb847abfa21193c34eabf7aba6896",
+        "name": "https://github.com/tsparticles/tsparticles/commit/d3b5672bd61bb847abfa21193c34eabf7aba6896"
       }
     ],
     "scope_influence": "",
     "tags": [
       "应用软件"
     ],
-    "title": "WN553X1-B命令注入漏洞",
+    "title": "tsParticles发布流程命令注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -143,53 +111,29 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-120239",
+    "cve_id": "CVE-2026-76826",
     "cvss": {
-      "cvssv2": [
-        {
-          "source": "cna@vuldb.com",
-          "vector": "AV:N/AC:L/Au:S/C:C/I:C/A:C",
-          "severity": "high",
-          "base_score": 9
-        }
-      ],
-      "cvssv3": [
-        {
-          "source": "VulDB",
-          "vector": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H/E:P/RL:X/RC:R",
-          "severity": "critical",
-          "base_score": 9.9
-        }
-      ],
-      "cvssv31": [
-        {
-          "source": "cna@vuldb.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-          "severity": "critical",
-          "base_score": 9.9
-        }
-      ],
       "cvssv4": [
         {
-          "source": "cna@vuldb.com",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
           "severity": "high",
-          "base_score": 8.6
+          "base_score": 7.5
         }
       ]
     },
-    "cvss_score": 8.6,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "WAVLINK WN553X1-B 是闭源无线路由器产品，固件提供 Web 管理接口，并由 /bin/ioos 处理 WireGuard CLI Handler 请求。\n受影响版本中，/bin/ioos 的 sub_419DA8 在处理 action 为 close 的 WireGuard CLI 请求时，将调用方传入的 file_id 拼入 shell 命令并交给 popen 执行，且未校验命令分隔符。持有有效管理会话的远程攻击者可控制 file_id，使额外操作系统命令以 root 权限执行。\n修复版本中通过官方固件更新消除 file_id 进入操作系统命令执行的路径；截至 2026-11-02，NVD 与 CVE.org 均未公布修复版本，也未找到可验证的修复提交。",
+    "description": "tsParticles 是一个开源的 TypeScript 粒子动画库，经 npm 发布，用于在网页中创建可高度定制的粒子动画效果。\n受影响版本中，仓库的稳定版发布工作流在 Prettify changelog 步骤把生成的发布说明正文 steps.release.outputs.body 直接内插进 echo 命令的 shell 源码（echo \"${{ steps.release.outputs.body }}\" > RAW_RELEASE.md），发布说明中的贡献者可控文本（例如被合并 PR 的标题）携带 shell 元字符时，维护者发布稳定版本会触发任意命令执行；发布作业持有 id-token: write 与 contents: write 权限，后续步骤还携带 GITHUB_TOKEN 并 source 工作区脚本，攻击者可篡改发布产物或覆盖后续步骤引用的脚本，影响持有写权限的发布环节。\n修复版本中通过新增环境变量 RELEASE_BODY 承载发布说明正文，并以 printf '%s\\n' \"$RELEASE_BODY\" > RAW_RELEASE.md 写入文件，发布说明文本不再进入 shell 源码，元字符失去求值机会，切断了发布说明到命令执行的注入链路。",
     "effects": [
       {
-        "comp_name": "wn553x1-b",
+        "comp_name": "tsparticles",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "[V260403_2.0.0,V260403_2.0.0]",
-            "min_fixed_version": "",
+            "affected_version": "[4.0.0,4.3.2)",
+            "min_fixed_version": "4.3.2",
             "repository": "unmanaged",
             "solutions": [],
             "upstream": true
@@ -200,52 +144,44 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "OS命令注入",
     "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
-    "last_modified_time": "2026-11-02",
+    "last_modified_time": "2026-11-05",
     "level": "High",
-    "mps_id": "MPS-v9xz-w0qp",
+    "mps_id": "MPS-94j1-cftm",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-11-02",
+    "published_time": "2026-11-05",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-v9xz-w0qp",
-        "name": "https://www.oscs1024.com/hd/MPS-v9xz-w0qp"
+        "url": "https://www.oscs1024.com/hd/MPS-94j1-cftm",
+        "name": "https://www.oscs1024.com/hd/MPS-94j1-cftm"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120239",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120239"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76826",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76826"
       },
       {
-        "url": "https://github.com/senxitoyshuyi-ui/HACKALL/blob/main/WAVLINK%20WN553X1-B%20Router/WAVLINK_WN553X1-B_wireguard_cli_command_injection.md",
-        "name": ""
+        "url": "https://github.com/tsparticles/tsparticles/security/advisories/GHSA-gw8q-3x59-mjjx",
+        "name": "https://github.com/tsparticles/tsparticles/security/advisories/GHSA-gw8q-3x59-mjjx"
       },
       {
-        "url": "https://vuldb.com/cve/CVE-2026-120239",
-        "name": ""
+        "url": "https://github.com/tsparticles/tsparticles/pull/5888",
+        "name": "https://github.com/tsparticles/tsparticles/pull/5888"
       },
       {
-        "url": "https://vuldb.com/submit/919250",
-        "name": ""
-      },
-      {
-        "url": "https://vuldb.com/vuln/429598",
-        "name": ""
-      },
-      {
-        "url": "https://vuldb.com/vuln/429598/cti",
-        "name": ""
+        "url": "https://github.com/tsparticles/tsparticles/commit/d3b5672bd61bb847abfa21193c34eabf7aba6896",
+        "name": "https://github.com/tsparticles/tsparticles/commit/d3b5672bd61bb847abfa21193c34eabf7aba6896"
       }
     ],
     "scope_influence": "",
     "tags": [
       "应用软件"
     ],
-    "title": "WN553X1-B命令注入漏洞"
+    "title": "tsParticles发布流程命令注入漏洞"
   },
-  "first_saved_at": "2026-11-01T20:03:46+00:00"
+  "first_saved_at": "2026-11-05T03:01:12+00:00"
 }
