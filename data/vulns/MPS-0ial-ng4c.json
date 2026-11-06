@@ -1,0 +1,257 @@
+{
+  "saved_at": "2026-11-06T07:33:18+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-0ial-ng4c",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2025-71458",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-89",
+    "description": "FTS3 Web Monitoring（fts-monitoring）是 CERN 开源的 FTS3 文件传输服务 Web 监控组件，基于 Python 与 Django 构建，以 RPM 包形式发布，用于展示传输任务、存储端点与链路配置等监控信息。\n受影响版本中，/linkinfo 路由映射的 get_linkinfo 视图从 http_request.GET 读取 source_se 与 dest_se 参数，未经参数化处理便以 %s 字符串格式化拼入多条查询语句，并通过不带参数绑定的 cursor.execute(query) 执行，远程攻击者无需认证，通过构造恶意请求可实现盲注，读取数据库中存储的云存储凭据与 Token Provider 客户端密钥。\n修复版本中通过将全部查询改为 %(name)s 占位符并以 cursor.execute(query, {...}) 传入参数绑定，使 source_se、dest_se 与 user_dn 等外部输入不再拼入 SQL 文本，同时新增 linkinfo.enabled 配置项支持在配置层面禁用 /linkinfo 端点；修复随 3.14.1 发布并回移植至 3.13.3。",
+    "effects": [
+      {
+        "comp_name": "fts-monitoring",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.14.0,3.14.1)",
+            "min_fixed_version": "3.14.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.12.0,3.13.3)",
+            "min_fixed_version": "3.13.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SQL注入",
+    "kind_en": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
+    "last_modified_time": "2026-11-06",
+    "level": "High",
+    "mps_id": "MPS-0ial-ng4c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0ial-ng4c",
+        "name": "https://www.oscs1024.com/hd/MPS-0ial-ng4c"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-71458",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2025-71458"
+      },
+      {
+        "url": "https://advisories.egi.eu/Advisory-EGI-SVG-2025-09",
+        "name": "EGI SVG Advisory EGI-SVG-2025-09"
+      },
+      {
+        "url": "https://github.com/cern-fts/fts-monitoring/commit/e993c27d60a150c67cc2b415ddb272b5d3f05596",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/cern-fts/fts-monitoring/commit/96241f6e9911195aae8e9e07bce511da4e81fc08",
+        "name": "Backport Commit (3.13.3)"
+      },
+      {
+        "url": "https://github.com/cern-fts/fts-monitoring/blob/v3.14.0/src/apps/ftsmon/views/linkinfo.py#L27-L60",
+        "name": "Vulnerable get_linkinfo at v3.14.0"
+      },
+      {
+        "url": "https://github.com/cern-fts/fts-monitoring/releases/tag/v3.14.1",
+        "name": "fts-monitoring v3.14.1 Release Notes"
+      },
+      {
+        "url": "https://github.com/cern-fts/fts-monitoring/releases/tag/v3.13.3",
+        "name": "fts-monitoring v3.13.3 Release Notes"
+      },
+      {
+        "url": "https://github.com/cern-fts/fts-monitoring",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/fts3-web-monitoring-3.12.0-through-3.13.2-and-3.14.0-sql-injection-via-linkinfo",
+        "name": "VulnCheck Advisory: FTS3 Web Monitoring 3.12.0 through 3.13.2 and 3.14.0 SQL Injection via /linkinfo"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FTS3 Web Monitoring SQL注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2025-71458",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-89",
+    "description": "FTS3 Web Monitoring（fts-monitoring）是 CERN 开源的 FTS3 文件传输服务 Web 监控组件，基于 Python 与 Django 构建，以 RPM 包形式发布，用于展示传输任务、存储端点与链路配置等监控信息。\n受影响版本中，/linkinfo 路由映射的 get_linkinfo 视图从 http_request.GET 读取 source_se 与 dest_se 参数，未经参数化处理便以 %s 字符串格式化拼入多条查询语句，并通过不带参数绑定的 cursor.execute(query) 执行，远程攻击者无需认证，通过构造恶意请求可实现盲注，读取数据库中存储的云存储凭据与 Token Provider 客户端密钥。\n修复版本中通过将全部查询改为 %(name)s 占位符并以 cursor.execute(query, {...}) 传入参数绑定，使 source_se、dest_se 与 user_dn 等外部输入不再拼入 SQL 文本，同时新增 linkinfo.enabled 配置项支持在配置层面禁用 /linkinfo 端点；修复随 3.14.1 发布并回移植至 3.13.3。",
+    "effects": [
+      {
+        "comp_name": "fts-monitoring",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.14.0,3.14.1)",
+            "min_fixed_version": "3.14.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.12.0,3.13.3)",
+            "min_fixed_version": "3.13.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SQL注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "last_modified_time": "2026-11-06",
+    "level": "High",
+    "mps_id": "MPS-0ial-ng4c",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-06",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-0ial-ng4c",
+        "name": "https://www.oscs1024.com/hd/MPS-0ial-ng4c"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-71458",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2025-71458"
+      },
+      {
+        "url": "https://advisories.egi.eu/Advisory-EGI-SVG-2025-09",
+        "name": "EGI SVG Advisory EGI-SVG-2025-09"
+      },
+      {
+        "url": "https://github.com/cern-fts/fts-monitoring/commit/e993c27d60a150c67cc2b415ddb272b5d3f05596",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/cern-fts/fts-monitoring/commit/96241f6e9911195aae8e9e07bce511da4e81fc08",
+        "name": "Backport Commit (3.13.3)"
+      },
+      {
+        "url": "https://github.com/cern-fts/fts-monitoring/blob/v3.14.0/src/apps/ftsmon/views/linkinfo.py#L27-L60",
+        "name": "Vulnerable get_linkinfo at v3.14.0"
+      },
+      {
+        "url": "https://github.com/cern-fts/fts-monitoring/releases/tag/v3.14.1",
+        "name": "fts-monitoring v3.14.1 Release Notes"
+      },
+      {
+        "url": "https://github.com/cern-fts/fts-monitoring/releases/tag/v3.13.3",
+        "name": "fts-monitoring v3.13.3 Release Notes"
+      },
+      {
+        "url": "https://github.com/cern-fts/fts-monitoring",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/fts3-web-monitoring-3.12.0-through-3.13.2-and-3.14.0-sql-injection-via-linkinfo",
+        "name": "VulnCheck Advisory: FTS3 Web Monitoring 3.12.0 through 3.13.2 and 3.14.0 SQL Injection via /linkinfo"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FTS3 Web Monitoring SQL注入漏洞"
+  },
+  "first_saved_at": "2026-11-06T07:33:18+00:00"
+}
