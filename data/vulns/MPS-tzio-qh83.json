@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-11-07T15:20:00+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-tzio-qh83",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-99272",
+    "cvss": {},
+    "cvss_score": 8.2,
+    "cvss_vector": "",
+    "cwe": "CWE-125",
+    "description": "Linux kernel 是开源操作系统内核，其 fs/smb/client 目录下的 CIFS/SMB 客户端（cifs 模块）负责在 Linux 主机上挂载和访问 SMB/CIFS 网络共享。\n受影响版本中，SMB2_read() 收到服务器返回的 READ 响应后，直接以 le32_to_cpu(rsp->DataLength) 作为复制长度、(char *)rsp + rsp->DataOffset 作为复制起点执行 memcpy，未校验该数据区是否落在实际收到的响应缓冲区内；当 DataOffset 为 0 时 smb2_get_data_area_len() 将数据区长度按 0 处理，smb2_check_message() 仅要求帧长不小于固定响应长度，短帧因此通过校验，而 SMB2_read() 仍使用服务器提供的 DataLength，仅受 CIFS_MAX_MSGSIZE 与调用方长度上限约束。恶意服务器可对 mfsymlinks（或 SFU）符号链接解析使用的同步读返回一个 81 字节、DataOffset 为 0 且 DataLength 为 1067 的 READ 响应，使客户端从 448 字节的接收对象中越界复制 1067 字节（KASAN 报告 slab-out-of-bounds，一般场景最多可达约 16 KiB），导致内核堆内存信息泄露并可触发内核异常。\n修复版本中通过在 SMB2_read() 内新增本地变量 data_offset，将小于 read_rsp_size 的 DataOffset（含 0 及与响应头重叠的情况）钳位为 read_rsp_size，与 handle_read_data() 对异步读路径的处理保持一致；同时新增校验，当 *nbytes 非零且 data_offset + *nbytes 超出 rsp_iov.iov_len 时返回 EIO 并将读取长度置零，memcpy 复制起点改用钳位后的 data_offset，越界数据区被直接拒绝，上述越界复制链路被切断。稳定分支 7.3.2 以回移 commit 1ba1937de005 修复，主线自 7.4-rc1 起包含修复 commit 2ec9cdf469dd。",
+    "effects": [
+      {
+        "comp_name": "linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.7,7.3.2)",
+            "min_fixed_version": "7.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界读取",
+    "kind_en": "越界读取",
+    "last_modified_time": "2026-11-07",
+    "level": "High",
+    "mps_id": "MPS-tzio-qh83",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tzio-qh83",
+        "name": "https://www.oscs1024.com/hd/MPS-tzio-qh83"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-99272",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-99272"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/1ba1937de005e261a8858f45bfef5da7458df94c",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/2ec9cdf469dd32bcf33073aeb30c08e9356e0ca1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "Linux内核SMB客户端越界读漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-99272",
+    "cvss": {},
+    "cvss_score": 8.2,
+    "cvss_vector": "",
+    "cwe": "CWE-125",
+    "description": "Linux kernel 是开源操作系统内核，其 fs/smb/client 目录下的 CIFS/SMB 客户端（cifs 模块）负责在 Linux 主机上挂载和访问 SMB/CIFS 网络共享。\n受影响版本中，SMB2_read() 收到服务器返回的 READ 响应后，直接以 le32_to_cpu(rsp->DataLength) 作为复制长度、(char *)rsp + rsp->DataOffset 作为复制起点执行 memcpy，未校验该数据区是否落在实际收到的响应缓冲区内；当 DataOffset 为 0 时 smb2_get_data_area_len() 将数据区长度按 0 处理，smb2_check_message() 仅要求帧长不小于固定响应长度，短帧因此通过校验，而 SMB2_read() 仍使用服务器提供的 DataLength，仅受 CIFS_MAX_MSGSIZE 与调用方长度上限约束。恶意服务器可对 mfsymlinks（或 SFU）符号链接解析使用的同步读返回一个 81 字节、DataOffset 为 0 且 DataLength 为 1067 的 READ 响应，使客户端从 448 字节的接收对象中越界复制 1067 字节（KASAN 报告 slab-out-of-bounds，一般场景最多可达约 16 KiB），导致内核堆内存信息泄露并可触发内核异常。\n修复版本中通过在 SMB2_read() 内新增本地变量 data_offset，将小于 read_rsp_size 的 DataOffset（含 0 及与响应头重叠的情况）钳位为 read_rsp_size，与 handle_read_data() 对异步读路径的处理保持一致；同时新增校验，当 *nbytes 非零且 data_offset + *nbytes 超出 rsp_iov.iov_len 时返回 EIO 并将读取长度置零，memcpy 复制起点改用钳位后的 data_offset，越界数据区被直接拒绝，上述越界复制链路被切断。稳定分支 7.3.2 以回移 commit 1ba1937de005 修复，主线自 7.4-rc1 起包含修复 commit 2ec9cdf469dd。",
+    "effects": [
+      {
+        "comp_name": "linux_kernel",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.7,7.3.2)",
+            "min_fixed_version": "7.3.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界读取",
+    "kind_en": "Out-of-bounds Read",
+    "last_modified_time": "2026-11-07",
+    "level": "High",
+    "mps_id": "MPS-tzio-qh83",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-07",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-tzio-qh83",
+        "name": "https://www.oscs1024.com/hd/MPS-tzio-qh83"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-99272",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-99272"
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/1ba1937de005e261a8858f45bfef5da7458df94c",
+        "name": ""
+      },
+      {
+        "url": "https://git.kernel.org/stable/c/2ec9cdf469dd32bcf33073aeb30c08e9356e0ca1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "Linux内核SMB客户端越界读漏洞"
+  },
+  "first_saved_at": "2026-11-07T15:20:00+00:00"
+}
