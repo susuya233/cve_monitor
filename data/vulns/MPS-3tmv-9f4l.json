@@ -1,0 +1,169 @@
+{
+  "saved_at": "2026-11-08T03:53:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3tmv-9f4l",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-123614",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-122",
+    "description": "imgproxy是一个开源（Apache-2.0许可）的Go语言图片处理代理服务，常用于按需缩放、转换与加速网站图片，其内置的vips图像加载模块以C代码实现各类图片格式的解析与加载。\n受影响版本中，ICO加载器vips/icoload.c的vips_foreign_load_ico_header函数从攻击者可控的ICO目录项读取32位data_size，并以data_size + BMP_FILE_HEADER_LEN计算堆缓冲区分配大小，缺少上界校验；当data_size大于UINT32_MAX - BMP_FILE_HEADER_LEN时，该32位加法发生回绕（如data_size为0xfffffff5时分配大小回绕为3字节），而actual_data指向缓冲区偏移14字节处，vips_foreign_load_read_full仍按原始data_size将图像数据写入该过小缓冲区，造成堆缓冲区溢出，远程攻击者可通过提交构造的ICO图片导致进程崩溃或可能实现任意代码执行。\n修复版本中通过在分配前引入MAX_ICO_ENTRY_DATA_SIZE（10MB）上限校验，超过上限的data_size直接拒绝解析，从根源消除32位加法回绕；同时将加法结果统一保存为full_data_size使用，新增VIPS_MALLOC返回值判空与full_data_size不小于BMP位图信息头长度的边界校验，并在读取失败等错误路径释放已分配缓冲区。",
+    "effects": [
+      {
+        "comp_name": "github.com/imgproxy/imgproxy/v4",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.0.16)",
+            "min_fixed_version": "4.0.16",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-11-08",
+    "level": "Critical",
+    "mps_id": "MPS-3tmv-9f4l",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3tmv-9f4l",
+        "name": "https://www.oscs1024.com/hd/MPS-3tmv-9f4l"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123614",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-123614"
+      },
+      {
+        "url": "https://github.com/imgproxy/imgproxy/security/advisories/GHSA-hff9-5pqw-6w9f",
+        "name": "GitHub Security Advisory (GHSA-hff9-5pqw-6w9f)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/imgproxy-4.0.0-before-4.0.16-heap-buffer-overflow-via-ico-loader-integer-overflow",
+        "name": "VulnCheck Advisory: imgproxy 4.0.0 before 4.0.16 Heap Buffer Overflow via ICO Loader Integer Overflow"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "imgproxy ICO加载器堆溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-123614",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-122",
+    "description": "imgproxy是一个开源（Apache-2.0许可）的Go语言图片处理代理服务，常用于按需缩放、转换与加速网站图片，其内置的vips图像加载模块以C代码实现各类图片格式的解析与加载。\n受影响版本中，ICO加载器vips/icoload.c的vips_foreign_load_ico_header函数从攻击者可控的ICO目录项读取32位data_size，并以data_size + BMP_FILE_HEADER_LEN计算堆缓冲区分配大小，缺少上界校验；当data_size大于UINT32_MAX - BMP_FILE_HEADER_LEN时，该32位加法发生回绕（如data_size为0xfffffff5时分配大小回绕为3字节），而actual_data指向缓冲区偏移14字节处，vips_foreign_load_read_full仍按原始data_size将图像数据写入该过小缓冲区，造成堆缓冲区溢出，远程攻击者可通过提交构造的ICO图片导致进程崩溃或可能实现任意代码执行。\n修复版本中通过在分配前引入MAX_ICO_ENTRY_DATA_SIZE（10MB）上限校验，超过上限的data_size直接拒绝解析，从根源消除32位加法回绕；同时将加法结果统一保存为full_data_size使用，新增VIPS_MALLOC返回值判空与full_data_size不小于BMP位图信息头长度的边界校验，并在读取失败等错误路径释放已分配缓冲区。",
+    "effects": [
+      {
+        "comp_name": "github.com/imgproxy/imgproxy/v4",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.0.16)",
+            "min_fixed_version": "4.0.16",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-11-08",
+    "level": "Critical",
+    "mps_id": "MPS-3tmv-9f4l",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-3tmv-9f4l",
+        "name": "https://www.oscs1024.com/hd/MPS-3tmv-9f4l"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123614",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-123614"
+      },
+      {
+        "url": "https://github.com/imgproxy/imgproxy/security/advisories/GHSA-hff9-5pqw-6w9f",
+        "name": "GitHub Security Advisory (GHSA-hff9-5pqw-6w9f)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/imgproxy-4.0.0-before-4.0.16-heap-buffer-overflow-via-ico-loader-integer-overflow",
+        "name": "VulnCheck Advisory: imgproxy 4.0.0 before 4.0.16 Heap Buffer Overflow via ICO Loader Integer Overflow"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go"
+    ],
+    "title": "imgproxy ICO加载器堆溢出漏洞"
+  },
+  "first_saved_at": "2026-11-08T03:53:33+00:00"
+}

@@ -1,0 +1,197 @@
+{
+  "saved_at": "2026-11-08T03:53:30+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-y4ml-9bq3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-123616",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-789",
+    "description": "imgproxy 是 Evil Martians 开源的高性能图像处理服务，基于 Go 与 libvips 构建，通常以容器形式部署，通过 URL 参数对远程或本地图像源执行缩放与格式转换。\n受影响版本中，vips/icoload.c 的 vips_foreign_load_ico_header 函数从选中的 ICO 目录项读取攻击者可控的 data_size 字段，未经上界检查直接传入 VIPS_MALLOC 分配 data_size + BMP_FILE_HEADER_LEN 字节内存，也未校验文件在声明的 data_offset 处是否实际包含相应数据。攻击者将一个仅 23 字节、目录项声明 data_size 为 0xfa000068（约 4GB）的 ICO 文件作为源图提交处理请求，触发约 4GB 的内存分配：内存受限的容器中 worker 进程被 OOM 终止，内存充裕的主机上每次请求产生约 4GB 的瞬时占用，重复请求造成内存耗尽与服务不可用。\n修复版本中通过在 vips/icoload.c 引入 MAX_ICO_ENTRY_DATA_SIZE（10 MB）上界并在头部解析阶段拒绝超限的 data_size，同时为 VIPS_MALLOC 结果增加判空、在源读取失败与缓冲区不足以容纳 BMP 头的路径释放已分配内存，切断了超大声明值进入内存分配的因果链，畸形 ICO 文件不再导致无界分配或进程崩溃。",
+    "effects": [
+      {
+        "comp_name": "github.com/imgproxy/imgproxy/v3",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[3.3.0,4.0.16)",
+            "min_fixed_version": "4.0.16",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "imgproxy",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.3.0,4.0.16)",
+            "min_fixed_version": "4.0.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的内存分配",
+    "kind_en": "大小值过大的内存分配",
+    "last_modified_time": "2026-11-08",
+    "level": "High",
+    "mps_id": "MPS-y4ml-9bq3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-y4ml-9bq3",
+        "name": "https://www.oscs1024.com/hd/MPS-y4ml-9bq3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123616",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-123616"
+      },
+      {
+        "url": "https://github.com/imgproxy/imgproxy/security/advisories/GHSA-mmq5-xm89-9pfg",
+        "name": "GitHub Security Advisory (GHSA-mmq5-xm89-9pfg)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/imgproxy-3.3.0-before-4.0.16-memory-exhaustion-dos-via-ico-loader",
+        "name": "VulnCheck Advisory: imgproxy 3.3.0 before 4.0.16 Memory Exhaustion DoS via ICO Loader"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go",
+      "应用软件"
+    ],
+    "title": "imgproxy ICO加载器内存耗尽漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-123616",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-789",
+    "description": "imgproxy 是 Evil Martians 开源的高性能图像处理服务，基于 Go 与 libvips 构建，通常以容器形式部署，通过 URL 参数对远程或本地图像源执行缩放与格式转换。\n受影响版本中，vips/icoload.c 的 vips_foreign_load_ico_header 函数从选中的 ICO 目录项读取攻击者可控的 data_size 字段，未经上界检查直接传入 VIPS_MALLOC 分配 data_size + BMP_FILE_HEADER_LEN 字节内存，也未校验文件在声明的 data_offset 处是否实际包含相应数据。攻击者将一个仅 23 字节、目录项声明 data_size 为 0xfa000068（约 4GB）的 ICO 文件作为源图提交处理请求，触发约 4GB 的内存分配：内存受限的容器中 worker 进程被 OOM 终止，内存充裕的主机上每次请求产生约 4GB 的瞬时占用，重复请求造成内存耗尽与服务不可用。\n修复版本中通过在 vips/icoload.c 引入 MAX_ICO_ENTRY_DATA_SIZE（10 MB）上界并在头部解析阶段拒绝超限的 data_size，同时为 VIPS_MALLOC 结果增加判空、在源读取失败与缓冲区不足以容纳 BMP 头的路径释放已分配内存，切断了超大声明值进入内存分配的因果链，畸形 ICO 文件不再导致无界分配或进程崩溃。",
+    "effects": [
+      {
+        "comp_name": "github.com/imgproxy/imgproxy/v3",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[3.3.0,4.0.16)",
+            "min_fixed_version": "4.0.16",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "imgproxy",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.3.0,4.0.16)",
+            "min_fixed_version": "4.0.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的内存分配",
+    "kind_en": "Memory Allocation with Excessive Size Value",
+    "last_modified_time": "2026-11-08",
+    "level": "High",
+    "mps_id": "MPS-y4ml-9bq3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-08",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-y4ml-9bq3",
+        "name": "https://www.oscs1024.com/hd/MPS-y4ml-9bq3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123616",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-123616"
+      },
+      {
+        "url": "https://github.com/imgproxy/imgproxy/security/advisories/GHSA-mmq5-xm89-9pfg",
+        "name": "GitHub Security Advisory (GHSA-mmq5-xm89-9pfg)"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/imgproxy-3.3.0-before-4.0.16-memory-exhaustion-dos-via-ico-loader",
+        "name": "VulnCheck Advisory: imgproxy 3.3.0 before 4.0.16 Memory Exhaustion DoS via ICO Loader"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go",
+      "应用软件"
+    ],
+    "title": "imgproxy ICO加载器内存耗尽漏洞"
+  },
+  "first_saved_at": "2026-11-08T03:53:30+00:00"
+}
