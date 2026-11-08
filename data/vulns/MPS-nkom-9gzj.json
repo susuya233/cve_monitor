@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-11-08T20:57:05+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-nkom-9gzj",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-9764",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@us.ibm.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "IBM Bob Shell 是 IBM 发布的商业人工智能编程助手，用于在本地工作区提供代码辅助，并加载工作区中定义的 Model Context Protocol（MCP）服务器。\n受影响版本中，Bob Shell 对仓库提供的 MCP 服务器配置缺少充分校验。用户打开不可信仓库时，仓库内定义的 MCP 服务器会在未经用户明确同意的情况下自动初始化并执行，远程攻击者可由此在本机注入并执行任意代码。\n修复版本中通过引入 Workspace Folder Trust 机制，在用户明确信任仓库之前阻止初始化工作区定义的 MCP 服务器及其他工作区配置，使未信任仓库中的 MCP 服务器不再自动执行。",
+    "effects": [
+      {
+        "comp_name": "bob",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.4,2.0.2)",
+            "min_fixed_version": "2.0.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-11-09",
+    "level": "High",
+    "mps_id": "MPS-nkom-9gzj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-nkom-9gzj",
+        "name": "https://www.oscs1024.com/hd/MPS-nkom-9gzj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-9764",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-9764"
+      },
+      {
+        "url": "https://www.ibm.com/support/pages/node/7291535",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "IBM Bob代码注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-9764",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@us.ibm.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-94",
+    "description": "IBM Bob Shell 是 IBM 发布的商业人工智能编程助手，用于在本地工作区提供代码辅助，并加载工作区中定义的 Model Context Protocol（MCP）服务器。\n受影响版本中，Bob Shell 对仓库提供的 MCP 服务器配置缺少充分校验。用户打开不可信仓库时，仓库内定义的 MCP 服务器会在未经用户明确同意的情况下自动初始化并执行，远程攻击者可由此在本机注入并执行任意代码。\n修复版本中通过引入 Workspace Folder Trust 机制，在用户明确信任仓库之前阻止初始化工作区定义的 MCP 服务器及其他工作区配置，使未信任仓库中的 MCP 服务器不再自动执行。",
+    "effects": [
+      {
+        "comp_name": "bob",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.4,2.0.2)",
+            "min_fixed_version": "2.0.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-11-09",
+    "level": "High",
+    "mps_id": "MPS-nkom-9gzj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-09",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-nkom-9gzj",
+        "name": "https://www.oscs1024.com/hd/MPS-nkom-9gzj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-9764",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-9764"
+      },
+      {
+        "url": "https://www.ibm.com/support/pages/node/7291535",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "IBM Bob代码注入漏洞"
+  },
+  "first_saved_at": "2026-11-08T20:57:05+00:00"
+}
