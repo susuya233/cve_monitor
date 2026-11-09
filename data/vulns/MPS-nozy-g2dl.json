@@ -1,0 +1,147 @@
+{
+  "saved_at": "2026-11-09T18:08:19+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-nozy-g2dl",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-121576",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-266",
+    "description": "AtlasAiDev MCP Server for WordPress（插件标识 ai-workflow-automation-ai-agent-hub，亦称 AtlasMCP）是发布在 WordPress.org 的开源插件，把站点暴露为模型上下文协议服务器，供已连接的 AI 应用按当前登录用户的权限读写内容、用户与设置。\n受影响版本中，内容模型工具 awfah-content-model/update-meta 经默认 MCP 路由 awfah_mcp/mcp 接收 object、id、key 与 value，并由 Content_Model_Abilities::update_meta 调用 update_metadata。Meta_Policy::refusal 只对用户 meta 键做精确字符串锁定，锁定表包含当前表前缀的 capabilities 与 user_level，但不覆盖大小写、重音或尾随空白形成的形近键，也不覆盖多站点上其他站点的角色键。Subscriber 修改自身用户时，can_write_meta 对不以 \"_\" 开头的键直接返回允许，形近或未锁定的角色键因此写入数据库，并在默认排序规则下命中真实角色行，调用者角色被抬升。\n修复版本中通过在 Meta_Policy::refusal 增加 fold 规范化比较，并按 base_prefix 正则锁定各站点的 capabilities 与 user_level，同时让 Content_Model_Abilities::can_write_meta 调用 Meta_Policy::user_key_allowed，使没有 edit_users 能力的用户只能写入自身资料字段，阻断低权限账号改写角色 meta。",
+    "effects": [
+      {
+        "comp_name": "ai-workflow-automation-ai-agent-hub",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.2)",
+            "min_fixed_version": "2.0.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "特权授予不正确",
+    "kind_en": "权限分配不正确",
+    "last_modified_time": "2026-11-10",
+    "level": "High",
+    "mps_id": "MPS-nozy-g2dl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-nozy-g2dl",
+        "name": "https://www.oscs1024.com/hd/MPS-nozy-g2dl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121576",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-121576"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/ai-workflow-automation-ai-agent-hub/vulnerability/wordpress-mcp-server-for-wordpress-plugin-2-0-1-privilege-escalation-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "AtlasMCP权限提升漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-121576",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-266",
+    "description": "AtlasAiDev MCP Server for WordPress（插件标识 ai-workflow-automation-ai-agent-hub，亦称 AtlasMCP）是发布在 WordPress.org 的开源插件，把站点暴露为模型上下文协议服务器，供已连接的 AI 应用按当前登录用户的权限读写内容、用户与设置。\n受影响版本中，内容模型工具 awfah-content-model/update-meta 经默认 MCP 路由 awfah_mcp/mcp 接收 object、id、key 与 value，并由 Content_Model_Abilities::update_meta 调用 update_metadata。Meta_Policy::refusal 只对用户 meta 键做精确字符串锁定，锁定表包含当前表前缀的 capabilities 与 user_level，但不覆盖大小写、重音或尾随空白形成的形近键，也不覆盖多站点上其他站点的角色键。Subscriber 修改自身用户时，can_write_meta 对不以 \"_\" 开头的键直接返回允许，形近或未锁定的角色键因此写入数据库，并在默认排序规则下命中真实角色行，调用者角色被抬升。\n修复版本中通过在 Meta_Policy::refusal 增加 fold 规范化比较，并按 base_prefix 正则锁定各站点的 capabilities 与 user_level，同时让 Content_Model_Abilities::can_write_meta 调用 Meta_Policy::user_key_allowed，使没有 edit_users 能力的用户只能写入自身资料字段，阻断低权限账号改写角色 meta。",
+    "effects": [
+      {
+        "comp_name": "ai-workflow-automation-ai-agent-hub",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.2)",
+            "min_fixed_version": "2.0.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "特权授予不正确",
+    "kind_en": "Incorrect Privilege Assignment",
+    "last_modified_time": "2026-11-10",
+    "level": "High",
+    "mps_id": "MPS-nozy-g2dl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-nozy-g2dl",
+        "name": "https://www.oscs1024.com/hd/MPS-nozy-g2dl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121576",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-121576"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/ai-workflow-automation-ai-agent-hub/vulnerability/wordpress-mcp-server-for-wordpress-plugin-2-0-1-privilege-escalation-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "AtlasMCP权限提升漏洞"
+  },
+  "first_saved_at": "2026-11-09T18:08:19+00:00"
+}

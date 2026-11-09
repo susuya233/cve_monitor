@@ -1,0 +1,163 @@
+{
+  "saved_at": "2026-11-09T18:08:15+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4x5a-rgjd",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-124683",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "emo@eclipse.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-407",
+    "description": "Eclipse Langium 是 Eclipse 基金会维护的开源语言工程库，以 npm 包 langium 分发，运行于 Node.js，用于为领域特定语言构建词法分析、语法分析与 Language Server Protocol 语言服务。\n受影响版本中，可选的 IndentationAwareTokenBuilder 在生成 DEDENT 词法单元时，getLineNumber 对当前位置之前的全部文本执行 substring 并按换行切分以重算行号，dedentMatcher 还会用正则再次扫描该前缀末尾的换行。缩进在多数行发生变化时，词法分析时间随文档长度呈二次增长；IndentationAwareLexer.tokenize 在 Node.js 事件循环中同步执行，数百 KB 文档即可阻塞事件循环数十秒，使同一进程中的服务不可用。使用 DefaultLexer 与 DefaultTokenBuilder 的语言不进入该路径。\n修复版本中通过让 getLineNumber 记录上次偏移与行号并只扫描新增区间，同时将 DEDENT 前的换行长度改为从当前偏移向前逐字符计数，消除对整段前缀的重复复制与扫描，使该词法路径恢复为线性时间。",
+    "effects": [
+      {
+        "comp_name": "langium",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[3.2.0,4.4.1)",
+            "min_fixed_version": "4.4.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "低效算法复杂性",
+    "kind_en": "低效的算法复杂性",
+    "last_modified_time": "2026-11-10",
+    "level": "High",
+    "mps_id": "MPS-4x5a-rgjd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4x5a-rgjd",
+        "name": "https://www.oscs1024.com/hd/MPS-4x5a-rgjd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-124683",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-124683"
+      },
+      {
+        "url": "https://gitlab.eclipse.org/security/vulnerability-reports/-/work_items/1069",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/eclipse-langium/langium/security/advisories/GHSA-297v-g8mm-qj4h",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.eclipse.org/security/cve-assignment/-/work_items/553",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "Langium缩进词法拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-124683",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "emo@eclipse.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-407",
+    "description": "Eclipse Langium 是 Eclipse 基金会维护的开源语言工程库，以 npm 包 langium 分发，运行于 Node.js，用于为领域特定语言构建词法分析、语法分析与 Language Server Protocol 语言服务。\n受影响版本中，可选的 IndentationAwareTokenBuilder 在生成 DEDENT 词法单元时，getLineNumber 对当前位置之前的全部文本执行 substring 并按换行切分以重算行号，dedentMatcher 还会用正则再次扫描该前缀末尾的换行。缩进在多数行发生变化时，词法分析时间随文档长度呈二次增长；IndentationAwareLexer.tokenize 在 Node.js 事件循环中同步执行，数百 KB 文档即可阻塞事件循环数十秒，使同一进程中的服务不可用。使用 DefaultLexer 与 DefaultTokenBuilder 的语言不进入该路径。\n修复版本中通过让 getLineNumber 记录上次偏移与行号并只扫描新增区间，同时将 DEDENT 前的换行长度改为从当前偏移向前逐字符计数，消除对整段前缀的重复复制与扫描，使该词法路径恢复为线性时间。",
+    "effects": [
+      {
+        "comp_name": "langium",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[3.2.0,4.4.1)",
+            "min_fixed_version": "4.4.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "低效算法复杂性",
+    "kind_en": "Inefficient Algorithmic Complexity",
+    "last_modified_time": "2026-11-10",
+    "level": "High",
+    "mps_id": "MPS-4x5a-rgjd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4x5a-rgjd",
+        "name": "https://www.oscs1024.com/hd/MPS-4x5a-rgjd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-124683",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-124683"
+      },
+      {
+        "url": "https://gitlab.eclipse.org/security/vulnerability-reports/-/work_items/1069",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/eclipse-langium/langium/security/advisories/GHSA-297v-g8mm-qj4h",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.eclipse.org/security/cve-assignment/-/work_items/553",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "Langium缩进词法拒绝服务"
+  },
+  "first_saved_at": "2026-11-09T18:08:15+00:00"
+}
