@@ -1,0 +1,215 @@
+{
+  "saved_at": "2026-11-10T17:25:06+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d414-82c3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-111241",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-377",
+    "description": "Apache TomEE 是 Apache 软件基金会维护的开源 Jakarta EE 应用服务器，基于 Tomcat 提供 EJB 容器，有状态会话 Bean 的钝化由 openejb-core 中的 PassivationStrategy 实现。\n受影响版本中，有状态会话 Bean 容器的 Passivator 被配置为非默认的 org.apache.openejb.core.stateful.RAFPassivater 时，passivate 方法用 RandomAccessFile 以 rw 模式打开共享系统临时目录中名称可预测的 passivation 加递增序号与 .ser 后缀文件，并复用目录中已经存在的同名文件。activate 方法按记录的偏移读取同一文件，再调用 Serializer.deserialize 还原 Bean 状态。能够写入该临时目录的本地用户可以读取钝化会话状态，或预先放入数据，使服务器在激活时反序列化这些数据，从而以服务器进程身份执行代码。\n修复版本中通过把钝化文件放到 java.io.tmpdir 下由 Files.createTempDirectory 创建的仅属主可访问且名称不可预测的目录，并在 createPassivationFile 中用 Files.createFile 拒绝已存在文件和符号链接，切断本地用户复用共享临时目录中可预测文件并进入反序列化的路径。",
+    "effects": [
+      {
+        "comp_name": "org.apache.openejb:openejb-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[4.0.0-beta-1,4.7.5]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.apache.tomee:openejb-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[7.0.0-M1,10.0.0-M1)",
+            "min_fixed_version": "10.0.0-M1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.0.0-M1,11.0.0-M2)",
+            "min_fixed_version": "11.0.0-M2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.0.0-M1,10.3.0)",
+            "min_fixed_version": "10.3.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不安全的临时文件",
+    "kind_en": "不安全的临时文件",
+    "last_modified_time": "2026-11-10",
+    "level": "High",
+    "mps_id": "MPS-d414-82c3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-10",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12606.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-111241",
+        "name": ""
+      },
+      {
+        "url": "https://lists.apache.org/thread/kbpc7t241483pnxo2sccrhyp6pjkwbq2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomee/commit/3205f69fa69e41bf4112e9c85ad29f08a56ae03a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomee/commit/b2dbb1236ae8e858d6f402bff737ec180d629d3e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomee/pull/3082",
+        "name": ""
+      },
+      {
+        "url": "https://tomee.apache.org/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "TomEE钝化文件本地执行",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-111241",
+    "cvss": {},
+    "cvss_score": 7.8,
+    "cvss_vector": "",
+    "cwe": "CWE-377",
+    "description": "Apache TomEE 是 Apache 软件基金会维护的开源 Jakarta EE 应用服务器，基于 Tomcat 提供 EJB 容器，有状态会话 Bean 的钝化由 openejb-core 中的 PassivationStrategy 实现。\n受影响版本中，有状态会话 Bean 容器的 Passivator 被配置为非默认的 org.apache.openejb.core.stateful.RAFPassivater 时，passivate 方法用 RandomAccessFile 以 rw 模式打开共享系统临时目录中名称可预测的 passivation 加递增序号与 .ser 后缀文件，并复用目录中已经存在的同名文件。activate 方法按记录的偏移读取同一文件，再调用 Serializer.deserialize 还原 Bean 状态。能够写入该临时目录的本地用户可以读取钝化会话状态，或预先放入数据，使服务器在激活时反序列化这些数据，从而以服务器进程身份执行代码。\n修复版本中通过把钝化文件放到 java.io.tmpdir 下由 Files.createTempDirectory 创建的仅属主可访问且名称不可预测的目录，并在 createPassivationFile 中用 Files.createFile 拒绝已存在文件和符号链接，切断本地用户复用共享临时目录中可预测文件并进入反序列化的路径。",
+    "effects": [
+      {
+        "comp_name": "org.apache.openejb:openejb-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[4.0.0-beta-1,4.7.5]",
+            "min_fixed_version": "",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.apache.tomee:openejb-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[7.0.0-M1,10.0.0-M1)",
+            "min_fixed_version": "10.0.0-M1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[11.0.0-M1,11.0.0-M2)",
+            "min_fixed_version": "11.0.0-M2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.0.0-M1,10.3.0)",
+            "min_fixed_version": "10.3.0",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不安全的临时文件",
+    "kind_en": "Insecure Temporary File",
+    "last_modified_time": "2026-11-10",
+    "level": "High",
+    "mps_id": "MPS-d414-82c3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-10",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12606.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-111241",
+        "name": ""
+      },
+      {
+        "url": "https://lists.apache.org/thread/kbpc7t241483pnxo2sccrhyp6pjkwbq2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomee/commit/3205f69fa69e41bf4112e9c85ad29f08a56ae03a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomee/commit/b2dbb1236ae8e858d6f402bff737ec180d629d3e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/tomee/pull/3082",
+        "name": ""
+      },
+      {
+        "url": "https://tomee.apache.org/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "TomEE钝化文件本地执行"
+  },
+  "first_saved_at": "2026-11-10T17:25:06+00:00"
+}
