@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-11-10T01:50:18+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-mx1z-dlbt",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-125404",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:A/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-191",
+    "description": "Ettercap 是开源的网络嗅探与中间人工具，用于在链路层捕获、解析并解密流量，进程通常以 root 权限运行。\n受影响版本中，src/ec_encryption_ccmp.c 的 ccmp_decrypt 在将无符号长度 len 减去 8 字节 CCMP 尾部 WPA_CCMP_TRAILER 之前没有检查下限。Ettercap 以 802.11 监控模式运行且已安装 WPA2/CCMP 安全关联时，decode_wifi 把数据帧交给 wpa_decrypt，再进入 wpa_ccmp_decrypt。len 小于 8 时 size_t 减法回绕到接近 SIZE_MAX，解密循环对调用方栈上的变长数组 decbuf 连续写入 AES 块，可在该进程中造成栈缓冲区溢出。\n修复版本中通过在 wpa_ccmp_decrypt 与 ccmp_decrypt 进入减法之前拒绝短于 WPA_CCMP_TRAILER 的帧，并将 len 大于 UINT16_MAX 的检查前移到变长数组 decbuf 声明之前，阻断下溢后的栈写入。截至 2026-11-10，该改动已合入 master，但尚未进入已发布版本。",
+    "effects": [
+      {
+        "comp_name": "ettercap",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.8.4.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "超界折返",
+    "kind_en": "整数下溢（环绕或环绕）",
+    "last_modified_time": "2026-11-10",
+    "level": "High",
+    "mps_id": "MPS-mx1z-dlbt",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mx1z-dlbt",
+        "name": "https://www.oscs1024.com/hd/MPS-mx1z-dlbt"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-125404",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-125404"
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/security/advisories/GHSA-j37f-7jx3-rf8j",
+        "name": "GitHub Security Advisory (GHSA-j37f-7jx3-rf8j)"
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/commit/1d8badb713579419a29a494bb463a1af59707e98",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/pull/1330",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/blob/v0.8.4.1/src/ec_encryption_ccmp.c#L190-L203",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ettercap-through-0.8.4.1-stack-buffer-overflow-via-wpa-ccmp-decryption",
+        "name": "VulnCheck Advisory: Ettercap through 0.8.4.1 Stack Buffer Overflow via WPA CCMP Decryption"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Ettercap整数下溢漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-125404",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:A/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-191",
+    "description": "Ettercap 是开源的网络嗅探与中间人工具，用于在链路层捕获、解析并解密流量，进程通常以 root 权限运行。\n受影响版本中，src/ec_encryption_ccmp.c 的 ccmp_decrypt 在将无符号长度 len 减去 8 字节 CCMP 尾部 WPA_CCMP_TRAILER 之前没有检查下限。Ettercap 以 802.11 监控模式运行且已安装 WPA2/CCMP 安全关联时，decode_wifi 把数据帧交给 wpa_decrypt，再进入 wpa_ccmp_decrypt。len 小于 8 时 size_t 减法回绕到接近 SIZE_MAX，解密循环对调用方栈上的变长数组 decbuf 连续写入 AES 块，可在该进程中造成栈缓冲区溢出。\n修复版本中通过在 wpa_ccmp_decrypt 与 ccmp_decrypt 进入减法之前拒绝短于 WPA_CCMP_TRAILER 的帧，并将 len 大于 UINT16_MAX 的检查前移到变长数组 decbuf 声明之前，阻断下溢后的栈写入。截至 2026-11-10，该改动已合入 master，但尚未进入已发布版本。",
+    "effects": [
+      {
+        "comp_name": "ettercap",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.8.4.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "超界折返",
+    "kind_en": "Integer Underflow (Wrap or Wraparound)",
+    "last_modified_time": "2026-11-10",
+    "level": "High",
+    "mps_id": "MPS-mx1z-dlbt",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-mx1z-dlbt",
+        "name": "https://www.oscs1024.com/hd/MPS-mx1z-dlbt"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-125404",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-125404"
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/security/advisories/GHSA-j37f-7jx3-rf8j",
+        "name": "GitHub Security Advisory (GHSA-j37f-7jx3-rf8j)"
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/commit/1d8badb713579419a29a494bb463a1af59707e98",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/pull/1330",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/blob/v0.8.4.1/src/ec_encryption_ccmp.c#L190-L203",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ettercap-through-0.8.4.1-stack-buffer-overflow-via-wpa-ccmp-decryption",
+        "name": "VulnCheck Advisory: Ettercap through 0.8.4.1 Stack Buffer Overflow via WPA CCMP Decryption"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Ettercap整数下溢漏洞"
+  },
+  "first_saved_at": "2026-11-10T01:50:18+00:00"
+}

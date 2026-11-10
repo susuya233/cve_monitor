@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-11-06T21:12:56+00:00",
+  "saved_at": "2026-11-10T01:50:27+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-gdob-khe1",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5sp4-ezub",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,36 +21,36 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-124040",
+    "cve_id": "CVE-2026-125400",
     "cvss": {
       "cvssv31": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
           "severity": "high",
-          "base_score": 8.1
+          "base_score": 8.8
         }
       ],
       "cvssv4": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "critical",
-          "base_score": 9.2
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
         }
       ]
     },
-    "cvss_score": 9.2,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-416",
-    "description": "CivetWeb 是一个开源的 C 语言嵌入式 Web 服务器与 HTTP 库，可集成到应用程序中提供 HTTP/HTTPS 服务，并通过实验性模块支持 HTTP/2 协议。\n受影响版本中，当服务以 USE_HTTP2 宏编译且配置 enable_http2 开启时，handle_http2() 在处理 HEADERS 帧时将 HPACK 解码出的 :method 与 :path 伪头部值所在的堆缓冲指针同时保存到 conn->request_info 的 request_method、local_uri、request_uri 与 local_uri_raw 字段；流处理结束后 free_buffered_request_header_list() 释放全部请求头部缓冲，但不清空上述别名字段。同一连接上后续收到省略这些伪头部的 HEADERS 帧时，handle_request() 继续读取已释放的指针，访问控制规则所见的方法与路径可能被攻击者影响，也可能因访问已释放内存导致服务崩溃。\n修复版本中通过，上游尚未提供包含修复的版本，issue #1379 仍处于跟踪状态；建议不以 USE_HTTP2 宏编译或在配置中关闭 enable_http2，避免进入存在缺陷的 HTTP/2 处理路径，官方发布修复版本后应及时升级。",
+    "description": "Ettercap 是开源局域网嗅探与中间人工具，可按过滤器捕获并改写网络流量。\n受影响版本中，src/ec_filter.c 的 func_pcre 在 PCRE2 的 level 5 替换路径上先执行 pcre2_match_data_free，再调用 pcre2_get_ovector_pointer 读取已释放 match data 中的 ovector。该指针随后决定 SAFE_CALLOC 的分配大小，并作为对 po->DATA.data 执行 memcpy 的偏移和长度，邻近网络上的攻击者发送与已加载 pcre_regex 替换规则匹配的数据包即可破坏堆内存；进程通常以 root 身份运行，可进一步导致代码执行。PCRE1 路径使用栈上 ovec 数组，不受此问题影响。\n修复版本中通过在释放 match data 之前将 ovector 偏移复制到栈数组，切断对已释放对象的后续读取，并使报文改写只使用这份本地副本，同时在 level 5 与 level 6 的未匹配路径释放 match data。",
     "effects": [
       {
-        "comp_name": "civetweb",
+        "comp_name": "ettercap",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,1.16]",
+            "affected_version": "(-∞,0.8.4.1]",
             "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
@@ -67,43 +67,48 @@
     "fix_suggestion": "建议修复",
     "kind": "UAF",
     "kind_en": "免费后使用",
-    "last_modified_time": "2026-11-07",
-    "level": "Critical",
-    "mps_id": "MPS-gdob-khe1",
+    "last_modified_time": "2026-11-10",
+    "level": "High",
+    "mps_id": "MPS-5sp4-ezub",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-11-07",
+    "published_time": "2026-11-10",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-gdob-khe1",
-        "name": "https://www.oscs1024.com/hd/MPS-gdob-khe1"
+        "url": "https://www.oscs1024.com/hd/MPS-5sp4-ezub",
+        "name": "https://www.oscs1024.com/hd/MPS-5sp4-ezub"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-124040",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-124040"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-125400",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-125400"
       },
       {
-        "url": "https://github.com/civetweb/civetweb/issues/1379",
-        "name": "GitHub Issue #1379"
+        "url": "https://github.com/Ettercap/ettercap/security/advisories/GHSA-f3j5-rhhr-85j5",
+        "name": "GitHub Security Advisory (GHSA-f3j5-rhhr-85j5)"
       },
       {
-        "url": "https://github.com/civetweb/civetweb",
+        "url": "https://github.com/Ettercap/ettercap/commit/1d8badb713579419a29a494bb463a1af59707e98",
         "name": ""
       },
       {
-        "url": "https://github.com/civetweb/civetweb/blob/v1.16/src/http2.inl#L1574-L1581",
+        "url": "https://github.com/Ettercap/ettercap/pull/1330",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/civetweb-through-1.16-http-2-use-after-free-via-stale-pseudo-header-state",
-        "name": "VulnCheck Advisory: CivetWeb through 1.16 HTTP/2 Use-After-Free via Stale Pseudo-Header State"
+        "url": "https://github.com/Ettercap/ettercap/blob/v0.8.4.1/src/ec_filter.c#L593-L625",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ettercap-through-0.8.4.1-use-after-free-via-pcre2-filter-substitution",
+        "name": "VulnCheck Advisory: Ettercap through 0.8.4.1 Use-After-Free via PCRE2 Filter Substitution"
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "应用软件",
+      "终端软件"
     ],
-    "title": "CivetWeb HTTP/2 释放后重用漏洞",
+    "title": "Ettercap过滤器UAF",
     "_translated": true
   },
   "detail_original": {
@@ -123,36 +128,36 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-124040",
+    "cve_id": "CVE-2026-125400",
     "cvss": {
       "cvssv31": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
           "severity": "high",
-          "base_score": 8.1
+          "base_score": 8.8
         }
       ],
       "cvssv4": [
         {
           "source": "disclosure@vulncheck.com",
-          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-          "severity": "critical",
-          "base_score": 9.2
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
         }
       ]
     },
-    "cvss_score": 9.2,
-    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-416",
-    "description": "CivetWeb 是一个开源的 C 语言嵌入式 Web 服务器与 HTTP 库，可集成到应用程序中提供 HTTP/HTTPS 服务，并通过实验性模块支持 HTTP/2 协议。\n受影响版本中，当服务以 USE_HTTP2 宏编译且配置 enable_http2 开启时，handle_http2() 在处理 HEADERS 帧时将 HPACK 解码出的 :method 与 :path 伪头部值所在的堆缓冲指针同时保存到 conn->request_info 的 request_method、local_uri、request_uri 与 local_uri_raw 字段；流处理结束后 free_buffered_request_header_list() 释放全部请求头部缓冲，但不清空上述别名字段。同一连接上后续收到省略这些伪头部的 HEADERS 帧时，handle_request() 继续读取已释放的指针，访问控制规则所见的方法与路径可能被攻击者影响，也可能因访问已释放内存导致服务崩溃。\n修复版本中通过，上游尚未提供包含修复的版本，issue #1379 仍处于跟踪状态；建议不以 USE_HTTP2 宏编译或在配置中关闭 enable_http2，避免进入存在缺陷的 HTTP/2 处理路径，官方发布修复版本后应及时升级。",
+    "description": "Ettercap 是开源局域网嗅探与中间人工具，可按过滤器捕获并改写网络流量。\n受影响版本中，src/ec_filter.c 的 func_pcre 在 PCRE2 的 level 5 替换路径上先执行 pcre2_match_data_free，再调用 pcre2_get_ovector_pointer 读取已释放 match data 中的 ovector。该指针随后决定 SAFE_CALLOC 的分配大小，并作为对 po->DATA.data 执行 memcpy 的偏移和长度，邻近网络上的攻击者发送与已加载 pcre_regex 替换规则匹配的数据包即可破坏堆内存；进程通常以 root 身份运行，可进一步导致代码执行。PCRE1 路径使用栈上 ovec 数组，不受此问题影响。\n修复版本中通过在释放 match data 之前将 ovector 偏移复制到栈数组，切断对已释放对象的后续读取，并使报文改写只使用这份本地副本，同时在 level 5 与 level 6 的未匹配路径释放 match data。",
     "effects": [
       {
-        "comp_name": "civetweb",
+        "comp_name": "ettercap",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,1.16]",
+            "affected_version": "(-∞,0.8.4.1]",
             "min_fixed_version": "",
             "repository": "unmanaged",
             "solutions": [],
@@ -169,43 +174,48 @@
     "fix_suggestion": "Recommend",
     "kind": "UAF",
     "kind_en": "Use After Free",
-    "last_modified_time": "2026-11-07",
-    "level": "Critical",
-    "mps_id": "MPS-gdob-khe1",
+    "last_modified_time": "2026-11-10",
+    "level": "High",
+    "mps_id": "MPS-5sp4-ezub",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-11-07",
+    "published_time": "2026-11-10",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-gdob-khe1",
-        "name": "https://www.oscs1024.com/hd/MPS-gdob-khe1"
+        "url": "https://www.oscs1024.com/hd/MPS-5sp4-ezub",
+        "name": "https://www.oscs1024.com/hd/MPS-5sp4-ezub"
       },
       {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-124040",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-124040"
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-125400",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-125400"
       },
       {
-        "url": "https://github.com/civetweb/civetweb/issues/1379",
-        "name": "GitHub Issue #1379"
+        "url": "https://github.com/Ettercap/ettercap/security/advisories/GHSA-f3j5-rhhr-85j5",
+        "name": "GitHub Security Advisory (GHSA-f3j5-rhhr-85j5)"
       },
       {
-        "url": "https://github.com/civetweb/civetweb",
+        "url": "https://github.com/Ettercap/ettercap/commit/1d8badb713579419a29a494bb463a1af59707e98",
         "name": ""
       },
       {
-        "url": "https://github.com/civetweb/civetweb/blob/v1.16/src/http2.inl#L1574-L1581",
+        "url": "https://github.com/Ettercap/ettercap/pull/1330",
         "name": ""
       },
       {
-        "url": "https://www.vulncheck.com/advisories/civetweb-through-1.16-http-2-use-after-free-via-stale-pseudo-header-state",
-        "name": "VulnCheck Advisory: CivetWeb through 1.16 HTTP/2 Use-After-Free via Stale Pseudo-Header State"
+        "url": "https://github.com/Ettercap/ettercap/blob/v0.8.4.1/src/ec_filter.c#L593-L625",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ettercap-through-0.8.4.1-use-after-free-via-pcre2-filter-substitution",
+        "name": "VulnCheck Advisory: Ettercap through 0.8.4.1 Use-After-Free via PCRE2 Filter Substitution"
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "应用软件",
+      "终端软件"
     ],
-    "title": "CivetWeb HTTP/2 释放后重用漏洞"
+    "title": "Ettercap过滤器UAF"
   },
-  "first_saved_at": "2026-11-06T21:12:56+00:00"
+  "first_saved_at": "2026-11-10T01:50:27+00:00"
 }

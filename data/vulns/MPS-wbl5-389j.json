@@ -1,0 +1,221 @@
+{
+  "saved_at": "2026-11-10T01:50:21+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-wbl5-389j",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-125403",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-125",
+    "description": "Ettercap 是开源网络嗅探与中间人工具，用于拦截局域网流量，并可在 SSL 中间人模式下解密 HTTPS。\n受影响版本中，服务端 HTTPS 响应由 sslw_read_data 读入后，在 direction 为 SSL_SERVER 时进入 sslw_remove_sts，用于删除 Strict-Transport-Security 头。函数先把指针移过头部起始位置，第二次 memmem 仍使用整个包的长度，读取越过缓冲区末尾；返回值未检查。当响应包含该头部且本段没有后续 CRLF 时，h_end 被置为空指针加 2，header_length 异常增大，size_t 减法下溢，memcpy 以接近 SIZE_MAX 的长度读写堆内存，导致越界读和内存破坏。Ettercap 通常以 root 权限运行。\n修复版本中通过将第二次 memmem 的搜索长度改为指针到缓冲区末尾的剩余长度，并在 memmem 返回空时直接返回 -E_NOTFOUND，使未闭合的头部不再进入长度计算和 memcpy。",
+    "effects": [
+      {
+        "comp_name": "ettercap",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.8.4.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界读取",
+    "kind_en": "越界读取",
+    "last_modified_time": "2026-11-10",
+    "level": "High",
+    "mps_id": "MPS-wbl5-389j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wbl5-389j",
+        "name": "https://www.oscs1024.com/hd/MPS-wbl5-389j"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-125403",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-125403"
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/security/advisories/GHSA-hq2w-pg4m-6w63",
+        "name": "GitHub Security Advisory (GHSA-hq2w-pg4m-6w63)"
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/commit/1d8badb713579419a29a494bb463a1af59707e98",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/pull/1330",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/blob/v0.8.4.1/src/ec_sslwrap.c#L1294-L1322",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ettercap-through-0.8.4.1-out-of-bounds-read-via-sslw-remove-sts",
+        "name": "VulnCheck Advisory: Ettercap through 0.8.4.1 Out-of-Bounds Read via sslw_remove_sts"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Ettercap越界读取漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨界内存读是指应用程序在读取内存时，未正确验证或限制读取的内存范围。攻击者利用这种漏洞可以读取应用程序内存中的敏感数据，如密码、加密密钥、会话令牌等。常见的原因是由于缓冲区溢出、格式化字符串漏洞或其他内存错误导致的。",
+        "title": "什么是越界读取"
+      },
+      {
+        "content": "攻击者可以通过不当构造的输入来触发跨界内存读漏洞。攻击者可能会通过向应用程序发送特定的输入，使其读取超过预期的内存区域。攻击者可以利用这个漏洞来获取敏感信息，如其他用户的数据、操作系统的敏感数据或应用程序的内部状态。",
+        "title": "越界读取常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和限制：应用程序应对所有输入数据进行严格的验证和限制。确保输入数据的长度、格式和内容符合预期，避免超出缓冲区或访问非预期的内存区域。\n- 内存安全编程实践：开发人员应使用安全的编程实践，如避免使用不安全的函数、正确处理内存分配和释放操作，以及遵循最小特权原则。\n- 使用安全的编程语言和库：选择使用安全性较高的编程语言和库，这些语言和库在内存管理和安全性方面提供了更多的保护机制。\n- 定期进行代码审查和安全测试：定期审查应用程序的代码，并进行安全测试，以发现潜在的跨界内存读漏洞。使用静态代码分析工具和漏洞扫描工具来辅助检测和修复问题。\n- 实施防御性编程技术：应用程序应采用防御性编程技术，如使用随机化地址空间布局（ASLR）、堆栈保护机制（如堆栈溢出保护）和数据执行预防（DEP）等。\n- 及时更新和修补：及时应用程序和操作系统的安全更新和补丁，以确保已知的跨界内存读漏洞得到修复。及时更新相关软件和库，以避免使用已知存在漏洞的版本。",
+        "title": "如何预防越界读取"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-125403",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.2
+        }
+      ]
+    },
+    "cvss_score": 7.2,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-125",
+    "description": "Ettercap 是开源网络嗅探与中间人工具，用于拦截局域网流量，并可在 SSL 中间人模式下解密 HTTPS。\n受影响版本中，服务端 HTTPS 响应由 sslw_read_data 读入后，在 direction 为 SSL_SERVER 时进入 sslw_remove_sts，用于删除 Strict-Transport-Security 头。函数先把指针移过头部起始位置，第二次 memmem 仍使用整个包的长度，读取越过缓冲区末尾；返回值未检查。当响应包含该头部且本段没有后续 CRLF 时，h_end 被置为空指针加 2，header_length 异常增大，size_t 减法下溢，memcpy 以接近 SIZE_MAX 的长度读写堆内存，导致越界读和内存破坏。Ettercap 通常以 root 权限运行。\n修复版本中通过将第二次 memmem 的搜索长度改为指针到缓冲区末尾的剩余长度，并在 memmem 返回空时直接返回 -E_NOTFOUND，使未闭合的头部不再进入长度计算和 memcpy。",
+    "effects": [
+      {
+        "comp_name": "ettercap",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.8.4.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界读取",
+    "kind_en": "Out-of-bounds Read",
+    "last_modified_time": "2026-11-10",
+    "level": "High",
+    "mps_id": "MPS-wbl5-389j",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-10",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wbl5-389j",
+        "name": "https://www.oscs1024.com/hd/MPS-wbl5-389j"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-125403",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-125403"
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/security/advisories/GHSA-hq2w-pg4m-6w63",
+        "name": "GitHub Security Advisory (GHSA-hq2w-pg4m-6w63)"
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/commit/1d8badb713579419a29a494bb463a1af59707e98",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/pull/1330",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Ettercap/ettercap/blob/v0.8.4.1/src/ec_sslwrap.c#L1294-L1322",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ettercap-through-0.8.4.1-out-of-bounds-read-via-sslw-remove-sts",
+        "name": "VulnCheck Advisory: Ettercap through 0.8.4.1 Out-of-Bounds Read via sslw_remove_sts"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Ettercap越界读取漏洞"
+  },
+  "first_saved_at": "2026-11-10T01:50:21+00:00"
+}

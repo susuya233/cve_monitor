@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-11-06T21:12:55+00:00",
+  "saved_at": "2026-11-10T01:50:28+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-iab8-pqey",
+  "source_page": "https://www.oscs1024.com/hd/MPS-x4jm-qtgb",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,30 +21,38 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-33050",
+    "cve_id": "CVE-2026-125399",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security-advisories@github.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
           "severity": "high",
-          "base_score": 8.8
+          "base_score": 8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
         }
       ]
     },
-    "cvss_score": 8.8,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "GeoNode 是开源地理空间内容管理系统，用于管理与发布地理空间数据，支持通过上传接口导入矢量数据文件并写入空间数据库。\n受影响版本中，矢量文件上传后其图层名会进入 ogr2ogr 命令拼接流程，geonode/upload/handlers/common/vector.py 的 create_ogr2ogr_command 将图层名 alternate 以未转义形式拼入 -nln 参数，import_with_ogr2ogr 随后以 Popen(shell=True) 执行整条命令字符串，具备数据上传权限的低权限远程用户上传图层名携带 shell 语法的矢量文件后，可在 GeoNode 服务器上执行任意操作系统命令。\n修复版本中通过在 create_ogr2ogr_command 使用 shlex.quote 转义输入文件路径与图层名，import_with_ogr2ogr 改用 shlex.split 构造参数列表并以 shell=False 执行 ogr2ogr，OGR2OGR_COPY_WITH_DUMP 场景下的 psql 管道改为 Python 内进程对接且 PGPASSWORD 经环境变量传递，切断了图层名进入 shell 解析的路径。",
+    "description": "Fluxion 是 FluxionNetwork 维护的开源 Bash 无线审计工具，用于扫描接入点、捕获握手包并实施验证门户测试。\n受影响版本中，fluxion.sh 的 fluxion_get_target() 在解析 airodump-ng 扫描结果时，只把 ESSID 字段中的单引号替换为反斜杠转义，再放进 $'...' 后交给 eval 执行。无线覆盖范围内攻击者广播的接入点名称会在操作员扫描阶段、选定目标之前被当作 shell 代码运行，并以运行 Fluxion 的 root 权限执行命令。\n修复版本中通过去掉该 eval 解码，改为按扫描记录中的字节长度截取 ESSID，并只用 printf -v 的 %b 转换还原十六进制转义，使接入点名称保持为数据，不再进入 shell 求值。",
     "effects": [
       {
-        "comp_name": "GeoNode",
-        "ecosystem": "pip",
+        "comp_name": "fluxion",
+        "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,5.1.0)",
-            "min_fixed_version": "5.1.0",
-            "repository": "pip",
+            "affected_version": "[0,6.39)",
+            "min_fixed_version": "6.39",
+            "repository": "unmanaged",
             "solutions": [],
             "upstream": true
           }
@@ -54,37 +62,52 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "OS命令注入",
     "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
-    "last_modified_time": "2026-11-07",
+    "last_modified_time": "2026-11-10",
     "level": "High",
-    "mps_id": "MPS-iab8-pqey",
+    "mps_id": "MPS-x4jm-qtgb",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-11-07",
+    "published_time": "2026-11-10",
     "reference_url_list": [
       {
-        "url": "https://github.com/GeoNode/geonode/security/advisories/GHSA-9fpx-fr6j-2vh6",
+        "url": "https://www.oscs1024.com/hd/MPS-x4jm-qtgb",
+        "name": "https://www.oscs1024.com/hd/MPS-x4jm-qtgb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-125399",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-125399"
+      },
+      {
+        "url": "https://github.com/FluxionNetwork/fluxion/commit/be22b0c42f21144a712b62fc072a438a012eb5d7",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/FluxionNetwork/fluxion",
         "name": ""
       },
       {
-        "url": "https://github.com/GeoNode/geonode/commit/1408290c0bb54872924a9b334a516db9758a2180",
+        "url": "https://github.com/FluxionNetwork/fluxion/blob/v6.32/fluxion.sh#L1754-L1757",
         "name": ""
       },
       {
-        "url": "https://github.com/advisories/GHSA-9fpx-fr6j-2vh6",
-        "name": ""
+        "url": "https://github.com/FluxionNetwork/fluxion/releases/tag/v6.39",
+        "name": "fluxion v6.39 Release Notes"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/fluxion-before-6.39-os-command-injection-via-crafted-ssid",
+        "name": "VulnCheck Advisory: Fluxion before 6.39 OS Command Injection via Crafted SSID"
       }
     ],
     "scope_influence": "",
     "tags": [
-      "python",
-      "开源"
+      "应用软件"
     ],
-    "title": "GeoNode 命令注入漏洞",
+    "title": "Fluxion命令注入漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -104,30 +127,38 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-33050",
+    "cve_id": "CVE-2026-125399",
     "cvss": {
       "cvssv31": [
         {
-          "source": "security-advisories@github.com",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
           "severity": "high",
-          "base_score": 8.8
+          "base_score": 8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
         }
       ]
     },
-    "cvss_score": 8.8,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-78",
-    "description": "GeoNode 是开源地理空间内容管理系统，用于管理与发布地理空间数据，支持通过上传接口导入矢量数据文件并写入空间数据库。\n受影响版本中，矢量文件上传后其图层名会进入 ogr2ogr 命令拼接流程，geonode/upload/handlers/common/vector.py 的 create_ogr2ogr_command 将图层名 alternate 以未转义形式拼入 -nln 参数，import_with_ogr2ogr 随后以 Popen(shell=True) 执行整条命令字符串，具备数据上传权限的低权限远程用户上传图层名携带 shell 语法的矢量文件后，可在 GeoNode 服务器上执行任意操作系统命令。\n修复版本中通过在 create_ogr2ogr_command 使用 shlex.quote 转义输入文件路径与图层名，import_with_ogr2ogr 改用 shlex.split 构造参数列表并以 shell=False 执行 ogr2ogr，OGR2OGR_COPY_WITH_DUMP 场景下的 psql 管道改为 Python 内进程对接且 PGPASSWORD 经环境变量传递，切断了图层名进入 shell 解析的路径。",
+    "description": "Fluxion 是 FluxionNetwork 维护的开源 Bash 无线审计工具，用于扫描接入点、捕获握手包并实施验证门户测试。\n受影响版本中，fluxion.sh 的 fluxion_get_target() 在解析 airodump-ng 扫描结果时，只把 ESSID 字段中的单引号替换为反斜杠转义，再放进 $'...' 后交给 eval 执行。无线覆盖范围内攻击者广播的接入点名称会在操作员扫描阶段、选定目标之前被当作 shell 代码运行，并以运行 Fluxion 的 root 权限执行命令。\n修复版本中通过去掉该 eval 解码，改为按扫描记录中的字节长度截取 ESSID，并只用 printf -v 的 %b 转换还原十六进制转义，使接入点名称保持为数据，不再进入 shell 求值。",
     "effects": [
       {
-        "comp_name": "GeoNode",
-        "ecosystem": "pip",
+        "comp_name": "fluxion",
+        "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,5.1.0)",
-            "min_fixed_version": "5.1.0",
-            "repository": "pip",
+            "affected_version": "[0,6.39)",
+            "min_fixed_version": "6.39",
+            "repository": "unmanaged",
             "solutions": [],
             "upstream": true
           }
@@ -137,37 +168,52 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "中",
+    "exploit_requirement_cost": "高",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "OS命令注入",
     "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
-    "last_modified_time": "2026-11-07",
+    "last_modified_time": "2026-11-10",
     "level": "High",
-    "mps_id": "MPS-iab8-pqey",
+    "mps_id": "MPS-x4jm-qtgb",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-11-07",
+    "published_time": "2026-11-10",
     "reference_url_list": [
       {
-        "url": "https://github.com/GeoNode/geonode/security/advisories/GHSA-9fpx-fr6j-2vh6",
+        "url": "https://www.oscs1024.com/hd/MPS-x4jm-qtgb",
+        "name": "https://www.oscs1024.com/hd/MPS-x4jm-qtgb"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-125399",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-125399"
+      },
+      {
+        "url": "https://github.com/FluxionNetwork/fluxion/commit/be22b0c42f21144a712b62fc072a438a012eb5d7",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/FluxionNetwork/fluxion",
         "name": ""
       },
       {
-        "url": "https://github.com/GeoNode/geonode/commit/1408290c0bb54872924a9b334a516db9758a2180",
+        "url": "https://github.com/FluxionNetwork/fluxion/blob/v6.32/fluxion.sh#L1754-L1757",
         "name": ""
       },
       {
-        "url": "https://github.com/advisories/GHSA-9fpx-fr6j-2vh6",
-        "name": ""
+        "url": "https://github.com/FluxionNetwork/fluxion/releases/tag/v6.39",
+        "name": "fluxion v6.39 Release Notes"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/fluxion-before-6.39-os-command-injection-via-crafted-ssid",
+        "name": "VulnCheck Advisory: Fluxion before 6.39 OS Command Injection via Crafted SSID"
       }
     ],
     "scope_influence": "",
     "tags": [
-      "python",
-      "开源"
+      "应用软件"
     ],
-    "title": "GeoNode 命令注入漏洞"
+    "title": "Fluxion命令注入漏洞"
   },
-  "first_saved_at": "2026-11-06T21:12:55+00:00"
+  "first_saved_at": "2026-11-10T01:50:28+00:00"
 }
