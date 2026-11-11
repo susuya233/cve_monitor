@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-11-11T10:10:28+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-uebm-s31o",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-126623",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@gitlab.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-407",
+    "description": "Progressive Robot hMailServer 6.3.6 和 6.3.7 的 JSON 读取器中算法复杂性低下，允许远程攻击者控制服务器的邮件传递线程或其 REST API 的工作线程，从而使邮件传递、REST API 和 Web 邮件不可用。 6.3.6 修复了 CVE-2026-107574，其中读取 JSON 对象会通过将名称保留在哈希集中来搜索已读取的每个新名称的成员名称；该集合使用标准库的哈希值，该哈希值没有任何秘密，因此选择落入其中一个存储桶的成员名称仍然需要花费时间，并且时间会随着其数量的平方而增长。与已发布的读取器相比，在 Linux 版本中读取一个 16 MB 的此类对象大约需要 5 秒，在 Windows 版本中读取一个 6 MB 以下的对象大约需要 23 秒，而具有其他名称的相同大小的对象则需要不到十分之一秒。未经身份验证的远程攻击者通过将 TLS-RPT 报告等对象（解压后最大为 16 MB）邮寄到托管域的报告邮箱（管理员已在其中设置）来到达读者；它是在邮件传递线程（默认情况下为 10 个）上读取的，并且这些线程传递所有邮件（本地和出站），因此只要此类报告流继续存在，就会停止所有传递。也可以在没有帐户的情况下通过回复受密码保护的消息来访问它，仅使用消息的链接，其中 REST API 处于打开状态（默认情况下处于关闭状态）并且设置了此类链接的公共基本 URL；任何帐户可以通过授予 16 MB 的网络邮件路由，也可以通过应用程序的 API 密钥通过发送 API 进行发送。每个此类请求都包含 REST API 的四个工作线程之一，该进程还为 SMTP、IMAP 和 POP3 提供服务。",
+    "effects": [
+      {
+        "comp_name": "hMailServer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(6.3.6,6.3.7]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "低效算法复杂性",
+    "kind_en": "低效的算法复杂性",
+    "last_modified_time": "2026-11-11",
+    "level": "High",
+    "mps_id": "MPS-uebm-s31o",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-uebm-s31o",
+        "name": "https://www.oscs1024.com/hd/MPS-uebm-s31o"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126623",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-126623"
+      },
+      {
+        "url": "https://gitlab.com/hmailserver/hmailserver/-/work_items/111",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.com/hmailserver/hmailserver/-/releases/v6.3.8",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-107574",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "hMailServer 中低效的算法复杂性",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-126623",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@gitlab.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-407",
+    "description": "Inefficient algorithmic complexity in the JSON reader of Progressive Robot hMailServer 6.3.6 and 6.3.7 allows a remote attacker to hold the server's mail delivery threads or its REST API's worker threads, making mail delivery, the REST API and the webmail unavailable. 6.3.6 fixed CVE-2026-107574, in which reading a JSON object searched the member names already read for each new name, by keeping the names in a hash set; the set uses the standard library's hash, which takes no secret, so member names chosen to fall in one bucket of it still cost time growing with the square of their number. Against the released reader, one such object of 16 MB took about 5 seconds to read in the Linux build, and one of under 6 MB about 23 seconds in the Windows build, where objects of the same sizes with other names took under a tenth of a second. A remote unauthenticated attacker reaches the reader by mailing such an object as a TLS-RPT report, up to 16 MB once decompressed, to a hosted domain's report mailbox, where an administrator has set one; it is read on a mail delivery thread (ten by default), and those threads deliver all mail, local and outbound, so a stream of such reports stops all delivery for as long as it continues. It is also reached without an account through the reply to a password-protected message, with the message's link alone, where the REST API is on (it is off by default) and a public base URL for such links is set; and by any account through the webmail's routes granted 16 MB, and by an application's API key through the send API. Each such request holds one of the REST API's four worker threads, in the process that also serves SMTP, IMAP and POP3.",
+    "effects": [
+      {
+        "comp_name": "hMailServer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(6.3.6,6.3.7]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "低效算法复杂性",
+    "kind_en": "Inefficient Algorithmic Complexity",
+    "last_modified_time": "2026-11-11",
+    "level": "High",
+    "mps_id": "MPS-uebm-s31o",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-11",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-uebm-s31o",
+        "name": "https://www.oscs1024.com/hd/MPS-uebm-s31o"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126623",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-126623"
+      },
+      {
+        "url": "https://gitlab.com/hmailserver/hmailserver/-/work_items/111",
+        "name": ""
+      },
+      {
+        "url": "https://gitlab.com/hmailserver/hmailserver/-/releases/v6.3.8",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-107574",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Inefficient Algorithmic Complexity in hMailServer"
+  },
+  "first_saved_at": "2026-11-11T10:10:28+00:00"
+}
