@@ -1,0 +1,187 @@
+{
+  "saved_at": "2026-11-12T09:05:56+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5u6w-gjiv",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85101",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@synology.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:L",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:L",
+    "cwe": "CWE-288",
+    "description": "Synology DiskStation Manager (DSM) 是群晖科技（Synology）用于 NAS 设备的闭源操作系统，提供文件服务、备份与管理功能，其内置的 rsync 服务用于远程备份与文件同步。\n受影响版本中，DSM 内置 rsync 服务存在使用替代路径或通道绕过身份认证的缺陷（CWE-288）。在启用 rsync 服务的设备上，远程攻击者无需凭据即可绕过认证并访问 rsync 服务，进而读取特定文件、写入任意文件并实施有限的拒绝服务攻击；官方公告未披露具体源码位置，该漏洞 CVSS 3.1 评分为 8.6。\n修复版本中通过官方安全更新修复 rsync 服务的认证校验逻辑，封堵了绕过身份认证的替代通道，阻断未授权的文件读取、写入与拒绝服务风险，对应修复版本为 DSM 7.2.1-69057-13、7.2.2-72806-10、7.3.2-86009-5 与 7.4.1-90080-1。",
+    "effects": [
+      {
+        "comp_name": "diskstation_manager",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.2.2-72806,7.2.2-72806-10)",
+            "min_fixed_version": "7.2.2-72806-10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.3.2-86009,7.3.2-86009-5)",
+            "min_fixed_version": "7.3.2-86009-5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.2.1-69057,7.2.1-69057-13)",
+            "min_fixed_version": "7.2.1-69057-13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.4.1-90080,7.4.1-90080-1)",
+            "min_fixed_version": "7.4.1-90080-1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用候选路径或通道进行的认证绕过",
+    "kind_en": "使用备用路径或通道绕过身份验证",
+    "last_modified_time": "2026-11-12",
+    "level": "High",
+    "mps_id": "MPS-5u6w-gjiv",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5u6w-gjiv",
+        "name": "https://www.oscs1024.com/hd/MPS-5u6w-gjiv"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85101",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85101"
+      },
+      {
+        "url": "https://www.synology.com/en-global/security/advisory/Synology_SA_26_19",
+        "name": "Synology-SA-26:19 DSM"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Synology DSM rsync认证绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-85101",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@synology.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:L",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:L",
+    "cwe": "CWE-288",
+    "description": "Synology DiskStation Manager (DSM) 是群晖科技（Synology）用于 NAS 设备的闭源操作系统，提供文件服务、备份与管理功能，其内置的 rsync 服务用于远程备份与文件同步。\n受影响版本中，DSM 内置 rsync 服务存在使用替代路径或通道绕过身份认证的缺陷（CWE-288）。在启用 rsync 服务的设备上，远程攻击者无需凭据即可绕过认证并访问 rsync 服务，进而读取特定文件、写入任意文件并实施有限的拒绝服务攻击；官方公告未披露具体源码位置，该漏洞 CVSS 3.1 评分为 8.6。\n修复版本中通过官方安全更新修复 rsync 服务的认证校验逻辑，封堵了绕过身份认证的替代通道，阻断未授权的文件读取、写入与拒绝服务风险，对应修复版本为 DSM 7.2.1-69057-13、7.2.2-72806-10、7.3.2-86009-5 与 7.4.1-90080-1。",
+    "effects": [
+      {
+        "comp_name": "diskstation_manager",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.2.2-72806,7.2.2-72806-10)",
+            "min_fixed_version": "7.2.2-72806-10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.3.2-86009,7.3.2-86009-5)",
+            "min_fixed_version": "7.3.2-86009-5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.2.1-69057,7.2.1-69057-13)",
+            "min_fixed_version": "7.2.1-69057-13",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.4.1-90080,7.4.1-90080-1)",
+            "min_fixed_version": "7.4.1-90080-1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用候选路径或通道进行的认证绕过",
+    "kind_en": "Authentication Bypass Using an Alternate Path or Channel",
+    "last_modified_time": "2026-11-12",
+    "level": "High",
+    "mps_id": "MPS-5u6w-gjiv",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5u6w-gjiv",
+        "name": "https://www.oscs1024.com/hd/MPS-5u6w-gjiv"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85101",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-85101"
+      },
+      {
+        "url": "https://www.synology.com/en-global/security/advisory/Synology_SA_26_19",
+        "name": "Synology-SA-26:19 DSM"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Synology DSM rsync认证绕过漏洞"
+  },
+  "first_saved_at": "2026-11-12T09:05:56+00:00"
+}

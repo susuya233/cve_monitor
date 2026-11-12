@@ -1,0 +1,313 @@
+{
+  "saved_at": "2026-11-12T09:05:51+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6gwm-2bq0",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-105437",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@gitlab.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-122",
+    "description": "Git 合并两个分支的文本改动时，会参照两者的共同版本，判断各自改了什么，再尝试整合。这一过程称为文本三方合并，由 xdiff 模块处理。\n受影响版本中，xdiff 用有符号整数 int 累计合并结果的长度，Git 再按计算值分配缓冲区。旧代码未检查累加是否发生整数溢出。发生整数溢出后，Git 可能把偏小的计算值当作实际长度，分配的缓冲区便装不下完整的合并结果。后续写入可能越过缓冲区边界，导致进程崩溃或破坏内存。GitLab 和极狐 GitLab 的公告指出，这种越界写还可能导致在 Gitaly（仓库后端服务）中执行任意命令。\n修复版本中通过将累计长度的类型从 int 改为 size_t（C 语言中用于表示对象大小的无符号整数类型），并在累加时检查溢出，避免按错误长度分配缓冲区。如果累加发生溢出，或结果超过后续接口所用 long 类型的上限，Git 会停止处理该合并结果。",
+    "effects": [
+      {
+        "comp_name": "git",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.56.0-rc0,2.56.1)",
+            "min_fixed_version": "2.56.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.50.2)",
+            "min_fixed_version": "2.50.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.55.0-rc0,2.55.1)",
+            "min_fixed_version": "2.55.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.51.0-rc0,2.51.3)",
+            "min_fixed_version": "2.51.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.54.0-rc0,2.54.1)",
+            "min_fixed_version": "2.54.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.53.0-rc0,2.53.1)",
+            "min_fixed_version": "2.53.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.52.0-rc0,2.52.1)",
+            "min_fixed_version": "2.52.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "gitlab",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[16.2,19.3.8)",
+            "min_fixed_version": "19.3.8",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[19.4,19.4.6)",
+            "min_fixed_version": "19.4.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[19.5,19.5.4)",
+            "min_fixed_version": "19.5.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": 0.00399,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "低",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-11-12",
+    "level": "High",
+    "mps_id": "MPS-6gwm-2bq0",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-11-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6gwm-2bq0",
+        "name": "https://www.oscs1024.com/hd/MPS-6gwm-2bq0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105437",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-105437"
+      },
+      {
+        "url": "https://gitlab.com/gitlab-org/git/-/work_items/814",
+        "name": ""
+      },
+      {
+        "url": "https://hackerone.com/reports/4044249",
+        "name": "HackerOne Bug Bounty Report #4044249"
+      },
+      {
+        "url": "https://github.com/git/git/commit/b1313872cefef5704a0acff14b7c0869a9d5dc7c",
+        "name": "Commit"
+      }
+    ],
+    "scope_influence": "小",
+    "tags": [
+      "poc",
+      "应用软件"
+    ],
+    "title": "Git 文本三方合并堆缓冲区溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-105437",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@gitlab.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-122",
+    "description": "Git 合并两个分支的文本改动时，会参照两者的共同版本，判断各自改了什么，再尝试整合。这一过程称为文本三方合并，由 xdiff 模块处理。\n受影响版本中，xdiff 用有符号整数 int 累计合并结果的长度，Git 再按计算值分配缓冲区。旧代码未检查累加是否发生整数溢出。发生整数溢出后，Git 可能把偏小的计算值当作实际长度，分配的缓冲区便装不下完整的合并结果。后续写入可能越过缓冲区边界，导致进程崩溃或破坏内存。GitLab 和极狐 GitLab 的公告指出，这种越界写还可能导致在 Gitaly（仓库后端服务）中执行任意命令。\n修复版本中通过将累计长度的类型从 int 改为 size_t（C 语言中用于表示对象大小的无符号整数类型），并在累加时检查溢出，避免按错误长度分配缓冲区。如果累加发生溢出，或结果超过后续接口所用 long 类型的上限，Git 会停止处理该合并结果。",
+    "effects": [
+      {
+        "comp_name": "git",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.56.0-rc0,2.56.1)",
+            "min_fixed_version": "2.56.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.50.2)",
+            "min_fixed_version": "2.50.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.55.0-rc0,2.55.1)",
+            "min_fixed_version": "2.55.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.51.0-rc0,2.51.3)",
+            "min_fixed_version": "2.51.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.54.0-rc0,2.54.1)",
+            "min_fixed_version": "2.54.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.53.0-rc0,2.53.1)",
+            "min_fixed_version": "2.53.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.52.0-rc0,2.52.1)",
+            "min_fixed_version": "2.52.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "gitlab",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[16.2,19.3.8)",
+            "min_fixed_version": "19.3.8",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[19.4,19.4.6)",
+            "min_fixed_version": "19.4.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[19.5,19.5.4)",
+            "min_fixed_version": "19.5.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": 0.00399,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "低",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-11-12",
+    "level": "High",
+    "mps_id": "MPS-6gwm-2bq0",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-11-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6gwm-2bq0",
+        "name": "https://www.oscs1024.com/hd/MPS-6gwm-2bq0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105437",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-105437"
+      },
+      {
+        "url": "https://gitlab.com/gitlab-org/git/-/work_items/814",
+        "name": ""
+      },
+      {
+        "url": "https://hackerone.com/reports/4044249",
+        "name": "HackerOne Bug Bounty Report #4044249"
+      },
+      {
+        "url": "https://github.com/git/git/commit/b1313872cefef5704a0acff14b7c0869a9d5dc7c",
+        "name": "Commit"
+      }
+    ],
+    "scope_influence": "小",
+    "tags": [
+      "poc",
+      "应用软件"
+    ],
+    "title": "Git 文本三方合并堆缓冲区溢出漏洞"
+  },
+  "first_saved_at": "2026-11-12T09:05:51+00:00"
+}

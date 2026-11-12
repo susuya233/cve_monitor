@@ -1,0 +1,365 @@
+{
+  "saved_at": "2026-11-12T09:05:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4d86-cb27",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "由于整数类型的有限范围，在进行算术运算或操作时，结果可能超出类型的表示范围，导致溢出或环绕。溢出指的是结果超过了类型的最大值或小于了最小值，而环绕指的是结果绕回到类型的最小值或最大值。",
+        "title": "什么是整数溢出或环绕"
+      },
+      {
+        "content": "- 缓冲区溢出：整数溢出可能导致缓冲区溢出漏洞。当整数溢出导致分配的缓冲区大小不足以容纳结果时，攻击者可以利用这个漏洞覆盖相邻的内存区域，执行恶意代码或篡改程序的状态。\r\n- 身份验证绕过：在进行身份验证或访问控制时，整数溢出可能导致绕过验证的漏洞。攻击者可以构造特殊的输入，使溢出的整数值绕过了预期的验证逻辑，从而获得未经授权的访问权限。\r\n- 数据篡改：整数溢出可能导致数据篡改漏洞。攻击者可以通过使整数溢出，修改计数器、索引或其他控制数据的值，导致程序在处理数据时发生错误或执行意外的操作。",
+        "title": "整数溢出或环绕常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与限制：对用户输入的整数进行合理的验证和限制，确保其在允许的范围内。\r\n- 使用安全的整数操作函数：使用安全的整数操作函数，如`add_with_overflow()`、`sub_with_overflow()`、`mul_with_overflow()`等，这些函数会检查并处理溢出情况，确保计算结果在安全范围内。\r\n- 类型检查和转换：在进行整数运算或操作之前，进行类型检查和转换，确保操作数的类型和范围是合适的。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括对整数运算和操作的规范和限制，以帮助程序员编写更可靠、安全的代码。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的整数溢出问题。这些工具可以帮助发现代码中可能存在的溢出漏洞，并及时修复。",
+        "title": "如何预防整数溢出或环绕"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-111760",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8
+        }
+      ]
+    },
+    "cvss_score": 8,
+    "cvss_vector": "",
+    "cwe": "CWE-190",
+    "description": "Git 是广泛使用的开源分布式版本控制系统，为开发者工作机、构建服务器与代码托管平台提供代码版本管理与协作能力。\n受影响版本中，攻击者放入一条超长路径。Git 用较宽的整数 size_t 算出它有多长，记入索引的长度字段 ce_namelen 时只保留 32 位，记下的长度变成较小正数。这条路径的开头几个字符是 .git，后面还有很长一段。安全检查看的是带有后半段的整条路径，整条路径不是单独的名字 .git，检查通过。写到磁盘时，Git 只按记下的短长度保留开头几个字符，后半段被丢掉，文件名变成 .git。这条记录若是符号链接，子模块文件夹里的 .git 由路标小文件变成符号链接，指向攻击者准备的另一个目录。常见代码托管网站拒收这种超长路径，仓库要由攻击者自己提供，并且用户要做子模块递归克隆。Git 顺着这个 .git 进入该目录，把它当作子模块的仓库目录，可能执行里面的钩子。钩子是 Git 在克隆过程中自动调用的脚本，其中的命令以执行克隆的用户身份运行。命令跑在开发人员的电脑或持续集成任务里，攻击者能在这台机器上执行命令，并读取该用户能访问的代码和凭据。\n修复版本中通过在记入索引之前核对路径的真实长度。长度超过有符号整数的上限时，Git 拒绝这条路径，变短的长度不会被保存。安全检查和写到磁盘的文件名因此看到同一条路径，超长路径不会再被写成名叫 .git 的符号链接，克隆时也不会执行攻击者放在该目录里的钩子。索引路径还有长度上限 index.maxPathLen，默认 1073740799 字节。读取目录树和检出时也使用真实长度，避免在核对之前先被截短。",
+    "effects": [
+      {
+        "comp_name": "enterprise_server",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.20,3.20.11)",
+            "min_fixed_version": "3.20.11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.21,3.21.9)",
+            "min_fixed_version": "3.21.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.22,3.22.4)",
+            "min_fixed_version": "3.22.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.19,3.19.15)",
+            "min_fixed_version": "3.19.15",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "git",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.52.0-rc0,2.52.1)",
+            "min_fixed_version": "2.52.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.54.0-rc0,2.54.1)",
+            "min_fixed_version": "2.54.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.50.2)",
+            "min_fixed_version": "2.50.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.53.0-rc0,2.53.1)",
+            "min_fixed_version": "2.53.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.55.0-rc0,2.55.1)",
+            "min_fixed_version": "2.55.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.51.0-rc0,2.51.3)",
+            "min_fixed_version": "2.51.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.56.0-rc0,2.56.1)",
+            "min_fixed_version": "2.56.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "低",
+    "fix_suggestion": "建议修复",
+    "kind": "整数溢出或环绕",
+    "kind_en": "整数溢出或环绕",
+    "last_modified_time": "2026-11-12",
+    "level": "High",
+    "mps_id": "MPS-4d86-cb27",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-11-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4d86-cb27",
+        "name": "https://www.oscs1024.com/hd/MPS-4d86-cb27"
+      },
+      {
+        "url": "https://securityonline.info/git-security-vulnerabilities-cve-2026-111760-patched/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/git/git/security/advisories/GHSA-vp2w-7xxj-jvxr",
+        "name": ""
+      },
+      {
+        "url": "https://github.blog/open-source/git/git-security-vulnerabilities-announced-7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/git/git/commit/29411cf59fd417d8fce1be40ab2911e3e0885f26",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/git/git/blob/v2.50.2/Documentation/RelNotes/2.50.2.adoc",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/git/git/blob/v2.56.1/Documentation/RelNotes/2.56.1.adoc",
+        "name": ""
+      },
+      {
+        "url": "https://security-tracker.debian.org/tracker/CVE-2026-111760",
+        "name": ""
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "poc",
+      "应用软件"
+    ],
+    "title": "Git 递归克隆远程代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [
+      {
+        "content": "由于整数类型的有限范围，在进行算术运算或操作时，结果可能超出类型的表示范围，导致溢出或环绕。溢出指的是结果超过了类型的最大值或小于了最小值，而环绕指的是结果绕回到类型的最小值或最大值。",
+        "title": "什么是整数溢出或环绕"
+      },
+      {
+        "content": "- 缓冲区溢出：整数溢出可能导致缓冲区溢出漏洞。当整数溢出导致分配的缓冲区大小不足以容纳结果时，攻击者可以利用这个漏洞覆盖相邻的内存区域，执行恶意代码或篡改程序的状态。\r\n- 身份验证绕过：在进行身份验证或访问控制时，整数溢出可能导致绕过验证的漏洞。攻击者可以构造特殊的输入，使溢出的整数值绕过了预期的验证逻辑，从而获得未经授权的访问权限。\r\n- 数据篡改：整数溢出可能导致数据篡改漏洞。攻击者可以通过使整数溢出，修改计数器、索引或其他控制数据的值，导致程序在处理数据时发生错误或执行意外的操作。",
+        "title": "整数溢出或环绕常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与限制：对用户输入的整数进行合理的验证和限制，确保其在允许的范围内。\r\n- 使用安全的整数操作函数：使用安全的整数操作函数，如`add_with_overflow()`、`sub_with_overflow()`、`mul_with_overflow()`等，这些函数会检查并处理溢出情况，确保计算结果在安全范围内。\r\n- 类型检查和转换：在进行整数运算或操作之前，进行类型检查和转换，确保操作数的类型和范围是合适的。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括对整数运算和操作的规范和限制，以帮助程序员编写更可靠、安全的代码。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的整数溢出问题。这些工具可以帮助发现代码中可能存在的溢出漏洞，并及时修复。",
+        "title": "如何预防整数溢出或环绕"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-111760",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8
+        }
+      ]
+    },
+    "cvss_score": 8,
+    "cvss_vector": "",
+    "cwe": "CWE-190",
+    "description": "Git 是广泛使用的开源分布式版本控制系统，为开发者工作机、构建服务器与代码托管平台提供代码版本管理与协作能力。\n受影响版本中，攻击者放入一条超长路径。Git 用较宽的整数 size_t 算出它有多长，记入索引的长度字段 ce_namelen 时只保留 32 位，记下的长度变成较小正数。这条路径的开头几个字符是 .git，后面还有很长一段。安全检查看的是带有后半段的整条路径，整条路径不是单独的名字 .git，检查通过。写到磁盘时，Git 只按记下的短长度保留开头几个字符，后半段被丢掉，文件名变成 .git。这条记录若是符号链接，子模块文件夹里的 .git 由路标小文件变成符号链接，指向攻击者准备的另一个目录。常见代码托管网站拒收这种超长路径，仓库要由攻击者自己提供，并且用户要做子模块递归克隆。Git 顺着这个 .git 进入该目录，把它当作子模块的仓库目录，可能执行里面的钩子。钩子是 Git 在克隆过程中自动调用的脚本，其中的命令以执行克隆的用户身份运行。命令跑在开发人员的电脑或持续集成任务里，攻击者能在这台机器上执行命令，并读取该用户能访问的代码和凭据。\n修复版本中通过在记入索引之前核对路径的真实长度。长度超过有符号整数的上限时，Git 拒绝这条路径，变短的长度不会被保存。安全检查和写到磁盘的文件名因此看到同一条路径，超长路径不会再被写成名叫 .git 的符号链接，克隆时也不会执行攻击者放在该目录里的钩子。索引路径还有长度上限 index.maxPathLen，默认 1073740799 字节。读取目录树和检出时也使用真实长度，避免在核对之前先被截短。",
+    "effects": [
+      {
+        "comp_name": "enterprise_server",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[3.20,3.20.11)",
+            "min_fixed_version": "3.20.11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.21,3.21.9)",
+            "min_fixed_version": "3.21.9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.22,3.22.4)",
+            "min_fixed_version": "3.22.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.19,3.19.15)",
+            "min_fixed_version": "3.19.15",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "git",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.52.0-rc0,2.52.1)",
+            "min_fixed_version": "2.52.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.54.0-rc0,2.54.1)",
+            "min_fixed_version": "2.54.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.50.2)",
+            "min_fixed_version": "2.50.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.53.0-rc0,2.53.1)",
+            "min_fixed_version": "2.53.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.55.0-rc0,2.55.1)",
+            "min_fixed_version": "2.55.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.51.0-rc0,2.51.3)",
+            "min_fixed_version": "2.51.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.56.0-rc0,2.56.1)",
+            "min_fixed_version": "2.56.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "低",
+    "fix_suggestion": "Recommend",
+    "kind": "整数溢出或环绕",
+    "kind_en": "Integer Overflow or Wraparound",
+    "last_modified_time": "2026-11-12",
+    "level": "High",
+    "mps_id": "MPS-4d86-cb27",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-11-12",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4d86-cb27",
+        "name": "https://www.oscs1024.com/hd/MPS-4d86-cb27"
+      },
+      {
+        "url": "https://securityonline.info/git-security-vulnerabilities-cve-2026-111760-patched/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/git/git/security/advisories/GHSA-vp2w-7xxj-jvxr",
+        "name": ""
+      },
+      {
+        "url": "https://github.blog/open-source/git/git-security-vulnerabilities-announced-7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/git/git/commit/29411cf59fd417d8fce1be40ab2911e3e0885f26",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/git/git/blob/v2.50.2/Documentation/RelNotes/2.50.2.adoc",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/git/git/blob/v2.56.1/Documentation/RelNotes/2.56.1.adoc",
+        "name": ""
+      },
+      {
+        "url": "https://security-tracker.debian.org/tracker/CVE-2026-111760",
+        "name": ""
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "poc",
+      "应用软件"
+    ],
+    "title": "Git 递归克隆远程代码执行漏洞"
+  },
+  "first_saved_at": "2026-11-12T09:05:49+00:00"
+}
