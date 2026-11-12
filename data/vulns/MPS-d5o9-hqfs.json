@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-11-12T23:04:44+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d5o9-hqfs",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86322",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-639",
+    "description": "Foreman 是开源的服务器生命周期管理平台，用于物理与虚拟主机的自动化部署、配置与升级，也是 Red Hat Satellite 6 的上游组件。\n受影响版本中，Api::V2::PersonalAccessTokensController 通过 Foreman::Controller::UserAware 注册的 before_action :find_user 解析目标用户，editing_self? 为假时直接执行 User.find(params[:user_id])，缺少父用户授权检查；持有 create_personal_access_tokens 权限的调用者向 POST /api/v2/users/:user_id/personal_access_tokens 传入他人用户 ID，能够为任意目标用户创建个人访问令牌，PersonalAccessToken#check_permissions_after_save 仅回查令牌资源上的 create_personal_access_tokens 权限，未对目标用户执行 edit_users 授权，接口随后在响应中返回令牌明文，攻击者可使用该令牌以受害者身份通过 API 认证，导致包括管理员在内的账号接管。\n修复版本中通过在 Foreman::Controller::UserAware 引入 find_authorized_user(permission) 方法收紧目标用户解析，编辑自身时返回 User.current，否则改为 User.authorized(permission).except_hidden.find_by(:id => params[:user_id]) 在调用者授权范围内查找；Api::V2::PersonalAccessTokensController#create 在创建令牌前调用 find_authorized_user(:edit_users)，目标用户不在授权范围时直接返回 not_found 且不再生成令牌，切断了为无权编辑用户创建令牌并冒用其身份的越权链路。",
+    "effects": [
+      {
+        "comp_name": "foreman",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.17.0,5.0.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-d5o9-hqfs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-d5o9-hqfs",
+        "name": "https://www.oscs1024.com/hd/MPS-d5o9-hqfs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86322",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86322"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-86322",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2529289",
+        "name": "RHBZ#2529289"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Foreman个人访问令牌越权创建漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "attack_vector_type": "Network",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86322",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "secalert@redhat.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-639",
+    "description": "Foreman 是开源的服务器生命周期管理平台，用于物理与虚拟主机的自动化部署、配置与升级，也是 Red Hat Satellite 6 的上游组件。\n受影响版本中，Api::V2::PersonalAccessTokensController 通过 Foreman::Controller::UserAware 注册的 before_action :find_user 解析目标用户，editing_self? 为假时直接执行 User.find(params[:user_id])，缺少父用户授权检查；持有 create_personal_access_tokens 权限的调用者向 POST /api/v2/users/:user_id/personal_access_tokens 传入他人用户 ID，能够为任意目标用户创建个人访问令牌，PersonalAccessToken#check_permissions_after_save 仅回查令牌资源上的 create_personal_access_tokens 权限，未对目标用户执行 edit_users 授权，接口随后在响应中返回令牌明文，攻击者可使用该令牌以受害者身份通过 API 认证，导致包括管理员在内的账号接管。\n修复版本中通过在 Foreman::Controller::UserAware 引入 find_authorized_user(permission) 方法收紧目标用户解析，编辑自身时返回 User.current，否则改为 User.authorized(permission).except_hidden.find_by(:id => params[:user_id]) 在调用者授权范围内查找；Api::V2::PersonalAccessTokensController#create 在创建令牌前调用 find_authorized_user(:edit_users)，目标用户不在授权范围时直接返回 not_found 且不再生成令牌，切断了为无权编辑用户创建令牌并冒用其身份的越权链路。",
+    "effects": [
+      {
+        "comp_name": "foreman",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.17.0,5.0.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-d5o9-hqfs",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-d5o9-hqfs",
+        "name": "https://www.oscs1024.com/hd/MPS-d5o9-hqfs"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86322",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-86322"
+      },
+      {
+        "url": "https://access.redhat.com/security/cve/CVE-2026-86322",
+        "name": ""
+      },
+      {
+        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2529289",
+        "name": "RHBZ#2529289"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Foreman个人访问令牌越权创建漏洞"
+  },
+  "first_saved_at": "2026-11-12T23:04:44+00:00"
+}

@@ -1,0 +1,205 @@
+{
+  "saved_at": "2026-11-12T23:04:45+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5nhr-f08z",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-127208",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-94",
+    "description": "datamodel-code-generator 是一个开源 Python 代码生成工具，可从 JSON Schema、OpenAPI、GraphQL 等输入生成 Pydantic 模型、dataclasses、TypedDict 等数据模型代码，通过 PyPI 分发，常用于后端接口建模与 CI/CD 代码生成流水线。\n受影响版本中，JSON Schema 扩展字段 x-python-type 的外部文本经 parse_python_type_annotation 解析，_python_type_expr_from_ast 的 Subscript 分支对所有下标参数固定传入 allow_literal=True 且未校验下标基类型，而字面值类型集合 _LITERAL_VALUE_TYPES 包含 str 与 bytes，形如 list[\"...\"]、Optional[\"...\"]、dict[str, \"...\"] 中的字符串常量被当作 PythonTypeLiteralValue 接受，并按带引号前向引用的形式写入生成的模型代码；生成代码在 Pydantic v2 环境中被导入或触发 model_rebuild() 时，前向引用经 eval() 求值，攻击者嵌入的 __import__ 等表达式被执行，开发者本机、CI/CD 流水线以及运行时生成并加载模型的应用面临任意代码执行风险。\n修复版本中通过在 _python_type_expr_from_ast 中新增 _is_literal_base 基类型判定并引入 allow_string_literal 标志，字符串与字节常量仅在 Literal[...] 参数位置被接受，其余下标位置抛出 _InvalidPythonTypeAnnotationError，代码生成阶段直接拒绝恶意注解，切断带引号前向引用注入与 eval() 求值链路。",
+    "effects": [
+      {
+        "comp_name": "datamodel-code-generator",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.84.0)",
+            "min_fixed_version": "0.84.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "代码注入",
+    "kind_en": "代码生成控制不当（“代码注入”）",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-5nhr-f08z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5nhr-f08z",
+        "name": "https://www.oscs1024.com/hd/MPS-5nhr-f08z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-127208",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-127208"
+      },
+      {
+        "url": "https://github.com/datamodel-code-generator/datamodel-code-generator/releases/tag/0.84.0",
+        "name": "Release Notes"
+      },
+      {
+        "url": "https://github.com/datamodel-code-generator/datamodel-code-generator/commit/ebfc11d0644d37a71374b28aac06d98748e584ec",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/datamodel-code-generator-code-injection-via-x-python-type-annotation",
+        "name": "VulnCheck Advisory: datamodel-code-generator < 0.84.0 Code Injection via x-python-type Annotation"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "datamodel-code-generator代码注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序在处理用户输入时的不完善或缺乏验证机制，所以攻击者能够通过向应用程序发送恶意输入，利用应用程序对输入数据的错误处理方式来注入自己的恶意代码。这些恶意代码会被应用程序误认为是合法的指令或数据，并在执行过程中被执行。",
+        "title": "什么是代码注入"
+      },
+      {
+        "content": "应用程序使用可执行动态代码的函数来执行用户可控的参数，当应用程序对于用户输入过滤不完全时，攻击者可以注入恶意代码并控制代码执行流程。",
+        "title": "代码注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对所有用户输入进行验证和过滤，确保只接受预期的有效输入。这包括对输入数据进行输入长度验证、类型检查和格式验证等。\r\n- 使用参数化查询或预编译语句：对于数据库查询操作，应该使用参数化查询或预编译语句，确保输入数据不会被误认为是执行代码。\r\n- 最小特权原则：应用程序在执行操作系统命令或动态代码时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。\r\n- 安全编码实践：开发人员应该采用安全编码实践，包括避免使用eval函数、避免拼接用户输入的字符串作为代码执行等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止代码注入攻击。",
+        "title": "如何预防代码注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-127208",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-94",
+    "description": "datamodel-code-generator 是一个开源 Python 代码生成工具，可从 JSON Schema、OpenAPI、GraphQL 等输入生成 Pydantic 模型、dataclasses、TypedDict 等数据模型代码，通过 PyPI 分发，常用于后端接口建模与 CI/CD 代码生成流水线。\n受影响版本中，JSON Schema 扩展字段 x-python-type 的外部文本经 parse_python_type_annotation 解析，_python_type_expr_from_ast 的 Subscript 分支对所有下标参数固定传入 allow_literal=True 且未校验下标基类型，而字面值类型集合 _LITERAL_VALUE_TYPES 包含 str 与 bytes，形如 list[\"...\"]、Optional[\"...\"]、dict[str, \"...\"] 中的字符串常量被当作 PythonTypeLiteralValue 接受，并按带引号前向引用的形式写入生成的模型代码；生成代码在 Pydantic v2 环境中被导入或触发 model_rebuild() 时，前向引用经 eval() 求值，攻击者嵌入的 __import__ 等表达式被执行，开发者本机、CI/CD 流水线以及运行时生成并加载模型的应用面临任意代码执行风险。\n修复版本中通过在 _python_type_expr_from_ast 中新增 _is_literal_base 基类型判定并引入 allow_string_literal 标志，字符串与字节常量仅在 Literal[...] 参数位置被接受，其余下标位置抛出 _InvalidPythonTypeAnnotationError，代码生成阶段直接拒绝恶意注解，切断带引号前向引用注入与 eval() 求值链路。",
+    "effects": [
+      {
+        "comp_name": "datamodel-code-generator",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,0.84.0)",
+            "min_fixed_version": "0.84.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "代码注入",
+    "kind_en": "Improper Control of Generation of Code ('Code Injection')",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-5nhr-f08z",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5nhr-f08z",
+        "name": "https://www.oscs1024.com/hd/MPS-5nhr-f08z"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-127208",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-127208"
+      },
+      {
+        "url": "https://github.com/datamodel-code-generator/datamodel-code-generator/releases/tag/0.84.0",
+        "name": "Release Notes"
+      },
+      {
+        "url": "https://github.com/datamodel-code-generator/datamodel-code-generator/commit/ebfc11d0644d37a71374b28aac06d98748e584ec",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/datamodel-code-generator-code-injection-via-x-python-type-annotation",
+        "name": "VulnCheck Advisory: datamodel-code-generator < 0.84.0 Code Injection via x-python-type Annotation"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "datamodel-code-generator代码注入漏洞"
+  },
+  "first_saved_at": "2026-11-12T23:04:45+00:00"
+}

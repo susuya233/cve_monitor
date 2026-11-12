@@ -1,0 +1,205 @@
+{
+  "saved_at": "2026-11-12T23:04:46+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-dj1l-fot3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-126793",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-426",
+    "description": "AWS Advanced Go Wrapper 是 AWS 开源的 Go 语言数据库驱动包装器（Apache-2.0 许可），以 database/sql 驱动形式包装 pgx、go-sql-driver/mysql 等底层驱动，用于连接 Amazon RDS 与 Amazon Aurora 集群，并在建立连接时自动探测数据库方言，以启用故障转移、读写分离等插件功能。\n受影响版本中，wrapper 在每次建立初始连接后自动执行方言探测，GlobalAuroraPgDatabaseDialect.IsDialect 向集群发送 SELECT count(1) FROM pg_catalog.aurora_global_db_status()，其中聚合函数 count 未限定到 pg_catalog 模式，PostgreSQL 按会话 search_path 解析该标识符；对受害用户 search_path 中的 schema（如 public）持有 CREATE 权限的已认证数据库用户可创建同名 count 函数覆盖内置实现，当受害用户（包括 rds_superuser 角色成员）通过受影响版本 wrapper 连接 Aurora PostgreSQL 集群时，方言探测改为执行攻击者定义的函数，攻击者代码以受害用户权限运行，权限最高可提升至 rds_superuser；v2.0.0 中同一条查询的表函数 aurora_global_db_status() 同样未限定，2026-05-15 合并的 CVE-2026-11401 修复在 v2.0.1 中限定了表函数与比较操作符，但遗留 count(1) 未限定，构成不完整修复。\n修复版本中通过 release-2026-07-29（awssql/v2 v2.0.3）包含的提交 0ec76a0 将探测查询重写为 SELECT pg_catalog.count(1) FROM pg_catalog.aurora_global_db_status()，并将 pg_database_dialects.go 中剩余的 LIKE 操作符、::regproc 类型转换与等号比较全部限定到 pg_catalog，使方言探测查询的函数、操作符与类型名称解析不再经过用户 search_path，攻击者植入 schema 的同名对象无法再被选中，提权链路被切断。",
+    "effects": [
+      {
+        "comp_name": "aws-advanced-go-wrapper",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2026-04-06,2026-07-29)",
+            "min_fixed_version": "2026-07-29",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "github.com/aws/aws-advanced-go-wrapper/awssql/v2",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.0.3)",
+            "min_fixed_version": "2.0.3",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不可信的搜索路径",
+    "kind_en": "不受信任的搜索路径",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-dj1l-fot3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dj1l-fot3",
+        "name": "https://www.oscs1024.com/hd/MPS-dj1l-fot3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126793",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-126793"
+      },
+      {
+        "url": "https://github.com/aws/aws-advanced-go-wrapper/releases/tag/release-2026-07-29",
+        "name": ""
+      },
+      {
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-182-aws/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/aws/aws-advanced-go-wrapper/security/advisories/GHSA-fhr2-6r5v-gm9f",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go",
+      "应用软件"
+    ],
+    "title": "AWS Go Wrapper 方言探测提权",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-126793",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-426",
+    "description": "AWS Advanced Go Wrapper 是 AWS 开源的 Go 语言数据库驱动包装器（Apache-2.0 许可），以 database/sql 驱动形式包装 pgx、go-sql-driver/mysql 等底层驱动，用于连接 Amazon RDS 与 Amazon Aurora 集群，并在建立连接时自动探测数据库方言，以启用故障转移、读写分离等插件功能。\n受影响版本中，wrapper 在每次建立初始连接后自动执行方言探测，GlobalAuroraPgDatabaseDialect.IsDialect 向集群发送 SELECT count(1) FROM pg_catalog.aurora_global_db_status()，其中聚合函数 count 未限定到 pg_catalog 模式，PostgreSQL 按会话 search_path 解析该标识符；对受害用户 search_path 中的 schema（如 public）持有 CREATE 权限的已认证数据库用户可创建同名 count 函数覆盖内置实现，当受害用户（包括 rds_superuser 角色成员）通过受影响版本 wrapper 连接 Aurora PostgreSQL 集群时，方言探测改为执行攻击者定义的函数，攻击者代码以受害用户权限运行，权限最高可提升至 rds_superuser；v2.0.0 中同一条查询的表函数 aurora_global_db_status() 同样未限定，2026-05-15 合并的 CVE-2026-11401 修复在 v2.0.1 中限定了表函数与比较操作符，但遗留 count(1) 未限定，构成不完整修复。\n修复版本中通过 release-2026-07-29（awssql/v2 v2.0.3）包含的提交 0ec76a0 将探测查询重写为 SELECT pg_catalog.count(1) FROM pg_catalog.aurora_global_db_status()，并将 pg_database_dialects.go 中剩余的 LIKE 操作符、::regproc 类型转换与等号比较全部限定到 pg_catalog，使方言探测查询的函数、操作符与类型名称解析不再经过用户 search_path，攻击者植入 schema 的同名对象无法再被选中，提权链路被切断。",
+    "effects": [
+      {
+        "comp_name": "aws-advanced-go-wrapper",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2026-04-06,2026-07-29)",
+            "min_fixed_version": "2026-07-29",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "github.com/aws/aws-advanced-go-wrapper/awssql/v2",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[2.0.0,2.0.3)",
+            "min_fixed_version": "2.0.3",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不可信的搜索路径",
+    "kind_en": "Untrusted Search Path",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-dj1l-fot3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dj1l-fot3",
+        "name": "https://www.oscs1024.com/hd/MPS-dj1l-fot3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126793",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-126793"
+      },
+      {
+        "url": "https://github.com/aws/aws-advanced-go-wrapper/releases/tag/release-2026-07-29",
+        "name": ""
+      },
+      {
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-182-aws/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/aws/aws-advanced-go-wrapper/security/advisories/GHSA-fhr2-6r5v-gm9f",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "go",
+      "应用软件"
+    ],
+    "title": "AWS Go Wrapper 方言探测提权"
+  },
+  "first_saved_at": "2026-11-12T23:04:46+00:00"
+}
