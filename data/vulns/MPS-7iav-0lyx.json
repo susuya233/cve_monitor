@@ -1,0 +1,143 @@
+{
+  "saved_at": "2026-11-13T12:46:23+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-7iav-0lyx",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120221",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "57a55968-44ac-464c-a794-6ba3baad09c4",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:X/RE:X/U:X",
+    "cwe": "CWE-416",
+    "description": "在 FRRouting 8.4 及更高版本中，如果“bgp 侦听范围”使用的对等组也配置了源站点（“邻居 PG soo”），则当动态 BGP 邻居断开连接时，bgpd 会释放同一内存两次。每个动态邻居共享对等组的 SoO 值，而不是获取自己的副本，但在删除邻居时将其释放为自己的值，这种情况在其连接关闭时就会发生。第一次断开连接使对等组指向已释放的内存，第二次断开连接再次释放它，导致 bgpd 中止并丢弃路由器上的所有 BGP 会话。地址落在侦听范围内的任何主机都可以通过打开和关闭到 BGP 端口的两个 TCP 连接来触发此操作，无需发送任何 BGP 消息，也不知道 AS 编号，并且可以在每次 bgpd 重新启动时重复此操作。如果对等组有 TCP-MD5 密码，则只有知道该密码的主机才能触发它。合法动态邻居的两个普通襟翼具有相同的效果。在两次释放之间，显示配置（“show running-config”）或建立动态邻居也会读取释放的内存，这可能会在单次断开连接后使 bgpd 崩溃。只有将侦听范围与同一对等组上的 SoO 相结合的配置才会受到影响。",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "UAF",
+    "kind_en": "免费后使用",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-7iav-0lyx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-7iav-0lyx",
+        "name": "https://www.oscs1024.com/hd/MPS-7iav-0lyx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120221",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120221"
+      },
+      {
+        "url": "https://github.com/FRRouting/frr/pull/21685/changes/6a96f515760dc278147fbf802777956ba80c7edd",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "frr：当动态邻居断开连接时，bgpd 双重释放对等组源站点",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120221",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "57a55968-44ac-464c-a794-6ba3baad09c4",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:X/RE:X/U:X",
+    "cwe": "CWE-416",
+    "description": "In FRRouting 8.4 and later, bgpd frees the same memory twice when dynamic BGP neighbors disconnect, if the peer-group used by a \"bgp listen range\" also has a Site-of-Origin configured (\"neighbor PG soo\"). Each dynamic neighbor shares the peer-group's SoO value instead of getting its own copy, but frees it as its own when the neighbor is deleted, which happens as soon as its connection closes. The first disconnect leaves the peer-group pointing at freed memory, and the second disconnect frees it again, causing bgpd to abort and drop all BGP sessions on the router. Any host whose address falls inside the listen range can trigger this by opening and closing two TCP connections to the BGP port, without sending any BGP message and without knowing the AS number, and can repeat it each time bgpd restarts. If the peer-group has a TCP-MD5 password, only hosts that know the password can trigger it. Two ordinary flaps of legitimate dynamic neighbors have the same effect. Between the two frees, displaying the configuration (\"show running-config\") or establishing a dynamic neighbor also reads the freed memory, which can crash bgpd after a single disconnect. Only configurations that combine a listen range with a SoO on the same peer-group are affected.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "UAF",
+    "kind_en": "Use After Free",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-7iav-0lyx",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-7iav-0lyx",
+        "name": "https://www.oscs1024.com/hd/MPS-7iav-0lyx"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120221",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-120221"
+      },
+      {
+        "url": "https://github.com/FRRouting/frr/pull/21685/changes/6a96f515760dc278147fbf802777956ba80c7edd",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "frr: bgpd double free of peer-group Site-of-Origin when dynamic neighbors disconnect"
+  },
+  "first_saved_at": "2026-11-13T12:46:23+00:00"
+}
