@@ -1,0 +1,147 @@
+{
+  "saved_at": "2026-11-13T20:13:50+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-aro9-egwd",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97692",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H",
+    "cwe": "CWE-787",
+    "description": "BACnet Stack is a BACnet open source protocol stack C library for embedded systems. Prior to versions 1.4.6, 1.5.2, and 1.6.1, the BACnet/SC message decoder walks the header-option list by following each option's MORE bit. Nothing rejects a list whose last option still has the MORE bit set, and the decode walk has no upper bound on how many options it processes. A single crafted BVLC-SC frame makes the walk advance one option past the end of the message and read message[message_len], one byte out of bounds. When the bytes after the message carry more MORE-set option markers, the walk keeps going: it runs past the fixed 4-entry option array and writes decoded option fields out of bounds. On the server that decode array is the static global bsc_dm, so the out-of-bounds write lands in adjacent BSS. Both faults are reachable before authentication, from the first frame a peer sends on a BACnet/SC connection, and the bytes that follow the message are the same peer's prior-frame data. This issue has been patched in versions 1.4.6, 1.5.2, 1.6.1, and 1.7.0.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界写入",
+    "kind_en": "越界写入",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-aro9-egwd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-aro9-egwd",
+        "name": "https://www.oscs1024.com/hd/MPS-aro9-egwd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97692",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97692"
+      },
+      {
+        "url": "https://github.com/bacnet-stack/bacnet-stack/pull/1435",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/bacnet-stack/bacnet-stack/security/advisories/GHSA-gr74-333w-7wg8",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-97692漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-97692",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H",
+    "cwe": "CWE-787",
+    "description": "BACnet Stack is a BACnet open source protocol stack C library for embedded systems. Prior to versions 1.4.6, 1.5.2, and 1.6.1, the BACnet/SC message decoder walks the header-option list by following each option's MORE bit. Nothing rejects a list whose last option still has the MORE bit set, and the decode walk has no upper bound on how many options it processes. A single crafted BVLC-SC frame makes the walk advance one option past the end of the message and read message[message_len], one byte out of bounds. When the bytes after the message carry more MORE-set option markers, the walk keeps going: it runs past the fixed 4-entry option array and writes decoded option fields out of bounds. On the server that decode array is the static global bsc_dm, so the out-of-bounds write lands in adjacent BSS. Both faults are reachable before authentication, from the first frame a peer sends on a BACnet/SC connection, and the bytes that follow the message are the same peer's prior-frame data. This issue has been patched in versions 1.4.6, 1.5.2, 1.6.1, and 1.7.0.",
+    "effects": [],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界写入",
+    "kind_en": "Out-of-bounds Write",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-aro9-egwd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-aro9-egwd",
+        "name": "https://www.oscs1024.com/hd/MPS-aro9-egwd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97692",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-97692"
+      },
+      {
+        "url": "https://github.com/bacnet-stack/bacnet-stack/pull/1435",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/bacnet-stack/bacnet-stack/security/advisories/GHSA-gr74-333w-7wg8",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "CVE-2026-97692漏洞"
+  },
+  "first_saved_at": "2026-11-13T20:13:44+00:00"
+}
