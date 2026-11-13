@@ -1,0 +1,223 @@
+{
+  "saved_at": "2026-11-13T04:37:50+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-v3ym-xc8d",
+  "detail": {
+    "analysis_status": 3,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-6460",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "f86ef6dc-4d3a-42ad-8f28-e6d5547a5007",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-843",
+    "description": "PostgreSQL 是开源关系型数据库，用 SQL 提供查询、事务和过程语言。表和 CREATE TYPE 都会生成复合类型，把多个字段组成一行式的值。\n受影响版本中，命名复合类型的值以通用载体 Datum 保存，类型信息不在值自身，而记在系统目录和元组描述符 TupleDesc 上；对象创建者可以先用 PREPARE 或 PL/pgSQL 变量把旧布局的复合值留下来，再执行 ALTER TYPE ... ALTER ATTRIBUTE ... TYPE、ALTER TABLE ... SET DATA TYPE，或 ADD COLUMN 后 ROLLBACK 再 ADD COLUMN 等 DDL，改掉字段类型。之后拆解函数 heap_deform_tuple() 仍按新的 TupleDesc 读取这份旧 Datum，把一种字段宽度和对齐当成另一种来解释，造成类型混淆并破坏后端进程内存。已登录且能创建对象的远程用户通过 SQL 即可触发，默认配置允许在临时模式 pg_temp 中创建临时对象。厂商说明这允许以运行数据库的操作系统用户身份执行任意代码。\n修复版本中通过为命名复合类型的 Datum 打上属性版本号，并在 heap_deform_tuple() 拆解前调用核对函数 heap_datum_check()，比较 TupleDesc 与 Datum 是否兼容；版本不一致时拒绝拆解并报错，切断按错误布局读取旧值的路径。同一次安全更新还收紧了 ALTER COLUMN TYPE 在函数默认表达式等依赖仍然存在时的限制。",
+    "effects": [
+      {
+        "comp_name": "postgresql",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[17.0,17.12)",
+            "min_fixed_version": "17.12",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,14.25)",
+            "min_fixed_version": "14.25",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[16.0,16.16)",
+            "min_fixed_version": "16.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.0,15.20)",
+            "min_fixed_version": "15.20",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[18.0,18.7)",
+            "min_fixed_version": "18.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用不兼容类型访问资源（类型混淆）",
+    "kind_en": "使用不兼容类型访问资源（“类型混淆”）",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-v3ym-xc8d",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-v3ym-xc8d",
+        "name": "https://www.oscs1024.com/hd/MPS-v3ym-xc8d"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-6460",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-6460"
+      },
+      {
+        "url": "https://www.postgresql.org/support/security/CVE-2026-6460/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/postgres/postgres/commit/cfdd09589b9f19fbc78c244e7868f1af46c460b8",
+        "name": "Commit"
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "应用软件",
+      "数据库"
+    ],
+    "title": "PostgreSQL复合类型任意代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 3,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-6460",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "f86ef6dc-4d3a-42ad-8f28-e6d5547a5007",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ]
+    },
+    "cvss_score": 8.8,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-843",
+    "description": "PostgreSQL 是开源关系型数据库，用 SQL 提供查询、事务和过程语言。表和 CREATE TYPE 都会生成复合类型，把多个字段组成一行式的值。\n受影响版本中，命名复合类型的值以通用载体 Datum 保存，类型信息不在值自身，而记在系统目录和元组描述符 TupleDesc 上；对象创建者可以先用 PREPARE 或 PL/pgSQL 变量把旧布局的复合值留下来，再执行 ALTER TYPE ... ALTER ATTRIBUTE ... TYPE、ALTER TABLE ... SET DATA TYPE，或 ADD COLUMN 后 ROLLBACK 再 ADD COLUMN 等 DDL，改掉字段类型。之后拆解函数 heap_deform_tuple() 仍按新的 TupleDesc 读取这份旧 Datum，把一种字段宽度和对齐当成另一种来解释，造成类型混淆并破坏后端进程内存。已登录且能创建对象的远程用户通过 SQL 即可触发，默认配置允许在临时模式 pg_temp 中创建临时对象。厂商说明这允许以运行数据库的操作系统用户身份执行任意代码。\n修复版本中通过为命名复合类型的 Datum 打上属性版本号，并在 heap_deform_tuple() 拆解前调用核对函数 heap_datum_check()，比较 TupleDesc 与 Datum 是否兼容；版本不一致时拒绝拆解并报错，切断按错误布局读取旧值的路径。同一次安全更新还收紧了 ALTER COLUMN TYPE 在函数默认表达式等依赖仍然存在时的限制。",
+    "effects": [
+      {
+        "comp_name": "postgresql",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[17.0,17.12)",
+            "min_fixed_version": "17.12",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,14.25)",
+            "min_fixed_version": "14.25",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[16.0,16.16)",
+            "min_fixed_version": "16.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.0,15.20)",
+            "min_fixed_version": "15.20",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[18.0,18.7)",
+            "min_fixed_version": "18.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用不兼容类型访问资源（类型混淆）",
+    "kind_en": "Access of Resource Using Incompatible Type ('Type Confusion')",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-v3ym-xc8d",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-v3ym-xc8d",
+        "name": "https://www.oscs1024.com/hd/MPS-v3ym-xc8d"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-6460",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-6460"
+      },
+      {
+        "url": "https://www.postgresql.org/support/security/CVE-2026-6460/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/postgres/postgres/commit/cfdd09589b9f19fbc78c244e7868f1af46c460b8",
+        "name": "Commit"
+      }
+    ],
+    "scope_influence": "广",
+    "tags": [
+      "应用软件",
+      "数据库"
+    ],
+    "title": "PostgreSQL复合类型任意代码执行漏洞"
+  },
+  "first_saved_at": "2026-11-13T04:37:50+00:00"
+}

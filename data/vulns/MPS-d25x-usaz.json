@@ -1,0 +1,265 @@
+{
+  "saved_at": "2026-11-13T04:37:53+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-d25x-usaz",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107414",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-122",
+    "description": "Citrix NetScaler ADC（原 Citrix ADC）与 Citrix NetScaler Gateway（原 Citrix Gateway）是 Cloud Software Group 旗下的闭源商用应用交付控制器与安全接入网关，广泛用于负载均衡、SSL VPN、身份认证与流量安全防护。\n受影响版本中，设备对 WebAuth authentication 认证流程的处理存在内存越界缺陷（CWE-122，堆缓冲区溢出），配置了 WebAuth action（add authentication webAuthAction）的 NetScaler ADC 或 NetScaler Gateway 在处理相关认证流量时可能向缓冲区边界外写入内存，远程攻击者无需身份认证，通过网络请求可触发该缺陷，导致设备出现不可预测或错误行为，严重时造成拒绝服务。\n修复版本中通过更新设备固件修复 WebAuth 认证处理中的越界内存访问，切断远程触发的堆缓冲区溢出路径，Citrix 已在 NetScaler ADC 和 NetScaler Gateway 14.1-73.57、13.1-64.39，NetScaler ADC FIPS 14.1-73.58 FIPS，以及 NetScaler ADC FIPS 和 NDcPP 13.1-37.293 及以上构建中完成修复，官方建议受影响用户尽快升级。",
+    "effects": [
+      {
+        "comp_name": "netscaler_adc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[13.1,13.1-64.39)",
+            "min_fixed_version": "13.1-64.39",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.1,14.1-73.57)",
+            "min_fixed_version": "14.1-73.57",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "netscaler_adc_fips",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[13.1,13.1-37.293)",
+            "min_fixed_version": "13.1-37.293",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.1,14.1-73.58)",
+            "min_fixed_version": "14.1-73.58",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "netscaler_adc_ndcpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[13.1,13.1-37.293)",
+            "min_fixed_version": "13.1-37.293",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "netscaler_gateway",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[14.1,14.1-73.57)",
+            "min_fixed_version": "14.1-73.57",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.1,13.1-64.39)",
+            "min_fixed_version": "13.1-64.39",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-d25x-usaz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-d25x-usaz",
+        "name": "https://www.oscs1024.com/hd/MPS-d25x-usaz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107414",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107414"
+      },
+      {
+        "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697305",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "NetScaler WebAuth认证堆溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-107414",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-122",
+    "description": "Citrix NetScaler ADC（原 Citrix ADC）与 Citrix NetScaler Gateway（原 Citrix Gateway）是 Cloud Software Group 旗下的闭源商用应用交付控制器与安全接入网关，广泛用于负载均衡、SSL VPN、身份认证与流量安全防护。\n受影响版本中，设备对 WebAuth authentication 认证流程的处理存在内存越界缺陷（CWE-122，堆缓冲区溢出），配置了 WebAuth action（add authentication webAuthAction）的 NetScaler ADC 或 NetScaler Gateway 在处理相关认证流量时可能向缓冲区边界外写入内存，远程攻击者无需身份认证，通过网络请求可触发该缺陷，导致设备出现不可预测或错误行为，严重时造成拒绝服务。\n修复版本中通过更新设备固件修复 WebAuth 认证处理中的越界内存访问，切断远程触发的堆缓冲区溢出路径，Citrix 已在 NetScaler ADC 和 NetScaler Gateway 14.1-73.57、13.1-64.39，NetScaler ADC FIPS 14.1-73.58 FIPS，以及 NetScaler ADC FIPS 和 NDcPP 13.1-37.293 及以上构建中完成修复，官方建议受影响用户尽快升级。",
+    "effects": [
+      {
+        "comp_name": "netscaler_adc",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[13.1,13.1-64.39)",
+            "min_fixed_version": "13.1-64.39",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.1,14.1-73.57)",
+            "min_fixed_version": "14.1-73.57",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "netscaler_adc_fips",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[13.1,13.1-37.293)",
+            "min_fixed_version": "13.1-37.293",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[14.1,14.1-73.58)",
+            "min_fixed_version": "14.1-73.58",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "netscaler_adc_ndcpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[13.1,13.1-37.293)",
+            "min_fixed_version": "13.1-37.293",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "netscaler_gateway",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[14.1,14.1-73.57)",
+            "min_fixed_version": "14.1-73.57",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[13.1,13.1-64.39)",
+            "min_fixed_version": "13.1-64.39",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-d25x-usaz",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-d25x-usaz",
+        "name": "https://www.oscs1024.com/hd/MPS-d25x-usaz"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107414",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-107414"
+      },
+      {
+        "url": "https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX697305",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "NetScaler WebAuth认证堆溢出漏洞"
+  },
+  "first_saved_at": "2026-11-13T04:37:53+00:00"
+}

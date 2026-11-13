@@ -1,9 +1,9 @@
 {
-  "saved_at": "2026-11-10T09:04:16+00:00",
+  "saved_at": "2026-11-13T04:37:51+00:00",
   "first_seen": true,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
-  "source_page": "https://www.oscs1024.com/hd/MPS-oxzn-816d",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3u0j-nhif",
   "detail": {
     "analysis_status": 0,
     "articles": [
@@ -21,30 +21,34 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-76877",
-    "cvss": {
-      "cvssv31": [
-        {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-          "severity": "high",
-          "base_score": 8.1
-        }
-      ]
-    },
+    "cve_id": "CVE-2026-110279",
+    "cvss": {},
     "cvss_score": 8.1,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cvss_vector": "",
     "cwe": "CWE-287",
-    "description": "WPML Multilingual CMS（WordPress 插件 slug 为 sitepress-multilingual-cms）是 OnTheGoSystems 的商业多语言插件，官方未提供公开 GitHub 开源仓库，用于管理多语言内容，并在每种语言使用不同域名时同步用户会话。\n受影响版本中，按语言分域名的 SSO 处理器 WPML_Language_Per_Domain_SSO::process_iframe_request 使用 wp_create_nonce('wpml_sso') 生成跨域登录令牌。登出落地页已经丢弃认证 Cookie，wp_get_session_token() 返回空字符串，令牌退化为当前 12 小时时间片的共享匿名 nonce，并写入 transient wpml_sso_user_<token>_<sha256('wpml_sso'.$domain)>，仅映射 user_id，不绑定具体登出动作或请求客户端。未认证攻击者可在 wp-login.php?action=logout 的登出确认流程中独立得到同一令牌；is_iframe_request() 的门禁（已启动的 SSO transient，以及由公开常量 SSO_NONCE 推导的域名哈希）在 60 秒 SSO_TIMEOUT 内可以满足。攻击者在合法 wpml_user_signed_out iframe 发出之前，向次级语言域名提交同一 wpml_sso_token_domain 且状态为 wpml_user_signed_in，WordPress 会为目标用户签发认证 Cookie，其中包括管理员账户。\n修复版本中通过官方安全更新切断该竞争条件的公开记录尚不存在。CVE.org 仅将受影响上界标为 4.9.7（含），Wordfence 将该问题标为未修复，且未公布修复 commit。在确认修复发布前，应关闭按语言分域名的跨域自动登录与登出，避免登出页把匿名 nonce 写入用户 transient 并签发认证 Cookie。",
+    "description": "IBM ContextForge MCP Gateway 是 Apache-2.0 开源的 AI 网关，PyPI 包名为 mcp-contextforge-gateway，用来把 MCP、A2A 与 REST 请求统一转发到上游服务器，并可自行持有上游凭据，例如按用户存储的 OAuth 令牌、client_credentials 令牌，以及网关配置的 bearer、basic 或自定义认证头。\n受影响版本中，已认证用户经公开 RPC 入口 handle_rpc、SSE 入口 sse_endpoint、WebSocket 入口 websocket_endpoint 或 Streamable HTTP 处理函数 handle_streamable_http 把请求送进网关时，请求里的上游授权头 X-Upstream-Authorization 进入透传头构造函数 get_passthrough_headers 与缓存路径 compute_passthrough_headers_cached；这两处读到该头后无条件把它改名为 Authorization 写进发往上游的头，改名不依赖全局开关 ENABLE_HEADER_PASSTHROUGH。工具服务 invoke_tool 在 REST 与 A2A 路径上把网关认证类型 gateway_auth_type 传成 None，缓存路径无法识别 oauth、bearer、basic、authheaders 已存凭据，调用者即可用自己的令牌替换网关代管的上游凭据，审计只记下调用者身份，上游却以另一套凭据执行，绕过按用户权限与审计归属。\n修复版本中通过增加网关代管认证类型集合 _GATEWAY_MANAGED_AUTH_TYPES，在 get_passthrough_headers 与 compute_passthrough_headers_cached 中对 oauth、bearer、basic、authheaders 丢弃 X-Upstream-Authorization 并记录告警，REST 与 A2A 调用改为传入真实的 tool_auth_type 与 a2a_agent_auth_type；token-exchange 仍保持拦截，none、未设置与 one_time_auth 仍允许改名。",
     "effects": [
       {
-        "comp_name": "wpml",
+        "comp_name": "ibm_contextforge_mcp_gateway",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,4.9.7]",
-            "min_fixed_version": "",
+            "affected_version": "[1.0.0,1.1.1)",
+            "min_fixed_version": "1.1.1",
             "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "mcp-contextforge-gateway",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.1.1)",
+            "min_fixed_version": "1.1.1",
+            "repository": "pip",
             "solutions": [],
             "upstream": true
           }
@@ -54,40 +58,32 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "建议修复",
+    "fix_suggestion": "可选修复",
     "kind": "身份验证不当",
     "kind_en": "认证不当",
-    "last_modified_time": "2026-11-10",
+    "last_modified_time": "2026-11-13",
     "level": "High",
-    "mps_id": "MPS-oxzn-816d",
+    "mps_id": "MPS-3u0j-nhif",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-11-10",
+    "published_time": "2026-11-13",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-oxzn-816d",
-        "name": "https://www.oscs1024.com/hd/MPS-oxzn-816d"
-      },
-      {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76877",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76877"
-      },
-      {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/006d1fcd-77b4-4214-be71-b6d71afad072?source=cve",
+        "url": "https://www.ibm.com/support/pages/node/7296490",
         "name": ""
       },
       {
-        "url": "https://wpml.org/",
+        "url": "https://github.com/IBM/mcp-context-forge/commit/724b13eef5a98cfb6db3274a88e90def6288a1d1",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "AI"
     ],
-    "title": "WPML跨域SSO认证绕过",
+    "title": "ContextForge凭据覆盖漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -107,30 +103,34 @@
       }
     ],
     "cnvd_id": "",
-    "cve_id": "CVE-2026-76877",
-    "cvss": {
-      "cvssv31": [
-        {
-          "source": "security@wordfence.com",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-          "severity": "high",
-          "base_score": 8.1
-        }
-      ]
-    },
+    "cve_id": "CVE-2026-110279",
+    "cvss": {},
     "cvss_score": 8.1,
-    "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "cvss_vector": "",
     "cwe": "CWE-287",
-    "description": "WPML Multilingual CMS（WordPress 插件 slug 为 sitepress-multilingual-cms）是 OnTheGoSystems 的商业多语言插件，官方未提供公开 GitHub 开源仓库，用于管理多语言内容，并在每种语言使用不同域名时同步用户会话。\n受影响版本中，按语言分域名的 SSO 处理器 WPML_Language_Per_Domain_SSO::process_iframe_request 使用 wp_create_nonce('wpml_sso') 生成跨域登录令牌。登出落地页已经丢弃认证 Cookie，wp_get_session_token() 返回空字符串，令牌退化为当前 12 小时时间片的共享匿名 nonce，并写入 transient wpml_sso_user_<token>_<sha256('wpml_sso'.$domain)>，仅映射 user_id，不绑定具体登出动作或请求客户端。未认证攻击者可在 wp-login.php?action=logout 的登出确认流程中独立得到同一令牌；is_iframe_request() 的门禁（已启动的 SSO transient，以及由公开常量 SSO_NONCE 推导的域名哈希）在 60 秒 SSO_TIMEOUT 内可以满足。攻击者在合法 wpml_user_signed_out iframe 发出之前，向次级语言域名提交同一 wpml_sso_token_domain 且状态为 wpml_user_signed_in，WordPress 会为目标用户签发认证 Cookie，其中包括管理员账户。\n修复版本中通过官方安全更新切断该竞争条件的公开记录尚不存在。CVE.org 仅将受影响上界标为 4.9.7（含），Wordfence 将该问题标为未修复，且未公布修复 commit。在确认修复发布前，应关闭按语言分域名的跨域自动登录与登出，避免登出页把匿名 nonce 写入用户 transient 并签发认证 Cookie。",
+    "description": "IBM ContextForge MCP Gateway 是 Apache-2.0 开源的 AI 网关，PyPI 包名为 mcp-contextforge-gateway，用来把 MCP、A2A 与 REST 请求统一转发到上游服务器，并可自行持有上游凭据，例如按用户存储的 OAuth 令牌、client_credentials 令牌，以及网关配置的 bearer、basic 或自定义认证头。\n受影响版本中，已认证用户经公开 RPC 入口 handle_rpc、SSE 入口 sse_endpoint、WebSocket 入口 websocket_endpoint 或 Streamable HTTP 处理函数 handle_streamable_http 把请求送进网关时，请求里的上游授权头 X-Upstream-Authorization 进入透传头构造函数 get_passthrough_headers 与缓存路径 compute_passthrough_headers_cached；这两处读到该头后无条件把它改名为 Authorization 写进发往上游的头，改名不依赖全局开关 ENABLE_HEADER_PASSTHROUGH。工具服务 invoke_tool 在 REST 与 A2A 路径上把网关认证类型 gateway_auth_type 传成 None，缓存路径无法识别 oauth、bearer、basic、authheaders 已存凭据，调用者即可用自己的令牌替换网关代管的上游凭据，审计只记下调用者身份，上游却以另一套凭据执行，绕过按用户权限与审计归属。\n修复版本中通过增加网关代管认证类型集合 _GATEWAY_MANAGED_AUTH_TYPES，在 get_passthrough_headers 与 compute_passthrough_headers_cached 中对 oauth、bearer、basic、authheaders 丢弃 X-Upstream-Authorization 并记录告警，REST 与 A2A 调用改为传入真实的 tool_auth_type 与 a2a_agent_auth_type；token-exchange 仍保持拦截，none、未设置与 one_time_auth 仍允许改名。",
     "effects": [
       {
-        "comp_name": "wpml",
+        "comp_name": "ibm_contextforge_mcp_gateway",
         "ecosystem": "linux",
         "versions": [
           {
-            "affected_version": "(-∞,4.9.7]",
-            "min_fixed_version": "",
+            "affected_version": "[1.0.0,1.1.1)",
+            "min_fixed_version": "1.1.1",
             "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "mcp-contextforge-gateway",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.1.1)",
+            "min_fixed_version": "1.1.1",
+            "repository": "pip",
             "solutions": [],
             "upstream": true
           }
@@ -140,40 +140,32 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "高",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
-    "fix_suggestion": "Recommend",
+    "fix_suggestion": "Optional",
     "kind": "身份验证不当",
     "kind_en": "Improper Authentication",
-    "last_modified_time": "2026-11-10",
+    "last_modified_time": "2026-11-13",
     "level": "High",
-    "mps_id": "MPS-oxzn-816d",
+    "mps_id": "MPS-3u0j-nhif",
     "poc": false,
     "poc_url": [],
-    "published_time": "2026-11-10",
+    "published_time": "2026-11-13",
     "reference_url_list": [
       {
-        "url": "https://www.oscs1024.com/hd/MPS-oxzn-816d",
-        "name": "https://www.oscs1024.com/hd/MPS-oxzn-816d"
-      },
-      {
-        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76877",
-        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76877"
-      },
-      {
-        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/006d1fcd-77b4-4214-be71-b6d71afad072?source=cve",
+        "url": "https://www.ibm.com/support/pages/node/7296490",
         "name": ""
       },
       {
-        "url": "https://wpml.org/",
+        "url": "https://github.com/IBM/mcp-context-forge/commit/724b13eef5a98cfb6db3274a88e90def6288a1d1",
         "name": ""
       }
     ],
     "scope_influence": "",
     "tags": [
-      "应用软件"
+      "AI"
     ],
-    "title": "WPML跨域SSO认证绕过"
+    "title": "ContextForge凭据覆盖漏洞"
   },
-  "first_saved_at": "2026-11-10T09:04:16+00:00"
+  "first_saved_at": "2026-11-13T04:37:51+00:00"
 }

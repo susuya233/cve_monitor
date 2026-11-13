@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-11-13T04:37:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-17a2-5baa",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-123274",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-787",
+    "description": "Apache DataSketches C++ 是 Apache 软件基金会开源的流式草图算法库，提供 KLL、Theta、HLL、REQ 等近似计算数据结构，支持草图以二进制图像序列化并在不同系统与语言间交换。\n受影响版本中，kll_sketch 的 deserialize() 从序列化图像读取 levels 层级边界数组时未做任何校验，攻击者构造的图像可携带超出 items 缓冲区容量或递减的层级边界，使层级偏移越过缓冲区，后续基于 levels 数组的更新与合并操作按这些偏移写入堆内存，造成堆越界写入与内存损坏；bytes 重载在读取 levels 数组前也未检查输入剩余长度，可进一步触发越界读取。\n修复版本中通过在 deserialize() 解析流程中新增 check_k、check_num_levels 与 check_levels 校验，要求 k 不小于 MIN_K、层级数大于 0、levels 数组单调不减且末项固定为容量，并在 bytes 重载读取 levels 数组前调用 ensure_minimum_memory 检查输入剩余长度，非法图像在解析阶段即被拒绝，切断堆越界写入链路。",
+    "effects": [
+      {
+        "comp_name": "datasketches-cpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.0.0-incubating,5.3.1)",
+            "min_fixed_version": "5.3.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界写入",
+    "kind_en": "越界写入",
+    "last_modified_time": "2026-11-13",
+    "level": "Critical",
+    "mps_id": "MPS-17a2-5baa",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12674.html",
+        "name": ""
+      },
+      {
+        "url": "https://lists.apache.org/thread/t4rngyg9cbv1b42f1d0crgpgtpby0594",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/releases/tag/5.3.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/pull/568",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/commit/bb86d439db494e3d362e54cc4f83481893974335",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-123274",
+        "name": ""
+      },
+      {
+        "url": "https://datasketches.apache.org",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DataSketches C++ KLL反序列化越界写入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-123274",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-787",
+    "description": "Apache DataSketches C++ 是 Apache 软件基金会开源的流式草图算法库，提供 KLL、Theta、HLL、REQ 等近似计算数据结构，支持草图以二进制图像序列化并在不同系统与语言间交换。\n受影响版本中，kll_sketch 的 deserialize() 从序列化图像读取 levels 层级边界数组时未做任何校验，攻击者构造的图像可携带超出 items 缓冲区容量或递减的层级边界，使层级偏移越过缓冲区，后续基于 levels 数组的更新与合并操作按这些偏移写入堆内存，造成堆越界写入与内存损坏；bytes 重载在读取 levels 数组前也未检查输入剩余长度，可进一步触发越界读取。\n修复版本中通过在 deserialize() 解析流程中新增 check_k、check_num_levels 与 check_levels 校验，要求 k 不小于 MIN_K、层级数大于 0、levels 数组单调不减且末项固定为容量，并在 bytes 重载读取 levels 数组前调用 ensure_minimum_memory 检查输入剩余长度，非法图像在解析阶段即被拒绝，切断堆越界写入链路。",
+    "effects": [
+      {
+        "comp_name": "datasketches-cpp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.0.0-incubating,5.3.1)",
+            "min_fixed_version": "5.3.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界写入",
+    "kind_en": "Out-of-bounds Write",
+    "last_modified_time": "2026-11-13",
+    "level": "Critical",
+    "mps_id": "MPS-17a2-5baa",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12674.html",
+        "name": ""
+      },
+      {
+        "url": "https://lists.apache.org/thread/t4rngyg9cbv1b42f1d0crgpgtpby0594",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/releases/tag/5.3.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/pull/568",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/datasketches-cpp/commit/bb86d439db494e3d362e54cc4f83481893974335",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-123274",
+        "name": ""
+      },
+      {
+        "url": "https://datasketches.apache.org",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "DataSketches C++ KLL反序列化越界写入漏洞"
+  },
+  "first_saved_at": "2026-11-13T04:37:52+00:00"
+}

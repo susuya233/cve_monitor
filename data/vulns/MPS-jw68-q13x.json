@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-11-13T04:37:58+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-jw68-q13x",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-110278",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-294",
+    "description": "IBM ContextForge MCP Gateway 是 Apache-2.0 开源的 AI 网关，PyPI 包名为 mcp-contextforge-gateway，用来把 MCP、A2A 与 REST 请求统一转发到上游服务器，并按全局开关 IDENTITY_PROPAGATION_ENABLED 与每个上游网关的 identity_propagation 配置，把调用用户的 ID、邮箱、组、团队、角色和管理员标记转给上游。\n受影响版本中，认证用户通过公开 RPC 入口 handle_rpc 提交 tools/call，或通过 Streamable HTTP 处理函数 call_tool 与适配器 _adapt_call_tool 调用工具，以及通过资源读取入口 read_resource 访问上游资源时，当前用户的用户上下文 UserContext 进入工具服务 invoke_tool 与资源服务；这两处拼装发往上游的 HTTP 头和 MCP 元数据 `_meta.user` 时，调用身份头构造函数 build_identity_headers 和 build_identity_meta，没有传入该上游网关的 identity_propagation 覆盖。配置解析函数 _resolve_config 在缺少网关对象时只读取全局 IDENTITY_PROPAGATION_ENABLED；全局打开且某个上游已把 identity_propagation.enabled 设为 false 时，仍会发出 X-Forwarded-User-* 头和 `_meta.user`，把用户身份交给本不该收到这些字段的第三方 MCP 服务器。IBM 还写明声明签名 Claims-Signature 对 `user_id:email` 做静态 HMAC，可被重放。\n修复版本中通过让 _resolve_config、build_identity_headers 和 build_identity_meta 接受每个网关的 identity_propagation 字典，并在 invoke_tool 从网关缓存取出该字段后传入；资源读取路径把网关对象交给 build_identity_headers。单个上游设置为 enabled: false 时不再带出身份头和 `_meta.user`。",
+    "effects": [
+      {
+        "comp_name": "ibm_contextforge_mcp_gateway",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.1.1)",
+            "min_fixed_version": "1.1.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "mcp-contextforge-gateway",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.1.1)",
+            "min_fixed_version": "1.1.1",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "使用捕获-重放进行的认证绕过",
+    "kind_en": "通过捕获重放绕过身份验证",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-jw68-q13x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.ibm.com/support/pages/node/7296489",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/IBM/mcp-context-forge/commit/7386a32833a08b176c09223eb58fdbf2104c5068",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI"
+    ],
+    "title": "ContextForge身份信息泄露漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-110278",
+    "cvss": {},
+    "cvss_score": 7.4,
+    "cvss_vector": "",
+    "cwe": "CWE-294",
+    "description": "IBM ContextForge MCP Gateway 是 Apache-2.0 开源的 AI 网关，PyPI 包名为 mcp-contextforge-gateway，用来把 MCP、A2A 与 REST 请求统一转发到上游服务器，并按全局开关 IDENTITY_PROPAGATION_ENABLED 与每个上游网关的 identity_propagation 配置，把调用用户的 ID、邮箱、组、团队、角色和管理员标记转给上游。\n受影响版本中，认证用户通过公开 RPC 入口 handle_rpc 提交 tools/call，或通过 Streamable HTTP 处理函数 call_tool 与适配器 _adapt_call_tool 调用工具，以及通过资源读取入口 read_resource 访问上游资源时，当前用户的用户上下文 UserContext 进入工具服务 invoke_tool 与资源服务；这两处拼装发往上游的 HTTP 头和 MCP 元数据 `_meta.user` 时，调用身份头构造函数 build_identity_headers 和 build_identity_meta，没有传入该上游网关的 identity_propagation 覆盖。配置解析函数 _resolve_config 在缺少网关对象时只读取全局 IDENTITY_PROPAGATION_ENABLED；全局打开且某个上游已把 identity_propagation.enabled 设为 false 时，仍会发出 X-Forwarded-User-* 头和 `_meta.user`，把用户身份交给本不该收到这些字段的第三方 MCP 服务器。IBM 还写明声明签名 Claims-Signature 对 `user_id:email` 做静态 HMAC，可被重放。\n修复版本中通过让 _resolve_config、build_identity_headers 和 build_identity_meta 接受每个网关的 identity_propagation 字典，并在 invoke_tool 从网关缓存取出该字段后传入；资源读取路径把网关对象交给 build_identity_headers。单个上游设置为 enabled: false 时不再带出身份头和 `_meta.user`。",
+    "effects": [
+      {
+        "comp_name": "ibm_contextforge_mcp_gateway",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.1.1)",
+            "min_fixed_version": "1.1.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "mcp-contextforge-gateway",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.1.1)",
+            "min_fixed_version": "1.1.1",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "使用捕获-重放进行的认证绕过",
+    "kind_en": "Authentication Bypass by Capture-replay",
+    "last_modified_time": "2026-11-13",
+    "level": "High",
+    "mps_id": "MPS-jw68-q13x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-13",
+    "reference_url_list": [
+      {
+        "url": "https://www.ibm.com/support/pages/node/7296489",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/IBM/mcp-context-forge/commit/7386a32833a08b176c09223eb58fdbf2104c5068",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI"
+    ],
+    "title": "ContextForge身份信息泄露漏洞"
+  },
+  "first_saved_at": "2026-11-13T04:37:58+00:00"
+}
