@@ -1,0 +1,217 @@
+{
+  "saved_at": "2026-11-14T20:17:19+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-nm6c-ux91",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129261",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:L/AC:L/Au:M/C:C/I:C/A:C",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H/E:X/RL:X/RC:R",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-782",
+    "description": "Kingston FURY CTRL RGB Control Software 是 Kingston 面向 FURY 系列内存的闭源 Windows RGB 灯光控制软件，随软件安装的 NTIOLib_X64.sys 为运行在内核态的硬件访问驱动。\n受影响版本中，NTIOLib_X64.sys 的 IOCTL 处理组件将设备控制接口暴露给本地调用方，缺少足够的访问控制校验，本地攻击者可向驱动设备发送构造的 IOCTL 请求，借助内核态执行能力跨越用户态边界影响内核内存与系统组件，官方记录将缺陷所在函数列为未知，具体源码位置未公开。\n修复版本中通过官方后续安全更新修复该 IOCTL 访问控制缺失，截至 2026-11-15 公开记录尚未披露已发布的修复版本与补丁内容，官方修复发布前可通过卸载受影响版本的 FURY CTRL 软件、移除 NTIOLib_X64.sys 内核驱动并启用 Microsoft 漏洞驱动程序阻止列表缓解风险。",
+    "effects": [
+      {
+        "comp_name": "fury_ctrl_rgb_control_software",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.66.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "无充分访问控制条件下暴露IOCTL",
+    "kind_en": "访问控制不足的公开 IOCTL",
+    "last_modified_time": "2026-11-15",
+    "level": "Critical",
+    "mps_id": "MPS-nm6c-ux91",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-nm6c-ux91",
+        "name": "https://www.oscs1024.com/hd/MPS-nm6c-ux91"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129261",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-129261"
+      },
+      {
+        "url": "https://vuldb.com/vuln/437302",
+        "name": "VDB-437302 | Kingston FURY CTRL RGB Control Software IOCTL NTIOLib_X64.sys exposed ioctl with insufficient access control"
+      },
+      {
+        "url": "https://vuldb.com/vuln/437302/cti",
+        "name": "VDB-437302 | CTI Indicators (IOB, IOC, IOA)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-129261",
+        "name": "CVE-2026-129261 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/1043190",
+        "name": "Submit #1043190 | Kingston FURY CTRL 2.0.66.0 Exposed IOCTL with Insufficient Access Control"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Kingston FURY CTRL驱动IOCTL访问控制缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129261",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:L/AC:L/Au:M/C:C/I:C/A:C",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H/E:X/RL:X/RC:R",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-782",
+    "description": "Kingston FURY CTRL RGB Control Software 是 Kingston 面向 FURY 系列内存的闭源 Windows RGB 灯光控制软件，随软件安装的 NTIOLib_X64.sys 为运行在内核态的硬件访问驱动。\n受影响版本中，NTIOLib_X64.sys 的 IOCTL 处理组件将设备控制接口暴露给本地调用方，缺少足够的访问控制校验，本地攻击者可向驱动设备发送构造的 IOCTL 请求，借助内核态执行能力跨越用户态边界影响内核内存与系统组件，官方记录将缺陷所在函数列为未知，具体源码位置未公开。\n修复版本中通过官方后续安全更新修复该 IOCTL 访问控制缺失，截至 2026-11-15 公开记录尚未披露已发布的修复版本与补丁内容，官方修复发布前可通过卸载受影响版本的 FURY CTRL 软件、移除 NTIOLib_X64.sys 内核驱动并启用 Microsoft 漏洞驱动程序阻止列表缓解风险。",
+    "effects": [
+      {
+        "comp_name": "fury_ctrl_rgb_control_software",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.0.66.0]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "无充分访问控制条件下暴露IOCTL",
+    "kind_en": "Exposed IOCTL with Insufficient Access Control",
+    "last_modified_time": "2026-11-15",
+    "level": "Critical",
+    "mps_id": "MPS-nm6c-ux91",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-nm6c-ux91",
+        "name": "https://www.oscs1024.com/hd/MPS-nm6c-ux91"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129261",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-129261"
+      },
+      {
+        "url": "https://vuldb.com/vuln/437302",
+        "name": "VDB-437302 | Kingston FURY CTRL RGB Control Software IOCTL NTIOLib_X64.sys exposed ioctl with insufficient access control"
+      },
+      {
+        "url": "https://vuldb.com/vuln/437302/cti",
+        "name": "VDB-437302 | CTI Indicators (IOB, IOC, IOA)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-129261",
+        "name": "CVE-2026-129261 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/1043190",
+        "name": "Submit #1043190 | Kingston FURY CTRL 2.0.66.0 Exposed IOCTL with Insufficient Access Control"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Kingston FURY CTRL驱动IOCTL访问控制缺失漏洞"
+  },
+  "first_saved_at": "2026-11-14T20:17:19+00:00"
+}
