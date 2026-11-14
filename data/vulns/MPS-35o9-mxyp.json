@@ -1,0 +1,235 @@
+{
+  "saved_at": "2026-11-14T15:27:42+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-35o9-mxyp",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129429",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "india_payroll 是 Frappe Technologies 开源的印度本地化薪资组件（frappe/india-payroll，GPL-3.0 许可），作为 Frappe/ERPNext HR 应用的扩展提供所得税制度选择器（Tax Regime Selector）页面，供员工查看薪资明细、比较新旧所得税制度并选择所得税模板。\n受影响版本中，india_payroll/india_payroll/page/tax_regime_selector/tax_regime_selector.py 中的 get_employee_details、compute_tax_comparison 与 set_tax_regime 方法均以 frappe.whitelist() 暴露为 HTTP 接口，方法体内缺少授权校验，任意登录的低权限用户传入其他员工的 employee 标识，经 get_employee_salary_data 读取该员工 Salary Structure Assignment 中的基本薪资与收入、扣除分项数据；set_tax_regime 在校验 docstatus 后通过 frappe.db.set_value 直接改写目标员工草稿 Salary Structure Assignment 的 income_tax_slab 字段，可影响其代扣所得税计算。\n修复版本中通过新增 validate_employee_access 校验修复，仅当会话用户为该员工本人时放行，其余调用方要求具备目标 Employee 的读取权限及对应 Salary Structure Assignment 的 read 或 write 权限；set_tax_regime 另经 validate_income_tax_slab 校验所得税模板存在、已提交、未停用且公司与币种匹配，get_latest_assignment 增加 docstatus 过滤以跳过已取消记录，阻断跨员工薪资数据读取与越权改写。",
+    "effects": [
+      {
+        "comp_name": "india_payroll",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,16.0.4)",
+            "min_fixed_version": "16.0.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-35o9-mxyp",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-35o9-mxyp",
+        "name": "https://www.oscs1024.com/hd/MPS-35o9-mxyp"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129429",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-129429"
+      },
+      {
+        "url": "https://github.com/frappe/india-payroll/security/advisories/GHSA-758f-34xj-xvcc",
+        "name": "GitHub Security Advisory (GHSA-758f-34xj-xvcc)"
+      },
+      {
+        "url": "https://github.com/frappe/india-payroll/commit/78de736298a340ecb971826a5df10e7204773cef",
+        "name": "Patch Commit (develop)"
+      },
+      {
+        "url": "https://github.com/frappe/india-payroll/commit/bdb988f172663db4054f9c3fc23833f10c3b60b0",
+        "name": "Patch Commit (v16.0.4)"
+      },
+      {
+        "url": "https://github.com/frappe/india-payroll/blob/9c1fc91b34de8a55df58aa5f2dbabff95dedb4d1/india_payroll/india_payroll/page/tax_regime_selector/tax_regime_selector.py#L207-L215",
+        "name": "set_tax_regime without permission check at v16.0.3"
+      },
+      {
+        "url": "https://github.com/frappe/india-payroll/releases/tag/v16.0.4",
+        "name": "india-payroll v16.0.4 Release Notes"
+      },
+      {
+        "url": "https://github.com/frappe/india-payroll",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/frappe-india-payroll-before-16.0.4-missing-authorization-via-tax-regime-selector",
+        "name": "VulnCheck Advisory: Frappe india-payroll before 16.0.4 Missing Authorization via Tax Regime Selector"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "india-payroll 缺失授权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129429",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-862",
+    "description": "india_payroll 是 Frappe Technologies 开源的印度本地化薪资组件（frappe/india-payroll，GPL-3.0 许可），作为 Frappe/ERPNext HR 应用的扩展提供所得税制度选择器（Tax Regime Selector）页面，供员工查看薪资明细、比较新旧所得税制度并选择所得税模板。\n受影响版本中，india_payroll/india_payroll/page/tax_regime_selector/tax_regime_selector.py 中的 get_employee_details、compute_tax_comparison 与 set_tax_regime 方法均以 frappe.whitelist() 暴露为 HTTP 接口，方法体内缺少授权校验，任意登录的低权限用户传入其他员工的 employee 标识，经 get_employee_salary_data 读取该员工 Salary Structure Assignment 中的基本薪资与收入、扣除分项数据；set_tax_regime 在校验 docstatus 后通过 frappe.db.set_value 直接改写目标员工草稿 Salary Structure Assignment 的 income_tax_slab 字段，可影响其代扣所得税计算。\n修复版本中通过新增 validate_employee_access 校验修复，仅当会话用户为该员工本人时放行，其余调用方要求具备目标 Employee 的读取权限及对应 Salary Structure Assignment 的 read 或 write 权限；set_tax_regime 另经 validate_income_tax_slab 校验所得税模板存在、已提交、未停用且公司与币种匹配，get_latest_assignment 增加 docstatus 过滤以跳过已取消记录，阻断跨员工薪资数据读取与越权改写。",
+    "effects": [
+      {
+        "comp_name": "india_payroll",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,16.0.4)",
+            "min_fixed_version": "16.0.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-35o9-mxyp",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-35o9-mxyp",
+        "name": "https://www.oscs1024.com/hd/MPS-35o9-mxyp"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129429",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-129429"
+      },
+      {
+        "url": "https://github.com/frappe/india-payroll/security/advisories/GHSA-758f-34xj-xvcc",
+        "name": "GitHub Security Advisory (GHSA-758f-34xj-xvcc)"
+      },
+      {
+        "url": "https://github.com/frappe/india-payroll/commit/78de736298a340ecb971826a5df10e7204773cef",
+        "name": "Patch Commit (develop)"
+      },
+      {
+        "url": "https://github.com/frappe/india-payroll/commit/bdb988f172663db4054f9c3fc23833f10c3b60b0",
+        "name": "Patch Commit (v16.0.4)"
+      },
+      {
+        "url": "https://github.com/frappe/india-payroll/blob/9c1fc91b34de8a55df58aa5f2dbabff95dedb4d1/india_payroll/india_payroll/page/tax_regime_selector/tax_regime_selector.py#L207-L215",
+        "name": "set_tax_regime without permission check at v16.0.3"
+      },
+      {
+        "url": "https://github.com/frappe/india-payroll/releases/tag/v16.0.4",
+        "name": "india-payroll v16.0.4 Release Notes"
+      },
+      {
+        "url": "https://github.com/frappe/india-payroll",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/frappe-india-payroll-before-16.0.4-missing-authorization-via-tax-regime-selector",
+        "name": "VulnCheck Advisory: Frappe india-payroll before 16.0.4 Missing Authorization via Tax Regime Selector"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "india-payroll 缺失授权漏洞"
+  },
+  "first_saved_at": "2026-11-14T15:27:42+00:00"
+}

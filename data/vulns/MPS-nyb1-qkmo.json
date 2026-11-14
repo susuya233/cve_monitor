@@ -1,0 +1,235 @@
+{
+  "saved_at": "2026-11-14T15:27:44+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-nyb1-qkmo",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能正确验证和过滤用户输入，将用户提供的数据直接用作操作系统命令的一部分。攻击者可以利用这个漏洞，通过注入恶意的操作系统命令来执行任意系统命令、获取敏感信息或者对系统进行未授权的操作。",
+        "title": "什么是OS命令注入"
+      },
+      {
+        "content": "- 命令拼接：应用程序将用户输入直接拼接到操作系统命令中，而不进行合适的过滤和验证。攻击者可以通过在输入中注入特殊字符、命令分隔符等，来执行额外的命令或修改原始命令的行为。\r\n- 命令注释：攻击者通过在输入中注入特殊字符或命令注释符号，如\"#\"或\"//\"，来注释掉原始命令中的一部分，然后执行自己的恶意命令。\r\n- 命令管道：攻击者通过在输入中注入管道符号\"|\"，将多个命令连接起来执行。这使得攻击者可以在单个注入点上执行多个命令，进一步扩大攻击的范围。",
+        "title": "OS命令注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对用户输入进行严格的验证和过滤，确保只接受预期的有效输入。可以使用白名单验证，限制用户输入的字符集和格式，防止特殊字符和命令注释符的注入。\r\n- 使用参数化命令或预编译语句：应该使用参数化命令或预编译语句，而不是将用户输入直接拼接到命令中。这样可以将输入数据视为参数，而不是命令的一部分，从而避免命令注入漏洞。\r\n- 最小特权原则：应用程序在执行操作系统命令时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。这样即使发生命令注入漏洞，攻击者的权限也会受到限制。\r\n- 安全编码实践：开发人员应避免使用不受信任的用户输入来拼接命令，并使用安全的编码实践，如输入验证、输出编码和参数化查询等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止命令注入攻击。",
+        "title": "如何预防OS命令注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129433",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-78",
+    "description": "Dokploy 是一个开源的容器应用部署平台，基于 Docker Compose 与 Docker Swarm 提供应用部署、数据库管理和计划备份等自托管 PaaS 能力。\n受影响版本中，packages/server/src/utils/backups/utils.ts 的 getComposeContainerCommand 将用户可控的 serviceName 以模板字符串直接拼进 docker ps 命令的 label 过滤参数，未做任何 shell 元字符转义；具备项目访问权限的组织成员可通过 backup.create 或 backup.update tRPC 接口把含 shell 元字符的 serviceName 写入 Compose 备份配置，计划备份由 node-schedule 按 cron 默认每分钟调度并经 execAsync 以 /bin/bash 执行，注入的命令以 root 身份在 Dokploy 容器内运行，标准安装默认挂载 /var/run/docker.sock，攻击者可接管宿主机。\n修复版本中通过 shell-quote 的 quote() 对 label 过滤参数整体安全引用，使 serviceName 中的元字符不再被 shell 解释，同一修复还对 rclone 目标路径与备份保留清理路径补充引用处理，切断了从备份配置到 root 命令执行的注入链路。",
+    "effects": [
+      {
+        "comp_name": "dokploy",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,0.31.1)",
+            "min_fixed_version": "0.31.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "OS命令注入",
+    "kind_en": "操作系统命令中使用的特殊元素的不正确中和（“操作系统命令注入”）",
+    "last_modified_time": "2026-11-14",
+    "level": "Critical",
+    "mps_id": "MPS-nyb1-qkmo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-nyb1-qkmo",
+        "name": "https://www.oscs1024.com/hd/MPS-nyb1-qkmo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129433",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-129433"
+      },
+      {
+        "url": "https://github.com/Dokploy/dokploy/security/advisories/GHSA-j329-jw7j-rxjm",
+        "name": "GitHub Security Advisory (GHSA-j329-jw7j-rxjm)"
+      },
+      {
+        "url": "https://github.com/Dokploy/dokploy/pull/5908",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Dokploy/dokploy/commit/b24006e16e95a10ce3daf739d06ac783e5c70ba0",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/Dokploy/dokploy/blob/v0.31.0/packages/server/src/utils/backups/utils.ts#L152",
+        "name": "Unescaped serviceName in getComposeContainerCommand at v0.31.0"
+      },
+      {
+        "url": "https://github.com/Dokploy/dokploy/releases/tag/v0.31.1",
+        "name": "Dokploy v0.31.1 Release Notes"
+      },
+      {
+        "url": "https://github.com/Dokploy/dokploy",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dokploy-before-0.31.1-os-command-injection-via-compose-backup-servicename",
+        "name": "VulnCheck Advisory: Dokploy before 0.31.1 OS Command Injection via Compose Backup serviceName"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dokploy命令注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序未能正确验证和过滤用户输入，将用户提供的数据直接用作操作系统命令的一部分。攻击者可以利用这个漏洞，通过注入恶意的操作系统命令来执行任意系统命令、获取敏感信息或者对系统进行未授权的操作。",
+        "title": "什么是OS命令注入"
+      },
+      {
+        "content": "- 命令拼接：应用程序将用户输入直接拼接到操作系统命令中，而不进行合适的过滤和验证。攻击者可以通过在输入中注入特殊字符、命令分隔符等，来执行额外的命令或修改原始命令的行为。\r\n- 命令注释：攻击者通过在输入中注入特殊字符或命令注释符号，如\"#\"或\"//\"，来注释掉原始命令中的一部分，然后执行自己的恶意命令。\r\n- 命令管道：攻击者通过在输入中注入管道符号\"|\"，将多个命令连接起来执行。这使得攻击者可以在单个注入点上执行多个命令，进一步扩大攻击的范围。",
+        "title": "OS命令注入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与过滤：应用程序应该对用户输入进行严格的验证和过滤，确保只接受预期的有效输入。可以使用白名单验证，限制用户输入的字符集和格式，防止特殊字符和命令注释符的注入。\r\n- 使用参数化命令或预编译语句：应该使用参数化命令或预编译语句，而不是将用户输入直接拼接到命令中。这样可以将输入数据视为参数，而不是命令的一部分，从而避免命令注入漏洞。\r\n- 最小特权原则：应用程序在执行操作系统命令时，应该使用最小特权原则，即使用具有最低权限的用户或服务来执行操作。这样即使发生命令注入漏洞，攻击者的权限也会受到限制。\r\n- 安全编码实践：开发人员应避免使用不受信任的用户输入来拼接命令，并使用安全的编码实践，如输入验证、输出编码和参数化查询等。\r\n- 使用Web应用程序防火墙（WAF）：部署Web应用程序防火墙可以帮助检测和阻止命令注入攻击。",
+        "title": "如何预防OS命令注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129433",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.4
+        }
+      ]
+    },
+    "cvss_score": 9.4,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-78",
+    "description": "Dokploy 是一个开源的容器应用部署平台，基于 Docker Compose 与 Docker Swarm 提供应用部署、数据库管理和计划备份等自托管 PaaS 能力。\n受影响版本中，packages/server/src/utils/backups/utils.ts 的 getComposeContainerCommand 将用户可控的 serviceName 以模板字符串直接拼进 docker ps 命令的 label 过滤参数，未做任何 shell 元字符转义；具备项目访问权限的组织成员可通过 backup.create 或 backup.update tRPC 接口把含 shell 元字符的 serviceName 写入 Compose 备份配置，计划备份由 node-schedule 按 cron 默认每分钟调度并经 execAsync 以 /bin/bash 执行，注入的命令以 root 身份在 Dokploy 容器内运行，标准安装默认挂载 /var/run/docker.sock，攻击者可接管宿主机。\n修复版本中通过 shell-quote 的 quote() 对 label 过滤参数整体安全引用，使 serviceName 中的元字符不再被 shell 解释，同一修复还对 rclone 目标路径与备份保留清理路径补充引用处理，切断了从备份配置到 root 命令执行的注入链路。",
+    "effects": [
+      {
+        "comp_name": "dokploy",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0,0.31.1)",
+            "min_fixed_version": "0.31.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "OS命令注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "last_modified_time": "2026-11-14",
+    "level": "Critical",
+    "mps_id": "MPS-nyb1-qkmo",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-nyb1-qkmo",
+        "name": "https://www.oscs1024.com/hd/MPS-nyb1-qkmo"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129433",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-129433"
+      },
+      {
+        "url": "https://github.com/Dokploy/dokploy/security/advisories/GHSA-j329-jw7j-rxjm",
+        "name": "GitHub Security Advisory (GHSA-j329-jw7j-rxjm)"
+      },
+      {
+        "url": "https://github.com/Dokploy/dokploy/pull/5908",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Dokploy/dokploy/commit/b24006e16e95a10ce3daf739d06ac783e5c70ba0",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/Dokploy/dokploy/blob/v0.31.0/packages/server/src/utils/backups/utils.ts#L152",
+        "name": "Unescaped serviceName in getComposeContainerCommand at v0.31.0"
+      },
+      {
+        "url": "https://github.com/Dokploy/dokploy/releases/tag/v0.31.1",
+        "name": "Dokploy v0.31.1 Release Notes"
+      },
+      {
+        "url": "https://github.com/Dokploy/dokploy",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/dokploy-before-0.31.1-os-command-injection-via-compose-backup-servicename",
+        "name": "VulnCheck Advisory: Dokploy before 0.31.1 OS Command Injection via Compose Backup serviceName"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dokploy命令注入漏洞"
+  },
+  "first_saved_at": "2026-11-14T15:27:44+00:00"
+}
