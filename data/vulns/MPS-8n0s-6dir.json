@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-11-14T08:26:43+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-8n0s-6dir",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129319",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "7ffcee3d-2c14-4c3e-b844-86c6a321a158",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 5.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "7ffcee3d-2c14-4c3e-b844-86c6a321a158",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-20",
+    "description": "create-ecdh 是 browserify 生态下的开源 npm 加密组件，提供 Node.js crypto.createECDH 的可浏览器化实现，供前端打包工具以及缺少可用原生 ECDH 的 Node.js 版本执行椭圆曲线 Diffie-Hellman 密钥协商。\n受影响版本中，browser.js 的 ECDH.prototype.computeSecret 与 ECDH.prototype.setPublicKey 直接以 curve.keyFromPublic 解析对端公钥并执行点乘，未校验该点位于配置曲线或其素数阶子群，绕过了 elliptic 6.5.x 起 KeyPair.validate 与 KeyPair.derive 提供的公钥校验；攻击者向复用静态私钥的一方提交无效曲线或小子群上的低阶点，可依据协商结果通过中国剩余定理逐项恢复私钥模小因子的分量并最终还原完整私钥；ed25519 与 curve25519 曲线还接受低阶点，可强制产生可预测的共享密钥。\n修复版本中通过新增 validPublicKey 校验函数在 computeSecret 与 setPublicKey 中拒绝无穷远点、不在曲线上的点以及素数阶子群之外的点，并对 Montgomery 曲线显式拒绝 x 为 0 的低阶点，computeSecret 改用 keys.derive 推导共享密钥，无效公钥统一抛出 Public key is not valid for specified curve，行为与 Node.js 原生 ERR_CRYPTO_ECDH_INVALID_PUBLIC_KEY 一致。",
+    "effects": [
+      {
+        "comp_name": "create-ecdh",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.0.5)",
+            "min_fixed_version": "4.0.5",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "输入验证不恰当",
+    "kind_en": "输入验证不当",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-8n0s-6dir",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8n0s-6dir",
+        "name": "https://www.oscs1024.com/hd/MPS-8n0s-6dir"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129319",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-129319"
+      },
+      {
+        "url": "https://github.com/browserify/createECDH/security/advisories/GHSA-32q7-f779-hw5r",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/browserify/createECDH/commit/1cfaf332773237e5fea4b51a2ad3efab4c22bec1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "create-ecdh公钥校验缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129319",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "7ffcee3d-2c14-4c3e-b844-86c6a321a158",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 5.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "7ffcee3d-2c14-4c3e-b844-86c6a321a158",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.2
+        }
+      ]
+    },
+    "cvss_score": 8.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-20",
+    "description": "create-ecdh 是 browserify 生态下的开源 npm 加密组件，提供 Node.js crypto.createECDH 的可浏览器化实现，供前端打包工具以及缺少可用原生 ECDH 的 Node.js 版本执行椭圆曲线 Diffie-Hellman 密钥协商。\n受影响版本中，browser.js 的 ECDH.prototype.computeSecret 与 ECDH.prototype.setPublicKey 直接以 curve.keyFromPublic 解析对端公钥并执行点乘，未校验该点位于配置曲线或其素数阶子群，绕过了 elliptic 6.5.x 起 KeyPair.validate 与 KeyPair.derive 提供的公钥校验；攻击者向复用静态私钥的一方提交无效曲线或小子群上的低阶点，可依据协商结果通过中国剩余定理逐项恢复私钥模小因子的分量并最终还原完整私钥；ed25519 与 curve25519 曲线还接受低阶点，可强制产生可预测的共享密钥。\n修复版本中通过新增 validPublicKey 校验函数在 computeSecret 与 setPublicKey 中拒绝无穷远点、不在曲线上的点以及素数阶子群之外的点，并对 Montgomery 曲线显式拒绝 x 为 0 的低阶点，computeSecret 改用 keys.derive 推导共享密钥，无效公钥统一抛出 Public key is not valid for specified curve，行为与 Node.js 原生 ERR_CRYPTO_ECDH_INVALID_PUBLIC_KEY 一致。",
+    "effects": [
+      {
+        "comp_name": "create-ecdh",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.0.5)",
+            "min_fixed_version": "4.0.5",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "输入验证不恰当",
+    "kind_en": "Improper Input Validation",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-8n0s-6dir",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8n0s-6dir",
+        "name": "https://www.oscs1024.com/hd/MPS-8n0s-6dir"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129319",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-129319"
+      },
+      {
+        "url": "https://github.com/browserify/createECDH/security/advisories/GHSA-32q7-f779-hw5r",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/browserify/createECDH/commit/1cfaf332773237e5fea4b51a2ad3efab4c22bec1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "npm",
+      "开源"
+    ],
+    "title": "create-ecdh公钥校验缺失漏洞"
+  },
+  "first_saved_at": "2026-11-14T08:26:43+00:00"
+}

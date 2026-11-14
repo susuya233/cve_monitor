@@ -1,0 +1,219 @@
+{
+  "saved_at": "2026-11-14T08:26:46+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-wirl-upfe",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-124969",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
+    "cwe": "CWE-502",
+    "description": "Optimole 是 WordPress 官方插件目录中的开源图片优化插件（插件标识 optimole-wp，源码托管于 GitHub），提供图片压缩、WebP 与 AVIF 格式转换、CDN 分发与懒加载等功能，并支持在媒体库中对附件文件执行重命名与替换操作。\n受影响版本中，管理员对任意附件执行 Rename 操作时，插件通过 Optml_Attachment_Db_Renamer 类扫描数据库各表并把文本列的行值交给 replace_urls_in_value 处理；该函数对判定为序列化数据的行值直接调用 unserialize，未限制可实例化的类，而扫描范围未排除 wp_comments 表。未认证攻击者可先发表评论，在 comment_content 或 comment_agent 字段植入包含目标附件 URL 的序列化 Archive_Tar 对象载荷，管理员随后重命名该附件时载荷被反序列化，Archive_Tar 对象销毁时 __destruct 调用 _close 将攻击者可控的 _temp_tarname 属性传入 unlink，删除服务器任意文件，删除 wp-config.php 等关键文件后可借助 WordPress 重装流程获得远程代码执行。利用还需主机存在并可加载 PEAR Archive_Tar 库。\n修复版本中通过新增 read_serialized 方法替换原有反序列化调用：以 allowed_classes 选项仅允许 stdClass 实例化，拒绝包含 r:/R: 引用标记的值，并在递归检查发现 stdClass 以外对象时保持原值不变，嵌套的序列化字符串复用同一防护并受 MAX_NESTED_DEPTH 上限约束，阻止 Archive_Tar 等任意类被实例化，切断对象注入到任意文件删除的利用链。",
+    "effects": [
+      {
+        "comp_name": "optimole-wp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.2.20)",
+            "min_fixed_version": "4.2.20",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-wirl-upfe",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wirl-upfe",
+        "name": "https://www.oscs1024.com/hd/MPS-wirl-upfe"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-124969",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-124969"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/277b9a34-8e0b-496e-b07b-602b25f125d8?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.19/inc/media_rename/attachment_db_renamer.php#L415",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.19/inc/media_rename/attachment_db_renamer.php#L548",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.19/inc/media_rename/attachment_db_renamer.php#L319",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.19/inc/media_rename/attachment_rename.php#L107",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.19/inc/media_rename/attachment_edit.php#L311",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.20",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Optimole 任意文件删除漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-124969",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security@wordfence.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
+    "cwe": "CWE-502",
+    "description": "Optimole 是 WordPress 官方插件目录中的开源图片优化插件（插件标识 optimole-wp，源码托管于 GitHub），提供图片压缩、WebP 与 AVIF 格式转换、CDN 分发与懒加载等功能，并支持在媒体库中对附件文件执行重命名与替换操作。\n受影响版本中，管理员对任意附件执行 Rename 操作时，插件通过 Optml_Attachment_Db_Renamer 类扫描数据库各表并把文本列的行值交给 replace_urls_in_value 处理；该函数对判定为序列化数据的行值直接调用 unserialize，未限制可实例化的类，而扫描范围未排除 wp_comments 表。未认证攻击者可先发表评论，在 comment_content 或 comment_agent 字段植入包含目标附件 URL 的序列化 Archive_Tar 对象载荷，管理员随后重命名该附件时载荷被反序列化，Archive_Tar 对象销毁时 __destruct 调用 _close 将攻击者可控的 _temp_tarname 属性传入 unlink，删除服务器任意文件，删除 wp-config.php 等关键文件后可借助 WordPress 重装流程获得远程代码执行。利用还需主机存在并可加载 PEAR Archive_Tar 库。\n修复版本中通过新增 read_serialized 方法替换原有反序列化调用：以 allowed_classes 选项仅允许 stdClass 实例化，拒绝包含 r:/R: 引用标记的值，并在递归检查发现 stdClass 以外对象时保持原值不变，嵌套的序列化字符串复用同一防护并受 MAX_NESTED_DEPTH 上限约束，阻止 Archive_Tar 等任意类被实例化，切断对象注入到任意文件删除的利用链。",
+    "effects": [
+      {
+        "comp_name": "optimole-wp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,4.2.20)",
+            "min_fixed_version": "4.2.20",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-wirl-upfe",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-wirl-upfe",
+        "name": "https://www.oscs1024.com/hd/MPS-wirl-upfe"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-124969",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-124969"
+      },
+      {
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/277b9a34-8e0b-496e-b07b-602b25f125d8?source=cve",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.19/inc/media_rename/attachment_db_renamer.php#L415",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.19/inc/media_rename/attachment_db_renamer.php#L548",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.19/inc/media_rename/attachment_db_renamer.php#L319",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.19/inc/media_rename/attachment_rename.php#L107",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.19/inc/media_rename/attachment_edit.php#L311",
+        "name": ""
+      },
+      {
+        "url": "https://plugins.trac.wordpress.org/browser/optimole-wp/tags/4.2.20",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Optimole 任意文件删除漏洞"
+  },
+  "first_saved_at": "2026-11-14T08:26:46+00:00"
+}
