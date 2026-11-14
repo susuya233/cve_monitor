@@ -1,0 +1,201 @@
+{
+  "saved_at": "2026-11-14T01:10:33+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-vtjm-zlay",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71519",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "PrestaShop 是开源 PHP 电商建站系统，广泛用于在线商店搭建，Webservice REST API 与多店铺（multistore）管理为其官方内置能力。\n受影响版本中，WebserviceRequest 的 shopHasRight() 仅校验 API 密钥是否覆盖请求参数 id_shop 或 id_shop_group 指定的店铺，saveEntityFromXml()、getList() 与 getEntityDetails() 按主键加载记录后未校验该记录所属店铺是否在密钥授权范围内，customer 等无 id_shop 字段的记录也未回溯 owner 店铺归属，导致仅绑定单一店铺的密钥可跨店读取客户密码哈希与 secure_key，并可修改任意客户的邮箱与密码完成账号接管。\n修复版本中通过重写 shopHasRight() 要求密钥覆盖每一个选中店铺，新增 getAllowedShopIdsForCurrentKey() 与 isObjectAccessibleFromShops() 在读取、列表、创建、更新和删除前校验记录归属店铺，并支持共享店铺组与无店铺字段的 owner 店铺回溯，saveEntityFromXml() 在应用 XML 后二次校验，阻断跨店读取与改写路径。",
+    "effects": [
+      {
+        "comp_name": "prestashop/prestashop",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[9.0.0,9.2.1)",
+            "min_fixed_version": "9.2.1",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.0.0,8.2.9)",
+            "min_fixed_version": "8.2.9",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-vtjm-zlay",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-vtjm-zlay",
+        "name": "https://www.oscs1024.com/hd/MPS-vtjm-zlay"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71519",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71519"
+      },
+      {
+        "url": "https://github.com/PrestaShop/PrestaShop/security/advisories/GHSA-hjwq-7qvv-qxj4",
+        "name": "GitHub Security Advisory (GHSA-hjwq-7qvv-qxj4)"
+      },
+      {
+        "url": "https://github.com/PrestaShop/PrestaShop/releases/tag/9.2.1",
+        "name": "9.2.1 Release Tag"
+      },
+      {
+        "url": "https://github.com/PrestaShop/PrestaShop/releases/tag/8.2.9",
+        "name": "8.2.9 Release Tag"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/prestashop-webservice-api-authorization-bypass-via-id-shop-parameter",
+        "name": "VulnCheck Advisory: PrestaShop Webservice API Authorization Bypass via id_shop Parameter"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "PrestaShop Webservice跨店越权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-71519",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "PrestaShop 是开源 PHP 电商建站系统，广泛用于在线商店搭建，Webservice REST API 与多店铺（multistore）管理为其官方内置能力。\n受影响版本中，WebserviceRequest 的 shopHasRight() 仅校验 API 密钥是否覆盖请求参数 id_shop 或 id_shop_group 指定的店铺，saveEntityFromXml()、getList() 与 getEntityDetails() 按主键加载记录后未校验该记录所属店铺是否在密钥授权范围内，customer 等无 id_shop 字段的记录也未回溯 owner 店铺归属，导致仅绑定单一店铺的密钥可跨店读取客户密码哈希与 secure_key，并可修改任意客户的邮箱与密码完成账号接管。\n修复版本中通过重写 shopHasRight() 要求密钥覆盖每一个选中店铺，新增 getAllowedShopIdsForCurrentKey() 与 isObjectAccessibleFromShops() 在读取、列表、创建、更新和删除前校验记录归属店铺，并支持共享店铺组与无店铺字段的 owner 店铺回溯，saveEntityFromXml() 在应用 XML 后二次校验，阻断跨店读取与改写路径。",
+    "effects": [
+      {
+        "comp_name": "prestashop/prestashop",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[9.0.0,9.2.1)",
+            "min_fixed_version": "9.2.1",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.0.0,8.2.9)",
+            "min_fixed_version": "8.2.9",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-vtjm-zlay",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-vtjm-zlay",
+        "name": "https://www.oscs1024.com/hd/MPS-vtjm-zlay"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71519",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-71519"
+      },
+      {
+        "url": "https://github.com/PrestaShop/PrestaShop/security/advisories/GHSA-hjwq-7qvv-qxj4",
+        "name": "GitHub Security Advisory (GHSA-hjwq-7qvv-qxj4)"
+      },
+      {
+        "url": "https://github.com/PrestaShop/PrestaShop/releases/tag/9.2.1",
+        "name": "9.2.1 Release Tag"
+      },
+      {
+        "url": "https://github.com/PrestaShop/PrestaShop/releases/tag/8.2.9",
+        "name": "8.2.9 Release Tag"
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/prestashop-webservice-api-authorization-bypass-via-id-shop-parameter",
+        "name": "VulnCheck Advisory: PrestaShop Webservice API Authorization Bypass via id_shop Parameter"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "PrestaShop Webservice跨店越权漏洞"
+  },
+  "first_saved_at": "2026-11-14T01:10:33+00:00"
+}

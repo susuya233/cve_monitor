@@ -1,0 +1,173 @@
+{
+  "saved_at": "2026-11-14T01:10:35+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-h1jd-3fk2",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-128134",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-427",
+    "description": "NLTK（Natural Language Toolkit）是开源 Python 自然语言处理工具包，提供分词、标注、句法分析等能力，nltk.parse.dependencygraph 模块用于构建依存句法图，并通过 Graphviz 的 dot 程序渲染 SVG 等图像输出。\n受影响版本中，dot2img 通过 find_binary(\"dot\") 解析 dot 二进制路径后，以 subprocess.run 直接执行解析出的绝对路径，未经过 nltk.pathsec.spawn_trusted 通道，resolve_trusted_executable 的属主与可写性校验以及 safe_env 的加载器环境清洗均不会运行，而 find_binary 的第一层校验只拒绝当前工作目录下的相对匹配，PATH 的 which 搜索阶段返回的绝对路径会原样通过。本地低权限攻击者在 POSIX 宿主上向受害者 PATH 中的组/全局可写目录植入或替换 dot 后，受害者调用 dot2img 或渲染 DependencyGraph（Jupyter 经 _repr_svg_ 自动触发）时植入的二进制以受害者身份执行，形成本地任意代码执行，未清洗的子进程环境同时暴露 LD_PRELOAD 等加载器注入面；该问题是 CVE-2026-78680 修复 translate/api.py 后 dot2img 遗留的可写绝对 PATH 元素绕过。\n修复版本中通过将 dot 的解析与执行收敛到受信路径切断该链路：dot2img 改用 find_binary_absolute 解析 dot 并拒绝含 .. 分量的路径，再经 spawn_trusted 校验二进制所在目录链无其他本地用户可写、拒绝 shell 并在 exec 前清洗加载器环境，植入的 dot 被 TrustError 拒绝执行。",
+    "effects": [
+      {
+        "comp_name": "nltk",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.10.4)",
+            "min_fixed_version": "3.10.4",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对搜索路径元素未加控制",
+    "kind_en": "Uncontrolled Search Path Element",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-h1jd-3fk2",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-h1jd-3fk2",
+        "name": "https://www.oscs1024.com/hd/MPS-h1jd-3fk2"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-128134",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-128134"
+      },
+      {
+        "url": "https://github.com/nltk/nltk/security/advisories/GHSA-7mxv-7h3q-9324",
+        "name": "https://github.com/nltk/nltk/security/advisories/GHSA-7mxv-7h3q-9324"
+      },
+      {
+        "url": "https://github.com/nltk/nltk/pull/3887",
+        "name": "https://github.com/nltk/nltk/pull/3887"
+      },
+      {
+        "url": "https://github.com/nltk/nltk/commit/b002a7288c22db86fd6ca2d9526e3f91d6fda797",
+        "name": "https://github.com/nltk/nltk/commit/b002a7288c22db86fd6ca2d9526e3f91d6fda797"
+      },
+      {
+        "url": "https://github.com/nltk/nltk/releases/tag/v3.10.4",
+        "name": "https://github.com/nltk/nltk/releases/tag/v3.10.4"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "NLTK dot2img本地代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-128134",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "security-advisories@github.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-427",
+    "description": "NLTK（Natural Language Toolkit）是开源 Python 自然语言处理工具包，提供分词、标注、句法分析等能力，nltk.parse.dependencygraph 模块用于构建依存句法图，并通过 Graphviz 的 dot 程序渲染 SVG 等图像输出。\n受影响版本中，dot2img 通过 find_binary(\"dot\") 解析 dot 二进制路径后，以 subprocess.run 直接执行解析出的绝对路径，未经过 nltk.pathsec.spawn_trusted 通道，resolve_trusted_executable 的属主与可写性校验以及 safe_env 的加载器环境清洗均不会运行，而 find_binary 的第一层校验只拒绝当前工作目录下的相对匹配，PATH 的 which 搜索阶段返回的绝对路径会原样通过。本地低权限攻击者在 POSIX 宿主上向受害者 PATH 中的组/全局可写目录植入或替换 dot 后，受害者调用 dot2img 或渲染 DependencyGraph（Jupyter 经 _repr_svg_ 自动触发）时植入的二进制以受害者身份执行，形成本地任意代码执行，未清洗的子进程环境同时暴露 LD_PRELOAD 等加载器注入面；该问题是 CVE-2026-78680 修复 translate/api.py 后 dot2img 遗留的可写绝对 PATH 元素绕过。\n修复版本中通过将 dot 的解析与执行收敛到受信路径切断该链路：dot2img 改用 find_binary_absolute 解析 dot 并拒绝含 .. 分量的路径，再经 spawn_trusted 校验二进制所在目录链无其他本地用户可写、拒绝 shell 并在 exec 前清洗加载器环境，植入的 dot 被 TrustError 拒绝执行。",
+    "effects": [
+      {
+        "comp_name": "nltk",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.10.4)",
+            "min_fixed_version": "3.10.4",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对搜索路径元素未加控制",
+    "kind_en": "Uncontrolled Search Path Element",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-h1jd-3fk2",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-h1jd-3fk2",
+        "name": "https://www.oscs1024.com/hd/MPS-h1jd-3fk2"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-128134",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-128134"
+      },
+      {
+        "url": "https://github.com/nltk/nltk/security/advisories/GHSA-7mxv-7h3q-9324",
+        "name": "https://github.com/nltk/nltk/security/advisories/GHSA-7mxv-7h3q-9324"
+      },
+      {
+        "url": "https://github.com/nltk/nltk/pull/3887",
+        "name": "https://github.com/nltk/nltk/pull/3887"
+      },
+      {
+        "url": "https://github.com/nltk/nltk/commit/b002a7288c22db86fd6ca2d9526e3f91d6fda797",
+        "name": "https://github.com/nltk/nltk/commit/b002a7288c22db86fd6ca2d9526e3f91d6fda797"
+      },
+      {
+        "url": "https://github.com/nltk/nltk/releases/tag/v3.10.4",
+        "name": "https://github.com/nltk/nltk/releases/tag/v3.10.4"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "NLTK dot2img本地代码执行漏洞"
+  },
+  "first_saved_at": "2026-11-14T01:10:35+00:00"
+}

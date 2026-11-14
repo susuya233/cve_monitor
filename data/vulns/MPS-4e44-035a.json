@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-11-14T01:10:36+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4e44-035a",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-9661",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-427",
+    "description": "Postecert FIRMAOK! 是 Postecert 推出的闭源数字签名客户端软件，用于在 Windows 平台完成电子签名与证书相关操作，属于意大利邮政集团旗下的数字签名产品。\n受影响版本中，应用依赖受 OPENSSLDIR 环境变量影响的 OpenSSL 配置路径，且未校验该路径来源；低权限本地用户可预创建一个原本不存在的目录并放置恶意 OpenSSL 配置或库文件，主程序 launcher.exe 启动 updater.exe、tslupdater.exe 等依赖组件后，这些组件会从攻击者控制的目录加载 OpenSSL 相关文件，加载内容按启动用户的权限级别被信任执行，经研究者测试 1.6.29 版本受影响，在共享或多用户环境中可导致横向权限提升，并可能进一步造成纵向权限提升。\n修复版本中通过官方安全更新收紧 OpenSSL 配置路径的解析与校验，限制应用从用户可写目录加载配置与库文件；截至 2026-11-13 厂商尚未公开发布修复版本，公开资料未披露具体修复代码，官方修复发布前建议按缓解措施处理。",
+    "effects": [
+      {
+        "comp_name": "postecert_firmaok",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.6.29]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对搜索路径元素未加控制",
+    "kind_en": "Uncontrolled Search Path Element",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-4e44-035a",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://seclists.org/fulldisclosure/2026/Nov/14",
+        "name": ""
+      },
+      {
+        "url": "https://olografix.org/acme/_poc/CVE-2026-9661.pdf",
+        "name": ""
+      },
+      {
+        "url": "https://postecert.poste.it/firma/download.shtml",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FIRMAOK本地权限提升漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-9661",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-427",
+    "description": "Postecert FIRMAOK! 是 Postecert 推出的闭源数字签名客户端软件，用于在 Windows 平台完成电子签名与证书相关操作，属于意大利邮政集团旗下的数字签名产品。\n受影响版本中，应用依赖受 OPENSSLDIR 环境变量影响的 OpenSSL 配置路径，且未校验该路径来源；低权限本地用户可预创建一个原本不存在的目录并放置恶意 OpenSSL 配置或库文件，主程序 launcher.exe 启动 updater.exe、tslupdater.exe 等依赖组件后，这些组件会从攻击者控制的目录加载 OpenSSL 相关文件，加载内容按启动用户的权限级别被信任执行，经研究者测试 1.6.29 版本受影响，在共享或多用户环境中可导致横向权限提升，并可能进一步造成纵向权限提升。\n修复版本中通过官方安全更新收紧 OpenSSL 配置路径的解析与校验，限制应用从用户可写目录加载配置与库文件；截至 2026-11-13 厂商尚未公开发布修复版本，公开资料未披露具体修复代码，官方修复发布前建议按缓解措施处理。",
+    "effects": [
+      {
+        "comp_name": "postecert_firmaok",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.6.29]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对搜索路径元素未加控制",
+    "kind_en": "Uncontrolled Search Path Element",
+    "last_modified_time": "2026-11-14",
+    "level": "High",
+    "mps_id": "MPS-4e44-035a",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-14",
+    "reference_url_list": [
+      {
+        "url": "https://seclists.org/fulldisclosure/2026/Nov/14",
+        "name": ""
+      },
+      {
+        "url": "https://olografix.org/acme/_poc/CVE-2026-9661.pdf",
+        "name": ""
+      },
+      {
+        "url": "https://postecert.poste.it/firma/download.shtml",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FIRMAOK本地权限提升漏洞"
+  },
+  "first_saved_at": "2026-11-14T01:10:36+00:00"
+}
