@@ -1,0 +1,159 @@
+{
+  "saved_at": "2026-11-15T00:37:26+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ol9d-me8i",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2015-10149",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-1286",
+    "description": "Dancer 是开源的 Perl Web 应用框架，提供路由、模板、会话管理等能力，各类会话引擎基于公共基类 Dancer::Session::Abstract 实现。\n受影响版本中，Dancer::Session::Abstract 的 read_session_id 方法从 dancer.session cookie 中取值后未做任何字符校验，直接把 cookie 值作为会话 ID 返回；Dancer::Session::get_current_session 随后将该值传给会话引擎的 retrieve 方法加载会话，把 ID 拼进文件路径、缓存命令或查询语句且未自行校验的会话引擎可被攻击者注入 ../ 等路径穿越序列或协议控制字符，导致路径遍历或注入。\n修复版本中通过在 Dancer::Session::Abstract 新增 validate_session_id 方法解决该问题，默认仅接受匹配 ^[A-Za-z0-9_\\-~]+$ 的会话 ID，read_session_id 对不合法的 ID 记录警告并拒绝返回，使未校验的 cookie 值无法再进入会话引擎，会话提供方也可按需覆盖该校验方法以适配自身 ID 格式。",
+    "effects": [
+      {
+        "comp_name": "dancer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.3400)",
+            "min_fixed_version": "1.3400",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "输入的句法正确性验证不当",
+    "kind_en": "输入语法正确性验证不当",
+    "last_modified_time": "2026-11-15",
+    "level": "High",
+    "mps_id": "MPS-ol9d-me8i",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ol9d-me8i",
+        "name": "https://www.oscs1024.com/hd/MPS-ol9d-me8i"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2015-10149",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2015-10149"
+      },
+      {
+        "url": "https://github.com/PerlDancer/Dancer/commit/5a68fddbaef903fd3bd58517ce585cde986716e4.patch",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/PerlDancer/Dancer/issues/1117",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/PerlDancer/Dancer/issues/1118",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/PerlDancer/Dancer/pull/1172",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/BIGPRESH/Dancer-1.3400/changes",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dancer会话ID校验缺失漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2015-10149",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-1286",
+    "description": "Dancer 是开源的 Perl Web 应用框架，提供路由、模板、会话管理等能力，各类会话引擎基于公共基类 Dancer::Session::Abstract 实现。\n受影响版本中，Dancer::Session::Abstract 的 read_session_id 方法从 dancer.session cookie 中取值后未做任何字符校验，直接把 cookie 值作为会话 ID 返回；Dancer::Session::get_current_session 随后将该值传给会话引擎的 retrieve 方法加载会话，把 ID 拼进文件路径、缓存命令或查询语句且未自行校验的会话引擎可被攻击者注入 ../ 等路径穿越序列或协议控制字符，导致路径遍历或注入。\n修复版本中通过在 Dancer::Session::Abstract 新增 validate_session_id 方法解决该问题，默认仅接受匹配 ^[A-Za-z0-9_\\-~]+$ 的会话 ID，read_session_id 对不合法的 ID 记录警告并拒绝返回，使未校验的 cookie 值无法再进入会话引擎，会话提供方也可按需覆盖该校验方法以适配自身 ID 格式。",
+    "effects": [
+      {
+        "comp_name": "dancer",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.3400)",
+            "min_fixed_version": "1.3400",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "输入的句法正确性验证不当",
+    "kind_en": "Improper Validation of Syntactic Correctness of Input",
+    "last_modified_time": "2026-11-15",
+    "level": "High",
+    "mps_id": "MPS-ol9d-me8i",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ol9d-me8i",
+        "name": "https://www.oscs1024.com/hd/MPS-ol9d-me8i"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2015-10149",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2015-10149"
+      },
+      {
+        "url": "https://github.com/PerlDancer/Dancer/commit/5a68fddbaef903fd3bd58517ce585cde986716e4.patch",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/PerlDancer/Dancer/issues/1117",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/PerlDancer/Dancer/issues/1118",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/PerlDancer/Dancer/pull/1172",
+        "name": ""
+      },
+      {
+        "url": "https://metacpan.org/release/BIGPRESH/Dancer-1.3400/changes",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Dancer会话ID校验缺失漏洞"
+  },
+  "first_saved_at": "2026-11-15T00:37:26+00:00"
+}

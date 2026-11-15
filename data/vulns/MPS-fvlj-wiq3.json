@@ -1,0 +1,251 @@
+{
+  "saved_at": "2026-11-15T00:37:25+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-fvlj-wiq3",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129456",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "57a55968-44ac-464c-a794-6ba3baad09c4",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:X/RE:X/U:X",
+    "cwe": "CWE-416",
+    "description": "FRR（FRRouting）是开源的 IP 路由协议套件，其中的 bgpd 守护进程负责与对等体建立 BGP 会话并维护路由表，广泛部署于 Linux 路由器与网络设备。\n受影响版本中，bgpd 接受邻居发送的 RFC 9012 Tunnel Encapsulation 属性（类型 23），bgp_attr_encap() 对外层 TLV 长度与属性剩余长度不一致的情况仅记录日志并继续处理；已建立 BGP 会话的邻居通过 UPDATE 消息携带此类畸形属性，使 intern 化的子 TLV 链引用计数失衡，该链在 Adj-RIB-In 条目与 RIB 路径仍持有引用时被释放，后续路由替换、撤销或会话拆除触发 encap_unintern() 读取已释放内存并二次释放，bgpd 因内存记账断言失败退出，路由器上全部 BGP 会话中断，攻击者可在 bgpd 重启后重复触发。\n修复版本中通过在 bgp_attr_encap() 中将长度不一致判定为畸形属性，以 flog_err 记录错误日志并经 bgp_attr_malformed() 返回 BGP_NOTIFY_UPDATE_OPT_ATTR_ERR 通知，拒绝处理该属性，切断引用计数失衡与后续对已释放内存的访问路径，bgpd 不再因该属性崩溃。",
+    "effects": [
+      {
+        "comp_name": "frrouting",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,10.2.6)",
+            "min_fixed_version": "10.2.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.3,10.3.4)",
+            "min_fixed_version": "10.3.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.6,10.6.0)",
+            "min_fixed_version": "10.6.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.4,10.4.4)",
+            "min_fixed_version": "10.4.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.5,10.5.4)",
+            "min_fixed_version": "10.5.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "UAF",
+    "kind_en": "免费后使用",
+    "last_modified_time": "2026-11-15",
+    "level": "High",
+    "mps_id": "MPS-fvlj-wiq3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fvlj-wiq3",
+        "name": "https://www.oscs1024.com/hd/MPS-fvlj-wiq3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129456",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-129456"
+      },
+      {
+        "url": "https://github.com/FRRouting/frr/issues/20874",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FRRouting/frr/pull/21176/changes/1238ac4a06e5c23595e8bf626856f297d0c302a2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FRRouting/frr/commit/bebf95f02bc0dccc6a1841f0c8cbcba1f617d655",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FRRouting/frr/commit/abef07b500e19baa924d157ab03809b93730e619",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FRR bgpd 隧道封装属性 UAF",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "应用程序使用已释放的内存区域。当一个对象被释放后，程序可能继续引用该内存地址，导致使用了无效的内存。攻击者可以利用这个漏洞，通过修改已释放的内存内容来执行恶意代码或者获取敏感信息。",
+        "title": "什么是UAF"
+      },
+      {
+        "content": "- 悬空指针攻击：攻击者利用程序中的已释放指针，重新分配内存并故意将指针指向已释放的内存区域。然后，当程序继续使用该指针时，攻击者可以执行恶意代码或者篡改内存数据。\r\n- 虚函数表劫持：针对面向对象的程序，攻击者可以通过修改已释放对象的虚函数表（VTable）指针，来改变程序的行为。攻击者可以控制程序执行任意代码或者调用任意函数。\r\n- 堆喷射：攻击者通过大量分配和释放特定大小的内存块，以创建特定的内存布局。然后，攻击者可以利用UAF漏洞来操作特定的内存块，例如修改函数指针，从而实现代码执行。",
+        "title": "UAF常见的攻击方式"
+      },
+      {
+        "content": "- 释放后置空指针：在释放内存后，立即将指针置为空，防止后续误用。\r\n- 使用析构函数：在对象被释放时，使用析构函数来清理相关资源，避免UAF漏洞的发生。\r\n- 使用引用计数或垃圾回收机制：引入引用计数或垃圾回收机制可以自动处理内存释放，减少UAF的发生。\r\n- 使用现代化的编程语言和框架：现代编程语言和框架通常具有内存管理机制，如自动内存回收和强类型检查，可以有效减少UAF漏洞的发生。\r\n- 定期更新和修复：及时更新和修复软件，包括操作系统、应用程序和库文件，以防止已知的UAF漏洞被攻击利用。",
+        "title": "如何预防UAF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129456",
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "57a55968-44ac-464c-a794-6ba3baad09c4",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:X/RE:X/U:X",
+    "cwe": "CWE-416",
+    "description": "FRR（FRRouting）是开源的 IP 路由协议套件，其中的 bgpd 守护进程负责与对等体建立 BGP 会话并维护路由表，广泛部署于 Linux 路由器与网络设备。\n受影响版本中，bgpd 接受邻居发送的 RFC 9012 Tunnel Encapsulation 属性（类型 23），bgp_attr_encap() 对外层 TLV 长度与属性剩余长度不一致的情况仅记录日志并继续处理；已建立 BGP 会话的邻居通过 UPDATE 消息携带此类畸形属性，使 intern 化的子 TLV 链引用计数失衡，该链在 Adj-RIB-In 条目与 RIB 路径仍持有引用时被释放，后续路由替换、撤销或会话拆除触发 encap_unintern() 读取已释放内存并二次释放，bgpd 因内存记账断言失败退出，路由器上全部 BGP 会话中断，攻击者可在 bgpd 重启后重复触发。\n修复版本中通过在 bgp_attr_encap() 中将长度不一致判定为畸形属性，以 flog_err 记录错误日志并经 bgp_attr_malformed() 返回 BGP_NOTIFY_UPDATE_OPT_ATTR_ERR 通知，拒绝处理该属性，切断引用计数失衡与后续对已释放内存的访问路径，bgpd 不再因该属性崩溃。",
+    "effects": [
+      {
+        "comp_name": "frrouting",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,10.2.6)",
+            "min_fixed_version": "10.2.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.3,10.3.4)",
+            "min_fixed_version": "10.3.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.6,10.6.0)",
+            "min_fixed_version": "10.6.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.4,10.4.4)",
+            "min_fixed_version": "10.4.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[10.5,10.5.4)",
+            "min_fixed_version": "10.5.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "UAF",
+    "kind_en": "Use After Free",
+    "last_modified_time": "2026-11-15",
+    "level": "High",
+    "mps_id": "MPS-fvlj-wiq3",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-fvlj-wiq3",
+        "name": "https://www.oscs1024.com/hd/MPS-fvlj-wiq3"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129456",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-129456"
+      },
+      {
+        "url": "https://github.com/FRRouting/frr/issues/20874",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FRRouting/frr/pull/21176/changes/1238ac4a06e5c23595e8bf626856f297d0c302a2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FRRouting/frr/commit/bebf95f02bc0dccc6a1841f0c8cbcba1f617d655",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FRRouting/frr/commit/abef07b500e19baa924d157ab03809b93730e619",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FRR bgpd 隧道封装属性 UAF"
+  },
+  "first_saved_at": "2026-11-15T00:37:25+00:00"
+}
