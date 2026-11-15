@@ -1,0 +1,233 @@
+{
+  "saved_at": "2026-11-15T15:12:24+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-c0wh-vj9e",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129453",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:S/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 9
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H/E:P/RL:O/RC:C",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-122",
+    "description": "DrayTek Vigor2960 是 DrayTek 公司推出的企业级 VPN 路由器设备，固件为闭源嵌入式软件，通过 /cgi-bin/mainfunction.cgi 提供 Web 管理接口。\n受影响版本中，mainfunction.cgi 的 check_file_exist 处理例程读取 upload_config、upload_section、upload_option、upload_path 与 upload_name 参数后，将 upload_name 通过 strcat 直接拼接到承载 upload_path 的堆缓冲区，拼接前未获取目标缓冲区容量也未限制写入长度；已通过认证的攻击者提交超长 upload_name 可越界改写相邻堆数据，造成 CGI 进程内存破坏并在请求清理阶段于 free 函数触发 SIGSEGV 崩溃，公开验证显示 0x100 字节输入使接口响应由正常 JSON 变为空响应体。\n修复版本中通过升级 Vigor2960 固件至 1.5.1.7 修复，厂商确认所报告问题已在更新固件中修复，升级后可消除超长 upload_name 引发的堆越界写入与进程崩溃风险。",
+    "effects": [
+      {
+        "comp_name": "vigor2960_firmware",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5.1.7)",
+            "min_fixed_version": "1.5.1.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-11-15",
+    "level": "High",
+    "mps_id": "MPS-c0wh-vj9e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-c0wh-vj9e",
+        "name": "https://www.oscs1024.com/hd/MPS-c0wh-vj9e"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129453",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-129453"
+      },
+      {
+        "url": "https://vuldb.com/vuln/437464",
+        "name": "VDB-437464 | DrayTek Vigor2960 File Existence Check mainfunction.cgi check_file_exist heap-based overflow"
+      },
+      {
+        "url": "https://vuldb.com/vuln/437464/cti",
+        "name": "VDB-437464 | CTI Indicators (IOB, IOC, IOA)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-129453",
+        "name": "CVE-2026-129453 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/1044963",
+        "name": "Submit #1044963 | DrayTek Vigor2960 Vigor2960 1.5.1.6 (revision 8218) Authenticated check_file_exist Heap Memory Corruption"
+      },
+      {
+        "url": "https://github.com/yikesoftware/DrayTek_Vigor2960_Security_Analysis/tree/main/cases/DRV2960-0020-authenticated-check-file-exist-direct-cgi-core",
+        "name": ""
+      },
+      {
+        "url": "https://fw.draytek.com.tw/Vigor2960/Firmware/v1.5.1.7/Vigor2960_v1.5.1.7.zip",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Vigor2960 堆缓冲区溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129453",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:L/Au:S/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 9
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H/E:P/RL:O/RC:C",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ]
+    },
+    "cvss_score": 8.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-122",
+    "description": "DrayTek Vigor2960 是 DrayTek 公司推出的企业级 VPN 路由器设备，固件为闭源嵌入式软件，通过 /cgi-bin/mainfunction.cgi 提供 Web 管理接口。\n受影响版本中，mainfunction.cgi 的 check_file_exist 处理例程读取 upload_config、upload_section、upload_option、upload_path 与 upload_name 参数后，将 upload_name 通过 strcat 直接拼接到承载 upload_path 的堆缓冲区，拼接前未获取目标缓冲区容量也未限制写入长度；已通过认证的攻击者提交超长 upload_name 可越界改写相邻堆数据，造成 CGI 进程内存破坏并在请求清理阶段于 free 函数触发 SIGSEGV 崩溃，公开验证显示 0x100 字节输入使接口响应由正常 JSON 变为空响应体。\n修复版本中通过升级 Vigor2960 固件至 1.5.1.7 修复，厂商确认所报告问题已在更新固件中修复，升级后可消除超长 upload_name 引发的堆越界写入与进程崩溃风险。",
+    "effects": [
+      {
+        "comp_name": "vigor2960_firmware",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5.1.7)",
+            "min_fixed_version": "1.5.1.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-11-15",
+    "level": "High",
+    "mps_id": "MPS-c0wh-vj9e",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-15",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-c0wh-vj9e",
+        "name": "https://www.oscs1024.com/hd/MPS-c0wh-vj9e"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129453",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-129453"
+      },
+      {
+        "url": "https://vuldb.com/vuln/437464",
+        "name": "VDB-437464 | DrayTek Vigor2960 File Existence Check mainfunction.cgi check_file_exist heap-based overflow"
+      },
+      {
+        "url": "https://vuldb.com/vuln/437464/cti",
+        "name": "VDB-437464 | CTI Indicators (IOB, IOC, IOA)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-129453",
+        "name": "CVE-2026-129453 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/1044963",
+        "name": "Submit #1044963 | DrayTek Vigor2960 Vigor2960 1.5.1.6 (revision 8218) Authenticated check_file_exist Heap Memory Corruption"
+      },
+      {
+        "url": "https://github.com/yikesoftware/DrayTek_Vigor2960_Security_Analysis/tree/main/cases/DRV2960-0020-authenticated-check-file-exist-direct-cgi-core",
+        "name": ""
+      },
+      {
+        "url": "https://fw.draytek.com.tw/Vigor2960/Firmware/v1.5.1.7/Vigor2960_v1.5.1.7.zip",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Vigor2960 堆缓冲区溢出漏洞"
+  },
+  "first_saved_at": "2026-11-15T15:12:24+00:00"
+}
