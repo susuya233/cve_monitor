@@ -1,0 +1,145 @@
+{
+  "saved_at": "2026-11-15T20:42:59+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-kqxb-iowd",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-125823",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-770",
+    "description": "Gutenverse 是 Jegstudio 发布的开源 WordPress 区块与页面构建插件，用于在区块编辑器和站点编辑器中搭建页面、模板与站点布局。\n受影响版本中，插件默认注册无需认证的 REST 接口 gutenverse-client/v1/postblock/data 与 gutenverse-client/v1/postlist/data，并把请求中的 attributes 传入文章区块查询。Post_Abstract::filter_attribute 对 numberPost 与 paginationNumberPost 只执行 intval，未把结果限制为正数。paginationMode 不属于 loadmore 或 scrollload 时，count_total_page 会用 numberPost 覆盖后续页步长；该步长为 0 或负数且剩余量大于 0 时，while 循环无法减少剩余量，单个 HTTP 请求持续占用 PHP 进程并导致站点拒绝服务。\n修复版本中通过把 numberPost 与 paginationNumberPost 的下限限制为 1，并将 count_total_page 的递减循环改为按不小于 1 的步长计算页数，切断异常分页参数导致的不可终止循环。",
+    "effects": [
+      {
+        "comp_name": "gutenverse",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.2.3)",
+            "min_fixed_version": "4.2.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-11-16",
+    "level": "High",
+    "mps_id": "MPS-kqxb-iowd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-16",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-kqxb-iowd",
+        "name": "https://www.oscs1024.com/hd/MPS-kqxb-iowd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-125823",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-125823"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/gutenverse/vulnerability/wordpress-gutenverse-plugin-4-2-2-denial-of-service-attack-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Gutenverse分页拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-125823",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "audit@patchstack.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-770",
+    "description": "Gutenverse 是 Jegstudio 发布的开源 WordPress 区块与页面构建插件，用于在区块编辑器和站点编辑器中搭建页面、模板与站点布局。\n受影响版本中，插件默认注册无需认证的 REST 接口 gutenverse-client/v1/postblock/data 与 gutenverse-client/v1/postlist/data，并把请求中的 attributes 传入文章区块查询。Post_Abstract::filter_attribute 对 numberPost 与 paginationNumberPost 只执行 intval，未把结果限制为正数。paginationMode 不属于 loadmore 或 scrollload 时，count_total_page 会用 numberPost 覆盖后续页步长；该步长为 0 或负数且剩余量大于 0 时，while 循环无法减少剩余量，单个 HTTP 请求持续占用 PHP 进程并导致站点拒绝服务。\n修复版本中通过把 numberPost 与 paginationNumberPost 的下限限制为 1，并将 count_total_page 的递减循环改为按不小于 1 的步长计算页数，切断异常分页参数导致的不可终止循环。",
+    "effects": [
+      {
+        "comp_name": "gutenverse",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.2.3)",
+            "min_fixed_version": "4.2.3",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-11-16",
+    "level": "High",
+    "mps_id": "MPS-kqxb-iowd",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-16",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-kqxb-iowd",
+        "name": "https://www.oscs1024.com/hd/MPS-kqxb-iowd"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-125823",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-125823"
+      },
+      {
+        "url": "https://patchstack.com/database/wordpress/plugin/gutenverse/vulnerability/wordpress-gutenverse-plugin-4-2-2-denial-of-service-attack-vulnerability?_s_id=cve",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Gutenverse分页拒绝服务"
+  },
+  "first_saved_at": "2026-11-15T20:42:59+00:00"
+}
