@@ -1,11 +1,11 @@
 {
-  "saved_at": "2026-11-14T08:26:44+00:00",
-  "first_seen": true,
+  "saved_at": "2026-11-16T07:32:29+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-adb1-b3b5",
   "detail": {
-    "analysis_status": 0,
+    "analysis_status": 3,
     "articles": [
       {
         "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
@@ -22,9 +22,24 @@
     ],
     "cnvd_id": "",
     "cve_id": "CVE-2026-129349",
-    "cvss": {},
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:U/V:C/RE:L/U:Red",
+          "severity": "critical",
+          "base_score": 9.1
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:U/V:C/RE:L/U:Red",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
     "cvss_score": 9.1,
-    "cvss_vector": "",
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:U/V:C/RE:L/U:Red",
     "cwe": "CWE-287",
     "description": "Apache Shiro 是 Apache 软件基金会开源的 Java 安全框架，提供认证、授权、会话管理与加密能力，其 shiro-core 模块（org.apache.shiro:shiro-core）包含对接 LDAP 目录的 DefaultLdapRealm 与 JndiLdapRealm。\n受影响版本中，DefaultLdapRealm 构造函数默认调用 setCredentialsMatcher(new AllowAllCredentialsMatcher())，为该 Realm 安装无条件接受任意凭据的 AllowAllCredentialsMatcher；当应用将 authenticationCachingEnabled 设为 true（非默认配置）后，AuthenticatingRealm.getAuthenticationInfo 以用户名作为缓存键命中认证缓存并跳过 doGetAuthenticationInfo 中的 LDAP bind 校验，凭据校验退化为 assertCredentialsMatch 中的匹配器判定，而 AllowAllCredentialsMatcher 对任意密码均返回通过，攻击者在获知有效用户名且该用户此前成功登录过一次形成缓存后，可用任意密码通过该用户的身份认证。\n修复版本中通过移除 DefaultLdapRealm 构造函数中的 setCredentialsMatcher(new AllowAllCredentialsMatcher()) 调用完成修复，Realm 恢复继承 AuthenticatingRealm 默认的 SimpleCredentialsMatcher，认证缓存命中时提交的凭据仍会与缓存中的 AuthenticationInfo 实际比对，任意密码不再通过认证，修复随 3.0.1 版本发布。",
     "effects": [
@@ -40,23 +55,61 @@
             "upstream": true
           }
         ]
+      },
+      {
+        "comp_name": "shiro",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:13",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:14",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
       }
     ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "高",
-    "exploitability": "中",
+    "exploitability": "低",
     "fix_suggestion": "建议修复",
     "kind": "身份验证不当",
     "kind_en": "认证不当",
-    "last_modified_time": "2026-11-14",
+    "last_modified_time": "2026-11-16",
     "level": "Critical",
     "mps_id": "MPS-adb1-b3b5",
-    "poc": false,
+    "poc": true,
     "poc_url": [],
-    "published_time": "2026-11-14",
+    "published_time": "2026-11-16",
     "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-adb1-b3b5",
+        "name": "https://www.oscs1024.com/hd/MPS-adb1-b3b5"
+      },
       {
         "url": "https://www.openwall.com/lists/oss-security/2026/11/14/8",
         "name": ""
@@ -70,24 +123,21 @@
         "name": ""
       },
       {
-        "url": "https://shiro.apache.org/",
-        "name": ""
-      },
-      {
         "url": "https://www.cve.org/CVERecord?id=CVE-2026-129349",
         "name": ""
       }
     ],
-    "scope_influence": "",
+    "scope_influence": "小",
     "tags": [
       "java",
+      "poc",
       "开源"
     ],
     "title": "Apache Shiro认证缓存密码绕过漏洞",
     "_translated": true
   },
   "detail_original": {
-    "analysis_status": 0,
+    "analysis_status": 3,
     "articles": [
       {
         "content": "应用程序在进行身份验证时使用了不恰当的机制或实施不安全的验证方法。这可能包括使用未限制登录次数、使用不安全的会话管理、缺乏多因素身份验证等。攻击者可以利用这些弱点来绕过身份验证，冒充合法用户，获取未授权的访问权限。",
@@ -104,9 +154,24 @@
     ],
     "cnvd_id": "",
     "cve_id": "CVE-2026-129349",
-    "cvss": {},
+    "cvss": {
+      "cvssv4": [
+        {
+          "source": "security@apache.org",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:U/V:C/RE:L/U:Red",
+          "severity": "critical",
+          "base_score": 9.1
+        },
+        {
+          "source": "murphysec",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:U/V:C/RE:L/U:Red",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
     "cvss_score": 9.1,
-    "cvss_vector": "",
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:U/V:C/RE:L/U:Red",
     "cwe": "CWE-287",
     "description": "Apache Shiro 是 Apache 软件基金会开源的 Java 安全框架，提供认证、授权、会话管理与加密能力，其 shiro-core 模块（org.apache.shiro:shiro-core）包含对接 LDAP 目录的 DefaultLdapRealm 与 JndiLdapRealm。\n受影响版本中，DefaultLdapRealm 构造函数默认调用 setCredentialsMatcher(new AllowAllCredentialsMatcher())，为该 Realm 安装无条件接受任意凭据的 AllowAllCredentialsMatcher；当应用将 authenticationCachingEnabled 设为 true（非默认配置）后，AuthenticatingRealm.getAuthenticationInfo 以用户名作为缓存键命中认证缓存并跳过 doGetAuthenticationInfo 中的 LDAP bind 校验，凭据校验退化为 assertCredentialsMatch 中的匹配器判定，而 AllowAllCredentialsMatcher 对任意密码均返回通过，攻击者在获知有效用户名且该用户此前成功登录过一次形成缓存后，可用任意密码通过该用户的身份认证。\n修复版本中通过移除 DefaultLdapRealm 构造函数中的 setCredentialsMatcher(new AllowAllCredentialsMatcher()) 调用完成修复，Realm 恢复继承 AuthenticatingRealm 默认的 SimpleCredentialsMatcher，认证缓存命中时提交的凭据仍会与缓存中的 AuthenticationInfo 实际比对，任意密码不再通过认证，修复随 3.0.1 版本发布。",
     "effects": [
@@ -122,23 +187,61 @@
             "upstream": true
           }
         ]
+      },
+      {
+        "comp_name": "shiro",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:12",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:13",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:14",
+            "solutions": [],
+            "upstream": false
+          },
+          {
+            "affected_version": "影响所有版本",
+            "min_fixed_version": "",
+            "repository": "debian:unstable",
+            "solutions": [],
+            "upstream": false
+          }
+        ]
       }
     ],
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
     "exploit_requirement_cost": "高",
-    "exploitability": "中",
+    "exploitability": "低",
     "fix_suggestion": "Recommend",
     "kind": "身份验证不当",
     "kind_en": "Improper Authentication",
-    "last_modified_time": "2026-11-14",
+    "last_modified_time": "2026-11-16",
     "level": "Critical",
     "mps_id": "MPS-adb1-b3b5",
-    "poc": false,
+    "poc": true,
     "poc_url": [],
-    "published_time": "2026-11-14",
+    "published_time": "2026-11-16",
     "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-adb1-b3b5",
+        "name": "https://www.oscs1024.com/hd/MPS-adb1-b3b5"
+      },
       {
         "url": "https://www.openwall.com/lists/oss-security/2026/11/14/8",
         "name": ""
@@ -152,17 +255,14 @@
         "name": ""
       },
       {
-        "url": "https://shiro.apache.org/",
-        "name": ""
-      },
-      {
         "url": "https://www.cve.org/CVERecord?id=CVE-2026-129349",
         "name": ""
       }
     ],
-    "scope_influence": "",
+    "scope_influence": "小",
     "tags": [
       "java",
+      "poc",
       "开源"
     ],
     "title": "Apache Shiro认证缓存密码绕过漏洞"

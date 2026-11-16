@@ -1,0 +1,115 @@
+{
+  "saved_at": "2026-11-16T07:32:22+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-qtrb-kiyc",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-128138",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-88",
+    "description": "NLTK（Natural Language Toolkit）是开源 Python 自然语言处理库，用于分词、词性标注和语料读取，并通过公开函数 java() 调用本机 Java 程序。\n受影响版本中，公开函数 java() 先校验单独传入的选项列表 options，再把调用方给出的命令列表 cmd 原样接到 Java 启动器命令末尾；3.10.3 会拒绝 options 中的启动器开关和参数文件标记 @argfile，但不要求 cmd 的第一项是 Java 主类名。应用把不可信字符串放进 cmd 的第一项，或放进分词器 StanfordSegmenter 的构造参数 java_class（分段函数 segment_file() 会把它作为 cmd 的第一项传给 java()）时，Java 启动器把 -jar 或 @argfile 当作启动参数而不是主类名，加载当前进程可读的外部 JAR，以 NLTK 进程的权限执行攻击者选定的 Java 字节码。\n修复版本中通过在组装启动命令前检查 cmd 切断这条路径。第一项去掉首尾空白后若为空、不是字符串，或以 -、@ 开头，java() 抛出 ValueError；列表中任一以 @ 开头的标记同样被拒绝，启动器标记不再进入 Java 进程。主类名之后的普通程序参数仍可以 - 开头。",
+    "effects": [
+      {
+        "comp_name": "nltk",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[3.10.3,3.10.4)",
+            "min_fixed_version": "3.10.4",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "参数注入或修改",
+    "kind_en": "命令中参数分隔符的不正确中和（“参数注入”）",
+    "last_modified_time": "2026-11-16",
+    "level": "Critical",
+    "mps_id": "MPS-qtrb-kiyc",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-11-16",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/nltk/nltk/security/advisories/GHSA-x8q7-6c7m-52gw",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nltk/nltk/commit/b36212795a522d2b7b176cf0e0d9d8da489ba6e6",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "NLTK Java代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-128138",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-88",
+    "description": "NLTK（Natural Language Toolkit）是开源 Python 自然语言处理库，用于分词、词性标注和语料读取，并通过公开函数 java() 调用本机 Java 程序。\n受影响版本中，公开函数 java() 先校验单独传入的选项列表 options，再把调用方给出的命令列表 cmd 原样接到 Java 启动器命令末尾；3.10.3 会拒绝 options 中的启动器开关和参数文件标记 @argfile，但不要求 cmd 的第一项是 Java 主类名。应用把不可信字符串放进 cmd 的第一项，或放进分词器 StanfordSegmenter 的构造参数 java_class（分段函数 segment_file() 会把它作为 cmd 的第一项传给 java()）时，Java 启动器把 -jar 或 @argfile 当作启动参数而不是主类名，加载当前进程可读的外部 JAR，以 NLTK 进程的权限执行攻击者选定的 Java 字节码。\n修复版本中通过在组装启动命令前检查 cmd 切断这条路径。第一项去掉首尾空白后若为空、不是字符串，或以 -、@ 开头，java() 抛出 ValueError；列表中任一以 @ 开头的标记同样被拒绝，启动器标记不再进入 Java 进程。主类名之后的普通程序参数仍可以 - 开头。",
+    "effects": [
+      {
+        "comp_name": "nltk",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[3.10.3,3.10.4)",
+            "min_fixed_version": "3.10.4",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "参数注入或修改",
+    "kind_en": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "last_modified_time": "2026-11-16",
+    "level": "Critical",
+    "mps_id": "MPS-qtrb-kiyc",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-11-16",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/nltk/nltk/security/advisories/GHSA-x8q7-6c7m-52gw",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/nltk/nltk/commit/b36212795a522d2b7b176cf0e0d9d8da489ba6e6",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "NLTK Java代码执行漏洞"
+  },
+  "first_saved_at": "2026-11-16T07:32:22+00:00"
+}
