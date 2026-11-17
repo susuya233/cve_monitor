@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-11-17T09:59:41+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-5u3r-t8ew",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-121864",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnreport@tenable.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "vulnreport@tenable.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-73",
+    "description": "nanobot 是 HKUDS 团队在 GitHub 开源的轻量级个人 AI 代理（Python 编写，MIT 协议），通过网关接入 Telegram、Discord、WhatsApp 等聊天渠道与 WebSocket 界面，为大模型代理提供 exec 等 shell 工具，并支持基于 Linux bubblewrap（bwrap）或 macOS Seatbelt 的沙箱化命令执行。\n受影响版本中，exec 工具把代理指定的 shell 参数交给 _resolve_shell 校验，该函数对绝对路径仅检查文件名属于 sh、bash、zsh 且带有可执行位，随后原样返回该路径；_prepare_command 先把命令包装为 bwrap 沙箱命令，_spawn 再以调用方选择的 shell 作为宿主机顶层进程执行被包装的命令，攻击者诱导代理在工作区写入名为 bash 的可执行文件并以该路径作为 shell 调用 exec 后，该文件在沙箱外以 nanobot 进程的系统权限运行，绕过 bwrap 对工作区的限制，访问该服务账号可触达的宿主机资源。\n修复版本中通过 0.4.1 版本（commit 4dd3fbec）把 _prepare_command 中的沙箱包装移到 shell 解析之后，将调用方选择的 shell 与登录配置文件一并包进沙箱内执行，并改用操作系统默认可执行路径解析 bwrap 启动器，启动器缺失时直接报错拒绝执行，切断在沙箱外启动代理可控 shell 的利用链。",
+    "effects": [
+      {
+        "comp_name": "nanobot",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.2.1,0.4.1)",
+            "min_fixed_version": "0.4.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "nanobot-ai",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0.2.1,0.4.1)",
+            "min_fixed_version": "0.4.1",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "文件名或路径的外部控制",
+    "last_modified_time": "2026-11-17",
+    "level": "High",
+    "mps_id": "MPS-5u3r-t8ew",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-17",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5u3r-t8ew",
+        "name": "https://www.oscs1024.com/hd/MPS-5u3r-t8ew"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121864",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-121864"
+      },
+      {
+        "url": "https://github.com/HKUDS/nanobot/releases/tag/v0.4.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/HKUDS/nanobot/security/advisories/GHSA-5v87-m222-qr94",
+        "name": ""
+      },
+      {
+        "url": "https://www.tenable.com/security/research/tra-2026-68",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "nanobot 沙箱逃逸漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-121864",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "vulnreport@tenable.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "vulnreport@tenable.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-73",
+    "description": "nanobot 是 HKUDS 团队在 GitHub 开源的轻量级个人 AI 代理（Python 编写，MIT 协议），通过网关接入 Telegram、Discord、WhatsApp 等聊天渠道与 WebSocket 界面，为大模型代理提供 exec 等 shell 工具，并支持基于 Linux bubblewrap（bwrap）或 macOS Seatbelt 的沙箱化命令执行。\n受影响版本中，exec 工具把代理指定的 shell 参数交给 _resolve_shell 校验，该函数对绝对路径仅检查文件名属于 sh、bash、zsh 且带有可执行位，随后原样返回该路径；_prepare_command 先把命令包装为 bwrap 沙箱命令，_spawn 再以调用方选择的 shell 作为宿主机顶层进程执行被包装的命令，攻击者诱导代理在工作区写入名为 bash 的可执行文件并以该路径作为 shell 调用 exec 后，该文件在沙箱外以 nanobot 进程的系统权限运行，绕过 bwrap 对工作区的限制，访问该服务账号可触达的宿主机资源。\n修复版本中通过 0.4.1 版本（commit 4dd3fbec）把 _prepare_command 中的沙箱包装移到 shell 解析之后，将调用方选择的 shell 与登录配置文件一并包进沙箱内执行，并改用操作系统默认可执行路径解析 bwrap 启动器，启动器缺失时直接报错拒绝执行，切断在沙箱外启动代理可控 shell 的利用链。",
+    "effects": [
+      {
+        "comp_name": "nanobot",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.2.1,0.4.1)",
+            "min_fixed_version": "0.4.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "nanobot-ai",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "[0.2.1,0.4.1)",
+            "min_fixed_version": "0.4.1",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "文件名或路径的外部可控制",
+    "kind_en": "External Control of File Name or Path",
+    "last_modified_time": "2026-11-17",
+    "level": "High",
+    "mps_id": "MPS-5u3r-t8ew",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-17",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-5u3r-t8ew",
+        "name": "https://www.oscs1024.com/hd/MPS-5u3r-t8ew"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121864",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-121864"
+      },
+      {
+        "url": "https://github.com/HKUDS/nanobot/releases/tag/v0.4.1",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/HKUDS/nanobot/security/advisories/GHSA-5v87-m222-qr94",
+        "name": ""
+      },
+      {
+        "url": "https://www.tenable.com/security/research/tra-2026-68",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "nanobot 沙箱逃逸漏洞"
+  },
+  "first_saved_at": "2026-11-17T09:59:41+00:00"
+}
