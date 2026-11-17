@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-11-17T01:25:56+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-jv67-yup8",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-130320",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-122",
+    "description": "Open Object Rexx（ooRexx）是开源的面向对象 Rexx 解释器。RXAPI 是其默认提供的本地 API 服务进程，负责在同一主机上的解释器进程之间管理数据队列、宏空间和外部函数注册。\n受影响版本中，APIServer::processMessages 从本地连接读入 ServiceMessage 后，APIServer::getInstance 对未见过的 userid 执行 new APIServerInstance。构造函数 APIServerInstance::APIServerInstance 使用 strcpy 把消息字段 userid 复制到位于对象末尾的定长数组 userid[MAX_USERID_LENGTH]。当该字段在数组长度内没有 NUL 终止符时，写入会越过堆对象边界，造成堆缓冲区溢出，并可能进一步执行任意代码。同一消息中的 nameArg 也被当作未确认边界的 C 字符串交给队列名和宏名处理。\n修复版本中通过把 userid 的复制改为按目标缓冲区长度截断并强制写入 NUL 的 Utilities::strncpy，同时把 isUser 改为 strncmp(message.userid, userid, sizeof(userid))，阻止未终止的 userid 再越过对象边界。名称字段 nameArg 的拷入同样改为带长度上限且保证终止的 Utilities::strncpy。",
+    "effects": [
+      {
+        "comp_name": "ooRexx",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,5.2.0)",
+            "min_fixed_version": "5.2.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-11-17",
+    "level": "Critical",
+    "mps_id": "MPS-jv67-yup8",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-17",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jv67-yup8",
+        "name": "https://www.oscs1024.com/hd/MPS-jv67-yup8"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-130320",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-130320"
+      },
+      {
+        "url": "https://sourceforge.net/p/oorexx/bugs/1982/",
+        "name": ""
+      },
+      {
+        "url": "https://sourceforge.net/p/oorexx/code-0/12916/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "ooRexx RXAPI堆溢出",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-130320",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-122",
+    "description": "Open Object Rexx（ooRexx）是开源的面向对象 Rexx 解释器。RXAPI 是其默认提供的本地 API 服务进程，负责在同一主机上的解释器进程之间管理数据队列、宏空间和外部函数注册。\n受影响版本中，APIServer::processMessages 从本地连接读入 ServiceMessage 后，APIServer::getInstance 对未见过的 userid 执行 new APIServerInstance。构造函数 APIServerInstance::APIServerInstance 使用 strcpy 把消息字段 userid 复制到位于对象末尾的定长数组 userid[MAX_USERID_LENGTH]。当该字段在数组长度内没有 NUL 终止符时，写入会越过堆对象边界，造成堆缓冲区溢出，并可能进一步执行任意代码。同一消息中的 nameArg 也被当作未确认边界的 C 字符串交给队列名和宏名处理。\n修复版本中通过把 userid 的复制改为按目标缓冲区长度截断并强制写入 NUL 的 Utilities::strncpy，同时把 isUser 改为 strncmp(message.userid, userid, sizeof(userid))，阻止未终止的 userid 再越过对象边界。名称字段 nameArg 的拷入同样改为带长度上限且保证终止的 Utilities::strncpy。",
+    "effects": [
+      {
+        "comp_name": "ooRexx",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.0.0,5.2.0)",
+            "min_fixed_version": "5.2.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-11-17",
+    "level": "Critical",
+    "mps_id": "MPS-jv67-yup8",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-17",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-jv67-yup8",
+        "name": "https://www.oscs1024.com/hd/MPS-jv67-yup8"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-130320",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-130320"
+      },
+      {
+        "url": "https://sourceforge.net/p/oorexx/bugs/1982/",
+        "name": ""
+      },
+      {
+        "url": "https://sourceforge.net/p/oorexx/code-0/12916/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "ooRexx RXAPI堆溢出"
+  },
+  "first_saved_at": "2026-11-17T01:25:56+00:00"
+}
