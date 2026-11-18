@@ -1,0 +1,171 @@
+{
+  "saved_at": "2026-11-18T09:56:08+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-k6b7-531r",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-131959",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-829",
+    "description": "GNU Emacs 是 GNU 计划维护的开源可扩展文本编辑器，以 Emacs Lisp 作为扩展语言，广泛用于代码编辑与开发环境配置。\n受影响版本中，set-auto-mode 在模式选择时通过 hack-dir-local--get-variables 读取 .dir-locals.el 提供的 auto-mode-alist 并传入 set-auto-mode--apply-alist 匹配，其内部辅助函数 set-auto-mode--find-matching-alist-entry 在处理 (REGEXP FUNCTION t) 形式条目时把首个命中的 FUNCTION 暂存，并在继续命中下一个条目时先行调用 set-auto-mode-0 执行该函数，执行先于调用方的 set-auto-mode--dir-local-valid-p 白名单校验发生，攻击者在项目目录放置含此类条目的 .dir-locals.el，用户打开匹配文件后无需任何确认提示即可运行注入的任意 Emacs Lisp，执行权限与 Emacs 进程相同。\n修复版本中通过将匹配辅助函数重构为 set-auto-mode--from-matching-alist-entry 并新增 keep-mode-if-same 与 dir-local 参数，把 set-auto-mode-0 调用收拢到辅助函数内部，在每次执行待选模式前先经 set-auto-mode--dir-local-valid-p 校验，校验失败的条目仅打印 Ignoring invalid mode 并被忽略，set-auto-mode--apply-alist 不再只校验最终返回值，先执行后校验的路径被切断，经目录本地变量注入的非法函数不再被执行。",
+    "effects": [
+      {
+        "comp_name": "emacs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[31.1,31.2)",
+            "min_fixed_version": "31.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "从非可信控制范围包含功能例程",
+    "kind_en": "包含来自不可信控制领域的功能",
+    "last_modified_time": "2026-11-18",
+    "level": "High",
+    "mps_id": "MPS-k6b7-531r",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k6b7-531r",
+        "name": "https://www.oscs1024.com/hd/MPS-k6b7-531r"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-131959",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-131959"
+      },
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/11/11/7",
+        "name": ""
+      },
+      {
+        "url": "https://cgit.git.savannah.gnu.org/cgit/emacs.git/commit/?id=205ae0b0583dbfe09e258164adbc49e130645221",
+        "name": ""
+      },
+      {
+        "url": "https://x3r0day.github.io",
+        "name": ""
+      },
+      {
+        "url": "https://debbugs.gnu.org/82213",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Emacs 目录本地变量代码执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-131959",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "cve@mitre.org",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ]
+    },
+    "cvss_score": 7.8,
+    "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+    "cwe": "CWE-829",
+    "description": "GNU Emacs 是 GNU 计划维护的开源可扩展文本编辑器，以 Emacs Lisp 作为扩展语言，广泛用于代码编辑与开发环境配置。\n受影响版本中，set-auto-mode 在模式选择时通过 hack-dir-local--get-variables 读取 .dir-locals.el 提供的 auto-mode-alist 并传入 set-auto-mode--apply-alist 匹配，其内部辅助函数 set-auto-mode--find-matching-alist-entry 在处理 (REGEXP FUNCTION t) 形式条目时把首个命中的 FUNCTION 暂存，并在继续命中下一个条目时先行调用 set-auto-mode-0 执行该函数，执行先于调用方的 set-auto-mode--dir-local-valid-p 白名单校验发生，攻击者在项目目录放置含此类条目的 .dir-locals.el，用户打开匹配文件后无需任何确认提示即可运行注入的任意 Emacs Lisp，执行权限与 Emacs 进程相同。\n修复版本中通过将匹配辅助函数重构为 set-auto-mode--from-matching-alist-entry 并新增 keep-mode-if-same 与 dir-local 参数，把 set-auto-mode-0 调用收拢到辅助函数内部，在每次执行待选模式前先经 set-auto-mode--dir-local-valid-p 校验，校验失败的条目仅打印 Ignoring invalid mode 并被忽略，set-auto-mode--apply-alist 不再只校验最终返回值，先执行后校验的路径被切断，经目录本地变量注入的非法函数不再被执行。",
+    "effects": [
+      {
+        "comp_name": "emacs",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[31.1,31.2)",
+            "min_fixed_version": "31.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "从非可信控制范围包含功能例程",
+    "kind_en": "Inclusion of Functionality from Untrusted Control Sphere",
+    "last_modified_time": "2026-11-18",
+    "level": "High",
+    "mps_id": "MPS-k6b7-531r",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-18",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-k6b7-531r",
+        "name": "https://www.oscs1024.com/hd/MPS-k6b7-531r"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-131959",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-131959"
+      },
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/11/11/7",
+        "name": ""
+      },
+      {
+        "url": "https://cgit.git.savannah.gnu.org/cgit/emacs.git/commit/?id=205ae0b0583dbfe09e258164adbc49e130645221",
+        "name": ""
+      },
+      {
+        "url": "https://x3r0day.github.io",
+        "name": ""
+      },
+      {
+        "url": "https://debbugs.gnu.org/82213",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "Emacs 目录本地变量代码执行漏洞"
+  },
+  "first_saved_at": "2026-11-18T09:56:08+00:00"
+}
