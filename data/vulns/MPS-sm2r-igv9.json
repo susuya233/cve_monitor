@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-11-18T18:36:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-sm2r-igv9",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76421",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@cisco.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-122",
+    "description": "ClamAV 是 Cisco Talos 维护的开源杀毒引擎，以 C 语言库和 clamscan、clamd 等工具形式发布，广泛用于邮件网关、文件服务器与终端防护产品中对文件内容进行病毒扫描。\n受影响版本中，CHM 文件在扫描流程中被识别为 CL_TYPE_MSCHM 后由 cli_scanmschm 交给 libclammspack 解包，内嵌 LZX 解码器的 lzxd_decompress 函数在复制匹配数据前把无符号回溯距离 match_offset - window_posn 窄化为 int 型变量 j 再与窗口大小比较；攻击者构造的重复偏移可使该距离回绕为负值并绕过边界检查，runsrc 随之指向堆上窗口缓冲区之外，复制长度同时被放大，形成堆缓冲区越界写入，向扫描引擎投递此类 CHM 文件可使扫描进程崩溃并造成拒绝服务。\n修复版本中通过在窄化前直接以无符号数比较 match_offset - window_posn 与窗口大小，距离回绕时返回 MSPACK_ERR_DECRUNCH 终止解码，仅对不超过窗口大小的值执行窄化，消除了负值绕过边界检查的路径，修复随 ClamAV 1.4.7 与 1.5.5 发布。",
+    "effects": [
+      {
+        "comp_name": "clamav",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.80,1.4.7)",
+            "min_fixed_version": "1.4.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.5.0,1.5.5)",
+            "min_fixed_version": "1.5.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-11-19",
+    "level": "High",
+    "mps_id": "MPS-sm2r-igv9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-sm2r-igv9",
+        "name": "https://www.oscs1024.com/hd/MPS-sm2r-igv9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76421",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76421"
+      },
+      {
+        "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-clamav-multi-e93M3vdA",
+        "name": "cisco-sa-clamav-multi-e93M3vdA"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "ClamAV CHM堆越界写漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76421",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@cisco.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-122",
+    "description": "ClamAV 是 Cisco Talos 维护的开源杀毒引擎，以 C 语言库和 clamscan、clamd 等工具形式发布，广泛用于邮件网关、文件服务器与终端防护产品中对文件内容进行病毒扫描。\n受影响版本中，CHM 文件在扫描流程中被识别为 CL_TYPE_MSCHM 后由 cli_scanmschm 交给 libclammspack 解包，内嵌 LZX 解码器的 lzxd_decompress 函数在复制匹配数据前把无符号回溯距离 match_offset - window_posn 窄化为 int 型变量 j 再与窗口大小比较；攻击者构造的重复偏移可使该距离回绕为负值并绕过边界检查，runsrc 随之指向堆上窗口缓冲区之外，复制长度同时被放大，形成堆缓冲区越界写入，向扫描引擎投递此类 CHM 文件可使扫描进程崩溃并造成拒绝服务。\n修复版本中通过在窄化前直接以无符号数比较 match_offset - window_posn 与窗口大小，距离回绕时返回 MSPACK_ERR_DECRUNCH 终止解码，仅对不超过窗口大小的值执行窄化，消除了负值绕过边界检查的路径，修复随 ClamAV 1.4.7 与 1.5.5 发布。",
+    "effects": [
+      {
+        "comp_name": "clamav",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.80,1.4.7)",
+            "min_fixed_version": "1.4.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.5.0,1.5.5)",
+            "min_fixed_version": "1.5.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-11-19",
+    "level": "High",
+    "mps_id": "MPS-sm2r-igv9",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-sm2r-igv9",
+        "name": "https://www.oscs1024.com/hd/MPS-sm2r-igv9"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76421",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76421"
+      },
+      {
+        "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-clamav-multi-e93M3vdA",
+        "name": "cisco-sa-clamav-multi-e93M3vdA"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "ClamAV CHM堆越界写漏洞"
+  },
+  "first_saved_at": "2026-11-18T18:36:49+00:00"
+}

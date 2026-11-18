@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-11-18T18:36:43+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4jcl-r1m5",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76516",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@cisco.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+    "cwe": "CWE-841",
+    "description": "ClamAV 是 Cisco Talos 开源的跨平台反病毒引擎，以 C 语言实现，广泛用于邮件网关、文件服务与终端防护产品对不可信文件的恶意软件扫描，支持解析 XAR 等多种归档格式。\n受影响版本中，libclamav/xar.c 的 cli_scanxar 在提取 XAR 归档内 application/x-gzip 编码成员时，将累计解压输出计数变量 outsize 声明在内层 inflate 循环体内并每轮清零，解压数据先经 cli_writen 写入临时文件，随后传给 cli_checklimits 的始终是单个 FILEBUFF 缓冲区的字节数，配置的 MaxFileSize 与 MaxScanSize 无法被成员累计输出触发；同时外层 TOC 成员循环未在达到 MaxFiles、扫描超时或收到中止标志后停止。攻击者将高压缩比 deflate 流封装为 XAR GZIP 成员并提交扫描，引擎会持续解压并把全部输出写入临时文件直至流结束，可超出配置限额耗尽临时存储并陷入长时间循环，造成拒绝服务。\n修复版本中通过在写入前跟踪成员累计解压输出并校验 out_size 与本次解压字节之和，超出 MaxFileSize 或 MaxScanSize 时将本次写入截断到剩余配额并停止当前成员解压，超出部分计入聚合扫描配额避免后续成员重复占用；同时在提取每个成员前检查文件数、超时与中止标志，向上传播 CL_ETIMEOUT 与 CL_EMAXFILES 退出条件，切断了利用无界解压写入耗尽临时存储的路径。",
+    "effects": [
+      {
+        "comp_name": "clamav",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.98,1.4.7)",
+            "min_fixed_version": "1.4.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.5.0,1.5.5)",
+            "min_fixed_version": "1.5.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "行为工作流的不恰当实施",
+    "kind_en": "Improper Enforcement of Behavioral Workflow",
+    "last_modified_time": "2026-11-19",
+    "level": "High",
+    "mps_id": "MPS-4jcl-r1m5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4jcl-r1m5",
+        "name": "https://www.oscs1024.com/hd/MPS-4jcl-r1m5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76516",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76516"
+      },
+      {
+        "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-clamav-multi-e93M3vdA",
+        "name": "cisco-sa-clamav-multi-e93M3vdA"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "ClamAV XAR GZIP解压限额绕过致拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76516",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@cisco.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+    "cwe": "CWE-841",
+    "description": "ClamAV 是 Cisco Talos 开源的跨平台反病毒引擎，以 C 语言实现，广泛用于邮件网关、文件服务与终端防护产品对不可信文件的恶意软件扫描，支持解析 XAR 等多种归档格式。\n受影响版本中，libclamav/xar.c 的 cli_scanxar 在提取 XAR 归档内 application/x-gzip 编码成员时，将累计解压输出计数变量 outsize 声明在内层 inflate 循环体内并每轮清零，解压数据先经 cli_writen 写入临时文件，随后传给 cli_checklimits 的始终是单个 FILEBUFF 缓冲区的字节数，配置的 MaxFileSize 与 MaxScanSize 无法被成员累计输出触发；同时外层 TOC 成员循环未在达到 MaxFiles、扫描超时或收到中止标志后停止。攻击者将高压缩比 deflate 流封装为 XAR GZIP 成员并提交扫描，引擎会持续解压并把全部输出写入临时文件直至流结束，可超出配置限额耗尽临时存储并陷入长时间循环，造成拒绝服务。\n修复版本中通过在写入前跟踪成员累计解压输出并校验 out_size 与本次解压字节之和，超出 MaxFileSize 或 MaxScanSize 时将本次写入截断到剩余配额并停止当前成员解压，超出部分计入聚合扫描配额避免后续成员重复占用；同时在提取每个成员前检查文件数、超时与中止标志，向上传播 CL_ETIMEOUT 与 CL_EMAXFILES 退出条件，切断了利用无界解压写入耗尽临时存储的路径。",
+    "effects": [
+      {
+        "comp_name": "clamav",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.98,1.4.7)",
+            "min_fixed_version": "1.4.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.5.0,1.5.5)",
+            "min_fixed_version": "1.5.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "行为工作流的不恰当实施",
+    "kind_en": "Improper Enforcement of Behavioral Workflow",
+    "last_modified_time": "2026-11-19",
+    "level": "High",
+    "mps_id": "MPS-4jcl-r1m5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4jcl-r1m5",
+        "name": "https://www.oscs1024.com/hd/MPS-4jcl-r1m5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76516",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76516"
+      },
+      {
+        "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-clamav-multi-e93M3vdA",
+        "name": "cisco-sa-clamav-multi-e93M3vdA"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "ClamAV XAR GZIP解压限额绕过致拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-11-18T18:36:43+00:00"
+}

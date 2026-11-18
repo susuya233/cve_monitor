@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-11-18T18:36:44+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-v8gy-qaek",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76416",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@cisco.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-835",
+    "description": "ClamAV 是 Cisco Talos 维护的开源防病毒引擎，广泛用于邮件网关与终端防护产品，其 InstallShield 解析器负责解析附加在 PE 安装程序 overlay 中的 InstallShield 安装包数据。\n受影响版本中，libclamav/ishield.c 的 is_parse_hdr 函数直接信任 data1.hdr 头部 OBJECTS 结构声明的 files_cnt，文件表偏移按 h1_data_off、objs_dirs_off 与 dir_sz2 相加计算且未与头部实际大小比对。当声明的文件表记录未完整存在于头部映射中时，fmap_need_off 读取失败后循环仍按声明次数继续推进偏移，循环内亦未检查扫描时限，攻击者远程提交一个包含此类畸形头部的 PE 文件供扫描，可使扫描工作进程长时间被占用，造成拒绝服务。\n修复版本中通过在解析前校验头部声明与实际数据的一致性切断该循环：data_off、目录区偏移与文件表大小均被限制在头部范围内，迭代次数上限改为按 IS_FILEITEM 记录大小计算出的实际可用记录数，每轮迭代先检查扫描时限，映射失败时终止解析并回退到原始扫描，同时对目录与文件名偏移以及 cabinet 流边界补充越界校验。",
+    "effects": [
+      {
+        "comp_name": "clamav",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.96,1.4.7)",
+            "min_fixed_version": "1.4.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.5.0,1.5.5)",
+            "min_fixed_version": "1.5.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不可达退出条件的循环（无限循环）",
+    "kind_en": "具有无法到达的退出条件的循环（“无限循环”）",
+    "last_modified_time": "2026-11-19",
+    "level": "High",
+    "mps_id": "MPS-v8gy-qaek",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-v8gy-qaek",
+        "name": "https://www.oscs1024.com/hd/MPS-v8gy-qaek"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76416",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76416"
+      },
+      {
+        "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-clamav-multi-e93M3vdA",
+        "name": "cisco-sa-clamav-multi-e93M3vdA"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "ClamAV InstallShield解析器死循环漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76416",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@cisco.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-835",
+    "description": "ClamAV 是 Cisco Talos 维护的开源防病毒引擎，广泛用于邮件网关与终端防护产品，其 InstallShield 解析器负责解析附加在 PE 安装程序 overlay 中的 InstallShield 安装包数据。\n受影响版本中，libclamav/ishield.c 的 is_parse_hdr 函数直接信任 data1.hdr 头部 OBJECTS 结构声明的 files_cnt，文件表偏移按 h1_data_off、objs_dirs_off 与 dir_sz2 相加计算且未与头部实际大小比对。当声明的文件表记录未完整存在于头部映射中时，fmap_need_off 读取失败后循环仍按声明次数继续推进偏移，循环内亦未检查扫描时限，攻击者远程提交一个包含此类畸形头部的 PE 文件供扫描，可使扫描工作进程长时间被占用，造成拒绝服务。\n修复版本中通过在解析前校验头部声明与实际数据的一致性切断该循环：data_off、目录区偏移与文件表大小均被限制在头部范围内，迭代次数上限改为按 IS_FILEITEM 记录大小计算出的实际可用记录数，每轮迭代先检查扫描时限，映射失败时终止解析并回退到原始扫描，同时对目录与文件名偏移以及 cabinet 流边界补充越界校验。",
+    "effects": [
+      {
+        "comp_name": "clamav",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.96,1.4.7)",
+            "min_fixed_version": "1.4.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.5.0,1.5.5)",
+            "min_fixed_version": "1.5.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不可达退出条件的循环（无限循环）",
+    "kind_en": "Loop with Unreachable Exit Condition ('Infinite Loop')",
+    "last_modified_time": "2026-11-19",
+    "level": "High",
+    "mps_id": "MPS-v8gy-qaek",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-v8gy-qaek",
+        "name": "https://www.oscs1024.com/hd/MPS-v8gy-qaek"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76416",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76416"
+      },
+      {
+        "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-clamav-multi-e93M3vdA",
+        "name": "cisco-sa-clamav-multi-e93M3vdA"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "ClamAV InstallShield解析器死循环漏洞"
+  },
+  "first_saved_at": "2026-11-18T18:36:44+00:00"
+}

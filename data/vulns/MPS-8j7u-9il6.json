@@ -1,0 +1,161 @@
+{
+  "saved_at": "2026-11-18T18:36:45+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-8j7u-9il6",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76422",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@cisco.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-134",
+    "description": "ClamAV 是 Cisco Talos 维护的开源防病毒引擎，用于邮件网关、终端防护等场景的文件扫描与恶意软件检测。\n受影响版本中，Rust 模块的日志桥接层 libclamav_rust/src/logging.rs 在 ClamLogger::log 方法中将已渲染完成的日志消息指针直接用作 C 侧变参日志函数 cli_dbgmsg_no_inline、cli_errmsg、cli_infomsg_simple、cli_warnmsg 的格式化字符串。在启用调试日志功能时，攻击者提交的待扫描文件中的可控文本（如归档内条目名等解析结果）可进入日志消息，其中的百分号指示符被变参函数当作格式说明符解析并读取不存在的变参参数，导致扫描进程终止，也可能造成内存信息泄露或内存破坏。\n修复版本中通过为全部 Rust 到 C 的日志调用改用固定 %s 格式说明符，并将已渲染的消息作为数据参数传入，日志内容不再被解释为格式化字符串，切断格式指示符注入路径，消除扫描进程崩溃风险。",
+    "effects": [
+      {
+        "comp_name": "clamav",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.105.0,1.4.7)",
+            "min_fixed_version": "1.4.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.5.0,1.5.5)",
+            "min_fixed_version": "1.5.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用外部控制的格式字符串",
+    "kind_en": "使用外部控制的格式字符串",
+    "last_modified_time": "2026-11-19",
+    "level": "High",
+    "mps_id": "MPS-8j7u-9il6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8j7u-9il6",
+        "name": "https://www.oscs1024.com/hd/MPS-8j7u-9il6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76422",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76422"
+      },
+      {
+        "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-clamav-multi-e93M3vdA",
+        "name": "cisco-sa-clamav-multi-e93M3vdA"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "ClamAV 格式字符串漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-76422",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@cisco.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ]
+    },
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-134",
+    "description": "ClamAV 是 Cisco Talos 维护的开源防病毒引擎，用于邮件网关、终端防护等场景的文件扫描与恶意软件检测。\n受影响版本中，Rust 模块的日志桥接层 libclamav_rust/src/logging.rs 在 ClamLogger::log 方法中将已渲染完成的日志消息指针直接用作 C 侧变参日志函数 cli_dbgmsg_no_inline、cli_errmsg、cli_infomsg_simple、cli_warnmsg 的格式化字符串。在启用调试日志功能时，攻击者提交的待扫描文件中的可控文本（如归档内条目名等解析结果）可进入日志消息，其中的百分号指示符被变参函数当作格式说明符解析并读取不存在的变参参数，导致扫描进程终止，也可能造成内存信息泄露或内存破坏。\n修复版本中通过为全部 Rust 到 C 的日志调用改用固定 %s 格式说明符，并将已渲染的消息作为数据参数传入，日志内容不再被解释为格式化字符串，切断格式指示符注入路径，消除扫描进程崩溃风险。",
+    "effects": [
+      {
+        "comp_name": "clamav",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.105.0,1.4.7)",
+            "min_fixed_version": "1.4.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[1.5.0,1.5.5)",
+            "min_fixed_version": "1.5.5",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用外部控制的格式字符串",
+    "kind_en": "Use of Externally-Controlled Format String",
+    "last_modified_time": "2026-11-19",
+    "level": "High",
+    "mps_id": "MPS-8j7u-9il6",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-19",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-8j7u-9il6",
+        "name": "https://www.oscs1024.com/hd/MPS-8j7u-9il6"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76422",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-76422"
+      },
+      {
+        "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-clamav-multi-e93M3vdA",
+        "name": "cisco-sa-clamav-multi-e93M3vdA"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "终端软件"
+    ],
+    "title": "ClamAV 格式字符串漏洞"
+  },
+  "first_saved_at": "2026-11-18T18:36:45+00:00"
+}
