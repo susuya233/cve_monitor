@@ -1,0 +1,155 @@
+{
+  "saved_at": "2026-11-19T08:18:04+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3a0c-a970",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-770",
+    "description": "quinn-proto 是 Rust 语言的开源 QUIC 传输协议实现库，作为 quinn 框架的核心协议栈负责 QUIC 帧解析、流管理与流控状态处理，被 Rust 生态中的 QUIC 服务端与客户端广泛依赖。\n受影响版本中，quinn-proto/src/connection/streams/state.rs 的 StreamsState::received_max_stream_data 方法在处理对端 MAX_STREAM_DATA 帧时，未像 STREAM 与 RESET_STREAM 处理器那样先调用 validate_receive_id 校验流编号是否超出本端向对端宣告的流上限，对尚未打开的对端双向流不返回错误，最终进入 on_stream_frame 将 next_remote 更新为攻击者指定的流编号加一并置位 opened，把该编号及以下全部对端双向流标记为已打开。握手完成后，攻击者发送一个 13 字节、流编号达到 2^40 的 MAX_STREAM_DATA 帧，quinn 的 accept 与 accept_bi 循环会持续产出超过 2^40 个流，端点内存耗尽退出、停止接受新连接或长期占用处理器，形成远程拒绝服务。\n修复版本中通过在 received_max_stream_data 中对双向流增加 validate_receive_id 前置校验，流编号达到或超出已宣告上限时以 STREAM_LIMIT_ERROR 关闭连接，并在 on_stream_frame 的流隐式打开路径增加 max_remote 上限防御检查，阻止超出限制的流被批量标记为已打开，使处理行为符合 RFC 9000 第 4.6 节要求。",
+    "effects": [
+      {
+        "comp_name": "quinn-proto",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "[0.11.0,0.11.19)",
+            "min_fixed_version": "0.11.19",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-11-19",
+    "level": "High",
+    "mps_id": "MPS-3a0c-a970",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-19",
+    "reference_url_list": [
+      {
+        "url": "https://rustsec.org/advisories/RUSTSEC-2026-0523.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/quinn-rs/quinn/security/advisories/GHSA-53rm-773f-4q8c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/quinn-rs/quinn/commit/3eb7465d9e11d7a245e99cde1a4eb872ec26d264",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/quinn-rs/quinn/commit/73114d8289d42bd536c790fa00a9beed05a4e5fa",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/quinn-rs/quinn/releases/tag/quinn-proto-0.11.19",
+        "name": ""
+      },
+      {
+        "url": "https://crates.io/crates/quinn-proto",
+        "name": ""
+      },
+      {
+        "url": "https://datatracker.ietf.org/doc/html/rfc9000#section-4.6",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "quinn-proto流限制绕过致拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "",
+    "cwe": "CWE-770",
+    "description": "quinn-proto 是 Rust 语言的开源 QUIC 传输协议实现库，作为 quinn 框架的核心协议栈负责 QUIC 帧解析、流管理与流控状态处理，被 Rust 生态中的 QUIC 服务端与客户端广泛依赖。\n受影响版本中，quinn-proto/src/connection/streams/state.rs 的 StreamsState::received_max_stream_data 方法在处理对端 MAX_STREAM_DATA 帧时，未像 STREAM 与 RESET_STREAM 处理器那样先调用 validate_receive_id 校验流编号是否超出本端向对端宣告的流上限，对尚未打开的对端双向流不返回错误，最终进入 on_stream_frame 将 next_remote 更新为攻击者指定的流编号加一并置位 opened，把该编号及以下全部对端双向流标记为已打开。握手完成后，攻击者发送一个 13 字节、流编号达到 2^40 的 MAX_STREAM_DATA 帧，quinn 的 accept 与 accept_bi 循环会持续产出超过 2^40 个流，端点内存耗尽退出、停止接受新连接或长期占用处理器，形成远程拒绝服务。\n修复版本中通过在 received_max_stream_data 中对双向流增加 validate_receive_id 前置校验，流编号达到或超出已宣告上限时以 STREAM_LIMIT_ERROR 关闭连接，并在 on_stream_frame 的流隐式打开路径增加 max_remote 上限防御检查，阻止超出限制的流被批量标记为已打开，使处理行为符合 RFC 9000 第 4.6 节要求。",
+    "effects": [
+      {
+        "comp_name": "quinn-proto",
+        "ecosystem": "cargo",
+        "versions": [
+          {
+            "affected_version": "[0.11.0,0.11.19)",
+            "min_fixed_version": "0.11.19",
+            "repository": "cargo",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-11-19",
+    "level": "High",
+    "mps_id": "MPS-3a0c-a970",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-19",
+    "reference_url_list": [
+      {
+        "url": "https://rustsec.org/advisories/RUSTSEC-2026-0523.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/quinn-rs/quinn/security/advisories/GHSA-53rm-773f-4q8c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/quinn-rs/quinn/commit/3eb7465d9e11d7a245e99cde1a4eb872ec26d264",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/quinn-rs/quinn/commit/73114d8289d42bd536c790fa00a9beed05a4e5fa",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/quinn-rs/quinn/releases/tag/quinn-proto-0.11.19",
+        "name": ""
+      },
+      {
+        "url": "https://crates.io/crates/quinn-proto",
+        "name": ""
+      },
+      {
+        "url": "https://datatracker.ietf.org/doc/html/rfc9000#section-4.6",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "quinn-proto流限制绕过致拒绝服务"
+  },
+  "first_saved_at": "2026-11-19T08:18:04+00:00"
+}
