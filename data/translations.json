@@ -2627,5 +2627,14 @@
   "d15582c9f75cd0033bd4fe371801c979efdadf01": "CVE-2026-133553 漏洞",
   "85ea107cf1a8c77894e49f0dcd20accdfd2b313d": "A flaw was found in crun. When copying files onto a tmpfs mounted with tmpcopyup, crun opens the destination a second time by name. A container that shares a writable volume with the container being created can change that path between the two lookups, so crun copies image files onto host files, including files under /proc/sys.",
   "a55eb2ec17a236238b32b4dc37993ab88ecc9a8c": "CVE-2026-113347漏洞",
-  "569885c8273f6f2e0175e7c7a768404ecee8d499": "Multiple products produced by Ruijie Networks Co., Ltd. contain an OS command injection vulnerability that may lead to arbitrary OS commands being executed by an attacker with the administrative privilege."
+  "569885c8273f6f2e0175e7c7a768404ecee8d499": "Multiple products produced by Ruijie Networks Co., Ltd. contain an OS command injection vulnerability that may lead to arbitrary OS commands being executed by an attacker with the administrative privilege.",
+  "4731864fb65660111c70c5a114f7fbe2eb4e1cbb": "AWS ssosync 中重复使用的电子邮件地址或组名称的权限分配不正确",
+  "11862a1102a313df7ce9934a165da0a0c88ed1cc": "2.9.5 之前的 AWS ssosync 中的用户和群组协调逻辑中的权限分配不正确，可能会允许已分配了重复使用的 Google Workspace 电子邮件地址或群组名称的经过身份验证的远程用户通过自动同步该 Google Workspace 帐号或群组来继承之前同步的不相关身份的 IAM Identity Center 群组成员身份和权限集分配。\n\n\n\n要修复此问题，用户应升级到版本 2.9.5 或更高版本。",
+  "e57b856c7b7e952cfd0c3b2c37131ff0b45bf931": "提交 9469b0c 之前的 LessPass 后端缺少 JWT 登录速率限制",
+  "18ea972d1a2ae460751d5a914647ece68f56ef41": "提交 9469b0c 之前的 LessPass 自托管同步服务器后端缺乏对 JWT 登录端点 /tokens/auth/ 和 /auth/jwt/create/ 的速率限制，允许无限制的身份验证尝试。未经身份验证的远程攻击者可以暴力破解密码或针对已知帐户电子邮件执行凭证填充，以获取授予对存储的配置文件进行读写访问权限的令牌。",
+  "7bb819944d283468f6b3f948469299303798a2bd": "Iceburg CRM 通过 5.0.0 通过记录保存绕过授权",
+  "6cb9a046b9194d5efee924e66207f600f7ff9d85": "Iceburg CRM 到 5.0.0 的 Module::saveRecord() 中包含一个不正确的授权漏洞，该漏洞允许经过身份验证的用户通过在请求主体密钥前添加另一个模块 ID 来写入未经授权的模块。对一个模块具有写入权限的攻击者可以向 POST /data/save 或 PUT /api/crm/{id} 提交精心设计的请求，以将其 role_id 设置为 Admin 并访问管理数据。",
+  "9ba6b60aeb977701079e945c14058c7598265037": "CVE-2026-115407 漏洞",
+  "08fdbc562afa8c58162087958bb057f00e24800a": "在 `github.com/eclipse-keypont/crypto11/v2` 版本 `<= 2.0.0-rc8` （以及已弃用的 v1 模块路径 `github.com/eclipse-keypont/crypto11 <= 1.6.8`、`github.com/ThalesGroup/crypto11 <= 1.7.0-rc1` 和 `github.com/ThalesIgnite/crypto11 <= 1.2.5`），“SecretKey.NewGCM()”返回的“cipher.AEAD”将直接给定的任何随机数传递给“CK_GCM_PARAMS”，而不根据“NonceSize()”检查其长度，并接受空随机数。在接受零长度 GCM IV 的令牌上（SoftHSM2 会这样做），每个具有空随机数的“Seal”都会在同一 IV 下进行加密，重用密钥流并暴露 GHASH 身份验证密钥，从而允许伪造。另外，“Config.UseGCMIVFromHSM”会向令牌发送长度为零的 NULL IV，除非还设置了“GCMIVFromHSMControl.SupplyIvForHSMGCMEncrypt”，因此令牌无处可写它生成的 IV：在明文已加密后，具有非空随机数的“Seal”会发生恐慌，而具有空随机数的“Seal”会在空 IV 下返回密文，不会出现错误。另外，在 v1 线路上，HSM-IV 模式永远不会将令牌生成的 IV 复制回调用者，因此调用者保留自己的随机数，同时数据在另一个随机数下加密。",
+  "549f8519ade616c12b909ed47c8f9e4c59239429": "弱初始化向量的生成（IV）"
 }
