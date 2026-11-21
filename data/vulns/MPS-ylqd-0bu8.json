@@ -1,6 +1,6 @@
 {
-  "saved_at": "2026-11-21T18:51:48+00:00",
-  "first_seen": true,
+  "saved_at": "2026-11-21T23:40:52+00:00",
+  "first_seen": false,
   "translated": true,
   "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
   "source_page": "https://www.oscs1024.com/hd/MPS-ylqd-0bu8",
@@ -46,10 +46,10 @@
     "cvss_score": 9.3,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-121",
-    "description": "A security flaw has been discovered in D-Link DIR-600L 2.17b02. This affects the function FUN_0040efb0 of the file gena.cgi of the component GENA Subscription Handler. Performing a manipulation of the argument service results in stack-based buffer overflow. The attack is possible to be carried out remotely. The exploit has been released to the public and may be used for attacks.",
+    "description": "D-Link DIR-600L 是 D-Link 公司推出的家用无线路由器，固件以闭源二进制形式分发，硬件版本 B 对应固件 2.17b02；设备 Web 服务内置 UPnP GENA（通用事件通知架构）订阅处理组件，由 htdocs/cgibin 目录下的 gena.cgi 程序对外处理 SUBSCRIBE 等订阅请求。\n受影响版本中，gena.cgi 的 GENA 订阅处理函数 FUN_0040efb0 将调用方提交的 service 参数写入约 516 字节的固定大小栈缓冲区，写入前缺少按目标缓冲区大小的边界检查；远程攻击者无需身份认证即可发送携带超长 service 值的 GENA 订阅请求，导致栈上相邻数据被覆盖，在 QEMU-MIPSEL 重宿主环境中表现为 gena.cgi 进程 SIGSEGV 崩溃。\n修复版本中通过，可通过关闭或限制设备 UPnP/GENA 服务对外暴露、仅允许可信网络访问设备 Web 管理面，并更换已停止维护的路由器设备来切断上述攻击链；D-Link 未针对 2.17b02 公布修复固件，产品已停止服务。",
     "effects": [
       {
-        "comp_name": "DIR-600L",
+        "comp_name": "dir-600l_firmware",
         "ecosystem": "linux",
         "versions": [
           {
@@ -65,7 +65,7 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "建议修复",
     "kind": "栈缓冲区溢出",
@@ -114,7 +114,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "D-Link DIR-600L GENA Subscription gena.cgi FUN_0040efb0 stack-based overflow",
+    "title": "D-Link DIR-600L gena.cgi 栈溢出漏洞",
     "_translated": true
   },
   "detail_original": {
@@ -159,10 +159,10 @@
     "cvss_score": 9.3,
     "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
     "cwe": "CWE-121",
-    "description": "A security flaw has been discovered in D-Link DIR-600L 2.17b02. This affects the function FUN_0040efb0 of the file gena.cgi of the component GENA Subscription Handler. Performing a manipulation of the argument service results in stack-based buffer overflow. The attack is possible to be carried out remotely. The exploit has been released to the public and may be used for attacks.",
+    "description": "D-Link DIR-600L 是 D-Link 公司推出的家用无线路由器，固件以闭源二进制形式分发，硬件版本 B 对应固件 2.17b02；设备 Web 服务内置 UPnP GENA（通用事件通知架构）订阅处理组件，由 htdocs/cgibin 目录下的 gena.cgi 程序对外处理 SUBSCRIBE 等订阅请求。\n受影响版本中，gena.cgi 的 GENA 订阅处理函数 FUN_0040efb0 将调用方提交的 service 参数写入约 516 字节的固定大小栈缓冲区，写入前缺少按目标缓冲区大小的边界检查；远程攻击者无需身份认证即可发送携带超长 service 值的 GENA 订阅请求，导致栈上相邻数据被覆盖，在 QEMU-MIPSEL 重宿主环境中表现为 gena.cgi 进程 SIGSEGV 崩溃。\n修复版本中通过，可通过关闭或限制设备 UPnP/GENA 服务对外暴露、仅允许可信网络访问设备 Web 管理面，并更换已停止维护的路由器设备来切断上述攻击链；D-Link 未针对 2.17b02 公布修复固件，产品已停止服务。",
     "effects": [
       {
-        "comp_name": "DIR-600L",
+        "comp_name": "dir-600l_firmware",
         "ecosystem": "linux",
         "versions": [
           {
@@ -178,7 +178,7 @@
     "epss": -1,
     "exp": false,
     "exploit_requirement": "",
-    "exploit_requirement_cost": "低",
+    "exploit_requirement_cost": "中",
     "exploitability": "中",
     "fix_suggestion": "Recommend",
     "kind": "栈缓冲区溢出",
@@ -227,7 +227,7 @@
     "tags": [
       "应用软件"
     ],
-    "title": "D-Link DIR-600L GENA Subscription gena.cgi FUN_0040efb0 stack-based overflow"
+    "title": "D-Link DIR-600L gena.cgi 栈溢出漏洞"
   },
   "first_saved_at": "2026-11-21T18:51:39+00:00"
 }
