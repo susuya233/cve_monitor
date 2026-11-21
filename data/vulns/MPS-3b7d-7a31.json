@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-11-21T03:42:18+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-3b7d-7a31",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120382",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-88",
+    "description": "Synology DiskStation Manager（DSM）是群晖科技面向其 NAS 设备的闭源操作系统，提供存储管理、套件扩展与 Web 管理界面，其 OAuth Service 套件为 DSM 及相关应用提供基于 OAuth 的登录授权能力，BeeStation OS 1.5 为同一公告覆盖的相关产品。\n受影响版本中，DSM 的 OAuth API 在命令处理过程中未正确中和参数分隔符（CWE-88），远程攻击者无需身份认证，可向该 API 提交携带参数分隔符的输入，使额外参数进入内部命令执行流程，读取或写入任意文件并发起拒绝服务攻击。\n修复版本中通过官方安全更新修复 OAuth API 对参数分隔符的中和处理消除该风险，对应分支修复版本为 6.2.4-25556-9、7.1.1-42962-10、7.2.1-69057-14、7.2.2-72806-11、7.3.2-86009-6、7.4.1-90080-2 及以上；在对应分支修复版本发布前，可按官方建议停用 OAuth Service 套件作为缓解措施。",
+    "effects": [
+      {
+        "comp_name": "beestation_os",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "diskstation_manager",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.2.4-25556-9)",
+            "min_fixed_version": "6.2.4-25556-9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,7.2.2-72806-11)",
+            "min_fixed_version": "7.2.2-72806-11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,7.1.1-42962-10)",
+            "min_fixed_version": "7.1.1-42962-10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,7.3.2-86009-6)",
+            "min_fixed_version": "7.3.2-86009-6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,7.2.1-69057-14)",
+            "min_fixed_version": "7.2.1-69057-14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,7.4.1-90080-2)",
+            "min_fixed_version": "7.4.1-90080-2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "参数注入或修改",
+    "kind_en": "命令中参数分隔符的不正确中和（“参数注入”）",
+    "last_modified_time": "2026-11-21",
+    "level": "Critical",
+    "mps_id": "MPS-3b7d-7a31",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-21",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/synology-dsm-vulnerabilities-cve-2026-120382/",
+        "name": ""
+      },
+      {
+        "url": "https://www.synology.com/en-global/security/advisory/Synology_SA_26_21",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Synology DSM OAuth参数注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120382",
+    "cvss": {},
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-88",
+    "description": "Synology DiskStation Manager（DSM）是群晖科技面向其 NAS 设备的闭源操作系统，提供存储管理、套件扩展与 Web 管理界面，其 OAuth Service 套件为 DSM 及相关应用提供基于 OAuth 的登录授权能力，BeeStation OS 1.5 为同一公告覆盖的相关产品。\n受影响版本中，DSM 的 OAuth API 在命令处理过程中未正确中和参数分隔符（CWE-88），远程攻击者无需身份认证，可向该 API 提交携带参数分隔符的输入，使额外参数进入内部命令执行流程，读取或写入任意文件并发起拒绝服务攻击。\n修复版本中通过官方安全更新修复 OAuth API 对参数分隔符的中和处理消除该风险，对应分支修复版本为 6.2.4-25556-9、7.1.1-42962-10、7.2.1-69057-14、7.2.2-72806-11、7.3.2-86009-6、7.4.1-90080-2 及以上；在对应分支修复版本发布前，可按官方建议停用 OAuth Service 套件作为缓解措施。",
+    "effects": [
+      {
+        "comp_name": "beestation_os",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.5]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "diskstation_manager",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.2.4-25556-9)",
+            "min_fixed_version": "6.2.4-25556-9",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,7.2.2-72806-11)",
+            "min_fixed_version": "7.2.2-72806-11",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,7.1.1-42962-10)",
+            "min_fixed_version": "7.1.1-42962-10",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,7.3.2-86009-6)",
+            "min_fixed_version": "7.3.2-86009-6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,7.2.1-69057-14)",
+            "min_fixed_version": "7.2.1-69057-14",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,7.4.1-90080-2)",
+            "min_fixed_version": "7.4.1-90080-2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "参数注入或修改",
+    "kind_en": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "last_modified_time": "2026-11-21",
+    "level": "Critical",
+    "mps_id": "MPS-3b7d-7a31",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-21",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/synology-dsm-vulnerabilities-cve-2026-120382/",
+        "name": ""
+      },
+      {
+        "url": "https://www.synology.com/en-global/security/advisory/Synology_SA_26_21",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Synology DSM OAuth参数注入漏洞"
+  },
+  "first_saved_at": "2026-11-21T03:42:18+00:00"
+}

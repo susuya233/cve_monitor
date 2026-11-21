@@ -1,0 +1,289 @@
+{
+  "saved_at": "2026-11-21T03:42:19+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2dgq-mz94",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-114025",
+    "cvss": {},
+    "cvss_score": 8.4,
+    "cvss_vector": "",
+    "cwe": "CWE-787",
+    "description": "AVEVideoEncoder 是 Apple 在 iOS/iPadOS、macOS 和 tvOS 中内置的音视频编码组件，属于闭源系统组件，为应用提供视频编码处理能力。\n受影响版本中，AVEVideoEncoder 在处理编码输入时存在越界写入缺陷，本地应用可向该组件提交构造的编码输入，触发内存越界写入，导致应用意外终止或任意代码执行；Apple 官方公告确认缺陷成因是输入校验不足。\n修复版本中通过改进输入校验消除越界写入风险，修复覆盖 iOS 26.7.2、iPadOS 26.7.2、iOS 27.2、iPadOS 27.2、macOS Golden Gate 27.2、macOS Sequoia 15.8.2、macOS Tahoe 26.7.2 和 tvOS 27.2。",
+    "effects": [
+      {
+        "comp_name": "iphone_os",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[26.0,26.7.2)",
+            "min_fixed_version": "26.7.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[27.0,27.2)",
+            "min_fixed_version": "27.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "macos",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[27.0,27.2)",
+            "min_fixed_version": "27.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[26.0,26.7.2)",
+            "min_fixed_version": "26.7.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.0,15.8.2)",
+            "min_fixed_version": "15.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "tvos",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[27.0,27.2)",
+            "min_fixed_version": "27.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界写入",
+    "kind_en": "越界写入",
+    "last_modified_time": "2026-11-21",
+    "level": "High",
+    "mps_id": "MPS-2dgq-mz94",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2dgq-mz94",
+        "name": "https://www.oscs1024.com/hd/MPS-2dgq-mz94"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-114025",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-114025"
+      },
+      {
+        "url": "https://support.apple.com/en-us/149227",
+        "name": ""
+      },
+      {
+        "url": "https://support.apple.com/en-us/149230",
+        "name": ""
+      },
+      {
+        "url": "https://support.apple.com/en-us/149521",
+        "name": ""
+      },
+      {
+        "url": "https://support.apple.com/en-us/149522",
+        "name": ""
+      },
+      {
+        "url": "https://support.apple.com/en-us/149523",
+        "name": ""
+      },
+      {
+        "url": "https://support.apple.com/en-us/149524",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "AVEVideoEncoder越界写入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "attack_vector_type": "Local",
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-114025",
+    "cvss": {},
+    "cvss_score": 8.4,
+    "cvss_vector": "",
+    "cwe": "CWE-787",
+    "description": "AVEVideoEncoder 是 Apple 在 iOS/iPadOS、macOS 和 tvOS 中内置的音视频编码组件，属于闭源系统组件，为应用提供视频编码处理能力。\n受影响版本中，AVEVideoEncoder 在处理编码输入时存在越界写入缺陷，本地应用可向该组件提交构造的编码输入，触发内存越界写入，导致应用意外终止或任意代码执行；Apple 官方公告确认缺陷成因是输入校验不足。\n修复版本中通过改进输入校验消除越界写入风险，修复覆盖 iOS 26.7.2、iPadOS 26.7.2、iOS 27.2、iPadOS 27.2、macOS Golden Gate 27.2、macOS Sequoia 15.8.2、macOS Tahoe 26.7.2 和 tvOS 27.2。",
+    "effects": [
+      {
+        "comp_name": "iphone_os",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[26.0,26.7.2)",
+            "min_fixed_version": "26.7.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[27.0,27.2)",
+            "min_fixed_version": "27.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "macos",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[27.0,27.2)",
+            "min_fixed_version": "27.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[26.0,26.7.2)",
+            "min_fixed_version": "26.7.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[15.0,15.8.2)",
+            "min_fixed_version": "15.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "tvos",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[27.0,27.2)",
+            "min_fixed_version": "27.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界写入",
+    "kind_en": "Out-of-bounds Write",
+    "last_modified_time": "2026-11-21",
+    "level": "High",
+    "mps_id": "MPS-2dgq-mz94",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-21",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2dgq-mz94",
+        "name": "https://www.oscs1024.com/hd/MPS-2dgq-mz94"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-114025",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-114025"
+      },
+      {
+        "url": "https://support.apple.com/en-us/149227",
+        "name": ""
+      },
+      {
+        "url": "https://support.apple.com/en-us/149230",
+        "name": ""
+      },
+      {
+        "url": "https://support.apple.com/en-us/149521",
+        "name": ""
+      },
+      {
+        "url": "https://support.apple.com/en-us/149522",
+        "name": ""
+      },
+      {
+        "url": "https://support.apple.com/en-us/149523",
+        "name": ""
+      },
+      {
+        "url": "https://support.apple.com/en-us/149524",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "操作系统"
+    ],
+    "title": "AVEVideoEncoder越界写入漏洞"
+  },
+  "first_saved_at": "2026-11-21T03:42:19+00:00"
+}
