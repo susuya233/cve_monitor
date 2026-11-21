@@ -1,0 +1,191 @@
+{
+  "saved_at": "2026-11-21T18:51:46+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-81f5-24tk",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-134457",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-789",
+    "description": "Hysteria 是 HyNetworks 开源的基于 QUIC 协议的高性能网络代理工具，采用 Go 语言编写并以 MIT 许可证发布，常用于加密代理与流量转发场景。服务端提供 TCP/UDP 转发、ACL 与流量嗅探等能力，嗅探功能用于解析转发流量中的 QUIC、TLS、HTTP 协议信息以还原域名并支撑基于域名的访问控制。\n受影响版本中，服务端开启嗅探后，已认证客户端发起 UDP 转发请求时，服务端在 UDP 会话建立阶段将客户端提供的 UDP 载荷交给嗅探器处理，extras/sniff/sniff.go 的 Sniffer.UDP 调用 extras/sniff/internal/quic/payload.go 的 ReadCryptoPayload 解析 QUIC Initial 包；extractCryptoFrames 直接以攻击者可控的 QUIC varint 长度 dataLen 调用 make([]byte, dataLen) 分配缓冲区，缺少长度上限与剩余数据校验，assembleCryptoFrames 也按未校验的 CRYPTO 帧偏移与长度计算总大小后分配内存。QUIC varint 最大可表示约 2^62 的数值，单个携带超大 CRYPTO 长度的 UDP 载荷能触发巨额内存分配，导致服务端内存耗尽并崩溃。\n修复版本中通过在 CRYPTO 帧解析与组装阶段引入 256 KiB 上限和前置校验切断该因果链：extractCryptoFrames 校验帧偏移不超过 math.MaxInt64、数据长度不超过 maxCryptoFrameDataLen 且不超出剩余缓冲区，超限时直接返回错误；assembleCryptoFrames 在分配前校验末帧偏移与总长度不超过 maxCryptoPayloadLen，不满足时返回空结果，不再按攻击者可控长度分配内存，该修复随 2.8.2 版本发布。",
+    "effects": [
+      {
+        "comp_name": "github.com/apernet/hysteria/extras/v2",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[2.5.0,2.8.2)",
+            "min_fixed_version": "2.8.2",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "hysteria",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.5.0,2.8.2)",
+            "min_fixed_version": "2.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "未经控制的内存分配",
+    "kind_en": "大小值过大的内存分配",
+    "last_modified_time": "2026-11-22",
+    "level": "High",
+    "mps_id": "MPS-81f5-24tk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-81f5-24tk",
+        "name": "https://www.oscs1024.com/hd/MPS-81f5-24tk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-134457",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-134457"
+      },
+      {
+        "url": "https://github.com/HyNetworks/hysteria/security/advisories/GHSA-9fw6-xgg2-mq9q",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/hysteria-2.5.0-before-2.8.2-quic-packet-oom-via-sniff-crypto-length",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Hysteria QUIC嗅探OOM拒绝服务",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-134457",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "medium",
+          "base_score": 6.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-789",
+    "description": "Hysteria 是 HyNetworks 开源的基于 QUIC 协议的高性能网络代理工具，采用 Go 语言编写并以 MIT 许可证发布，常用于加密代理与流量转发场景。服务端提供 TCP/UDP 转发、ACL 与流量嗅探等能力，嗅探功能用于解析转发流量中的 QUIC、TLS、HTTP 协议信息以还原域名并支撑基于域名的访问控制。\n受影响版本中，服务端开启嗅探后，已认证客户端发起 UDP 转发请求时，服务端在 UDP 会话建立阶段将客户端提供的 UDP 载荷交给嗅探器处理，extras/sniff/sniff.go 的 Sniffer.UDP 调用 extras/sniff/internal/quic/payload.go 的 ReadCryptoPayload 解析 QUIC Initial 包；extractCryptoFrames 直接以攻击者可控的 QUIC varint 长度 dataLen 调用 make([]byte, dataLen) 分配缓冲区，缺少长度上限与剩余数据校验，assembleCryptoFrames 也按未校验的 CRYPTO 帧偏移与长度计算总大小后分配内存。QUIC varint 最大可表示约 2^62 的数值，单个携带超大 CRYPTO 长度的 UDP 载荷能触发巨额内存分配，导致服务端内存耗尽并崩溃。\n修复版本中通过在 CRYPTO 帧解析与组装阶段引入 256 KiB 上限和前置校验切断该因果链：extractCryptoFrames 校验帧偏移不超过 math.MaxInt64、数据长度不超过 maxCryptoFrameDataLen 且不超出剩余缓冲区，超限时直接返回错误；assembleCryptoFrames 在分配前校验末帧偏移与总长度不超过 maxCryptoPayloadLen，不满足时返回空结果，不再按攻击者可控长度分配内存，该修复随 2.8.2 版本发布。",
+    "effects": [
+      {
+        "comp_name": "github.com/apernet/hysteria/extras/v2",
+        "ecosystem": "go",
+        "versions": [
+          {
+            "affected_version": "[2.5.0,2.8.2)",
+            "min_fixed_version": "2.8.2",
+            "repository": "go",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "hysteria",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.5.0,2.8.2)",
+            "min_fixed_version": "2.8.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "未经控制的内存分配",
+    "kind_en": "Memory Allocation with Excessive Size Value",
+    "last_modified_time": "2026-11-22",
+    "level": "High",
+    "mps_id": "MPS-81f5-24tk",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-81f5-24tk",
+        "name": "https://www.oscs1024.com/hd/MPS-81f5-24tk"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-134457",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-134457"
+      },
+      {
+        "url": "https://github.com/HyNetworks/hysteria/security/advisories/GHSA-9fw6-xgg2-mq9q",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/hysteria-2.5.0-before-2.8.2-quic-packet-oom-via-sniff-crypto-length",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "Hysteria QUIC嗅探OOM拒绝服务"
+  },
+  "first_saved_at": "2026-11-21T18:51:46+00:00"
+}

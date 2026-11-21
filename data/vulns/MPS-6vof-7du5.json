@@ -1,0 +1,247 @@
+{
+  "saved_at": "2026-11-21T18:51:40+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-6vof-7du5",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-134461",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "web-token jwt-framework 与 jwt-library 是 PHP 开源 JOSE/JWT 组件（MIT 许可，作者 Florent Morselli），为 PHP 应用与 Symfony 应用提供 JWE/JWS 加解密、密钥管理以及口令派生密钥等密钥加密算法。\n受影响版本中，应用在解密侧注册 PBES2-HS256+A128KW、PBES2-HS384+A192KW 或 PBES2-HS512+A256KW 算法处理 JWE 时，PBES2AESKW::unwrapKey() 将攻击者可控受保护头中的 p2c 迭代次数直接传入 hash_pbkdf2() 执行 PBKDF2 计算，checkHeaderAdditionalParameters() 仅校验该值为正整数且未设置上限，未认证攻击者提交单个携带超大 p2c 的 JWE 可迫使工作进程长时间占用 CPU 并耗尽服务器算力，形成拒绝服务。\n修复版本中通过为 p2c 增加可配置上限切断该链路：PBES2AESKW 引入 DEFAULT_MAX_COUNT 常量（默认 1000000）与构造函数 max_count 参数，checkHeaderAdditionalParameters() 在 PBKDF2 计算开始前拒绝超过上限的 p2c 并抛出异常，阻止 CPU 放大。",
+    "effects": [
+      {
+        "comp_name": "web-token/jwt-framework",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.4.10)",
+            "min_fixed_version": "3.4.10",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.0.7)",
+            "min_fixed_version": "4.0.7",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.1.0,4.1.7)",
+            "min_fixed_version": "4.1.7",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "web-token/jwt-library",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[3.3.0,3.4.10)",
+            "min_fixed_version": "3.4.10",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.0.7)",
+            "min_fixed_version": "4.0.7",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.1.0,4.1.7)",
+            "min_fixed_version": "4.1.7",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-11-22",
+    "level": "High",
+    "mps_id": "MPS-6vof-7du5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6vof-7du5",
+        "name": "https://www.oscs1024.com/hd/MPS-6vof-7du5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-134461",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-134461"
+      },
+      {
+        "url": "https://github.com/web-token/jwt-framework/security/advisories/GHSA-3prj-6hqw-cm82",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/web-token-jwt-framework-before-3.4.10-dos-via-unbounded-pbes2-p2c-iteration-count",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "web-token JWT库PBES2拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-134461",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-770",
+    "description": "web-token jwt-framework 与 jwt-library 是 PHP 开源 JOSE/JWT 组件（MIT 许可，作者 Florent Morselli），为 PHP 应用与 Symfony 应用提供 JWE/JWS 加解密、密钥管理以及口令派生密钥等密钥加密算法。\n受影响版本中，应用在解密侧注册 PBES2-HS256+A128KW、PBES2-HS384+A192KW 或 PBES2-HS512+A256KW 算法处理 JWE 时，PBES2AESKW::unwrapKey() 将攻击者可控受保护头中的 p2c 迭代次数直接传入 hash_pbkdf2() 执行 PBKDF2 计算，checkHeaderAdditionalParameters() 仅校验该值为正整数且未设置上限，未认证攻击者提交单个携带超大 p2c 的 JWE 可迫使工作进程长时间占用 CPU 并耗尽服务器算力，形成拒绝服务。\n修复版本中通过为 p2c 增加可配置上限切断该链路：PBES2AESKW 引入 DEFAULT_MAX_COUNT 常量（默认 1000000）与构造函数 max_count 参数，checkHeaderAdditionalParameters() 在 PBKDF2 计算开始前拒绝超过上限的 p2c 并抛出异常，阻止 CPU 放大。",
+    "effects": [
+      {
+        "comp_name": "web-token/jwt-framework",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.4.10)",
+            "min_fixed_version": "3.4.10",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.0.7)",
+            "min_fixed_version": "4.0.7",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.1.0,4.1.7)",
+            "min_fixed_version": "4.1.7",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "web-token/jwt-library",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "[3.3.0,3.4.10)",
+            "min_fixed_version": "3.4.10",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.0.0,4.0.7)",
+            "min_fixed_version": "4.0.7",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[4.1.0,4.1.7)",
+            "min_fixed_version": "4.1.7",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-11-22",
+    "level": "High",
+    "mps_id": "MPS-6vof-7du5",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-6vof-7du5",
+        "name": "https://www.oscs1024.com/hd/MPS-6vof-7du5"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-134461",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-134461"
+      },
+      {
+        "url": "https://github.com/web-token/jwt-framework/security/advisories/GHSA-3prj-6hqw-cm82",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/web-token-jwt-framework-before-3.4.10-dos-via-unbounded-pbes2-p2c-iteration-count",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [],
+    "title": "web-token JWT库PBES2拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-11-21T18:51:40+00:00"
+}
