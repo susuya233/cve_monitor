@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-11-22T04:37:29+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-dmz8-2fyj",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-134704",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-502",
+    "description": "OpenShot Video Editor（openshot-qt）是 OpenShot 团队开源的跨平台非线性视频编辑器，基于 Python 与 PyQt 构建，使用 .osp 项目文件保存与交换工程数据。\n受影响版本中，ProjectDataStore.load() 读取项目文件时先按 JSON 解析，解析失败后回退调用 read_legacy_project_file()，该函数把非 JSON 的项目文件直接交给 pickle.load() 反序列化，未使用受限 Unpickler，也未限制可解析的全局对象；攻击者在 .osp 文件中植入 pickle __reduce__ 载荷并诱导用户打开，文件前 64 字节的前缀检查无法拦截以 0x80 开头的 pickle 流，GLOBAL 指令在加载阶段解析出 posix.system 等任意可调用对象并执行命令，代码以运行 OpenShot 的用户权限生效。\n修复版本中通过新增 classes/legacy_project.py 引入受限反序列化器 LegacyProjectUnpickler，find_class 仅放行预登记的惰性数据记录类，并拒绝 EXT 与 PERSID 类操作码及尾部多余数据，反序列化结果再经图与字段类型校验；load() 与 read_legacy_project_file() 改为经由该受限导入器读取旧版项目，切断了任意类解析与代码执行链。",
+    "effects": [
+      {
+        "comp_name": "openshot-qt",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.1.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "反序列化",
+    "kind_en": "不可信数据的反序列化",
+    "last_modified_time": "2026-11-22",
+    "level": "High",
+    "mps_id": "MPS-dmz8-2fyj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dmz8-2fyj",
+        "name": "https://www.oscs1024.com/hd/MPS-dmz8-2fyj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-134704",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-134704"
+      },
+      {
+        "url": "https://github.com/OpenShot/openshot-qt/issues/6249",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OpenShot/openshot-qt/commit/18da38899ee04bd023171f0c4958a4cfafb2b38c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OpenShot/openshot-qt/blob/v4.1.1/src/classes/project_data.py",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/openshot-video-editor-through-4.1.1-deserialization-via-legacy-project-import",
+        "name": "VulnCheck Advisory: OpenShot Video Editor through 4.1.1 Deserialization via Legacy Project Import"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "OpenShot 反序列化漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 攻击者通过向受信任的数据序列化过程中添加恶意数据，从而在序列化和反序列化过程中执行恶意代码的攻击漏洞。这种漏洞通常存在于使用序列化 (serialization) 机制存储和传输数据的程序中。\n",
+        "title": "什么是反序列化"
+      },
+      {
+        "content": "- 注入攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码注入到程序中，从而实现代码执行的目的。\n- 反射攻击：攻击者使用反射机制，在序列化过程中动态生成恶意数据，并将恶意代码注入到程序中，从而实现代码执行的目的。\n- 缓冲区溢出攻击：攻击者通过在序列化过程中向缓冲区输入恶意数据，导致缓冲区溢出，从而破坏程序的内存管理，实现代码执行的目的。\n- 格式字符串攻击：攻击者通过在序列化过程中输入恶意数据，导致程序使用错误的格式字符串，从而实现代码执行的目的。\n- 数据流攻击：攻击者通过在序列化过程中注入恶意数据，将恶意代码作为一个数据流传递给程序，从而实现代码执行的目的。\n",
+        "title": "反序列化常见的攻击方式"
+      },
+      {
+        "content": "- 不信任输入数据：程序应该严格检查输入数据的有效性，并避免使用不受信任的数据。\n- 使用安全的序列化机制：程序应该使用安全的序列化机制，如 JSON 或 XML 序列化，而不是第三方序列化库。\n- 最小特权原则：程序应该限制对受信任数据的处理权限，并避免在运行时修改数据。\n- 代码审查和漏洞扫描：程序应该进行代码审查和漏洞扫描，以发现和修复潜在的安全漏洞。\n",
+        "title": "如何预防反序列化"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-134704",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-502",
+    "description": "OpenShot Video Editor（openshot-qt）是 OpenShot 团队开源的跨平台非线性视频编辑器，基于 Python 与 PyQt 构建，使用 .osp 项目文件保存与交换工程数据。\n受影响版本中，ProjectDataStore.load() 读取项目文件时先按 JSON 解析，解析失败后回退调用 read_legacy_project_file()，该函数把非 JSON 的项目文件直接交给 pickle.load() 反序列化，未使用受限 Unpickler，也未限制可解析的全局对象；攻击者在 .osp 文件中植入 pickle __reduce__ 载荷并诱导用户打开，文件前 64 字节的前缀检查无法拦截以 0x80 开头的 pickle 流，GLOBAL 指令在加载阶段解析出 posix.system 等任意可调用对象并执行命令，代码以运行 OpenShot 的用户权限生效。\n修复版本中通过新增 classes/legacy_project.py 引入受限反序列化器 LegacyProjectUnpickler，find_class 仅放行预登记的惰性数据记录类，并拒绝 EXT 与 PERSID 类操作码及尾部多余数据，反序列化结果再经图与字段类型校验；load() 与 read_legacy_project_file() 改为经由该受限导入器读取旧版项目，切断了任意类解析与代码执行链。",
+    "effects": [
+      {
+        "comp_name": "openshot-qt",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.1.1]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "反序列化",
+    "kind_en": "Deserialization of Untrusted Data",
+    "last_modified_time": "2026-11-22",
+    "level": "High",
+    "mps_id": "MPS-dmz8-2fyj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-22",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-dmz8-2fyj",
+        "name": "https://www.oscs1024.com/hd/MPS-dmz8-2fyj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-134704",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-134704"
+      },
+      {
+        "url": "https://github.com/OpenShot/openshot-qt/issues/6249",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OpenShot/openshot-qt/commit/18da38899ee04bd023171f0c4958a4cfafb2b38c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/OpenShot/openshot-qt/blob/v4.1.1/src/classes/project_data.py",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/openshot-video-editor-through-4.1.1-deserialization-via-legacy-project-import",
+        "name": "VulnCheck Advisory: OpenShot Video Editor through 4.1.1 Deserialization via Legacy Project Import"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "OpenShot 反序列化漏洞"
+  },
+  "first_saved_at": "2026-11-22T04:37:29+00:00"
+}
