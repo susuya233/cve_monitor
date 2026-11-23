@@ -1,0 +1,159 @@
+{
+  "saved_at": "2026-11-23T10:08:12+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-b7c3-0f38",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-123886",
+    "cvss": {},
+    "cvss_score": 8.8,
+    "cvss_vector": "",
+    "cwe": "CWE-917",
+    "description": "Spring Data Elasticsearch 是 Spring 官方维护的开源 Elasticsearch 数据访问模块，提供基于仓库接口与字符串型 @Query 注解的 Elasticsearch 查询构建能力，属于 Spring Data 家族的 Java 组件。\n受影响版本中，字符串型 @Query 查询的处理顺序为先由 QueryStringPlaceholderReplacer 将方法实参原样替换进 ?0 等位置占位符，再把拼接后的完整字符串交给 QueryStringSpELEvaluator 按 SpEL 模板解析执行，参数值在该阶段未做任何 SpEL 转义；应用将不可信输入作为此类仓库方法的参数传递时，攻击者提交形如 #{T(java.lang.Runtime).getRuntime().exec(...)} 的取值可在应用进程中执行任意代码，同时解析表达式缓存使用无界 ConcurrentHashMap，不同请求构造的不同查询串可持续占用内存直至耗尽。\n修复版本中通过调整 QueryStringProcessor.createQuery 的处理顺序切断该链路，SpEL 表达式先在声明的查询字符串上求值，位置占位符仅在求值结果的字面部分内替换，字符串参数值对引号与反斜杠进行转义，解析表达式缓存改为容量 256 的 ConcurrentLruCache，参数携带的 SpEL 表达式不再执行，缓存内存占用也受到上限约束。",
+    "effects": [
+      {
+        "comp_name": "org.springframework.data:spring-data-elasticsearch",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[6.1.0,6.1.3)",
+            "min_fixed_version": "6.1.3",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0.0,6.0.9)",
+            "min_fixed_version": "6.0.9",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "表达式语言注入",
+    "kind_en": "表达式语言语句中使用的特殊元素的不正确中和（“表达式语言注入”）",
+    "last_modified_time": "2026-11-23",
+    "level": "High",
+    "mps_id": "MPS-b7c3-0f38",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-23",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/spring-security-vulnerabilities-november-2026/",
+        "name": ""
+      },
+      {
+        "url": "https://spring.io/security/cve-2026-123886",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-data-elasticsearch/commit/311bc4127136af531c3a3c9197170827251a8594",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-data-elasticsearch/commit/1acdc7e1b0445a15104c4d7ab95e79201cb646d5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-data-elasticsearch/issues/3390",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Spring Data Elasticsearch SpEL表达式注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-123886",
+    "cvss": {},
+    "cvss_score": 8.8,
+    "cvss_vector": "",
+    "cwe": "CWE-917",
+    "description": "Spring Data Elasticsearch 是 Spring 官方维护的开源 Elasticsearch 数据访问模块，提供基于仓库接口与字符串型 @Query 注解的 Elasticsearch 查询构建能力，属于 Spring Data 家族的 Java 组件。\n受影响版本中，字符串型 @Query 查询的处理顺序为先由 QueryStringPlaceholderReplacer 将方法实参原样替换进 ?0 等位置占位符，再把拼接后的完整字符串交给 QueryStringSpELEvaluator 按 SpEL 模板解析执行，参数值在该阶段未做任何 SpEL 转义；应用将不可信输入作为此类仓库方法的参数传递时，攻击者提交形如 #{T(java.lang.Runtime).getRuntime().exec(...)} 的取值可在应用进程中执行任意代码，同时解析表达式缓存使用无界 ConcurrentHashMap，不同请求构造的不同查询串可持续占用内存直至耗尽。\n修复版本中通过调整 QueryStringProcessor.createQuery 的处理顺序切断该链路，SpEL 表达式先在声明的查询字符串上求值，位置占位符仅在求值结果的字面部分内替换，字符串参数值对引号与反斜杠进行转义，解析表达式缓存改为容量 256 的 ConcurrentLruCache，参数携带的 SpEL 表达式不再执行，缓存内存占用也受到上限约束。",
+    "effects": [
+      {
+        "comp_name": "org.springframework.data:spring-data-elasticsearch",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[6.1.0,6.1.3)",
+            "min_fixed_version": "6.1.3",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[6.0.0,6.0.9)",
+            "min_fixed_version": "6.0.9",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "表达式语言注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an Expression Language Statement ('Expression Language Injection')",
+    "last_modified_time": "2026-11-23",
+    "level": "High",
+    "mps_id": "MPS-b7c3-0f38",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-23",
+    "reference_url_list": [
+      {
+        "url": "https://securityonline.info/spring-security-vulnerabilities-november-2026/",
+        "name": ""
+      },
+      {
+        "url": "https://spring.io/security/cve-2026-123886",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-data-elasticsearch/commit/311bc4127136af531c3a3c9197170827251a8594",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-data-elasticsearch/commit/1acdc7e1b0445a15104c4d7ab95e79201cb646d5",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/spring-projects/spring-data-elasticsearch/issues/3390",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Spring Data Elasticsearch SpEL表达式注入漏洞"
+  },
+  "first_saved_at": "2026-11-23T10:08:12+00:00"
+}
