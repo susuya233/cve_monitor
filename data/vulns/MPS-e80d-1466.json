@@ -1,0 +1,193 @@
+{
+  "saved_at": "2026-11-23T22:23:16+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-e80d-1466",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96353",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-862",
+    "description": "Apache Texera（孵化中）是 Apache 软件基金会托管的开源可视化工作流平台，使用 Scala 与 Dropwizard 提供 REST API，用于协作编辑和执行数据分析工作流。\n受影响版本中，项目 REST API 仅校验调用者具备 REGULAR 或 ADMIN 角色，没有校验调用者是否拥有目标项目或已被授予访问权限。ProjectResource.getProject、updateProjectName、updateProjectDescription 与 deleteProject 按路径参数 pid 直接读取、改名、改描述或删除项目，addWorkflowToProject 与 deleteWorkflowFromProject 在未校验项目权限时改写项目包含的工作流，ProjectAccessResource.getOwner 与 getAccessList 按同一 pid 返回所有者及协作者电子邮箱。持有已审批账号的认证用户可以查看、修改或删除其他用户的项目并读取相关邮箱。该功能在 Web 界面默认隐藏，但接口仍随服务注册，不依赖启用项目页签。\n修复版本中通过移除已弃用的项目功能切断上述越权访问。1.3.0-incubating 删除 ProjectResource、PublicProjectResource 与 ProjectAccessResource 及其在 TexeraWebApplication.run 中的 Jersey 注册，并经由 sql/updates/45.sql 删除 project、project_user_access、workflow_of_project 与 public_project 表，项目 REST API 不再对外提供。",
+    "effects": [
+      {
+        "comp_name": "texera",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.1.0-incubating,1.3.0-incubating)",
+            "min_fixed_version": "1.3.0-incubating",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "授权检查缺失",
+    "kind_en": "缺少授权",
+    "last_modified_time": "2026-11-24",
+    "level": "High",
+    "mps_id": "MPS-e80d-1466",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-24",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12779.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.mail-archive.com/announce@apache.org/msg12779.html",
+        "name": ""
+      },
+      {
+        "url": "https://texera.apache.org",
+        "name": ""
+      },
+      {
+        "url": "https://texera.apache.org/releases/1.3.0-incubating/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-96353",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/texera/pull/9284",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/texera/commit/e70bbbf838eda11d34f287a9d83f5fa97059041f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/texera/pull/7464",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Texera项目接口越权",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中未正确实现授权机制，从而导致程序可以被未授权的用户访问或篡改",
+        "title": "什么是授权检查缺失"
+      },
+      {
+        "content": "- 伪造授权请求：攻击者可以通过发送伪造的授权请求来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过伪造用户名和密码、证书等来模拟授权请求，从而绕过授权验证。\n- 命令注入攻击：攻击者可以通过在应用程序中注入恶意的命令来绕过授权验证，从而实现访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中注入恶意的命令来访问受保护的数据库或文件系统。\n- 文件包含攻击：攻击者可以通过在应用程序中包含恶意的文件，从而利用 Missing Authorization 漏洞来访问受保护的资源或数据。例如，攻击者可以通过在 Web 应用程序中包含恶意的 CSS 或 JavaScript 文件来欺骗应用程序将用户输入的数据执行为授权请求，从而绕过授权验证。\n- 拒绝服务攻击 (DDoS):攻击者可以通过向应用程序发送大量的请求来占用其资源，从而实现拒绝服务攻击。例如，攻击者可以通过向 Web 服务器发送大量的 HTTP 请求来占用其资源，从而使 Web 服务器无法正常响应合法的请求。\n",
+        "title": "授权检查缺失常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防授权检查缺失"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96353",
+    "cvss": {},
+    "cvss_score": 8.1,
+    "cvss_vector": "",
+    "cwe": "CWE-862",
+    "description": "Apache Texera（孵化中）是 Apache 软件基金会托管的开源可视化工作流平台，使用 Scala 与 Dropwizard 提供 REST API，用于协作编辑和执行数据分析工作流。\n受影响版本中，项目 REST API 仅校验调用者具备 REGULAR 或 ADMIN 角色，没有校验调用者是否拥有目标项目或已被授予访问权限。ProjectResource.getProject、updateProjectName、updateProjectDescription 与 deleteProject 按路径参数 pid 直接读取、改名、改描述或删除项目，addWorkflowToProject 与 deleteWorkflowFromProject 在未校验项目权限时改写项目包含的工作流，ProjectAccessResource.getOwner 与 getAccessList 按同一 pid 返回所有者及协作者电子邮箱。持有已审批账号的认证用户可以查看、修改或删除其他用户的项目并读取相关邮箱。该功能在 Web 界面默认隐藏，但接口仍随服务注册，不依赖启用项目页签。\n修复版本中通过移除已弃用的项目功能切断上述越权访问。1.3.0-incubating 删除 ProjectResource、PublicProjectResource 与 ProjectAccessResource 及其在 TexeraWebApplication.run 中的 Jersey 注册，并经由 sql/updates/45.sql 删除 project、project_user_access、workflow_of_project 与 public_project 表，项目 REST API 不再对外提供。",
+    "effects": [
+      {
+        "comp_name": "texera",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.1.0-incubating,1.3.0-incubating)",
+            "min_fixed_version": "1.3.0-incubating",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "授权检查缺失",
+    "kind_en": "Missing Authorization",
+    "last_modified_time": "2026-11-24",
+    "level": "High",
+    "mps_id": "MPS-e80d-1466",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-24",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12779.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.mail-archive.com/announce@apache.org/msg12779.html",
+        "name": ""
+      },
+      {
+        "url": "https://texera.apache.org",
+        "name": ""
+      },
+      {
+        "url": "https://texera.apache.org/releases/1.3.0-incubating/",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-96353",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/texera/pull/9284",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/texera/commit/e70bbbf838eda11d34f287a9d83f5fa97059041f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/texera/pull/7464",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Texera项目接口越权"
+  },
+  "first_saved_at": "2026-11-23T22:23:16+00:00"
+}

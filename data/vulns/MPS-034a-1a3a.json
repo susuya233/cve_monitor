@@ -1,0 +1,159 @@
+{
+  "saved_at": "2026-11-23T22:23:15+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-034a-1a3a",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96296",
+    "cvss": {},
+    "cvss_score": 8.2,
+    "cvss_vector": "",
+    "cwe": "CWE-306",
+    "description": "Apache Texera（Incubating）是 Apache 软件基金会孵化中的开源可视化数据科学工作流平台，用于编排数据处理流程并保存工作流执行结果。\n受影响版本中，Jersey 将后端挂载在 /api/*，UserQuotaResource.deleteCollection 暴露 DELETE /api/quota/deleteCollection/{eid}。该方法未声明 @Auth 或 @RolesAllowed，只接收路径参数 eid，并调用 deleteExecutionCollection，再由 WorkflowExecutionsResource.removeAllExecutionFiles 按 eid 删除 WORKFLOW_EXECUTIONS 记录，并清空对应的执行结果、运行统计和控制台日志。能够访问实例的未认证调用者可删除任意工作流执行结果。\n修复版本中通过为 UserQuotaResource 及其 deleteCollection 增加 REGULAR 与 ADMIN 的 @RolesAllowed，要求 @Auth 注入 SessionUser，并在删除前调用 validateUserCanAccessExecutions 校验调用者对目标执行的写权限，未认证或无写权限的请求无法删除执行结果。",
+    "effects": [
+      {
+        "comp_name": "texera",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.1.0-incubating,1.3.0-incubating)",
+            "min_fixed_version": "1.3.0-incubating",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-11-24",
+    "level": "High",
+    "mps_id": "MPS-034a-1a3a",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-24",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12781.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-96296",
+        "name": ""
+      },
+      {
+        "url": "https://texera.apache.org",
+        "name": ""
+      },
+      {
+        "url": "https://texera.apache.org/releases/1.3.0-incubating/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/texera/pull/9275",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/texera/commit/19699e3c4b1b616729eb67e9ad126726b3cda0cb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/texera/commit/f373a1f8bd05911ffa2840d68e994095f1fcf35e",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Texera执行记录未授权删除",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-96296",
+    "cvss": {},
+    "cvss_score": 8.2,
+    "cvss_vector": "",
+    "cwe": "CWE-306",
+    "description": "Apache Texera（Incubating）是 Apache 软件基金会孵化中的开源可视化数据科学工作流平台，用于编排数据处理流程并保存工作流执行结果。\n受影响版本中，Jersey 将后端挂载在 /api/*，UserQuotaResource.deleteCollection 暴露 DELETE /api/quota/deleteCollection/{eid}。该方法未声明 @Auth 或 @RolesAllowed，只接收路径参数 eid，并调用 deleteExecutionCollection，再由 WorkflowExecutionsResource.removeAllExecutionFiles 按 eid 删除 WORKFLOW_EXECUTIONS 记录，并清空对应的执行结果、运行统计和控制台日志。能够访问实例的未认证调用者可删除任意工作流执行结果。\n修复版本中通过为 UserQuotaResource 及其 deleteCollection 增加 REGULAR 与 ADMIN 的 @RolesAllowed，要求 @Auth 注入 SessionUser，并在删除前调用 validateUserCanAccessExecutions 校验调用者对目标执行的写权限，未认证或无写权限的请求无法删除执行结果。",
+    "effects": [
+      {
+        "comp_name": "texera",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.1.0-incubating,1.3.0-incubating)",
+            "min_fixed_version": "1.3.0-incubating",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-11-24",
+    "level": "High",
+    "mps_id": "MPS-034a-1a3a",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-24",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12781.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-96296",
+        "name": ""
+      },
+      {
+        "url": "https://texera.apache.org",
+        "name": ""
+      },
+      {
+        "url": "https://texera.apache.org/releases/1.3.0-incubating/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/texera/pull/9275",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/texera/commit/19699e3c4b1b616729eb67e9ad126726b3cda0cb",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/texera/commit/f373a1f8bd05911ffa2840d68e994095f1fcf35e",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Texera执行记录未授权删除"
+  },
+  "first_saved_at": "2026-11-23T22:23:15+00:00"
+}
