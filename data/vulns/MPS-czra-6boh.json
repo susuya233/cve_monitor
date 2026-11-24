@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-11-24T18:33:38+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-czra-6boh",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，从而导致未授权的用户或资源可以被访问或篡改。",
+        "title": "什么是访问控制不当"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n",
+        "title": "访问控制不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防访问控制不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82322",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@solarwinds.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-284",
+    "description": "SolarWinds Serv-U是SolarWinds推出的商业闭源托管文件传输（MFT）与FTP服务器软件，面向企业提供FTP、SFTP、HTTP(S)文件传输服务以及域、用户、组等管理功能，广泛用于企业内外的安全文件交换场景。\n受影响版本中，Serv-U对域组管理员（domain group administrator）可访问对象的访问控制校验不完整，域组管理员通过直接引用自身权限范围之外的对象即可绕过限制，将权限提升到服务器管理员（server administrator）级别，进而获得对受管服务器的管理控制；官方公告同时说明该漏洞在Windows安装环境下的风险较低。\n修复版本中通过修正域组管理员相关操作的权限校验，拒绝其引用超出授权范围的对象，阻断该越权提升路径；官方已在Serv-U 2026.4（2026年11月24日发布）中完成对该漏洞的修复，受影响用户应升级至Serv-U 2026.4及以上版本。",
+    "effects": [
+      {
+        "comp_name": "serv-u",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.4)",
+            "min_fixed_version": "2026.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "访问控制不当",
+    "kind_en": "访问控制不当",
+    "last_modified_time": "2026-11-25",
+    "level": "Critical",
+    "mps_id": "MPS-czra-6boh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-czra-6boh",
+        "name": "https://www.oscs1024.com/hd/MPS-czra-6boh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82322",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82322"
+      },
+      {
+        "url": "https://documentation.solarwinds.com/en/success_center/servu/content/release_notes/servu_2026-4_release_notes.htm",
+        "name": ""
+      },
+      {
+        "url": "https://www.solarwinds.com/trust-center/security-advisories/CVE-2026-82322",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SolarWinds Serv-U权限提升漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "- 程序中的访问控制机制未正确实现，从而导致未授权的用户或资源可以被访问或篡改。",
+        "title": "什么是访问控制不当"
+      },
+      {
+        "content": "- 特权提升攻击：攻击者可以通过利用此缺陷，绕过应用程序的访问控制机制，获取系统管理员权限，从而完全控制系统。\n- 数据泄露攻击：攻击者可以通过利用此缺陷，获取系统中敏感数据，如用户凭证、信用卡信息等。\n- 拒绝服务攻击：攻击者可以通过利用此缺陷，对系统进行拒绝服务攻击，从而使系统无法正常工作。\n",
+        "title": "访问控制不当常见的攻击方式"
+      },
+      {
+        "content": "- 使用身份验证和授权机制：程序应该使用适当的身份验证和授权机制来验证用户的身份和权限，以确保只有授权用户可以访问受保护的资源或数据。\n- 最小特权原则：程序应该限制用户输入的数据的权限，只允许授权用户进行特定的操作，以减少未授权用户对受保护资源或数据的访问。\n- 输入验证：程序应该对用户输入的数据进行适当的验证和过滤，以确保输入的数据符合预期的格式和类型。\n- 安全编码实践：程序应该遵循一些安全编码实践，如使用安全的算法和加密机制、避免使用未认证的库和框架、避免使用默认设置等，以减少漏洞的出现。\n",
+        "title": "如何预防访问控制不当"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82322",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@solarwinds.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-284",
+    "description": "SolarWinds Serv-U是SolarWinds推出的商业闭源托管文件传输（MFT）与FTP服务器软件，面向企业提供FTP、SFTP、HTTP(S)文件传输服务以及域、用户、组等管理功能，广泛用于企业内外的安全文件交换场景。\n受影响版本中，Serv-U对域组管理员（domain group administrator）可访问对象的访问控制校验不完整，域组管理员通过直接引用自身权限范围之外的对象即可绕过限制，将权限提升到服务器管理员（server administrator）级别，进而获得对受管服务器的管理控制；官方公告同时说明该漏洞在Windows安装环境下的风险较低。\n修复版本中通过修正域组管理员相关操作的权限校验，拒绝其引用超出授权范围的对象，阻断该越权提升路径；官方已在Serv-U 2026.4（2026年11月24日发布）中完成对该漏洞的修复，受影响用户应升级至Serv-U 2026.4及以上版本。",
+    "effects": [
+      {
+        "comp_name": "serv-u",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.4)",
+            "min_fixed_version": "2026.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "访问控制不当",
+    "kind_en": "Improper Access Control",
+    "last_modified_time": "2026-11-25",
+    "level": "Critical",
+    "mps_id": "MPS-czra-6boh",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-czra-6boh",
+        "name": "https://www.oscs1024.com/hd/MPS-czra-6boh"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82322",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82322"
+      },
+      {
+        "url": "https://documentation.solarwinds.com/en/success_center/servu/content/release_notes/servu_2026-4_release_notes.htm",
+        "name": ""
+      },
+      {
+        "url": "https://www.solarwinds.com/trust-center/security-advisories/CVE-2026-82322",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SolarWinds Serv-U权限提升漏洞"
+  },
+  "first_saved_at": "2026-11-24T18:33:38+00:00"
+}

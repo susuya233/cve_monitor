@@ -1,0 +1,153 @@
+{
+  "saved_at": "2026-11-24T18:33:42+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-70yw-lqbr",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82315",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@solarwinds.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-367",
+    "description": "SolarWinds Serv-U 是 SolarWinds 推出的闭源安全文件传输服务器，支持 FTP、FTPS、SFTP 等协议，面向 Windows 与 Linux 平台提供托管式文件传输（MFT）服务。\n受影响版本中，Serv-U 在处理受保护文件时，路径与权限检查和后续实际使用分属两个时间点，构成 TOCTOU 竞态窗口；持有域管理员或更高权限账号的攻击者能够在检查通过后、文件被实际使用前替换目标路径，越过目录边界访问或修改预期目录之外的受保护文件，并可能进一步导致代码执行，该风险在 Windows 安装环境中相对较低。\n修复版本中通过 SolarWinds 于 2026 年 11 月 24 日发布的 Serv-U 2026.4 交付，官方在该版本中消除受保护文件检查与实际使用之间的竞态条件，阻断对预期目录之外受保护文件的越权访问与修改，用户需升级至 Serv-U 2026.4 及以上版本。",
+    "effects": [
+      {
+        "comp_name": "serv-u",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.4)",
+            "min_fixed_version": "2026.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "检查时间与使用时间(TOCTOU)的竞争条件",
+    "kind_en": "检查时间使用时间 (TOCTOU) 竞争条件",
+    "last_modified_time": "2026-11-25",
+    "level": "Critical",
+    "mps_id": "MPS-70yw-lqbr",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-70yw-lqbr",
+        "name": "https://www.oscs1024.com/hd/MPS-70yw-lqbr"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82315",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82315"
+      },
+      {
+        "url": "https://documentation.solarwinds.com/en/success_center/servu/content/release_notes/servu_2026-4_release_notes.htm",
+        "name": ""
+      },
+      {
+        "url": "https://www.solarwinds.com/trust-center/security-advisories/CVE-2026-82315",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SolarWinds Serv-U TOCTOU漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82315",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "psirt@solarwinds.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.1
+        }
+      ]
+    },
+    "cvss_score": 9.1,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+    "cwe": "CWE-367",
+    "description": "SolarWinds Serv-U 是 SolarWinds 推出的闭源安全文件传输服务器，支持 FTP、FTPS、SFTP 等协议，面向 Windows 与 Linux 平台提供托管式文件传输（MFT）服务。\n受影响版本中，Serv-U 在处理受保护文件时，路径与权限检查和后续实际使用分属两个时间点，构成 TOCTOU 竞态窗口；持有域管理员或更高权限账号的攻击者能够在检查通过后、文件被实际使用前替换目标路径，越过目录边界访问或修改预期目录之外的受保护文件，并可能进一步导致代码执行，该风险在 Windows 安装环境中相对较低。\n修复版本中通过 SolarWinds 于 2026 年 11 月 24 日发布的 Serv-U 2026.4 交付，官方在该版本中消除受保护文件检查与实际使用之间的竞态条件，阻断对预期目录之外受保护文件的越权访问与修改，用户需升级至 Serv-U 2026.4 及以上版本。",
+    "effects": [
+      {
+        "comp_name": "serv-u",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.4)",
+            "min_fixed_version": "2026.4",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "检查时间与使用时间(TOCTOU)的竞争条件",
+    "kind_en": "Time-of-check Time-of-use (TOCTOU) Race Condition",
+    "last_modified_time": "2026-11-25",
+    "level": "Critical",
+    "mps_id": "MPS-70yw-lqbr",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-70yw-lqbr",
+        "name": "https://www.oscs1024.com/hd/MPS-70yw-lqbr"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82315",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-82315"
+      },
+      {
+        "url": "https://documentation.solarwinds.com/en/success_center/servu/content/release_notes/servu_2026-4_release_notes.htm",
+        "name": ""
+      },
+      {
+        "url": "https://www.solarwinds.com/trust-center/security-advisories/CVE-2026-82315",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "SolarWinds Serv-U TOCTOU漏洞"
+  },
+  "first_saved_at": "2026-11-24T18:33:42+00:00"
+}
