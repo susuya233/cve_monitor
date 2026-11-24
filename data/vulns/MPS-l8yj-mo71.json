@@ -1,0 +1,167 @@
+{
+  "saved_at": "2026-11-24T06:40:26+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-l8yj-mo71",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-288",
+    "description": "帆软 FineReport 是一款闭源商业的企业级报表与数据决策平台，FineVis 数据可视化插件（插件标识 com.fr.plugin.wysiwyg.v11，下称 FVS）是其可视化大屏组件，随官方部署包与设计器默认分发，在金融、制造、政企等行业的报表与看板系统中部署广泛。\n受影响版本中，FVS 插件的复用包上传与应用接口由控制器类 DuchampReuseRequestService 暴露在 /webroot/decision/view/duchamp/reuse/item 与 /apply/v2/tpl，模板鉴权组件 DuchampTemplateRequestChecker 处理请求参数 tplPath 时会把携带 reportlets 前缀的路径归一化为空字符串，空模板标识被判定为无需登录的模板访问而放行，未认证攻击者向上述接口上传构造的复用包并调用应用接口；应用阶段导入链 BizLayerImporterChain 读取包内 content/biz/attachments/AttachmentLayer.json 清单，由附件写入工具类 SafeImportIO 按 originPath 路径把附件写入服务端 WEB-INF 目录且写入位置缺少业务白名单，攻击者在包内放置投毒的 web.xml 与以 .env 为后缀的 JSP 内容文件，web.xml 通过 jsp-file 声明与 load-on-startup 设置使容器在重载或重启时由 Jasper 预编译执行该 JSP，jspInit 中的 Runtime.exec 以应用进程权限运行攻击者的命令，远程未认证请求即可完成上述链路，可导致远程代码执行。\n修复版本中通过在模板鉴权组件补充空模板标识校验、为附件声明的写入目标路径（originPath）增加禁写目录与后缀检查两项改动，路径归一化结果为空的请求会被直接拒绝，上传与应用接口恢复登录要求，附件无法再写入 WEB-INF 目录，鉴权绕过与任意文件写入两条链路同时被封堵。",
+    "effects": [
+      {
+        "comp_name": "FineVis",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.15.0)",
+            "min_fixed_version": "4.15.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "finereport",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,11.5.16)",
+            "min_fixed_version": "11.5.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "使用候选路径或通道进行的认证绕过",
+    "kind_en": "使用备用路径或通道绕过身份验证",
+    "last_modified_time": "2026-11-24",
+    "level": "Critical",
+    "mps_id": "MPS-l8yj-mo71",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-11-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-l8yj-mo71",
+        "name": "https://www.oscs1024.com/hd/MPS-l8yj-mo71"
+      },
+      {
+        "url": "https://help.fanruan.com/finereport/doc-view-5605.html",
+        "name": ""
+      },
+      {
+        "url": "https://help.fanruan.com/finereport/doc-view-4658.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "一般",
+    "tags": [],
+    "title": "帆软FVS插件未授权RCE漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "murphysec",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9.8
+        }
+      ]
+    },
+    "cvss_score": 9.8,
+    "cvss_vector": "",
+    "cwe": "CWE-288",
+    "description": "帆软 FineReport 是一款闭源商业的企业级报表与数据决策平台，FineVis 数据可视化插件（插件标识 com.fr.plugin.wysiwyg.v11，下称 FVS）是其可视化大屏组件，随官方部署包与设计器默认分发，在金融、制造、政企等行业的报表与看板系统中部署广泛。\n受影响版本中，FVS 插件的复用包上传与应用接口由控制器类 DuchampReuseRequestService 暴露在 /webroot/decision/view/duchamp/reuse/item 与 /apply/v2/tpl，模板鉴权组件 DuchampTemplateRequestChecker 处理请求参数 tplPath 时会把携带 reportlets 前缀的路径归一化为空字符串，空模板标识被判定为无需登录的模板访问而放行，未认证攻击者向上述接口上传构造的复用包并调用应用接口；应用阶段导入链 BizLayerImporterChain 读取包内 content/biz/attachments/AttachmentLayer.json 清单，由附件写入工具类 SafeImportIO 按 originPath 路径把附件写入服务端 WEB-INF 目录且写入位置缺少业务白名单，攻击者在包内放置投毒的 web.xml 与以 .env 为后缀的 JSP 内容文件，web.xml 通过 jsp-file 声明与 load-on-startup 设置使容器在重载或重启时由 Jasper 预编译执行该 JSP，jspInit 中的 Runtime.exec 以应用进程权限运行攻击者的命令，远程未认证请求即可完成上述链路，可导致远程代码执行。\n修复版本中通过在模板鉴权组件补充空模板标识校验、为附件声明的写入目标路径（originPath）增加禁写目录与后缀检查两项改动，路径归一化结果为空的请求会被直接拒绝，上传与应用接口恢复登录要求，附件无法再写入 WEB-INF 目录，鉴权绕过与任意文件写入两条链路同时被封堵。",
+    "effects": [
+      {
+        "comp_name": "FineVis",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,4.15.0)",
+            "min_fixed_version": "4.15.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "finereport",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,11.5.16)",
+            "min_fixed_version": "11.5.16",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "使用候选路径或通道进行的认证绕过",
+    "kind_en": "Authentication Bypass Using an Alternate Path or Channel",
+    "last_modified_time": "2026-11-24",
+    "level": "Critical",
+    "mps_id": "MPS-l8yj-mo71",
+    "poc": true,
+    "poc_url": [],
+    "published_time": "2026-11-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-l8yj-mo71",
+        "name": "https://www.oscs1024.com/hd/MPS-l8yj-mo71"
+      },
+      {
+        "url": "https://help.fanruan.com/finereport/doc-view-5605.html",
+        "name": ""
+      },
+      {
+        "url": "https://help.fanruan.com/finereport/doc-view-4658.html",
+        "name": ""
+      }
+    ],
+    "scope_influence": "一般",
+    "tags": [],
+    "title": "帆软FVS插件未授权RCE漏洞"
+  },
+  "first_saved_at": "2026-11-24T06:40:26+00:00"
+}

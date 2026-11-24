@@ -1,0 +1,219 @@
+{
+  "saved_at": "2026-11-24T06:40:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-4c8v-ugsj",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-135743",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-787",
+    "description": "FFmpeg 是开源跨平台音视频处理框架，libavfilter 滤镜库提供滤镜图处理能力，dynaudnorm 滤镜用于音频动态响度归一化，支持在滤镜运行期间通过滤镜命令调整 gausssize 高斯滤波窗口大小。\n受影响版本中，gausssize 命令运行时改变滤波窗口后 dynaudnorm 滤镜调用 cqueue_resize() 调整增益历史队列，其扩容分支以 new_size - q->nb_elements 计算搬移偏移 side，并将队列元素数直接赋值为 new_size - 1 - side，元素计数与队列实际容量 q->size 脱节；攻击者可通过 asendcmd 命令脚本或未认证的 azmq 滤镜端点发送 gausssize 命令，连续变更序列会使元素计数变为负值，memmove 以负长度执行并造成堆缓冲区越界读写，导致进程崩溃或潜在任意代码执行。\n修复版本中通过重写 cqueue_resize() 的扩容与缩容分支解决了该问题，扩容分支仅在队列非空且 new_size 大于当前容量 q->size 时执行，side 改为按 new_size - q->size 计算，队列元素数改为 += side 增量更新，缩容分支跳过空队列，保证元素搬移范围始终落在容量上限 301 的队列缓冲区内，消除堆越界读与越界写。",
+    "effects": [
+      {
+        "comp_name": "ffmpeg",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.3,9.1)",
+            "min_fixed_version": "9.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "越界写入",
+    "kind_en": "越界写入",
+    "last_modified_time": "2026-11-24",
+    "level": "Critical",
+    "mps_id": "MPS-4c8v-ugsj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4c8v-ugsj",
+        "name": "https://www.oscs1024.com/hd/MPS-4c8v-ugsj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-135743",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-135743"
+      },
+      {
+        "url": "https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/26081",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FFmpeg/FFmpeg/commit/3dd257f99b5cdc1bf38e1cadff1e34ec559c7b7c",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/FFmpeg/FFmpeg/blob/n9.0.2/libavfilter/af_dynaudnorm.c#L261",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FFmpeg/FFmpeg",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ffmpeg-4.3-before-9.1-heap-out-of-bounds-read-write-via-dynaudnorm-filter",
+        "name": "VulnCheck Advisory: FFmpeg 4.3 before 9.1 Heap Out-of-Bounds Read/Write via dynaudnorm Filter"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FFmpeg dynaudnorm堆越界读写漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "在程序没有正确验证和限制内存写操作的情况下，攻击者通过向应用程序提供恶意输入，成功地将数据写入超出其预期范围的内存位置。这可能导致程序的内存损坏，使攻击者能够执行任意代码或破坏应用程序的正常运行。",
+        "title": "什么是越界写入"
+      },
+      {
+        "content": "- 缓冲区溢出：攻击者向应用程序的输入缓冲区中输入超出其容量的数据，导致数据溢出到相邻的内存区域，从而修改重要的数据结构或执行恶意代码。\n- 栈溢出：攻击者通过向函数调用栈中注入超出其容量的数据，覆盖返回地址或重要的控制信息，控制程序的执行流程。\n- 格式化字符串漏洞：攻击者利用格式化字符串函数的漏洞，通过提供恶意格式字符串来修改内存内容，进而执行任意代码。",
+        "title": "越界写入常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证和过滤：对于所有用户输入的数据，进行严格的验证和过滤，确保只接受合法的输入数据。\n- 使用安全的内存操作函数：使用安全的内存操作函数，如安全的字符串拷贝函数（如strcpy_s、strncpy_s）和安全的格式化函数（如snprintf、sprintf_s），确保内存操作的安全性。\n- 边界检查：在进行内存写操作时，确保操作不会超出内存的边界，可以使用边界检查函数或标准库提供的安全函数来实现。\n- 内存保护机制：启用操作系统或编译器提供的内存保护机制，如地址空间布局随机化（ASLR）、数据执行保护（DEP）等，以增加攻击的难度。\n- 定期更新和修复：及时应用厂商发布的安全补丁和更新，修复已知的跨界内存写漏洞。",
+        "title": "如何预防越界写入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-135743",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.2
+        }
+      ]
+    },
+    "cvss_score": 9.2,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-787",
+    "description": "FFmpeg 是开源跨平台音视频处理框架，libavfilter 滤镜库提供滤镜图处理能力，dynaudnorm 滤镜用于音频动态响度归一化，支持在滤镜运行期间通过滤镜命令调整 gausssize 高斯滤波窗口大小。\n受影响版本中，gausssize 命令运行时改变滤波窗口后 dynaudnorm 滤镜调用 cqueue_resize() 调整增益历史队列，其扩容分支以 new_size - q->nb_elements 计算搬移偏移 side，并将队列元素数直接赋值为 new_size - 1 - side，元素计数与队列实际容量 q->size 脱节；攻击者可通过 asendcmd 命令脚本或未认证的 azmq 滤镜端点发送 gausssize 命令，连续变更序列会使元素计数变为负值，memmove 以负长度执行并造成堆缓冲区越界读写，导致进程崩溃或潜在任意代码执行。\n修复版本中通过重写 cqueue_resize() 的扩容与缩容分支解决了该问题，扩容分支仅在队列非空且 new_size 大于当前容量 q->size 时执行，side 改为按 new_size - q->size 计算，队列元素数改为 += side 增量更新，缩容分支跳过空队列，保证元素搬移范围始终落在容量上限 301 的队列缓冲区内，消除堆越界读与越界写。",
+    "effects": [
+      {
+        "comp_name": "ffmpeg",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[4.3,9.1)",
+            "min_fixed_version": "9.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "越界写入",
+    "kind_en": "Out-of-bounds Write",
+    "last_modified_time": "2026-11-24",
+    "level": "Critical",
+    "mps_id": "MPS-4c8v-ugsj",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-24",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-4c8v-ugsj",
+        "name": "https://www.oscs1024.com/hd/MPS-4c8v-ugsj"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-135743",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-135743"
+      },
+      {
+        "url": "https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/26081",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FFmpeg/FFmpeg/commit/3dd257f99b5cdc1bf38e1cadff1e34ec559c7b7c",
+        "name": "Patch Commit"
+      },
+      {
+        "url": "https://github.com/FFmpeg/FFmpeg/blob/n9.0.2/libavfilter/af_dynaudnorm.c#L261",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/FFmpeg/FFmpeg",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/ffmpeg-4.3-before-9.1-heap-out-of-bounds-read-write-via-dynaudnorm-filter",
+        "name": "VulnCheck Advisory: FFmpeg 4.3 before 9.1 Heap Out-of-Bounds Read/Write via dynaudnorm Filter"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "FFmpeg dynaudnorm堆越界读写漏洞"
+  },
+  "first_saved_at": "2026-11-24T06:40:32+00:00"
+}
