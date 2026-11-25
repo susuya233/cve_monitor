@@ -1,0 +1,285 @@
+{
+  "saved_at": "2026-11-25T11:59:00+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ccd2-3817",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-133442",
+    "cvss": {},
+    "cvss_score": 8.6,
+    "cvss_vector": "",
+    "cwe": "CWE-89",
+    "description": "Hibernate ORM 是 Red Hat 主导的开源 Java 对象关系映射框架，提供 HQL 查询语言与面向多种数据库方言的 SQL 生成能力，受影响代码位于通过 Maven 坐标 org.hibernate.orm:hibernate-core 分发的核心模块。\n受影响版本中，当目标方言不支持 JSON 路径 passing 子句时（对应 MySQL 与 MariaDB 的 json_* HQL 函数渲染器），JsonValueFunction、JsonQueryFunction、JsonExistsFunction 等函数描述符会调用 JsonPathHelper.appendInlinedJsonPathIncludingPassingClause，把 passing 参数的字面值直接内联到 JSON 路径字符串中，并作为内联 SQL 字符串字面量拼入语句。该路径上的转义逻辑 JsonPathHelper.appendJsonPassingLiteralValue 只对单引号做双写处理，不转义反斜杠，而 MySQL 与 MariaDB 默认把反斜杠视为字符串字面量内的转义字符，攻击者通过 passing 路径参数传入以反斜杠结尾的字符串可以吞掉内联字面量的闭合引号，使后续受控内容被数据库当作 SQL 解析，形成一阶 SQL 注入，可绕过授权并读取、篡改数据库数据。\n修复版本中通过引入方言感知的字面量转义机制切断上述注入链路：SqlAppender、LiteralSupport 与 Dialect 新增 appendLiteral 与 appendLiteralContent 方法，JsonValueFunction 等 JSON 函数渲染器改为经方言转义后输出 JSON 路径片段与 passing 值，MySQLDialect 与 MySQLLegacyDialect 在未启用 NO_BACKSLASH_ESCAPES 时对反斜杠做双写转义，消除以反斜杠破坏字符串边界的可能。",
+    "effects": [
+      {
+        "comp_name": "hibernate_orm",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.3.0.CR1,7.4.17.Final)",
+            "min_fixed_version": "7.4.17.Final",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.0.0.Alpha1,8.0.0.CR2)",
+            "min_fixed_version": "8.0.0.CR2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.0.0.Beta2,7.2.26.Final)",
+            "min_fixed_version": "7.2.26.Final",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.hibernate.orm:hibernate-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[7.0.0.Beta2,7.2.26.Final)",
+            "min_fixed_version": "7.2.26.Final",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.3.0.CR1,7.4.17.Final)",
+            "min_fixed_version": "7.4.17.Final",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.0.0.Alpha1,8.0.0.CR2)",
+            "min_fixed_version": "8.0.0.CR2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SQL注入",
+    "kind_en": "SQL 命令中使用的特殊元素的不正确中和（“SQL 注入”）",
+    "last_modified_time": "2026-11-25",
+    "level": "High",
+    "mps_id": "MPS-ccd2-3817",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.ibm.com/support/pages/node/7297919",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/security/advisories/GHSA-v5mr-59hq-7mvm",
+        "name": ""
+      },
+      {
+        "url": "https://hibernate.atlassian.net/browse/HHH-21164",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/commit/61f3bad1f7b0a43f984b028f8756d931ee3890cc",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/commit/8443783b1d8bd1abb8c3e9b3a749f80c0f2fda32",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/commit/3299d2b76f5cfee2a2ffee19ca22f0c2957c5d01",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/commit/ff2615069a1601baa9cd72d348a1dd996f8e2028",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/pull/14021",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/security/advisories/GHSA-834x-qc2r-wc59",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Hibernate ORM json函数SQL注入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "当应用程序接受来自用户的输入，并将其直接拼接到SQL查询语句中，而没有对输入进行充分的验证和转义时，就会发生SQL注入。攻击者可以通过在输入中插入恶意的SQL代码，改变原始查询的意图，从而执行未经授权的操作或访问敏感数据。",
+        "title": "什么是SQL注入"
+      },
+      {
+        "content": "- 基于错误的输入过滤：攻击者通过向输入字段中插入特殊字符或SQL语句片段来破坏应用程序的输入过滤机制。这可能导致应用程序执行意外的SQL查询。\n- 基于布尔盲注：攻击者利用应用程序在查询结果中显示的不同响应来确定SQL语句的真假。通过构造特定的查询，攻击者可以逐步推断出数据库的结构和敏感信息。\n- 基于时间的盲注：攻击者通过在SQL查询中插入延迟语句来测试条件的真假。通过测量响应时间的差异，攻击者可以推断出SQL语句的真假和敏感数据的存在性。",
+        "title": "SQL注入常见的攻击方式"
+      },
+      {
+        "content": "- 使用参数化查询或预编译语句：避免将用户输入直接拼接到SQL查询语句中，而是使用参数化查询或预编译语句。这样可以将用户输入作为参数传递给查询，从而避免了注入攻击。\n- 输入验证和过滤：对用户输入进行充分的验证和过滤，确保输入符合预期的格式和范围。可以使用白名单验证、正则表达式或输入验证库等方法来过滤输入。\n- 最小权限原则：确保数据库用户具有最小的权限，并严格限制其对敏感数据和数据库操作的访问权限。\n- 不透明化敏感数据：对于敏感数据，如密码和信用卡号等，应该使用适当的加密和哈希算法进行存储，以减少数据泄露的风险。\n- 定期更新和维护：及时应用数据库供应商发布的安全补丁和更新，以修复已知的漏洞和弱点。",
+        "title": "如何预防SQL注入"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-133442",
+    "cvss": {},
+    "cvss_score": 8.6,
+    "cvss_vector": "",
+    "cwe": "CWE-89",
+    "description": "Hibernate ORM 是 Red Hat 主导的开源 Java 对象关系映射框架，提供 HQL 查询语言与面向多种数据库方言的 SQL 生成能力，受影响代码位于通过 Maven 坐标 org.hibernate.orm:hibernate-core 分发的核心模块。\n受影响版本中，当目标方言不支持 JSON 路径 passing 子句时（对应 MySQL 与 MariaDB 的 json_* HQL 函数渲染器），JsonValueFunction、JsonQueryFunction、JsonExistsFunction 等函数描述符会调用 JsonPathHelper.appendInlinedJsonPathIncludingPassingClause，把 passing 参数的字面值直接内联到 JSON 路径字符串中，并作为内联 SQL 字符串字面量拼入语句。该路径上的转义逻辑 JsonPathHelper.appendJsonPassingLiteralValue 只对单引号做双写处理，不转义反斜杠，而 MySQL 与 MariaDB 默认把反斜杠视为字符串字面量内的转义字符，攻击者通过 passing 路径参数传入以反斜杠结尾的字符串可以吞掉内联字面量的闭合引号，使后续受控内容被数据库当作 SQL 解析，形成一阶 SQL 注入，可绕过授权并读取、篡改数据库数据。\n修复版本中通过引入方言感知的字面量转义机制切断上述注入链路：SqlAppender、LiteralSupport 与 Dialect 新增 appendLiteral 与 appendLiteralContent 方法，JsonValueFunction 等 JSON 函数渲染器改为经方言转义后输出 JSON 路径片段与 passing 值，MySQLDialect 与 MySQLLegacyDialect 在未启用 NO_BACKSLASH_ESCAPES 时对反斜杠做双写转义，消除以反斜杠破坏字符串边界的可能。",
+    "effects": [
+      {
+        "comp_name": "hibernate_orm",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[7.3.0.CR1,7.4.17.Final)",
+            "min_fixed_version": "7.4.17.Final",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.0.0.Alpha1,8.0.0.CR2)",
+            "min_fixed_version": "8.0.0.CR2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.0.0.Beta2,7.2.26.Final)",
+            "min_fixed_version": "7.2.26.Final",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.hibernate.orm:hibernate-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[7.0.0.Beta2,7.2.26.Final)",
+            "min_fixed_version": "7.2.26.Final",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[7.3.0.CR1,7.4.17.Final)",
+            "min_fixed_version": "7.4.17.Final",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[8.0.0.Alpha1,8.0.0.CR2)",
+            "min_fixed_version": "8.0.0.CR2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SQL注入",
+    "kind_en": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "last_modified_time": "2026-11-25",
+    "level": "High",
+    "mps_id": "MPS-ccd2-3817",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-25",
+    "reference_url_list": [
+      {
+        "url": "https://www.ibm.com/support/pages/node/7297919",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/security/advisories/GHSA-v5mr-59hq-7mvm",
+        "name": ""
+      },
+      {
+        "url": "https://hibernate.atlassian.net/browse/HHH-21164",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/commit/61f3bad1f7b0a43f984b028f8756d931ee3890cc",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/commit/8443783b1d8bd1abb8c3e9b3a749f80c0f2fda32",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/commit/3299d2b76f5cfee2a2ffee19ca22f0c2957c5d01",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/commit/ff2615069a1601baa9cd72d348a1dd996f8e2028",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/pull/14021",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/hibernate/hibernate-orm/security/advisories/GHSA-834x-qc2r-wc59",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "Hibernate ORM json函数SQL注入漏洞"
+  },
+  "first_saved_at": "2026-11-25T11:59:00+00:00"
+}
