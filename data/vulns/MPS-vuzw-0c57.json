@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-11-25T21:24:32+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-vuzw-0c57",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-137093",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-129",
+    "description": "Assimp（Open Asset Import Library）是开源的 C++ 三维模型导入库，通过统一接口读取 md5mesh 在内的数十种模型格式，常被游戏引擎与三维内容处理工具集成。\n受影响版本中，MD5Importer::LoadMD5MeshFile() 在统计每个骨骼的顶点权重时，按关节数量 new 出 piCount 数组，随后直接以 .md5mesh 文件中的 mBone 作为下标执行 ++piCount[weightDesc.mBone]，且由 mFirstWeight 与 mNumWeights 决定的权重下标同样未做边界检查，攻击者提供 mBone 超出关节数量或权重下标越界的模型文件时，可越过 piCount 分配边界递增堆内存并读取越界权重数据，造成堆内存破坏、越界读取或进程崩溃。\n修复版本中通过在新增的 CountVertexBoneWeights() 中先校验权重下标与骨骼下标是否越界，越界时抛出 DeadlyImportError 终止导入，并将 piCount 改为 std::vector 以便异常路径自动释放，另一次修复在其余网格循环中补充权重下标边界检查，使非法骨骼与权重引用在进入累加与读取前被拒绝。",
+    "effects": [
+      {
+        "comp_name": "assimp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.0.6)",
+            "min_fixed_version": "6.0.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "对数组索引的验证不恰当",
+    "kind_en": "数组索引验证不当",
+    "last_modified_time": "2026-11-26",
+    "level": "High",
+    "mps_id": "MPS-vuzw-0c57",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-vuzw-0c57",
+        "name": "https://www.oscs1024.com/hd/MPS-vuzw-0c57"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-137093",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-137093"
+      },
+      {
+        "url": "https://github.com/assimp/assimp/pull/6700",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/assimp/assimp/pull/6685",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/assimp/assimp/commit/49fa5d051ed274ea0e51efee0514cde0dacf75db",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/assimp/assimp/commit/7555cc90df828f391d9f58aed1f46a065a02ca2c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/assimp/assimp/releases/tag/v6.0.6",
+        "name": "assimp v6.0.6 Release Notes"
+      },
+      {
+        "url": "https://github.com/assimp/assimp/blob/v6.0.5/code/AssetLib/MD5/MD5Loader.cpp#L413-L425",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/assimp-before-6.0.6-out-of-bounds-write-via-md5-importer-loadmd5meshfile",
+        "name": "VulnCheck Advisory: Assimp before 6.0.6 Out-of-Bounds Write via MD5 Importer LoadMD5MeshFile"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "开源"
+    ],
+    "title": "Assimp MD5越界写入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-137093",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-129",
+    "description": "Assimp（Open Asset Import Library）是开源的 C++ 三维模型导入库，通过统一接口读取 md5mesh 在内的数十种模型格式，常被游戏引擎与三维内容处理工具集成。\n受影响版本中，MD5Importer::LoadMD5MeshFile() 在统计每个骨骼的顶点权重时，按关节数量 new 出 piCount 数组，随后直接以 .md5mesh 文件中的 mBone 作为下标执行 ++piCount[weightDesc.mBone]，且由 mFirstWeight 与 mNumWeights 决定的权重下标同样未做边界检查，攻击者提供 mBone 超出关节数量或权重下标越界的模型文件时，可越过 piCount 分配边界递增堆内存并读取越界权重数据，造成堆内存破坏、越界读取或进程崩溃。\n修复版本中通过在新增的 CountVertexBoneWeights() 中先校验权重下标与骨骼下标是否越界，越界时抛出 DeadlyImportError 终止导入，并将 piCount 改为 std::vector 以便异常路径自动释放，另一次修复在其余网格循环中补充权重下标边界检查，使非法骨骼与权重引用在进入累加与读取前被拒绝。",
+    "effects": [
+      {
+        "comp_name": "assimp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,6.0.6)",
+            "min_fixed_version": "6.0.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "对数组索引的验证不恰当",
+    "kind_en": "Improper Validation of Array Index",
+    "last_modified_time": "2026-11-26",
+    "level": "High",
+    "mps_id": "MPS-vuzw-0c57",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-vuzw-0c57",
+        "name": "https://www.oscs1024.com/hd/MPS-vuzw-0c57"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-137093",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-137093"
+      },
+      {
+        "url": "https://github.com/assimp/assimp/pull/6700",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/assimp/assimp/pull/6685",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/assimp/assimp/commit/49fa5d051ed274ea0e51efee0514cde0dacf75db",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/assimp/assimp/commit/7555cc90df828f391d9f58aed1f46a065a02ca2c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/assimp/assimp/releases/tag/v6.0.6",
+        "name": "assimp v6.0.6 Release Notes"
+      },
+      {
+        "url": "https://github.com/assimp/assimp/blob/v6.0.5/code/AssetLib/MD5/MD5Loader.cpp#L413-L425",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/assimp-before-6.0.6-out-of-bounds-write-via-md5-importer-loadmd5meshfile",
+        "name": "VulnCheck Advisory: Assimp before 6.0.6 Out-of-Bounds Write via MD5 Importer LoadMD5MeshFile"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件",
+      "开源"
+    ],
+    "title": "Assimp MD5越界写入漏洞"
+  },
+  "first_saved_at": "2026-11-25T21:24:32+00:00"
+}

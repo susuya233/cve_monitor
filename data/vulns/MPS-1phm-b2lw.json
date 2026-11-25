@@ -1,0 +1,205 @@
+{
+  "saved_at": "2026-11-25T21:24:30+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-1phm-b2lw",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-137091",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-942",
+    "description": "EverOS 是 EverMind AI 开源的 Python 智能体记忆运行时（Apache-2.0 许可，PyPI 包名 everos），以本地优先方式为 AI 应用、编码助手与设备提供统一的用户记忆与智能体记忆存储检索层，其 FastAPI HTTP API 默认绑定 127.0.0.1，对外提供记忆写入、检索与清理接口。\n受影响版本中，API 的 CORS 中间件默认 allow_origins 为通配符 [\"*\"] 且 allow_credentials=True（src/everos/entrypoints/api/middleware/cors.py），除清理路由外其余路由均不校验 Origin，任意网站页面可携带凭据跨源调用本机回环 API；同时 file:// 资产读取默认放行（src/everos/config/settings.py 中 file_uri_allow_dirs 默认为空列表，src/everos/component/parser/input.py 的 _validated_file_path 在列表为空时允许读取任意可读文件）。攻击者可托管网页，向本机回环地址的 POST /api/v2/memory/add 提交 file:// URI，服务端读取任意本地文件并解析入库，攻击者随后通过 POST /api/v2/memory/search 检索读取解析内容，窃取 SSH 私钥与凭据等敏感文件，并可篡改或删除记忆。\n修复版本中通过新增 CrossSiteGuardMiddleware 在所有路由之前拒绝携带其他站点 Origin 或公网域名 Host（含 DNS rebinding 场景）的请求并返回 403，CORS 默认改为不允许任何来源且关闭凭据，file:// 读取改为默认拒绝、仅在显式配置 EVEROS_MULTIMODAL__FILE_URI_ALLOW_DIRS 白名单目录内放行并对符号链接解析后的路径二次校验，切断了跨源请求与任意本地文件读取两条路径。",
+    "effects": [
+      {
+        "comp_name": "everos",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.8.0)",
+            "min_fixed_version": "1.8.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "过度许可的跨域白名单",
+    "kind_en": "不受信任域的宽松跨域策略",
+    "last_modified_time": "2026-11-26",
+    "level": "High",
+    "mps_id": "MPS-1phm-b2lw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1phm-b2lw",
+        "name": "https://www.oscs1024.com/hd/MPS-1phm-b2lw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-137091",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-137091"
+      },
+      {
+        "url": "https://github.com/EverMind-AI/EverOS/commit/f5bae6a961a2b855c53f616f039ce6373ec66a59",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/EverMind-AI/EverOS/releases/tag/v1.8.0",
+        "name": "EverOS v1.8.0 Release Notes"
+      },
+      {
+        "url": "https://github.com/EverMind-AI/EverOS/blob/v1.7.1/src/everos/entrypoints/api/middleware/cors.py#L9-L12",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/EverMind-AI/EverOS/blob/v1.7.1/src/everos/component/parser/input.py#L100-L108",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/EverMind-AI/EverOS/blob/v1.7.1/src/everos/config/settings.py#L598-L600",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/everos-before-1.8.0-cross-origin-local-file-disclosure-via-permissive-cors",
+        "name": "VulnCheck Advisory: EverOS before 1.8.0 Cross-Origin Local File Disclosure via Permissive CORS"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "EverOS 跨域文件泄露漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-137091",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.1
+        }
+      ]
+    },
+    "cvss_score": 7.1,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-942",
+    "description": "EverOS 是 EverMind AI 开源的 Python 智能体记忆运行时（Apache-2.0 许可，PyPI 包名 everos），以本地优先方式为 AI 应用、编码助手与设备提供统一的用户记忆与智能体记忆存储检索层，其 FastAPI HTTP API 默认绑定 127.0.0.1，对外提供记忆写入、检索与清理接口。\n受影响版本中，API 的 CORS 中间件默认 allow_origins 为通配符 [\"*\"] 且 allow_credentials=True（src/everos/entrypoints/api/middleware/cors.py），除清理路由外其余路由均不校验 Origin，任意网站页面可携带凭据跨源调用本机回环 API；同时 file:// 资产读取默认放行（src/everos/config/settings.py 中 file_uri_allow_dirs 默认为空列表，src/everos/component/parser/input.py 的 _validated_file_path 在列表为空时允许读取任意可读文件）。攻击者可托管网页，向本机回环地址的 POST /api/v2/memory/add 提交 file:// URI，服务端读取任意本地文件并解析入库，攻击者随后通过 POST /api/v2/memory/search 检索读取解析内容，窃取 SSH 私钥与凭据等敏感文件，并可篡改或删除记忆。\n修复版本中通过新增 CrossSiteGuardMiddleware 在所有路由之前拒绝携带其他站点 Origin 或公网域名 Host（含 DNS rebinding 场景）的请求并返回 403，CORS 默认改为不允许任何来源且关闭凭据，file:// 读取改为默认拒绝、仅在显式配置 EVEROS_MULTIMODAL__FILE_URI_ALLOW_DIRS 白名单目录内放行并对符号链接解析后的路径二次校验，切断了跨源请求与任意本地文件读取两条路径。",
+    "effects": [
+      {
+        "comp_name": "everos",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.8.0)",
+            "min_fixed_version": "1.8.0",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "过度许可的跨域白名单",
+    "kind_en": "Permissive Cross-domain Policy with Untrusted Domains",
+    "last_modified_time": "2026-11-26",
+    "level": "High",
+    "mps_id": "MPS-1phm-b2lw",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-1phm-b2lw",
+        "name": "https://www.oscs1024.com/hd/MPS-1phm-b2lw"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-137091",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-137091"
+      },
+      {
+        "url": "https://github.com/EverMind-AI/EverOS/commit/f5bae6a961a2b855c53f616f039ce6373ec66a59",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/EverMind-AI/EverOS/releases/tag/v1.8.0",
+        "name": "EverOS v1.8.0 Release Notes"
+      },
+      {
+        "url": "https://github.com/EverMind-AI/EverOS/blob/v1.7.1/src/everos/entrypoints/api/middleware/cors.py#L9-L12",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/EverMind-AI/EverOS/blob/v1.7.1/src/everos/component/parser/input.py#L100-L108",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/EverMind-AI/EverOS/blob/v1.7.1/src/everos/config/settings.py#L598-L600",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/everos-before-1.8.0-cross-origin-local-file-disclosure-via-permissive-cors",
+        "name": "VulnCheck Advisory: EverOS before 1.8.0 Cross-Origin Local File Disclosure via Permissive CORS"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "EverOS 跨域文件泄露漏洞"
+  },
+  "first_saved_at": "2026-11-25T21:24:30+00:00"
+}
