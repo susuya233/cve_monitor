@@ -1,0 +1,259 @@
+{
+  "saved_at": "2026-11-25T02:53:53+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-1614-2dee",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129245",
+    "cvss": {},
+    "cvss_score": 9.2,
+    "cvss_vector": "",
+    "cwe": "CWE-321",
+    "description": "GeoServer 是开源 Java 地理空间服务器，用于发布、共享和编辑地理数据。记住登录由核心模块 org.geoserver:gs-main 实现，发行数据目录的 web 过滤链默认包含 rememberme，并用浏览器 cookie 维持已登录会话。\n受影响版本中，data/release/security/config.xml 的 rememberMeService 将签名密钥写为 geoserver，RememberMeServicesConfig.DEFAULT_KEY 与该值相同，setKey 还可把密钥持久化到数据目录。GeoServerTokenBasedRememberMeServices 用该密钥、用户名、过期时间以及已存储的口令摘要校验 cookie。已获得管理员口令摘要的远程攻击者可以提交通过校验的 remember-me cookie，在不知道明文口令的情况下以该管理员身份通过 Web 登录。\n修复版本中通过停止从数据目录提供签名密钥切断该伪造路径。RememberMeServicesConfig.resolveKey 在未配置 GEOSERVER_REMEMBERME_KEY 时用 SecureRandom 生成 32 字节随机密钥，集群部署则使用同一应用属性作为共享密钥。getKey 只返回这一运行期密钥，升级后既有 remember-me cookie 失效。",
+    "effects": [
+      {
+        "comp_name": "geoserver",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.28.0,2.28.6)",
+            "min_fixed_version": "2.28.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.2)",
+            "min_fixed_version": "3.0.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.27.7)",
+            "min_fixed_version": "2.27.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.geoserver:gs-main",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.27.7)",
+            "min_fixed_version": "2.27.7",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.28.0,2.28.6)",
+            "min_fixed_version": "2.28.6",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.2)",
+            "min_fixed_version": "3.0.2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "使用硬编码的密码学密钥",
+    "kind_en": "使用硬编码密钥",
+    "last_modified_time": "2026-11-25",
+    "level": "Critical",
+    "mps_id": "MPS-1614-2dee",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-25",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/geoserver/geoserver/security/advisories/GHSA-hgm3-wq4h-8vvq",
+        "name": ""
+      },
+      {
+        "url": "https://geoserver.org/vulnerability/2026/11/23/cve-update.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/pull/10008",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/fa423fc3737bfb4026647d00974dac35df4ff3c9",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/0debb8d23a21c48e4ea0102ed451ad6705dcd61c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/6466b5297d5b17557cdde6b5c0924c4bf9f66901",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/c49ef3cac9684de99a7c1814289f50d9aa9bb7a8",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/releases/tag/3.0.2",
+        "name": ""
+      },
+      {
+        "url": "https://docs.geoserver.org/stable/en/user/security/webadmin/auth/#remember-me",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "GeoServer会话伪造漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-129245",
+    "cvss": {},
+    "cvss_score": 9.2,
+    "cvss_vector": "",
+    "cwe": "CWE-321",
+    "description": "GeoServer 是开源 Java 地理空间服务器，用于发布、共享和编辑地理数据。记住登录由核心模块 org.geoserver:gs-main 实现，发行数据目录的 web 过滤链默认包含 rememberme，并用浏览器 cookie 维持已登录会话。\n受影响版本中，data/release/security/config.xml 的 rememberMeService 将签名密钥写为 geoserver，RememberMeServicesConfig.DEFAULT_KEY 与该值相同，setKey 还可把密钥持久化到数据目录。GeoServerTokenBasedRememberMeServices 用该密钥、用户名、过期时间以及已存储的口令摘要校验 cookie。已获得管理员口令摘要的远程攻击者可以提交通过校验的 remember-me cookie，在不知道明文口令的情况下以该管理员身份通过 Web 登录。\n修复版本中通过停止从数据目录提供签名密钥切断该伪造路径。RememberMeServicesConfig.resolveKey 在未配置 GEOSERVER_REMEMBERME_KEY 时用 SecureRandom 生成 32 字节随机密钥，集群部署则使用同一应用属性作为共享密钥。getKey 只返回这一运行期密钥，升级后既有 remember-me cookie 失效。",
+    "effects": [
+      {
+        "comp_name": "geoserver",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.28.0,2.28.6)",
+            "min_fixed_version": "2.28.6",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.2)",
+            "min_fixed_version": "3.0.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "(-∞,2.27.7)",
+            "min_fixed_version": "2.27.7",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.geoserver:gs-main",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.27.7)",
+            "min_fixed_version": "2.27.7",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.28.0,2.28.6)",
+            "min_fixed_version": "2.28.6",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.2)",
+            "min_fixed_version": "3.0.2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "使用硬编码的密码学密钥",
+    "kind_en": "Use of Hard-coded Cryptographic Key",
+    "last_modified_time": "2026-11-25",
+    "level": "Critical",
+    "mps_id": "MPS-1614-2dee",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-25",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/geoserver/geoserver/security/advisories/GHSA-hgm3-wq4h-8vvq",
+        "name": ""
+      },
+      {
+        "url": "https://geoserver.org/vulnerability/2026/11/23/cve-update.html",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/pull/10008",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/fa423fc3737bfb4026647d00974dac35df4ff3c9",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/0debb8d23a21c48e4ea0102ed451ad6705dcd61c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/6466b5297d5b17557cdde6b5c0924c4bf9f66901",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/c49ef3cac9684de99a7c1814289f50d9aa9bb7a8",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/releases/tag/3.0.2",
+        "name": ""
+      },
+      {
+        "url": "https://docs.geoserver.org/stable/en/user/security/webadmin/auth/#remember-me",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "GeoServer会话伪造漏洞"
+  },
+  "first_saved_at": "2026-11-25T02:53:53+00:00"
+}

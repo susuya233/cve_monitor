@@ -1,0 +1,203 @@
+{
+  "saved_at": "2026-11-25T02:53:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-8de8-1460",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨站点请求伪造 (CSRF)通过利用网站对用户请求的信任进行攻击。当用户在网站A登录并在同一浏览器会话中访问网站B时，攻击者可以构造特制的请求并诱使用户执行，以使网站B误以为这些请求是用户合法发起的。\n攻击者通常通过欺骗用户点击恶意链接、在受信任的网站中植入恶意代码或通过钓鱼等手段来实施CSRF攻击，一旦用户执行了恶意请求，攻击者可以以用户的身份执行任意操作，包括更改用户密码、发起资金转账或删除重要数据等。",
+        "title": "什么是CSRF"
+      },
+      {
+        "content": "- 链接欺骗：攻击者通过向用户发送包含恶意链接的电子邮件或社交媒体消息，诱使用户点击并执行恶意请求。\n- 图片引用攻击：攻击者通过在恶意网站上包含指向目标网站的图片引用，以触发用户浏览器自动发送目标网站的请求。\n- XSS利用：如果目标网站存在XSS漏洞，攻击者可以注入恶意脚本，以使用户在浏览器中执行恶意请求。",
+        "title": "CSRF常见的攻击方式"
+      },
+      {
+        "content": "- 随机令牌：网站可以在每个请求中包含一个随机生成的令牌（CSRF Token），并验证该令牌的有效性，以确认请求的来源是合法的。\n- SameSite Cookie：使用SameSite属性来限制跨站点请求，将Cookie的发送限制在同一站点上，减少了跨站请求伪造的风险。\n- 双重验证：对于敏感操作，网站可以要求用户进行额外的验证，例如输入验证码、提供第二个因素的身份验证等。\n- 强化浏览器策略：网站可以设置Content-Security-Policy（CSP）头，限制浏览器执行恶意脚本的能力，减少CSRF攻击的风险。\n- 限制用户操作：网站可以要求用户在执行敏感操作之前进行明确的确认或授权，防止恶意请求被误触发。\n- 安全编码实践：开发人员应遵循安全编码实践，对用户输入进行适当的验证和过滤，防止恶意请求的注入。",
+        "title": "如何预防CSRF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82359",
+    "cvss": {},
+    "cvss_score": 8.8,
+    "cvss_vector": "",
+    "cwe": "CWE-352",
+    "description": "Apache JSPWiki 是开源 Java Wiki 引擎，基于 Servlet 与 JSP 提供页面编辑、附件管理以及用户和权限控制。受影响发布物为 Maven 构件 org.apache.jspwiki:jspwiki-war，源码仓库为 apache/jspwiki。\n受影响版本中，3.0.0 的 jspwiki.war 没有在 WEB-INF/web.xml 注册 CsrfProtectionFilter。该过滤器只声明在 jspwiki-http-3.0.0.jar 的 META-INF/web-fragment.xml，并映射到 /*。该片段使用 Java EE 3.0 描述符，war 的 web.xml 使用 Jakarta Servlet 5.0 描述符。厂商公告确认该 CSRF 防护配置未生效，过滤器没有进入请求处理链。CsrfProtectionFilter.doFilter 不会在 POST 请求中比较参数 X-XSRF-TOKEN 与 Session.antiCsrfToken()，无效令牌也不会被重定向到 /error/Forbidden.html。已登录用户在跨站页面提交 POST 后，可以绕过同步令牌校验，执行页面删除、重命名、安装参数提交或工作流决策等状态变更。\n修复版本中通过将 CsrfProtectionFilter 及 url-pattern /* 写入 jspwiki-war 的 WEB-INF/web.xml，并删除 jspwiki-http 模块的 META-INF/web-fragment.xml，使 3.0.1 在部署时注册该过滤器。POST 请求重新进入 doFilter，令牌不匹配的请求被重定向到 /error/Forbidden.html。",
+    "effects": [
+      {
+        "comp_name": "org.apache.jspwiki:jspwiki-war",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[3.0.0,3.0.1)",
+            "min_fixed_version": "3.0.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "可选修复",
+    "kind": "CSRF",
+    "kind_en": "跨站请求伪造 (CSRF)",
+    "last_modified_time": "2026-11-25",
+    "level": "High",
+    "mps_id": "MPS-8de8-1460",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-25",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12814.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-82359",
+        "name": ""
+      },
+      {
+        "url": "https://issues.apache.org/jira/browse/JSPWIKI-1303",
+        "name": ""
+      },
+      {
+        "url": "https://jspwiki.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/jspwiki/commit/96bffc7d8333dd97a190d66dc0a3371cca005bc3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/jspwiki/commit/96374c1d8f22d596ecc98a7a5bb9222683a444c2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/jspwiki/pull/526",
+        "name": ""
+      },
+      {
+        "url": "https://repo1.maven.org/maven2/org/apache/jspwiki/jspwiki-war/3.0.0/jspwiki-war-3.0.0.war",
+        "name": ""
+      },
+      {
+        "url": "https://repo1.maven.org/maven2/org/apache/jspwiki/jspwiki-war/3.0.1/jspwiki-war-3.0.1.war",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "JSPWiki CSRF绕过",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "跨站点请求伪造 (CSRF)通过利用网站对用户请求的信任进行攻击。当用户在网站A登录并在同一浏览器会话中访问网站B时，攻击者可以构造特制的请求并诱使用户执行，以使网站B误以为这些请求是用户合法发起的。\n攻击者通常通过欺骗用户点击恶意链接、在受信任的网站中植入恶意代码或通过钓鱼等手段来实施CSRF攻击，一旦用户执行了恶意请求，攻击者可以以用户的身份执行任意操作，包括更改用户密码、发起资金转账或删除重要数据等。",
+        "title": "什么是CSRF"
+      },
+      {
+        "content": "- 链接欺骗：攻击者通过向用户发送包含恶意链接的电子邮件或社交媒体消息，诱使用户点击并执行恶意请求。\n- 图片引用攻击：攻击者通过在恶意网站上包含指向目标网站的图片引用，以触发用户浏览器自动发送目标网站的请求。\n- XSS利用：如果目标网站存在XSS漏洞，攻击者可以注入恶意脚本，以使用户在浏览器中执行恶意请求。",
+        "title": "CSRF常见的攻击方式"
+      },
+      {
+        "content": "- 随机令牌：网站可以在每个请求中包含一个随机生成的令牌（CSRF Token），并验证该令牌的有效性，以确认请求的来源是合法的。\n- SameSite Cookie：使用SameSite属性来限制跨站点请求，将Cookie的发送限制在同一站点上，减少了跨站请求伪造的风险。\n- 双重验证：对于敏感操作，网站可以要求用户进行额外的验证，例如输入验证码、提供第二个因素的身份验证等。\n- 强化浏览器策略：网站可以设置Content-Security-Policy（CSP）头，限制浏览器执行恶意脚本的能力，减少CSRF攻击的风险。\n- 限制用户操作：网站可以要求用户在执行敏感操作之前进行明确的确认或授权，防止恶意请求被误触发。\n- 安全编码实践：开发人员应遵循安全编码实践，对用户输入进行适当的验证和过滤，防止恶意请求的注入。",
+        "title": "如何预防CSRF"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-82359",
+    "cvss": {},
+    "cvss_score": 8.8,
+    "cvss_vector": "",
+    "cwe": "CWE-352",
+    "description": "Apache JSPWiki 是开源 Java Wiki 引擎，基于 Servlet 与 JSP 提供页面编辑、附件管理以及用户和权限控制。受影响发布物为 Maven 构件 org.apache.jspwiki:jspwiki-war，源码仓库为 apache/jspwiki。\n受影响版本中，3.0.0 的 jspwiki.war 没有在 WEB-INF/web.xml 注册 CsrfProtectionFilter。该过滤器只声明在 jspwiki-http-3.0.0.jar 的 META-INF/web-fragment.xml，并映射到 /*。该片段使用 Java EE 3.0 描述符，war 的 web.xml 使用 Jakarta Servlet 5.0 描述符。厂商公告确认该 CSRF 防护配置未生效，过滤器没有进入请求处理链。CsrfProtectionFilter.doFilter 不会在 POST 请求中比较参数 X-XSRF-TOKEN 与 Session.antiCsrfToken()，无效令牌也不会被重定向到 /error/Forbidden.html。已登录用户在跨站页面提交 POST 后，可以绕过同步令牌校验，执行页面删除、重命名、安装参数提交或工作流决策等状态变更。\n修复版本中通过将 CsrfProtectionFilter 及 url-pattern /* 写入 jspwiki-war 的 WEB-INF/web.xml，并删除 jspwiki-http 模块的 META-INF/web-fragment.xml，使 3.0.1 在部署时注册该过滤器。POST 请求重新进入 doFilter，令牌不匹配的请求被重定向到 /error/Forbidden.html。",
+    "effects": [
+      {
+        "comp_name": "org.apache.jspwiki:jspwiki-war",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "[3.0.0,3.0.1)",
+            "min_fixed_version": "3.0.1",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Optional",
+    "kind": "CSRF",
+    "kind_en": "Cross-Site Request Forgery (CSRF)",
+    "last_modified_time": "2026-11-25",
+    "level": "High",
+    "mps_id": "MPS-8de8-1460",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-25",
+    "reference_url_list": [
+      {
+        "url": "http://www.mail-archive.com/announce@apache.org/msg12814.html",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-82359",
+        "name": ""
+      },
+      {
+        "url": "https://issues.apache.org/jira/browse/JSPWIKI-1303",
+        "name": ""
+      },
+      {
+        "url": "https://jspwiki.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/jspwiki/commit/96bffc7d8333dd97a190d66dc0a3371cca005bc3",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/jspwiki/commit/96374c1d8f22d596ecc98a7a5bb9222683a444c2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/jspwiki/pull/526",
+        "name": ""
+      },
+      {
+        "url": "https://repo1.maven.org/maven2/org/apache/jspwiki/jspwiki-war/3.0.0/jspwiki-war-3.0.0.war",
+        "name": ""
+      },
+      {
+        "url": "https://repo1.maven.org/maven2/org/apache/jspwiki/jspwiki-war/3.0.1/jspwiki-war-3.0.1.war",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "JSPWiki CSRF绕过"
+  },
+  "first_saved_at": "2026-11-25T02:53:49+00:00"
+}

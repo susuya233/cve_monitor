@@ -1,0 +1,307 @@
+{
+  "saved_at": "2026-11-25T02:53:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-a5a2-ffd4",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120705",
+    "cvss": {},
+    "cvss_score": 8.6,
+    "cvss_vector": "",
+    "cwe": "CWE-91",
+    "description": "GeoServer 是开源 Java 地理空间数据服务器，通过 WFS、WMS 等开放标准发布和编辑空间数据。\n受影响版本中，公开的 WFS GetFeature 操作会展开内置存储查询 urn:ogc:def:query:OGC-WFS::GetFeatureById。StoredQuery.compile() 用字符串替换把调用方的 ID 参数写入模板中的 fes:ResourceId rid 属性，替换时不转义引号和尖括号，随后使用未设置 GeoServer entity resolver 的 Parser 解析替换结果。未认证调用方可以注入 XML，包括 xi:include，读取 GeoServer 进程可读的本地文本文件，或让服务器请求指定的 HTTP 或 HTTPS 地址。匿名用户可访问图层时，读取到的文本会出现在 Illegal property name 错误响应中；否则文件仍会被读取但不会返回。\n修复版本中通过在目录关联的存储查询解析路径上设置 ResourcePool 的 entity resolver，并在 GeoTools PreventLocalEntityResolver 中关闭自动跳转、于跟随 HTTP Location 前按允许列表复核目标，限制外部实体和 XInclude 的任意 URI 访问。内置 StoredQuery.DEFAULT 的 catalog 为空，compile() 在该对象上不会安装 entity resolver。",
+    "effects": [
+      {
+        "comp_name": "org.geoserver:gs-wfs-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.27.7)",
+            "min_fixed_version": "2.27.7",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.28.0,2.28.6)",
+            "min_fixed_version": "2.28.6",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.2)",
+            "min_fixed_version": "3.0.2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.geotools:gt-metadata",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,33.7)",
+            "min_fixed_version": "33.7",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[34.0,34.6)",
+            "min_fixed_version": "34.6",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[35.0,35.2)",
+            "min_fixed_version": "35.2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "XPath盲注",
+    "kind_en": "XML 注入（又名 XPath 盲注入）",
+    "last_modified_time": "2026-11-25",
+    "level": "High",
+    "mps_id": "MPS-a5a2-ffd4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-25",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/geoserver/geoserver/security/advisories/GHSA-39mw-5chv-jh47",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/pull/9928",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/8e43e96b913ebc3a1e2a6a5f6004321543ab189c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/6a525902fabbc9b0d2bc3e4062a6b1bfa4506228",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/2f5e2d071ed517a27ecfa0dbd4c53d9af6e7a35c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/releases/tag/2.27.7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/releases/tag/2.28.6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/releases/tag/3.0.2",
+        "name": ""
+      },
+      {
+        "url": "https://osgeo-org.atlassian.net/browse/GEOS-12199",
+        "name": ""
+      },
+      {
+        "url": "https://osgeo-org.atlassian.net/browse/GEOT-7938",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geotools/geotools/commit/361a0131b49eaab33b62026ac6f0617121df8633",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geotools/geotools/releases/tag/33.7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geotools/geotools/releases/tag/34.6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geotools/geotools/releases/tag/35.2",
+        "name": ""
+      },
+      {
+        "url": "https://cryptocat.me/blog/research/analysis/geoserver_preauth_rce/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "GeoServer WFS XML注入",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-120705",
+    "cvss": {},
+    "cvss_score": 8.6,
+    "cvss_vector": "",
+    "cwe": "CWE-91",
+    "description": "GeoServer 是开源 Java 地理空间数据服务器，通过 WFS、WMS 等开放标准发布和编辑空间数据。\n受影响版本中，公开的 WFS GetFeature 操作会展开内置存储查询 urn:ogc:def:query:OGC-WFS::GetFeatureById。StoredQuery.compile() 用字符串替换把调用方的 ID 参数写入模板中的 fes:ResourceId rid 属性，替换时不转义引号和尖括号，随后使用未设置 GeoServer entity resolver 的 Parser 解析替换结果。未认证调用方可以注入 XML，包括 xi:include，读取 GeoServer 进程可读的本地文本文件，或让服务器请求指定的 HTTP 或 HTTPS 地址。匿名用户可访问图层时，读取到的文本会出现在 Illegal property name 错误响应中；否则文件仍会被读取但不会返回。\n修复版本中通过在目录关联的存储查询解析路径上设置 ResourcePool 的 entity resolver，并在 GeoTools PreventLocalEntityResolver 中关闭自动跳转、于跟随 HTTP Location 前按允许列表复核目标，限制外部实体和 XInclude 的任意 URI 访问。内置 StoredQuery.DEFAULT 的 catalog 为空，compile() 在该对象上不会安装 entity resolver。",
+    "effects": [
+      {
+        "comp_name": "org.geoserver:gs-wfs-core",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.27.7)",
+            "min_fixed_version": "2.27.7",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[2.28.0,2.28.6)",
+            "min_fixed_version": "2.28.6",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[3.0.0,3.0.2)",
+            "min_fixed_version": "3.0.2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "org.geotools:gt-metadata",
+        "ecosystem": "maven",
+        "versions": [
+          {
+            "affected_version": "(-∞,33.7)",
+            "min_fixed_version": "33.7",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[34.0,34.6)",
+            "min_fixed_version": "34.6",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          },
+          {
+            "affected_version": "[35.0,35.2)",
+            "min_fixed_version": "35.2",
+            "repository": "maven",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "XPath盲注",
+    "kind_en": "XML Injection (aka Blind XPath Injection)",
+    "last_modified_time": "2026-11-25",
+    "level": "High",
+    "mps_id": "MPS-a5a2-ffd4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-25",
+    "reference_url_list": [
+      {
+        "url": "https://github.com/geoserver/geoserver/security/advisories/GHSA-39mw-5chv-jh47",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/pull/9928",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/8e43e96b913ebc3a1e2a6a5f6004321543ab189c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/6a525902fabbc9b0d2bc3e4062a6b1bfa4506228",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/commit/2f5e2d071ed517a27ecfa0dbd4c53d9af6e7a35c",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/releases/tag/2.27.7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/releases/tag/2.28.6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geoserver/geoserver/releases/tag/3.0.2",
+        "name": ""
+      },
+      {
+        "url": "https://osgeo-org.atlassian.net/browse/GEOS-12199",
+        "name": ""
+      },
+      {
+        "url": "https://osgeo-org.atlassian.net/browse/GEOT-7938",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geotools/geotools/commit/361a0131b49eaab33b62026ac6f0617121df8633",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geotools/geotools/releases/tag/33.7",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geotools/geotools/releases/tag/34.6",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/geotools/geotools/releases/tag/35.2",
+        "name": ""
+      },
+      {
+        "url": "https://cryptocat.me/blog/research/analysis/geoserver_preauth_rce/",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "java",
+      "开源"
+    ],
+    "title": "GeoServer WFS XML注入"
+  },
+  "first_saved_at": "2026-11-25T02:53:52+00:00"
+}
