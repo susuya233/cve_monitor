@@ -1,0 +1,151 @@
+{
+  "saved_at": "2026-11-26T13:27:36+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-174e-6b1d",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86470",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-770",
+    "description": "Apache SkyWalking BanyanDB 是 Apache SkyWalking 开源的可观测性数据库，作为 SkyWalking 平台的默认存储后端，通过 gRPC 向外部提供 Property 属性查询服务。\n受影响版本中，liaison 模块对外注册的 gRPC 接口 PropertyService.Query 将客户端可控的 limit 直接用作结果缓冲区容量：sortedQueryWithDedup 执行 resultBuffer := make([]*propertyWithCount, 0, req.Limit)，数据节点侧 banyand/property/db/db.go 的 Query 同样执行 make([]QueriedProperty, 0, req.Limit)，limit 为 uint32 且缺少上限校验，未认证的远程攻击者携带超大 limit 发送一个带排序条件的查询请求，即可触发数十吉字节的预分配，导致服务器内存耗尽、进程被终止，造成拒绝服务。\n修复版本中通过引入查询准入控制解决该问题：admitQuery 将 limit 与 offset 组成的查询窗口限制在 100000 以内并通过 protector.QueryBudget 按内存预算预留资源，propertyQueryCapacity 将结果缓冲区容量提示收敛到 1024，查询执行过程中再按实际分配逐项计费，窗口超限或预算耗尽的请求直接返回错误，阻断无上限的结果缓冲区预分配。",
+    "effects": [
+      {
+        "comp_name": "skywalking-banyandb",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.11.0,0.11.1)",
+            "min_fixed_version": "0.11.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "不受限制或节流地分配资源",
+    "last_modified_time": "2026-11-26",
+    "level": "High",
+    "mps_id": "MPS-174e-6b1d",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/11/26/1",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-86470",
+        "name": ""
+      },
+      {
+        "url": "https://skywalking.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/skywalking-banyandb/pull/1334",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/skywalking-banyandb/commit/e4c6be3def1c97dd201dcd863d4fc45771ac6989",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/skywalking-banyandb/releases/tag/v0.11.1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "BanyanDB Property查询内存耗尽拒绝服务漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-86470",
+    "cvss": {},
+    "cvss_score": 7.5,
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "cwe": "CWE-770",
+    "description": "Apache SkyWalking BanyanDB 是 Apache SkyWalking 开源的可观测性数据库，作为 SkyWalking 平台的默认存储后端，通过 gRPC 向外部提供 Property 属性查询服务。\n受影响版本中，liaison 模块对外注册的 gRPC 接口 PropertyService.Query 将客户端可控的 limit 直接用作结果缓冲区容量：sortedQueryWithDedup 执行 resultBuffer := make([]*propertyWithCount, 0, req.Limit)，数据节点侧 banyand/property/db/db.go 的 Query 同样执行 make([]QueriedProperty, 0, req.Limit)，limit 为 uint32 且缺少上限校验，未认证的远程攻击者携带超大 limit 发送一个带排序条件的查询请求，即可触发数十吉字节的预分配，导致服务器内存耗尽、进程被终止，造成拒绝服务。\n修复版本中通过引入查询准入控制解决该问题：admitQuery 将 limit 与 offset 组成的查询窗口限制在 100000 以内并通过 protector.QueryBudget 按内存预算预留资源，propertyQueryCapacity 将结果缓冲区容量提示收敛到 1024，查询执行过程中再按实际分配逐项计费，窗口超限或预算耗尽的请求直接返回错误，阻断无上限的结果缓冲区预分配。",
+    "effects": [
+      {
+        "comp_name": "skywalking-banyandb",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[0.11.0,0.11.1)",
+            "min_fixed_version": "0.11.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "不加限制或调节的资源分配",
+    "kind_en": "Allocation of Resources Without Limits or Throttling",
+    "last_modified_time": "2026-11-26",
+    "level": "High",
+    "mps_id": "MPS-174e-6b1d",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.openwall.com/lists/oss-security/2026/11/26/1",
+        "name": ""
+      },
+      {
+        "url": "https://www.cve.org/CVERecord?id=CVE-2026-86470",
+        "name": ""
+      },
+      {
+        "url": "https://skywalking.apache.org/",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/skywalking-banyandb/pull/1334",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/skywalking-banyandb/commit/e4c6be3def1c97dd201dcd863d4fc45771ac6989",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/apache/skywalking-banyandb/releases/tag/v0.11.1",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "BanyanDB Property查询内存耗尽拒绝服务漏洞"
+  },
+  "first_saved_at": "2026-11-26T13:27:36+00:00"
+}
