@@ -1,0 +1,179 @@
+{
+  "saved_at": "2026-11-26T03:53:15+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-obfd-3rvi",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-137306",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-640",
+    "description": "Grav Admin 插件(getgrav/grav-plugin-admin)是 Grav CMS 的官方管理后台插件，以 PHP 编写并基于 MIT 协议在 GitHub 开源，提供后台登录、账户管理与站点内容维护功能。\n受影响版本中，LoginController::taskForgot() 处理忘记密码请求时生成有效期为 1 小时的重置令牌，并在 plugins.login.site_host 未配置时通过 getAbsoluteAdminUrl() 拼接重置链接，该函数经由 Grav Pages::baseUrl() 以请求 Host 头作为链接主机，整个流程不校验 Login 插件的 Require Trusted Host(plugins.login.require_trusted_host)设置；知晓管理员用户名的未认证攻击者在提交忘记密码表单时伪造 Host 头，可使站点向管理员邮箱发送指向攻击者控制主机的真实重置链接，管理员点击后重置令牌被攻击者获取，进而接管包括超级管理员在内的管理员账户。\n修复版本中通过在发送重置邮件前增加受信主机校验解决该问题：1.10.65 版本的 taskForgot() 在 plugins.login.require_trusted_host 开启且 LoginEmail::isTrustedHostConfigured() 判定 site_host 与 custom_base_url 均未设置时拒绝发送重置邮件，记录错误日志并返回与成功发送一致的提示响应，使重置链接主机不再受请求 Host 头控制，同时避免表单被用于探测账户。",
+    "effects": [
+      {
+        "comp_name": "getgrav/grav-plugin-admin",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.10.65)",
+            "min_fixed_version": "1.10.65",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "忘记口令恢复机制弱",
+    "kind_en": "忘记密码的弱密码恢复机制",
+    "last_modified_time": "2026-11-26",
+    "level": "High",
+    "mps_id": "MPS-obfd-3rvi",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-obfd-3rvi",
+        "name": "https://www.oscs1024.com/hd/MPS-obfd-3rvi"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-137306",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-137306"
+      },
+      {
+        "url": "https://github.com/getgrav/grav/security/advisories/GHSA-v8r8-3hq6-qgff",
+        "name": "GitHub Security Advisory (GHSA-v8r8-3hq6-qgff)"
+      },
+      {
+        "url": "https://github.com/getgrav/grav-plugin-admin/commit/4d09bd84ed1f7871e4a1a07a14eb11c33cafd5b9",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/grav-admin-plugin-before-1.10.65-password-reset-poisoning-via-host-header",
+        "name": "VulnCheck Advisory: Grav Admin Plugin before 1.10.65 Password Reset Poisoning via Host Header"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Grav Admin插件忘记密码重置链接Host头投毒导致管理员账户接管漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-137306",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-640",
+    "description": "Grav Admin 插件(getgrav/grav-plugin-admin)是 Grav CMS 的官方管理后台插件，以 PHP 编写并基于 MIT 协议在 GitHub 开源，提供后台登录、账户管理与站点内容维护功能。\n受影响版本中，LoginController::taskForgot() 处理忘记密码请求时生成有效期为 1 小时的重置令牌，并在 plugins.login.site_host 未配置时通过 getAbsoluteAdminUrl() 拼接重置链接，该函数经由 Grav Pages::baseUrl() 以请求 Host 头作为链接主机，整个流程不校验 Login 插件的 Require Trusted Host(plugins.login.require_trusted_host)设置；知晓管理员用户名的未认证攻击者在提交忘记密码表单时伪造 Host 头，可使站点向管理员邮箱发送指向攻击者控制主机的真实重置链接，管理员点击后重置令牌被攻击者获取，进而接管包括超级管理员在内的管理员账户。\n修复版本中通过在发送重置邮件前增加受信主机校验解决该问题：1.10.65 版本的 taskForgot() 在 plugins.login.require_trusted_host 开启且 LoginEmail::isTrustedHostConfigured() 判定 site_host 与 custom_base_url 均未设置时拒绝发送重置邮件，记录错误日志并返回与成功发送一致的提示响应，使重置链接主机不再受请求 Host 头控制，同时避免表单被用于探测账户。",
+    "effects": [
+      {
+        "comp_name": "getgrav/grav-plugin-admin",
+        "ecosystem": "composer",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.10.65)",
+            "min_fixed_version": "1.10.65",
+            "repository": "composer",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "忘记口令恢复机制弱",
+    "kind_en": "Weak Password Recovery Mechanism for Forgotten Password",
+    "last_modified_time": "2026-11-26",
+    "level": "High",
+    "mps_id": "MPS-obfd-3rvi",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-obfd-3rvi",
+        "name": "https://www.oscs1024.com/hd/MPS-obfd-3rvi"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-137306",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-137306"
+      },
+      {
+        "url": "https://github.com/getgrav/grav/security/advisories/GHSA-v8r8-3hq6-qgff",
+        "name": "GitHub Security Advisory (GHSA-v8r8-3hq6-qgff)"
+      },
+      {
+        "url": "https://github.com/getgrav/grav-plugin-admin/commit/4d09bd84ed1f7871e4a1a07a14eb11c33cafd5b9",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/grav-admin-plugin-before-1.10.65-password-reset-poisoning-via-host-header",
+        "name": "VulnCheck Advisory: Grav Admin Plugin before 1.10.65 Password Reset Poisoning via Host Header"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "php",
+      "开源"
+    ],
+    "title": "Grav Admin插件忘记密码重置链接Host头投毒导致管理员账户接管漏洞"
+  },
+  "first_saved_at": "2026-11-26T03:53:15+00:00"
+}

@@ -1,0 +1,223 @@
+{
+  "saved_at": "2026-11-26T03:53:16+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-35ce-9y4i",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-137308",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "markdownify-mcp 是开源的 Model Context Protocol 服务器（npm 包名 mcp-markdownify-server），用于把网页、YouTube、Bing 搜索结果、本地文件与 Git 仓库内容转换为 Markdown，供大模型客户端通过 MCP 工具调用，属于大模型基础设施组件。\n受影响版本中，src/utils.ts 的 validateUrl 使用 private-ip 库对 new URL(url).hostname 做私网判断，DNS 主机名与带方括号的 IPv6 字面量会使其返回 undefined 并直接放行，::ffff:7f00:1 等十六进制压缩的 IPv4 映射 IPv6 地址与 224.0.0.1 组播地址也被误判为公网；validateRepoUrl 对 http(s) 仓库地址只校验协议、不检查目标地址。攻击者可通过提示注入诱导大模型客户端以恶意 URL 或仓库地址调用 webpage-to-markdown、youtube-to-markdown、bing-search-to-markdown 或 git-repo-to-markdown，使服务器向回环服务、内网主机和云元数据端点发起请求，并把响应内容转换为 Markdown 后返回。\n修复版本中通过以 node:net BlockList 实现的 isPrivateOrReservedIp 替换 private-ip，覆盖 IANA 特殊用途 IPv4 与 IPv6 网段并归一化方括号、zone id 与尾点；新增 validateUrlDestination 在每次重定向跳转前按全部解析记录做 fail-closed DNS 校验，validateRepoUrl 复用 URL 与 DNS 校验并拒绝 scp 风格 SSH 简写，从而阻断服务器向内网与云元数据端点发起的请求。",
+    "effects": [
+      {
+        "comp_name": "markdownify-mcp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.2.0)",
+            "min_fixed_version": "1.2.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "mcp-markdownify-server",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.2.0)",
+            "min_fixed_version": "1.2.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-11-26",
+    "level": "High",
+    "mps_id": "MPS-35ce-9y4i",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-35ce-9y4i",
+        "name": "https://www.oscs1024.com/hd/MPS-35ce-9y4i"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-137308",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-137308"
+      },
+      {
+        "url": "https://github.com/zcaceres/markdownify-mcp/security/advisories/GHSA-pxwh-pcrm-vrm3",
+        "name": "GitHub Security Advisory (GHSA-pxwh-pcrm-vrm3)"
+      },
+      {
+        "url": "https://github.com/zcaceres/markdownify-mcp/commit/ee00464d0744d5defddecd660c29e91470eea96a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zcaceres/markdownify-mcp/releases/tag/v1.2.0",
+        "name": "markdownify-mcp v1.2.0 Release Notes"
+      },
+      {
+        "url": "https://github.com/zcaceres/markdownify-mcp/blob/v1.1.0/src/utils.ts#L60-L90",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/markdownify-mcp-before-1.2.0-ssrf-protection-bypass-via-validateurl-and-validaterepourl",
+        "name": "VulnCheck Advisory: markdownify-mcp before 1.2.0 SSRF Protection Bypass via validateUrl and validateRepoUrl"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "npm",
+      "开源"
+    ],
+    "title": "markdownify-mcp SSRF防护绕过漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-137308",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.4
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.3
+        }
+      ]
+    },
+    "cvss_score": 8.3,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "markdownify-mcp 是开源的 Model Context Protocol 服务器（npm 包名 mcp-markdownify-server），用于把网页、YouTube、Bing 搜索结果、本地文件与 Git 仓库内容转换为 Markdown，供大模型客户端通过 MCP 工具调用，属于大模型基础设施组件。\n受影响版本中，src/utils.ts 的 validateUrl 使用 private-ip 库对 new URL(url).hostname 做私网判断，DNS 主机名与带方括号的 IPv6 字面量会使其返回 undefined 并直接放行，::ffff:7f00:1 等十六进制压缩的 IPv4 映射 IPv6 地址与 224.0.0.1 组播地址也被误判为公网；validateRepoUrl 对 http(s) 仓库地址只校验协议、不检查目标地址。攻击者可通过提示注入诱导大模型客户端以恶意 URL 或仓库地址调用 webpage-to-markdown、youtube-to-markdown、bing-search-to-markdown 或 git-repo-to-markdown，使服务器向回环服务、内网主机和云元数据端点发起请求，并把响应内容转换为 Markdown 后返回。\n修复版本中通过以 node:net BlockList 实现的 isPrivateOrReservedIp 替换 private-ip，覆盖 IANA 特殊用途 IPv4 与 IPv6 网段并归一化方括号、zone id 与尾点；新增 validateUrlDestination 在每次重定向跳转前按全部解析记录做 fail-closed DNS 校验，validateRepoUrl 复用 URL 与 DNS 校验并拒绝 scp 风格 SSH 简写，从而阻断服务器向内网与云元数据端点发起的请求。",
+    "effects": [
+      {
+        "comp_name": "markdownify-mcp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.2.0)",
+            "min_fixed_version": "1.2.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "mcp-markdownify-server",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.2.0)",
+            "min_fixed_version": "1.2.0",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-11-26",
+    "level": "High",
+    "mps_id": "MPS-35ce-9y4i",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-26",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-35ce-9y4i",
+        "name": "https://www.oscs1024.com/hd/MPS-35ce-9y4i"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-137308",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-137308"
+      },
+      {
+        "url": "https://github.com/zcaceres/markdownify-mcp/security/advisories/GHSA-pxwh-pcrm-vrm3",
+        "name": "GitHub Security Advisory (GHSA-pxwh-pcrm-vrm3)"
+      },
+      {
+        "url": "https://github.com/zcaceres/markdownify-mcp/commit/ee00464d0744d5defddecd660c29e91470eea96a",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/zcaceres/markdownify-mcp/releases/tag/v1.2.0",
+        "name": "markdownify-mcp v1.2.0 Release Notes"
+      },
+      {
+        "url": "https://github.com/zcaceres/markdownify-mcp/blob/v1.1.0/src/utils.ts#L60-L90",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/markdownify-mcp-before-1.2.0-ssrf-protection-bypass-via-validateurl-and-validaterepourl",
+        "name": "VulnCheck Advisory: markdownify-mcp before 1.2.0 SSRF Protection Bypass via validateUrl and validateRepoUrl"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "npm",
+      "开源"
+    ],
+    "title": "markdownify-mcp SSRF防护绕过漏洞"
+  },
+  "first_saved_at": "2026-11-26T03:53:16+00:00"
+}
