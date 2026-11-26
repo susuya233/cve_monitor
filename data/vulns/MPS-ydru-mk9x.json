@@ -1,0 +1,187 @@
+{
+  "saved_at": "2026-11-26T22:44:57+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ydru-mk9x",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-137529",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-59",
+    "description": "JAL（Just Another Ledger）是开源的个人财务记账软件，以 Python 编写，PyPI 包名为 jal，基于 PySide6 提供桌面界面，内置备份与还原功能，用于导出和恢复 SQLite 账本数据库。\n受影响版本中，备份还原流程对归档成员的校验不足。validate_backup 仅按文件名集合比较归档成员，不检查成员类型，包含 label 成员、指向绝对路径的 jal.sqlite 符号链接成员与同名普通文件成员的归档可以通过校验；do_restore 在路径检查后调用未指定过滤规则的 tarfile.extractall，Python 3.13 及更早版本上符号链接成员被创建，普通成员的内容经该链接写入攻击者指定的绝对路径，覆盖用户可写的任意文件（例如 shell 启动脚本），最终导致代码执行。\n修复版本中通过收紧归档校验并移除 extractall 解决该问题：归档必须恰好包含 jal.sqlite 与 label 两个普通文件成员，链接、目录、重复与多余成员被拒绝，jal.sqlite 内容必须以 SQLite 文件头开始，数据库内容经 extractfile 流式写入临时文件并以原子替换方式落盘，符号链接成员无法再参与还原流程。",
+    "effects": [
+      {
+        "comp_name": "jal",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.11.3]",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "在文件访问前对链接解析不恰当（链接跟随）",
+    "kind_en": "文件访问前的链接解析不正确（“链接跟踪”）",
+    "last_modified_time": "2026-11-27",
+    "level": "High",
+    "mps_id": "MPS-ydru-mk9x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ydru-mk9x",
+        "name": "https://www.oscs1024.com/hd/MPS-ydru-mk9x"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-137529",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-137529"
+      },
+      {
+        "url": "https://github.com/titov-vv/jal/blob/a27d31743f9e3cc894265085b2cd3938a0cb7046/jal/db/backup_restore.py#L72-L88",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/titov-vv/jal/commit/0353001ca085e3a1ce15c8a6fc216ddf5fd2daae",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/titov-vv/jal/issues/104",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/jal-through-2026.11.3-arbitrary-file-overwrite-via-symlink-in-backup-archive",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "JAL备份还原任意文件覆盖漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-137529",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-59",
+    "description": "JAL（Just Another Ledger）是开源的个人财务记账软件，以 Python 编写，PyPI 包名为 jal，基于 PySide6 提供桌面界面，内置备份与还原功能，用于导出和恢复 SQLite 账本数据库。\n受影响版本中，备份还原流程对归档成员的校验不足。validate_backup 仅按文件名集合比较归档成员，不检查成员类型，包含 label 成员、指向绝对路径的 jal.sqlite 符号链接成员与同名普通文件成员的归档可以通过校验；do_restore 在路径检查后调用未指定过滤规则的 tarfile.extractall，Python 3.13 及更早版本上符号链接成员被创建，普通成员的内容经该链接写入攻击者指定的绝对路径，覆盖用户可写的任意文件（例如 shell 启动脚本），最终导致代码执行。\n修复版本中通过收紧归档校验并移除 extractall 解决该问题：归档必须恰好包含 jal.sqlite 与 label 两个普通文件成员，链接、目录、重复与多余成员被拒绝，jal.sqlite 内容必须以 SQLite 文件头开始，数据库内容经 extractfile 流式写入临时文件并以原子替换方式落盘，符号链接成员无法再参与还原流程。",
+    "effects": [
+      {
+        "comp_name": "jal",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,2026.11.3]",
+            "min_fixed_version": "",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "在文件访问前对链接解析不恰当（链接跟随）",
+    "kind_en": "Improper Link Resolution Before File Access ('Link Following')",
+    "last_modified_time": "2026-11-27",
+    "level": "High",
+    "mps_id": "MPS-ydru-mk9x",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ydru-mk9x",
+        "name": "https://www.oscs1024.com/hd/MPS-ydru-mk9x"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-137529",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-137529"
+      },
+      {
+        "url": "https://github.com/titov-vv/jal/blob/a27d31743f9e3cc894265085b2cd3938a0cb7046/jal/db/backup_restore.py#L72-L88",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/titov-vv/jal/commit/0353001ca085e3a1ce15c8a6fc216ddf5fd2daae",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/titov-vv/jal/issues/104",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/jal-through-2026.11.3-arbitrary-file-overwrite-via-symlink-in-backup-archive",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "JAL备份还原任意文件覆盖漏洞"
+  },
+  "first_saved_at": "2026-11-26T22:44:57+00:00"
+}

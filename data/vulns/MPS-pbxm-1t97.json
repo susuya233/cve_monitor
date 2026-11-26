@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-11-26T22:44:56+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-pbxm-1t97",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-137539",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-59",
+    "description": "lastversion 是一个基于 BSD-2-Clause 协议开源的 Python 命令行工具与库，用于查询 GitHub 等平台项目的最新发布版本，并支持下载、解压与安装 release 资产。\n受影响版本中，lastversion extract 将项目 release 资产下载后交给 src/lastversion/utils.py 的 extract_tar() 解压，其前置检查 check_if_tar_safe() 仅解析成员名称且解析基准为进程当前工作目录，不校验符号链接成员的 linkname，也未相对实际解压目标目录校验路径；控制项目 release 资产的攻击者在压缩包中放置指向解压目录之外的符号链接成员及其下的普通文件成员，tarfile 提取时先创建该符号链接，再经其写出后续文件，在解压目录之外实现任意文件写入，写入 ~/.local/lib/python3.X/site-packages/usercustomize.py 这类路径可在下一次 Python 启动时执行任意代码。\n修复版本中通过重写 extract_tar() 将成员名与链接目标映射到剥离顶层目录后的最终输出布局并逐成员校验，拒绝绝对路径、.. 与越界链接目标，按实际解压根目录解析符号链接落点并直接创建链接，普通文件在支持时使用 tarfile 的 data 过滤器提取，阻断经符号链接逃逸解压目录的写入路径。",
+    "effects": [
+      {
+        "comp_name": "lastversion",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.6.20)",
+            "min_fixed_version": "3.6.20",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "在文件访问前对链接解析不恰当（链接跟随）",
+    "kind_en": "文件访问前的链接解析不正确（“链接跟踪”）",
+    "last_modified_time": "2026-11-27",
+    "level": "High",
+    "mps_id": "MPS-pbxm-1t97",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pbxm-1t97",
+        "name": "https://www.oscs1024.com/hd/MPS-pbxm-1t97"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-137539",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-137539"
+      },
+      {
+        "url": "https://github.com/dvershinin/lastversion/blob/17e18ae09ad3038bc4a09e5026405d614eacd7b7/src/lastversion/utils.py#L348-L391",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dvershinin/lastversion/commit/feb362e7af52c03063755dbbce82ff53ff4bafbf",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dvershinin/lastversion/issues/246",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dvershinin/lastversion/releases/tag/v3.6.20",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/lastversion-before-3.6.20-arbitrary-file-write-via-tar-symlink-members",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "lastversion tar 符号链接解压任意文件写入漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-137539",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-59",
+    "description": "lastversion 是一个基于 BSD-2-Clause 协议开源的 Python 命令行工具与库，用于查询 GitHub 等平台项目的最新发布版本，并支持下载、解压与安装 release 资产。\n受影响版本中，lastversion extract 将项目 release 资产下载后交给 src/lastversion/utils.py 的 extract_tar() 解压，其前置检查 check_if_tar_safe() 仅解析成员名称且解析基准为进程当前工作目录，不校验符号链接成员的 linkname，也未相对实际解压目标目录校验路径；控制项目 release 资产的攻击者在压缩包中放置指向解压目录之外的符号链接成员及其下的普通文件成员，tarfile 提取时先创建该符号链接，再经其写出后续文件，在解压目录之外实现任意文件写入，写入 ~/.local/lib/python3.X/site-packages/usercustomize.py 这类路径可在下一次 Python 启动时执行任意代码。\n修复版本中通过重写 extract_tar() 将成员名与链接目标映射到剥离顶层目录后的最终输出布局并逐成员校验，拒绝绝对路径、.. 与越界链接目标，按实际解压根目录解析符号链接落点并直接创建链接，普通文件在支持时使用 tarfile 的 data 过滤器提取，阻断经符号链接逃逸解压目录的写入路径。",
+    "effects": [
+      {
+        "comp_name": "lastversion",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.6.20)",
+            "min_fixed_version": "3.6.20",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "在文件访问前对链接解析不恰当（链接跟随）",
+    "kind_en": "Improper Link Resolution Before File Access ('Link Following')",
+    "last_modified_time": "2026-11-27",
+    "level": "High",
+    "mps_id": "MPS-pbxm-1t97",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-27",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-pbxm-1t97",
+        "name": "https://www.oscs1024.com/hd/MPS-pbxm-1t97"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-137539",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-137539"
+      },
+      {
+        "url": "https://github.com/dvershinin/lastversion/blob/17e18ae09ad3038bc4a09e5026405d614eacd7b7/src/lastversion/utils.py#L348-L391",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dvershinin/lastversion/commit/feb362e7af52c03063755dbbce82ff53ff4bafbf",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dvershinin/lastversion/issues/246",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/dvershinin/lastversion/releases/tag/v3.6.20",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/lastversion-before-3.6.20-arbitrary-file-write-via-tar-symlink-members",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "python",
+      "开源"
+    ],
+    "title": "lastversion tar 符号链接解压任意文件写入漏洞"
+  },
+  "first_saved_at": "2026-11-26T22:44:56+00:00"
+}
