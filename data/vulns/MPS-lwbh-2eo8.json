@@ -1,0 +1,195 @@
+{
+  "saved_at": "2026-11-27T23:08:56+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-lwbh-2eo8",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138034",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "bigcommerce-api-mcp 是一个基于 Node.js 与 Express 的开源 Model Context Protocol（MCP）服务器，用于向 MCP 客户端暴露 BigCommerce 店铺的商品、订单与客户查询工具，工具执行时使用部署方配置的 BIGCOMMERCE_API_KEY 访问 BigCommerce API，属于大模型与 AI 基础设施组件。\n受影响版本中，setupStreamableHttp 注册的 /mcp 路由挂载了 authenticateRequest 中间件，而 setupSSE 注册的 GET /sse 与 POST /messages 路由未挂载该中间件，MCP_AUTH_TOKEN 配置在 SSE 模式下不生效；SSE 服务通过 app.listen(port) 监听且未指定绑定地址，默认绑定全部网卡。远程攻击者无需任何凭据，可先 GET /sse 建立会话获得 sessionId，再向 /messages?sessionId= 提交 JSON-RPC 工具调用请求，transport.handlePostMessage 将请求分发给已注册的 MCP 工具，以部署方的 BIGCOMMERCE_API_KEY 读取店铺商品、订单与客户记录，造成敏感信息泄露。\n修复版本中通过在 GET /sse 与 POST /messages 路由上挂载 authenticateRequest 中间件恢复对 MCP_AUTH_TOKEN 的校验，未携带有效 Bearer 令牌的请求返回 401；同时为 HTTP 监听引入 HOST 环境变量并默认绑定 127.0.0.1，仅显式配置时对外暴露，并新增 test-auth.js 回归测试覆盖两种传输方式的未认证访问，切断未认证会话建立与工具调用链路。",
+    "effects": [
+      {
+        "comp_name": "bigcommerce-api-mcp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.0.1)",
+            "min_fixed_version": "1.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "缺少关键功能的身份验证",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-lwbh-2eo8",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lwbh-2eo8",
+        "name": "https://www.oscs1024.com/hd/MPS-lwbh-2eo8"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138034",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138034"
+      },
+      {
+        "url": "https://github.com/isaacgounton/bigcommerce-api-mcp/security/advisories/GHSA-q9p3-23c9-686x",
+        "name": "GitHub Security Advisory (GHSA-q9p3-23c9-686x)"
+      },
+      {
+        "url": "https://github.com/isaacgounton/bigcommerce-api-mcp/commit/6680235dbcbf1a57cb81f0981caf519c4a38e413",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/isaacgounton/bigcommerce-api-mcp/releases/tag/v1.0.1",
+        "name": "bigcommerce-api-mcp v1.0.1 Release Notes"
+      },
+      {
+        "url": "https://github.com/isaacgounton/bigcommerce-api-mcp/blob/091efc6b69f3651516fa0e0a3b6db8e6c4e3d227/mcpServer.js#L269-L306",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/bigcommerce-api-mcp-before-1.0.1-missing-authentication-via-sse-transport-routes",
+        "name": "VulnCheck Advisory: bigcommerce-api-mcp before 1.0.1 Missing Authentication via SSE Transport Routes"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "bigcommerce-api-mcp未授权访问漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138034",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.7
+        }
+      ]
+    },
+    "cvss_score": 8.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-306",
+    "description": "bigcommerce-api-mcp 是一个基于 Node.js 与 Express 的开源 Model Context Protocol（MCP）服务器，用于向 MCP 客户端暴露 BigCommerce 店铺的商品、订单与客户查询工具，工具执行时使用部署方配置的 BIGCOMMERCE_API_KEY 访问 BigCommerce API，属于大模型与 AI 基础设施组件。\n受影响版本中，setupStreamableHttp 注册的 /mcp 路由挂载了 authenticateRequest 中间件，而 setupSSE 注册的 GET /sse 与 POST /messages 路由未挂载该中间件，MCP_AUTH_TOKEN 配置在 SSE 模式下不生效；SSE 服务通过 app.listen(port) 监听且未指定绑定地址，默认绑定全部网卡。远程攻击者无需任何凭据，可先 GET /sse 建立会话获得 sessionId，再向 /messages?sessionId= 提交 JSON-RPC 工具调用请求，transport.handlePostMessage 将请求分发给已注册的 MCP 工具，以部署方的 BIGCOMMERCE_API_KEY 读取店铺商品、订单与客户记录，造成敏感信息泄露。\n修复版本中通过在 GET /sse 与 POST /messages 路由上挂载 authenticateRequest 中间件恢复对 MCP_AUTH_TOKEN 的校验，未携带有效 Bearer 令牌的请求返回 401；同时为 HTTP 监听引入 HOST 环境变量并默认绑定 127.0.0.1，仅显式配置时对外暴露，并新增 test-auth.js 回归测试覆盖两种传输方式的未认证访问，切断未认证会话建立与工具调用链路。",
+    "effects": [
+      {
+        "comp_name": "bigcommerce-api-mcp",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[1.0.0,1.0.1)",
+            "min_fixed_version": "1.0.1",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "关键功能的认证机制缺失",
+    "kind_en": "Missing Authentication for Critical Function",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-lwbh-2eo8",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-lwbh-2eo8",
+        "name": "https://www.oscs1024.com/hd/MPS-lwbh-2eo8"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138034",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138034"
+      },
+      {
+        "url": "https://github.com/isaacgounton/bigcommerce-api-mcp/security/advisories/GHSA-q9p3-23c9-686x",
+        "name": "GitHub Security Advisory (GHSA-q9p3-23c9-686x)"
+      },
+      {
+        "url": "https://github.com/isaacgounton/bigcommerce-api-mcp/commit/6680235dbcbf1a57cb81f0981caf519c4a38e413",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/isaacgounton/bigcommerce-api-mcp/releases/tag/v1.0.1",
+        "name": "bigcommerce-api-mcp v1.0.1 Release Notes"
+      },
+      {
+        "url": "https://github.com/isaacgounton/bigcommerce-api-mcp/blob/091efc6b69f3651516fa0e0a3b6db8e6c4e3d227/mcpServer.js#L269-L306",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/bigcommerce-api-mcp-before-1.0.1-missing-authentication-via-sse-transport-routes",
+        "name": "VulnCheck Advisory: bigcommerce-api-mcp before 1.0.1 Missing Authentication via SSE Transport Routes"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "应用软件"
+    ],
+    "title": "bigcommerce-api-mcp未授权访问漏洞"
+  },
+  "first_saved_at": "2026-11-27T23:08:56+00:00"
+}

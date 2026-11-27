@@ -1,0 +1,205 @@
+{
+  "saved_at": "2026-11-27T23:08:58+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-26ze-u7f4",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138027",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-749",
+    "description": "Bagel（PyPI 包名 bagel-mcp）是 Extelligence AI 开源的机器人、无人机与 IoT 数据 MCP 分析服务器，供大模型客户端通过 SQL 对录制数据做统计与事件分析。\n受影响版本中，query_messages 工具把大模型生成的 sql_statement 原样交给 bagel_mcp/query.py 的 sql() 函数，在线程默认的 DuckDB 连接上直接执行，未校验单条 SELECT，也未关闭外部文件访问、扩展自动加载与 Python 替换扫描；攻击者通过录制日志或 topic 内容对驱动 LLM 进行提示注入后，可调用 read_csv_auto 读取主机任意文件、用 COPY TO 写入任意文件，并借助 httpfs 发起服务器端请求伪造。\n修复版本中通过在 bagel_mcp/query.py 引入沙箱连接解决该问题，模型 SQL 在 enable_external_access 关闭、扩展安装与自动加载关闭、Python 替换扫描关闭且配置锁定的独立 DuckDB 连接上执行，数据以 Arrow 流传入沙箱，check_select() 仅放行单条 SELECT，其余语句抛出 UnsafeSqlError，文件读写与网络访问路径被切断。",
+    "effects": [
+      {
+        "comp_name": "bagel-mcp",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.5.5)",
+            "min_fixed_version": "2.5.5",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "暴露危险的方法或函数",
+    "kind_en": "暴露的危险方法或功能",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-26ze-u7f4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-26ze-u7f4",
+        "name": "https://www.oscs1024.com/hd/MPS-26ze-u7f4"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138027",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138027"
+      },
+      {
+        "url": "https://github.com/Extelligence-ai/bagel/security/advisories/GHSA-gx2g-3pch-43q5",
+        "name": "GitHub Security Advisory (GHSA-gx2g-3pch-43q5)"
+      },
+      {
+        "url": "https://github.com/Extelligence-ai/bagel/commit/cbec958edd9ce105b9005c9e31631b1dc420ee4f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Extelligence-ai/bagel/releases/tag/v2.5.5",
+        "name": "Bagel v2.5.5 Release Notes"
+      },
+      {
+        "url": "https://github.com/Extelligence-ai/bagel/blob/v2.5.4/bagel_mcp/query.py#L11-L29",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Extelligence-ai/bagel/blob/v2.5.4/bagel_mcp/server.py#L246",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/bagel-before-2.5.5-unsandboxed-duckdb-sql-execution-via-query-messages",
+        "name": "VulnCheck Advisory: Bagel before 2.5.5 Unsandboxed DuckDB SQL Execution via query_messages"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "Bagel未沙箱SQL执行漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138027",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-749",
+    "description": "Bagel（PyPI 包名 bagel-mcp）是 Extelligence AI 开源的机器人、无人机与 IoT 数据 MCP 分析服务器，供大模型客户端通过 SQL 对录制数据做统计与事件分析。\n受影响版本中，query_messages 工具把大模型生成的 sql_statement 原样交给 bagel_mcp/query.py 的 sql() 函数，在线程默认的 DuckDB 连接上直接执行，未校验单条 SELECT，也未关闭外部文件访问、扩展自动加载与 Python 替换扫描；攻击者通过录制日志或 topic 内容对驱动 LLM 进行提示注入后，可调用 read_csv_auto 读取主机任意文件、用 COPY TO 写入任意文件，并借助 httpfs 发起服务器端请求伪造。\n修复版本中通过在 bagel_mcp/query.py 引入沙箱连接解决该问题，模型 SQL 在 enable_external_access 关闭、扩展安装与自动加载关闭、Python 替换扫描关闭且配置锁定的独立 DuckDB 连接上执行，数据以 Arrow 流传入沙箱，check_select() 仅放行单条 SELECT，其余语句抛出 UnsafeSqlError，文件读写与网络访问路径被切断。",
+    "effects": [
+      {
+        "comp_name": "bagel-mcp",
+        "ecosystem": "pip",
+        "versions": [
+          {
+            "affected_version": "(-∞,2.5.5)",
+            "min_fixed_version": "2.5.5",
+            "repository": "pip",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "暴露危险的方法或函数",
+    "kind_en": "Exposed Dangerous Method or Function",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-26ze-u7f4",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-26ze-u7f4",
+        "name": "https://www.oscs1024.com/hd/MPS-26ze-u7f4"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138027",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138027"
+      },
+      {
+        "url": "https://github.com/Extelligence-ai/bagel/security/advisories/GHSA-gx2g-3pch-43q5",
+        "name": "GitHub Security Advisory (GHSA-gx2g-3pch-43q5)"
+      },
+      {
+        "url": "https://github.com/Extelligence-ai/bagel/commit/cbec958edd9ce105b9005c9e31631b1dc420ee4f",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Extelligence-ai/bagel/releases/tag/v2.5.5",
+        "name": "Bagel v2.5.5 Release Notes"
+      },
+      {
+        "url": "https://github.com/Extelligence-ai/bagel/blob/v2.5.4/bagel_mcp/query.py#L11-L29",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/Extelligence-ai/bagel/blob/v2.5.4/bagel_mcp/server.py#L246",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/bagel-before-2.5.5-unsandboxed-duckdb-sql-execution-via-query-messages",
+        "name": "VulnCheck Advisory: Bagel before 2.5.5 Unsandboxed DuckDB SQL Execution via query_messages"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "python",
+      "开源"
+    ],
+    "title": "Bagel未沙箱SQL执行漏洞"
+  },
+  "first_saved_at": "2026-11-27T23:08:58+00:00"
+}

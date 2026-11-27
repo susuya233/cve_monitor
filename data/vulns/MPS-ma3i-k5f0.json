@@ -1,0 +1,251 @@
+{
+  "saved_at": "2026-11-27T23:08:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ma3i-k5f0",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138003",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:H/Au:N/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H/E:P/RL:X/RC:R",
+          "severity": "critical",
+          "base_score": 9
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9
+        }
+      ]
+    },
+    "cvss_score": 9,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "TRENDnet TEW-751DR是TRENDnet公司的N600双频无线路由器，TEW-733GR是同厂商的N300无线路由器，两者均运行闭源嵌入式固件；固件中的UPnP/WFA（Wi-Fi Alliance注册）服务由多功能CGI程序htdocs/cgibin实现，wfadev.cgi是设备启动时创建的指向该程序的符号链接入口，用于处理WFA设备的SOAP控制请求。\n受影响版本中，wfadev_main对POST /wfadev.cgi请求不进行任何会话或凭证校验，直接读取HTTP_SOAPACTION环境变量中的SOAPAction请求头，并把#之前的内容传入共享SOAP响应构造函数FUN_0040ed90；该函数在4100字节栈缓冲区上通过sprintf拼接响应报文，写入过程无任何长度边界检查，全部14个WFA动作处理函数均经由其输出响应。SOAPAction前缀超过约3960字节即溢出栈缓冲区，该CGI二进制未启用栈保护且为非PIE，CGI进程以root权限运行，远程攻击者在无需认证的情况下可使进程崩溃形成拒绝服务，栈内容被覆盖后亦存在进一步代码执行的可能；经固件比对，官方最新固件1.03B03中的同一函数仍无边界检查。\n修复版本中通过厂商固件更新消除该漏洞的方案截至2026年11月28日尚未发布，官方最新固件1.03B03仍受影响；在修复固件发布前，建议关闭设备UPnP功能，将UPnP/WFA服务默认监听的49152端口限制为仅可信局域网主机访问，并在边界防火墙阻断WAN侧对该端口的访问，以降低被利用风险。",
+    "effects": [
+      {
+        "comp_name": "TEW-733GR",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.03B01]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "TEW-751DR",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.03B03]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "基于堆栈的缓冲区溢出",
+    "last_modified_time": "2026-11-28",
+    "level": "Critical",
+    "mps_id": "MPS-ma3i-k5f0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ma3i-k5f0",
+        "name": "https://www.oscs1024.com/hd/MPS-ma3i-k5f0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138003",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138003"
+      },
+      {
+        "url": "https://vuldb.com/vuln/444938",
+        "name": "VDB-444938 | TRENDnet TEW-751DR UPnP/WFA wfadev.cgi FUN_0040ed90 stack-based overflow"
+      },
+      {
+        "url": "https://vuldb.com/vuln/444938/cti",
+        "name": "VDB-444938 | CTI Indicators (IOB, IOC, IOA)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-138003",
+        "name": "CVE-2026-138003 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/1066758",
+        "name": "Submit #1066758 | TRENDnet TEW-751DR 1.03B01 Stack-based Buffer Overflow (CWE-121)"
+      },
+      {
+        "url": "https://gist.github.com/qwq-nm/4120495fb8a560921da0f102fa90fa0d",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "TRENDnet路由器栈溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138003",
+    "cvss": {
+      "cvssv2": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "AV:N/AC:H/Au:N/C:C/I:C/A:C",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ],
+      "cvssv3": [
+        {
+          "source": "VulDB",
+          "vector": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H/E:P/RL:X/RC:R",
+          "severity": "critical",
+          "base_score": 9
+        }
+      ],
+      "cvssv31": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+          "severity": "critical",
+          "base_score": 9
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "cna@vuldb.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9
+        }
+      ]
+    },
+    "cvss_score": 9,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "TRENDnet TEW-751DR是TRENDnet公司的N600双频无线路由器，TEW-733GR是同厂商的N300无线路由器，两者均运行闭源嵌入式固件；固件中的UPnP/WFA（Wi-Fi Alliance注册）服务由多功能CGI程序htdocs/cgibin实现，wfadev.cgi是设备启动时创建的指向该程序的符号链接入口，用于处理WFA设备的SOAP控制请求。\n受影响版本中，wfadev_main对POST /wfadev.cgi请求不进行任何会话或凭证校验，直接读取HTTP_SOAPACTION环境变量中的SOAPAction请求头，并把#之前的内容传入共享SOAP响应构造函数FUN_0040ed90；该函数在4100字节栈缓冲区上通过sprintf拼接响应报文，写入过程无任何长度边界检查，全部14个WFA动作处理函数均经由其输出响应。SOAPAction前缀超过约3960字节即溢出栈缓冲区，该CGI二进制未启用栈保护且为非PIE，CGI进程以root权限运行，远程攻击者在无需认证的情况下可使进程崩溃形成拒绝服务，栈内容被覆盖后亦存在进一步代码执行的可能；经固件比对，官方最新固件1.03B03中的同一函数仍无边界检查。\n修复版本中通过厂商固件更新消除该漏洞的方案截至2026年11月28日尚未发布，官方最新固件1.03B03仍受影响；在修复固件发布前，建议关闭设备UPnP功能，将UPnP/WFA服务默认监听的49152端口限制为仅可信局域网主机访问，并在边界防火墙阻断WAN侧对该端口的访问，以降低被利用风险。",
+    "effects": [
+      {
+        "comp_name": "TEW-733GR",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.03B01]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      },
+      {
+        "comp_name": "TEW-751DR",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.03B03]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "低",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "Stack-based Buffer Overflow",
+    "last_modified_time": "2026-11-28",
+    "level": "Critical",
+    "mps_id": "MPS-ma3i-k5f0",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ma3i-k5f0",
+        "name": "https://www.oscs1024.com/hd/MPS-ma3i-k5f0"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138003",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138003"
+      },
+      {
+        "url": "https://vuldb.com/vuln/444938",
+        "name": "VDB-444938 | TRENDnet TEW-751DR UPnP/WFA wfadev.cgi FUN_0040ed90 stack-based overflow"
+      },
+      {
+        "url": "https://vuldb.com/vuln/444938/cti",
+        "name": "VDB-444938 | CTI Indicators (IOB, IOC, IOA)"
+      },
+      {
+        "url": "https://vuldb.com/cve/CVE-2026-138003",
+        "name": "CVE-2026-138003 | CVE Analysis and Report"
+      },
+      {
+        "url": "https://vuldb.com/submit/1066758",
+        "name": "Submit #1066758 | TRENDnet TEW-751DR 1.03B01 Stack-based Buffer Overflow (CWE-121)"
+      },
+      {
+        "url": "https://gist.github.com/qwq-nm/4120495fb8a560921da0f102fa90fa0d",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "TRENDnet路由器栈溢出漏洞"
+  },
+  "first_saved_at": "2026-11-27T23:08:52+00:00"
+}

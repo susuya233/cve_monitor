@@ -1,0 +1,201 @@
+{
+  "saved_at": "2026-11-27T23:08:57+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ph79-e3sm",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138031",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "Typebot 是开源的对话式机器人构建平台，采用 TypeScript 与 Next.js 实现可视化流程编排，其中 HTTP 请求块用于在对话执行过程中发起自定义 Webhook 调用。\n受影响版本中，已登录的机器人作者通过 updateTypebot 保存 HTTP 请求块时，sanitizeGroups 未校验旧版 schema 携带的 webhookId 是否归属当前 typebot，攻击者可将其他工作区的 legacy Webhook 行 ID 持久化到自己的流程中。executeHttpRequestBlock 按 ID 单条件查询 Webhook 行，在客户端执行模式下把解析出的 URL、请求头与请求体返回给浏览器，导致受害者的 Webhook 配置与数据被读取；handleSubscribeHttpRequest 与 handleUnsubscribeHttpRequest 同样仅按 ID 更新 Webhook 行，可改写受害者的 webhook URL 并转移其回调数据。\n修复版本中通过在 sanitizeGroups 中集中收集 webhookId 并按 id 与 typebotId 双条件查询，发现不属于当前 typebot 的引用时抛出 BAD_REQUEST 拒绝保存；executeHttpRequestBlock 的查询、订阅与取消订阅处理器的更新条件以及 v3 到 v4 迁移的数据库查询同步限定 typebotId，阻断跨工作区的 Webhook 读取与改写。",
+    "effects": [
+      {
+        "comp_name": "typebot.io",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.14.0,3.19.0)",
+            "min_fixed_version": "3.19.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "通过用户控制的密钥绕过授权",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-ph79-e3sm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ph79-e3sm",
+        "name": "https://www.oscs1024.com/hd/MPS-ph79-e3sm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138031",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138031"
+      },
+      {
+        "url": "https://github.com/baptisteArno/typebot.io/security/advisories/GHSA-w4h3-92qg-f374",
+        "name": "GitHub Security Advisory (GHSA-w4h3-92qg-f374)"
+      },
+      {
+        "url": "https://github.com/baptisteArno/typebot.io/commit/64d47055a8248c441b05eecd3b12c486106d4562",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/baptisteArno/typebot.io/releases/tag/v3.19.0",
+        "name": "Typebot v3.19.0 Release Notes"
+      },
+      {
+        "url": "https://github.com/baptisteArno/typebot.io/blob/v3.18.0/packages/bot-engine/src/blocks/integrations/httpRequest/executeHttpRequestBlock.ts#L92-L129",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/baptisteArno/typebot.io/blob/v3.18.0/apps/builder/src/features/typebot/helpers/sanitizers.ts#L42-L61",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/typebot-from-2.14.0-before-3.19.0-cross-workspace-webhook-disclosure-via-unscoped-webhookid",
+        "name": "VulnCheck Advisory: Typebot from 2.14.0 before 3.19.0 Cross-Workspace Webhook Disclosure via Unscoped webhookId"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Typebot跨工作区Webhook越权漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138031",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
+          "severity": "medium",
+          "base_score": 6.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.6
+        }
+      ]
+    },
+    "cvss_score": 7.6,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-639",
+    "description": "Typebot 是开源的对话式机器人构建平台，采用 TypeScript 与 Next.js 实现可视化流程编排，其中 HTTP 请求块用于在对话执行过程中发起自定义 Webhook 调用。\n受影响版本中，已登录的机器人作者通过 updateTypebot 保存 HTTP 请求块时，sanitizeGroups 未校验旧版 schema 携带的 webhookId 是否归属当前 typebot，攻击者可将其他工作区的 legacy Webhook 行 ID 持久化到自己的流程中。executeHttpRequestBlock 按 ID 单条件查询 Webhook 行，在客户端执行模式下把解析出的 URL、请求头与请求体返回给浏览器，导致受害者的 Webhook 配置与数据被读取；handleSubscribeHttpRequest 与 handleUnsubscribeHttpRequest 同样仅按 ID 更新 Webhook 行，可改写受害者的 webhook URL 并转移其回调数据。\n修复版本中通过在 sanitizeGroups 中集中收集 webhookId 并按 id 与 typebotId 双条件查询，发现不属于当前 typebot 的引用时抛出 BAD_REQUEST 拒绝保存；executeHttpRequestBlock 的查询、订阅与取消订阅处理器的更新条件以及 v3 到 v4 迁移的数据库查询同步限定 typebotId，阻断跨工作区的 Webhook 读取与改写。",
+    "effects": [
+      {
+        "comp_name": "typebot.io",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "[2.14.0,3.19.0)",
+            "min_fixed_version": "3.19.0",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "通过用户控制密钥绕过授权机制",
+    "kind_en": "Authorization Bypass Through User-Controlled Key",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-ph79-e3sm",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ph79-e3sm",
+        "name": "https://www.oscs1024.com/hd/MPS-ph79-e3sm"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138031",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138031"
+      },
+      {
+        "url": "https://github.com/baptisteArno/typebot.io/security/advisories/GHSA-w4h3-92qg-f374",
+        "name": "GitHub Security Advisory (GHSA-w4h3-92qg-f374)"
+      },
+      {
+        "url": "https://github.com/baptisteArno/typebot.io/commit/64d47055a8248c441b05eecd3b12c486106d4562",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/baptisteArno/typebot.io/releases/tag/v3.19.0",
+        "name": "Typebot v3.19.0 Release Notes"
+      },
+      {
+        "url": "https://github.com/baptisteArno/typebot.io/blob/v3.18.0/packages/bot-engine/src/blocks/integrations/httpRequest/executeHttpRequestBlock.ts#L92-L129",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/baptisteArno/typebot.io/blob/v3.18.0/apps/builder/src/features/typebot/helpers/sanitizers.ts#L42-L61",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/typebot-from-2.14.0-before-3.19.0-cross-workspace-webhook-disclosure-via-unscoped-webhookid",
+        "name": "VulnCheck Advisory: Typebot from 2.14.0 before 3.19.0 Cross-Workspace Webhook Disclosure via Unscoped webhookId"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Typebot跨工作区Webhook越权漏洞"
+  },
+  "first_saved_at": "2026-11-27T23:08:57+00:00"
+}

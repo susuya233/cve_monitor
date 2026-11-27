@@ -1,0 +1,205 @@
+{
+  "saved_at": "2026-11-27T23:08:55+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-9j48-drhl",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138033",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "mcp-video-analyzer 是一个以 MIT 协议开源的 MCP 视频分析服务器，基于 TypeScript 与 Node.js 实现，通过 Model Context Protocol 向大模型客户端提供视频帧提取、转写、元数据与 OCR 等工具，支持 Loom、YouTube 等平台视频、以视频扩展名结尾的直连 URL 以及本地文件。\n受影响版本中，src/utils/url-detector.ts 的 detectPlatform 仅检查 URL 路径是否以 .mp4、.webm 等视频扩展名结尾，不校验协议、主机与 IP 网段，任意以视频扩展名结尾的 http(s) URL 均被归类为 direct；src/utils/video-download.ts 的 downloadDirectVideo 随后对该字符串直接 fetch 并把响应体写入磁盘，且默认跟随重定向，而 8 个 MCP 工具与 CLI 的 url 参数仅有 isVideoSource 这一道字面量检查。攻击者可通过提示注入让模型调用 get_frames、get_frame_at 等工具抓取回环、内网或云元数据地址，也可借助公网主机返回的 302 重定向转向内部地址，内部响应经落盘或经 extractBrowserFrames 渲染为 JPEG 截图返回，造成内网信息泄露。\n修复版本中通过在共享信任边界统一新增 SSRF 校验切断上述链条：新增 src/utils/ssrf-guard.ts，detectPlatform 在归类前拒绝非 http(s) 协议、UNC 路径与字面量内网主机，新增的 assertPublicUrl 在各下载入口解析 DNS 并检查全部返回地址，169.254.169.254 等云元数据网段无条件拒绝，私网与回环网段默认拒绝、仅在设置 MCP_ALLOW_PRIVATE_URLS=1 时放开；downloadDirectVideo 改为手动跟随最多 20 次重定向并对每一跳重新校验，消除了直连与重定向两条利用路径。",
+    "effects": [
+      {
+        "comp_name": "mcp-video-analyzer",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[0.2.0,0.10.1)",
+            "min_fixed_version": "0.10.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "SSRF",
+    "kind_en": "服务器端请求伪造 (SSRF)",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-9j48-drhl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-9j48-drhl",
+        "name": "https://www.oscs1024.com/hd/MPS-9j48-drhl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138033",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138033"
+      },
+      {
+        "url": "https://github.com/guimatheus92/mcp-video-analyzer/security/advisories/GHSA-hpmc-4g74-v53v",
+        "name": "GitHub Security Advisory (GHSA-hpmc-4g74-v53v)"
+      },
+      {
+        "url": "https://github.com/guimatheus92/mcp-video-analyzer/commit/e684edf16a2860e73d138653c0c3cf7a4cf2d6fd",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/guimatheus92/mcp-video-analyzer/releases/tag/v0.10.1",
+        "name": "mcp-video-analyzer v0.10.1 Release Notes"
+      },
+      {
+        "url": "https://github.com/guimatheus92/mcp-video-analyzer/blob/v0.10.0/src/utils/video-download.ts#L29-L41",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/guimatheus92/mcp-video-analyzer/blob/v0.10.0/src/utils/url-detector.ts#L54-L84",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/mcp-video-analyzer-0.2.0-before-0.10.1-ssrf-via-direct-video-urls",
+        "name": "VulnCheck Advisory: mcp-video-analyzer 0.2.0 before 0.10.1 SSRF via Direct Video URLs"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "npm",
+      "开源"
+    ],
+    "title": "mcp-video-analyzer SSRF漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138033",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:N/A:N",
+          "severity": "medium",
+          "base_score": 6.1
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7
+        }
+      ]
+    },
+    "cvss_score": 7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-918",
+    "description": "mcp-video-analyzer 是一个以 MIT 协议开源的 MCP 视频分析服务器，基于 TypeScript 与 Node.js 实现，通过 Model Context Protocol 向大模型客户端提供视频帧提取、转写、元数据与 OCR 等工具，支持 Loom、YouTube 等平台视频、以视频扩展名结尾的直连 URL 以及本地文件。\n受影响版本中，src/utils/url-detector.ts 的 detectPlatform 仅检查 URL 路径是否以 .mp4、.webm 等视频扩展名结尾，不校验协议、主机与 IP 网段，任意以视频扩展名结尾的 http(s) URL 均被归类为 direct；src/utils/video-download.ts 的 downloadDirectVideo 随后对该字符串直接 fetch 并把响应体写入磁盘，且默认跟随重定向，而 8 个 MCP 工具与 CLI 的 url 参数仅有 isVideoSource 这一道字面量检查。攻击者可通过提示注入让模型调用 get_frames、get_frame_at 等工具抓取回环、内网或云元数据地址，也可借助公网主机返回的 302 重定向转向内部地址，内部响应经落盘或经 extractBrowserFrames 渲染为 JPEG 截图返回，造成内网信息泄露。\n修复版本中通过在共享信任边界统一新增 SSRF 校验切断上述链条：新增 src/utils/ssrf-guard.ts，detectPlatform 在归类前拒绝非 http(s) 协议、UNC 路径与字面量内网主机，新增的 assertPublicUrl 在各下载入口解析 DNS 并检查全部返回地址，169.254.169.254 等云元数据网段无条件拒绝，私网与回环网段默认拒绝、仅在设置 MCP_ALLOW_PRIVATE_URLS=1 时放开；downloadDirectVideo 改为手动跟随最多 20 次重定向并对每一跳重新校验，消除了直连与重定向两条利用路径。",
+    "effects": [
+      {
+        "comp_name": "mcp-video-analyzer",
+        "ecosystem": "npm",
+        "versions": [
+          {
+            "affected_version": "[0.2.0,0.10.1)",
+            "min_fixed_version": "0.10.1",
+            "repository": "npm",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "SSRF",
+    "kind_en": "Server-Side Request Forgery (SSRF)",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-9j48-drhl",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-9j48-drhl",
+        "name": "https://www.oscs1024.com/hd/MPS-9j48-drhl"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138033",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138033"
+      },
+      {
+        "url": "https://github.com/guimatheus92/mcp-video-analyzer/security/advisories/GHSA-hpmc-4g74-v53v",
+        "name": "GitHub Security Advisory (GHSA-hpmc-4g74-v53v)"
+      },
+      {
+        "url": "https://github.com/guimatheus92/mcp-video-analyzer/commit/e684edf16a2860e73d138653c0c3cf7a4cf2d6fd",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/guimatheus92/mcp-video-analyzer/releases/tag/v0.10.1",
+        "name": "mcp-video-analyzer v0.10.1 Release Notes"
+      },
+      {
+        "url": "https://github.com/guimatheus92/mcp-video-analyzer/blob/v0.10.0/src/utils/video-download.ts#L29-L41",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/guimatheus92/mcp-video-analyzer/blob/v0.10.0/src/utils/url-detector.ts#L54-L84",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/mcp-video-analyzer-0.2.0-before-0.10.1-ssrf-via-direct-video-urls",
+        "name": "VulnCheck Advisory: mcp-video-analyzer 0.2.0 before 0.10.1 SSRF via Direct Video URLs"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "AI",
+      "npm",
+      "开源"
+    ],
+    "title": "mcp-video-analyzer SSRF漏洞"
+  },
+  "first_saved_at": "2026-11-27T23:08:55+00:00"
+}
