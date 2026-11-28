@@ -1,0 +1,201 @@
+{
+  "saved_at": "2026-11-28T05:53:49+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-q91p-7smn",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138163",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-122",
+    "description": "Gammu 是开源的移动设备管理工具与 libGammu 函数库，用于管理手机中的短信、电话簿、日历与 WAP 设置等数据，并支持文本格式备份文件的创建、恢复与相互转换。\n受影响版本中，libgammu/service/backup/backtext.c 的 ReadWAPSettingsEntry 函数在解析备份文件的 [WAPSettings] 或 [MMSSettings] 段时，把 settings->Number 初始化为 0 后作为 Settings 数组下标写入设置项字段，并在循环末尾递增该下标；GSM_MultiWAPSettings 中的 Settings 数组在 include/gammu-wap.h 中固定为 4 个元素，函数内未对该下标做边界检查，段内出现超过 4 个 TitleNN 键时会经 ReadBackupText 向堆对象越界写入攻击者可控内容，通过 gammu convertbackup、restore 命令或库接口 GSM_ReadBackupFile 加载此类备份文件可导致堆内存损坏与进程崩溃。\n修复版本中通过在写入每个设置项前检查 settings->Number 是否达到 Settings 数组容量、超限时返回 ERR_CORRUPTED，并由 LoadBackup 对 WAP 与 MMS 两类段统一检查该返回值转入错误处理，使超出数组容量的备份段被拒绝解析，切断堆越界写入路径。",
+    "effects": [
+      {
+        "comp_name": "gammu",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.45.2)",
+            "min_fixed_version": "1.45.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "基于堆的缓冲区溢出",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-q91p-7smn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-q91p-7smn",
+        "name": "https://www.oscs1024.com/hd/MPS-q91p-7smn"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138163",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138163"
+      },
+      {
+        "url": "https://github.com/gammu/gammu/security/advisories/GHSA-vppj-6q2c-vq79",
+        "name": "GitHub Security Advisory (GHSA-vppj-6q2c-vq79)"
+      },
+      {
+        "url": "https://github.com/gammu/gammu/commit/e0bf2fa08a78afebd493f7f00ea12ef9276ff52e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gammu/gammu/releases/tag/1.45.2",
+        "name": "Gammu 1.45.2 Release Notes"
+      },
+      {
+        "url": "https://github.com/gammu/gammu/blob/1.45.1/libgammu/service/backup/backtext.c#L2814-L2896",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gammu/gammu",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gammu-before-1.45.2-heap-buffer-overflow-via-readwapsettingsentry",
+        "name": "VulnCheck Advisory: Gammu before 1.45.2 Heap Buffer Overflow via ReadWAPSettingsEntry()"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Gammu堆缓冲区溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138163",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.8
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 8.5
+        }
+      ]
+    },
+    "cvss_score": 8.5,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-122",
+    "description": "Gammu 是开源的移动设备管理工具与 libGammu 函数库，用于管理手机中的短信、电话簿、日历与 WAP 设置等数据，并支持文本格式备份文件的创建、恢复与相互转换。\n受影响版本中，libgammu/service/backup/backtext.c 的 ReadWAPSettingsEntry 函数在解析备份文件的 [WAPSettings] 或 [MMSSettings] 段时，把 settings->Number 初始化为 0 后作为 Settings 数组下标写入设置项字段，并在循环末尾递增该下标；GSM_MultiWAPSettings 中的 Settings 数组在 include/gammu-wap.h 中固定为 4 个元素，函数内未对该下标做边界检查，段内出现超过 4 个 TitleNN 键时会经 ReadBackupText 向堆对象越界写入攻击者可控内容，通过 gammu convertbackup、restore 命令或库接口 GSM_ReadBackupFile 加载此类备份文件可导致堆内存损坏与进程崩溃。\n修复版本中通过在写入每个设置项前检查 settings->Number 是否达到 Settings 数组容量、超限时返回 ERR_CORRUPTED，并由 LoadBackup 对 WAP 与 MMS 两类段统一检查该返回值转入错误处理，使超出数组容量的备份段被拒绝解析，切断堆越界写入路径。",
+    "effects": [
+      {
+        "comp_name": "gammu",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.45.2)",
+            "min_fixed_version": "1.45.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "中",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "堆缓冲区溢出",
+    "kind_en": "Heap-based Buffer Overflow",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-q91p-7smn",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-q91p-7smn",
+        "name": "https://www.oscs1024.com/hd/MPS-q91p-7smn"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138163",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138163"
+      },
+      {
+        "url": "https://github.com/gammu/gammu/security/advisories/GHSA-vppj-6q2c-vq79",
+        "name": "GitHub Security Advisory (GHSA-vppj-6q2c-vq79)"
+      },
+      {
+        "url": "https://github.com/gammu/gammu/commit/e0bf2fa08a78afebd493f7f00ea12ef9276ff52e",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gammu/gammu/releases/tag/1.45.2",
+        "name": "Gammu 1.45.2 Release Notes"
+      },
+      {
+        "url": "https://github.com/gammu/gammu/blob/1.45.1/libgammu/service/backup/backtext.c#L2814-L2896",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gammu/gammu",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gammu-before-1.45.2-heap-buffer-overflow-via-readwapsettingsentry",
+        "name": "VulnCheck Advisory: Gammu before 1.45.2 Heap Buffer Overflow via ReadWAPSettingsEntry()"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Gammu堆缓冲区溢出漏洞"
+  },
+  "first_saved_at": "2026-11-28T05:53:49+00:00"
+}

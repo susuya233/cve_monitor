@@ -1,0 +1,201 @@
+{
+  "saved_at": "2026-11-28T05:53:47+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-zcpb-01wu",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138162",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "Gammu 是开源的手机管理工具与 libgammu 库，用于通过数据线、红外或蓝牙连接管理手机的电话簿、短信、日历等数据。\n受影响版本中，libgammu/phone/alcatel/alcatel.c 的 ALCATEL_EncodeString() 将电话簿文本字段编码到调用方提供的缓冲区时不限制输出长度。GSM 扩展字符经 EncodeDefault() 编码为两个字节，而 ALCATEL_CreateField() 提供的写入目标位于其 200 字节栈数组 buffer 的偏移 11 处。攻击者诱导用户使用 gammu restore 或 addnew 向由 Alcatel 驱动接管的手机恢复包含 200 个扩展字符字段的备份文件时，编码输出可达 400 字节并向栈数组之外写入最多 213 字节，造成栈缓冲区溢出，可导致进程崩溃，极端情况下可能执行任意代码。\n修复版本中通过在 ALCATEL_EncodeString() 引入 ALCATEL_MAX_FIELD_BYTES（187 字节）编码上限解决该问题：输入长度超过 GSM_PHONEBOOK_TEXT_LENGTH 或编码结果超过上限时返回 ERR_INVALIDDATA，编码先在本地缓冲区完成并通过长度检查后再复制到目标缓冲区，同时在 ALCATEL_AddCategoryText() 中传播该错误，阻断超长编码数据写入栈缓冲区。",
+    "effects": [
+      {
+        "comp_name": "gammu",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.45.2)",
+            "min_fixed_version": "1.45.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "基于堆栈的缓冲区溢出",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-zcpb-01wu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zcpb-01wu",
+        "name": "https://www.oscs1024.com/hd/MPS-zcpb-01wu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138162",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138162"
+      },
+      {
+        "url": "https://github.com/gammu/gammu/security/advisories/GHSA-3x76-xc9w-q78p",
+        "name": "GitHub Security Advisory (GHSA-3x76-xc9w-q78p)"
+      },
+      {
+        "url": "https://github.com/gammu/gammu/commit/a1c60cf0888052dd489d416a817b24d35dca2689",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gammu/gammu/releases/tag/1.45.2",
+        "name": "Gammu 1.45.2 Release Notes"
+      },
+      {
+        "url": "https://github.com/gammu/gammu/blob/1.45.1/libgammu/phone/alcatel/alcatel.c#L876-L916",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gammu/gammu",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gammu-before-1.45.2-stack-based-buffer-overflow-via-alcatel-encodestring",
+        "name": "VulnCheck Advisory: Gammu before 1.45.2 Stack-Based Buffer Overflow via ALCATEL_EncodeString()"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Gammu Alcatel驱动栈溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138162",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.3
+        }
+      ]
+    },
+    "cvss_score": 7.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-121",
+    "description": "Gammu 是开源的手机管理工具与 libgammu 库，用于通过数据线、红外或蓝牙连接管理手机的电话簿、短信、日历等数据。\n受影响版本中，libgammu/phone/alcatel/alcatel.c 的 ALCATEL_EncodeString() 将电话簿文本字段编码到调用方提供的缓冲区时不限制输出长度。GSM 扩展字符经 EncodeDefault() 编码为两个字节，而 ALCATEL_CreateField() 提供的写入目标位于其 200 字节栈数组 buffer 的偏移 11 处。攻击者诱导用户使用 gammu restore 或 addnew 向由 Alcatel 驱动接管的手机恢复包含 200 个扩展字符字段的备份文件时，编码输出可达 400 字节并向栈数组之外写入最多 213 字节，造成栈缓冲区溢出，可导致进程崩溃，极端情况下可能执行任意代码。\n修复版本中通过在 ALCATEL_EncodeString() 引入 ALCATEL_MAX_FIELD_BYTES（187 字节）编码上限解决该问题：输入长度超过 GSM_PHONEBOOK_TEXT_LENGTH 或编码结果超过上限时返回 ERR_INVALIDDATA，编码先在本地缓冲区完成并通过长度检查后再复制到目标缓冲区，同时在 ALCATEL_AddCategoryText() 中传播该错误，阻断超长编码数据写入栈缓冲区。",
+    "effects": [
+      {
+        "comp_name": "gammu",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,1.45.2)",
+            "min_fixed_version": "1.45.2",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "栈缓冲区溢出",
+    "kind_en": "Stack-based Buffer Overflow",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-zcpb-01wu",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-zcpb-01wu",
+        "name": "https://www.oscs1024.com/hd/MPS-zcpb-01wu"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138162",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138162"
+      },
+      {
+        "url": "https://github.com/gammu/gammu/security/advisories/GHSA-3x76-xc9w-q78p",
+        "name": "GitHub Security Advisory (GHSA-3x76-xc9w-q78p)"
+      },
+      {
+        "url": "https://github.com/gammu/gammu/commit/a1c60cf0888052dd489d416a817b24d35dca2689",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gammu/gammu/releases/tag/1.45.2",
+        "name": "Gammu 1.45.2 Release Notes"
+      },
+      {
+        "url": "https://github.com/gammu/gammu/blob/1.45.1/libgammu/phone/alcatel/alcatel.c#L876-L916",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/gammu/gammu",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/gammu-before-1.45.2-stack-based-buffer-overflow-via-alcatel-encodestring",
+        "name": "VulnCheck Advisory: Gammu before 1.45.2 Stack-Based Buffer Overflow via ALCATEL_EncodeString()"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "Gammu Alcatel驱动栈溢出漏洞"
+  },
+  "first_saved_at": "2026-11-28T05:53:47+00:00"
+}

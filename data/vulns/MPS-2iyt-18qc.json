@@ -1,0 +1,211 @@
+{
+  "saved_at": "2026-11-28T05:53:52+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-2iyt-18qc",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "由于整数类型的有限范围，在进行算术运算或操作时，结果可能超出类型的表示范围，导致溢出或环绕。溢出指的是结果超过了类型的最大值或小于了最小值，而环绕指的是结果绕回到类型的最小值或最大值。",
+        "title": "什么是整数溢出或环绕"
+      },
+      {
+        "content": "- 缓冲区溢出：整数溢出可能导致缓冲区溢出漏洞。当整数溢出导致分配的缓冲区大小不足以容纳结果时，攻击者可以利用这个漏洞覆盖相邻的内存区域，执行恶意代码或篡改程序的状态。\r\n- 身份验证绕过：在进行身份验证或访问控制时，整数溢出可能导致绕过验证的漏洞。攻击者可以构造特殊的输入，使溢出的整数值绕过了预期的验证逻辑，从而获得未经授权的访问权限。\r\n- 数据篡改：整数溢出可能导致数据篡改漏洞。攻击者可以通过使整数溢出，修改计数器、索引或其他控制数据的值，导致程序在处理数据时发生错误或执行意外的操作。",
+        "title": "整数溢出或环绕常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与限制：对用户输入的整数进行合理的验证和限制，确保其在允许的范围内。\r\n- 使用安全的整数操作函数：使用安全的整数操作函数，如`add_with_overflow()`、`sub_with_overflow()`、`mul_with_overflow()`等，这些函数会检查并处理溢出情况，确保计算结果在安全范围内。\r\n- 类型检查和转换：在进行整数运算或操作之前，进行类型检查和转换，确保操作数的类型和范围是合适的。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括对整数运算和操作的规范和限制，以帮助程序员编写更可靠、安全的代码。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的整数溢出问题。这些工具可以帮助发现代码中可能存在的溢出漏洞，并及时修复。",
+        "title": "如何预防整数溢出或环绕"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138159",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-190",
+    "description": "edbrowse 是一个开源的命令行文本浏览器与文件编辑器，采用 C 语言编写，支持通过 HTTP、FTP、gopher 等协议抓取并浏览网页与文件。\n受影响版本中，src/stringfile.c 的 stringAndBytes() 使用 32 位有符号 int 计算缓冲区累计长度，eb_curl_callback() 将 libcurl 收到的每一段 HTTP、FTP 或 gopher 响应数据经 stringAndBytes8() 累加进该缓冲区，当攻击者控制的服务器返回超过 INT_MAX（约 2GB）的响应体时 newlen = oldlen + cnt 回绕为负数，增长判断 x = oldlen ^ newlen 的结果为负数而跳过 realloc 扩容分支，memcpy(p + oldlen, t, cnt) 与 p[oldlen + cnt] = 0 仍按原始长度写入，在已分配的堆缓冲区之外继续写入响应数据，造成堆内存破坏、进程崩溃或潜在的代码执行。\n修复版本中通过在 stringAndBytes()、stringAndString() 与 stringAndChar() 扩容前改用 long long 计算 (long long)oldlen + (long long)cnt + 1 并与 INT_MAX 比较解决该问题，累计长度超限时调用 i_printfExit(MSG_ErrorRealloc) 终止运行而不再执行越界写入，同时为 stringAndString8()、stringAndChar8() 与 stringAndNum8() 补充收窄前的长度校验，切断恶意服务器超大响应体触发的堆越界写路径。",
+    "effects": [
+      {
+        "comp_name": "edbrowse",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.8.19]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "整数溢出或环绕",
+    "kind_en": "整数溢出或环绕",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-2iyt-18qc",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2iyt-18qc",
+        "name": "https://www.oscs1024.com/hd/MPS-2iyt-18qc"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138159",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138159"
+      },
+      {
+        "url": "https://github.com/edbrowse/edbrowse/commit/cce285327f3ab4956a113f99b76e3d535072fbcf",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/edbrowse/edbrowse/blob/v3.8.19/src/stringfile.c#L260-L280",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/edbrowse/edbrowse",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/edbrowse-through-3.8.19-heap-buffer-overflow-via-stringandbytes-integer-overflow",
+        "name": "VulnCheck Advisory: edbrowse through 3.8.19 Heap Buffer Overflow via stringAndBytes() Integer Overflow"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "edbrowse堆溢出漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [
+      {
+        "content": "由于整数类型的有限范围，在进行算术运算或操作时，结果可能超出类型的表示范围，导致溢出或环绕。溢出指的是结果超过了类型的最大值或小于了最小值，而环绕指的是结果绕回到类型的最小值或最大值。",
+        "title": "什么是整数溢出或环绕"
+      },
+      {
+        "content": "- 缓冲区溢出：整数溢出可能导致缓冲区溢出漏洞。当整数溢出导致分配的缓冲区大小不足以容纳结果时，攻击者可以利用这个漏洞覆盖相邻的内存区域，执行恶意代码或篡改程序的状态。\r\n- 身份验证绕过：在进行身份验证或访问控制时，整数溢出可能导致绕过验证的漏洞。攻击者可以构造特殊的输入，使溢出的整数值绕过了预期的验证逻辑，从而获得未经授权的访问权限。\r\n- 数据篡改：整数溢出可能导致数据篡改漏洞。攻击者可以通过使整数溢出，修改计数器、索引或其他控制数据的值，导致程序在处理数据时发生错误或执行意外的操作。",
+        "title": "整数溢出或环绕常见的攻击方式"
+      },
+      {
+        "content": "- 输入验证与限制：对用户输入的整数进行合理的验证和限制，确保其在允许的范围内。\r\n- 使用安全的整数操作函数：使用安全的整数操作函数，如`add_with_overflow()`、`sub_with_overflow()`、`mul_with_overflow()`等，这些函数会检查并处理溢出情况，确保计算结果在安全范围内。\r\n- 类型检查和转换：在进行整数运算或操作之前，进行类型检查和转换，确保操作数的类型和范围是合适的。\r\n- 强制性编码标准和最佳实践：制定强制性的编码标准和最佳实践，包括对整数运算和操作的规范和限制，以帮助程序员编写更可靠、安全的代码。\r\n- 静态代码分析和测试：使用静态代码分析工具和测试技术来检测和识别潜在的整数溢出问题。这些工具可以帮助发现代码中可能存在的溢出漏洞，并及时修复。",
+        "title": "如何预防整数溢出或环绕"
+      }
+    ],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138159",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 7.5
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "high",
+          "base_score": 7.7
+        }
+      ]
+    },
+    "cvss_score": 7.7,
+    "cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-190",
+    "description": "edbrowse 是一个开源的命令行文本浏览器与文件编辑器，采用 C 语言编写，支持通过 HTTP、FTP、gopher 等协议抓取并浏览网页与文件。\n受影响版本中，src/stringfile.c 的 stringAndBytes() 使用 32 位有符号 int 计算缓冲区累计长度，eb_curl_callback() 将 libcurl 收到的每一段 HTTP、FTP 或 gopher 响应数据经 stringAndBytes8() 累加进该缓冲区，当攻击者控制的服务器返回超过 INT_MAX（约 2GB）的响应体时 newlen = oldlen + cnt 回绕为负数，增长判断 x = oldlen ^ newlen 的结果为负数而跳过 realloc 扩容分支，memcpy(p + oldlen, t, cnt) 与 p[oldlen + cnt] = 0 仍按原始长度写入，在已分配的堆缓冲区之外继续写入响应数据，造成堆内存破坏、进程崩溃或潜在的代码执行。\n修复版本中通过在 stringAndBytes()、stringAndString() 与 stringAndChar() 扩容前改用 long long 计算 (long long)oldlen + (long long)cnt + 1 并与 INT_MAX 比较解决该问题，累计长度超限时调用 i_printfExit(MSG_ErrorRealloc) 终止运行而不再执行越界写入，同时为 stringAndString8()、stringAndChar8() 与 stringAndNum8() 补充收窄前的长度校验，切断恶意服务器超大响应体触发的堆越界写路径。",
+    "effects": [
+      {
+        "comp_name": "edbrowse",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,3.8.19]",
+            "min_fixed_version": "",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "整数溢出或环绕",
+    "kind_en": "Integer Overflow or Wraparound",
+    "last_modified_time": "2026-11-28",
+    "level": "High",
+    "mps_id": "MPS-2iyt-18qc",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-2iyt-18qc",
+        "name": "https://www.oscs1024.com/hd/MPS-2iyt-18qc"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138159",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138159"
+      },
+      {
+        "url": "https://github.com/edbrowse/edbrowse/commit/cce285327f3ab4956a113f99b76e3d535072fbcf",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/edbrowse/edbrowse/blob/v3.8.19/src/stringfile.c#L260-L280",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/edbrowse/edbrowse",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/edbrowse-through-3.8.19-heap-buffer-overflow-via-stringandbytes-integer-overflow",
+        "name": "VulnCheck Advisory: edbrowse through 3.8.19 Heap Buffer Overflow via stringAndBytes() Integer Overflow"
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "edbrowse堆溢出漏洞"
+  },
+  "first_saved_at": "2026-11-28T05:53:52+00:00"
+}

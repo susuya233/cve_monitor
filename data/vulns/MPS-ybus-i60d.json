@@ -1,0 +1,185 @@
+{
+  "saved_at": "2026-11-28T05:53:55+00:00",
+  "first_seen": true,
+  "translated": true,
+  "source_list": "https://www.oscs1024.com/oscs/v1/vdb/vuln_info",
+  "source_page": "https://www.oscs1024.com/hd/MPS-ybus-i60d",
+  "detail": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138154",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-749",
+    "description": "POSTAL 2 是 Running With Scissors 开发、经 Steam 发行的第一人称射击游戏，基于 Unreal Engine 2 引擎，官方支持玩家通过 Steam Workshop 发布与安装 UnrealScript 编译的模组，游戏加载模组时执行其脚本字节码。\n受影响版本中，模组脚本可调用引擎公开的 ConsoleCommand 接口执行任意控制台命令，Windows 平台的 start 命令底层经 ShellExecuteW 以 open 方式打开参数指向的目标，当参数为指向可执行文件或批处理文件的 file URI 时，该文件被直接打开并执行；Steam Workshop 允许模组包附带 .bat 批处理文件，workshop 内容固定安装在 steamapps/workshop/content/223470/<资产ID>/ 这一可预测路径，攻击者发布的恶意模组在加载后调用 ConsoleCommand(\"start file:///.../test.bat\")，以玩家身份在 Windows 主机上执行任意命令。\n修复版本中通过 build 26810491 更新封堵该沙箱逃逸路径，厂商于 2026 年 11 月 23 日在 Steam 发布 Workshop Security Update，阻断恶意模组经 ConsoleCommand 与 start file URI 启动本机文件的执行通道，玩家升级后加载 Workshop 模组不再被以自身身份执行命令。",
+    "effects": [
+      {
+        "comp_name": "postal_2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,26810491)",
+            "min_fixed_version": "26810491",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "建议修复",
+    "kind": "暴露危险的方法或函数",
+    "kind_en": "暴露的危险方法或功能",
+    "last_modified_time": "2026-11-28",
+    "level": "Critical",
+    "mps_id": "MPS-ybus-i60d",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ybus-i60d",
+        "name": "https://www.oscs1024.com/hd/MPS-ybus-i60d"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138154",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138154"
+      },
+      {
+        "url": "https://store.steampowered.com/news/app/223470/view/1849827110441228",
+        "name": ""
+      },
+      {
+        "url": "https://drbloop.dev/blog/one-click-remote-code-execution-in-postal2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/drbloop2000/Postal2-RCE",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/postal-2-before-build-26810491-workshop-mod-sandbox-escape-code-execution-via-consolecommand",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "POSTAL 2 沙箱逃逸漏洞",
+    "_translated": true
+  },
+  "detail_original": {
+    "analysis_status": 0,
+    "articles": [],
+    "cnvd_id": "",
+    "cve_id": "CVE-2026-138154",
+    "cvss": {
+      "cvssv31": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+          "severity": "high",
+          "base_score": 8.6
+        }
+      ],
+      "cvssv4": [
+        {
+          "source": "disclosure@vulncheck.com",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "severity": "critical",
+          "base_score": 9.3
+        }
+      ]
+    },
+    "cvss_score": 9.3,
+    "cvss_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "cwe": "CWE-749",
+    "description": "POSTAL 2 是 Running With Scissors 开发、经 Steam 发行的第一人称射击游戏，基于 Unreal Engine 2 引擎，官方支持玩家通过 Steam Workshop 发布与安装 UnrealScript 编译的模组，游戏加载模组时执行其脚本字节码。\n受影响版本中，模组脚本可调用引擎公开的 ConsoleCommand 接口执行任意控制台命令，Windows 平台的 start 命令底层经 ShellExecuteW 以 open 方式打开参数指向的目标，当参数为指向可执行文件或批处理文件的 file URI 时，该文件被直接打开并执行；Steam Workshop 允许模组包附带 .bat 批处理文件，workshop 内容固定安装在 steamapps/workshop/content/223470/<资产ID>/ 这一可预测路径，攻击者发布的恶意模组在加载后调用 ConsoleCommand(\"start file:///.../test.bat\")，以玩家身份在 Windows 主机上执行任意命令。\n修复版本中通过 build 26810491 更新封堵该沙箱逃逸路径，厂商于 2026 年 11 月 23 日在 Steam 发布 Workshop Security Update，阻断恶意模组经 ConsoleCommand 与 start file URI 启动本机文件的执行通道，玩家升级后加载 Workshop 模组不再被以自身身份执行命令。",
+    "effects": [
+      {
+        "comp_name": "postal_2",
+        "ecosystem": "linux",
+        "versions": [
+          {
+            "affected_version": "(-∞,26810491)",
+            "min_fixed_version": "26810491",
+            "repository": "unmanaged",
+            "solutions": [],
+            "upstream": true
+          }
+        ]
+      }
+    ],
+    "epss": -1,
+    "exp": false,
+    "exploit_requirement": "",
+    "exploit_requirement_cost": "高",
+    "exploitability": "中",
+    "fix_suggestion": "Recommend",
+    "kind": "暴露危险的方法或函数",
+    "kind_en": "Exposed Dangerous Method or Function",
+    "last_modified_time": "2026-11-28",
+    "level": "Critical",
+    "mps_id": "MPS-ybus-i60d",
+    "poc": false,
+    "poc_url": [],
+    "published_time": "2026-11-28",
+    "reference_url_list": [
+      {
+        "url": "https://www.oscs1024.com/hd/MPS-ybus-i60d",
+        "name": "https://www.oscs1024.com/hd/MPS-ybus-i60d"
+      },
+      {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-138154",
+        "name": "https://nvd.nist.gov/vuln/detail/CVE-2026-138154"
+      },
+      {
+        "url": "https://store.steampowered.com/news/app/223470/view/1849827110441228",
+        "name": ""
+      },
+      {
+        "url": "https://drbloop.dev/blog/one-click-remote-code-execution-in-postal2",
+        "name": ""
+      },
+      {
+        "url": "https://github.com/drbloop2000/Postal2-RCE",
+        "name": ""
+      },
+      {
+        "url": "https://www.vulncheck.com/advisories/postal-2-before-build-26810491-workshop-mod-sandbox-escape-code-execution-via-consolecommand",
+        "name": ""
+      }
+    ],
+    "scope_influence": "",
+    "tags": [
+      "应用软件"
+    ],
+    "title": "POSTAL 2 沙箱逃逸漏洞"
+  },
+  "first_saved_at": "2026-11-28T05:53:55+00:00"
+}
